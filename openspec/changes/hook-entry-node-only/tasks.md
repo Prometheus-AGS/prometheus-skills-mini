@@ -1,6 +1,6 @@
 ## 0. Prerequisite — goal 1, blocking
 
-- [ ] 0.1 Re-review as one batch the four unreviewed final fixes in `platform-paths-and-text`, `platform-atomic-write-and-lock`, `platform-spawn` and `windows-evidence` (8 `UNREVIEWED` markers). Record the outcome. **No task below starts until this is done** — every hook imports `lib/platform/`.
+- [x] 0.1 **DONE 2026-09-21** — verified by mutation, all four SOUND, 8 markers cleared; findings in `.kbd-orchestrator/phases/hook-entry-node-only/review/goal-1-rereview/findings.json`. Re-review as one batch the four unreviewed final fixes in `platform-paths-and-text`, `platform-atomic-write-and-lock`, `platform-spawn` and `windows-evidence` (8 `UNREVIEWED` markers). Record the outcome. **No task below starts until this is done** — every hook imports `lib/platform/`.
 
 ## 1. The open question — probe before any payload
 

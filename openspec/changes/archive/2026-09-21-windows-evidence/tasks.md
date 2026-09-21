@@ -34,7 +34,7 @@
 > and §9 lists what this phase settled — while keeping Node 26, Docker on Windows, and the hook
 > budgets explicitly unclaimed.
 
-> ADVERSARIAL DIFF REVIEW — 2 rounds (the cap). Round 2's fix is UNREVIEWED.
+> ADVERSARIAL DIFF REVIEW — 2 rounds (the cap). Round 2's fix is REVIEWED 2026-09-21 (goal-1 batch re-review, verdict SOUND — see hook-entry-node-only/review/goal-1-rereview/findings.json).
 > - R1 CRITICAL ×4. Three were correct against my own task list: rows lacked the per-claim run/job/
 >   result fields 2.2 asks for; node 24 was asserted "identical" rather than recorded; and `npm ci`
 >   was omitted although 2.1 names it. The fourth was a packet artifact — my HEAD~2..HEAD range swept
@@ -43,4 +43,4 @@
 >   named test. Correct. `gh run view` truncates that job's log and the job-logs API returns an empty
 >   body, but the RUN-level archive has it; unzip cannot write the '·' in the filename on this
 >   filesystem, so it was extracted with a zip reader in node. Node 24 prints `✔ <name>` where node 22
->   prints `ok N - <name>`. Every claim now has a verbatim named test on both. UNREVIEWED.
+>   prints `ok N - <name>`. Every claim now has a verbatim named test on both. REVIEWED 2026-09-21 (goal-1 batch re-review, verdict SOUND — see hook-entry-node-only/review/goal-1-rereview/findings.json).

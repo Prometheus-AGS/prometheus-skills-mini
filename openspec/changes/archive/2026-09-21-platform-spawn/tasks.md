@@ -33,7 +33,7 @@
 > at the time of the first green run — spawnNodeCli resolving and running the OpenSpec CLI with no
 > shell is OBSERVED on the platform where .cmd would otherwise break it.
 >
-> ADVERSARIAL DIFF REVIEW — 2 rounds (the cap). Round 2's fix is UNREVIEWED.
+> ADVERSARIAL DIFF REVIEW — 2 rounds (the cap). Round 2's fix is REVIEWED 2026-09-21 (goal-1 batch re-review, verdict SOUND — see hook-entry-node-only/review/goal-1-rereview/findings.json).
 > - R1 CRITICAL ×3, all correct. (a) The CI step used `npm run spec:validate` while my own
 >   scenario names `node scripts/spec-validate.mjs`; an npm indirection also reintroduces a shim
 >   on Windows. (b) A REAL gap: spawnExecutable refused only explicit .cmd/.bat SPELLINGS, but on
@@ -44,4 +44,4 @@
 >   gates, so the ownership table now states what is actually permitted, with proof per edit.
 > - R2 CRITICAL ×2. The ownership objection repeated, and — sharply — that I had created the very
 >   false positive I then changed the rule to excuse. Circular, and correct. The fixture was
->   changed to process.stdout.write and the original check restored. UNREVIEWED.
+>   changed to process.stdout.write and the original check restored. REVIEWED 2026-09-21 (goal-1 batch re-review, verdict SOUND — see hook-entry-node-only/review/goal-1-rereview/findings.json).

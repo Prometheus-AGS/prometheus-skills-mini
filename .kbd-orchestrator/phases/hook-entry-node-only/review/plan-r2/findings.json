@@ -1,0 +1,43 @@
+{
+  "stage": "plan",
+  "phase": "hook-entry-node-only",
+  "rounds_run": 2,
+  "cap": 2,
+  "verdict_round_1": "BLOCK (3 CRITICAL, 3 WARNING, 1 SUGGESTION)",
+  "verdict_round_2": "PASS (1 WARNING, 2 SUGGESTION — all fixed after the verdict)",
+  "producer": "claude-opus-5",
+  "judge": "fresh-context subagent (general-purpose, opus)",
+  "cross_model_check": "NOT verified-distinct — liter-llm gateway rejects authentication this session. Same model family as the producer, a weaker check.",
+  "round_1_criticals_all_confirmed_fixed": [
+    "execution.md did not exist and no task created it — fixed; the judge went further than the plan and confirmed in kbd-execute/SKILL.md that writing execution.md (step 6) precedes dispatch (step 9), so the assumption is sound and task 7.1 verifies it anyway.",
+    "The \"disjoint files\" claim was false — both changes write into scripts/ and share ci.yml:45 bare recursive node --test. Fixed: the shared surface is named, the ordering is now a binding rule (change 2 does not start until change 1 is green and archived), A-10 extended to scripts/ and ci.yml, attribution rule added, guard task 5.1a added.",
+    "\"The upstream submodule\" did not resolve — .gitmodules absent, git submodule status empty. Fixed with task 5.0 naming the absolute source path, stating it is a separate repository, and requiring verification before any copy."
+  ],
+  "round_2_findings": [
+    {
+      "severity": "WARNING",
+      "location": "plan.md CI-collection bullet; task 5.1a",
+      "finding": "One limb of the CI hazard was overstated (no carried filename matches Node's test-file glob), and the guard ran node --test only, while npm run coverage re-runs the same collection as a child and reports as a separate step.",
+      "disposition": "ACCEPTED AND FIXED, both verified first. The glob check returns nothing; coverage-report.mjs:29 does execFileSync node --test --experimental-test-coverage. The plan now names parse-at-collection as the live hazard and says it surfaces twice; task 5.1a runs all four CI commands."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "plan.md section 5 narrative; task 6.1 heading",
+      "finding": "Residual \"19\" where the carry is 17, re-opening the ambiguity the round-1 WARNING closed.",
+      "disposition": "ACCEPTED AND FIXED. Prose now says \"17 of the 19 upstream\"; task 6.1 retitled."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "task 5.1 destinations",
+      "finding": "skills/ and agents/ do not exist and no task names them, though 5.2/5.3 grep those pathspecs.",
+      "disposition": "ACCEPTED AND FIXED. 5.1 names them at the repository root and states the copy creates them, which is what makes the later pathspecs resolvable."
+    }
+  ],
+  "independently_reproduced_by_judge": [
+    "0 of 8 UNREVIEWED markers remain (goal 1 genuinely met).",
+    "Payload arithmetic exact: 19 upstream .mjs, 17 under scripts/, the 2 named exclusions correct, 20 skills / 5 agents / 11 schemas.",
+    "The six .sh-referencing skills in task 5.2 and the six .mjs-only skills in 5.3 both reproduce exactly from the commands the tasks cite.",
+    "model-routing.mjs:36 is the .sh hazard; its two importers are at openai-client.mjs:21 and model-routing-probe.mjs:13."
+  ],
+  "generated_at": "2026-09-21T11:46:38.660Z"
+}

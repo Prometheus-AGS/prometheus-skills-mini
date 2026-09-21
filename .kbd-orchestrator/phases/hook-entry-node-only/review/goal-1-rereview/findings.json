@@ -1,0 +1,47 @@
+{
+  "task": "goal-1 re-review of the four unreviewed final fixes",
+  "phase": "hook-entry-node-only",
+  "reviews": "platform-foundation changes, reviewed as one batch",
+  "reviewer": "claude-opus-5 (producer-adjacent — see caveat)",
+  "method": "Each fix was verified by MUTATION and behaviour against the live repository, not by re-reading the prose that claimed it. Where a gate was involved, the gate was mutated to confirm it still discriminates; where a threshold was involved, it was raised beyond reach to confirm a non-zero exit; where evidence was involved, the cited tests were matched against the codebase and the run against the GitHub API.",
+  "markers_found": 8,
+  "markers_expected": 8,
+  "fixes": [
+    {
+      "change": "platform-paths-and-text",
+      "round": 4,
+      "fix": "The spec said \"no module other than paths.mjs\" while paths.test.mjs is a module; the requirement now names a bounded exemption and two scenarios bind it to the enforcing checks.",
+      "verification": "Both checks clean at baseline (exit 1). The exemption is a pathspec exclusion for paths.test.mjs ONLY. MUTATION: added lib/platform/_mutation_probe.mjs calling os.tmpdir() — CAUGHT and reported by file and line, so the exemption did not widen into uselessness. paths.test.mjs makes exactly 2 real OS calls, matching what the exemption permits.",
+      "verdict": "SOUND"
+    },
+    {
+      "change": "platform-atomic-write-and-lock",
+      "round": 3,
+      "fix": "The live spec had been widened to \"every source file\" while the script thresholds only its listed child-process targets; the spec was narrowed to what is enforced.",
+      "verification": "The narrowed text distinguishes \"every source file the runner instruments\" from \"each file listed as a child-process target\", which matches scripts/coverage-report.mjs (TARGETS = rules/build.mjs, THRESHOLD = 80, process.exitCode = failed ? 1 : 0). BEHAVIOURAL MUTATION: threshold raised to 101 -> npm run coverage exited 1 and printed BELOW THRESHOLD; restored to 80 -> exited 0 at 102/102 lines = 100.00%. File restored with an empty git diff. Narrowing was toward what is enforced, not away from it.",
+      "verdict": "SOUND",
+      "note": "The requirement has no scenario asserting the non-zero exit, although the requirement text states it. The behaviour is real and now verified; adding a scenario would bind it. Recorded as a SUGGESTION, not a defect."
+    },
+    {
+      "change": "platform-spawn",
+      "round": 2,
+      "fix": "A circular gate-loosening was reverted: a test fixture had tripped no-console-log-in-lib and the check had been widened to excuse it; the fixture was changed to process.stdout.write and the original check restored.",
+      "verification": "The check at constraints.md:131 contains NO test-file exemption — the loosening is fully reverted, not partially. Fixtures in atomic-write.win32.test.mjs:26 and spawn.test.mjs:64 use process.stdout.write. MUTATION: added lib/platform/_probe3.mjs with a real console.log — CAUGHT. The gate was restored and still works.",
+      "verdict": "SOUND"
+    },
+    {
+      "change": "windows-evidence",
+      "round": 2,
+      "fix": "Node 24's per-claim evidence had been an API step conclusion, which is weaker than a named test; every claim now carries a verbatim named test from both Node versions.",
+      "verification": "The per-claim table has 9 rows, each citing BOTH node 22 TAP (`ok N - <name>`) and node 24 spec-reporter (`✔ <name>`) output. All 9 cited test names were matched verbatim against the test suite with git grep -F: all exist. The cited run 35585743561 was queried through the GitHub API: conclusion success, and both windows-latest jobs (node 22 and node 24) success. The step-conclusion table still exists but is explicitly labelled a separate per-step section, not a substitute for the named tests.",
+      "verdict": "SOUND",
+      "note": "An initial automated scan suggested 9 of 19 rows lacked both versions. That was MY scanning error: the file has three deliberately distinct tables and only the per-claim table carries that requirement. Corrected by reading the structure rather than pattern-matching rows."
+    }
+  ],
+  "outcome": "All four fixes SOUND. No defect found. lib/platform/ is cleared for the hook work to build on.",
+  "caveat": "This re-review was performed by the same model family that produced the fixes, so it is NOT the independent check E-2 prefers. It is stronger than a re-read — every claim was tested by mutation or against a live API rather than accepted — but weaker than a cross-model judge. The liter-llm gateway rejected authentication this session (/health 200; /v1/models and /v1/chat/completions return \"Missing or invalid Authorization header\"; no credential in the environment or any config path the bridge reads), so a cross-model judge was unavailable.",
+  "suggestions": [
+    "project-tooling \"npm scripts\" requirement states the non-zero exit on shortfall but has no scenario asserting it. The behaviour is verified; a scenario would bind it against regression."
+  ],
+  "generated_at": "2026-09-21T11:36:23.349Z"
+}

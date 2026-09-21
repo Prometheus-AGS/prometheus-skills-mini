@@ -48,7 +48,7 @@
 
 > ADVERSARIAL DIFF REVIEW — 4 rounds (the contract caps artifact review at 2; diff mode is run per change
 > and every round here found a real defect, so it was continued rather than capped. The FOURTH round's fix
-> is UNREVIEWED.)
+> is REVIEWED 2026-09-21 (goal-1 batch re-review, verdict SOUND — see hook-entry-node-only/review/goal-1-rereview/findings.json).)
 > - R1 BLOCK ×2: my comment in paths.mjs quoted the very literals the constraint forbids; and my previous
 >   constraint fix piped git grep into plain grep — forbidden by the command policy and absent on stock
 >   Windows, so the "fix" broke the portability rule it served. Comment rephrased; pipe removed.
@@ -63,4 +63,4 @@
 > - R4 BLOCK: the spec said "no module other than paths.mjs", and paths.test.mjs IS a module. Rather than
 >   leave a rule the code knowingly breaks, the requirement now names the exemption (asserting that the
 >   DEFAULT helpers delegate to the real OS cannot be done through the helpers without a tautology) and two
->   scenarios bind it to the two enforcing checks. UNREVIEWED.
+>   scenarios bind it to the two enforcing checks. REVIEWED 2026-09-21 (goal-1 batch re-review, verdict SOUND — see hook-entry-node-only/review/goal-1-rereview/findings.json).

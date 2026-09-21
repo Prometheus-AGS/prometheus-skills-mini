@@ -39,7 +39,7 @@
 > holder is now a separate process. This is exactly why the plan put CI before the Windows code.
 
 > ADVERSARIAL DIFF REVIEW — 4 rounds. Every round found a real defect, so it was continued past
-> the 2-round artifact cap; the FOURTH round's fix is UNREVIEWED.
+> the 2-round artifact cap; the FOURTH round's fix is REVIEWED 2026-09-21 (goal-1 batch re-review, verdict SOUND — see hook-entry-node-only/review/goal-1-rereview/findings.json).
 > - R1 CRITICAL, a data-loss bug I wrote: the temp file used a predictable name opened for
 >   TRUNCATING write, so an unrelated file at that path would be destroyed. Now a random suffix
 >   created with flag 'wx'. Two tests added; both fail against the old code. Two WARNINGs also
@@ -54,4 +54,4 @@
 >   rule, which its own scaffold test caught at once — the reporter now runs the suite with
 >   --experimental-test-coverage and inherits output, so one command does both.
 > - R3 CRITICAL: I had widened the live spec to "every source file" while the script thresholds
->   only its listed child-process targets. Spec narrowed to what is enforced. UNREVIEWED.
+>   only its listed child-process targets. Spec narrowed to what is enforced. REVIEWED 2026-09-21 (goal-1 batch re-review, verdict SOUND — see hook-entry-node-only/review/goal-1-rereview/findings.json).

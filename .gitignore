@@ -20,3 +20,6 @@ node_modules/
 # OS noise
 .DS_Store
 Thumbs.db
+
+# Single-writer lock for the rules build (runtime, per machine)
+rules/.build.lock

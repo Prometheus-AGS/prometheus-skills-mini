@@ -6,11 +6,13 @@
 //
 // Generated targets are replaced wholesale: a merge would keep files deleted from the source.
 
-import { existsSync, mkdirSync, readdirSync, renameSync, statSync, unlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, readdirSync, statSync, unlinkSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { HEADER, LIMITS, RulesBuildError, budgetErrors, parseConf, render } from './lib/render.mjs';
 import { readText as readPlatformText } from '../lib/platform/text.mjs';
+import { atomicWrite } from '../lib/platform/atomic-write.mjs';
+import { acquireLock } from '../lib/platform/lock.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(ROOT, 'rules', 'src');
@@ -54,13 +56,6 @@ function drift(files) {
   return [...problems, ...staleFiles(files).map((path) => `stale generated file: ${toPosix(relative(ROOT, path))}`)];
 }
 
-function writeAtomic(path, content) {
-  mkdirSync(dirname(path), { recursive: true });
-  const tmp = `${path}.tmp`;
-  writeFileSync(tmp, content, 'utf8');
-  renameSync(tmp, path);
-}
-
 function writeAll(files) {
   for (const path of staleFiles(files)) {
     unlinkSync(path);
@@ -69,7 +64,7 @@ function writeAll(files) {
   for (const [rel, content] of Object.entries(files)) {
     const path = join(ROOT, rel);
     const changed = !existsSync(path) || readText(path) !== content;
-    if (changed) writeAtomic(path, content);
+    if (changed) atomicWrite(path, content);
     console.log(`  ${changed ? 'wrote  ' : 'current'}  ${rel}`);
   }
 }
@@ -90,7 +85,14 @@ function main(argv) {
     return 1;
   }
   if (!check) {
-    writeAll(files);
+    // Single writer (A-10): two concurrent write runs would interleave renames over the same
+    // generated files. A --check run takes no lock — it writes nothing.
+    const release = acquireLock(join(ROOT, 'rules', '.build.lock'));
+    try {
+      writeAll(files);
+    } finally {
+      release();
+    }
     return 0;
   }
   const layer0 = files['CLAUDE.md'];

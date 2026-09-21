@@ -46,6 +46,9 @@ jobs:
 
       - run: node rules/build.mjs --check
 
+      # Coverage for files the tests run as child processes; the default reporter cannot see them.
+      - run: node scripts/coverage-report.mjs
+
       # The pinned CLI's JavaScript entry, run by node directly: no npx, no
       # .cmd shim, no global install. platform-spawn replaces this one step
       # with `node scripts/spec-validate.mjs`.

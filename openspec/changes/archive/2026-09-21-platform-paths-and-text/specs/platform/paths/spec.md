@@ -16,8 +16,16 @@
 - **THEN** the result uses the platform separator and contains no hardcoded `/`
 
 ### Requirement: No environment or literal locations
-No module in this repository other than `lib/platform/paths.mjs` SHALL read a home or temp location from the environment or from a literal.
+No module in this repository other than `lib/platform/paths.mjs` SHALL read a home or temp location from the environment, from a literal, or from `node:os` — with one exemption: `lib/platform/paths.test.mjs` MAY call `os.homedir()` and `os.tmpdir()` solely to assert that the default helpers delegate to the real operating system, which cannot be asserted through the helpers without becoming a tautology. The exemption is named in the enforcing check, so it cannot widen silently.
 
-#### Scenario: Constraint stays clean
+#### Scenario: No literals anywhere
 - **WHEN** the blocking constraint `no-home-or-tmp-literals` runs
 - **THEN** it finds no `$HOME`, `process.env.HOME` or `/tmp/` in any `.mjs` under `lib/`, `scripts/`, `hooks/` or `rules/`
+
+#### Scenario: Only the helpers reach the operating system
+- **WHEN** the blocking constraint `os-locations-only-via-platform` runs
+- **THEN** it finds no `os.homedir()` or `os.tmpdir()` call outside `lib/platform/paths.mjs` and the named test exemption
+
+#### Scenario: A new direct caller is rejected
+- **WHEN** any other module calls `os.tmpdir()`
+- **THEN** that constraint reports the file and line

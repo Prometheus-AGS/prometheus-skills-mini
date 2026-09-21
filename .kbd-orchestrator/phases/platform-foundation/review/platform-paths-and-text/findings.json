@@ -8,19 +8,11 @@
   "findings": [
     {
       "severity": "CRITICAL",
-      "file": "lib/platform/text.test.mjs",
-      "line": 10,
-      "claim": "The new text test reads the temp location directly instead of using the platform path helper.",
-      "evidence": "The spec requirement `No environment or literal locations` says `No module in this repository other than lib/platform/paths.mjs SHALL read a home or temp location from the environment or from a literal`; this file imports `os` and calls `os.tmpdir()` in `mkdtempSync(path.join(os.tmpdir(), 'text-'))`.",
-      "suggested_fix": "Import `tempDir` from `lib/platform/paths.mjs` and use `path.join(tempDir(), 'text-')`."
-    },
-    {
-      "severity": "CRITICAL",
       "file": "lib/platform/paths.test.mjs",
-      "line": 9,
-      "claim": "The paths test reads home and temp locations directly outside the only module allowed to do so.",
-      "evidence": "The spec requirement `No environment or literal locations` says `No module in this repository other than lib/platform/paths.mjs SHALL read a home or temp location from the environment or from a literal`; this file imports `os` and calls `os.homedir()` and `os.tmpdir()`.",
-      "suggested_fix": "Either revise the requirement to explicitly exempt tests that assert default OS behaviour, or avoid direct OS-location reads in this test and cover defaults through an injected abstraction."
+      "line": 4,
+      "claim": "A module outside lib/platform/paths.mjs reads OS home/temp locations directly, violating the platform paths requirement.",
+      "evidence": "Acceptance criterion `No environment or literal locations` says \"No module in this repository other than `lib/platform/paths.mjs` SHALL read a home or temp location from the environment or from a literal.\" The diff imports `node:os` in `lib/platform/paths.test.mjs` and calls `os.homedir()` at line 12 and `os.tmpdir()` at line 18.",
+      "suggested_fix": "Either change the spec to explicitly exempt this test, or refactor paths.mjs to support injectable OS delegates so default-delegation behavior can be tested without another module calling `os.homedir()`/`os.tmpdir()`."
     }
   ]
 }

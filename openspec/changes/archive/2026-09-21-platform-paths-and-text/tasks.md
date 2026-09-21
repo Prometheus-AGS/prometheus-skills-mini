@@ -45,3 +45,22 @@
 >
 > Creating `lib/` activated a nested-rules entry configured earlier, so `lib/AGENTS.md` is now generated
 > (18 targets, was 17) — harnesses without path-scoped rules get the Node rules when they open `lib/`.
+
+> ADVERSARIAL DIFF REVIEW — 4 rounds (the contract caps artifact review at 2; diff mode is run per change
+> and every round here found a real defect, so it was continued rather than capped. The FOURTH round's fix
+> is UNREVIEWED.)
+> - R1 BLOCK ×2: my comment in paths.mjs quoted the very literals the constraint forbids; and my previous
+>   constraint fix piped git grep into plain grep — forbidden by the command policy and absent on stock
+>   Windows, so the "fix" broke the portability rule it served. Comment rephrased; pipe removed.
+> - R2 BLOCK: splitFrontmatter matched \r?\n but RETURNED carriage returns, so CRLF input did not produce
+>   "the same result" the spec demands — and my test stripped \r before comparing, i.e. it was written to
+>   match the implementation rather than the requirement. Now folds CRLF before matching; test compares
+>   directly; verified to fail (22/23) when reverted. WARNING on git grep -P (PCRE is a build option) also
+>   accepted: back to the plain -E form, which passes because the literals are gone entirely.
+> - R3 BLOCK ×2: text.test.mjs and build-crlf.test.mjs called os.tmpdir() directly — a test bypassing the
+>   helper is where the rule rots first. Routed through tempDir(); added the blocking constraint
+>   os-locations-only-via-platform, verified to catch a reintroduced call.
+> - R4 BLOCK: the spec said "no module other than paths.mjs", and paths.test.mjs IS a module. Rather than
+>   leave a rule the code knowingly breaks, the requirement now names the exemption (asserting that the
+>   DEFAULT helpers delegate to the real OS cannot be done through the helpers without a tautology) and two
+>   scenarios bind it to the two enforcing checks. UNREVIEWED.

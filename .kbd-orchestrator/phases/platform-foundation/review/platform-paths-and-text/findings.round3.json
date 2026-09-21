@@ -1,0 +1,26 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "lib/platform/text.test.mjs",
+      "line": 10,
+      "claim": "The new text test reads the temp location directly instead of using the platform path helper.",
+      "evidence": "The spec requirement `No environment or literal locations` says `No module in this repository other than lib/platform/paths.mjs SHALL read a home or temp location from the environment or from a literal`; this file imports `os` and calls `os.tmpdir()` in `mkdtempSync(path.join(os.tmpdir(), 'text-'))`.",
+      "suggested_fix": "Import `tempDir` from `lib/platform/paths.mjs` and use `path.join(tempDir(), 'text-')`."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "lib/platform/paths.test.mjs",
+      "line": 9,
+      "claim": "The paths test reads home and temp locations directly outside the only module allowed to do so.",
+      "evidence": "The spec requirement `No environment or literal locations` says `No module in this repository other than lib/platform/paths.mjs SHALL read a home or temp location from the environment or from a literal`; this file imports `os` and calls `os.homedir()` and `os.tmpdir()`.",
+      "suggested_fix": "Either revise the requirement to explicitly exempt tests that assert default OS behaviour, or avoid direct OS-location reads in this test and cover defaults through an injected abstraction."
+    }
+  ]
+}

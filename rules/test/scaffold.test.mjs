@@ -18,7 +18,9 @@ test('package.json defines test, check and coverage scripts', () => {
 
   assert.equal(scripts.test, 'node --test');
   assert.equal(scripts.check, 'node rules/build.mjs --check');
-  assert.equal(scripts.coverage, 'node --test --experimental-test-coverage');
+  // coverage runs BOTH reports from one command: the in-process one, and the child-process
+  // one for rules/build.mjs that the default reporter cannot see. No && — PowerShell 5.1.
+  assert.equal(scripts.coverage, 'node scripts/coverage-report.mjs');
 });
 
 test('no script chains commands, because PowerShell 5.1 rejects &&', () => {

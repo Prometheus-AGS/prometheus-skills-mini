@@ -46,8 +46,9 @@ jobs:
 
       - run: node rules/build.mjs --check
 
-      # Coverage for files the tests run as child processes; the default reporter cannot see them.
-      - run: node scripts/coverage-report.mjs
+      # One command, both reports: the in-process one and the child-process one for
+      # rules/build.mjs, which the default reporter cannot see. Fails below threshold.
+      - run: npm run coverage
 
       # The pinned CLI's JavaScript entry, run by node directly: no npx, no
       # .cmd shim, no global install. platform-spawn replaces this one step

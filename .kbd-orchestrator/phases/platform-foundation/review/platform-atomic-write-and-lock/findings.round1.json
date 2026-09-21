@@ -1,0 +1,34 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "lib/platform/atomic-write.mjs",
+      "line": 49,
+      "claim": "The temporary filename is predictable and is opened with truncating write semantics, so atomicWrite can overwrite an unrelated pre-existing file in the target directory before any rename occurs.",
+      "evidence": "atomic-write.mjs constructs `const temporary = path.join(directory, `.${path.basename(file)}.${process.pid}.tmp`);` and then calls `writeFile(temporary, content, 'utf8')`; the acceptance criterion requires writing to a temporary file in the same directory and leaving only the target changed on failure.",
+      "suggested_fix": "Create the temporary file with an unguessable suffix and exclusive creation (`open`/`writeFile` with `flag: 'wx'`), retrying name generation on `EEXIST`, and only clean up the temp file that this call successfully created."
+    },
+    {
+      "severity": "WARNING",
+      "file": "lib/platform/atomic-write.win32.test.mjs",
+      "line": 41,
+      "claim": "The real Windows held-handle test can pass without the child process having opened the destination, so it does not reliably prove the required held-open-destination scenario.",
+      "evidence": "The test starts `holdOpen(target, 400)` and then waits a fixed `setTimeout(resolve, 100)` before calling `atomicWrite`; there is no IPC/readiness signal or child error check proving the child reached `fs.openSync` before the rename attempt.",
+      "suggested_fix": "Have the child signal readiness after `fs.openSync` succeeds, wait for that signal before calling `atomicWrite`, and fail the test if the child exits or errors before signaling."
+    },
+    {
+      "severity": "WARNING",
+      "file": "lib/platform/lock.mjs",
+      "line": 38,
+      "claim": "The release function can delete a lock file created by another process if the original lock file is removed and recreated before release runs.",
+      "evidence": "lock.mjs releases with `fs.rmSync(file, { force: true })` without verifying that the file still contains the pid/timestamp written by this acquisition; the lock spec explicitly relies on a human deleting stale locks.",
+      "suggested_fix": "Write a per-acquisition token into the lock file and have release remove it only if the current file still contains that token, or document that manual deletion of a live lock can cause another writer's lock to be removed."
+    }
+  ]
+}

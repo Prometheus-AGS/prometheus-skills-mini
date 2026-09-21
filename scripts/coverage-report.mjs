@@ -21,10 +21,12 @@ const THRESHOLD = 80;
 
 const profileDir = mkdtempSync(path.join(tempDir(), 'v8-coverage-'));
 try {
-  execFileSync(process.execPath, ['--test'], {
+  // One command, no shell chaining (PowerShell 5.1 rejects &&): this run both prints the
+  // standard in-process coverage report and leaves V8 profiles for the child-process pass below.
+  execFileSync(process.execPath, ['--test', '--experimental-test-coverage'], {
     cwd: ROOT,
     env: { ...process.env, NODE_V8_COVERAGE: profileDir },
-    stdio: 'ignore',
+    stdio: 'inherit',
   });
 
   let failed = false;

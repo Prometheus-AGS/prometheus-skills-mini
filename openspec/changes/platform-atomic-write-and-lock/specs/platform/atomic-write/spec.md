@@ -9,7 +9,15 @@
 
 #### Scenario: A bystander file is never truncated
 - **WHEN** a file already exists at the temporary path `atomicWrite` would use
-- **THEN** the write fails with `EEXIST` rather than overwriting it, and that file is unchanged
+- **THEN** that file is left exactly as it was — the temporary file is created exclusively, so a collision can never overwrite it
+
+#### Scenario: A colliding temporary name is retried, not fatal
+- **WHEN** the first candidate temporary name is already taken
+- **THEN** `atomicWrite` tries a fresh random name and completes, because a random-suffix collision is a freak transient event, not a caller error
+
+#### Scenario: Repeated collisions are bounded
+- **WHEN** every candidate name is taken
+- **THEN** `atomicWrite` gives up after a fixed number of attempts and rethrows `EEXIST` rather than looping
 
 #### Scenario: Missing parent directories
 - **WHEN** `atomicWrite` targets `<dir>/a/b/file.json` and neither `a` nor `b` exists

@@ -64,7 +64,7 @@ export function report(pairs) {
 }
 
 // Self-test
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   const tests = [
     { fg: "#000000", bg: "#ffffff", expectMin: 20.5, expectMax: 21.5, label: "black on white" },
     { fg: "#ffffff", bg: "#ffffff", expectMin: 0.9, expectMax: 1.1, label: "white on white" },

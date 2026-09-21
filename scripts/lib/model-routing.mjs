@@ -27,7 +27,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import {fileURLToPath, pathToFileURL } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -89,6 +89,12 @@ function probeEndpoint(endpointId, endpointConfig) {
     HEALTH_CACHE.set(probeUrl, { ...result, at: Date.now() });
     return result;
   }
+}
+
+// Exported for tests: the probe is the central change of the Windows review and
+// nothing exercised it, so it needs to be drivable directly.
+export function probeEndpointForTest(endpointId, endpointConfig) {
+  return probeEndpoint(endpointId, endpointConfig);
 }
 
 export function clearHealthCache() {
@@ -178,7 +184,7 @@ export function resolveAllPhases(opts = {}) {
 }
 
 // --- Self-test ---
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   console.log("--- model-routing.mjs self-test ---");
   const decisions = resolveAllPhases();
   if (decisions.length === 0) {

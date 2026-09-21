@@ -84,7 +84,7 @@ function walkForScript(node) {
 }
 
 // --- Self-test ---
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   const tests = [
     {
       label: "valid minimal SVG",

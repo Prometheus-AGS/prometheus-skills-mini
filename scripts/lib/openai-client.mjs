@@ -17,7 +17,7 @@
 
 import { mkdirSync, appendFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import {fileURLToPath, pathToFileURL } from "node:url";
 import { resolvePhase } from "./model-routing.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -150,7 +150,7 @@ export async function chat(phaseKey, messages, opts = {}) {
 }
 
 // --- Self-test ---
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   console.log("--- openai-client.mjs self-test ---");
   try {
     const reply = await chat(

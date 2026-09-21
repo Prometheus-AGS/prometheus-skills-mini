@@ -6,16 +6,19 @@
 //
 // Generated targets are replaced wholesale: a merge would keep files deleted from the source.
 
-import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, statSync, unlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, renameSync, statSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { HEADER, LIMITS, RulesBuildError, budgetErrors, parseConf, render } from './lib/render.mjs';
+import { readText as readPlatformText } from '../lib/platform/text.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(ROOT, 'rules', 'src');
 const GENERATED_DIRS = [join(ROOT, '.claude', 'rules'), join(ROOT, '.cursor', 'rules')];
 
-const readText = (path) => readFileSync(path, 'utf8').replace(/\r\n/g, '\n');
+// The project's one text reader (lib/platform/text.mjs). This build is its first consumer,
+// so the module is exercised by a real call graph rather than by tests alone.
+const readText = readPlatformText;
 const toPosix = (path) => path.split(sep).join('/');
 const isDir = (path) => existsSync(path) && statSync(path).isDirectory();
 

@@ -3,7 +3,7 @@
   "projectId": "prometheus-skills-mini",
   "__projectId_note": "kbd-memory-log derives the memory entity id from `.project // .projectId`, which the kbd-init template never writes; without this key every lifecycle event from this repo is filed under `unknown/`.",
   "description": "Windows-native, scaled-down port of prometheus-skill-pack: KBD + PMPO skills, OpenSpec, Karpathy logging, Nunjucks templates, Rust toolkit skills — Node.js-only scripts, two Docker-managed services.",
-  "activePhase": "hook-entry-node-only",
+  "activePhase": "karpathy-logs-node",
   "updatedAt": "2026-09-21T10:19:58Z",
   "worktreeRoot": "${HOME}/.claude/worktrees",
   "__worktreeRoot_note": "Template default, kept verbatim because the installed KBD skills (bash originals) expand ${HOME} themselves. This repo's own code must never read it that way — use os.homedir(). Revisit when the Node port of kbd-new-child lands.",

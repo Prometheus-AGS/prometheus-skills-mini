@@ -4,8 +4,8 @@
 
 ## 1. The open question — probe before any payload
 
-- [ ] 1.1 Register ONE trivial exec-form hook (`{"type":"command","command":"node","args":["<probe>.mjs"]}`) on a cheap event, trigger it, and observe whether it fires. Record the observation verbatim, including the harness and its version.
-- [ ] 1.2 If it does NOT fire: stop. Do not write a payload, do not adopt a shell string. Record the finding and re-plan the change. If it DOES fire: record that exec form is confirmed on this harness and continue.
+- [x] 1.1 **DONE 2026-09-21 — exec form FIRES.** Verified by deletion-and-recreation: registered an exec-form `PreToolUse` hook, triggered it, deleted the evidence file, triggered again, and the harness recreated it at 12:17:55.820Z. argv arrived as 4 discrete tokens, so no shell re-tokenised it. Evidence: `.kbd-orchestrator/phases/hook-entry-node-only/evidence/exec-form-probe.md`. Register ONE trivial exec-form hook (`{"type":"command","command":"node","args":["<probe>.mjs"]}`) on a cheap event, trigger it, and observe whether it fires. Record the observation verbatim, including the harness and its version.
+- [x] 1.2 **DONE — it fired, so the design proceeds unchanged.** No shell-string fallback adopted. Caveat recorded: confirmed on Claude Code/macOS; the Windows leg is covered by task 6.1, and the other harnesses remain unverified for hooks. If it does NOT fire: stop. Do not write a payload, do not adopt a shell string. Record the finding and re-plan the change. If it DOES fire: record that exec form is confirmed on this harness and continue.
 
 ## 2. Entry point and dispatch
 

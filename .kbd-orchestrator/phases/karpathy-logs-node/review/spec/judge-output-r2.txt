@@ -1,0 +1,30 @@
+```json
+{
+  "verdict": "PASS",
+  "rulings": [
+    {
+      "critic_finding": "The validation requirement says 'all five alternatives of it' but the upstream SECRET regex at recorder:22-27 is a seven-alternative disjunction (credential, bearer, PEM, GitHub, Slack, AWS, sk-). The scenario correctly enumerates seven values, so testability is preserved, but the prose count is wrong.",
+      "ruling": "UPHELD",
+      "severity": "SUGGESTION",
+      "reason": "The count error is confirmed against the embedded evidence, and it is wider than the critic notes: design.md repeats it ('the five-alternative `SECRET` pattern (`:22-27`)'). It stays SUGGESTION because the operative, testable content is correct: the scenario lists all seven values and asserts 'each of the seven events exits 2', and the mutation scenario deletes each alternative in turn, so no implementer following the scenarios can narrow the port. Only the prose count misrepresents the regex.",
+      "evidence": "recorder:22-26 shows six '|' separators joining seven alternatives: credential assignment, 'bearer\\s+[A-Za-z0-9._~+/=-]{12,}', '-----BEGIN [A-Z ]*PRIVATE KEY-----', 'gh[pousr]_[A-Za-z0-9]{20,}', 'xox[baprs]-[A-Za-z0-9-]{10,}', 'AKIA[0-9A-Z]{16}', 'sk-(?:proj-)?[A-Za-z0-9_-]{16,}'. The spec requirement says 'all five alternatives of it'; the scenario says 'a GitHub token, a Slack token, an AWS key id' as separate values and asserts 'each of the seven events exits 2'. Note the miscount originates in round 1: R1's own critic finding called it a 'five-alternative disjunction' and the round-1 judge 'verified' that count."
+    },
+    {
+      "critic_finding": "Spec says the recorder 'SHALL print one JSON object on stdout carrying `status` and `eventId`'. Upstream also prints sessionLogAppended, memory, receipt, recoveredPendingDelivery, deliveryComplete. The wording is ambiguous between 'at minimum' and 'only'.",
+      "ruling": "REJECTED",
+      "severity": "NONE",
+      "reason": "This is the round-1 R6 finding re-raised with no new evidence; the round-1 judge rejected it and the rejection still holds on the text. 'Carrying X and Y' is inclusive phrasing, not exhaustive — the same document uses the same construction elsewhere without implying exclusivity ('The recorder SHALL print one JSON object on stdout carrying `status` and `eventId`' versus 'the receipt SHALL record which source was used', which plainly does not forbid other receipt keys). Nothing in the spec forbids the extra fields, and no scenario instructs an implementer to strip them; upstream printing more fields (recorder:603-625, 650-661) is compatible with the spec text as written. The 'ambiguity' requires misreading plain English.",
+      "evidence": "Spec: 'The recorder SHALL print one JSON object on stdout carrying `status` and `eventId`, and SHALL exit 0 for `recorded`, `duplicate` and `degraded`...'. Round 1 R6 disposition: 'No action: rejected by the judge.' Upstream recorder:603-614 and :650-661 print the additional fields — evidence of what upstream does, not of any exclusivity in this spec's wording."
+    }
+  ],
+  "additional_findings": [
+    {
+      "severity": "SUGGESTION",
+      "location": "mini:karpathy-progress-recorder / specs/karpathy/progress-recorder/spec.md — validation requirement, `observedAt` bullet",
+      "finding": "The spec generalises upstream's timestamp check to 'parses as ISO 8601', but upstream uses `dt.datetime.fromisoformat(event[\"observedAt\"].replace(\"Z\", \"+00:00\"))` — a specific, narrower parser. If the Node port implements 'parses as ISO 8601' with `Date.parse` (the obvious choice), it will accept strings upstream refuses (e.g. 'Sep 21 2026' and other implementation-specific formats Node's Date.parse falls back to), so the same event would be accepted by this pack and refused by the source pack — a divergence in the field the spec otherwise ports check-for-check. The reverse divergence also exists: fromisoformat rejects some forms a strict ISO 8601 grammar accepts.",
+      "evidence": "recorder:221-225: 'require_string(event, \"observedAt\", limit=64)' then 'dt.datetime.fromisoformat(event[\"observedAt\"].replace(\"Z\", \"+00:00\"))' with ValueError mapped to 'observedAt must be an ISO-8601 timestamp'. Spec bullet: '`observedAt` is a string of at most 64 characters that parses as ISO 8601' — no parser pinned.",
+      "fix": "Pin the acceptance rule the way the size bound was pinned ('as upstream measures it'): e.g. a strict ISO-8601 shape check plus a round-trip parse, or state explicitly that the acceptance set differs from Python's fromisoformat at the margins and why that is safe for a field that never reaches a hash (observedAt is excluded from eventSha256 and eventIdentitySha256)."
+    }
+  ]
+}
+```

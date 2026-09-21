@@ -223,3 +223,28 @@ make CI report everything at once — `--no-fail-fast`, a job timeout, and no te
 Verify a sub-agent's proposed fix against the dependency's source before planning on it: one proposed
 `.env("USERPROFILE")`, which `dirs` does not read either. And mutation-check CI steps like tests — a
 "no `~` directory was created" assertion could never fail, because `pk context` creates nothing.
+
+## 2026-09-21 — a security pattern was ported from a grep fragment: one alternative of seven
+
+The spec for the progress recorder defined "the source pack's secret pattern" as
+`(api[_-]?key|access[_-]?token|password|secret)\s*[:=]\s*\S+`. Upstream's `SECRET`
+(`record-progress.py:22-27`) is a seven-alternative disjunction that also covers bearer tokens, PEM
+private keys, GitHub, Slack and AWS tokens, and `sk-` keys. The draft also carried four of
+`validate_event`'s checks out of roughly twenty, and design.md called that "all ported from upstream".
+
+**Cause:** the recorder was read through `grep -n` with `head`, which showed line 23 of a regex that
+continues to line 27, and `validate_event` was never read whole. CLAUDE.md §0.5 already says "read named
+documents in full, not by grep"; a 671-line source file being ported *is* a named document. The one
+scenario (`password = …`) could not detect the omission, and the review-packet builder's own secret
+scanner had the identical one-alternative defect.
+
+**Caught by:** the spec-stage adversarial review (critic MiniMax-M3, judge k3), round 1, as the only
+CRITICAL. Not by me.
+
+**Check:** before specifying a port of any function, read that function top to bottom and list its
+checks. For a pattern, print the whole definition (`sed -n 'A,Bp'`), never a grep hit. A scenario for a
+disjunction needs one value per alternative, and a mutation that deletes each alternative in turn.
+
+**And count with a command.** The fix itself first said "five alternatives" — repeated from the critic's
+text and from how the regex is laid out across lines. Splitting on top-level `|` gives seven. The judge
+caught that in round 2.

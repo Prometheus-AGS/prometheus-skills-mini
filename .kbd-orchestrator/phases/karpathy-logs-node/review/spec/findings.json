@@ -1,0 +1,177 @@
+{
+  "stage": "spec",
+  "mode": "artifact",
+  "changes_reviewed": [
+    "mini:karpathy-progress-recorder",
+    "mini:okf-v02-via-pk",
+    "pk-repo:okf-v02-writer"
+  ],
+  "critic": {
+    "model": "MiniMax-M3",
+    "endpoint_reported": "MiniMax-M3"
+  },
+  "judge": {
+    "model": "k3",
+    "endpoint_reported": "k3"
+  },
+  "cross_model_check": "verified-distinct",
+  "gateway": "liter-llm http://127.0.0.1:4000",
+  "rounds": [
+    {
+      "round": 1,
+      "verdict": "BLOCK",
+      "counts": {
+        "CRITICAL": 1,
+        "WARNING": 5,
+        "SUGGESTION": 8,
+        "rejected": 1
+      },
+      "rulings": [
+        {
+          "critic_finding": "Spec quotes only the first alternative of the upstream SECRET regex as 'the source pack's secret pattern'; the upstream regex (recorder:22-27) is a five-alternative disjunction also covering bearer tokens, PEM keys, GitHub/Slack/AWS/OpenAI tokens, and the only scenario exercises the first alternative, so a narrowed port passes while weakening A-3.",
+          "ruling": "UPHELD",
+          "severity": "CRITICAL",
+          "reason": "The spec is the implementation contract, and it defines the pattern as '(api[_-]?key|access[_-]?token|password|secret)\\s*[:=]\\s*\\S+' while calling it 'the source pack's secret pattern'. The upstream SECRET at recorder:22-27 has four more alternatives. The single scenario ('password = hunter2example') cannot detect omission of the other alternatives, and design.md's claim that hardening is 'all ported from upstream rather than invented' makes the silent narrowing worse, not better. This is a security boundary (A-3) guarding an append-only file; under-specifying it so tests pass anyway is a critical spec defect.",
+          "evidence": "Spec: \"matches the source pack's secret pattern `(api[_-]?key|access[_-]?token|password|secret)\\s*[:=]\\s*\\S+` case-insensitively\". Recorder:22-27: \"SECRET = re.compile( r\\\"(?i)(?:api[_-]?key|access[_-]?token|password|secret)\\\\s*[:=]\\\\s*\\\\S+\\\" r\\\"|bearer\\\\s+[A-Za-z0-9._~+/=-]{12,}|-----BEGIN [A-Z ]*PRIVATE KEY-----\\\" r\\\"|gh[pousr]_[A-Za-z0-9]{20,}|xox[baprs]-[A-Za-z0-9-]{10,}\\\" r\\\"|AKIA[0-9A-Z]{16}|sk-(?:proj-)?[A-Za-z0-9_-]{16,}\\\" )\"."
+        },
+        {
+          "critic_finding": "The requirement 'Every scenario above SHALL run on windows-latest, ubuntu-latest and macos-latest' contradicts the Windows-only PATHEXT scenario; tasks §11.4 grants an explicit skip that the spec never does.",
+          "ruling": "DOWNGRADED",
+          "severity": "WARNING",
+          "reason": "The tension is real: the blanket 'every scenario above' clause does not admit a skip, while the PATHEXT scenario is inherently Windows-only and tasks §11.4 prescribes 'skip with an explicit reason elsewhere'. But the PATHEXT scenario's own WHEN clause is explicitly scoped — 'WHEN on Windows a copy of the Node executable named pk.exe sits in a directory on PATH' — so a reader can reconcile the two by reading the scenario as conditional on platform. This is a precision defect in the requirement text, not an unimplementable contradiction; it does not block.",
+          "evidence": "Requirement: 'Every scenario above SHALL run on `windows-latest`, `ubuntu-latest` and `macos-latest` under Node 22 and Node 24'. Scenario: '**WHEN** on Windows a copy of the Node executable named `pk.exe` sits in a directory on `PATH` and `PK_BIN` is unset'. Tasks 11.4: 'The PATHEXT scenario is Windows-only ... Skip with an explicit reason elsewhere — never with a silent early `return`.'"
+        },
+        {
+          "critic_finding": "Design and spec state 'per-field string limits (4 000 characters)', but upstream overrides the 4000 default per field: eventId=128, observedAt=64, runId=200, phaseId=160, changeId/taskId=200, verification.command=2000, touchedFiles[]=1000.",
+          "ruling": "UPHELD",
+          "severity": "WARNING",
+          "reason": "design.md's Security boundary section says 'per-field string limits (4 000 characters)' as a blanket claim. recorder:199 shows 4000 is only the default of require_string, and the call sites (recorder:218, 221, 226, 231-233, 263, 267) override it downward for many fields. As written the design invites a validator that accepts strings upstream rejects (e.g., a 500-character runId). The claim is factually wrong as stated and belongs in the spec as the per-field table.",
+          "evidence": "design.md: 'per-field string limits (4 000 characters)'. recorder:199: 'def require_string(event, key, *, nullable=False, limit: int = 4000)'. recorder:218 'require_string(event, \"eventId\", limit=128)'; :221 'observedAt, limit=64'; :226 'runId, limit=200'; :231 'phaseId, limit=160'; :232-233 'changeId/taskId, nullable=True, limit=200'."
+        },
+        {
+          "critic_finding": "The validation spec is a thin subset of upstream validate_event: it omits unknown-field rejection, schemaVersion==1, eventId format, observedAt ISO-8601, status/taskClass closed sets, changeId/taskId boundary requirements, touchedFiles safety (no absolute paths, no '..'), verification record structure, and commitSha format.",
+          "ruling": "UPHELD",
+          "severity": "WARNING",
+          "reason": "Every omitted check is present in recorder:207-280, and several are security-relevant under A-3 (touchedFiles rejects absolute paths and '..' segments at :246-256; unknown-field rejection at :213-215). The spec's requirement names only size, secret, boundary set and elapsedHours; tasks 3.1's test list is likewise a subset. Design.md's 'Hardening, all ported from upstream' enumerates only four items, so the omission is systematic across the packet, and the spec gives no statement that validation is deliberately narrowed. An implementer following spec+tasks would admit events (and unsafe paths) upstream refuses.",
+          "evidence": "recorder:213-215 'unknown = sorted(set(event) - allowed) ... raise'; :251-254 'Path(path).is_absolute() or PureWindowsPath(path).is_absolute() or \"..\" in Path(path).parts'; :238-239 'if event.get(\"taskClass\") not in TASK_CLASSES: raise'. Spec requirement covers only: size bound, secret pattern, boundary closed set, elapsedHours range and the (0, 0.0001) refusal."
+        },
+        {
+          "critic_finding": "The spec names only the per-event receipt lock; upstream uses a second, differently-named lock (session-log.md.karpathy-progress.lock) held across the marker scan plus append, and the spec is silent on its file name and holder.",
+          "ruling": "DOWNGRADED",
+          "severity": "SUGGESTION",
+          "reason": "The critic's facts are right — upstream takes a session-log lock at recorder:345-346 and a per-event lock at :563-564 — but the spec's session-log requirement does say 'append ... under a lock', and tasks 7.1 pins it to 'lib/platform/lock.mjs acquireLock' with release-on-throw. What is genuinely missing is only the lock *file name*, which matters solely for cross-pack mutual exclusion if the Python and Node recorders ever run against the same project root concurrently — a narrow migration-time concern. Worth stating, not a warning-level gap.",
+          "evidence": "Spec session-log requirement: 'The recorder SHALL append the markdown record to `.prometheus/session-log.md` under a lock'. recorder:345 'lock = log.with_name(f\"{log.name}.karpathy-progress.lock\")'; :563 'event_lock = existing_receipt.with_suffix(\".lock\")'. Tasks 7.1: 'the append happens under `lib/platform/lock.mjs` `acquireLock` and the lock is released when the write throws'."
+        },
+        {
+          "critic_finding": "Spec says stdout carries 'status and eventId', suggesting 'only status and eventId'; upstream also prints memory, receipt, sessionLogAppended, recoveredPendingDelivery, deliveryComplete — an implementer reading literally could strip fields.",
+          "ruling": "REJECTED",
+          "severity": "NONE",
+          "reason": "The spec's wording is 'one JSON object on stdout carrying `status` and `eventId`' — 'carrying' states a floor, not a ceiling, and nothing in the spec says or implies 'only'. The critic's case rests on a hypothetical misreading, not on any contradictory text; no scenario restricts the object to two keys, and tasks 9.4 only requires 'stdout is one JSON line'. A finding must cite spec text that misleads; this text does not.",
+          "evidence": "Spec: 'The recorder SHALL print one JSON object on stdout carrying `status` and `eventId`, and SHALL exit 0 for `recorded`, `duplicate` and `degraded`'. Tasks 9.4: 'stdout is one JSON line'. No spec or task text limits the object to the two named keys."
+        },
+        {
+          "critic_finding": "Spec's 'never write a secret, a token or an event payload to stderr' is stricter than upstream, which echoes touchedFiles paths (:256) and OS error text (:570, :666); only the secret case has a scenario, leaving other error paths unchecked.",
+          "ruling": "UPHELD",
+          "severity": "WARNING",
+          "reason": "The spec's blanket claim covers 'an event payload', and upstream's error messages do echo payload content — recorder:256 formats the offending path with {path!r}, and a touchedFiles entry is event payload. Design.md only commits to never echoing the *matched secret text* ('stderr carries the reason for a refusal and never the matched text'), which is a narrower promise than the spec's. So the spec simultaneously (a) promises more than the design describes and (b) tests only the secret case. Either the port must sanitize beyond upstream (a real design decision that should be stated) or the claim must be narrowed.",
+          "evidence": "Spec: 'It SHALL never write a secret, a token or an event payload to stderr.' recorder:256 'raise ProgressError(f\"unsafe touchedFiles entry: {path!r}\")'; :666 'print(f\"karpathy-progress-memory: {error}\", file=sys.stderr)'. design.md: 'stderr carries the *reason* for a refusal and never the matched text'."
+        },
+        {
+          "critic_finding": "The canonical-state requirement does not decide the case where the prometheus CLI resolves but exits non-zero or returns malformed JSON.",
+          "ruling": "DOWNGRADED",
+          "severity": "SUGGESTION",
+          "reason": "The routing gap is real — 'the CLI when it resolves; else the projection' does not say what a resolving-but-failing CLI means — but the spec's 'No identity at all' scenario partially absorbs it: a failed CLI 'yields' no identity, so the run routes to projection or to the exit-2 refusal. The undecided part is only whether a failed CLI should *fall through* to projection or refuse outright (upstream refuses, per analysis §5 question 5, which explicitly flags this as undecided). A one-line statement settles it; it is not warning-grade because both reachable outcomes are already spec'd states.",
+          "evidence": "Spec: 'Canonical KBD state SHALL be read from `prometheus kbd status --json` when that executable resolves, and otherwise from `.kbd-orchestrator/current-waypoint.json`' and '**WHEN** neither source yields a project id, a run id and an active phase **THEN** the exit code is 2'. analysis.md §5.5: 'is a missing `prometheus` CLI a `degraded` record, or a refusal? ... Undecided — a spec decision'."
+        },
+        {
+          "critic_finding": "okf-v02-via-pk proposal withdraws the 'events.jsonl is the append-only truth' clause, but the spec scenario's negative list checks only 'the Node implementation', 'log.md is rendered from it', and 'Never append to log.md' — the events.jsonl clause itself is never asserted absent.",
+          "ruling": "UPHELD",
+          "severity": "WARNING",
+          "reason": "The proposal's What Changes explicitly names three withdrawn clauses, including '\"events.jsonl\" is the append-only truth'. The spec scenario checks three phrases, but they are not the same three: 'events.jsonl is the append-only truth and is outside OKF' appears verbatim in config.yaml and is in no negative check, and tasks 4.2 inherits the spec's list ('the three withdrawn phrases'). An amendment that strips the Node-writer and log.md language but leaves the events.jsonl-truth sentence intact would pass every scenario while contradicting the proposal's stated intent. Since config.yaml is loaded into every artifact as binding context, an unwithdrawn stale clause is an instruction, per this change's own design.md.",
+          "evidence": "Proposal: 'the Node writer, the Node-rendered `log.md` and \"`events.jsonl` is the append-only truth\" clauses are withdrawn'. Spec scenario: 'it does not contain \"the Node implementation\", \"log.md is rendered from it\", or \"Never append to log.md\"'. config.yaml: 'events.jsonl is the append-only truth and is outside OKF; log.md is rendered from it, newest first, by atomic rewrite. Never append to log.md.'"
+        },
+        {
+          "critic_finding": "The source skill directory contains references/progress-event.schema.json; the change carries only SKILL.md and never states whether the schema is carried, replaced, or deliberately omitted.",
+          "ruling": "DOWNGRADED",
+          "severity": "SUGGESTION",
+          "reason": "The omission is real: the upstream dir listing shows 'references/progress-event.schema.json', and proposal Impact plus tasks 10.1 cover SKILL.md alone. But nothing depends on the schema file — validation is specified in prose and implemented in validate.mjs, and the carried-payload test checks script paths, not schemas. The defect is scope transparency (a reader cannot tell deliberate omission from oversight), which is suggestion-grade; no implementation can go wrong over it.",
+          "evidence": "Evidence 'upstream karpathy-progress-memory dir': 'references/progress-event.schema.json'. Proposal Impact: 'New: `skills/karpathy-progress-memory/SKILL.md`, carried from the source pack (119 lines there) with its invocations rewritten.' Tasks 10.1 covers only SKILL.md."
+        },
+        {
+          "critic_finding": "canonicalState is a Node-only receipt extension (upstream write_receipt emits no such field) and the spec does not flag it as an extension or address source-pack consumers.",
+          "ruling": "DOWNGRADED",
+          "severity": "SUGGESTION",
+          "reason": "The factual core is right — recorder:520-530's payload has no canonicalState, and the spec adds it. But design.md already presents it openly as an addition with rationale ('The receipt records `canonicalState: \"cli\" | \"projection\"`, so a reader can tell confirmed evidence from best-effort evidence'), and the compatibility risk is speculative: the only evidenced consumer is the source recorder itself, which reads receipts via prior.get(...) (recorder:566-600) and would ignore an unknown key. Adding a JSON key is backward-compatible against every reader in evidence. An explicit 'this is a port extension' note in the spec would be nice; the absence breaks nothing shown.",
+          "evidence": "recorder:520-530 payload keys: 'schemaVersion, eventId, eventSha256, eventIdentitySha256, event, sessionLogAppended, memory, complete, recordedAt'. design.md: 'The receipt records `canonicalState: \"cli\" | \"projection\"`'. recorder:568/586/591 read via 'prior.get(...)'."
+        },
+        {
+          "critic_finding": "The float-token scenario tests only 0.00001; the 'ordinary decimals agree' claim is 'expected, not yet observed' and that caveat lives in design/tasks, not the spec.",
+          "ruling": "UPHELD",
+          "severity": "SUGGESTION",
+          "reason": "The critic's suggestion is consistent with the packet's own honesty standard: design.md says agreement in [0.0001, 1000] 'is expected, not yet observed', and tasks 1.2 keeps the vector test 'todo' with the hash claim labelled 'verified for one integer-valued float only'. Surfacing that caveat as a spec note (or a todo scenario) is a legitimate, low-cost improvement and contradicts nothing.",
+          "evidence": "design.md: 'For ordinary decimals in [0.0001, 1000] Python's `repr` and JavaScript's `toString` ... agree; that is expected, not yet observed'. Tasks 1.2: 'Until the file exists, §2's vector test is marked `todo` and the hash claim stays \"verified for one integer-valued float only\".' Spec scenario covers only '**WHEN** `elapsedHours` is `0.00001`'."
+        },
+        {
+          "critic_finding": "pk-repo spec makes source ids mandatory and unique per entry, stricter than OKF §5.1's Optional/SHOULD; defensible but worth acknowledging in the rationale.",
+          "ruling": "UPHELD",
+          "severity": "SUGGESTION",
+          "reason": "The observation is accurate: §5.1 says 'id: Optional ... SHOULD be present when the body cites it', while the spec requires every attached source to carry a unique id. The design already supplies the rationale (footnote join is by label and 'a duplicate label misattributes silently'), so this is an informational flag, correctly graded as a suggestion.",
+          "evidence": "OKF §5.1: '`id`: Optional. A stable key used to attribute individual claims ... SHOULD be present when the body cites the source.' Spec: 'every source pk attaches to a compiled entry SHALL carry an `id` that is unique within the entry'. design.md: '§5.1's footnote join is by label and a duplicate label misattributes silently'."
+        },
+        {
+          "critic_finding": "The 'exactly six hook ids' scenario should pin the count source (6 command entries across 5 hook types) so a future manifest edit does not silently break it.",
+          "ruling": "UPHELD",
+          "severity": "SUGGESTION",
+          "reason": "The count is verifiable in the embedded manifest — SessionStart has two command entries and PostToolUse, SubagentStop, TaskCompleted, PreCompact one each — and the scenario passes today. Tying the assertion to the manifest rather than a bare count is a reasonable robustness suggestion, correctly graded.",
+          "evidence": "hooks/hooks.json: SessionStart contains two 'type': 'command' entries; PostToolUse, SubagentStop, TaskCompleted, PreCompact one each. Spec scenario: '`hooks/hooks.json` still declares exactly six hook ids'. Tasks 9.6: 'the manifest still declares six ids'."
+        }
+      ],
+      "additional_findings": [
+        {
+          "severity": "SUGGESTION",
+          "location": "mini:karpathy-progress-recorder — specs/karpathy/progress-recorder/spec.md — Requirement: Neither `pk` nor the `prometheus` CLI is required",
+          "finding": "canonical_validate is specified thinner than upstream in the same way the critic flagged for validate_event, but for a different function: the spec's only agreement scenario is a *status* mismatch. Upstream also refuses on runId disagreement (recorder:284-287) and when the phase, change, or task does not exist in canonical state at all (:290-291, :299-300, :306-307). Tasks 4.1 likewise tests only 'status disagrees → a typed error'. An implementer following spec+tasks would accept an event whose runId differs from canonical state, forking the event-id identity upstream would have refused to record.",
+          "evidence": "recorder:284-287 'if event[\"runId\"] != state.get(\"runId\"): raise ProgressError(f\"canonical run disagreement...\")'; :290-291 'phase = (state.get(\"phases\") or {}).get(phase_id); if not isinstance(phase, dict): raise'. Spec scenario: '**WHEN** the CLI resolves and reports a status for the boundary's subject that differs from the event's `status` **THEN** the exit code is 2' — no runId or existence scenario.",
+          "fix": "Add scenarios (or one requirement line) covering runId disagreement and nonexistent phase/change/task as exit-2 refusals in cli mode, matching recorder:284-308; or state explicitly that the port narrows canonical_validate to the status check."
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "verdict": "PASS",
+      "counts": {
+        "CRITICAL": 0,
+        "WARNING": 0,
+        "SUGGESTION": 2,
+        "rejected": 1
+      },
+      "rulings": [
+        {
+          "critic_finding": "The validation requirement says 'all five alternatives of it' but the upstream SECRET regex at recorder:22-27 is a seven-alternative disjunction (credential, bearer, PEM, GitHub, Slack, AWS, sk-). The scenario correctly enumerates seven values, so testability is preserved, but the prose count is wrong.",
+          "ruling": "UPHELD",
+          "severity": "SUGGESTION",
+          "reason": "The count error is confirmed against the embedded evidence, and it is wider than the critic notes: design.md repeats it ('the five-alternative `SECRET` pattern (`:22-27`)'). It stays SUGGESTION because the operative, testable content is correct: the scenario lists all seven values and asserts 'each of the seven events exits 2', and the mutation scenario deletes each alternative in turn, so no implementer following the scenarios can narrow the port. Only the prose count misrepresents the regex.",
+          "evidence": "recorder:22-26 shows six '|' separators joining seven alternatives: credential assignment, 'bearer\\s+[A-Za-z0-9._~+/=-]{12,}', '-----BEGIN [A-Z ]*PRIVATE KEY-----', 'gh[pousr]_[A-Za-z0-9]{20,}', 'xox[baprs]-[A-Za-z0-9-]{10,}', 'AKIA[0-9A-Z]{16}', 'sk-(?:proj-)?[A-Za-z0-9_-]{16,}'. The spec requirement says 'all five alternatives of it'; the scenario says 'a GitHub token, a Slack token, an AWS key id' as separate values and asserts 'each of the seven events exits 2'. Note the miscount originates in round 1: R1's own critic finding called it a 'five-alternative disjunction' and the round-1 judge 'verified' that count."
+        },
+        {
+          "critic_finding": "Spec says the recorder 'SHALL print one JSON object on stdout carrying `status` and `eventId`'. Upstream also prints sessionLogAppended, memory, receipt, recoveredPendingDelivery, deliveryComplete. The wording is ambiguous between 'at minimum' and 'only'.",
+          "ruling": "REJECTED",
+          "severity": "NONE",
+          "reason": "This is the round-1 R6 finding re-raised with no new evidence; the round-1 judge rejected it and the rejection still holds on the text. 'Carrying X and Y' is inclusive phrasing, not exhaustive — the same document uses the same construction elsewhere without implying exclusivity ('The recorder SHALL print one JSON object on stdout carrying `status` and `eventId`' versus 'the receipt SHALL record which source was used', which plainly does not forbid other receipt keys). Nothing in the spec forbids the extra fields, and no scenario instructs an implementer to strip them; upstream printing more fields (recorder:603-625, 650-661) is compatible with the spec text as written. The 'ambiguity' requires misreading plain English.",
+          "evidence": "Spec: 'The recorder SHALL print one JSON object on stdout carrying `status` and `eventId`, and SHALL exit 0 for `recorded`, `duplicate` and `degraded`...'. Round 1 R6 disposition: 'No action: rejected by the judge.' Upstream recorder:603-614 and :650-661 print the additional fields — evidence of what upstream does, not of any exclusivity in this spec's wording."
+        }
+      ],
+      "additional_findings": [
+        {
+          "severity": "SUGGESTION",
+          "location": "mini:karpathy-progress-recorder / specs/karpathy/progress-recorder/spec.md — validation requirement, `observedAt` bullet",
+          "finding": "The spec generalises upstream's timestamp check to 'parses as ISO 8601', but upstream uses `dt.datetime.fromisoformat(event[\"observedAt\"].replace(\"Z\", \"+00:00\"))` — a specific, narrower parser. If the Node port implements 'parses as ISO 8601' with `Date.parse` (the obvious choice), it will accept strings upstream refuses (e.g. 'Sep 21 2026' and other implementation-specific formats Node's Date.parse falls back to), so the same event would be accepted by this pack and refused by the source pack — a divergence in the field the spec otherwise ports check-for-check. The reverse divergence also exists: fromisoformat rejects some forms a strict ISO 8601 grammar accepts.",
+          "evidence": "recorder:221-225: 'require_string(event, \"observedAt\", limit=64)' then 'dt.datetime.fromisoformat(event[\"observedAt\"].replace(\"Z\", \"+00:00\"))' with ValueError mapped to 'observedAt must be an ISO-8601 timestamp'. Spec bullet: '`observedAt` is a string of at most 64 characters that parses as ISO 8601' — no parser pinned.",
+          "fix": "Pin the acceptance rule the way the size bound was pinned ('as upstream measures it'): e.g. a strict ISO-8601 shape check plus a round-trip parse, or state explicitly that the acceptance set differs from Python's fromisoformat at the margins and why that is safe for a field that never reaches a hash (observedAt is excluded from eventSha256 and eventIdentitySha256)."
+        }
+      ]
+    }
+  ],
+  "final_verdict": "PASS",
+  "disposition": "Round 1 BLOCK on one CRITICAL: the spec ported one alternative of the upstream secret pattern and 4 of ~20 validate_event checks, from grep fragments. All 14 non-rejected round-1 findings accepted and fixed. Round 2 PASS: 0 CRITICAL, 0 WARNING, 2 SUGGESTION (count \"five\" should be seven; observedAt rule too loose). Both applied AFTER the round-2 PASS and are therefore UNREVIEWED."
+}

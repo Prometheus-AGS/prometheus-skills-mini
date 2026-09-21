@@ -1,0 +1,112 @@
+{
+ "verdict": "BLOCK",
+ "note": "Round 1. Dispositions are the producer's; check each against the revised changes in this packet.",
+ "rulings": [
+  {
+   "id": "R1",
+   "ruling": "UPHELD",
+   "severity": "CRITICAL",
+   "critic_finding": "Spec quotes only the first alternative of the upstream SECRET regex as 'the source pack's secret pattern'; the upstream regex (recorder:22-27) is a five-alternative disjunction also covering bearer tokens, PEM keys, GitHub/Slack/AWS/OpenAI tokens, and the only scenario exercises the first alternative, so a narrowed port passes while weakening A-3.",
+   "disposition": "ACCEPTED (CRITICAL). Verified at record-progress.py:22-27: five alternatives; the draft ported one. The validation requirement is rewritten as a FULL port of validate_event and of the pattern; a scenario now requires one value per alternative, a mutation scenario requires each deletion to be detected, and values are assembled at run time so no token-shaped literal is committed. Root cause recorded in design.md and tasks 3.0: the function was never read whole, only grepped."
+  },
+  {
+   "id": "R2",
+   "ruling": "DOWNGRADED",
+   "severity": "WARNING",
+   "critic_finding": "The requirement 'Every scenario above SHALL run on windows-latest, ubuntu-latest and macos-latest' contradicts the Windows-only PATHEXT scenario; tasks §11.4 grants an explicit skip that the spec never does.",
+   "disposition": "ACCEPTED. The Windows requirement now exempts platform-conditional scenarios explicitly and requires a reported skip with a reason elsewhere."
+  },
+  {
+   "id": "R3",
+   "ruling": "UPHELD",
+   "severity": "WARNING",
+   "critic_finding": "Design and spec state 'per-field string limits (4 000 characters)', but upstream overrides the 4000 default per field: eventId=128, observedAt=64, runId=200, phaseId=160, changeId/taskId=200, verification.command=2000, touchedFiles[]=1000.",
+   "disposition": "ACCEPTED. Per-field limits are now listed per field in the spec (128/64/200/160/200/1000/2000/4000) with a scenario at limit+1; the blanket \"4 000\" claim is removed from design.md."
+  },
+  {
+   "id": "R4",
+   "ruling": "UPHELD",
+   "severity": "WARNING",
+   "critic_finding": "The validation spec is a thin subset of upstream validate_event: it omits unknown-field rejection, schemaVersion==1, eventId format, observedAt ISO-8601, status/taskClass closed sets, changeId/taskId boundary requirements, touchedFiles safety (no absolute paths, no '..'), verification record structure, and commitSha format.",
+   "disposition": "ACCEPTED. Every check of validate_event is now a bullet: closed field set, schemaVersion, eventId format, observedAt, closed sets for status and taskClass, boundary-requires-subject, touchedFiles (unique, <=500, not absolute under POSIX or Windows, no ..), verification record shape, commitSha."
+  },
+  {
+   "id": "R5",
+   "ruling": "DOWNGRADED",
+   "severity": "SUGGESTION",
+   "critic_finding": "The spec names only the per-event receipt lock; upstream uses a second, differently-named lock (session-log.md.karpathy-progress.lock) held across the marker scan plus append, and the spec is silent on its file name and holder.",
+   "disposition": "ACCEPTED. Both lock file names are now stated and match upstream; upstream acquire_lock (:361) is an O_EXCL create, the same primitive as this pack wx lock."
+  },
+  {
+   "id": "R6",
+   "ruling": "REJECTED",
+   "severity": "NONE",
+   "critic_finding": "Spec says stdout carries 'status and eventId', suggesting 'only status and eventId'; upstream also prints memory, receipt, sessionLogAppended, recoveredPendingDelivery, deliveryComplete — an implementer reading literally could strip fields.",
+   "disposition": "No action: rejected by the judge."
+  },
+  {
+   "id": "R7",
+   "ruling": "UPHELD",
+   "severity": "WARNING",
+   "critic_finding": "Spec's 'never write a secret, a token or an event payload to stderr' is stricter than upstream, which echoes touchedFiles paths (:256) and OS error text (:570, :666); only the secret case has a scenario, leaving other error paths unchecked.",
+   "disposition": "ACCEPTED. The promise is narrowed to what is achievable and tested: never the matched secret text; an unsafe touchedFiles entry is named by index, not echoed - a stated departure from upstream :256, because field checks run before the secret scan."
+  },
+  {
+   "id": "R8",
+   "ruling": "DOWNGRADED",
+   "severity": "SUGGESTION",
+   "critic_finding": "The canonical-state requirement does not decide the case where the prometheus CLI resolves but exits non-zero or returns malformed JSON.",
+   "disposition": "ACCEPTED. New scenario: a CLI that resolves but fails (non-zero, timeout, non-JSON) is treated as absent and state comes from the projection."
+  },
+  {
+   "id": "R9",
+   "ruling": "UPHELD",
+   "severity": "WARNING",
+   "critic_finding": "okf-v02-via-pk proposal withdraws the 'events.jsonl is the append-only truth' clause, but the spec scenario's negative list checks only 'the Node implementation', 'log.md is rendered from it', and 'Never append to log.md' — the events.jsonl clause itself is never asserted absent.",
+   "disposition": "ACCEPTED. The fourth phrase \"events.jsonl is the append-only truth\" is added to the negative list, matched after collapsing whitespace because config.yaml wraps it across lines. Verified present today, so the scenario starts red."
+  },
+  {
+   "id": "R10",
+   "ruling": "DOWNGRADED",
+   "severity": "SUGGESTION",
+   "critic_finding": "The source skill directory contains references/progress-event.schema.json; the change carries only SKILL.md and never states whether the schema is carried, replaced, or deliberately omitted.",
+   "disposition": "ACCEPTED. references/progress-event.schema.json is carried (SKILL.md:86 cites it), with a test that it agrees with the validator field set."
+  },
+  {
+   "id": "R11",
+   "ruling": "DOWNGRADED",
+   "severity": "SUGGESTION",
+   "critic_finding": "canonicalState is a Node-only receipt extension (upstream write_receipt emits no such field) and the spec does not flag it as an extension or address source-pack consumers.",
+   "disposition": "ACCEPTED. canonicalState is flagged in spec and design as this pack extension, with a scenario that every key upstream reads is still present."
+  },
+  {
+   "id": "R12",
+   "ruling": "UPHELD",
+   "severity": "SUGGESTION",
+   "critic_finding": "The float-token scenario tests only 0.00001; the 'ordinary decimals agree' claim is 'expected, not yet observed' and that caveat lives in design/tasks, not the spec.",
+   "disposition": "ACCEPTED. New scenario: with the Python vectors absent the vector test is todo and the evidence labels the rule \"verified for one integer-valued float only\"."
+  },
+  {
+   "id": "R13",
+   "ruling": "UPHELD",
+   "severity": "SUGGESTION",
+   "critic_finding": "pk-repo spec makes source ids mandatory and unique per entry, stricter than OKF §5.1's Optional/SHOULD; defensible but worth acknowledging in the rationale.",
+   "disposition": "ACCEPTED. The pk spec now states that unique mandatory ids are deliberately stricter than OKF 5.1 and why."
+  },
+  {
+   "id": "R14",
+   "ruling": "UPHELD",
+   "severity": "SUGGESTION",
+   "critic_finding": "The 'exactly six hook ids' scenario should pin the count source (6 command entries across 5 hook types) so a future manifest edit does not silently break it.",
+   "disposition": "ACCEPTED. The scenario now names the six ids rather than a bare count."
+  }
+ ],
+ "additional_findings": [
+  {
+   "id": "A1",
+   "severity": "SUGGESTION",
+   "finding": "canonical_validate is specified thinner than upstream in the same way the critic flagged for validate_event, but for a different function: the spec's only agreement scenario is a *status* mismatch. Upstream also refuses on runId disagreement (recorder:284-287) and when the phase, change, or task does not exist in canonical state at all (:290-291, :299-300, :306-307). Tasks 4.1 likewise tests only 'status disagrees → a typed error'. An implementer following spec+tasks would accept an event whose runId differs from canonical state, forking the event-id identity upstream would have refused to record.",
+   "disposition": "ACCEPTED. canonical validation now lists all five refusals of canonical_validate (:283-313): runId, unknown phase, unknown change, unknown task, status."
+  }
+ ]
+}

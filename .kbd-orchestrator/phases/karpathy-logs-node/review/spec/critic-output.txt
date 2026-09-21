@@ -1,0 +1,134 @@
+Looking at this packet, I need to carefully verify factual claims against embedded evidence, check scenario testability, evaluate cross-change dependencies, and check the pk-repo change against the OKF v0.2 spec text.
+
+**Verifications performed:**
+
+1. **Hash values** match the recorded observations (760d332e…, be2c1c52…, ca79e321…)
+2. **Line citations** in design.md and analysis.md — most verified; the "lock (:361)" reference doesn't match the surrounding evidence (the visible session-log lock is at :345-346; per-event lock at :564), but the cited functions themselves are correct
+3. **Constants** — `256_000`, `BOUNDARIES`, `STATUSES`, `TASK_CLASSES`, `KPM_PK_TIMEOUT_SECONDS` bounds, crash seams (74, 75), event-ID derivation, replay hash selection — all checked against Python source
+4. **PK_BIN, PATH, shell:false** — matches Python's behavior and lib/platform/spawn.mjs
+5. **Float token rule** — Python's `json.dumps(0.0)` produces `"0.0"`; JS `JSON.stringify(0.0)` produces `"0"` — consistent with the design
+6. **pk-repo change against OKF v0.2** — `resource` required, `id` optional, `extra` for unknown keys, `generated.by` preservation all consistent with §4.1, §5.1, §5.2; `okf_version` declaration location matches §12
+7. **Cross-change ordering** — okf-v02-via-pk follows karpathy-progress-recorder (creates `lib/karpathy/`), and is blocked on pk-repo's merge (task 1.1 STOP). Operator ruling honored: "Keep v0.2, fix pk first"
+
+```json
+{
+  "verdict": "BLOCK",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "location": "mini:karpathy-progress-recorder — specs/karpathy/progress-recorder/spec.md — Requirement: Event input is validated at the boundary",
+      "finding": "The spec quotes only the first alternative of the upstream SECRET regex as 'the source pack's secret pattern (api[_-]?key|access[_-]?token|password|secret)\\s*[:=]\\s*\\S+'. The upstream Python SECRET regex (record-progress.py:22-27) is a five-alternative disjunction that ALSO catches bearer tokens, PEM private keys, GitHub tokens (gh[pousr]_...), Slack tokens (xox[baprs]-...), AWS access keys (AKIA...), and OpenAI keys (sk-(?:proj-)?...). The only scenario that exercises this (secret containing `password = hunter2example`) hits the first alternative, so an implementation that ports only the quoted narrower pattern passes the scenario while weakening A-3.",
+      "evidence": "From recorder:22-30: 'SECRET = re.compile(r\"(?i)(?:api[_-]?key|access[_-]?token|password|secret)\\s*[:=]\\s*\\S+\" r\"|bearer\\s+[A-Za-z0-9._~+/=-]{12,}|-----BEGIN [A-Z ]*PRIVATE KEY-----\" r\"|gh[pousr]_[A-Za-z0-9]{20,}|xox[baprs]-[A-Za-z0-9-]{10,}\" r\"|AKIA[0-9A-Z]{16}|sk-(?:proj-)?[A-Za-z0-9_-]{16,}\")'",
+      "fix": "Either replace the quoted pattern with the full five-alternative disjunction, or explicitly state that the port narrows the upstream pattern and name what it drops. Then add scenarios that exercise each remaining alternative."
+    },
+    {
+      "severity": "CRITICAL",
+      "location": "mini:karpathy-progress-recorder — specs/karpathy/progress-recorder/spec.md — Requirement: Windows behaviour is observed, not asserted",
+      "finding": "The requirement states 'Every scenario above SHALL run on `windows-latest`, `ubuntu-latest` and `macos-latest` under Node 22 and Node 24', but one of the scenarios it claims to cover — 'An executable is resolved through PATHEXT' — is inherently Windows-only (PATHEXT does not exist on macOS or Linux). The tasks.md §11.4 acknowledges this and instructs the implementation to 'skip with an explicit reason elsewhere — never with a silent early return', but the spec itself never grants that skip. The spec is internally contradictory and the implementation must choose between honoring the scenario or honoring the all-platforms rule.",
+      "evidence": "Spec scenario text: 'WHEN on Windows a copy of the Node executable named `pk.exe` sits in a directory on `PATH` and `PK_BIN` is unset / THEN the recorder spawns it by the bare name `pk`'. Requirement text: 'Every scenario above SHALL run on `windows-latest`, `ubuntu-latest` and `macos-latest` under Node 22 and Node 24'. Tasks §11.4: 'The PATHEXT scenario is Windows-only ... Skip with an explicit reason elsewhere — never with a silent early `return`'.",
+      "fix": "Either narrow the requirement to 'Every scenario above that is platform-portable SHALL run on all three OSes', or rewrite the PATHEXT scenario so it has a non-Windows expression (e.g., a `#if defined(_WIN32)` test that asserts the dispatch path is taken on Windows and asserts the platform-gate exists on the others)."
+    },
+    {
+      "severity": "WARNING",
+      "location": "mini:karpathy-progress-recorder — specs/karpathy/progress-recorder/spec.md — Security boundary (A-3)",
+      "finding": "Design.md and the spec both say 'per-field string limits (4 000 characters)' as a ported-from-upstream rule. The upstream uses 4 000 as the default in require_string (recorder:199) but per-field callers override it: eventId=128, observedAt=64, runId=200, phaseId=160, changeId/taskId=200, blocker/exactNextWork=4000, verification.command=2000, verification.summary=4000, touchedFiles[]=1000. Stating '4 000 characters' is incorrect for several fields and would let an implementation accept strings upstream rejects.",
+      "evidence": "Spec, design.md 'Security boundary (A-3)': 'per-field string limits (4 000 characters)'. Recorder:199 shows `limit: int = 4000` as default. Recorder call sites vary: 218 `eventId, limit=128`; 221 `observedAt, limit=64`; 226 `runId, limit=200`; 231 `phaseId, limit=160`; 232-233 `changeId/taskId, limit=200`.",
+      "fix": "Replace '4 000 characters' with the per-field table from recorder:199-274, or state which fields use 4 000 and which use the other limits."
+    },
+    {
+      "severity": "WARNING",
+      "location": "mini:karpathy-progress-recorder — specs/karpathy/progress-recorder/spec.md — Requirement: Event input is validated at the boundary",
+      "finding": "The spec is a thin subset of upstream validation. It names the size bound, the secret pattern, the boundary closed set, and the elapsedHours range — but the Python's validate_event (recorder:207-280) also enforces: unknown-field rejection (allowed whitelist), schemaVersion==1, eventId regex (128 chars), observedAt ISO-8601 parse, runId/phaseId limits, status closed set (STATUSES), taskClass closed set (TASK_CLASSES), change/task boundary requires changeId/taskId, touchedFiles (unique, ≤500, ≤1000 chars, no absolute path, no `..` parts, PureWindowsPath check), verification (≤100, exact keys {command, exitCode, summary}, command ≤2000, exitCode 0-255), commitSha regex (7-64 hex or null), and blocker/exactNextWork limits. None of these appears in the spec. An implementer reading only the spec would write a validator that admits events upstream refuses.",
+      "evidence": "Recorder:207-280 — every check above is in the upstream. Spec scenarios test: secret pattern, 256_001-byte event, 256_000-byte event, `elapsedHours` of -1/1000.5/true/'1'/0.00001/0/1000, string field over 4000 chars. No mention of unknown fields, schemaVersion, eventId format, observedAt format, status/taskClass closed sets, changeId/taskId requirements, touchedFiles rules, verification structure, or commitSha format.",
+      "fix": "Either enumerate the omitted validation rules as scenarios (cheapest is to test the upstream validator byte-for-byte on the rejected vectors the upstream tests cover) or explicitly state that the port narrows validation to a named subset and identify which upstream rejections are deliberately dropped."
+    },
+    {
+      "severity": "WARNING",
+      "location": "mini:karpathy-progress-recorder — specs/karpathy/progress-recorder/spec.md — Requirement: Receipts keep the source pack's on-disk contract",
+      "finding": "The spec mentions only the per-event `wx` lock from `lib/platform/lock.mjs`. The upstream uses TWO locks: the per-event lock on the receipt (acquired at recorder:564 with file name `<receipt>.lock`) AND a session-log lock acquired inside append_session_log at recorder:345-346 with file name `<log>.karpathy-progress.lock`. The spec does not name the session-log lock file, its location, or whether it must be held during the marker scan plus append. With only `lib/platform/lock.mjs`'s no-wait semantics, two concurrent recordings of different events serialize correctly only if both acquire the same lock; the spec is silent on which lock file that is.",
+      "evidence": "Spec: 'under a per-event `wx` lock from `lib/platform/lock.mjs`'. Recorder:345 `lock = log.with_name(f\"{log.name}.karpathy-progress.lock\")` and 346 `descriptor = acquire_lock(lock)`. Recorder:563 `event_lock = existing_receipt.with_suffix(\".lock\")`.",
+      "fix": "Name both lock files (and what holds them) in the spec, or point at the tasks.md §7.1 acceptance criteria which already cover this."
+    },
+    {
+      "severity": "WARNING",
+      "location": "mini:karpathy-progress-recorder — specs/karpathy/progress-recorder/spec.md — Requirement: Results and exit codes are a stable contract",
+      "finding": "Spec says 'The recorder SHALL print one JSON object on stdout carrying `status` and `eventId`' — but the upstream prints more: on the recorded path, `memory`, `receipt`, `sessionLogAppended`; on the replay path, `recoveredPendingDelivery`, `memory`, `receipt`, `deliveryComplete`. The spec is a minimum, not a list, but the scenario phrasing 'one JSON object on stdout carrying `status` and `eventId`' suggests 'only status and eventId'. An implementer reading the scenario literally could emit a stripped object that drops fields the upstream emits.",
+      "evidence": "Recorder:603-613 (replay JSON) and 650-661 (new-event JSON). Spec scenario: 'The recorder SHALL print one JSON object on stdout carrying `status` and `eventId`'.",
+      "fix": "State explicitly that the JSON object MUST also include `memory` and `receipt` on every path, and that `recoveredPendingDelivery: true` appears on the replay path."
+    },
+    {
+      "severity": "WARNING",
+      "location": "mini:karpathy-progress-recorder — specs/karpathy/progress-recorder/spec.md — Requirement: Results and exit codes are a stable contract",
+      "finding": "Spec says 'It SHALL never write a secret, a token or an event payload to stderr.' This is stricter than upstream. The upstream's ProgressError can echo path-shaped content — `f\"unsafe touchedFiles entry: {path!r}\"` at recorder:256 — and the existing-receipt reader echoes OSError text at recorder:570 — and main's top-level handler prints `f\"karpathy-progress-memory: {error}\"`. The Node port must therefore add error-message sanitisation beyond what upstream does. The spec scenario only exercises the secret case ('the event appears to contain a secret'); other paths (path validation, JSON parse, lock contention, OS errors) are unchecked.",
+      "evidence": "Recorder:256 `f\"unsafe touchedFiles entry: {path!r}\"`; 570 `f\"existing progress receipt is unreadable: {error}\"`; 666 `f\"karpathy-progress-memory: {error}\"`. Spec scenario only covers the secret case.",
+      "fix": "Either add scenarios for the path-validation, JSON-parse, and lock-contention error paths, or narrow the 'never write' claim to the specific fields the spec already covers."
+    },
+    {
+      "severity": "WARNING",
+      "location": "mini:karpathy-progress-recorder — specs/karpathy/progress-recorder/spec.md — Requirement: Neither `pk` nor the `prometheus` CLI is required",
+      "finding": "The requirement covers three cases: both binaries absent (→ degraded), projection supplies identity (→ projection mode), no identity (→ refused, exit 2). It does not cover a fourth case the upstream can produce: the `prometheus` CLI resolves but exits non-zero, or returns malformed JSON. Upstream's kbd_status would then raise ProgressError, which the upstream maps to exit 2. The spec leaves the case undecided.",
+      "evidence": "Spec scenarios list three states for the canonical-source branch; none mentions 'CLI present but failing'. Design.md does not resolve it either. Recorder:138 `state = kbd_status(root)` — kbd_status source not in evidence but analysis §5 question 5 explicitly flags this as undecided.",
+      "fix": "Add a scenario for the CLI-present-but-failing case, or explicitly state that this case is treated as 'no canonical state', which then routes through projection or refusal."
+    },
+    {
+      "severity": "WARNING",
+      "location": "mini:okf-v02-via-pk — specs/karpathy/knowledge-bundle/spec.md — Requirement: The binding constraints describe what is built",
+      "finding": "Proposal.md says the amendment withdraws three clauses from `openspec/config.yaml`: 'the Node OKF writer', 'the Node-rendered `log.md`', and '`events.jsonl` is the append-only truth'. But the spec scenario 'The withdrawn clauses are gone' checks for only three literal phrases: 'the Node implementation', 'log.md is rendered from it', 'Never append to log.md'. The clause 'events.jsonl is the append-only truth and is outside OKF' is not in the negative list, so an implementation that leaves it intact while removing the other three would pass the scenario while failing the proposal's intent.",
+      "evidence": "Proposal 'What Changes': 'the Node writer, the Node-rendered `log.md` and `events.jsonl` is the append-only truth clauses are withdrawn'. Spec scenario: 'it does not contain \"the Node implementation\", \"log.md is rendered from it\", or \"Never append to log.md\"'. Config.yaml text: 'events.jsonl is the append-only truth and is outside OKF'.",
+      "fix": "Add 'events.jsonl is the append-only truth' to the negative list, or rename it to the precise substring used in config.yaml."
+    },
+    {
+      "severity": "WARNING",
+      "location": "mini:karpathy-progress-recorder — proposal.md + design.md",
+      "finding": "The change claims to 'carry the source pack's `karpathy-progress-memory` skill document, rewritten to the Node CLI' and that 'carried-payload' test (tasks §10.2) verifies every script the skill names resolves. But the source pack's skill directory also contains `references/progress-event.schema.json` — a JSON Schema for the event object. The change's scope covers only `SKILL.md`. The schema is not mentioned as carried, omitted, or replaced, leaving the Node port without a JSON Schema contract for event validation and leaving a reader of the proposal unable to tell whether the omission is deliberate.",
+      "evidence": "Evidence 'upstream karpathy-progress-memory dir': 'references/progress-event.schema.json'. Proposal 'Impact': 'New: ... `skills/karpathy-progress-memory/SKILL.md`, carried from the source pack (119 lines there) with its invocations rewritten.' Tasks §10.1 covers SKILL.md only.",
+      "fix": "Either carry `progress-event.schema.json` alongside SKILL.md and update §10.2 to require it resolves, or explicitly list it among the omitted files."
+    },
+    {
+      "severity": "WARNING",
+      "location": "mini:karpathy-progress-recorder — specs/karpathy/progress-recorder/spec.md — Requirement: Receipts keep the source pack's on-disk contract",
+      "finding": "The spec requires the receipt to carry `canonicalState: 'cli' | 'projection'`. This is a Node-only extension — the upstream write_receipt (recorder:509-538) emits no such field. Adding the field is fine and recorded in the design, but the spec does not name it as a forward-incompatible extension. A consumer that already reads receipts (the source pack's hook dispatcher, e.g.) and switches on top-level keys could treat the new field as a schema error or ignore it inconsistently.",
+      "evidence": "Recorder:520-530 receipt payload keys: schemaVersion, eventId, eventSha256, eventIdentitySha256, event, sessionLogAppended, memory, complete, recordedAt — no canonicalState. Spec: 'the receipt records `canonicalState: \"cli\" | \"projection\"`'.",
+      "fix": "Acknowledge canonicalState as a Node-port extension in the spec, and (if compatibility with source-pack consumers matters) state that an unknown-key round-trip test must hold."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "mini:karpathy-progress-recorder — specs/karpathy/progress-recorder/spec.md — Requirement: Event input is validated at the boundary",
+      "finding": "The float-token rule scenario ('A value whose token does not port is refused') tests only `0.00001`. The design.md acknowledges that ordinary decimals in [0.0001, 1000] rely on agreement between Python's repr and JS toString 'expected, not yet observed', and tasks §1.2 defers the broader vectors to a human-run Python command. An implementer could read the spec and conclude the rule covers the entire (0, 1000) range; the design's narrower claim is hidden in §1.2.",
+      "evidence": "Spec scenario covers only 0.00001. Tasks §1.2: 'Vectors must come from a real Python run by a human, once, and be committed as data — this repository must not run Python'. Design.md: 'For ordinary decimals in [0.0001, 1000] ... that is expected, not yet observed'.",
+      "fix": "Move the 'ordinary decimals are not yet observed' caveat into the spec as a Note on the relevant requirement, or add a `todo` scenario for an as-yet-unverified vector in the middle of the range."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "pk-repo:okf-v02-writer — specs/okf-v02-writer/spec.md — Requirement: Claims are cited by keyed footnotes",
+      "finding": "OKF §5.1 makes `id` Optional with SHOULD-when-body-cites-it. The pk-repo change makes id effectively mandatory on every attached source (every source pk attaches SHALL carry an id that is unique within the entry). That is stricter than OKF, but defensible since the librarian's compile response yields strings whose slugs always succeed. No fix required; flagging because §5.1's wording could mislead a reviewer.",
+      "evidence": "OKF §5.1: '`id`: Optional. ... SHOULD be present when the body cites the source'. Spec: 'every source pk attaches to a compiled entry SHALL carry an `id` that is unique within the entry'.",
+      "fix": "Acknowledge in the spec rationale that this is stricter than §5.1 and explain why (the slug derivation succeeds on every input)."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "mini:karpathy-progress-recorder — specs/karpathy/progress-recorder/spec.md — Requirement: The recorder ships with its skill",
+      "finding": "The spec scenario 'hooks/dispatch is unchanged' states `hooks/hooks.json` still declares 'exactly six hook ids'. The current manifest has 5 hook types but 6 command entries (SessionStart: 2, PostToolUse: 1, SubagentStop: 1, TaskCompleted: 1, PreCompact: 1). The scenario passes today and after the change only if `hooks/hooks.json` is not edited by this change. Worth pinning the count source explicitly so a future edit does not silently break this scenario.",
+      "evidence": "Evidence 'this pack: hooks/hooks.json' shows six command entries. Spec scenario: '`hooks/hooks.json` still declares exactly six hook ids'.",
+      "fix": "Cite the manifest location and the count (6 command entries across 5 hook types) in the scenario, or tie the scenario to the manifest file rather than a count."
+    }
+  ],
+  "sound_claims": [
+    "Hash values 760d332edc72460e98ad7c22627bf9db9b902d7bf4cf473f752017fd30a10a13, be2c1c523097e921da9a538f10ec9f6b7d00317bafa41062384e398f5b775e7c, and ca79e321903cc10e8bf23597e19e8ea8f241dafbf476b1fb6527b7878f3ca47e in the recorder spec all match the recorded observation in the hash observation evidence.",
+    "Line citations in design.md (event_from_hook :135, validate_event :207, canonical_validate :283, markdown_record :315, append_session_log :341, memory_write :399, event_sha256 :479, event_identity_sha256 :490, write_receipt :509, receipt_path :59) all match the embedded recorder source.",
+    "PK_BIN / KPM_PK_TIMEOUT_SECONDS / shell:false contract matches both the recorder (record-progress.py:399-416) and lib/platform/spawn.mjs:104-117.",
+    "Event-ID derivation (`kpm-` + first 32 hex of SHA-256 over 7 NUL-joined parts with absent values as empty string) matches the recorder (record-progress.py:148-160) and reproduces the recorded eventId `kpm-d6f1c4a3b56523b3673b20a41c84abe3` from the waypoint's projectId (evidence 'eventId reproduction (command output)').",
+    "Replay comparison (eventIdentitySha256 for --from-hook, eventSha256 for --input) matches the recorder (record-progress.py:571-576) and is correctly stated in the spec.",
+    "Crash seams KPM_TEST_CRASH_BEFORE_MEMORY→74 and KPM_TEST_CRASH_AFTER_PK→75 match the recorder (record-progress.py:636, 647) and the spec scenario's expected behaviour.",
+    "Float-token rule: Python's `json.dumps(0.0)` with default separators writes `\"0.0\"`, reproducing the recorded 760d332e… hash; JS `JSON.stringify(0.0)` writes `0`, producing the observed ca79e321… hash — consistent with the design.md analysis.",
+    "Boundary closed set {task, change, phase} matches the recorder (record-progress.py:28 BOUNDARIES).",
+    "elapsedHours range 0–1000 and the rejection of values in (0, 0.0001) is consistent with both upstream and the design.md's analysis of Python/JS token divergence below 1e-4.",
+    "pk-repo change's Source struct (`resource: String` required, `id: Option<String>` optional, `extra` catch-all) correctly models OKF §5.1's required/optional fields and §4.1's unknown-key preservation.",
+    "pk-repo change's `generated.by` preservation rule (default only, never overwrite) is consistent with OKF §5.2 (required within generated, must be an actor) and §13.1 (timestamp → generated.at supersession).",
+    "pk-repo change's bundle-root index.md carrying only `okf_version: \"0.2\"` and nested indexes carrying no frontmatter is consistent with OKF §8 and §12.",
+    "Cross-change ordering: okf-v02-via-pk's task 1.1 STOP gate and task 3.1 dependency on karpathy-progress-recorder both correctly model the operator ruling 'Keep v0.2, fix pk first' — config.yaml keeps v0.2, pk is updated, pin moves after pk merges.",
+    "Recorder's `pk ingest --scope project --source karpathy-progress-memory:<eventId>` argv matches the recorder (record-progress.py:411).",
+    "lib/platform/lock.mjs's `wx` semantics (no wait, no retry, no stale-takeover, errors name the file) is faithfully represented in the recorder spec's per-event lock requirement."
+  ]
+}
+```

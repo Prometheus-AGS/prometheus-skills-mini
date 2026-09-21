@@ -1,0 +1,55 @@
+```json
+{
+  "verdict": "PASS",
+  "round_1_dispositions": {
+    "R1": "PARTIALLY FIXED — scenarios correctly enumerate all 7 alternatives (credential, bearer, PEM, GitHub, Slack, AWS, sk-); mutation scenario present; values assembled at run time. Requirement prose still says 'all five alternatives' (the bullet list groups GitHub/Slack/AWS under one bullet), which misrepresents the upstream 7-alternative regex. See SUGGESTION below.",
+    "R2": "FIXED — 'Every scenario above that is not conditional on a platform SHALL run on windows-latest, ubuntu-latest and macos-latest under Node 22 and Node 24; a scenario whose WHEN names a platform SHALL run there and SHALL be reported elsewhere as skipped with its reason, never passed silently.'",
+    "R3": "FIXED — per-field limits enumerated (128/64/200/160/200/1000/2000/4000) with scenario 'Per-field limits are upstream's, not a blanket limit' covering 201/161/129/1001/2001; blanket 4000 removed from design.md.",
+    "R4": "FIXED — every check of validate_event enumerated: closed field set, schemaVersion, eventId format, observedAt, per-field limits, three closed sets, boundary-requires-subject, elapsedHours, touchedFiles (uniqueness, cap, POSIX and Windows absolute, ..), verification record shape, commitSha, blocker/exactNextWork, 256K size, secret pattern.",
+    "R5": "FIXED — session-log lock named '.prometheus/session-log.md.karpathy-progress.lock'; receipt lock named as '<receipt path>.lock'. Both match upstream.",
+    "R6": "NOT FIXED — producer rejected; spec still says 'stdout carrying status and eventId' without listing sessionLogAppended, memory, receipt, recoveredPendingDelivery, deliveryComplete. See SUGGESTION.",
+    "R7": "FIXED — promise narrowed to 'never the matched secret text'; 'unsafe touchedFiles entry by its index rather than by its value'; field-checks-before-secret-scan ordering stated as a deliberate departure from upstream :256.",
+    "R8": "FIXED — scenario 'A CLI that resolves but fails is treated as absent' added; non-zero / timeout / non-JSON each covered.",
+    "R9": "FIXED — fourth phrase 'events.jsonl is the append-only truth' added to negative list with whitespace-collapse note.",
+    "R10": "FIXED — task 10.1 carries references/progress-event.schema.json and adds a test that schema.properties agree with the validator's closed field set.",
+    "R11": "FIXED — canonicalState flagged in spec and design as this pack's extension; scenario verifies every key upstream reads is present.",
+    "R12": "FIXED — scenario 'The portability of ordinary decimals is recorded, not assumed' marks the vector test as todo and labels the hash rule 'verified for one integer-valued float only'.",
+    "R13": "FIXED — pk spec states the deliberate strictness over OKF §5.1: 'pk always cites, and a duplicate label misattributes silently.'",
+    "R14": "FIXED — six hook ids named explicitly: sessionstart-kbd-control, sessionstart-detect-project-context, posttool-write-position-reminder, subagent-fallback-checkpoint, taskcompleted-kbd-receipt, precompact-kbd-control.",
+    "A1": "FIXED — canonical_validate refusal cases listed: different runId, unknown phase, unknown change, unknown task, status disagreement."
+  },
+  "findings": [
+    {
+      "severity": "SUGGESTION",
+      "location": "mini:karpathy-progress-recorder / specs/karpathy/progress-recorder/spec.md — validation requirement, secret-pattern bullet",
+      "finding": "The requirement says 'all five alternatives of it' but the upstream regex at recorder:22-27 is a SEVEN-alternative disjunction (credential assignment, bearer, PEM, GitHub, Slack, AWS, sk-). The spec's bullet list groups GitHub/Slack/AWS under one bullet, making five bullets; the test scenario correctly enumerates seven values, so testability is preserved, but the prose count is wrong.",
+      "evidence": "Upstream recorder:22-27: 'r\"(?i)(?:api[_-]?key|access[_-]?token|password|secret)\\\\s*[:=]\\\\s*\\\\S+\" | \"bearer\\\\s+[A-Za-z0-9._~+/=-]{12,}\" | \"-----BEGIN [A-Z ]*PRIVATE KEY-----\" | \"gh[pousr]_[A-Za-z0-9]{20,}\" | \"xox[baprs]-[A-Za-z0-9-]{10,}\" | \"AKIA[0-9A-Z]{16}\" | \"sk-(?:proj-)?[A-Za-z0-9_-]{16,}\"' — seven alternatives separated by six '|'.",
+      "fix": "Replace 'all five alternatives' with 'all seven alternatives' (or 'all alternatives') so the prose matches both the regex and the seven-value scenario."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "mini:karpathy-progress-recorder / specs/karpathy/progress-recorder/spec.md — 'Results and exit codes' requirement",
+      "finding": "Spec says the recorder 'SHALL print one JSON object on stdout carrying `status` and `eventId`'. Upstream also prints sessionLogAppended, memory, receipt, recoveredPendingDelivery, deliveryComplete (recorder:603-625, 650-661). The wording is ambiguous between 'at minimum' and 'only'.",
+      "evidence": "Upstream recorder:603-614 prints recoveredPendingDelivery; recorder:615-625 prints deliveryComplete; recorder:650-661 prints sessionLogAppended.",
+      "fix": "Clarify as 'SHALL print one JSON object on stdout that includes `status` and `eventId`, plus the additional fields upstream prints (memory, receipt, sessionLogAppended, recoveredPendingDelivery, deliveryComplete as applicable).'"
+    }
+  ],
+  "sound_claims": [
+    "Recorded eventSha256 760d332edc72460e98ad7c22627bf9db9b902d7bf4cf473f752017fd30a10a13 and eventIdentitySha256 be2c1c523097e921da9a538f10ec9f6b7d00317bafa41062384e398f5b775e7c in the spec scenario match the hash observation command output exactly.",
+    "Naive Node hash ca79e321903cc10e8bf23597e19e8ea8f241dafbf476b1fb6527b7878f3ca47e in the float-rule scenario matches the naive Node hash in the hash observation output exactly.",
+    "Per-field string limits (128/64/200/160/200/1000/2000/4000) match upstream recorder:218, 221, 226, 231-233, 250, 263, 267.",
+    "Closed value sets for boundary, status, taskClass match upstream recorder:28-30.",
+    "Five canonical_validate refusal cases (runId, phase, change, task, status) match upstream recorder:284-312.",
+    "Lock file names match upstream: per-event lock is the receipt path with '.lock' suffix (recorder:563), session-log lock is '.karpathy-progress.lock' sibling (recorder:345).",
+    "The 'queued' read path (complete:true with memory.status:queued replays as duplicate without retry) matches upstream recorder:586-591.",
+    "Crash seam codes 74 (KPM_TEST_CRASH_BEFORE_MEMORY) and 75 (KPM_TEST_CRASH_AFTER_PK) match upstream recorder:636-648.",
+    "The pk invocation argv ('pk ingest --scope project --source karpathy-progress-memory:<eventId>', shell:false, stdin) matches upstream recorder:411-415.",
+    "Float-token rule scope (elapsedHours, integer-valued gains '.0') matches upstream's Python repr behavior as evidenced in the hash observation.",
+    "The five-hook-types-with-six-ids manifest (sessionstart x2, posttool, subagent, taskcompleted, precompact) matches the hooks/hooks.json evidence exactly.",
+    "The OKF §13.1 mappings (timestamp→generated.at, # Citations body→sources frontmatter) are correctly captured in the pk-repo spec; §5.1's resource-required and §5.2's by-required are ported; §7's '<producer>/<version>' actor convention is followed with 'pk/<CARGO_PKG_VERSION>'; §12's okf_version location constraint is honored.",
+    "The six named hook ids scenario pin (sessionstart-kbd-control, sessionstart-detect-project-context, posttool-write-position-reminder, subagent-fallback-checkpoint, taskcompleted-kbd-receipt, precompact-kbd-control) matches the hooks/hooks.json evidence.",
+    "The projection-vs-CLI canonical_state ordering (CLI when resolves, projection otherwise, CLI-fails-treated-as-absent) is consistent with the goal that 'everything degrades when pk is absent' and with canonical_validate's requirement for confirmed state.",
+    "The okf-via-pk change explicitly depends on the recorder change creating lib/karpathy/ (task 3.1) and the okf-v02-writer upstream merge (task 1.1 precondition)."
+  ]
+}
+```

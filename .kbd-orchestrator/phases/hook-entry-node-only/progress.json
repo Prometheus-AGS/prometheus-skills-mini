@@ -2,27 +2,27 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 7,
-  "derivedRevision": 7,
+  "sourceRevision": 10,
+  "derivedRevision": 10,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 7
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 10
   },
   "conflictCount": 0,
   "phase": "hook-entry-node-only",
   "phaseId": "hook-entry-node-only",
   "parentPhase": null,
-  "last_updated": "2026-09-21T12:12:55.281878Z",
+  "last_updated": "2026-09-21T13:41:28.963829Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 2,
-  "changes_completed": 0,
+  "changes_completed": 1,
   "implementation_total": 2,
-  "implementation_completed": 0,
+  "implementation_completed": 1,
   "completion": {
     "primaryCounter": "implementation",
     "implementation": {
-      "completed": 0,
+      "completed": 1,
       "total": 2,
-      "status": "PENDING"
+      "status": "IN_PROGRESS"
     },
     "evidence": {
       "status": "PENDING",
@@ -44,8 +44,8 @@
     {
       "id": "hook-entry-node-only",
       "title": "Node-only hook entry point, exec-form manifest and six KBD lifecycle payloads",
-      "status": "PENDING",
-      "implementation_status": "PENDING",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
       "tasks_total": 0,
       "tasks_done": 0,
       "last_task_completed": null,
@@ -55,8 +55,8 @@
     {
       "id": "artifact-refiner-node",
       "title": "Port artifact-refiner to Node and wire the QA gate",
-      "status": "PENDING",
-      "implementation_status": "PENDING",
+      "status": "IN_PROGRESS",
+      "implementation_status": "IN_PROGRESS",
       "tasks_total": 0,
       "tasks_done": 0,
       "last_task_completed": null,

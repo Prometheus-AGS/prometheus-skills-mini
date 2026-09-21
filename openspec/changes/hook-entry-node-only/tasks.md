@@ -30,8 +30,8 @@
 
 ## 5. CI: manifest check and the Windows measurement
 
-- [ ] 5.1 Add the hook-manifest check to every job in `.github/workflows/ci.yml` (the MODIFIED `continuous-integration` requirement).
-- [ ] 5.2 Add the `windows-latest` cold-start measurement for **all three** 1000 ms hooks — `sessionstart-kbd-control`, `taskcompleted-kbd-receipt` and `precompact-kbd-control`. `goals.md` names only the first two; porting the third brings it under the same budget, and measuring only the named two would ship an unmeasured hook against the budget this phase exists to test.
+- [x] 5.1 Added `node --test hooks/hooks.test.mjs` to every job. Add the hook-manifest check to every job in `.github/workflows/ci.yml` (the MODIFIED `continuous-integration` requirement).
+- [x] 5.2 Added `scripts/hook-cold-start.mjs`, run on `windows-latest` only. Measures **all three** 1000 ms hooks by `spawnSync` round trip (process start, which in-process benchmark libraries cannot see) and reports min/median/p95/max. Checks the **max**, not the median, because a timeout fires on the slow run. macOS baseline: median 39 ms, max 44 ms (~4% of budget). Add the `windows-latest` cold-start measurement for **all three** 1000 ms hooks — `sessionstart-kbd-control`, `taskcompleted-kbd-receipt` and `precompact-kbd-control`. `goals.md` names only the first two; porting the third brings it under the same budget, and measuring only the named two would ship an unmeasured hook against the budget this phase exists to test.
 - [ ] 5.3 Record the result as a distribution (repeated samples, median and maximum), not one number, in `evidence/windows.md`. If the tail exceeds 1000 ms, raise the budget and state the measurement; do not reach for a compiled dispatcher (C7).
 - [ ] 5.4 Commit locally with an `Assisted-by` trailer: `ci: check the hook manifest and measure hook cold start on Windows`. Do not push.
 

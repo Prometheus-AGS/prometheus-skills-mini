@@ -56,3 +56,16 @@ jobs:
       # The project's shell-free entry point: on Windows `openspec` is a .cmd that node cannot
       # run without a shell, so spawnNodeCli starts its JavaScript entry with process.execPath.
       - run: node scripts/spec-validate.mjs
+
+      # Every file hooks.json names must resolve. A missing entry file fails in
+      # Node's loader before any of our code runs, on every hook event, so no
+      # hook can detect or report it — the source pack shipped exactly that bug.
+      # The list is derived from the manifest, never hand-kept.
+      - run: node --test hooks/hooks.test.mjs
+
+      # Cold start against the 1 s budget, on the platform where it is in doubt.
+      # A distribution, not one number: the timeout fires on the tail, and Windows
+      # process creation is slower and noisier than macOS.
+      - name: Measure hook cold start against the 1 s budget
+        if: runner.os == 'Windows'
+        run: node scripts/hook-cold-start.mjs

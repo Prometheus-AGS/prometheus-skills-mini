@@ -10,8 +10,8 @@
 ## 2. Entry point and dispatch
 
 - [x] 2.1 RED (2026-09-21): `node --test scripts/hook-entry.test.mjs` → **fail**, `ERR_MODULE_NOT_FOUND: .../scripts/hook-entry.mjs`, which aborts the file before any assertion runs (tests 1 / pass 0 / fail 1). Failing test committed alone. Write `scripts/hook-entry.test.mjs` asserting dispatch by `--hook` to a payload module, a non-zero exit naming an unknown id, and that the map's keys are hyphen-spelled `--hook` values and contain no colon-spelled matcher id; run `node --test <that file>` and see it FAIL; commit the failing test alone and paste the failure output under this task.
-- [ ] 2.2 GREEN: implement `scripts/hook-entry.mjs` with the static import map until the test passes. Under 500 lines. Reads stdin JSON with `readFileSync(0)`, tolerating empty stdin and never hanging on a TTY.
-- [ ] 2.3 Self-review by mutation: revert the dispatch implementation and confirm the test fails. A test that passes against reverted code asserts nothing.
+- [x] 2.2 GREEN (2026-09-21): 10/10 pass. Implement `scripts/hook-entry.mjs` with the static import map until the test passes. Under 500 lines. Reads stdin JSON with `readFileSync(0)`, tolerating empty stdin and never hanging on a TTY.
+- [x] 2.3 **Self-review by mutation — three reverts, each producing exactly one failure, suite restored to 10/0:** degradation guard removed → 9/1; unknown-id rejection removed → 9/1; malformed-JSON tolerance removed → 9/1. A test that passes against reverted code asserts nothing.
 - [ ] 2.4 Commit locally with an `Assisted-by` trailer and no `Signed-off-by`: `feat(hooks): in-process dispatch by hook id, no shell`. Do not push.
 
 ## 3. The manifest and its resolution test

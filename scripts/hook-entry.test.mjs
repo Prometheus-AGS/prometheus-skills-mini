@@ -18,7 +18,7 @@ const runEntry = (args, stdin = '') =>
 
 test('dispatch runs the payload named by --hook and exits 0', async () => {
   const calls = [];
-  const modules = { 'probe-hook': async (payload) => calls.push(payload) };
+  const modules = { 'probe-hook': async () => ({ run: async (payload) => calls.push(payload) }) };
 
   const code = await dispatch(['--hook', 'probe-hook', '--harness', 'claude-code'], { modules });
 
@@ -28,7 +28,7 @@ test('dispatch runs the payload named by --hook and exits 0', async () => {
 
 test('dispatch passes the harness and parsed stdin to the payload', async () => {
   const seen = [];
-  const modules = { 'probe-hook': async (payload) => seen.push(payload) };
+  const modules = { 'probe-hook': async () => ({ run: async (payload) => seen.push(payload) }) };
 
   await dispatch(['--hook', 'probe-hook', '--harness', 'claude-code'], {
     modules,
@@ -74,7 +74,7 @@ test('the import map resolves each id to a module path inside lib/hooks', () => 
 // Empty stdin is the orchestrator path; a hook must not hang or crash on it.
 test('empty stdin yields an empty input rather than throwing', async () => {
   const seen = [];
-  const modules = { 'probe-hook': async (payload) => seen.push(payload) };
+  const modules = { 'probe-hook': async () => ({ run: async (payload) => seen.push(payload) }) };
 
   const code = await dispatch(['--hook', 'probe-hook'], { modules, stdin: '' });
 
@@ -84,7 +84,7 @@ test('empty stdin yields an empty input rather than throwing', async () => {
 
 test('malformed stdin JSON does not fail the hook', async () => {
   const seen = [];
-  const modules = { 'probe-hook': async (payload) => seen.push(payload) };
+  const modules = { 'probe-hook': async () => ({ run: async (payload) => seen.push(payload) }) };
 
   const code = await dispatch(['--hook', 'probe-hook'], { modules, stdin: 'not json{' });
 
@@ -96,9 +96,11 @@ test('malformed stdin JSON does not fail the hook', async () => {
 // not a failed hook — otherwise a missing service would make the service mandatory.
 test('a payload that throws still exits 0 and reports the degradation', async () => {
   const modules = {
-    'probe-hook': async () => {
-      throw new Error('service unreachable');
-    },
+    'probe-hook': async () => ({
+      run: async () => {
+        throw new Error('service unreachable');
+      },
+    }),
   };
 
   const code = await dispatch(['--hook', 'probe-hook'], { modules });

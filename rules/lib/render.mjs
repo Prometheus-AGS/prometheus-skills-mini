@@ -33,9 +33,11 @@ export function parseConf(text) {
 }
 
 export function splitFrontmatter(text, name) {
-  // \r?\n throughout: this function is exported and callable without readText, so a
-  // CRLF rule file must parse here too rather than reporting "no paths: frontmatter".
-  const match = /^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/.exec(text);
+  // This function is exported and callable without readText, so a CRLF rule file must parse
+  // here too — and must return exactly what the LF equivalent returns, carriage returns and
+  // all folded away. Matching \r?\n alone would parse but leave \r inside front and body.
+  const normalised = text.replace(/\r\n/g, '\n');
+  const match = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/.exec(normalised);
   if (!match || !match[1].includes('paths:')) {
     throw new RulesBuildError(`${name} has no \`paths:\` frontmatter — it would load unconditionally`);
   }

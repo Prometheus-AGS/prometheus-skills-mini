@@ -45,11 +45,11 @@ const toCrlf = (text) => text.replace(/\n/g, '\r\n');
 test('splitFrontmatter tolerates CRLF line endings', () => {
   const { front, body } = splitFrontmatter(toCrlf(RULE), 'tech/rust');
 
-  // The CRLF input yields CRLF output; what matters is that it PARSED — the same
-  // frontmatter and body are found, rather than the function throwing "has no paths:".
+  // The spec says "the same result", so compare directly: no stripping in the assertion,
+  // or the test would be written to match the implementation instead of the requirement.
   const lf = splitFrontmatter(RULE, 'tech/rust');
-  assert.equal(front.replace(/\r/g, ''), lf.front);
-  assert.equal(body.replace(/\r/g, ''), lf.body);
+  assert.equal(front, lf.front);
+  assert.equal(body, lf.body);
 });
 
 test('routingLayer0 tolerates CRLF line endings', () => {

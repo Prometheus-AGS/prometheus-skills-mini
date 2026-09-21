@@ -73,8 +73,8 @@ constraints:
     severity: blocking
     source: '.claude/rules/node-scripts.md — Paths'
     description: 'Paths come from os.homedir() / os.tmpdir() / path.join, never $HOME, process.env.HOME or /tmp'
-    check: 'git grep --no-index --exclude-standard -n -P -e "^(?!\s*(//|\*|/\*)).*([$]HOME|process\.env\.HOME|/tmp/)" -- "lib/*.mjs" "scripts/*.mjs" "hooks/*.mjs" "rules/*.mjs"'
-    note: 'One git grep, no pipe: the command policy forbids plain grep, which also does not exist on stock Windows. -P (PCRE) gives the negative lookahead that skips comment lines, because lib/platform/paths.mjs documents the rule by naming the very literals it forbids, and a rule that cannot be explained in its own source is a bad rule. Verified to catch code (process.env.HOME on a code line) and to ignore prose (the same text in a // comment). If a git build lacks PCRE this check errors rather than passing silently — treat that as a violation to investigate, not as clean.'
+    check: 'git grep --no-index --exclude-standard -n -E -e "[$]HOME|process\.env\.HOME|/tmp/" -- "lib/*.mjs" "scripts/*.mjs" "hooks/*.mjs" "rules/*.mjs"'
+    note: 'Back to the original -E form, with no pipe and no PCRE. An earlier attempt to exempt comments used a grep pipe (forbidden by the command policy, and grep is absent on stock Windows) and then git grep -P (PCRE is a build-time option, so the check could error on another machine). Neither is needed: the comment that triggered this now describes the forbidden spellings instead of quoting them, so the plain check passes. Prose that must quote a literal belongs in a .md file, which this pathspec does not cover.'
 
   - id: no-zeespec
     severity: blocking

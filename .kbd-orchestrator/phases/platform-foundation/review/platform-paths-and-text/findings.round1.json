@@ -1,0 +1,26 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "lib/platform/paths.mjs",
+      "line": 2,
+      "claim": "The new module contains the exact `$HOME` and `process.env.HOME` strings that the `no-home-or-tmp-literals` blocking constraint and acceptance scenario require to be absent from `.mjs` files.",
+      "evidence": "The diff adds comments saying \"so `$HOME`, `process.env.HOME` and\" in `lib/platform/paths.mjs`, while the acceptance scenario says the blocking constraint `no-home-or-tmp-literals` must find no `$HOME`, `process.env.HOME` or `/tmp/` in any `.mjs` under `lib/`, `scripts/`, `hooks/` or `rules/`; the packet constraint check is `git grep ... -e \"[$]HOME|process\\.env\\.HOME|/tmp/\" -- \"lib/*.mjs\" ...`.",
+      "suggested_fix": "Remove or rephrase the comment so it does not contain the prohibited literals, rather than weakening the constraint."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/constraints.md",
+      "line": 76,
+      "claim": "The modified blocking check violates the repository command policy by adding a pipe to plain `grep`.",
+      "evidence": "The diff changes the check to `... | grep -v -E ...`, but the command policy says the project forbids telling an agent to run `grep` and that content checks use `git grep --no-index --exclude-standard`; it also requires commands to behave the same from `cmd.exe`, Windows PowerShell 5.1, bash and zsh.",
+      "suggested_fix": "Do not pipe to `grep`; keep the portable `git grep`-only check and remove the prohibited literals from source comments instead."
+    }
+  ]
+}

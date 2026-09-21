@@ -25,6 +25,30 @@ every scenario`.
 | `spawnNodeCli` with `shell: false` on Windows | `platform-spawn` (change 5) |
 | A `.cmd`-only tool is refused | change 5 |
 
+## Observed Windows behaviour that changed the implementation
+
+**Run 35581577… (change 4, first push): `windows-latest` failed while all four other jobs passed.**
+
+```
+not ok 10 - a destination held open by another handle is still replaced
+  error: "EPERM: operation not permitted, rename 'C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\win32-atomic-...'"
+  code: 'EPERM'
+```
+
+Two facts, neither obtainable on macOS:
+
+1. **Windows really does raise `EPERM` on a rename over a held handle.** The behaviour the retry
+   exists for is confirmed, not assumed. macOS and Linux replace the file happily — no failure to
+   retry, which is why the retry is `win32`-only.
+2. **The original retry window was too short.** 10 ms doubling over 4 retries (150 ms total) was a
+   number guessed on a platform where the failure cannot occur. It is now 25 ms over 6 retries
+   (~1.575 s), sized against a holder that keeps the file for a few hundred milliseconds — ordinary
+   for a scanner or the indexer.
+
+The test was also wrong in a way only Windows exposed: it released the handle with `setTimeout`,
+which can never fire, because `atomicWrite` is synchronous and blocks the event loop for the whole
+retry window. The holder is now a separate process.
+
 ## What CI caught that local runs did not
 
 `openspec validate` failed on all six jobs while passing locally at the time of the push: a

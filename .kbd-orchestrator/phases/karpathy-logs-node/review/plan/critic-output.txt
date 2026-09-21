@@ -1,0 +1,43 @@
+```json
+{
+  "verdict": "PASS",
+  "findings": [
+    {
+      "severity": "SUGGESTION",
+      "location": "plan.md §'Ordering, and why' — 'puts the waiting in parallel with change 2's 34 tasks'",
+      "finding": "The word 'parallel' overstates what one agent can do. The plan also says 'executed one at a time: there is one agent.' The reconciliation is that the agent switches to change 2 at the change 1 task 6.3 hard stop, does all 34 recorder tasks while change 1 sits in operator-wait, and returns to the push — i.e. the wait and the recorder are temporally overlapped, not literally concurrent. Spell that workflow out so the cost statement ('if the session ends early, the phase's main deliverable — the recorder — is not the thing that got built') is unambiguous about which 'early' it refers to (before, during, or after the 34-task stretch).",
+      "evidence": "\"Changes 1 and 2 touch different repositories with different toolchains and separate build directories, so nothing in one can break the other. They are still executed one at a time: there is one agent, and A-10's single-writer rule applies inside each.\" / \"Doing change 1 first puts the waiting in parallel with change 2's 34 tasks instead of after them.\"",
+      "fix": "Add one sentence: 'At change 1 task 6.3 the agent switches to change 2; the recorder runs to completion while change 1 sits in operator-wait; on go-ahead the agent returns to change 1's push. The recorder-not-built failure mode is the session ending before that 34-task stretch finishes.'"
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "plan.md §'Change 1 — okf-v02-writer' — gate description",
+      "finding": "The plan lists `prometheus-rust-auditor` as part of change 1's gate alongside fmt/clippy/tests and the diff review, but does not state whether the auditor is invoked before or after the diff review, or what its output is consumed by. The previous plan (`hook-entry-node-only/plan.md`) was explicit that the review-packet builder was open and packets were hand-assembled; this plan inherits that. Worth pinning the order so the secret-scan mutation check (also referenced) lands in the right place.",
+      "evidence": "\"For change 1 the constraint gate is this repository's and does not run there; its gate is `cargo fmt --check`, clippy `-D warnings`, the workspace tests, `prometheus-rust-auditor`, and the diff review. That substitution is declared here, not made silently.\"",
+      "fix": "Pin the order, e.g. 'fmt → clippy -D warnings → cargo test --workspace --locked --no-fail-fast → prometheus-rust-auditor → secret-scan mutation check → diff review.'"
+    }
+  ],
+  "sound_claims": [
+    "Task counts 14 + 34 + 9 = 57 match `grep -c '^- \\[ \\]' <change>/tasks.md` outputs in evidence.",
+    "pk PR #12 merged as `80e864b` matches `git log --oneline -3` in evidence.",
+    "Pin commit `05fdec2` matches `chore(pk): bump the pk submodule to 80e864b` in mini git log.",
+    "Cross-model review gate MET is consistent with goals.md RESOLVED note ('the operator supplied the liter-llm gateway key; MiniMax-M3 and k3 both verified live').",
+    "OKF v0.2 spec post-cutoff status matches spec handoff ('OKF v0.2 SPEC was READ (post-cutoff, 2026-07-25)').",
+    "`versions.toml` ABSENT in this repository matches evidence `mini: versions.toml: ABSENT` and CLAUDE.md §0.2 names it.",
+    "Non-test source files touching `WikiEntry.sources` is 4, matches grep output: types.rs, markdown.rs, librarian.rs, main.rs.",
+    "`pk-mcp` `entry_summary` returns 5 fields (id, title, tags, revision, updated_at), no `sources` — matches `pk-mcp/src/tools.rs:278-280`.",
+    "pk events carry ids (ArticleId), not full entries — matches `pk-core/src/event.rs:9-47` (Compiled/Updated/etc. hold entry_id, not WikiEntry).",
+    "`prometheus-rust-workspace` is absent — matches `docs/skill-routing.md:39` ('house skill, not written yet').",
+    "`prometheus-rust-auditor` is present — matches `docs/skill-routing.md:40`.",
+    "Change 2 ordering internal: fixtures (§1) → hash (§2) → validate (§3) → canonical-state (§4) → event (§5) → receipt (§6) → session-log (§7) → transport (§8) → record (§9) → skill (§10) → evidence (§11) is non-circular and module data-dependencies flow forward.",
+    "Task 3.0's read of `record-progress.py:20-31` and `:199-282` in full addresses the round-1 CRITICAL (spec drafted one of seven secret-pattern alternatives from a grep fragment).",
+    "Library-candidate → section mapping (cand-201 whole change, cand-203 §2, cand-207 §7, cand-208 §9, cand-204/205/206 rejected) is internally consistent with `library-candidates.json` rationales.",
+    "Per-task rules do not contradict A-9 (T0/T1/T2 boundaries), A-10 (one cargo per target dir), A-12 (config.yaml human-gated), or A-15 (Assisted-by only, no Co-Authored-By, no Signed-off-by).",
+    "QA gate substitution for change 1 is explicitly declared: 'That substitution is declared here, not made silently'.",
+    "Human gates cover every outward-facing step: change 1 task 6.3 push (operator go-ahead), change 3 task 4.1 config.yaml (operator approval), all pushes (operator go-ahead), Python vectors (operator input, non-blocking).",
+    "Risk 2's external-break refutation (5-field pk-mcp summary, ids-only events) is grounded in the cited pk source files.",
+    "Risk 7's two-projectId claim is grounded in spec handoff OBSERVED note and pinned by change 2 task 5.1's test.",
+    "The constraint gate script exists: `mini: scripts/refine-validate.mjs:1-30`."
+  ]
+}
+```

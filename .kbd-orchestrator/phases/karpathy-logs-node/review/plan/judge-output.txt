@@ -1,0 +1,30 @@
+```json
+{
+  "verdict": "PASS",
+  "rulings": [
+    {
+      "critic_finding": "plan.md §'Ordering, and why': the word 'parallel' overstates what one agent can do; spell out the switch-at-6.3 workflow and disambiguate 'if the session ends early'",
+      "ruling": "UPHELD",
+      "severity": "SUGGESTION",
+      "reason": "The quoted texts are real and sit in tension in the ordering section: 'puts the waiting in parallel with change 2's 34 tasks' versus 'They are still executed one at a time: there is one agent'. The reconciliation does exist in the plan — risk 3 describes 'the go-ahead has not come by the time change 2 is archived' — but it is not stated at the point of the claim, and the cost statement ('if the session ends early, the phase's main deliverable — the recorder — is not the thing that got built') does not say whether 'early' means before or during the 34-task stretch. This is a clarity nit only; no ordering defect results, since risk 3 already defines the behavior. Suggestion severity is correct.",
+      "evidence": "\"Doing change 1 first puts the waiting in parallel with change 2's 34 tasks instead of after them.\" / \"They are still executed one at a time: there is one agent, and A-10's single-writer rule applies inside each.\" / risk 3: \"if the go-ahead has not come by the time change 2 is archived, the phase reports change 3 BLOCKED rather than idling.\""
+    },
+    {
+      "critic_finding": "plan.md §'Change 1': gate lists fmt/clippy/tests, prometheus-rust-auditor, and the diff review without stating their relative order or what consumes the auditor's output",
+      "ruling": "UPHELD",
+      "severity": "SUGGESTION",
+      "reason": "Accurate. The mini-repo gate gives an explicit sequence ('refine-validate.mjs → on PASS an adversarial diff review → on PASS openspec-verify-change, then archive'), while the change-1 substitution lists components unordered. The Change 1 section does say 'prometheus-rust-auditor runs after implementation', which partially orders it, but its position relative to the secret-scan mutation check and the diff review is unstated. Pinning the order is a reasonable, low-cost improvement; nothing in the omission can cause an incorrect gate outcome because all components are mandatory regardless of order. Suggestion severity is correct.",
+      "evidence": "\"its gate is `cargo fmt --check`, clippy `-D warnings`, the workspace tests, `prometheus-rust-auditor`, and the diff review. That substitution is declared here, not made silently.\" / \"`prometheus-rust-auditor` runs after implementation.\""
+    }
+  ],
+  "additional_findings": [
+    {
+      "severity": "SUGGESTION",
+      "location": "tasks: mini karpathy-progress-recorder, task 3.1 (per-field limits parenthetical)",
+      "finding": "The per-field limit list in task 3.1 does not match the list in the spec handoff. The handoff states eight per-field limits including a 64 ('128/64/200/160/200/1000/2000/4000, NOT a blanket 4000'). Task 3.1 names eventId's 128 separately and then lists seven limits — (200, 160, 200, 200, 1 000, 2 000, 4 000) — which contains no 64 and three 200s where the handoff's remaining seven values are {64, 160, 200, 200, 1000, 2000, 4000}. Either the task's parenthetical dropped the 64-limited field or duplicated a 200. The plan's own per-task rule ('Every count cites its command') and the round-1 history of porting from fragments make this worth reconciling. Impact is bounded: task 3.1 makes the spec's validation requirement authoritative ('one test per bullet of the spec's validation requirement') and task 3.0 mandates reading record-progress.py:199-282 in full, so an implementer following the rules would test the true limits; the parenthetical is informational. Flagging so the informational list is corrected rather than relied on.",
+      "evidence": "spec.handoff.summaryForNext: \"per-field limits (128/64/200/160/200/1000/2000/4000, NOT a blanket 4000)\" / tasks 3.1: \"the `eventId` format and its 128 limit; ... the per-field limits (200, 160, 200, 200, 1 000, 2 000, 4 000) each tested at limit and limit + 1\"",
+      "fix": "Re-derive the per-field limits from record-progress.py:199-282 (or the spec's validation requirement) and correct the task 3.1 parenthetical so it enumerates all eight limits, including whichever field carries 64."
+    }
+  ]
+}
+```

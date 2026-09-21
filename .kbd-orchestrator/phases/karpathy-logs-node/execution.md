@@ -76,6 +76,10 @@ If the fallout is materially wider than that, stop there and re-plan rather than
   Each was verified against source; every requirement they touch has a scenario, so a wrong one fails a test.
 - `pk ingest` succeeding from Node on Windows **cannot be proven in CI**: `pk` has 0 releases, CI does not
   check out the submodule, and nothing there builds Rust. That path stays self-reported.
+- **Corrected 2026-09-21:** the plan claimed changing `sources` does not break MCP consumers. It does:
+  `handle_get` returns the whole `WikiEntry`. The Rust auditor found that, and a CRITICAL the author's
+  evidence could not see — 1.9.0 rejects every non-empty 1.8.0 prompt snapshot, reproduced on the real one.
+  Change 1 gained a section 7 of fixes; it does **not** reach its task 6.3 stop until they are done.
 - The Python hash vectors (change 2, task 1.2) are an operator input. Without them the portability goal
   closes as *declared for non-integer values*, not as met.
 

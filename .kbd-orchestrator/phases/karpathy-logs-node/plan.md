@@ -130,8 +130,12 @@ pattern before dispatch, and the scan is mutation-checked whenever it changes.
    non-integer values*, not as met. Hook events are unaffected: they compare the identity hash, which
    holds no float and already matches.
 2. **`WikiEntry.sources` ripples further than the grep shows.** Non-test sources touching it: 4 files
-   (`grep -rln 'with_sources\|\.sources'`). Checked this stage and **refuted** as an external break:
-   `pk-mcp` returns a five-field `entry_summary` with no `sources`, and events carry ids, not entries.
+   (`grep -rln 'with_sources\|\.sources'`). ~~Checked this stage and **refuted** as an external break: `pk-mcp` returns a five-field
+   `entry_summary` with no `sources`.~~ **That refutation was WRONG (corrected 2026-09-21).** `handle_get`
+   (`pk-mcp/src/tools.rs:273`) returns the whole `WikiEntry`, so the MCP wire shape of `sources` did change. I
+   read the lines that show it and looked only at `entry_summary` beneath them; the Rust auditor caught it.
+   Events do carry ids, not entries — that half holds. And the break that mattered was one neither of us
+   predicted: the prompt snapshot (auditor finding 1).
    Tests were not counted. Mitigation: change 1's task 1.3 is `cargo check --workspace` immediately after
    the type change, and the re-plan trigger above is tied to it.
 3. **Change 1 waits on the operator and the phase stalls.** Mitigated by the ordering; if the go-ahead

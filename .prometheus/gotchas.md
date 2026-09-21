@@ -109,3 +109,20 @@ treating upstream state as local state.
 **Check:** when porting from another repository, every "existing"/"already there" claim names which
 repository. A file path in a task is a claim that the path resolves *here* — verify with the filesystem,
 not with a grep of the source repo.
+
+## 2026-09-21 — a naive forbidden-tool grep flags its own documentation
+
+Checking `lib/refiner/` for `python3|jq|date -u` matched three lines — all of them **prose**: a
+comment saying "those scripts shell out to python3", and two test names ("not uuid.uuid4 via python3",
+"not \`date -u\` output"). Zero were invocations.
+
+This is the "content checks must read code, not text" pattern from
+`platform-foundation/reflection.md` (3 false positives there), and the reason change 2's spec scenario
+says the scan matches "only fenced code blocks and command lines ... never narrative text".
+
+**The check that works:** strip block comments, line comments, and single/double/backtick string
+literals, THEN match. Verified: 2 files scanned, 0 hits, while the naive grep reported 3.
+
+Tasks 5.4 and 6.2 need this, and so does any future constraint of the same shape. A check that cannot
+tell an invocation from a description of one will either be ignored or quietly narrowed until it
+matches nothing.

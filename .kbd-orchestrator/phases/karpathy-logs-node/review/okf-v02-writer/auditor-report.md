@@ -36,3 +36,21 @@ prompt snapshot of finding 1.
 `evidence.md` §6.2 copied only the wiki root into the sandbox — deliberately, to limit what `pk ingest` sent
 to the model — so no 1.8.0 snapshot was ever exercised. The "pk context before any write" check returned
 nothing and was labelled vacuous; it was vacuous in a way that hid exactly this defect.
+
+## Disposition after section 7 (branch head a656f47)
+
+| # | Disposition |
+|---|---|
+| 1 CRITICAL | **FIXED** (`677b2eb`). Identity is verified against the entries as stored (raw text, compacted), not a re-serialisation. Confirmed read-only on the real snapshots: global 4/4, shared 128/128 under 1.8.0 and 1.9.0. |
+| 2 HIGH | **FIXED** (`2527ec9`). `generated` is read leniently; an unparseable `generated.at` falls through. |
+| 3 MEDIUM | **FIXED** (`98fcf98`). A number or boolean source is read as its text. |
+| 4 MEDIUM | **DECLINED**, reason in design.md: unreachable from parsed data, no caller, nothing observed. |
+| 5 HIGH | **FIXED** (`a374782`). Three ordered passes; labels compared case-folded. A surviving mutant led to one more test. |
+| 6 MEDIUM | **FIXED** (`a7852e8`). Only whitespace, `[`, `]`, `^` and the empty label are refused. |
+| 7 MEDIUM | **FIXED** (`fd13a25`). Bodies are parsed with footnotes enabled. |
+| 8 MEDIUM | **DOCUMENTED** under BREAKING in proposal.md, with the Rust API change. |
+| 9 LOW | **FIXED** with #5: a HashSet and a plain loop; no `expect` remains in non-test code in the diff. |
+
+Found while redoing the evidence, not by the auditor: a knowledge base 1.9.0 has written to cannot be shared
+with a 1.8.0 binary (it skips v0.2 entries and fails 1.9.0 snapshots). Inherent in v0.2; documented as a
+fourth BREAKING surface.

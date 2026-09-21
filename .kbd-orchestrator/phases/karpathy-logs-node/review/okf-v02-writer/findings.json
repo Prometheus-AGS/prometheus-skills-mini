@@ -1,0 +1,60 @@
+{
+  "stage": "execute",
+  "mode": "diff",
+  "change": "okf-v02-writer",
+  "repository": "prometheus-knowledge-rs",
+  "branch": "feat/okf-v02-writer",
+  "reviewed_head": "a656f47",
+  "round": 1,
+  "verdict": "PASS",
+  "critic": {
+    "model": "MiniMax-M3",
+    "endpoint_reported": "MiniMax-M3"
+  },
+  "judge": {
+    "model": "k3",
+    "endpoint_reported": "k3"
+  },
+  "cross_model_check": "verified-distinct",
+  "gateway": "liter-llm http://127.0.0.1:4000",
+  "counts": {
+    "CRITICAL": 0,
+    "WARNING": 0,
+    "SUGGESTION": 4,
+    "rejected_critic_findings": 0
+  },
+  "prior_gate": "rust-auditor (independent, report-only): 1 CRITICAL, 2 HIGH, 5 MEDIUM, 1 LOW - 7 fixed, 1 documented, 1 declined with a reason; see auditor-report.md",
+  "rulings": [
+    {
+      "critic_finding": "WikiEntry.generated_by and description lack `skip_serializing_if = \"Option::is_none\"`, so prompt-snapshot JSON always emits `\"generated_by\": null` / `\"description\": null`; 1.8.0 JSON had no `generated_by` key at all. Not a correctness regression because the snapshot hash is taken over the stored bytes.",
+      "ruling": "UPHELD",
+      "severity": "SUGGESTION",
+      "reason": "The quoted code confirms it: `#[serde(default)] pub generated_by: Option<String>` and `#[serde(default)] pub description: Option<String>` carry no skip attribute, while the Frontmatter struct skips Nones (`#[serde(default, skip_serializing_if = \"Option::is_none\")] description`). The critic's own caveat is also correct and important: since `read_prompt_snapshot` now hashes the stored raw text (`compact_json(stored.entries.get())`), never a re-serialisation, the extra null cannot invalidate anything — the 1.8.0 fixture test (`a_snapshot_written_by_1_8_0_still_validates`) passes with string-form sources and no `generated_by` key. So this is a shape-cleanliness point only, correctly filed as SUGGESTION. Note the critic under-scoped it slightly: `entry_type` is also `#[serde(default)] Option<String>` with no skip and has always emitted `null` in snapshots (the 1.8.0 fixture itself carries `\"entry_type\": \"Table\"` / `\"description\": null`), so emitting nulls is the established 1.8.0 shape for two of the three fields — only `generated_by` is new.",
+      "evidence": "\"#[serde(default)]\\n    pub generated_by: Option<String>\" in pk-core/src/types.rs; \"/// The generation was taken over compact JSON and the file is pretty-printed, so the stored text is compacted first.\\n    let entries_bytes = compact_json(stored.entries.get());\" in prompt_snapshot.rs; fixture constant ENTRIES_FROM_1_8_0 contains \"\\\"description\\\": null\" with no \"generated_by\" key."
+    },
+    {
+      "critic_finding": "is_footnote_label uses `c.is_whitespace()`, which rejects Unicode whitespace (U+00A0, U+2009, …) beyond what breaks footnote syntax, making pk slightly stricter than its stated rationale of refusing 'only what would break the syntax'.",
+      "ruling": "UPHELD",
+      "severity": "SUGGESTION",
+      "reason": "The code quote is accurate: `char::is_whitespace()` is Unicode-aware (White_Space property), so labels containing e.g. a no-break space are replaced even though only ASCII space/tab/newline would actually terminate or break a `[^label]` in markdown. The consequence is bounded — a replaced label only misattributes if the model cited with that exact Unicode-whitespace label in the body, and no such input has been observed (the test battery exercises ASCII only: `\"has space\", \"close]bracket\", \"open[bracket\", \"care^t\", \"tab\\\\there\", \"\"`). The critic's own 'probably benign' framing matches the evidence, so SUGGESTION is the right level; the embedded packet does not include pulldown-cmark's label grammar, so the claim that pulldown-cmark accepts all non-newline whitespace is taken on the critic's word, but the narrower claim (is_whitespace exceeds the documented intent) stands on the quoted code alone.",
+      "evidence": "\"!label.chars().any(|c| c.is_whitespace() || matches!(c, '[' | ']' | '^'))\" with doc comment \"Only what would break the syntax is refused: whitespace, `[`, `]` and `^`.\""
+    }
+  ],
+  "additional_findings": [
+    {
+      "severity": "SUGGESTION",
+      "location": "openspec design.md, 'Footnote ids' section (vs pk-librarian/src/librarian.rs:292-297)",
+      "finding": "design.md still describes the superseded label-acceptance rule: \"keeps a label verbatim when it can be a footnote label (ASCII letters, digits, `-`, `_`)\". The shipped code deliberately does the opposite — it keeps `notes.md`, `session:abc` and `a/b` verbatim and refuses only whitespace, `[`, `]`, `^` and the empty string — and the design's own next paragraph explains the model chooses labels, so the stale charset rule contradicts both the code and the tests (`a_valid_footnote_label_with_punctuation_is_kept_verbatim`). A reader of the design would conclude pk rewrites `notes.md`, which is exactly the bug fix 7.5 removed.",
+      "evidence": "design.md: \"1. keeps a label verbatim when it can be a footnote label (ASCII letters, digits, `-`, `_`);\" vs librarian.rs: \"Only what would break the syntax is refused: whitespace, `[`, `]` and `^`. `notes.md`, `session:abc` and `a/b` are valid labels\" and test \"a_valid_footnote_label_with_punctuation_is_kept_verbatim\" iterating [\"notes.md\", \"session:abc\", \"a/b\", \"rfc9110.s3\"].",
+      "fix": "Update design.md step 1 to the shipped rule (refuse only whitespace, `[`, `]`, `^`, empty; compare case-folded; three ordered passes), matching commit a7852e8 and the code comment."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "pk-librarian/src/librarian.rs parse_compile_response (vs design.md 'generated.by is only defaulted' and markdown.rs PK_ACTOR default)",
+      "finding": "The design's rationale for defaulting rather than stamping `generated.by` is that 'pk is not always the author: the librarian compiles with a model' — but nothing records that model: parse_compile_response builds the entry via WikiEntry::new (generated_by: None) and never sets generated_by from the compile model, so every librarian-compiled entry is written with `by: pk/<version>` even though the prose, sources and footnotes were authored by e.g. gpt-5.5. The author's own evidence shows this: the real ingest 'compiled by gpt-5.5' was written with `by: pk/1.9.0`. OKF §7's actor convention (`<producer>/<version>`) is satisfied, so this is not a conformance defect, but the attribution the design argues for is never actually produced on the main write path — only a hand-edited or pre-existing `generated.by` survives.",
+      "evidence": "design.md: \"pk is not always the author: the librarian compiles with a model, and a human may edit a file. If the writer stamped pk/<version> on every write it would erase that.\" parse_compile_response: \"let entry = WikiEntry::new(out.title, out.content).with_tags(out.tags).with_sources(with_unique_ids(out.sources));\" with no generated_by assignment. evidence.md: \"compiled by gpt-5.5 through the local proxy\" produced frontmatter \"generated:\\n  by: pk/1.9.0\".",
+      "fix": "Either have the librarian set entry.generated_by to the compile actor (e.g. `librarian/<model>` per §7) when it compiled the entry, or narrow the design.md/markdown.rs comments so they no longer imply model authorship is preserved on the compile path."
+    }
+  ],
+  "disposition": "A1 and A2 accepted and applied to design.md and proposal.md after the PASS (unreviewed; documents only). R1 (generated_by serialises as null) and R2 (Unicode whitespace refused in labels) left as they are with reasons recorded in the pk commit: neither affects correctness and neither has been observed."
+}

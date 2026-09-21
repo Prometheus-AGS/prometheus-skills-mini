@@ -1,0 +1,22 @@
+```json
+{
+  "verdict": "PASS",
+  "findings": [
+    {
+      "severity": "SUGGESTION",
+      "location": "pk-core/src/types.rs (WikiEntry.generated_by, description)",
+      "finding": "WikiEntry.generated_by and description lack `skip_serializing_if = \"Option::is_none\"`, so prompt-snapshot JSON always carries `\"generated_by\": null` / `\"description\": null` even when the entry has no producer `by` and no description. 1.8.0-emitted JSON had no `generated_by` key at all, so any new 1.9.0 entry's snapshot JSON differs from the equivalent 1.8.0 shape by an extra null field. The round-trip and stored-bytes hash check still hold (the compact form differs by exactly that one null, and the hash is taken over those bytes), so this is not a correctness regression — only a minor cleanliness gap with the markdown form, which does skip None entries.",
+      "evidence": "\"#[serde(default)] pub generated_by: Option<String>\" and \"#[serde(default)] pub description: Option<String>\" on WikiEntry carry no skip_serializing_if. Frontmatter, by contrast, declares description with \"#[serde(default, skip_serializing_if = \\\"Option::is_none\\\")]\".",
+      "fix": "Add `#[serde(skip_serializing_if = \"Option::is_none\")]` to generated_by (and optionally description) on WikiEntry."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "pk-librarian/src/librarian.rs (is_footnote_label)",
+      "finding": "is_footnote_label uses `c.is_whitespace()`, which also rejects Unicode whitespace (U+00A0 no-break space, U+2009 thin space, …). The doc comment says \"only what would break the syntax is refused\", but pulldown-cmark with ENABLE_FOOTNOTES accepts all non-newline whitespace inside a footnote label, so pk rewrites labels pulldown-cmark would have accepted. Probably benign — no model produces such labels today, and the test suite only exercises ASCII — but slightly stricter than the stated rationale.",
+      "evidence": "\"!label.chars().any(|c| c.is_whitespace() || matches!(c, '[' | ']' | '^'))\" — `char::is_whitespace()` matches Unicode whitespace categories, not just ASCII.",
+      "fix": "Restrict to ASCII whitespace (e.g. `c == ' ' || c == '\\t'`) if the intent is \"what breaks the syntax\"."
+    }
+  ],
+  "sound_claims": [
+    "Every scenario in spec.md maps to a non-vacuous test that would fail without the corresponding change. I traced each scenario to the test that would fail without it and confirmed the assertion is not satisfied by a trivial implementation.",
+    "

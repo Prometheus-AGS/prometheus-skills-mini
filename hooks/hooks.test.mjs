@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { readText } from '../lib/platform/text.mjs';
 import { HOOK_MODULES } from '../scripts/hook-entry.mjs';
 
@@ -61,7 +61,14 @@ test('every entry point named by the manifest is importable', async () => {
   for (const { hook } of hookEntries()) {
     const file = entryPointOf(hook);
 
-    await assert.doesNotReject(() => import(file), `${file} is named by hooks.json but not importable`);
+    // pathToFileURL, not the bare path: Node's ESM loader parses an absolute
+    // Windows path as a URL, so `D:\a\repo\scripts\hook-entry.mjs` is read as
+    // scheme `d:` and rejected. CI caught this on both Windows jobs while all
+    // four Unix jobs passed, because a POSIX path happens to parse as a path.
+    await assert.doesNotReject(
+      () => import(pathToFileURL(file).href),
+      `${file} is named by hooks.json but not importable`,
+    );
   }
 });
 

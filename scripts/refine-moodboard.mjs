@@ -37,7 +37,7 @@
 //     --audience "backend engineers" \
 //     --aesthetic "minimal, mono, ember" \
 //     [--brand knowme] \
-//     --output /tmp/mb.html \
+//     --output ./out/mb.html \
 //     [--mode llm|placeholder] (default: llm)
 
 import { readFileSync, writeFileSync, mkdtempSync, mkdirSync } from "node:fs";

@@ -26,7 +26,7 @@
 //     --brief "identity layer for human-AI collaboration" \
 //     [--style "geometric minimal"] \
 //     [--primary-color "#E04E28"] \
-//     --output-dir /tmp/logo \
+//     --output-dir ./out/logo \
 //     [--mode llm|placeholder] (default: llm)
 //     [--variants icon,wordmark,lockup] (default: all)
 //     [--png-sizes 16,32,64,128,256,512] (default)

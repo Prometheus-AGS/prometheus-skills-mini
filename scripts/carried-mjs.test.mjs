@@ -45,7 +45,7 @@ test('no .mjs resolves or executes a shell script', () => {
   assert.deepEqual(offenders, []);
 });
 
-test('no .mjs spawns with shell: true', () => {
+test('no .mjs enables the shell option when spawning', () => {
   const offenders = [];
 
   for (const file of allMjs()) {

@@ -35,25 +35,35 @@ only to `lib/refiner/`.
 **Attribution rule:** any CI failure appearing after change 2's task 5.1 is attributed to the carry
 until proven otherwise. The hooks were green before it.
 
-## QA gate — AS CONTRACTED, AND WHAT THAT MEANS PER CHANGE
+## QA gate — AS CONTRACTED, AND WHAT RAN
 
-The planned gate is: `/refine-validate <change-id>` → on PASS `/adversarial-review --mode diff <change-id>`
-→ on PASS `openspec validate` then archive.
+The contracted gate is `/refine-validate <change-id>` → on PASS
+`/adversarial-review --mode diff <change-id>` → on PASS `openspec validate` then archive.
 
-**For change 1 the first step does not exist yet.** `/refine-validate` is delivered *by* change 2. The
-gate that runs for change 1 is therefore:
+### Change 1 — the QA half could not run, and that was declared in advance
 
-1. the 13 constraints in `.kbd-orchestrator/constraints.md` (10 automated `check:` expressions plus the
-   three command constraints), then
-2. the adversarial diff review, then
-3. `node scripts/spec-validate.mjs` and archive.
+`/refine-validate` is delivered **by change 2**. It did not exist when change 1 was gated, so what ran
+was: the 13 constraints (10 automated `check:` expressions, all clean) → the adversarial diff review →
+`node scripts/spec-validate.mjs` → archive.
 
-**This substitution is declared here, before it happens.** Last phase the same substitution was made
-*silently* for all six changes and only surfaced at reflection — that is Delta 2, and declaring the gap
-in advance is the correction. For change 2 and every change after it, the full contracted gate runs.
+**This paragraph was written before change 1 ran, not after.** That is the whole correction: last phase
+the identical substitution was made *silently* for all six changes and surfaced only at reflection
+(`platform-foundation/reflection.md` Delta 2). Declaring a narrower gate in advance is honest; letting
+one be discovered afterwards is not.
 
-**Change 2's gate applies from its own completion onward.** It does **not** retroactively gate change 1.
-That is the cost of the operator's sequencing choice, stated rather than discovered.
+The diff review earned its place: it returned BLOCK on a real CRITICAL — a self-invocation guard built
+by string concatenation that made every hook a silent no-op on a path containing `#` or `?`.
+
+### Change 2 — the full gate runs, and from here on it always does
+
+`/refine-validate` exists as `scripts/refine-validate.mjs` over `lib/refiner/validate.mjs`. Verified
+end to end before wiring: a valid manifest PASSes, a manifest naming a missing file FAILs with the file
+named and exit 2, a hookless blocking constraint is a WARN that does **not** block, and an absent
+manifest SKIPs rather than failing.
+
+**Delta 2 is closed from this change's completion onward.** It is not closed retroactively: change 1 was
+never gated by `/refine-validate`, and no amount of wiring changes that. That is the honest cost of the
+operator's sequencing choice, recorded here rather than discovered in the next reflection.
 
 ## Per-task rules (binding)
 

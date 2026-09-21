@@ -8,7 +8,7 @@
  * Usage:
  *   node scripts/convert-htmx-pdf.mjs --source report.html --output report.pdf \
  *     --header-left "Acme · Q3 Report" --header-right "DOC-001" \
- *     --footer-left "Prepared by A. Author" --preview /tmp/page-1.png
+ *     --footer-left "Prepared by A. Author" --preview ./out/page-1.png
  *
  * See skills/convert-htmx-pdf/SKILL.md and references/print-pagination.md.
  */

@@ -37,3 +37,21 @@
 > occur, now 25ms × 6 ≈ 1.575s; and the test released its handle with setTimeout, which can never
 > fire because atomicWrite is synchronous and blocks the event loop for the whole window — the
 > holder is now a separate process. This is exactly why the plan put CI before the Windows code.
+
+> ADVERSARIAL DIFF REVIEW — 4 rounds. Every round found a real defect, so it was continued past
+> the 2-round artifact cap; the FOURTH round's fix is UNREVIEWED.
+> - R1 CRITICAL, a data-loss bug I wrote: the temp file used a predictable name opened for
+>   TRUNCATING write, so an unrelated file at that path would be destroyed. Now a random suffix
+>   created with flag 'wx'. Two tests added; both fail against the old code. Two WARNINGs also
+>   accepted: the win32 test could pass without the child ever opening the file (it now waits for
+>   a readiness signal on stdout), and release() could delete a lock another writer had taken
+>   after a human cleared a supposedly stale one (each acquisition now writes a token and removes
+>   the file only while that token is present; test fails without the guard).
+> - R2 CRITICAL ×2: my spec said a temp collision "fails with EEXIST" while my code retried — the
+>   spec described a mechanism, not the guarantee. Rewritten as three scenarios: bystander never
+>   damaged, collision retried, retries bounded. And 'npm run coverage' did not enforce the
+>   build.mjs threshold; folding it in with '&&' would have broken this project's own no-chaining
+>   rule, which its own scaffold test caught at once — the reporter now runs the suite with
+>   --experimental-test-coverage and inherits output, so one command does both.
+> - R3 CRITICAL: I had widened the live spec to "every source file" while the script thresholds
+>   only its listed child-process targets. Spec narrowed to what is enforced. UNREVIEWED.

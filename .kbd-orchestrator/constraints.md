@@ -76,6 +76,13 @@ constraints:
     check: 'git grep --no-index --exclude-standard -n -E -e "[$]HOME|process\.env\.HOME|/tmp/" -- "lib/*.mjs" "scripts/*.mjs" "hooks/*.mjs" "rules/*.mjs"'
     note: 'Back to the original -E form, with no pipe and no PCRE. An earlier attempt to exempt comments used a grep pipe (forbidden by the command policy, and grep is absent on stock Windows) and then git grep -P (PCRE is a build-time option, so the check could error on another machine). Neither is needed: the comment that triggered this now describes the forbidden spellings instead of quoting them, so the plain check passes. Prose that must quote a literal belongs in a .md file, which this pathspec does not cover.'
 
+  - id: os-locations-only-via-platform
+    severity: blocking
+    source: '.claude/rules/node-scripts.md — Paths; adversarial review of platform-paths-and-text'
+    description: 'Only lib/platform/paths.mjs asks the OS where things live; every other module and test uses the helpers'
+    check: 'git grep --no-index --exclude-standard -n -E -e "os\.(tmpdir|homedir)\(\)" -- "lib/*.mjs" "scripts/*.mjs" "hooks/*.mjs" "rules/*.mjs" ":!lib/platform/paths.mjs" ":!lib/platform/paths.test.mjs"'
+    note: 'paths.test.mjs is the single documented exception: it asserts that the DEFAULT helpers delegate to the real OS, which cannot be asserted through the helper without becoming a tautology. Review caught two modules reading os.tmpdir() directly; this check makes the next one mechanical.'
+
   - id: no-zeespec
     severity: blocking
     source: 'AGENTS.md §P — there is no ZeeSpec'

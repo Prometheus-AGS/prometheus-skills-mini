@@ -1,0 +1,26 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "rules/lib/render.mjs",
+      "line": 36,
+      "claim": "splitFrontmatter still does not produce the same result for CRLF input as for the LF equivalent because it preserves carriage returns in the returned front/body.",
+      "evidence": "Acceptance criterion `Parsers tolerate CRLF directly` says `parseConf`, `splitFrontmatter`, `routingLayer0` and the line counter SHALL produce the same result for CRLF input as for the LF equivalent; the implementation only changes the delimiter regex to `/^---\\r?\\n([\\s\\S]*?)\\r?\\n---\\r?\\n([\\s\\S]*)$/`, and the added test explicitly documents `The CRLF input yields CRLF output` before stripping `\\r` for comparison.",
+      "suggested_fix": "Normalize CRLF inside `splitFrontmatter` before returning, or normalize `match[1]` and `match[2]` so the returned `front` and `body` exactly match the LF-input results."
+    },
+    {
+      "severity": "WARNING",
+      "file": ".kbd-orchestrator/constraints.md",
+      "line": 76,
+      "claim": "The blocking `no-home-or-tmp-literals` check was changed to depend on `git grep -P`, which the change itself admits may error when PCRE support is unavailable.",
+      "evidence": "The command policy requires checks to behave the same from `cmd.exe`, Windows PowerShell 5.1, bash and zsh; the diff changes the check from `git grep ... -E` to `git grep ... -P`, and the added note says `If a git build lacks PCRE this check errors rather than passing silently`.",
+      "suggested_fix": "Keep the constraint on portable `git grep -E`, or implement the comment-aware filtering in a Node script that is invoked consistently on all supported shells."
+    }
+  ]
+}

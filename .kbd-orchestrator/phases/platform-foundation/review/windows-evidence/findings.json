@@ -9,30 +9,10 @@
     {
       "severity": "CRITICAL",
       "file": ".kbd-orchestrator/phases/platform-foundation/evidence/windows.md",
-      "claim": "The evidence file does not satisfy the required per-row fields for each claim.",
-      "evidence": "tasks.md 2.2 requires: \"For each row give the asserting test name, the run URL, the job name and the result.\" The new table has only columns `Claim` and `Asserting test, verbatim from the Windows job log`, with a single global `Run` and `Job` header and no per-row result.",
-      "suggested_fix": "Restore per-claim columns for run URL, job name, Node version, and result, or otherwise include those fields on every claim row."
-    },
-    {
-      "severity": "CRITICAL",
-      "file": ".kbd-orchestrator/phases/platform-foundation/evidence/windows.md",
-      "claim": "The evidence records only one Windows job instead of the required Node 22 and Node 24 observations.",
-      "evidence": "tasks.md 2.1 requires recording evidence \"for Node 22 and Node 24 on `windows-latest`\". The evidence header says `Job: windows-latest \u00b7 node 22 (the node 24 leg is identical)`, but no Node 24 per-claim rows, job log lines, or result fields are recorded.",
-      "suggested_fix": "Add explicit Node 24 evidence for each required claim, including the job name and result, rather than relying on an unsupported 'identical' assertion."
-    },
-    {
-      "severity": "CRITICAL",
-      "file": ".kbd-orchestrator/phases/platform-foundation/evidence/windows.md",
-      "claim": "The required `npm ci` Windows observation is not recorded.",
-      "evidence": "tasks.md 2.1 requires recording `npm ci` for Node 22 and Node 24 on `windows-latest`; the evidence file contains no row or verbatim log line for `npm ci`, only global 'all six jobs green' metadata and test/build/spec rows.",
-      "suggested_fix": "Add explicit evidence rows for `npm ci` on both Windows Node versions with run URL, job name, and pass result."
-    },
-    {
-      "severity": "CRITICAL",
-      "file": ".kbd-orchestrator/project.json",
-      "claim": "This change modifies KBD-owned project state even though the constraints reserve `.kbd-orchestrator/project.json` from writes by non-`/kbd-init` skills.",
-      "evidence": "Constraint 'Path ownership \u2014 hidden does not mean disposable' says `.kbd-orchestrator/` is KBD-owned and 'Skills other than `/kbd-init` never write `project.json`.' The diff for the `windows-evidence` target changes `.kbd-orchestrator/project.json` fields including `build_health_command`, `test_command`, `spec_validate_command`, and adds coverage metadata.",
-      "suggested_fix": "Remove `.kbd-orchestrator/project.json` changes from this change, or separate them into the `/kbd-init` regeneration change that owns the file."
+      "line": 55,
+      "claim": "Node 24 per-claim evidence does not meet the required asserting-test-name evidence standard despite tasks being marked complete.",
+      "evidence": "Acceptance task 2.2 requires: \"For each row give the asserting test name, the run URL, the job name and the result\" for Node 22 and Node 24 from task 2.1; the evidence file states \"The `node 24` job's downloadable log contains its step names but not its test output\" and uses only \"step `node --test` \u2192 success\" in the Node 24 column for each claim.",
+      "suggested_fix": "Either obtain Node 24 logs containing the actual `ok N - <name>` test lines and record them per row, or mark each Node 24 per-claim assertion as NOT MET with the reason instead of checking tasks 2.1/2.2 complete."
     }
   ]
 }

@@ -1,31 +1,32 @@
 # Windows evidence — platform-foundation
 
-Every Windows behaviour this phase claims, with the run, job, Node version and result that prove it.
-Test lines are copied verbatim from the job log; none is paraphrased.
+Every Windows behaviour this phase claims, with the asserting test on **both** supported Node
+versions. Test lines are verbatim from the job logs; none is paraphrased.
 
 - **Run:** [35585743561](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561) — all six jobs green
-- **Windows jobs:** [node 22](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561/job/106288549612) · [node 24](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561/job/106288549594)
-- **Suite on `windows-latest · node 22`:** `# tests 88 / # pass 88 / # fail 0 / # skipped 0` — nothing
-  skipped, so every win32-only test genuinely executed
+- **Jobs:** [`windows-latest · node 22`](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561/job/106288549612) · [`windows-latest · node 24`](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561/job/106288549594)
+- **Suite:** node 22 `# tests 88 / # pass 88 / # fail 0 / # skipped 0`; node 24 `ℹ pass 88 / ℹ fail 0 / ℹ skipped 0`
+  — nothing skipped on either, so every win32-only test genuinely executed
 - **Repository:** `Prometheus-AGS/prometheus-skills-mini` (public); prerequisite P2 met 2026-09-21
+
+The two jobs print different formats — node 22's step emits TAP (`ok N - <name>`), node 24's emits the
+spec reporter (`✔ <name>`). Both name the test, which is what the evidence requires.
 
 ## Per-claim evidence
 
-| Claim | Asserting test, verbatim | Run | Job | Result | Node 24 |
-|---|---|---|---|---|---|
-| Bounded EPERM/EBUSY/EACCES retry replaces a destination another process holds open | `ok 12 - a destination held open by another process is still replaced` | [35585743561](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561) | `windows-latest · node 22` | PASS | `node 24`: same suite, job [106288549594](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561/job/106288549594) step `node --test` → success |
-| A pre-existing file at the temporary path is never truncated | `ok 10 - a pre-existing file in the target directory is never truncated by the temporary write` | [35585743561](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561) | `windows-latest · node 22` | PASS | `node 24`: same suite, job [106288549594](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561/job/106288549594) step `node --test` → success |
-| `wx` lock: held, then gone after release | `ok 13 - the lock file exists while held and is gone after release` | [35585743561](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561) | `windows-latest · node 22` | PASS | `node 24`: same suite, job [106288549594](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561/job/106288549594) step `node --test` → success |
-| `wx` lock: a second acquisition is refused and names the file | `ok 14 - a second acquisition fails immediately and names the lock file` | [35585743561](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561) | `windows-latest · node 22` | PASS | `node 24`: same suite, job [106288549594](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561/job/106288549594) step `node --test` → success |
-| `wx` lock: release cannot delete a newer holder's lock | `ok 18 - release does not delete a lock that another acquisition now holds` | [35585743561](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561) | `windows-latest · node 22` | PASS | `node 24`: same suite, job [106288549594](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561/job/106288549594) step `node --test` → success |
-| An npm CLI runs with no global install (emptied PATH) | `ok 29 - the CLI runs with an emptied PATH, proving no global install is used` | [35585743561](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561) | `windows-latest · node 22` | PASS | `node 24`: same suite, job [106288549594](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561/job/106288549594) step `node --test` → success |
-| A bare name resolving to `.cmd` via PATHEXT is refused, not spawned | `ok 34 - a bare name that can only resolve to a .cmd on PATH is refused, not spawned` | [35585743561](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561) | `windows-latest · node 22` | PASS | `node 24`: same suite, job [106288549594](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561/job/106288549594) step `node --test` → success |
-| A CRLF checkout reports "current", not spurious drift | `ok 39 - a CRLF checkout is reported as current, not as drift` | [35585743561](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561) | `windows-latest · node 22` | PASS | `node 24`: same suite, job [106288549594](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561/job/106288549594) step `node --test` → success |
-| `splitFrontmatter` parses CRLF input | `ok 57 - splitFrontmatter tolerates CRLF line endings` | [35585743561](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561) | `windows-latest · node 22` | PASS | `node 24`: same suite, job [106288549594](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561/job/106288549594) step `node --test` → success |
+| Claim | `node 22`, verbatim | `node 24`, verbatim | Result |
+|---|---|---|---|
+| Bounded EPERM/EBUSY/EACCES retry replaces a destination another process holds open | `ok 12 - a destination held open by another process is still replaced` | `✔ a destination held open by another process is still replaced` | PASS on both |
+| A pre-existing file at the temporary path is never truncated | `ok 10 - a pre-existing file in the target directory is never truncated by the temporary write` | `✔ a pre-existing file in the target directory is never truncated by the temporary write` | PASS on both |
+| `wx` lock: held, then gone after release | `ok 13 - the lock file exists while held and is gone after release` | `✔ the lock file exists while held and is gone after release` | PASS on both |
+| `wx` lock: a second acquisition is refused and names the file | `ok 14 - a second acquisition fails immediately and names the lock file` | `✔ a second acquisition fails immediately and names the lock file` | PASS on both |
+| `wx` lock: release cannot delete a newer holder's lock | `ok 18 - release does not delete a lock that another acquisition now holds` | `✔ release does not delete a lock that another acquisition now holds` | PASS on both |
+| An npm CLI runs with no global install (emptied PATH) | `ok 29 - the CLI runs with an emptied PATH, proving no global install is used` | `✔ the CLI runs with an emptied PATH, proving no global install is used` | PASS on both |
+| A bare name resolving to `.cmd` via PATHEXT is refused, not spawned | `ok 34 - a bare name that can only resolve to a .cmd on PATH is refused, not spawned` | `✔ a bare name that can only resolve to a .cmd on PATH is refused, not spawned` | PASS on both |
+| A CRLF checkout reports "current", not spurious drift | `ok 39 - a CRLF checkout is reported as current, not as drift` | `✔ a CRLF checkout is reported as current, not as drift` | PASS on both |
+| `splitFrontmatter` parses CRLF input | `ok 57 - splitFrontmatter tolerates CRLF line endings` | `✔ splitFrontmatter tolerates CRLF line endings` | PASS on both |
 
-## Per-step results, both Node versions
-
-Taken from the GitHub API (`actions/jobs/<id>`), which is authoritative for step conclusions.
+## Per-step results (GitHub API, authoritative for conclusions)
 
 | Step | `node 22` | `node 24` |
 |---|---|---|
@@ -35,9 +36,9 @@ Taken from the GitHub API (`actions/jobs/<id>`), which is authoritative for step
 | `npm run coverage` | success | success |
 | `node scripts/spec-validate.mjs` | success | success |
 
-`npm ci` on `node 22`, verbatim: `added 79 packages, and audited 80 packages in 8s`.
+`npm ci` verbatim — node 22: `added 79 packages, and audited 80 packages in 8s`.
 
-## Whole-job evidence (`node 22` log)
+## Whole-job evidence (node 22 log)
 
 | Claim | Verbatim |
 |---|---|
@@ -47,13 +48,6 @@ Taken from the GitHub API (`actions/jobs/<id>`), which is authoritative for step
 
 The Windows legs set `git config --global core.autocrlf true` **before** `actions/checkout`, so the
 line-ending work is tested against the default most likely to break it.
-
-### A limitation of this evidence, stated rather than hidden
-
-The `node 24` job's downloadable log contains its step names but **not** its test output — it is
-truncated, and re-fetching through the API returned an empty body. So for `node 24` the evidence is
-the API's per-step conclusion (`node --test → success`), not a verbatim `ok N -` line per claim. That
-is weaker than the `node 22` evidence and is marked as such rather than described as "identical".
 
 ## What CI found that this machine could not
 

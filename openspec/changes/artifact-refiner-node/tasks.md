@@ -1,9 +1,9 @@
 ## 1. State lifecycle in Node
 
 - [x] 1.1 RED (2026-09-21): `node --test lib/refiner/state.test.mjs` → **fail**, `ERR_MODULE_NOT_FOUND: .../lib/refiner/state.mjs`. Failing test committed alone. Write `lib/refiner/state.test.mjs`: a fresh init generates a refinement id and writes atomically; an existing non-finalized state resumes rather than being truncated; a finalized state starts a new cycle recording the prior id; no `os.homedir()` or `process.env.HOME` in `lib/refiner/`. Run `node --test <that file>`, see it FAIL, commit the failing test alone and paste the output.
-- [ ] 1.2 GREEN: implement `lib/refiner/state.mjs` (init, checkpoint, finalize) until the tests pass, replacing `state-init.sh`, `state-checkpoint.sh` and `state-finalize.sh`. Use `crypto.randomUUID()` and `toISOString()`; write through `lib/platform/atomic-write.mjs`; read through `lib/platform/text.mjs`. Under 500 lines.
-- [ ] 1.3 Self-review by mutation: revert the resume branch and confirm the resume test fails.
-- [ ] 1.4 Commit locally with an `Assisted-by` trailer and no `Signed-off-by`: `feat(refiner): state lifecycle in Node, no bash or python`. Do not push.
+- [x] 1.2 GREEN (2026-09-21): 12/12 pass. Implement `lib/refiner/state.mjs` (init, checkpoint, finalize) until the tests pass, replacing `state-init.sh`, `state-checkpoint.sh` and `state-finalize.sh`. Use `crypto.randomUUID()` and `toISOString()`; write through `lib/platform/atomic-write.mjs`; read through `lib/platform/text.mjs`. Under 500 lines.
+- [x] 1.3 **Mutation self-review — 4 reverts, each biting, suite restored to 12/0:** resume branch removed → 2 failures; prior id not seeded → 1; checkpoint does not advance → 1; checkpoint throws instead of degrading → 1.
+- [x] 1.4 Commit locally with an `Assisted-by` trailer and no `Signed-off-by`: `feat(refiner): state lifecycle in Node, no bash or python`. Do not push.
 
 ## 2. Provider resolution
 

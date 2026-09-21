@@ -49,3 +49,17 @@ delete them.
 - **2026-09-21 · `prometheus kbd status --json` is not read-only.** It creates `.prometheus/project.json` (a runtime
   `projectId` + repository fingerprint). Harmless and not an OKF concept file, but it means two files named
   `project.json` exist; always write the full path `.kbd-orchestrator/project.json`.
+
+## hooks and packaging
+
+- **2026-09-21 · A `hooks.json` that names a file the payload does not contain breaks EVERY hook, silently to
+  our code.** Observed in the source pack: all 31 hook entries ran
+  `node ${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs`, the distribution generator copied two other scripts by
+  a hand-kept list, and `hook-entry.mjs` was never packaged — every Stop printed `Cannot find module`. The
+  failure is in Node's loader, so nothing inside a hook can catch it. Prevention is at packaging time only:
+  derive the file list from `hooks.json` and test that each path resolves in the built payload. Fixed upstream
+  on branch `fix/package-hook-entry`. This repo's installer copies instead of symlinking, which makes the
+  same drift easier — see the rule in `.claude/rules/node-scripts.md`.
+- **2026-09-21 · Replaying a real hook is not side-effect free.** Running the pack's `stop-karpathy-learning`
+  hook by hand wrote a session record into the wiki of whatever directory was cwd, and its learning worker
+  left a stale `index.lock` behind. Replay hooks in a throwaway directory, never in a working tree.

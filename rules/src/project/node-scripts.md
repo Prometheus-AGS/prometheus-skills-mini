@@ -37,6 +37,11 @@ Every script in this repo has to behave identically from `cmd.exe`, PowerShell, 
 - **No symlinks, no executable bit, no shebang reliance.** Installers copy.
 - Never two files whose names differ only by case. Keep state paths short — Windows still has a
   260-character limit in places.
+- **Every file a `hooks.json` names must ship with it.** A missing entry file fails in Node's loader
+  (`MODULE_NOT_FOUND`) before any of our code runs, on *every* hook event, so no hook can detect or
+  report it. Derive the packaged/installed file list **from `hooks.json`**, never from a hand-kept list,
+  and keep a `node:test` that resolves each referenced path inside the built payload. The source pack
+  shipped exactly this bug (`.prometheus/gotchas.md`); a copy-based installer makes it easier to repeat.
 - A hook that touches a service (memory, gateway) **always exits 0**; a missing service is a degraded
   result, never a failed hook.
 - A hook with a 1 s budget imports nothing heavy: Node cold start is already most of that budget.

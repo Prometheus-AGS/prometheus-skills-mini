@@ -592,7 +592,7 @@ Each line is one `/opsx:propose`. Order matters — later changes build on
 `lib/platform`.
 
 1. `platform-foundation` — `lib/platform/` (paths, atomic write, lock, spawn with `.cmd` resolution), `node:test` harness, 3-OS CI, `.gitattributes`.
-2. `hook-entry-node-only` — `hooks.json` + `hook-entry.mjs` with in-process dispatch; cold-start measurement on Windows.
+2. `hook-entry-node-only` — `hooks.json` + `hook-entry.mjs` with in-process dispatch; cold-start measurement on Windows. The installed file list is derived from `hooks.json`, and a test resolves every path `hooks.json` names inside the built payload — the source pack shipped a payload missing its hook entry, which broke every hook event.
 3. `kbd-state-core` — position, progress, waypoint, stage-gate, rollup as Node modules.
 4. `spec-backend-openspec-default` — OpenSpec adapter, native-kbd fallback, `kbd-apply` driver.
 5. `kbd-skills-import` — copy Markdown sub-skills; strip ZeeSpec and daemon references.

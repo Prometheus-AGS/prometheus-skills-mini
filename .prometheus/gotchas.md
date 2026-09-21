@@ -181,3 +181,23 @@ with `grep -c '^test('` against the runner's total. I caught it because 1 did no
 ever run, so several may have top-level effects; `openai-client.mjs` is a library and imports cleanly.
 
 Worth reporting upstream as a missing entry guard, though it is harmless when the file is only executed.
+
+## 2026-09-21 — /kbd-new-phase wrote the files but did not register the phase canonically
+
+After `/kbd-new-phase karpathy-logs-node`, `current-waypoint.json` and `project.json` both named the
+new phase — but `prometheus kbd status --json` did not list it at all, `activePath.phaseId` still
+pointed at `hook-entry-node-only`, and `position-reminder.txt` (a runtime projection) still reported
+the OLD phase as the position.
+
+The skill's step list flips the waypoint and `project.json` but never calls
+`prometheus kbd phase create` / `phase activate`, so in runtime-authority mode the new phase does not
+exist canonically. Anything reading the projection — including the position reminder the skills tell
+agents to read FIRST every turn — reports the previous phase.
+
+**Fix applied:** `phase create --id <name> --title <…>` then
+`phase activate --id <name> --exact-next-work <…>`. The projection refreshed immediately and
+`phaseDefinitionOrder` gained the phase.
+
+**Check:** after any `/kbd-new-phase`, confirm `prometheus kbd status --json | .activePath.phaseId`
+matches `current-waypoint.json .phase` before starting the next stage. Two sources of truth that
+disagree is worse than one that is stale.

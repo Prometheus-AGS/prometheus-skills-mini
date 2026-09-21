@@ -1,0 +1,86 @@
+{
+  "verdict": "BLOCK",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "location": "PART 2 / GAP 5 — The Boss already has a filesystem MCP server",
+      "finding": "Gap 5 is not supported by the embedded evidence. The assessment asserts a specific existing in-process TypeScript filesystem MCP server, its size, and its tool names, but the packet provides no source excerpt for that server and the assessment's own provenance list for The Boss does not include `src/main/ai/mcp/servers/filesystem/`. Because this is one of the six claimed integration gaps and drives a product-decision recommendation, it is material to planning.",
+      "evidence": "Assessment claim: `src/main/ai/mcp/servers/filesystem/ is an in-process TypeScript server, 1,865 lines, with tools read, write, edit, delete, ls, glob, grep.` Provenance list only says The Boss files read were: `package.json`, `electron-builder.yml`, `src/main/utils/builtinSkills.ts`, `src/main/ai/skills/SkillService.ts`, `src/main/ai/runtime/claudeCode/{hooks,environment,settingsBuilder}.ts`, `src/main/utils/binaryResolver.ts`. No embedded evidence excerpt for `src/main/ai/mcp/servers/filesystem/` is present.",
+      "fix": "Either embed the filesystem MCP server evidence used for the claim, including the file listing/tool definitions and line count command, or downgrade Gap 5 to an unverified open question."
+    },
+    {
+      "severity": "CRITICAL",
+      "location": "PART 2 / GAP 3 and RISKS — hook integration",
+      "finding": "The assessment omits a material integration risk: this pack's `hooks/hooks.json` does not just require a `node` binary; it also depends on `${CLAUDE_PLUGIN_ROOT}` resolving to a stable pack root. The Boss evidence shows an isolated `CLAUDE_CONFIG_DIR`, but no evidence that `CLAUDE_PLUGIN_ROOT` is set or meaningful inside The Boss. Gap 3 says an isolated `settings.json` carrying exec-form hooks might be honored, but only marks it 'subject to Gap 2'; it misses this separate root-variable failure mode.",
+      "evidence": "Pack hook evidence: `\"command\": \"node\", \"args\": [\"${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs\", ...]`. The Boss environment evidence includes `CLAUDE_CONFIG_DIR: application.getPath('feature.agents.claude.root')` and `ELECTRON_RUN_AS_NODE: '1'`, but no `CLAUDE_PLUGIN_ROOT`. Assessment Gap 3: `a settings.json in The Boss's isolated CLAUDE_CONFIG_DIR carrying exec-form hooks might be honoured by the CLI underneath — subject to Gap 2`.",
+      "fix": "Add a seventh explicit hook-root/config gap, or expand Gap 3 to state that exec-form hook reuse requires both a Node-compatible launcher and a defined pack-root substitution/environment contract for `${CLAUDE_PLUGIN_ROOT}`."
+    },
+    {
+      "severity": "WARNING",
+      "location": "PROVENANCE / multiple baseline measurements",
+      "finding": "Many Part 1 measurements are only asserted as command summaries, not evidenced with raw output or embedded file listings. That conflicts with the assessment's own process goal that counts cite the command and that evidence be pasted before review. These unsupported claims may be true, but the packet does not let the judge recompute them.",
+      "evidence": "Assessment says: `Baseline: npm test → 220 tests, 219 pass, 0 fail, 1 skipped`, `Absence of the recorder: node -e fs.existsSync on lib/karpathy, lib/okf, lib/memory → all false`, `.prometheus/ contents: git ls-files '.prometheus/*' → 14 files`, but no raw command output or file listing is embedded. Goals say: `Before every judge call, run the mutation and paste its output into the task` and `Every count cites the command that produced it`.",
+      "fix": "Embed the actual command outputs for baseline tests, existence checks, file listings, and counts, or explicitly mark those as self-reported/unverified measurements."
+    },
+    {
+      "severity": "WARNING",
+      "location": "PART 2 / WHAT THE BOSS ALREADY PROVIDES",
+      "finding": "The claim that built-in skills are recopied when `the app version or a full-directory content hash changes` is not supported by the embedded excerpts. The provided `builtinSkills.ts` comment describes app-version comparison only; no full-directory content hash logic is shown.",
+      "evidence": "Assessment claim: `It re-copies only when the app version or a full-directory content hash changes.` Evidence comment: `Each installed skill gets a .version file recording the app version... On subsequent launches the bundled version is compared with the installed version — the skill files are overwritten only when the app ships a newer version.`",
+      "fix": "Embed the `syncBuiltinSkill` code that implements the content hash, or remove the content-hash part of the claim."
+    },
+    {
+      "severity": "WARNING",
+      "location": "PART 2 / WHAT THE BOSS ALREADY PROVIDES",
+      "finding": "The claim that `syncBuiltinSkill` takes a `namespace` parameter is unsupported and appears inconsistent with the embedded call site, which passes only three arguments and no namespace.",
+      "evidence": "Assessment claim: `syncBuiltinSkill takes a namespace parameter, so a prometheus namespace is available without schema work.` Embedded call: `skillService.syncBuiltinSkill(entry.name, path.join(resourceSkillsPath, entry.name), appVersion)`.",
+      "fix": "Embed the function signature showing the namespace parameter and explain why the current call omits it, or retract the namespace/no-schema-work claim."
+    },
+    {
+      "severity": "WARNING",
+      "location": "PART 2 / GAP 2",
+      "finding": "The assessment overstates the clean-Windows conclusion. The embedded evidence shows The Boss sets `ELECTRON_RUN_AS_NODE` and resolves `bun`; it does not prove that no `node` is placed on PATH anywhere else, nor does it provide evidence for the Electron version or embedded Node version.",
+      "evidence": "Evidence shows environment entries including `ELECTRON_RUN_AS_NODE: '1'` and `CLAUDE_CONFIG_DIR: ...`, and `const bunPath = await getBinaryPath('bun')`. Assessment claims: `It does not put a node executable on PATH` and `Electron 44.2.0 embeds a Node that satisfies >=22`.",
+      "fix": "Qualify as `no node PATH setup was found in the provided environment path` and embed package/Electron version evidence if the embedded Node claim matters."
+    },
+    {
+      "severity": "WARNING",
+      "location": "PART 2 / GAP 3",
+      "finding": "The statement that The Boss's hooks are SDK callbacks is not directly supported by embedded code. The packet contains `settingsBuilder.ts getSettingSources`, environment excerpts, and this pack's `hooks.json`, but no `hooks.ts` excerpt showing `buildClaudeCodeHooks` or `HookCallback` assembly.",
+      "evidence": "Assessment claim: `buildClaudeCodeHooks (hooks.ts, 313 lines) assembles in-process HookCallbacks.` Embedded evidence includes only `settingsBuilder.ts getSettingSources` and no `hooks.ts` excerpt.",
+      "fix": "Embed the relevant `hooks.ts` excerpt, or downgrade the in-process callback statement to an unverified reading note."
+    },
+    {
+      "severity": "WARNING",
+      "location": "PART 2 / WHAT FITS WITHOUT WORK",
+      "finding": "The statement that `rust-mcp-filesystem` is STDIO-only and read-only by default is unsupported by the embedded evidence. The only rust-mcp-filesystem evidence is `dist-workspace.toml`, which shows release targets/installers, not feature list or runtime defaults.",
+      "evidence": "Assessment claim: `rust-mcp-filesystem is STDIO-only by its feature list, read-only by default with --allow-write opt-in`. Embedded evidence: `rust-mcp-filesystem dist-workspace.toml` contains `installers` and `targets`, but no feature list or CLI default behavior.",
+      "fix": "Embed `Cargo.toml` feature definitions and CLI help/docs proving the transport and write-default claims, or mark them unverified."
+    },
+    {
+      "severity": "WARNING",
+      "location": "PART 2 / GAP 6",
+      "finding": "The assessment correctly supports that compass's MCP invocation needs `--graph <path>/graph.json`, but overclaims additional implementation properties. `embedded store`, `no service to run`, and `axum HTTP transport` are not evidenced in the packet.",
+      "evidence": "Embedded compass evidence: `.mcp.json` has args `[\"serve\", \"--transport\", \"stdio\", \"--graph\", \"/.../graph.json\"]`. Assessment adds: `compass's embedded store means no service to run` and `compass-mcp also contains an axum HTTP transport`.",
+      "fix": "Keep the supported graph-per-workspace finding, but embed source/docs for the embedded-store and HTTP-transport claims or remove them."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "PART 2 / GAP 1",
+      "finding": "Gap 1 is directionally supported for copied skills, but the evidence list includes `agents/*.md` invocations as well as `skills/*.md`. The assessment does not separately address how agents are installed into The Boss, even though The Boss evidence only proves a built-in skill installer.",
+      "evidence": "The script invocation evidence includes `agents/artifact-validator.md`, `agents/pmpo-executor.md`, and multiple `skills/.../SKILL.md` files. The Boss installer evidence says it copies directories under `resources/skills/` into `{userData}/Data/Skills/`.",
+      "fix": "Separate `skills` from `agents` in the integration assessment: either show The Boss has an agent-bundling seam, or add an explicit open question for agent installation."
+    }
+  ],
+  "confirmed_sound": [
+    "The hash portability risk is supported by the Python hash implementation: `event_sha256` drops `observedAt`, uses sorted compact JSON, and therefore includes `elapsedHours`; the golden receipt contains `elapsedHours: 0.0`. The assessment appropriately limits the finding to one observed receipt.",
+    "The two event-shape finding is supported: `events.jsonl` entries have keys like `id`, `kind`, `session_id`, `timestamp`, and `kind: compiled`, while the golden receipt event uses `schemaVersion`, `eventId`, `boundary`, `status`, `phaseId`, etc.",
+    "The 256 KiB payload bound and secret rejection are supported by upstream lines 270-281, including `len(serialized.encode()) > 256_000` and `SECRET.search(serialized)`.",
+    "The SECRET regex top-level alternative count of 7 is correct from the provided regex: key/value secret, bearer, private key, GitHub token, Slack token, AWS AKIA, and OpenAI `sk-` token.",
+    "Gap 1 is supported for skills copied as isolated directories: The Boss copies each directory under `resources/skills/`, while the pack's skill docs invoke `node scripts/...` paths outside an individual skill folder.",
+    "Gap 4 is supported for `rust-mcp-filesystem`: The Boss build scripts cover win x64+arm64, mac x64+arm64, linux x64+arm64; `rust-mcp-filesystem` targets omit `aarch64-pc-windows-msvc`.",
+    "Gap 6's core graph-per-workspace issue is supported by the compass `.mcp.json` invocation requiring `--graph .../graph.json`.",
+    "The scope recommendation to split The Boss integration into its own phase is broadly honest: the supported gaps span this pack, The Boss packaging/hook wiring, and upstream binary targets."
+  ],
+  "notes": "The assessment generally leads with missing work and unknowns rather than burying them. The blocking issues are not that the overall direction is wrong, but that one of the six named integration gaps is entirely unsupported in the packet, and a separate hook-root failure mode is omitted despite being visible from the provided `hooks.json`."
+}

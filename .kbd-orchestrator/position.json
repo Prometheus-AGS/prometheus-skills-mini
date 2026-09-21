@@ -2,15 +2,16 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 13,
-  "derivedRevision": 13,
+  "sourceRevision": 17,
+  "derivedRevision": 17,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 13
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 17
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-21T16:06:59.982332Z",
+  "updatedAt": "2026-09-21T17:47:07.401839Z",
   "cursor": [
-    "hook-entry-node-only"
+    "karpathy-logs-node",
+    "assess"
   ],
   "root": {
     "type": "phase",
@@ -50,6 +51,18 @@
             }
           }
         ],
+        "annotations": []
+      },
+      {
+        "type": "phase",
+        "id": "karpathy-logs-node",
+        "canonicalId": "karpathy-logs-node",
+        "status": "PENDING",
+        "progress": {
+          "done": 0,
+          "total": 0
+        },
+        "children": [],
         "annotations": []
       },
       {

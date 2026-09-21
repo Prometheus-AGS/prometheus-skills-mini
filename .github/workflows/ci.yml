@@ -1,0 +1,52 @@
+# CI for prometheus-skills-mini.
+#
+# The point of this workflow is evidence. Nothing in this repository has been
+# observed on Windows, and the development host runs a Current (non-LTS) Node,
+# so every Windows and LTS claim is self-reported until these jobs run.
+#
+# The Windows legs check out with core.autocrlf=true on purpose: that is the
+# default most likely to break the rules build and its parsers, so it is the
+# one worth testing against.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: ${{ matrix.os }} · node ${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        node: [22, 24]
+
+    steps:
+      # Before checkout, so the checkout itself is performed under the hostile
+      # default and .gitattributes has to do its job.
+      - name: Check out under the hostile line-ending default
+        if: runner.os == 'Windows'
+        run: git config --global core.autocrlf true
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - run: npm ci
+
+      - run: node --test
+
+      - run: node rules/build.mjs --check
+
+      # The pinned CLI's JavaScript entry, run by node directly: no npx, no
+      # .cmd shim, no global install. platform-spawn replaces this one step
+      # with `node scripts/spec-validate.mjs`.
+      - run: node node_modules/@fission-ai/openspec/bin/openspec.js validate --all --no-interactive

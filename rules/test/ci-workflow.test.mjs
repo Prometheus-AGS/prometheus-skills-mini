@@ -35,11 +35,12 @@ test('every job runs the four verification commands in order', () => {
 });
 
 test('validation uses the pinned CLI, never a shim or a global install', () => {
-  const text = workflow();
+  // Executable lines only: a comment may legitimately mention npx to say it is not used.
+  const commands = runSteps(workflow());
 
-  assert.doesNotMatch(text, /\bnpx\b/);
-  assert.doesNotMatch(text, /^\s*- run:\s*openspec\b/m);
-  assert.match(text, /node node_modules\/@fission-ai\/openspec\/bin\/openspec\.js/);
+  assert.deepEqual(commands.filter((command) => /\bnpx\b/.test(command)), []);
+  assert.deepEqual(commands.filter((command) => /^openspec\b/.test(command)), []);
+  assert.ok(commands.some((command) => command.includes('node_modules/@fission-ai/openspec/bin/openspec.js')));
 });
 
 test('windows checks out under the hostile autocrlf default, before checkout', () => {

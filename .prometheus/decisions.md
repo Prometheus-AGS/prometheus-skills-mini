@@ -72,3 +72,25 @@ reported as degraded when down).
 
 This is a **behaviour change from upstream, made deliberately and recorded**, not a porting error. The
 hook id, event and timeout are unchanged, so the manifest and the six-id scenario still hold.
+
+## 2026-09-21 — provider resolution ports 4 of 6 tiers; tiers 4–5 are dead upstream
+
+`state-resolve-provider.sh` declares a six-tier waterfall. Tiers 4 and 5 read:
+
+```sh
+if command -v mcp 2>/dev/null | grep -q "refiner_state" 2>/dev/null; then
+```
+
+`command -v` prints the **path** of an executable, not a list of tools it offers. On this machine
+`command -v mcp` prints `/Users/gqadonis/.pyenv/shims/mcp`, which contains neither `refiner_state` nor
+`memory`, so **neither tier can ever fire** regardless of what MCP servers are configured. Verified by
+running the comparison.
+
+**Decision:** port the four reachable tiers — env var, project-local, global config, filesystem default —
+and do not port the two unreachable ones. Carrying them would reproduce a latent bug and add code with
+no observed problem (A-2). If MCP-backed state is wanted later it needs a real capability probe, which
+is a change with its own spec, not a line resurrected from a broken conditional.
+
+The filesystem default is unchanged and is what actually runs today, so no behaviour anyone depends on
+is lost. The only non-markdown reference to the script anywhere in the upstream repo is the script
+itself.

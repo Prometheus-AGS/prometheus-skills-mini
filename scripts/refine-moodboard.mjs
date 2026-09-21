@@ -1,4 +1,19 @@
 #!/usr/bin/env node
+// UNAVAILABLE IN THIS PROJECT
+//
+// This script shells out to template-forge, resolved as
+// tools/template-forge-rs/target/release/template-forge. That directory does not
+// exist in prometheus-skills-mini: the Rust template-forge toolchain was not
+// carried with the refiner, and porting it is a separate change.
+// design-svg-logo additionally calls rsvg-convert.
+//
+// So it cannot run here on ANY platform — this is not a Windows-specific
+// failure. It is carried so its interface stays visible, and it says so at the
+// top rather than failing several steps into a task with an opaque ENOENT.
+//
+// Follow-up: carry the template-forge toolchain, or drop these scripts.
+// Tracked in .prometheus/decisions.md (2026-09-21, scope of the refiner port).
+
 // refine-moodboard.mjs
 //
 // LLM-primary moodboard synthesizer. First script in this repo where the LLM

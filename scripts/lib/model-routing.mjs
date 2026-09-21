@@ -25,15 +25,14 @@
 // endpoints run an actual probe.
 
 import { readFileSync, existsSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { execSync } from "node:child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const REPO_ROOT = resolve(__dirname, "..", "..");
 const PROJECT_JSON = resolve(REPO_ROOT, ".kbd-orchestrator/project.json");
-const HEALTH_PROBE_SCRIPT = resolve(REPO_ROOT, "scripts/check-openai-proxy-health.sh");
 
 const HEALTH_CACHE = new Map(); // probe_url -> { healthy: bool, reason: string, at: ms }
 const HEALTH_TTL_MS = 30_000;
@@ -61,20 +60,32 @@ function probeEndpoint(endpointId, endpointConfig) {
   if (cached && Date.now() - cached.at < HEALTH_TTL_MS) {
     return { healthy: cached.healthy, reason: cached.reason + "_cached" };
   }
-  // Invoke the probe script
-  if (!existsSync(HEALTH_PROBE_SCRIPT)) {
-    const result = { healthy: false, reason: "probe_script_missing" };
-    HEALTH_CACHE.set(probeUrl, { ...result, at: Date.now() });
-    return result;
-  }
+  // Probe in Node, not by shelling out to bash + curl. The upstream script
+  // needed both, and stock Windows has neither — that was the one hazard the
+  // analysis named, at this line.
+  //
+  // probeEndpoint and its callers are synchronous, so the request runs in a
+  // short-lived child node process with shell: false. Making this async would
+  // ripple through openai-client.mjs and model-routing-probe.mjs, and this is a
+  // review of carried code rather than a rewrite of it.
   try {
-    const env = { ...process.env, OPENAI_PROXY_HEALTH_URL: probeUrl };
-    execSync(`bash "${HEALTH_PROBE_SCRIPT}"`, { env, stdio: "pipe", timeout: 5000 });
-    const result = { healthy: true, reason: "probe_ok" };
+    const probe = spawnSync(
+      process.execPath,
+      [
+        "-e",
+        `fetch(process.argv[1],{signal:AbortSignal.timeout(4000)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))`,
+        probeUrl,
+      ],
+      { shell: false, timeout: 5000, stdio: "ignore" },
+    );
+    const healthy = probe.status === 0;
+    const result = healthy
+      ? { healthy: true, reason: "probe_ok" }
+      : { healthy: false, reason: `probe_failed:${probe.status ?? "unknown"}` };
     HEALTH_CACHE.set(probeUrl, { ...result, at: Date.now() });
     return result;
   } catch (err) {
-    const result = { healthy: false, reason: `probe_failed:${err.status ?? "unknown"}` };
+    const result = { healthy: false, reason: `probe_failed:${err.code ?? "unknown"}` };
     HEALTH_CACHE.set(probeUrl, { ...result, at: Date.now() });
     return result;
   }

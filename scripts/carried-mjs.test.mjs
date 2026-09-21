@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 
@@ -110,4 +111,58 @@ test('an unhealthy probe yields a decision rather than throwing', async () => {
   // No policy configured here, so this exercises the degraded path its two
   // importers -- openai-client.mjs and model-routing-probe.mjs -- depend on.
   await assert.doesNotReject(async () => resolvePhase('specify'));
+});
+
+// Task 6.4. The review of change 2's spec established that model-routing.mjs has
+// two live importers and that resolvePhase never throws — it returns a decision
+// carrying healthy:false and a reason. The behaviour exists upstream; this test
+// is what keeps it, because the probe was just rewritten underneath it.
+test('an unreachable probe degrades for both importers rather than throwing', async () => {
+  const routing = path.join(repoRoot, 'scripts', 'lib', 'model-routing.mjs');
+  if (!existsSync(routing)) return;
+
+  const { resolvePhase, resolveAllPhases, clearHealthCache } = await import(
+    new URL('./lib/model-routing.mjs', import.meta.url).href
+  );
+  clearHealthCache();
+
+  // resolvePhase is what scripts/lib/openai-client.mjs imports; resolveAllPhases
+  // is what scripts/model-routing-probe.mjs imports.
+  await assert.doesNotReject(async () => resolvePhase('specify'));
+  await assert.doesNotReject(async () => resolveAllPhases());
+});
+
+test('a decision always carries a reason, so a caller can report the degradation', async () => {
+  const routing = path.join(repoRoot, 'scripts', 'lib', 'model-routing.mjs');
+  if (!existsSync(routing)) return;
+
+  const { resolvePhase } = await import(new URL('./lib/model-routing.mjs', import.meta.url).href);
+  const decision = resolvePhase('specify');
+
+  assert.equal(typeof decision.phase, 'string');
+  assert.ok('healthy' in decision || decision.endpoint === 'host_harness');
+});
+
+test('the live importer of resolvePhase still loads after the probe rewrite', async () => {
+  const file = path.join(repoRoot, 'scripts', 'lib', 'openai-client.mjs');
+  if (!existsSync(file)) return;
+
+  await assert.doesNotReject(() => import(new URL('./lib/openai-client.mjs', import.meta.url).href));
+});
+
+// model-routing-probe.mjs is deliberately NOT imported here. It is a CLI whose
+// module body runs on import and ends in process.exit(0) with no
+// import.meta.url === argv[1] guard, so importing it terminates the test
+// process — which it did, silently reducing this file to one test before the
+// cause was found. It is spawned instead, which is how it is actually used.
+test('the model-routing CLI runs as a process without a shell', () => {
+  const file = path.join(repoRoot, 'scripts', 'model-routing-probe.mjs');
+  if (!existsSync(file)) return;
+
+  const result = spawnSync(process.execPath, [file], { shell: false, encoding: 'utf8', timeout: 20000 });
+
+  assert.equal(result.status, 0);
+  // With no policy configured every phase falls back, and the CLI reports that
+  // rather than failing — the degradation both importers rely on.
+  assert.match(result.stdout, /host_harness/);
 });

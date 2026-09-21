@@ -163,3 +163,21 @@ Two things worth keeping from this:
    the argument for deriving a list mechanically rather than enumerating what you expect to find.
 
 Worth reporting upstream; not fixed here, because this project does not own that repository.
+
+## 2026-09-21 — importing a CLI silently truncated a test file
+
+`scripts/model-routing-probe.mjs` is a CLI: its module body runs on import, prints a routing table and
+ends with `process.exit(0)`. It has no `import.meta.url === argv[1]` guard, which is the pattern
+`scripts/hook-entry.mjs` uses for exactly this reason.
+
+A test that imported it to check the module still loads **terminated the test process mid-run**. The
+runner reported `tests 1 / pass 1 / fail 0` — green, and nine tests never executed. Nothing failed;
+the file just stopped.
+
+**The symptom to recognise:** a test file whose reported count is far below its `test()` count. Check
+with `grep -c '^test('` against the runner's total. I caught it because 1 did not match 9.
+
+**Fix:** spawn a CLI, never import it. The carried `.mjs` came from a repo where these files are only
+ever run, so several may have top-level effects; `openai-client.mjs` is a library and imports cleanly.
+
+Worth reporting upstream as a missing entry guard, though it is harmless when the file is only executed.

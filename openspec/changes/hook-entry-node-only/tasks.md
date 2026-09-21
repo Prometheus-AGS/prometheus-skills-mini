@@ -37,5 +37,5 @@
 
 ## 6. Exit evidence
 
-- [ ] 6.1 For every claim this change makes about Windows, cite the named asserting test and its verbatim output from **both** Node 22 and Node 24 on `windows-latest`, as `platform-foundation` established.
-- [ ] 6.2 T2 at change completion: `node --test`, `node rules/build.mjs --check`, `node scripts/spec-validate.mjs`. State which tier ran (A-6, A-9).
+- [x] 6.1 **DONE — 10 claims, each with a verbatim named test from BOTH node 22 (TAP) and node 24 (spec reporter), run 35601170970.** All 10 cited names verified to exist in the suite (`git grep -F`) and to appear verbatim in the run log. `evidence/windows.md`. For every claim this change makes about Windows, cite the named asserting test and its verbatim output from **both** Node 22 and Node 24 on `windows-latest`, as `platform-foundation` established.
+- [x] 6.2 **T2 ran (A-6, A-9):** `node --test` → 148 tests, 147 pass, 0 fail, 1 skipped (win32-only, correctly skipped on macOS); `node rules/build.mjs --check` → 20 files current; `node scripts/spec-validate.mjs` → 9 passed, 0 failed; `npm run coverage` → `rules/build.mjs: 102/102 lines = 100.00%`. All 10 automated constraints clean. T2 at change completion: `node --test`, `node rules/build.mjs --check`, `node scripts/spec-validate.mjs`. State which tier ran (A-6, A-9).

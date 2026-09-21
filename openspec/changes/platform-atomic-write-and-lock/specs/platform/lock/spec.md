@@ -14,6 +14,10 @@
 ### Requirement: Explicit non-guarantees
 The lock SHALL NOT attempt stale-lock detection, waiting, or takeover.
 
+#### Scenario: Release respects a newer holder
+- **WHEN** a lock is removed by hand, acquired by a second writer, and the first writer's release then runs
+- **THEN** the second writer's lock file survives untouched
+
 #### Scenario: Stale lock is not recovered
 - **WHEN** a lock file is left behind by a crashed process
 - **THEN** `acquireLock` rejects, and the error message tells the operator which file to remove

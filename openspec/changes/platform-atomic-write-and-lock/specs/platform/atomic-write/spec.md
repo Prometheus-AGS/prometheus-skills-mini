@@ -7,6 +7,10 @@
 - **WHEN** `atomicWrite` completes
 - **THEN** `path` holds exactly `content` and no temporary file remains in the directory
 
+#### Scenario: A bystander file is never truncated
+- **WHEN** a file already exists at the temporary path `atomicWrite` would use
+- **THEN** the write fails with `EEXIST` rather than overwriting it, and that file is unchanged
+
 #### Scenario: Missing parent directories
 - **WHEN** `atomicWrite` targets `<dir>/a/b/file.json` and neither `a` nor `b` exists
 - **THEN** both are created, the file holds exactly `content`, and no temporary file remains

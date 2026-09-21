@@ -1,0 +1,42 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment does not assess the goal requirement that parsers tolerate CRLF input.",
+      "evidence": "Goal: \".gitattributes \u2014 text=auto eol=lf; parsers tolerate CRLF on input\". Assessment only states: \".gitattributes: MISSING \u2014 core.autocrlf is unset on this machine; no CRLF exists in the tree today, which says nothing about a Windows checkout.\" No parser locations, parser behavior, or CRLF-input tolerance gap is analyzed.",
+      "suggested_fix": "Add a specific gap for CRLF input tolerance: identify which parsers/readers exist or state that none exist yet, and specify what must be tested or changed."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment only partially covers the node:test harness goal and omits the Arrange-Act-Assert and tests-written-first requirements.",
+      "evidence": "Goal: \"node:test harness \u2014 Arrange-Act-Assert, tests written first; package.json with engines.node >= 22 and test/check scripts\". Assessment says: \"node:test harness: PARTIAL \u2014 20 node:test tests pass by auto-discovery. There is no package.json, so no engines field, no test/check scripts...\" It does not assess whether tests follow Arrange-Act-Assert or whether tests were written first.",
+      "suggested_fix": "Add explicit findings for AAA structure and tests-first evidence, or state that tests-first cannot be verified from the repository state."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The CI blocker claim depends on git repository state that is not supported by the packet and is inconsistent with the constraints note.",
+      "evidence": "Assessment claims: \"the repository has zero commits and no remote, so no CI can run anywhere.\" The constraints instead state: \"They cannot run yet: this directory is not a git repository.\" The file_tree contains no .git metadata, so the packet supports neither \"zero commits\" nor a configured remote state.",
+      "suggested_fix": "Replace with a packet-supported statement such as: \"No .github/ workflow exists; git hosting/remote status is outside the provided tree and must be confirmed before planning CI.\""
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "Several precise codebase-health claims are not supported by the provided file tree or artifacts.",
+      "evidence": "Assessment states: \"Codebase baseline: 407 lines of Node ESM\", \"20 node:test tests pass\", and \"Node reports 98.74% lines\". The packet provides only the directory tree, goals, constraints, and assessment text; no file contents, test output, or coverage report is included.",
+      "suggested_fix": "Either include the command outputs/provenance used for these measurements or downgrade these to unverified observations that must be confirmed in the next phase."
+    }
+  ]
+}

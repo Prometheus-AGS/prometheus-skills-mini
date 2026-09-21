@@ -1,0 +1,117 @@
+schema: spec-driven
+
+context: |
+  prometheus-skills-mini is a Windows-native, scaled-down port of
+  prometheus-skill-pack: KBD + PMPO process skills, OpenSpec as the default
+  spec backend, Karpathy logging / self-improvement, a Node template engine,
+  and Rust toolkit skills. See README.md for the full port analysis.
+
+  Hard constraints (every change must satisfy all of them):
+  - Runs on Windows from cmd.exe / PowerShell with no WSL and no Git Bash.
+  - Node.js LTS (>= 22) is the only script runtime. All hooks and scripts are
+    ESM .mjs files invoked as `node <file>`; hooks use exec form
+    ("command": "node", "args": [...]), never a shell string.
+  - No .sh files. No .ps1 unless a cross-platform equivalent ships with it.
+  - No Python anywhere, including in rendered templates.
+  - No jq, sed, grep, awk, curl, mktemp, or chmod in scripts or in SKILL.md
+    instructions.
+  - No symlinks; installers copy. No reliance on the executable bit.
+  - Paths via path.join, os.homedir(), os.tmpdir(); never ~, $HOME, or /tmp.
+  - Child processes via spawn with shell: false and an args array.
+  - OpenSpec is the default SpecBackend; native-kbd is the fallback. No ZeeSpec.
+  - Templates are Nunjucks (*.njk), autoescape off.
+  - Exactly two resident services are kept from the source pack:
+    (1) surreal-memory server backed by SurrealDB, and (2) the liter-llm
+    gateway, which serves the adversarial-review critic and judge models.
+    On Windows both run in Docker via docker/compose.yaml (three containers:
+    surrealdb, surreal-memory, liter-llm). On macOS and Linux they run exactly
+    as in the source pack today (native launchd/systemd; the same compose file
+    also works there). No other daemon, database, or listening port.
+  - Endpoints and names are identical on every platform, so code has no
+    platform branches for them: SurrealDB 127.0.0.1:28000, surreal-memory
+    http://localhost:23001/mcp/sse, liter-llm http://localhost:4000/v1,
+    models kbd-judge and kbd-critic. Only how the process is started differs.
+  - Compose rules: publish ports on 127.0.0.1 only; credentials and provider
+    keys come from a git-ignored env file, never inline; named volumes, never
+    bind mounts built from HOME; a memory limit on every service; pinned image
+    versions. No Windows services, no Task Scheduler.
+  - The KBD loop must keep working with both services down: memory writes go
+    to a durable local outbox and are flushed later; review falls back to a
+    fresh-context subagent and records isolation_mode=harness-native. Hooks
+    that touch a service always exit 0.
+  - The pack's own code never enters WSL or calls wsl.exe. Docker Desktop's
+    backend (WSL 2 or Hyper-V) is Docker's concern; the pack reaches containers
+    over loopback TCP only. Beyond Docker, the pack depends on node, git, and
+    the openspec CLI. Other MCP servers are optional.
+  - Rust skills are guidance and scaffolding only; nothing requires a Rust
+    toolchain or Rust binary on the Windows host (the two Rust services arrive
+    as containers). Scaffolded MCP servers are STDIO only, log to stderr, and
+    use no unix-only APIs (nix, libc, unix sockets, sh -c).
+  - Must fit a 16 GB RAM machine, including the Docker VM (capped at about
+    4 GB) and Rust builds.
+  - Logs are Open Knowledge Format v0.2 bundles (write 0.2, read 0.1 and 0.2):
+    frontmatter `type` on every non-reserved .md; generated {by, at}; verified
+    [{by, at}]; status; stale_after; sources as mappings. events.jsonl is the
+    append-only truth and is outside OKF; log.md is rendered from it, newest
+    first, by atomic rewrite. Never append to log.md.
+  - Three tiers of log, one format: project (.prometheus/ in the repo),
+    personal (the developer's own private git repo), team (a team git repo).
+    Selection is a registry merged from .prometheus/sources.json (committed),
+    ~/.prometheus/sources.json (personal) and .prometheus/sources.local.json
+    (git-ignored). Clones live under ~/.prometheus/sources/<id>/. No
+    submodules, no symlinks. A private repository URL never appears in a
+    project repository.
+  - Every assess and plan stage needs a fresh sources-receipt.json naming each
+    selected source and its resolved commit SHA. sync is fetch + fast-forward
+    only, time-boxed, and degrades offline; it never merges, rebases or forces.
+  - A team log changes only by pull request. An agent never writes to it
+    directly and never pushes any log, at any tier: the developer pushes.
+    sources sync reports unpushed commits and uncommitted files. Promotion out of a private or client
+    log needs per-entry opt-in, secret rejection and path redaction.
+  - pk (prometheus-knowledge-rs) is an optional accelerator. Nothing may
+    require it. The contract between pk and the Node implementation is the
+    on-disk OKF bundle, not an API.
+  - deep-research and adversarial-review are in scope, each as its own phase
+    after platform-foundation. The Rust prometheus-research server is not
+    shipped; deep-research runs in checkpoint mode only.
+  - Agent rules follow Prometheus Rules Architecture v4. Edit rules/src/ only;
+    CLAUDE.md, AGENTS.md, .claude/rules/, .cursor/rules/ and
+    docs/skill-routing.md are generated by `node rules/build.mjs`. AGENTS.md
+    is a generated copy of CLAUDE.md, not a symlink.
+
+  Conventions: small focused modules (200-400 lines, 500 max — the v4 rule;
+  partition by responsibility, never by line count), immutable data
+  patterns, explicit error handling, node:test with AAA structure, tests
+  written first, CI on windows-latest + ubuntu-latest + macos-latest,
+  conventional commits.
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+# Example:
+#   context: |
+#     Tech stack: TypeScript, React, Node.js
+#     We use conventional commits
+#     Domain: e-commerce platform
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing

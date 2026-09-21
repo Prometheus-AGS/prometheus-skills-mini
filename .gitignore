@@ -1,0 +1,22 @@
+# Secrets for the Docker services — referenced by .kbd-orchestrator/constraints.md (no-hardcoded-secrets)
+docker/.env
+
+# KBD runtime artefacts — per-machine, never committed (same list as prometheus-skill-pack).
+# Everything else under .kbd-orchestrator/ is tracked project state.
+.kbd-orchestrator/memory-outbox.jsonl
+.kbd-orchestrator/model-preflight.json
+.kbd-orchestrator/runtime/
+.kbd-orchestrator/PAUSE
+.kbd-orchestrator/position-reminder.txt
+.kbd-orchestrator/**/hooks-status.json
+.kbd-orchestrator/**/hooks.log.jsonl
+*.log.lock
+*.jsonl.lock
+
+# Dependencies and atomic-write leftovers
+node_modules/
+*.tmp
+
+# OS noise
+.DS_Store
+Thumbs.db

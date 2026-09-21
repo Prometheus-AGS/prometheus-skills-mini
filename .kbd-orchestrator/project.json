@@ -1,0 +1,139 @@
+{
+  "name": "prometheus-skills-mini",
+  "projectId": "prometheus-skills-mini",
+  "__projectId_note": "kbd-memory-log derives the memory entity id from `.project // .projectId`, which the kbd-init template never writes; without this key every lifecycle event from this repo is filed under `unknown/`.",
+  "description": "Windows-native, scaled-down port of prometheus-skill-pack: KBD + PMPO skills, OpenSpec, Karpathy logging, Nunjucks templates, Rust toolkit skills — Node.js-only scripts, two Docker-managed services.",
+  "activePhase": "platform-foundation",
+  "updatedAt": "2026-09-21T02:30:52Z",
+  "worktreeRoot": "${HOME}/.claude/worktrees",
+  "__worktreeRoot_note": "Template default, kept verbatim because the installed KBD skills (bash originals) expand ${HOME} themselves. This repo's own code must never read it that way — use os.homedir(). Revisit when the Node port of kbd-new-child lands.",
+  "maxChildDepth": 4,
+  "ux_profile": "advanced",
+  "__ux_profile_note": "advanced → kbd-status is dense by default; beginner → kbd-status --explain is on by default (expands decision-log entries + next-and-why narrative). Verbosity only — never gates information.",
+  "specBackend": "openspec",
+  "spec_paths": [
+    "openspec/specs/*.md",
+    "openspec/specs/**/spec.md"
+  ],
+  "openspec_available": true,
+  "constraint_file": ".kbd-orchestrator/constraints.md",
+  "build_health_command": "node rules/build.mjs --check",
+  "__build_health_command_note": "There is no package.json and nothing to compile yet. The only generated artefacts are the agent rules, so the drift-and-budget check is the build. Replace when a real build exists.",
+  "test_command": "node --test",
+  "lint_command": null,
+  "__lint_command_note": "No linter is configured in this repo and none was invented. Per-file syntax feedback is `node --check <file>` (tier T0 in .claude/rules/node-scripts.md).",
+  "dev_command": null,
+  "spec_validate_command": "openspec validate --all --no-interactive",
+  "__command_policy": "Every command here must run identically from cmd.exe, Windows PowerShell 5.1, bash and zsh: no `&&` chaining (PowerShell 5.1 rejects it), double quotes only, no grep/sed/jq/awk/curl. Nothing that starts Docker belongs in a trigger — that is tier T3.",
+  "preferred_planning_agent": "claude-code",
+  "__preferred_planning_agent_note": "AGENTS.md has no Agent-Specific Notes section. The kbd-init default is `antigravity`, but this repo has no Antigravity configuration; `openspec init` configured Claude Code, Codex, Cursor and OpenCode. Chosen from that evidence — change freely.",
+  "preferred_execution_agents": [],
+  "model_policy": {
+    "__note": "Template defaults, unverified for this project. README §7 puts local model inference out of scope on 16 GB, which conflicts with the `local` Qwen entries below; the judge and critic resolve through liter-llm (kbd-judge / kbd-critic) at a higher precedence than this block. Needs an owner decision.",
+    "registry": {
+      "small": {
+        "local": "Qwen3.5-9B-Q8_0",
+        "t4": "Qwen3.5-9B-Q8_0",
+        "l4": "Qwen3.5-9B-Q8_0"
+      },
+      "medium": {
+        "local": null,
+        "t4": "Qwen3.5-27B-Q4",
+        "l4": "Qwen3.5-35B-A3B-Q4"
+      },
+      "frontier": {
+        "local": "claude-sonnet-4-6",
+        "t4": "claude-sonnet-4-6",
+        "l4": "claude-sonnet-4-6"
+      }
+    },
+    "phases": {
+      "kbd-assess": "frontier",
+      "kbd-plan": "frontier",
+      "kbd-status": "small",
+      "kbd-reflect": "frontier",
+      "opsx-new": "small",
+      "opsx-apply-low": "small",
+      "opsx-apply-medium": "medium",
+      "opsx-apply-high": "frontier",
+      "opsx-verify": "medium",
+      "opsx-archive": "small",
+      "refiner-iterate": "small",
+      "refiner-evaluate": "medium",
+      "evolver-assess": "frontier",
+      "evolver-analyze": "frontier",
+      "evolver-plan": "frontier",
+      "evolver-execute-low": "small",
+      "evolver-execute-medium": "medium",
+      "evolver-execute-high": "frontier",
+      "evolver-reflect": "frontier",
+      "evolver-status": "small",
+      "creator-specify": "frontier",
+      "creator-plan": "frontier",
+      "creator-execute": "tiered",
+      "creator-reflect": "frontier",
+      "creator-persist": "small"
+    },
+    "active_environment": "local"
+  },
+  "agents_config": {
+    "claude-code": {
+      "entry": "CLAUDE.md + .claude/rules (path-scoped) + .claude/skills; /opsx:* commands",
+      "strengths": [
+        "planning",
+        "multi-file features",
+        "subagent-driven work"
+      ]
+    },
+    "codex": {
+      "entry": "AGENTS.md + .agents/skills; $openspec-* skills",
+      "strengths": [
+        "parallel isolated tasks via git worktrees"
+      ]
+    },
+    "cursor-agent": {
+      "entry": "AGENTS.md + .cursor/rules/*.mdc (globs) + /opsx-* commands",
+      "strengths": [
+        "parallel subagent tasks",
+        "refactoring"
+      ]
+    },
+    "opencode": {
+      "entry": "AGENTS.md + .opencode/commands /opsx-*",
+      "strengths": [
+        "quick targeted edits",
+        "file patches"
+      ]
+    }
+  },
+  "focus_project_path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini",
+  "workspace": {
+    "workspace_file": null,
+    "__note": "Five .code-workspace files exist in the parent directories; none lists this project, so this is single-project mode. The reference folder below was added by hand, not discovered: this repo is a port of it, it is read constantly, and it has live worktrees — write drift into it is the real risk the role system exists for.",
+    "folders": [
+      {
+        "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini",
+        "role": "focus",
+        "purpose": "Active project — all KBD operations target this directory",
+        "write_access": true
+      },
+      {
+        "path": "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack",
+        "role": "reference",
+        "purpose": "Port source. Read skills, hooks, shared scripts and Docker assets from here; never write. Its bash/Python is the behaviour to reproduce in Node, not code to copy.",
+        "read_paths": [
+          "skills/process/**",
+          "skills/rust/**",
+          "hooks/*.json",
+          "scripts/hook-entry.mjs",
+          "shared/scripts/**",
+          "tools/surreal-memory-server/Dockerfile",
+          "tools/surreal-memory-server/docker-compose*.y*ml",
+          "tools/liter-llm/docker/**",
+          ".worktrees/gomark-rules-architecture-v4/skills/process/prometheus-context-bootstrap/references/rules-src/**"
+        ],
+        "write_access": false
+      }
+    ]
+  }
+}

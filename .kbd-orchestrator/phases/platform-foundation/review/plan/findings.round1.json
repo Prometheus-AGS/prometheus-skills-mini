@@ -1,0 +1,34 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The plan assigns agents to edit `project.json`, which violates the path ownership constraint and is ambiguous because two `project.json` files exist.",
+      "evidence": "Change 1 scope includes \"`project.json` command fields\" and Change 4 scope includes \"`project.json` + `constraints.md` command fields\". The constraints say: \"`.kbd-orchestrator/` | KBD | Repository-owned state, tracked. Skills other than `/kbd-init` never write `project.json`.\" The packet also reports `project.json` has \"2 matches (.kbd-orchestrator/project.json, .prometheus/project.json)\".",
+      "suggested_fix": "Remove `project.json` edits from implementation changes, or make the exact allowed file and owner action explicit; do not have `/opsx:new` implementation agents modify `.kbd-orchestrator/project.json`."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The Windows evidence scope points to a missing root-level `phases/` path instead of the existing phase directory under `.kbd-orchestrator/`, so evidence will be written to the wrong place.",
+      "evidence": "Change 6 scope says: \"`phases/platform-foundation/evidence/windows.md`\". The cited paths section reports \"MISSING phases/platform-foundation/evidence/windows.md\", while existing phase artifacts are under `.kbd-orchestrator/phases/platform-foundation/` per `assessment.md -> .kbd-orchestrator/phases/platform-foundation/assessment.md`, `analysis.md -> .kbd-orchestrator/phases/platform-foundation/analysis.md`, and `goals.md -> .kbd-orchestrator/phases/platform-foundation/goals.md`.",
+      "suggested_fix": "Change the scope to `.kbd-orchestrator/phases/platform-foundation/evidence/windows.md`, or explicitly create and justify a new root-level `phases/` convention."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The implementation order contradicts the prior assessment\u2019s required sequencing for Windows-observed behavior.",
+      "evidence": "The assess handoff says: \"CI should land before the EPERM/.cmd defensive code so it can be observed on windows-latest\". The plan instead orders `platform-atomic-write-and-lock` and `platform-spawn` in Round 3, with `ci-three-os` only in Round 4.",
+      "suggested_fix": "Move the minimal CI workflow earlier, before the Windows-specific atomic-write retry and spawn behavior are implemented, or explicitly justify why the assessment sequencing is being rejected and how first-observation evidence will still be preserved."
+    }
+  ]
+}

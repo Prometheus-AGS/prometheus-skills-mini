@@ -1,0 +1,24 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "claim": "The universal change-completion command depends on a script that is not created until change 5, making changes 1\u20134 impossible to execute as specified.",
+      "evidence": "The plan says under \"HOW EVERY CHANGE IS EXECUTED\": \"T2 at change completion `node --test`, `node rules/build.mjs --check`, `node scripts/spec-validate.mjs`\". But change 5 is the first change that creates it: \"Scope: `lib/platform/spawn.mjs`, `scripts/spec-validate.mjs`, a `spec:validate` script in `package.json`...\" and the cited paths list says \"MISSING scripts/spec-validate.mjs\".",
+      "suggested_fix": "For changes before platform-spawn, require the current OpenSpec validation command or the direct local JS entry after change 1; only switch T2 to `node scripts/spec-validate.mjs` after change 5 lands."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "claim": "The command sequence contradicts the required implementation order by creating `ci-three-os` after changes that depend on it.",
+      "evidence": "The execution order says \"Round 2: ci-three-os\" and change 3 depends on it: \"Depends on: project-scaffold, ci-three-os\"; change 5 also depends on it: \"Depends on: project-scaffold (the devDependency), ci-three-os, platform-paths-and-text\". But \"COMMANDS TO RUN\" lists `/opsx:new ci-three-os` fifth, after `/opsx:new platform-paths-and-text`, `/opsx:new platform-atomic-write-and-lock`, and `/opsx:new platform-spawn`.",
+      "suggested_fix": "Reorder \"COMMANDS TO RUN\" to match the dependency order: project-scaffold, ci-three-os, platform-paths-and-text, platform-atomic-write-and-lock, platform-spawn, windows-evidence."
+    }
+  ]
+}

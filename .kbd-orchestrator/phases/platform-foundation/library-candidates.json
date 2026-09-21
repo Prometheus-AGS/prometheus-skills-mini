@@ -1,0 +1,458 @@
+{
+  "phase": "platform-foundation",
+  "generated_at": "2026-09-21T05:40:00Z",
+  "research_budget": {
+    "max_queries_per_tier": 8,
+    "max_minutes": 45,
+    "queries_used": {
+      "tier1": 1,
+      "tier2": 2,
+      "tier3": 7,
+      "tier4": 1
+    }
+  },
+  "gaps_addressed": [
+    "lib/platform: atomic write",
+    "lib/platform: lock",
+    "lib/platform: spawn on Windows",
+    "spec backend: locating the openspec CLI",
+    "three-OS CI",
+    "karpathy self-improvement on Windows",
+    "log format: Open Knowledge Format",
+    "karpathy logs: project / personal / team tiers",
+    "karpathy logs: proving every selected log was read",
+    "node:test harness and package.json",
+    ".gitattributes and CRLF-tolerant parsing",
+    "lib/platform: first consumer",
+    "lib/platform: paths (home, temp, join)"
+  ],
+  "candidates": [
+    {
+      "id": "cand-001",
+      "name": "node:fs (writeFile to temp in same dir + rename)",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "lib/platform: atomic write",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "Already implemented privately in rules/build.mjs:54-59; 6 lines, zero dependencies."
+        },
+        {
+          "tier": 3,
+          "claim": "The bounded EPERM/EBUSY/EACCES rename retry (win32 only, fixed attempts, backoff) is an explicit phase goal and is required; windows-latest CI validates it with a test that holds the destination open. It does not decide whether it is written."
+        }
+      ]
+    },
+    {
+      "id": "cand-002",
+      "name": "write-file-atomic",
+      "kind": "library",
+      "registry": "npm",
+      "repo_url": "https://github.com/npm/write-file-atomic",
+      "fit_for_gap": "lib/platform: atomic write",
+      "verdict": "reference",
+      "coverage_estimate": 1,
+      "license": "ISC",
+      "maintenance": {
+        "last_release": "8.0.0, registry modified 2026-09-09"
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "npm view: write-file-atomic@8.0.0, ISC, one dependency (signal-exit), modified 2026-09-09 — maintained by npm."
+        },
+        {
+          "tier": 3,
+          "claim": "Reference rather than adopt: the pack ships with zero runtime dependencies today and hooks have a 1 s budget; read its Windows rename handling when the retry is justified by CI evidence."
+        }
+      ]
+    },
+    {
+      "id": "cand-003",
+      "name": "graceful-fs",
+      "kind": "library",
+      "registry": "npm",
+      "repo_url": "https://github.com/isaacs/node-graceful-fs",
+      "fit_for_gap": "lib/platform: atomic write",
+      "verdict": "reference",
+      "coverage_estimate": 0.5,
+      "license": "ISC",
+      "maintenance": {
+        "last_release": "4.2.11, registry modified 2023-06-09"
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "npm view: graceful-fs@4.2.11, ISC, no dependencies, last modified 2023-06-09."
+        },
+        {
+          "tier": 3,
+          "claim": "Its Windows rename retry is the canonical prior art for the EPERM/EACCES case; it monkey-patches fs, which conflicts with 'no framework magic' (B-7). Read, do not depend."
+        }
+      ]
+    },
+    {
+      "id": "cand-004",
+      "name": "fs.open(path, 'wx') lock file",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "lib/platform: lock",
+      "verdict": "adopt",
+      "coverage_estimate": 0.8,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "Direct equivalent of the O_WRONLY|O_CREAT|O_EXCL lock in the source pack's record-progress.py; no dependency."
+        },
+        {
+          "tier": 3,
+          "claim": "Not covered: stale-lock recovery after a crash. The source pack does not implement it either; do not add it unobserved."
+        }
+      ]
+    },
+    {
+      "id": "cand-005",
+      "name": "proper-lockfile",
+      "kind": "library",
+      "registry": "npm",
+      "repo_url": "https://github.com/moxystudio/node-proper-lockfile",
+      "fit_for_gap": "lib/platform: lock",
+      "verdict": "reject",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "maintenance": {
+        "last_release": "4.1.2, registry modified 2022-06-24"
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "npm view: last modified 2022-06-24 — unmaintained for four years; pulls in graceful-fs, retry and signal-exit."
+        }
+      ]
+    },
+    {
+      "id": "cand-006",
+      "name": "process.execPath + the CLI's JavaScript entry",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "lib/platform: spawn on Windows",
+      "verdict": "adopt",
+      "coverage_estimate": 0.9,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 2,
+          "source_url": "https://nodejs.org/api/child_process.html",
+          "claim": "Node docs, 'Spawning .bat and .cmd files on Windows': .bat/.cmd 'are not executable on their own without a terminal' and cannot be launched by execFile or by spawn without a shell. Resolving the shim path therefore does not help."
+        },
+        {
+          "tier": 3,
+          "claim": "openspec's bin is bin/openspec.js in @fission-ai/openspec; spawning node with that file needs no shell and no quoting and is identical on all three OSes."
+        },
+        {
+          "tier": 3,
+          "claim": "Covers Node CLIs only. git and docker are real executables and spawn by name; a tool that exists only as .cmd needs cand-007."
+        },
+        {
+          "tier": 3,
+          "claim": "The phase goal \".cmd shim resolution under shell:false\" is infeasible as written. Contract: spawnNodeCli(package, bin, args) and spawnExecutable(name, args); a .cmd-only tool is refused with a clear error. Goal text revision needs owner acceptance before plan."
+        }
+      ]
+    },
+    {
+      "id": "cand-007",
+      "name": "cross-spawn",
+      "kind": "library",
+      "registry": "npm",
+      "repo_url": "https://github.com/moxystudio/node-cross-spawn",
+      "fit_for_gap": "lib/platform: spawn on Windows",
+      "verdict": "reference",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "maintenance": {
+        "last_release": "7.0.6, registry modified 2024-11-18"
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "npm view: cross-spawn@7.0.6, MIT, deps which/path-key/shebang-command, modified 2024-11-18 (the ReDoS fix release)."
+        },
+        {
+          "tier": 3,
+          "claim": "It solves .cmd by routing through cmd.exe /d /s /c with argument escaping — a shell, with the escaping risk that implies. The pack has no .cmd-only dependency once openspec is handled by cand-006, so the need is unobserved."
+        }
+      ]
+    },
+    {
+      "id": "cand-008",
+      "name": "execa",
+      "kind": "library",
+      "registry": "npm",
+      "fit_for_gap": "lib/platform: spawn on Windows",
+      "verdict": "reject",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "maintenance": {
+        "last_release": "10.0.1, registry modified 2026-07-31"
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "npm view: 12 direct dependencies. Too heavy for hooks with a 1 s budget and a zero-dependency pack."
+        }
+      ]
+    },
+    {
+      "id": "cand-009",
+      "name": "@fission-ai/openspec as a pinned devDependency",
+      "kind": "library",
+      "registry": "npm",
+      "repo_url": "https://github.com/Fission-AI/OpenSpec",
+      "fit_for_gap": "spec backend: locating the openspec CLI",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "Observed on this machine: openspec is installed under nvm's Node 24 while `node` on PATH is fnm's Node 26, so `npm root -g` from the running Node cannot find it. A global CLI is unreliable to locate even before Windows is involved."
+        },
+        {
+          "tier": 3,
+          "claim": "A devDependency gives a fixed path (node_modules/@fission-ai/openspec/bin/openspec.js), a pinned version, and makes cand-006 deterministic. It is also the literal reading of the requirement 'include openspec natively'."
+        },
+        {
+          "tier": 3,
+          "claim": "npm view: @fission-ai/openspec@1.13.1, MIT, modified 2026-09-17, engines node >=20.19.0. Installed and exercised here: 1.10.0."
+        }
+      ],
+      "maintenance": {
+        "last_release": "1.13.1, registry modified 2026-09-17",
+        "pin": "1.10.0 — the version that ran openspec init in this repository; upgrade as a separate change",
+        "engines": "node >=20.19.0"
+      }
+    },
+    {
+      "id": "cand-010",
+      "name": "GitHub Actions matrix (actions/checkout + actions/setup-node)",
+      "kind": "service",
+      "registry": "none",
+      "fit_for_gap": "three-OS CI",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "windows-latest / ubuntu-latest / macos-latest × Node 22 and 24 is the only available source of Windows evidence; the host runs Node 26 (non-LTS), so CI is also the only LTS evidence."
+        },
+        {
+          "tier": 3,
+          "claim": "Blocked on an owner decision: the repository has no remote and the agent must not create or push one (A-16)."
+        },
+        {
+          "tier": 3,
+          "claim": "Required job steps: npm ci (the pinned openspec devDependency); node --test; node rules/build.mjs --check; node node_modules/@fission-ai/openspec/bin/openspec.js validate --all --no-interactive — the shell-free invocation, so Windows CI exercises the real path."
+        }
+      ]
+    },
+    {
+      "id": "cand-011",
+      "name": "prometheus-knowledge-rs (pk) v1.8.0 as an optional native accelerator",
+      "kind": "service",
+      "registry": "none",
+      "repo_url": "https://github.com/Prometheus-AGS/prometheus-knowledge-rs",
+      "fit_for_gap": "karpathy self-improvement on Windows",
+      "verdict": "adapt",
+      "coverage_estimate": 0.7,
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "Verified by git ref at 01a1dbe: three Windows blockers exactly as reported — ungated std::os::unix import in pk-cli/src/main.rs:1216; File::open(dir).sync_all() in pk-store/src/prompt_snapshot.rs:171 and pk-learning-worker/src/main.rs:922; Command::new(\"npx\") at pk-cli/src/main.rs:984. All other unix-only code is cfg-gated."
+        },
+        {
+          "tier": 3,
+          "claim": "A 3-file patch was prepared in a scratch export (not applied to any repository). The Windows branch is unverified: no Windows target is installed here."
+        },
+        {
+          "tier": 3,
+          "claim": "pk implements OKF v0.1 (writes `timestamp:` and string `sources`); OKF v0.2 renamed both, so 'latest OKF' requires a second, larger pk change."
+        },
+        {
+          "tier": 3,
+          "claim": "`pk doctor` hardcodes the source pack's bash hook payload names (karpathy-hook-dispatch.sh …), so it reports failures against a Node-only pack regardless of platform."
+        }
+      ]
+    },
+    {
+      "id": "cand-012",
+      "name": "Open Knowledge Format v0.2",
+      "kind": "pattern",
+      "registry": "none",
+      "repo_url": "https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md",
+      "fit_for_gap": "log format: Open Knowledge Format",
+      "verdict": "adopt",
+      "coverage_estimate": 0.8,
+      "evidence": [
+        {
+          "tier": 4,
+          "source_url": "https://raw.githubusercontent.com/GoogleCloudPlatform/knowledge-catalog/main/okf/SPEC.md",
+          "claim": "SPEC.md declares Version 0.2. Required: frontmatter `type` on every non-reserved .md. New optional families: sources (mappings with required `resource`), generated {by, at}, verified [{by, at}], status draft|stable|deprecated, stale_after. Renames from 0.1: timestamp → generated.at; body '# Citations' → `sources` frontmatter. Reserved filenames: index.md, log.md."
+        },
+        {
+          "tier": 4,
+          "source_url": "https://raw.githubusercontent.com/GoogleCloudPlatform/knowledge-catalog/main/okf/SPEC.md",
+          "claim": "§9 log.md is date-grouped, NEWEST FIRST, prose. The spec 'does not address time-series data, event streams, or append-only records' — so events.jsonl stays outside OKF and log.md must be a rendered projection, not an appended file."
+        },
+        {
+          "tier": 3,
+          "claim": "The 20% not covered: OKF has no event model. The append-only JSONL stream and the idempotency receipts remain this project's own formats."
+        }
+      ]
+    },
+    {
+      "id": "cand-013",
+      "name": "Sources registry + plain git clones under the user home",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "karpathy logs: project / personal / team tiers",
+      "verdict": "adopt",
+      "coverage_estimate": 0.85,
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "pk v1.8.0 has three hard-wired local scopes (pk-cli/src/main.rs:909-913) and no git, remote, team or per-project selection concept; Shared means cross-project on one machine."
+        },
+        {
+          "tier": 3,
+          "claim": "Observed on this machine: ~/.prometheus/knowledge is a symlink into a private git repository whose last commit is 2026-08-23 with 35 uncommitted files — the personal tier exists by hand, is unmaintained, and relies on a symlink Windows cannot create without elevation."
+        },
+        {
+          "tier": 3,
+          "claim": "Three registry files keep private repository URLs out of project repositories: .prometheus/sources.json (committed, team sources), ~/.prometheus/sources.json (personal, follows the developer), .prometheus/sources.local.json (git-ignored overrides)."
+        }
+      ]
+    },
+    {
+      "id": "cand-014",
+      "name": "Git submodules for team and personal logs",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "karpathy logs: project / personal / team tiers",
+      "verdict": "reject",
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "Would commit a developer's private repository URL into every project and churn a SHA pin on every log update."
+        }
+      ]
+    },
+    {
+      "id": "cand-015",
+      "name": "surreal-memory as the team knowledge store",
+      "kind": "service",
+      "registry": "none",
+      "fit_for_gap": "karpathy logs: project / personal / team tiers",
+      "verdict": "reject",
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "Not reviewable by pull request, so OKF v0.2's human-reviewed tier and rule D-6 have nowhere to happen; and it would make a service mandatory. Acceptable as a secondary search index only."
+        }
+      ]
+    },
+    {
+      "id": "cand-016",
+      "name": "sources-receipt.json checked by the KBD stage gate",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "karpathy logs: proving every selected log was read",
+      "verdict": "adopt",
+      "coverage_estimate": 0.9,
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "Nothing today records which logs a stage read. A per-phase receipt (source id, tier, resolved commit SHA, fetched-at, status) makes it checkable, and the previous receipt's SHA gives the update digest via git log old..new."
+        },
+        {
+          "tier": 3,
+          "claim": "Not covered: proof that the model USED what was injected. The receipt proves selection and availability, not attention."
+        }
+      ]
+    },
+    {
+      "id": "cand-017",
+      "name": "package.json with node:test scripts and engines >=22 (no test framework dependency)",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "node:test harness and package.json",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "node --test already discovers and passes 20 tests here with no package.json; the missing parts are engines, scripts and a coverage script."
+        },
+        {
+          "tier": 3,
+          "claim": "Tests-first cannot be shown from a transcript. From the first commit: a failing test commit, then the implementation commit, with RED output recorded in the OpenSpec change tasks."
+        },
+        {
+          "tier": 3,
+          "claim": "rules/build.mjs is imported by no test (absent from the coverage report); it gets tests in this phase as lib/platform's first consumer."
+        }
+      ]
+    },
+    {
+      "id": "cand-018",
+      "name": ".gitattributes (text=auto eol=lf) + one CRLF-normalising reader in lib/platform + tolerant splitFrontmatter",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": ".gitattributes and CRLF-tolerant parsing",
+      "verdict": "adopt",
+      "coverage_estimate": 0.9,
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "Probed directly: splitFrontmatter in rules/lib/render.mjs rejects CRLF input (\"has no paths: frontmatter\"); tolerance today is one untested line, readText in rules/build.mjs:18."
+        },
+        {
+          "tier": 3,
+          "claim": ".gitattributes protects this repository only; OKF bundles cloned from team and personal repositories can still arrive as CRLF, so the reader must normalise regardless."
+        },
+        {
+          "tier": 3,
+          "claim": "Not covered: files with mixed or CR-only endings. Unobserved; not handled."
+        }
+      ]
+    },
+    {
+      "id": "cand-019",
+      "name": "node:os + node:path behind lib/platform (homeDir, tempDir, stateDir, join)",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "lib/platform: paths (home, temp, join)",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "os.homedir(), os.tmpdir() and path.join are the documented cross-platform primitives; no dependency is needed."
+        },
+        {
+          "tier": 3,
+          "claim": "Enforcement is already mechanical: the blocking constraint no-home-or-tmp-literals matches $HOME, process.env.HOME and /tmp/ in every .mjs, verified against known-bad fixtures when constraints.md was generated."
+        },
+        {
+          "tier": 3,
+          "claim": "Tests inject both roots, so no test reads or writes the real home directory."
+        }
+      ]
+    }
+  ]
+}

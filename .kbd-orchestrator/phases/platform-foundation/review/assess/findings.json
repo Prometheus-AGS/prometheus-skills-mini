@@ -1,0 +1,34 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment treats an existing rules renderer and node:test suite as present, but the packet file tree does not contain the cited implementation or test files.",
+      "evidence": "The assessment claims: \"20 node:test tests pass\", \"all 20 tests in rules/test/render.test.mjs\", and \"parseConf (rules/lib/render.mjs:25)\". The file_tree lists \"./rules/lib\" and \"./rules/test\" only as directories and lists no \"./rules/lib/render.mjs\" or \"./rules/test/render.test.mjs\"; the only .mjs file explicitly listed under rules is \"./rules/build.mjs\".",
+      "suggested_fix": "Reconcile the assessment with the actual tree: either include the missing files in the packet/tree evidence or remove/qualify all claims about render.mjs, render.test.mjs, test counts, coverage, and CRLF parser behavior derived from them."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The baseline summary contradicts the later goal assessment by saying none of the five goals has any implementation while later marking two goal areas as partial.",
+      "evidence": "The opening states: \"none of the phase's five goals has any implementation.\" Later it states: \"node:test harness: PARTIAL \u2014 20 node:test tests pass\" and \".gitattributes + CRLF tolerance: NOT MET \u2014 no .gitattributes; tolerance exists in one untested line and one parser rejects CRLF outright.\"",
+      "suggested_fix": "Change the baseline to distinguish missing deliverables from partial pre-existing capability, e.g. \"no goal is fully implemented; node:test and limited CRLF handling are partial.\""
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The cross-tool progress finding cites progress.json even though the packet tree contains no such file.",
+      "evidence": "The assessment says: \"progress.json was last written by kbd-new-phase\". The file_tree under .kbd-orchestrator lists only \"constraints.md\", \"current-waypoint.json\", \"model-preflight.json\", \"phases\", and \"project.json\"; no progress.json appears anywhere.",
+      "suggested_fix": "Name the actual tracked progress file from the tree, add the missing file to the packet if it exists, or remove the progress.json-specific claim."
+    }
+  ]
+}

@@ -7,9 +7,9 @@ Each code task is test-first: write the `node:test` file, run it and see it fail
 
 ## 2. Hashing — `lib/karpathy/hash.mjs`
 
-- [ ] 2.1 Write `lib/karpathy/hash.test.mjs`: both recorded hashes of the 1.1 fixture are reproduced; serialising `elapsedHours` with `JSON.stringify` yields `ca79e321…` and therefore does not match; key order of the input does not change either hash; a non-ASCII string is hashed unescaped; every vector in 1.2 matches (or `todo`).
-- [ ] 2.2 Write `lib/karpathy/hash.mjs`: sorted-key compact serialisation; for `elapsedHours` only, the raw numeric token when the event came from text and Python's float form when it was built here; `eventSha256` (drops `observedAt`), `eventIdentitySha256` (the eight named fields, absent as `null`).
-- [ ] 2.3 Mutation: remove the float rule and confirm 2.1's first test fails; paste the output into the evidence file (11.3).
+- [x] 2.1 Write `lib/karpathy/hash.test.mjs`: both recorded hashes of the 1.1 fixture are reproduced; serialising `elapsedHours` with `JSON.stringify` yields `ca79e321…` and therefore does not match; key order of the input does not change either hash; a non-ASCII string is hashed unescaped; every vector in 1.2 matches (or `todo`).
+- [x] 2.2 Write `lib/karpathy/hash.mjs`: sorted-key compact serialisation; for `elapsedHours` only, the raw numeric token when the event came from text and Python's float form when it was built here; `eventSha256` (drops `observedAt`), `eventIdentitySha256` (the eight named fields, absent as `null`).
+- [x] 2.3 Mutation: remove the float rule and confirm 2.1's first test fails; paste the output into the evidence file (11.3).
 
 ## 3. Validation — `lib/karpathy/validate.mjs`
 

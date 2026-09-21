@@ -126,3 +126,19 @@ literals, THEN match. Verified: 2 files scanned, 0 hits, while the naive grep re
 Tasks 5.4 and 6.2 need this, and so does any future constraint of the same shape. A check that cannot
 tell an invocation from a description of one will either be ignored or quietly narrowed until it
 matches nothing.
+
+## 2026-09-21 — a task edited a file a LATER task carries
+
+`artifact-refiner-node` task 3.3 said "rewrite those two blocks in the carried
+`agents/artifact-validator.md`". That file is carried by task **5.1**, two sections later, so 3.3 could
+not run in section order — the file does not exist in this project until the carry.
+
+Third instance of one class this phase: a path in a task is a claim that it resolves **when that task
+runs**, not merely that it exists somewhere. The spec review caught the first two (an `execution.md`
+that `/kbd-execute` had not written yet, and an "upstream submodule" that is a separate repository).
+
+**Fix applied:** 3.3 renumbered to 5.1b, immediately after the carry, rather than executed out of order
+or quietly skipped.
+
+**Check for the next plan:** for every task naming a file, ask which earlier task creates it. If none
+does, either the task is misordered or a carry step is missing.

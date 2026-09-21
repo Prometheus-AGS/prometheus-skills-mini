@@ -73,7 +73,8 @@ constraints:
     severity: blocking
     source: '.claude/rules/node-scripts.md — Paths'
     description: 'Paths come from os.homedir() / os.tmpdir() / path.join, never $HOME, process.env.HOME or /tmp'
-    check: 'git grep --no-index --exclude-standard -n -E -e "[$]HOME|process\.env\.HOME|/tmp/" -- "lib/*.mjs" "scripts/*.mjs" "hooks/*.mjs" "rules/*.mjs"'
+    check: 'git grep --no-index --exclude-standard -n -E -e "[$]HOME|process\.env\.HOME|/tmp/" -- "lib/*.mjs" "scripts/*.mjs" "hooks/*.mjs" "rules/*.mjs" | grep -v -E "^[^:]+:[0-9]+:[[:space:]]*(//|\*|/\*)"'
+    note: 'Comment lines are excluded: lib/platform/paths.mjs documents the rule by naming $HOME, and a rule that cannot be explained in its own source is a bad rule. The pipe means the check exits 0 when grep -v finds nothing to print, so a clean run is exit 1 from the pipeline only when git grep itself matched nothing; treat any printed line as a violation.'
 
   - id: no-zeespec
     severity: blocking

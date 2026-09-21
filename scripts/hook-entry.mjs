@@ -10,7 +10,8 @@
 // shipped a payload whose entry file was never packaged, which broke every hook
 // in Node's loader before any of its own code ran; only a check that reads the
 // manifest catches that, and only a static map lets the check see the ids.
-import { readFileSync, fstatSync } from 'node:fs';
+import { readFileSync, fstatSync, realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 // Keys are the `--hook` argument, NEVER the matcher-level `id`. `id` is a
 // property of the matcher, and a matcher holds 1-6 hooks, so it cannot address
@@ -106,8 +107,27 @@ export async function dispatch(args, options = {}) {
   }
 }
 
-const invokedDirectly =
-  process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href;
+// Compare resolved real PATHS, not URL strings. Two independent things break a
+// URL comparison here, and a wrong answer is silent: dispatch is skipped, the
+// process still exits 0, and the harness reports success with every hook a no-op.
+//
+//  1. `file://${path}` truncates at '#' or '?' (they become a fragment or query)
+//     and double-encodes '%'. Adversarial review caught this.
+//  2. Even with pathToFileURL, `import.meta.url` reports the REALPATH while
+//     argv[1] keeps the symlinked path — on macOS /var is a symlink to
+//     /private/var, so the two differ for anything under a temp directory.
+//     Found by the test written for (1), which still failed after fixing it.
+//
+// realpathSync collapses both. It throws only if the file vanished between spawn
+// and this line, which cannot happen for the script currently executing.
+const invokedDirectly = (() => {
+  if (!process.argv[1]) return false;
+  try {
+    return realpathSync(fileURLToPath(import.meta.url)) === realpathSync(process.argv[1]);
+  } catch {
+    return false;
+  }
+})();
 
 if (invokedDirectly) {
   process.exitCode = await dispatch(process.argv.slice(2));

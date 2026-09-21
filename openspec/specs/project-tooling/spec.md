@@ -13,7 +13,7 @@ The project SHALL declare Node.js 22 or newer as its only supported runtime in `
 - **THEN** `engines.node` is `>=22`, `type` is `module`, and `private` is `true`
 
 ### Requirement: npm scripts
-The project SHALL provide npm scripts `test` (`node --test`), `check` (`node rules/build.mjs --check`) and `coverage`, and each SHALL be a single command with no shell chaining. `coverage` SHALL report line coverage for every source file, including files that the tests exercise as child processes, and SHALL fail when a file falls below its threshold.
+The project SHALL provide npm scripts `test` (`node --test`), `check` (`node rules/build.mjs --check`) and `coverage`, and each SHALL be a single command with no shell chaining. `coverage` SHALL report line coverage for every source file the test runner instruments, SHALL additionally report it for each file listed as a child-process target (which the default reporter cannot see), and SHALL exit non-zero when a listed target falls below its threshold.
 
 #### Scenario: Tests run through npm
 - **WHEN** `npm test` runs in a clean checkout after `npm ci`

@@ -16,6 +16,9 @@ import { execFileSync } from 'node:child_process';
 import { tempDir } from '../lib/platform/paths.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
+// Files the tests run as CHILD PROCESSES, which the in-process reporter above cannot see.
+// Everything else is already covered by that report; this list exists precisely because these
+// files are invisible to it. Add a file here when its tests spawn it rather than import it.
 const TARGETS = ['rules/build.mjs'];
 const THRESHOLD = 80;
 

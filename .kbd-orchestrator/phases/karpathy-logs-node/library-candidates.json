@@ -1,0 +1,331 @@
+{
+  "phase": "karpathy-logs-node",
+  "generated_at": "2026-09-21T20:40:40Z",
+  "research_budget": {
+    "max_queries_per_tier": 8,
+    "max_minutes": 20,
+    "queries_used": {
+      "tier1": 4,
+      "tier2": 2,
+      "tier3": 6,
+      "tier4": 0
+    }
+  },
+  "gaps_addressed": [
+    "progress recorder",
+    "receipt hash portability",
+    "session-log append",
+    "pk present but LLM absent",
+    "pk distribution",
+    "OKF version"
+  ],
+  "candidates": [
+    {
+      "id": "cand-201",
+      "name": "Thin Node recorder in lib/karpathy that calls pk as an optional transport",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "progress recorder",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Upstream recorder is prometheus-skill-pack/skills/process/karpathy-progress-memory/scripts/record-progress.py (671 lines); it calls pk only at :411-416 and owns receipts, the lock, the 256 KiB bound (:278) and the secret rejection (:22-23, :279) itself."
+        },
+        {
+          "tier": 1,
+          "claim": "This pack already has the primitives: lib/platform/lock.mjs, atomic-write.mjs, spawn.mjs spawnExecutable (shell:false, accepts input and timeout), text.mjs, lib/hooks/context.mjs degradeSafely."
+        }
+      ],
+      "risks": [
+        "No Node dispatcher exists for KBD lifecycle boundaries (task:after etc.), so the recorder needs an explicit invocation point.",
+        "spawnExecutable resolving pk.exe through PATHEXT on Windows is untested in this pack.",
+        "PK_BIN (record-progress.py:402) is part of the contract and must be honoured, not only a PATH lookup.",
+        "canonical_validate needs prometheus kbd status --json for every event, so the prometheus CLI is an upstream prerequisite; its absence is undecided here."
+      ],
+      "decision_rationale": "The goal that everything degrades when pk is absent decides it: receipts and idempotency must work with no pk, which is every clean machine while pk has 0 releases."
+    },
+    {
+      "id": "cand-202",
+      "name": "A pk record-progress subcommand upstream",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "progress recorder",
+      "verdict": "reject",
+      "coverage_estimate": 0.6,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "pk has 0 releases (gh release list --repo Prometheus-AGS/prometheus-knowledge-rs: 0 rows)."
+        },
+        {
+          "tier": 1,
+          "claim": "pk --help lists 15 subcommands; none records progress, so this is new Rust work plus a release before this pack could use it."
+        }
+      ],
+      "risks": [
+        "Receipts and idempotency would disappear exactly when pk is missing.",
+        "Needs an upstream change requiring operator go-ahead."
+      ],
+      "decision_rationale": "Fails the degrade goal by construction."
+    },
+    {
+      "id": "cand-203",
+      "name": "Sorted-key JSON with a Python float token for the single float field elapsedHours",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "receipt hash portability",
+      "verdict": "adopt",
+      "coverage_estimate": 0.9,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Observed on the golden receipt dea37563: naive Node hash ca79e321 DIFFERS from the recorded eventSha256 760d332e; re-emitting elapsedHours as 0.0 reproduces 760d332e exactly."
+        },
+        {
+          "tier": 1,
+          "claim": "Hook replays compare eventIdentitySha256, not eventSha256 (prometheus-skill-pack/skills/process/karpathy-progress-memory/scripts/record-progress.py:571-576); its 8 fields hold no float, and the Node identity hash be2c1c52 already MATCHES."
+        },
+        {
+          "tier": 1,
+          "claim": "elapsedHours is the only float-capable field and is bounded to 0-1000 (prometheus-skill-pack/skills/process/karpathy-progress-memory/scripts/record-progress.py:240-242)."
+        }
+      ],
+      "risks": [
+        "Verified against one receipt and only for an integer-valued float.",
+        "Python repr and JS toString also diverge below 1e-4; the spec should reject elapsedHours in (0, 1e-4) rather than guess."
+      ],
+      "decision_rationale": "One rule on one named field closes the gap; a general canonicaliser solves a different problem."
+    },
+    {
+      "id": "cand-204",
+      "name": "canonicalize (RFC 8785 JCS)",
+      "kind": "library",
+      "registry": "npm",
+      "fit_for_gap": "receipt hash portability",
+      "verdict": "reject",
+      "coverage_estimate": 0,
+      "license": "Apache-2.0",
+      "maintenance": {
+        "last_release": "2026-09-18"
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "source_url": "https://www.npmjs.com/package/canonicalize",
+          "claim": "v5.1.0, modified 2026-09-18, 0 dependencies."
+        }
+      ],
+      "risks": [
+        "Would be this pack first runtime dependency."
+      ],
+      "decision_rationale": "RFC 8785 mandates ECMAScript number serialisation, so a conformant implementation must write 0; the recorded hashes were made from Python 0.0. It cannot reproduce them."
+    },
+    {
+      "id": "cand-205",
+      "name": "json-canonicalize",
+      "kind": "library",
+      "registry": "npm",
+      "fit_for_gap": "receipt hash portability",
+      "verdict": "reject",
+      "coverage_estimate": 0,
+      "license": "MIT",
+      "maintenance": {
+        "last_release": "2026-09-10"
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "source_url": "https://www.npmjs.com/package/json-canonicalize",
+          "claim": "v3.0.1, modified 2026-09-10, 0 dependencies."
+        }
+      ],
+      "risks": [
+        "Same RFC 8785 number rule as cand-204."
+      ],
+      "decision_rationale": "Same reason as cand-204."
+    },
+    {
+      "id": "cand-206",
+      "name": "fast-json-stable-stringify / safe-stable-stringify",
+      "kind": "library",
+      "registry": "npm",
+      "fit_for_gap": "receipt hash portability",
+      "verdict": "reject",
+      "coverage_estimate": 0,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 3,
+          "source_url": "https://www.npmjs.com/package/fast-json-stable-stringify",
+          "claim": "fast-json-stable-stringify v2.1.0 (2023-06-22); safe-stable-stringify v2.5.0 (2024-08-24); both 0 dependencies."
+        }
+      ],
+      "risks": [
+        "Both delegate numbers to JSON.stringify, which writes 0."
+      ],
+      "decision_rationale": "Key ordering is about ten lines; the number token is the actual problem and neither addresses it."
+    },
+    {
+      "id": "cand-207",
+      "name": "fs.appendFileSync under lib/platform/lock.mjs for session-log.md",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "session-log append",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "The recorder appends to .prometheus/session-log.md, marker-deduplicated under a lock (prometheus-skill-pack/skills/process/karpathy-progress-memory/scripts/record-progress.py:341-358); it never writes events.jsonl, which only pk-event-store writes (pk-event-store/src/fallback.rs:13)."
+        }
+      ],
+      "risks": [
+        "Upstream re-reads the whole log for the marker on every call; the receipt sessionLogAppended flag makes that unnecessary on a replay."
+      ],
+      "decision_rationale": "No new primitive and no library: the append flag plus the existing wx lock is the whole mechanism."
+    },
+    {
+      "id": "cand-208",
+      "name": "Receipt-driven retry: complete:false + memory.status degraded, retried on replay",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "pk present but LLM absent",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "pk ingest cannot succeed without a reachable LLM and has no raw mode (pk-librarian/src/librarian.rs:48-51; pk ingest --help shows only --kb-dir --source --scope --yes)."
+        },
+        {
+          "tier": 1,
+          "claim": "Upstream already retries the memory write from the receipt own event snapshot when the prior receipt is incomplete or degraded (prometheus-skill-pack/skills/process/karpathy-progress-memory/scripts/record-progress.py:586-600); degraded is emitted at :473."
+        },
+        {
+          "tier": 1,
+          "claim": "Exit 0 for recorded, duplicate and degraded (record-progress.py:614, :626, :662); exit 2 for validation or I/O errors (:667). The receipt is written complete:false before the memory write and again after it; crash seams KPM_TEST_CRASH_BEFORE_MEMORY -> 74 and KPM_TEST_CRASH_AFTER_PK -> 75 (:636-648)."
+        }
+      ],
+      "risks": [
+        "A boundary that is never replayed is never retried.",
+        "The upstream outbox path is Python plus pk-learning-worker, neither of which this pack may run.",
+        "queued is never emitted here but must be READ: the golden receipt is complete:true with memory.status queued, so it replays as duplicate and its memory write is never retried."
+      ],
+      "decision_rationale": "The receipt is already a durable queue of one; adopting it removes the need for an outbox, a drain, and a third daemon. Result states become recorded, duplicate, degraded."
+    },
+    {
+      "id": "cand-209",
+      "name": "cargo-dist (dist) for pk release artifacts",
+      "kind": "framework",
+      "registry": "crates",
+      "fit_for_gap": "pk distribution",
+      "verdict": "reference",
+      "coverage_estimate": 0.9,
+      "license": "Apache-2.0",
+      "repo_url": "https://github.com/axodotdev/cargo-dist",
+      "maintenance": {
+        "stars": 2121,
+        "last_release": "2026-09-21"
+      },
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/axodotdev/cargo-dist",
+          "claim": "2121 stars, pushed 2026-09-21, not archived."
+        },
+        {
+          "tier": 2,
+          "source_url": "https://github.com/axodotdev/cargo-dist/blob/main/book/src/ci/customizing.md",
+          "claim": "Docs show targets x86_64-pc-windows-msvc and aarch64-pc-windows-msvc, and a checksum setting supporting sha256 per artifact."
+        },
+        {
+          "tier": 3,
+          "claim": "cargo search: cargo-dist 0.32.0."
+        }
+      ],
+      "risks": [
+        "Unverified whether pk ring dependency cross-compiles under the cargo-xwin container or needs native Windows runners.",
+        "A change to the pk repository: needs operator go-ahead."
+      ],
+      "decision_rationale": "Matches the pinned-version plus SHA-256-per-platform shape The Boss download-binaries.js consumes, but its consumer is the next phase. Not adopted here."
+    },
+    {
+      "id": "cand-210",
+      "name": "taiki-e/upload-rust-binary-action",
+      "kind": "framework",
+      "registry": "none",
+      "fit_for_gap": "pk distribution",
+      "verdict": "reference",
+      "coverage_estimate": 0.6,
+      "license": "Apache-2.0",
+      "repo_url": "https://github.com/taiki-e/upload-rust-binary-action",
+      "maintenance": {
+        "stars": 323
+      },
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/taiki-e/upload-rust-binary-action",
+          "claim": "323 stars, pushed 2026-09-02, not archived."
+        }
+      ],
+      "risks": [
+        "No installers; checksums are opt-in."
+      ],
+      "decision_rationale": "The smaller fallback if dist proves too much."
+    },
+    {
+      "id": "cand-211",
+      "name": "cargo-binstall",
+      "kind": "framework",
+      "registry": "crates",
+      "fit_for_gap": "pk distribution",
+      "verdict": "reject",
+      "coverage_estimate": 0.3,
+      "license": "GPL-3.0",
+      "repo_url": "https://github.com/cargo-bins/cargo-binstall",
+      "maintenance": {
+        "stars": 2887
+      },
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/cargo-bins/cargo-binstall",
+          "claim": "2887 stars, pushed 2026-09-21."
+        },
+        {
+          "tier": 3,
+          "claim": "cargo search: cargo-binstall 1.23.0."
+        }
+      ],
+      "risks": [
+        "pk has 0 published artifacts for it to fetch."
+      ],
+      "decision_rationale": "Nothing to install until pk publishes releases, and installing binstall itself is no easier than downloading a pk binary directly."
+    }
+  ],
+  "build_required": [
+    {
+      "need": "lib/karpathy recorder and the scripts/record-progress.mjs entry point: ports event_from_hook, validate_event, canonical_validate, markdown_record, append_session_log, the lock, memory_write, both hash functions, write_receipt and receipt_path",
+      "why_no_candidate": "The receipt shape, the two hashes and the session-log marker are bespoke to the source pack; no library implements them.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "An invocation point for task, change and phase boundaries",
+      "why_no_candidate": "No .mjs in lib or scripts mentions task:after or kbd_hooks_fire (0 files), and this pack does not carry the upstream kbd-process-orchestrator/hooks/hooks.json whose lines 47-71 run python3 record-progress.py. The recorder is a CLI that carried skill text names at each boundary; a general Node lifecycle dispatcher is not proposed.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "Secret-pattern rejection and the 256 KiB payload bound",
+      "why_no_candidate": "A-3 boundary on untrusted event input reaching an append-only file; port the upstream pattern rather than invent one.",
+      "capability_gap_id": null
+    }
+  ]
+}

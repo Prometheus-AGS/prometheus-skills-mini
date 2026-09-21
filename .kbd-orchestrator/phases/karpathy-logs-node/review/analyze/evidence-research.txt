@@ -1,0 +1,27 @@
+## gh search repos (tier 1)
+--- q: cargo-dist
+axodotdev/cargo-dist stars=2121 pushed=2026-09-21 archived=false license=apache-2.0
+meminds/CargoDistributionSystem stars=6 pushed=2022-03-29 archived=false license=mit
+--- q: upload-rust-binary-action
+taiki-e/upload-rust-binary-action stars=323 pushed=2026-09-02 archived=false license=apache-2.0
+step-security/upload-rust-binary-action stars=0 pushed=2026-08-17 archived=false license=mit
+--- q: cargo-binstall
+cargo-bins/cargo-binstall stars=2887 pushed=2026-09-21 archived=false license=gpl-3.0
+conda-forge/cargo-binstall-feedstock stars=0 pushed=2026-09-05 archived=false license=bsd-3-clause
+## npm view (tier 3)
+canonicalize v5.1.0 modified=2026-09-18 Apache-2.0 deps=0
+json-canonicalize v3.0.1 modified=2026-09-10 MIT deps=0
+fast-json-stable-stringify v2.1.0 modified=2023-06-22 MIT deps=0
+safe-stable-stringify v2.5.0 modified=2024-08-24 MIT deps=0
+## cargo search (tier 3)
+cargo-dist = "0.32.0"    # Shippable application packaging for Rust
+note: to learn more about a package, run `cargo info <name>`
+note: to learn more about a package, run `cargo info <name>`
+cargo-binstall = "1.23.0"    # Binary installation for rust projects
+## Context7 /axodotdev/cargo-dist (tier 2), quoted from book/src/ci/customizing.md and book/src/reference/config.md
+targets = ["x86_64-pc-windows-msvc", "aarch64-pc-windows-msvc"]
+checksum: "Supported values include sha256, sha512, sha3-256, sha3-512, blake2s, blake2b. Setting it to false disables checksum generation."
+## pk OKF version mentions
+  10 OKF v0.1
+## pk releases
+rows: 0

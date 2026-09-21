@@ -1,0 +1,30 @@
+## gh pr view 12 --repo Prometheus-AGS/prometheus-knowledge-rs
+state=OPEN mergeState=CLEAN mergeable=MERGEABLE head=61688f1
+## run 35644261220 jobs
+ubuntu-latest success 142s
+macos-latest success 150s
+windows-latest success 209s
+## windows-latest steps
+success Set up job
+success Run actions/checkout@v4
+success Install stable Rust
+skipped Format
+success Build pk
+success Build the workspace
+success pk --version
+success pk context with HOME unset
+success Clippy
+success Test
+success Post Run actions/checkout@v4
+success Complete job
+## windows log: totals
+passed=113 failed=0 ignored=0
+## macOS local log: totals
+passed=115 failed=0
+## tests present on macOS and absent on Windows (comm -23)
+test reconcile_removes_one_of_two_aliases_to_the_same_article
+test tests::normalized_submitting_operation_is_not_rewritten_during_recovery
+## windows log: HOME-unset step
+info: no project root detected; using global KB at C:\Users\runneradmin\.prometheus/knowledge
+## submodule pin in this pack
+ 01a1dbe0d97156b27c82ee0ec4a0a5b746f18df1 tools/prometheus-knowledge (v1.8.0-8-g01a1dbe)

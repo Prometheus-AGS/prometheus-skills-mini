@@ -1,0 +1,116 @@
+```json
+{
+  "verdict": "BLOCK",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "location": "analysis.md §4 Build required",
+      "finding": "The build_required section understates what the Node recorder must implement. It claims the contract is 'bespoke' (G1) and lists only 'lib/karpathy recorder + scripts/record-progress.mjs entry point' as build item 1, plus 'invocation point' and 'secret/256KiB bound' — but the recorder's event construction (record-progress.py:135-187) reads KBD_HOOK_NAME (line 143), KBD_TASK_CLASS (line 162), KBD_TASK_ELAPSED_HOURS (line 164), calls kbd_status(root) (line 138), parse_hook_subject (line 144), touched_files(root) (line 179), and git_value(root,'rev-parse','HEAD') (line 181). None of these KBD orchestrator / git inputs are enumerated. A spec built from this analysis would not know it has to construct the same event payload that the recorder produces today, or where it sources the canonical state from. The analysis even concedes the recorder 'calls pk only at :411-416 and owns receipts, the lock, the 256 KiB bound (:278) and the secret rejection (:22-23, :279) itself' — i.e., the contract is the recorder's, not 'bespoke'. This would mislead the spec.",
+      "evidence": "recorder:135-187 — `event_from_hook` reads `os.environ.get('KBD_HOOK_NAME', '')`, `os.environ.get('KBD_TASK_CLASS', 'product')`, `float(os.environ.get('KBD_TASK_ELAPSED_HOURS', '0'))`, calls `kbd_status(root)`, `parse_hook_subject`, `touched_files(root)`, `git_value(root, 'rev-parse', 'HEAD')`. analysis.md G1: 'No library fits: the contract (receipt shape, two hashes, marker format) is bespoke to the source pack.' build_required: only enumerates (1) recorder + entry point, (2) invocation point, (3) secret/256KiB bound.",
+      "fix": "Either enumerate the KBD / git inputs the Node port must read in build_required (KBD_HOOK_NAME, KBD_TASK_CLASS, KBD_TASK_ELAPSED_HOURS env vars; kbd_status() state shape; touched_files() output shape; commitSha via git rev-parse), or change the framing — the contract is the recorder's event_from_hook output, not something invented — and call out the canonical-state dependency that today lives in `.kbd-orchestrator/current-waypoint.json` (visible in the golden receipt's touchedFiles) as an external input the spec must define."
+    },
+    {
+      "severity": "CRITICAL",
+      "location": "analysis.md §1 'What changed since assess' — first table, row 'The Karpathy flow calls exactly two pk subcommands'",
+      "finding": "The claim cites 'record-progress.py:411-416; upstream karpathy-hook-dispatch.sh' but the embedded evidence only includes the recorder. The karpathy-hook-dispatch.sh file is not in the packet. The recorder shows only `pk ingest` (line 411-416). The `pk context … --format hook` half of the 'exactly two' claim is unverified. This is a load-bearing factual claim for the recorder's scope (any node port must call both, not just one).",
+      "evidence": "Evidence block contains 'recorder:411-416' for ingest but no evidence for pk context being called from karpathy-hook-dispatch.sh. analysis.md: 'The Karpathy flow calls exactly two pk subcommands: `pk ingest --scope project --source karpathy-progress-memory:<eventId>` (record on stdin) and `pk context … --format hook`'.",
+      "fix": "Either paste the pk context invocation lines from karpathy-hook-dispatch.sh, or remove the second subcommand from the claim and adjust the table to 'one pk subcommand called from the recorder'."
+    },
+    {
+      "severity": "WARNING",
+      "location": "analysis.md §1 — table row 'pk doctor reports FAIL on a healthy Windows machine (POSIX-shaped checks)'",
+      "finding": "Cited as 'pk PR #12 body, \"Deliberately not in this PR\"' but the PR body is not present in the embedded evidence — only the gh pr view output (state, CI jobs, test counts) is in evidence. The FAIL behavior on Windows is asserted, not observed.",
+      "evidence": "Embedded `pk PR #12 CI` evidence shows gh pr view state/CI logs/test counts but no PR body text. analysis.md: 'pk PR #12 body, \"Deliberately not in this PR\"'",
+      "fix": "Either paste the relevant lines from the PR body, or downgrade the claim to 'asserted in PR #12 body (not in evidence)' so the spec doesn't depend on a quote the reader cannot verify."
+    },
+    {
+      "severity": "WARNING",
+      "location": "analysis.md §2.2 — 'the identity hash covers eight fields — one integer and seven strings'",
+      "finding": "Imprecise. The eight identity fields (recorder:490-503) include changeId and taskId, which can be null (the golden receipt has both null; recorder:232-237 allows nullable). The identity hash still matches because both Python and JS serialize null as 'null', but the prose is wrong: it is 'one integer, five strings, and two nulls' in the verified receipt, not 'one integer and seven strings'. The match claim survives; the count-by-type claim does not.",
+      "evidence": "recorder:490-503 lists schemaVersion, eventId, runId, boundary, status, phaseId, changeId, taskId. recorder:232-237: `require_string(event, 'changeId', nullable=True, limit=200)` / `require_string(event, 'taskId', nullable=True, limit=200)`. golden receipt: `\"changeId\": null, \"taskId\": null`. Identity hash MATCH confirmed: be2c1c523097e921da9a538f10ec9f6b7d00317bafa41062384e398f5b775e7c.",
+      "fix": "Say 'one integer, five strings, and two nulls (or six strings when both IDs are present)' so the spec knows null is part of the input domain, not a transcription error."
+    },
+    {
+      "severity": "WARNING",
+      "location": "analysis.md §3 G4 — 'Result states for this pack: `recorded` (pk accepted) · `duplicate` · `degraded` ... `queued` is not reachable and should not be emitted'",
+      "finding": "The Node port will read pre-existing receipts whose `memory.status` field was written by the upstream Python recorder as 'queued' (golden receipt proves this — `\"status\": \"queued\", \"operationId\": \"4b0d...\"`). On replay the prior memory.status can still be 'queued' even though the new Node port never emits 'queued'. The analysis does not address how a replay should treat `prior.memory.status == 'queued'` from a receipt that predates the Node port — is it treated as 'degraded' for retry purposes (recorder:587-590 retries on `not complete` OR `prior_degraded`)? If yes, that should be stated; if no, that is a regression vs the upstream behavior. Recorder:587-590 retries when `not prior.get('complete') or prior_degraded`, where prior_degraded checks `memory.status == 'degraded'`. A 'queued' prior status is NOT degraded, so upstream does NOT retry it on replay — but it also has 'complete: true', so the recorder returns 'duplicate' instead. Either way, the Node port's spec must define the interaction; the analysis does not.",
+      "evidence": "recorder:586-590: `prior_degraded = isinstance(prior_memory, dict) and prior_memory.get('status') == 'degraded'`. Golden receipt: `\"memory\": {\"transport\": \"outbox\", \"status\": \"queued\", \"operationId\": \"4b0d...\", ...}, \"complete\": true`. analysis.md G4: '`queued` is not reachable and should not be emitted.'",
+      "fix": "State explicitly that the Node port's replay path must treat a prior `memory.status == 'queued'` receipt the same way the upstream recorder does: as 'complete' (no retry) and emit 'duplicate'. If the intent is different, say so."
+    },
+    {
+      "severity": "WARNING",
+      "location": "analysis.md §3 G1 — 'spawnExecutable ... `spawnSync` takes `input` and `timeout`, which carries upstream's 0.1–10 s KPM_PK_TIMEOUT_SECONDS bound'",
+      "finding": "Recorder:402 reads `os.environ.get('PK_BIN', 'pk')` — the upstream recorder explicitly honors a PK_BIN environment variable to point at a specific pk binary, not just whatever is on PATH. The analysis's invocation contract is `spawnExecutable('pk')` (open question 3 even flags PATHEXT resolution as untested) but does not require the Node port to honor PK_BIN. With 0 releases today, users will set PK_BIN to a `cargo install --locked` path; a spec that ignores PK_BIN would force every such user to wrap the recorder in a PATH-mutating shell.",
+      "evidence": "recorder:402: `pk = os.environ.get('PK_BIN', 'pk')`. analysis.md G1: 'Reused, not rebuilt: ... `lib/platform/spawn.mjs` `spawnExecutable` ...'. analysis.md Open Q3: '`PK_BIN` / PATH resolution on Windows ... spawnExecutable('pk') relies on `lookupOnPath`; whether it resolves `pk.exe` through `PATHEXT` is untested here.'",
+      "fix": "State that the Node port's pk invocation must read PK_BIN first, falling back to spawnExecutable('pk'). Make this part of the G1 contract, not a separate open question."
+    },
+    {
+      "severity": "WARNING",
+      "location": "analysis.md §3 G4 — missing exit code semantics for the Node recorder",
+      "finding": "The upstream recorder returns exit code 0 for both `recorded` and `duplicate` (recorder:614, 626), exit 0 for `degraded` (via the same return), and exit codes 74/75 for the KPM_TEST_CRASH_BEFORE_MEMORY / KPM_TEST_CRASH_AFTER_PK test hooks (recorder:637, 648). The analysis enumerates result states but never states the exit-code contract — including the 74/75 test hooks, which are how upstream verifies the crash-recovery behavior the Node port inherits.",
+      "evidence": "recorder:614 `return 0` (after recorded), recorder:626 `return 0` (after duplicate), recorder:637 `os._exit(74)` (KPM_TEST_CRASH_BEFORE_MEMORY), recorder:648 `os._exit(75)` (KPM_TEST_CRASH_AFTER_PK).",
+      "fix": "State exit-code contract: 0 for recorded/duplicate/degraded; 74/75 preserved as test seams; the KPM_TEST_CRASH_* env vars honored by the Node port so the same test cases apply."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "analysis.md §3 G2 — 'reject an `elapsedHours` in (0, 1e-4) rather than guess its token'",
+      "finding": "The boundary phrasing leaves 0 itself outside the rejection range, which is correct (the python-float token handles 0.0 → '0.0'), but the boundary should be made explicit: 'reject elapsedHours in (0, 1e-4); at 0 emit \"0.0\" via the Python-float token; at ≥1e-4 to ≤1000 the JS toString matches Python repr, so emit directly'. Right now a spec reader has to assemble this from two paragraphs.",
+      "evidence": "analysis.md G2: 'Python's `repr` and JS `toString` also diverge below 1e-4 (`1e-05` vs `0.00001`) and at ≥1e16. `elapsedHours` is bounded to 0–1000, so only the small-value case is reachable, and only via a manual event. The spec should cover integer-valued and ordinary decimals with recorded vectors and **reject** an `elapsedHours` in (0, 1e-4) rather than guess its token.'",
+      "fix": "Restate the rule with three explicit cases (0, (0,1e-4), [1e-4, 1000])."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "analysis.md §3 G3 — 'cand-207 adopt'",
+      "finding": "The reuse rationale is sound but omits that `lib/refiner/session.mjs`'s read-modify-write append is 'out of scope (A-4)' — the analysis says so but does not point at any file. A spec author looking at the lib/ tree (which the evidence shows has lib/refiner/) would not know whether the refiner session append should be migrated too or left as the documented exception. State the boundary explicitly: which appends in lib/ stay as read-modify-write and which move to appendFileSync under lock.mjs.",
+      "evidence": "analysis.md G3: '`lib/refiner/session.mjs`'s read-modify-write append stays as it is — a bounded per-artifact log, out of scope (A-4).' Evidence `this pack lib/` shows lib/refiner exists but no file is named.",
+      "fix": "Name the specific file in lib/refiner that is exempt, or list the append sites the spec must NOT change."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "analysis.md §3 G4 + build_required item 1",
+      "finding": "The Node port must implement canonical_validate (recorder:558 calls it on every event). The function is not in the embedded evidence, so its behavior is undocumented in the packet. If the spec inherits it as 'port upstream' without listing its checks, the Node port could diverge silently. Same applies to write_receipt and receipt_path — referenced but not in evidence.",
+      "evidence": "recorder:558: `canonical_validate(event, state)`. The function body is not in the embedded evidence. analysis.md mentions `canonical_validate` only by name.",
+      "fix": "Add a short list of the recorder functions the Node port must port by name (canonical_validate, write_receipt, receipt_path, markdown_record) so the spec knows it is not implementing a clean-room copy."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "analysis.md G6 — 'pk is v0.1 throughout (`grep -o 'OKF v0\\.[0-9]'` over its `.rs`: 10 × v0.1, 0 × v0.2)'",
+      "finding": "The count comes from a grep of `.rs` files only. If pk's OKF mentions live in `.toml`, `.md`, `.json`, or comments inside non-Rust files, this count is incomplete. The result still stands (nothing in the packet's evidence shows v0.2), but a grep restricted to `.rs` is an undercount by construction.",
+      "evidence": "Embedded `pk OKF version mentions` shows only `10 OKF v0.1`. analysis.md G6: '`grep -o 'OKF v0\\.[0-9]'` over its `.rs`: 10 × v0.1'",
+      "fix": "State the grep scope explicitly and note that markdown/config mentions were not searched."
+    },
+    {
+      "severity": "SUGGESTION",
+      "library-candidates.json cand-201 risks[1]",
+      "finding": "Risk 1 names 'spawnExecutable resolving pk.exe through PATHEXT on Windows is untested in this pack.' The matching open question (Q3) is the only place this is flagged. Promote it to a known constraint the spec must cover, not a residual risk, since with 0 pk releases the only install path is `cargo install` to a non-PATH location and PK_BIN will be set.",
+      "evidence": "library-candidates.json cand-201 risks: ['No Node dispatcher exists for KBD lifecycle boundaries...', 'spawnExecutable resolving pk.exe through PATHEXT on Windows is untested in this pack.']. decision-log.md 'pk distribution': 'cargo install --git … --locked pk-cli ... reference — the only path that works today'.",
+      "fix": "Move the PATHEXT/PK_BIN question from 'open' to a hard requirement that the Node port must read PK_BIN explicitly."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "analysis.md Open Q5 — 'hooks/dispatch \"exactly six ported ids\" fails if this phase adds a seventh harness hook. Under the design above it adds none — the recorder is a CLI, not a harness hook — so the scenario stands.'",
+      "finding": "The recorder is a CLI, but KBD lifecycle boundaries fire the recorder via shell scripts (recorder:1 hooks.json:47-73 show `command: \"... python3 .../record-progress.py ...\"`). If the carried KBD skills name the Node CLI the same way (via shell), then there is still a hooks.json consumer downstream that must be updated. The 'no seventh harness hook' claim is true, but the boundary that has to be updated is in the carried skills, not in the hooks/dispatch module. Not in evidence either way.",
+      "evidence": "hooks.json:47 `command: 'script=\"${KBD_ORCHESTRATOR_ROOT:-$HOME/.claude/skills/kbd-process-orchestrator}/../karpathy-progress-memory/scripts/record-progress.py\"; python3 ...'`. analysis.md Q5 references 'hooks/dispatch \"exactly six ported ids\"'.",
+      "fix": "Clarify whether 'six ported ids' is the hooks.json contract in this pack, or a different dispatcher; if the KBD skills carry hooks.json, name the file the carried skills will edit."
+    }
+  ],
+  "sound_claims": [
+    "Recorder line citations (:411-416 ingest call, :341-358 append_session_log, :571-576 hash comparison path, :490-503 identity fields, :240-242 elapsedHours bound, :586-600 retry path, :22-23 SECRET regex, :135-187 event_from_hook) match the embedded source exactly.",
+    "The hash observation (recorded eventSha256 760d332e, naive Node ca79e321 DIFFERS, python-float token 760d332e MATCH, identity hash be2c1c52 MATCH) is reproduced verbatim in the embedded `hash observation` block and ties out to the recorded values in the golden receipt.",
+    "pk PR #12 CI counts (ubuntu 142s, macOS 150s, windows 209s; windows 113/0/0, macOS 115/0/0; the two `#[cfg(unix)]` test names removed by `comm -23`) match the embedded CI evidence.",
+    "HOME-unset pk resolves `C:\\Users\\runneradmin\\.prometheus/knowledge` — directly quoted in the embedded windows CI step output.",
+    "pk has 0 releases — `gh release list` evidence shows `rows: 0`.",
+    "pk OKF v0.1 count of 10 — embedded `pk OKF version mentions` shows `10 OKF v0.1`. (Scope: .rs only — see suggestion finding.)",
+    "Submodule pin 01a1dbe0d97156b27c82ee0ec4a0a5b746f18df1 matches the embedded git submodule status.",
+    "Recorder's pk invocation `pk ingest --scope project --source karpathy-progress-memory:{eventId}` (recorder:411) and `KPM_PK_TIMEOUT_SECONDS` bound 0.1–10s (recorder:407) match the embedded source.",
+    "pk-librarian/src/librarian.rs:48-51 mapping to PkError::llm proves pk ingest requires an LLM, and the pk ingest --help output enumerates only --kb-dir --source --scope --yes (no --raw or --no-llm).",
+    "hooks.json lines 47, 59, 71 each carry `timeout: 15` for the three KBD boundary hooks; the analysis's 15 s timeout claim is supported.",
+    "lib/hooks/taskcompleted-kbd-receipt.mjs is identified as the 1000 ms harness hook (not part of KBD lifecycle) — supported by the embedded file content 'Declared at 1000 ms.'",
+    "library-candidates.json research budget figures (tier1=4, tier2=2, tier3=6, tier4=0) match the registry + search evidence blocks (gh search repos hits, npm view entries, cargo search entries, Context7 quote, pk OKF grep, pk releases).",
+    "G2 rejection of canonicalize/json-canonicalize/fast-json-stable-stringify/safe-stable-stringify is supported: their `npm view` evidence is in the packet, and the version/last_release/license figures match.",
+    "G5 cargo-dist 0.32.0 docs claim (Windows triples + sha256 per artifact) is supported by the embedded Context7 quote.",
+    "G6 pk-store/src/bundle.rs:298-321 okf_index_reports confirms the lint checks only that the index block declares `okf_version`, not its value.",
+    "The 'no Node lifecycle dispatcher' claim (`0 .mjs files mention task:after or kbd_hooks_fire`) is supported by the embedded grep result."
+  ]
+}
+```

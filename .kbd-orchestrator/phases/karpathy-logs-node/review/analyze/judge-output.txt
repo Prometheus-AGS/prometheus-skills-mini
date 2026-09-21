@@ -1,0 +1,121 @@
+```json
+{
+  "verdict": "PASS",
+  "rulings": [
+    {
+      "critic_finding": "build_required understates the Node recorder: event_from_hook inputs (KBD_HOOK_NAME, KBD_TASK_CLASS, KBD_TASK_ELAPSED_HOURS, kbd_status, parse_hook_subject, touched_files, git rev-parse) are never enumerated; 'bespoke' framing misleading.",
+      "ruling": "DOWNGRADED",
+      "severity": "WARNING",
+      "reason": "The omission is real — analysis.md §4 lists only 'recorder + entry point', 'invocation point', 'secret/256 KiB bound', and no string among KBD_HOOK_NAME/KBD_TASK_CLASS/KBD_TASK_ELAPSED_HOURS/kbd_status/touched_files appears anywhere in analysis.md, decision-log.md, or library-candidates.json. But the 'bespoke' framing is accurate — the contract is bespoke *to the source pack*, which is exactly what the recorder:135-187 evidence shows — and the analyze mandate in goals.md was the build-vs-adopt decision ('Decide in analyze: a thin Node recorder that calls pk, or a pk subcommand'), which was made with correct, evidenced rationale. The spec stage inherits goals.md's 'keeps the source pack's on-disk contract' and §4's 'Port upstream's patterns; do not invent new ones', so it must read the recorder; the gap is incompleteness of enumeration, not a wrong design direction.",
+      "evidence": "recorder:135-187 shows event_from_hook reading the three env vars and calling kbd_status/parse_hook_subject/touched_files/git_value; analysis.md §4 item 1 reads only 'lib/karpathy/ recorder + scripts/record-progress.mjs entry point. Bespoke contract.'"
+    },
+    {
+      "critic_finding": "'Exactly two pk subcommands' claim: the `pk context … --format hook` half cites upstream karpathy-hook-dispatch.sh, which is not in the embedded evidence; unverified.",
+      "ruling": "DOWNGRADED",
+      "severity": "WARNING",
+      "reason": "Supported as an evidence-discipline defect: no content of karpathy-hook-dispatch.sh appears in the packet, and `pk --help`/`pk ingest --help` show no '--format hook' flag. But not CRITICAL: the ingest half is fully verified (recorder:411-416), no build_required item depends on the context invocation shape — context appears only in Open Q4's recommendation — and the adjacent claim 'pk context needs no network' is independently supported by its help text ('Retrieve bounded local context without invoking an LLM'). The claim must be pasted into evidence or softened, but the design does not rest on it.",
+      "evidence": "analysis.md §1: 'and `pk context … --format hook` | `record-progress.py:411-416`; upstream `karpathy-hook-dispatch.sh`' — no dispatch-script lines exist in the evidence block; pk --help shows only 'context Retrieve bounded local context without invoking an LLM'."
+    },
+    {
+      "critic_finding": "'pk doctor reports FAIL on a healthy Windows machine' cites the PR #12 body, which is not in evidence — asserted, not observed.",
+      "ruling": "UPHELD",
+      "severity": "WARNING",
+      "reason": "The embedded 'pk PR #12 CI' evidence contains only gh pr view state fields, CI job/step results, and test counts; no PR body text. The FAIL claim is unverifiable from the packet, violating the carried process goal 'Verify the claim, not just the code'.",
+      "evidence": "analysis.md §1 table: 'pk doctor reports FAIL … | pk PR #12 body, \"Deliberately not in this PR\"'; evidence 'pk PR #12 CI' shows 'state=OPEN mergeState=CLEAN mergeable=MERGEABLE' and job timings only."
+    },
+    {
+      "critic_finding": "§2.2 'eight fields — one integer and seven strings' is imprecise: changeId/taskId are nullable and are null in the golden receipt.",
+      "ruling": "DOWNGRADED",
+      "severity": "SUGGESTION",
+      "reason": "The count-by-type is wrong for the verified receipt (one integer, five strings, two nulls), but the load-bearing claim — 'no float can reach it' — survives intact: null serialises identically in Python json.dumps and JS JSON.stringify, and the identity-hash MATCH is observed (be2c1c52… = be2c1c52…). A precision nit with no design consequence.",
+      "evidence": "recorder:232-237 'require_string(event, \"changeId\", nullable=True, limit=200)'; golden receipt '\"changeId\": null, \"taskId\": null'; hash observation 'identity hash (Node) : be2c1c523097… MATCH'."
+    },
+    {
+      "critic_finding": "G4 'queued is not reachable' ignores that pre-existing upstream receipts carry memory.status 'queued' (golden receipt proves it) and the Node replay path's treatment of them is undefined.",
+      "ruling": "UPHELD",
+      "severity": "WARNING",
+      "reason": "Fully supported. The golden receipt itself — the very artifact this phase re-hashed — has '\"transport\": \"outbox\", \"status\": \"queued\"' with '\"complete\": true'. Recorder:586-591 retries only when 'not complete' OR status=='degraded', so a queued+complete receipt falls through to 'duplicate'. The Node port must read (while never emitting) 'queued', and the analysis's reachable-states list does not say so.",
+      "evidence": "golden receipt: '\"memory\": {\"transport\": \"outbox\", \"status\": \"queued\", …}, \"complete\": true'; recorder:587-590 prior_degraded checks only '== \"degraded\"'; analysis.md G4: 'queued is not reachable and should not be emitted.'"
+    },
+    {
+      "critic_finding": "G1/Open Q3 do not require the Node port to honor PK_BIN (recorder:402), only spawnExecutable('pk') PATH lookup.",
+      "ruling": "UPHELD",
+      "severity": "WARNING",
+      "reason": "recorder:402 is explicit — 'pk = os.environ.get(\"PK_BIN\", \"pk\")' — and honoring it is part of the on-disk/behavioral contract the port must keep. The analysis relegates PK_BIN to an open-question title while committing only to spawnExecutable('pk'), which on a machine where pk was cargo-installed to a non-PATH location would silently degrade every record.",
+      "evidence": "recorder:402; analysis.md Open Q3: 'PK_BIN / PATH resolution on Windows. spawnExecutable('pk') relies on lookupOnPath; whether it resolves pk.exe through PATHEXT is untested here.'"
+    },
+    {
+      "critic_finding": "G4 omits the exit-code contract (0 for recorded/duplicate/degraded; 74/75 crash-test seams via KPM_TEST_CRASH_*).",
+      "ruling": "UPHELD",
+      "severity": "WARNING",
+      "reason": "The exit codes are observable contract: recorder returns 0 even for degraded (the degrade goal depends on this — a nonzero exit on 'pk absent' would contradict 'never a failed hook'), and 74/75 are the seams by which crash-recovery is tested. The analysis enumerates result states but never the process-level contract.",
+      "evidence": "recorder:614 'return 0', recorder:626 'return 0', recorder:636-637 'os._exit(74)' on KPM_TEST_CRASH_BEFORE_MEMORY, recorder:647-648 'os._exit(75)'."
+    },
+    {
+      "critic_finding": "G2 elapsedHours rule should be restated as three explicit cases (0, (0,1e-4), [1e-4,1000]).",
+      "ruling": "UPHELD",
+      "severity": "SUGGESTION",
+      "reason": "Presentation improvement only; the substance (token for 0.0, reject (0,1e-4)) is already in the analysis.",
+      "evidence": "analysis.md G2: 'reject an elapsedHours in (0, 1e-4) rather than guess its token' and the observed 'python-float token 760d332e… MATCH' for 0.0."
+    },
+    {
+      "critic_finding": "G3 'does not point at any file' for the lib/refiner exemption; spec author would not know which appends stay read-modify-write.",
+      "ruling": "REJECTED",
+      "severity": "NONE",
+      "reason": "Factually wrong: the analysis names the file explicitly. The critic conflated the lib/ evidence listing (which shows the refiner directory but not its contents) with the analysis text, which names the exact file.",
+      "evidence": "analysis.md G3: '`lib/refiner/session.mjs`'s read-modify-write append stays as it is — a bounded per-artifact log, out of scope (A-4).'"
+    },
+    {
+      "critic_finding": "canonical_validate, write_receipt, receipt_path, markdown_record are required ports but not enumerated or evidenced.",
+      "ruling": "UPHELD",
+      "severity": "SUGGESTION",
+      "reason": "Valid and, if anything, understated: analysis.md does not mention canonical_validate at all (the critic claimed 'only by name'), yet recorder:558 calls it on every event before any receipt work. A by-name port list belongs in the handoff to spec.",
+      "evidence": "recorder:557-558 'validate_event(event); canonical_validate(event, state)'; canonical_validate's body is absent from the evidence block and from all three artifacts."
+    },
+    {
+      "critic_finding": "G6's '10 × v0.1, 0 × v0.2' grep covered only .rs files — an undercount by construction.",
+      "ruling": "UPHELD",
+      "severity": "SUGGESTION",
+      "reason": "The analysis itself states the grep scope ('over its .rs'), so it is honest, but markdown/toml mentions were not searched and the caveat deserves one line.",
+      "evidence": "analysis.md G6: 'grep -o 'OKF v0\\.[0-9]' over its .rs: 10 × v0.1, 0 × v0.2'; evidence 'pk OKF version mentions' shows only '10 OKF v0.1'."
+    },
+    {
+      "critic_finding": "cand-201's PATHEXT/PK_BIN risk should be promoted from open question to a hard spec requirement.",
+      "ruling": "UPHELD",
+      "severity": "SUGGESTION",
+      "reason": "Subsumed by the upheld WARNING on PK_BIN; as a restatement on the candidate record it is a fair suggestion.",
+      "evidence": "library-candidates.json cand-201 risks[1]: 'spawnExecutable resolving pk.exe through PATHEXT on Windows is untested in this pack.'"
+    },
+    {
+      "critic_finding": "Q5 'adds no seventh harness hook' is true, but the carried KBD skills' hooks.json commands (which invoke python3 record-progress.py) must still be updated to name the Node CLI — not stated.",
+      "ruling": "UPHELD",
+      "severity": "SUGGESTION",
+      "reason": "hooks.json:47-71 show the boundary hooks shell out to the Python script; §4 item 2 says 'the carried KBD skills name it at each boundary' without naming the file those skills will edit. A one-line clarification, not a design defect.",
+      "evidence": "hooks.json:47 'command: \"script=\\\"…/record-progress.py\\\"; python3 \\\"$script\\\" …\"'; analysis.md §4 item 2: 'the recorder is a CLI and the carried KBD skills name it at each boundary.'"
+    }
+  ],
+  "additional_findings": [
+    {
+      "severity": "WARNING",
+      "location": "analysis.md §1 'What changed since assess'",
+      "finding": "The claim that the two tests absent on Windows 'are #[cfg(unix)] by design — symlinks and inode identity' is asserted, not evidenced. The evidence shows only the two test names (via comm -23); nothing in the packet shows a #[cfg(unix)] attribute on either test, and one of them — 'normalized_submitting_operation_is_not_rewritten_during_recovery' — does not self-evidently concern symlinks or inodes. This sits directly under goal 1, which demands the Windows result be 'observed, not asserted': if the two tests are absent for any other reason (deleted, broken, conditionally compiled for another cause), the 'windows 113/0 green' observation is weaker than stated.",
+      "evidence": "evidence 'pk PR #12 CI': 'tests present on macOS and absent on Windows (comm -23): reconcile_removes_one_of_two_aliases_to_the_same_article / normalized_submitting_operation_is_not_rewritten_during_recovery' — no cfg attribute lines are included; analysis.md §1: 'the two absent tests are #[cfg(unix)] by design — symlinks and inode identity; diffed with comm'.",
+      "fix": "Paste the #[cfg(unix)] attribute lines (and the enclosing test module) from the pk source at head 61688f1, or downgrade the sentence to 'absent on Windows (comm -23); the reason is inferred, not yet observed'."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "analysis.md §3 G5 / library-candidates.json cand-211",
+      "finding": "The cargo-binstall rejection reason 'needs a Rust toolchain on the user's machine' mischaracterizes the tool: cargo-binstall's purpose is installing prebuilt binaries without a Rust toolchain (per its own crates description, 'Binary installation for rust projects'). The decisive reason is the one the same row already states second — pk has 0 published release artifacts for binstall to fetch — plus the bootstrap awkwardness of obtaining binstall itself without cargo, at which point a direct artifact download is simpler.",
+      "evidence": "evidence 'registry + search output': 'cargo-binstall = \"1.23.0\"    # Binary installation for rust projects'; library-candidates.json cand-211 risks: 'Requires a Rust toolchain on the user machine' but decision_rationale: 'it also needs published artifacts first'; evidence 'pk releases': 'rows: 0'.",
+      "fix": "Restate the rejection as: no published pk artifacts to fetch (pk has 0 releases), and installing binstall without cargo is no easier than downloading a pk binary directly. The reject verdict stands."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "analysis.md §1 table, row 'pk context needs no network'",
+      "finding": "'ran offline against an empty home, exit 0' overstates the observation: the CI evidence shows the step 'pk context with HOME unset' succeeded on a networked GitHub runner. What is supported is (a) 'needs no network' per its help text and (b) 'ran with HOME unset, exit 0'. The word 'offline' is inferred from the code path, not observed.",
+      "evidence": "evidence 'pk PR #12 CI': step 'success pk context with HOME unset'; windows log: 'info: no project root detected; using global KB at C:\\Users\\runneradmin\\.prometheus/knowledge'; pk --help: 'context Retrieve bounded local context without invoking an LLM'.",
+      "fix": "Reword to 'needs no network (per its help text); observed running with HOME unset on windows-latest, exit 0'."
+    }
+  ]
+}
+```

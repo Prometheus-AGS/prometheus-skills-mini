@@ -1,0 +1,56 @@
+{
+  "stage": "spec",
+  "phase": "hook-entry-node-only",
+  "rounds_run": 2,
+  "cap": 2,
+  "verdict_round_1": "BLOCK (2 CRITICAL, 3 WARNING, 2 SUGGESTION)",
+  "verdict_round_2": "BLOCK (2 CRITICAL, 1 WARNING, 1 SUGGESTION) — all NEW, not repeats",
+  "final_state": "All round-1 and round-2 findings accepted and fixed. The two-round cap is now spent; the round-2 fixes are UNREVIEWED.",
+  "producer": "claude-opus-5",
+  "judge": "fresh-context subagent (general-purpose, opus)",
+  "cross_model_check": "NOT verified-distinct — the liter-llm gateway rejected authentication this session (/health 200, but /v1/models and /v1/chat/completions return \"Missing or invalid Authorization header\"; no credential in the environment or any config path the bridge reads). Judge shares the producer model family, which is a weaker check.",
+  "round_2_findings": [
+    {
+      "severity": "CRITICAL",
+      "location": "artifact-refiner-node tasks.md §6, proposal.md",
+      "finding": "Task 6 reviewed and edited 19 .mjs as \"existing\", but nothing carried them into this project. Verified: this project has only scripts/spec-validate.mjs and scripts/coverage-report.mjs; all three files the tasks name by path are absent.",
+      "disposition": "ACCEPTED AND FIXED. Task 5.1 now carries the 19 .mjs into scripts/ and scripts/lib/; Impact declares the destination; a new requirement (\"Every script the carried payload names is present\") asserts the health-probe fix has a target. This single false premise caused BOTH round-2 CRITICALs."
+    },
+    {
+      "severity": "CRITICAL",
+      "location": "artifact-refiner-node specs/refiner/qa-gate/spec.md, tasks 5.2/5.3",
+      "finding": "The unavailable-skill rule was correctly re-keyed onto the property in round 1 but applied only to .sh. Six skills name only an unported .mjs (convert-htmx-pdf, convert-htmx-react, convert-md-to-htmx, design-svg-logo, rebrand-artifact, refine-moodboard) and would pass a .sh-only scan while being just as broken on invocation.",
+      "disposition": "ACCEPTED AND FIXED. The scan scenario is now extension-agnostic (\"of any extension\"), a new scenario names all six, and task 5.4 asserts every script path of any extension resolves or its skill declares itself unavailable."
+    },
+    {
+      "severity": "WARNING",
+      "location": "artifact-refiner-node proposal.md table and design.md",
+      "finding": "Every line count was inflated by one per file: split(\"\\n\").length counts a trailing newline. On a table advertising \"measured, not estimated\", against a phase goal requiring every count to cite its command.",
+      "disposition": "ACCEPTED AND FIXED. Re-derived with wc -l: core 661 (was 671), scaffolders 2,879 (2,886), installers 1,540 (1,557), .mjs 4,501 (4,520), all .sh 5,357 (5,396). The counting rule is now stated alongside the numbers. Conclusions unaffected."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "artifact-refiner-node design.md / proposal.md",
+      "finding": "\"Every python3 call is json.load/dumps or uuid.uuid4()\" overclaims: post-execute-check.sh branches on artifact_type over manifest.preview.runs, and validate-manifest.sh accumulates errors with isinstance checks.",
+      "disposition": "ACCEPTED AND FIXED. Reworded to \"only the Python standard library — JSON, UUID, os.path checks and list/dict logic\", preserving the load-bearing point (no third-party dependency) without the overclaim."
+    },
+    {
+      "severity": "NOTE",
+      "location": "artifact-refiner-node proposal.md Decisions",
+      "finding": "The round-1 correction was applied to design.md only; proposal.md still carried the refuted sentence \"no .mjs imports model-routing.mjs\", leaving the two documents contradicting each other on the finding's own subject.",
+      "disposition": "ACCEPTED AND FIXED. The proposal bullet now rests the no-third-service conclusion on the configurable probe URL and §P, and explicitly records the earlier claim as false."
+    }
+  ],
+  "verified_fixes_from_round_1": [
+    "CRITICAL (false containment claim about model-routing.mjs importers) — CONFIRMED FIXED by the judge, who independently reproduced both importers at the exact lines and read all 12 return paths of model-routing.mjs to confirm it never throws.",
+    "CRITICAL (unavailable-skill rule scoped by name prefix) — CONFIRMED FIXED: the rule is property-keyed and the two scenarios no longer contradict. (Its under-application to .mjs was a NEW finding, not a failed fix.)",
+    "WARNING (installer count) — PARTIALLY FIXED in round 2 (file count right, line count still off by one per file); fully fixed after round 2.",
+    "WARNING (undeclared Impact files) — CONFIRMED FIXED.",
+    "WARNING (vacuous manifest-resolution scenario) — CONFIRMED FIXED; the judge tested the vacuity attack from both ends (classify none, classify all) and both now fail.",
+    "SUGGESTION (process step as a spec scenario) — CONFIRMED FIXED, scenario deleted.",
+    "SUGGESTION (undefined prose/code scan rule) — CONFIRMED FIXED with a negative fixture that fails both degenerate implementations.",
+    "MODIFIED-delta regression check — NO REGRESSION across both rounds: all 4 current scenarios repeated, 2 added."
+  ],
+  "cap_disposition": "The skill caps artifact review at 2 rounds and the prior reflection's corrective action 1 says a change reaching round 3 STOPS and the reflection is re-read. Both round-2 CRITICALs shared a single root cause (reasoning about upstream files as though they were already in this project), which is fixed at the source rather than patched per-symptom. No third round was run. The fixes were self-reviewed by re-derivation (every corrected count recomputed with wc -l, the carry premise checked against the actual filesystem, the six .mjs-only skills derived by comm) and the MODIFIED delta re-checked for regression. Those fixes remain UNREVIEWED and are carried into the handoff as such.",
+  "generated_at": "2026-09-21T11:31:38.181Z"
+}

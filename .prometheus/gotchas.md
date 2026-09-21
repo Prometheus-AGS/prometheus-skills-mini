@@ -94,3 +94,18 @@ delete them.
 - **2026-09-21 · `git ls-files -s`, counting mode `120000`, is a portable symlink check.** `constraints.md`
   says no portable one-line check exists for `no-symlinks`; it does, it needs no `find`, and it works
   identically on Windows. Worth adopting as the constraint's `check:`.
+
+## 2026-09-21 — "existing" is a claim about THIS repo, not the upstream one
+
+Writing the `artifact-refiner-node` spec, I described 19 `.mjs` as "existing" and specced a Windows
+*review* of them. They exist in the upstream submodule; this project has two `.mjs` under `scripts/`.
+Nothing carried them. The spec therefore had tasks editing absent files, and a RED test whose expected
+failure (`model-routing.mjs:36`) was unreachable.
+
+One false premise produced both round-2 CRITICALs: the second was a `.sh`-only scan that let six
+`.mjs`-only skills through, which only looks like a separate defect until you notice both come from
+treating upstream state as local state.
+
+**Check:** when porting from another repository, every "existing"/"already there" claim names which
+repository. A file path in a task is a claim that the path resolves *here* — verify with the filesystem,
+not with a grep of the source repo.

@@ -1,0 +1,41 @@
+## 0. Prerequisite — goal 1, blocking
+
+- [ ] 0.1 Re-review as one batch the four unreviewed final fixes in `platform-paths-and-text`, `platform-atomic-write-and-lock`, `platform-spawn` and `windows-evidence` (8 `UNREVIEWED` markers). Record the outcome. **No task below starts until this is done** — every hook imports `lib/platform/`.
+
+## 1. The open question — probe before any payload
+
+- [ ] 1.1 Register ONE trivial exec-form hook (`{"type":"command","command":"node","args":["<probe>.mjs"]}`) on a cheap event, trigger it, and observe whether it fires. Record the observation verbatim, including the harness and its version.
+- [ ] 1.2 If it does NOT fire: stop. Do not write a payload, do not adopt a shell string. Record the finding and re-plan the change. If it DOES fire: record that exec form is confirmed on this harness and continue.
+
+## 2. Entry point and dispatch
+
+- [ ] 2.1 RED: write `scripts/hook-entry.test.mjs` asserting dispatch by `--hook` to a payload module, a non-zero exit naming an unknown id, and that the map's keys are hyphen-spelled `--hook` values and contain no colon-spelled matcher id; run `node --test <that file>` and see it FAIL; commit the failing test alone and paste the failure output under this task.
+- [ ] 2.2 GREEN: implement `scripts/hook-entry.mjs` with the static import map until the test passes. Under 500 lines. Reads stdin JSON with `readFileSync(0)`, tolerating empty stdin and never hanging on a TTY.
+- [ ] 2.3 Self-review by mutation: revert the dispatch implementation and confirm the test fails. A test that passes against reverted code asserts nothing.
+- [ ] 2.4 Commit locally with an `Assisted-by` trailer and no `Signed-off-by`: `feat(hooks): in-process dispatch by hook id, no shell`. Do not push.
+
+## 3. The manifest and its resolution test
+
+- [ ] 3.1 RED: write the manifest-resolution test deriving its file list from `hooks/hooks.json` (never a hand-kept list): every named file resolves, every `--hook` value has a map entry, and exactly 6 distinct ids are registered; see it FAIL; commit the failing test alone and paste the output.
+- [ ] 3.2 GREEN: write `hooks/hooks.json` in exec form for the 6 ported ids until the test passes.
+- [ ] 3.3 Prove the test can fail for the reason it exists: remove a file the manifest names, confirm the test fails and names it, restore the file.
+- [ ] 3.4 Commit locally with an `Assisted-by` trailer: `feat(hooks): exec-form manifest and resolution test`. Do not push.
+
+## 4. The six payloads
+
+- [ ] 4.1 RED: write tests for the 6 payloads, each asserting exit 0 with a degraded result when its dependency is absent, and exit 0 with a throw contained; see them FAIL; commit alone and paste the output.
+- [ ] 4.2 GREEN: implement `lib/hooks/{sessionstart-kbd-control,sessionstart-detect-project-context,posttool-write-position-reminder,subagent-fallback-checkpoint,taskcompleted-kbd-receipt,precompact-kbd-control}.mjs` until the tests pass. Each imports from `lib/platform/` and re-implements none of it.
+- [ ] 4.3 Self-review by mutation: revert one payload's degradation guard and confirm its test fails.
+- [ ] 4.4 Commit locally with an `Assisted-by` trailer: `feat(hooks): six KBD lifecycle payloads that degrade to exit 0`. Do not push.
+
+## 5. CI: manifest check and the Windows measurement
+
+- [ ] 5.1 Add the hook-manifest check to every job in `.github/workflows/ci.yml` (the MODIFIED `continuous-integration` requirement).
+- [ ] 5.2 Add the `windows-latest` cold-start measurement for **all three** 1000 ms hooks — `sessionstart-kbd-control`, `taskcompleted-kbd-receipt` and `precompact-kbd-control`. `goals.md` names only the first two; porting the third brings it under the same budget, and measuring only the named two would ship an unmeasured hook against the budget this phase exists to test.
+- [ ] 5.3 Record the result as a distribution (repeated samples, median and maximum), not one number, in `evidence/windows.md`. If the tail exceeds 1000 ms, raise the budget and state the measurement; do not reach for a compiled dispatcher (C7).
+- [ ] 5.4 Commit locally with an `Assisted-by` trailer: `ci: check the hook manifest and measure hook cold start on Windows`. Do not push.
+
+## 6. Exit evidence
+
+- [ ] 6.1 For every claim this change makes about Windows, cite the named asserting test and its verbatim output from **both** Node 22 and Node 24 on `windows-latest`, as `platform-foundation` established.
+- [ ] 6.2 T2 at change completion: `node --test`, `node rules/build.mjs --check`, `node scripts/spec-validate.mjs`. State which tier ran (A-6, A-9).

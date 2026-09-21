@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/GQAdonis/artifact-refiner-skill/references/schemas/model-policy.schema.json",
+  "title": "Artifact Refiner Model Policy",
+  "description": "Shape of .kbd-orchestrator/project.json -> model_policy. Drives phase-tiered inference routing across endpoints (host harness, openai-proxy, etc.).",
+  "$comment": "prefer_model values are upstream-proxy aliases (e.g., 'gpt-5.4-mini' resolved by openai-proxy), not canonical OpenAI/Anthropic API model IDs. If the proxy renames a catalog entry, prefer_model strings must be updated accordingly.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["default_endpoint", "phases", "endpoints"],
+  "properties": {
+    "default_endpoint": {
+      "type": "string",
+      "description": "Endpoint id used when a phase has no prefer_endpoint."
+    },
+    "phases": {
+      "type": "object",
+      "description": "Per-phase tier + endpoint/model preferences. Phase names follow refiner-<verb> (refiner-iterate, refiner-evaluate, refiner-finalize).",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["tier"],
+        "properties": {
+          "tier": {
+            "type": "string",
+            "enum": ["small", "medium", "frontier"],
+            "description": "Capability class. Mechanical phases use 'small'; evaluation/reasoning use 'medium' or 'frontier'."
+          },
+          "prefer_endpoint": {
+            "type": "string",
+            "description": "Preferred endpoint id (must match a key in endpoints). Falls back to default_endpoint when the preferred endpoint is unhealthy."
+          },
+          "prefer_model": {
+            "type": "string",
+            "description": "Preferred model alias on the preferred endpoint. Proxy-mediated alias, not a canonical API id."
+          }
+        }
+      }
+    },
+    "endpoints": {
+      "type": "object",
+      "description": "Endpoint registry. Each entry describes how to reach a model provider.",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "title": "Host harness endpoint",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["via"],
+            "properties": {
+              "via": {
+                "type": "string",
+                "enum": ["host"],
+                "description": "Inference proxied through whatever LLM harness hosts the refiner (Claude Code, Codex CLI, etc.). No external service contract."
+              }
+            }
+          },
+          {
+            "title": "openai-proxy endpoint",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["base_url", "auth_mode"],
+            "properties": {
+              "base_url": {
+                "type": "string",
+                "format": "uri",
+                "description": "Base URL for the proxy's OpenAI-compatible /v1 surface."
+              },
+              "auth_mode": {
+                "type": "string",
+                "enum": ["chatgpt_oauth", "openai_api_key"],
+                "description": "Primary auth path. chatgpt_oauth uses 'codex login' subscription credentials; openai_api_key uses OPENAI_API_KEY env var."
+              },
+              "fallback_auth": {
+                "type": "string",
+                "enum": ["chatgpt_oauth", "openai_api_key"],
+                "description": "Optional fallback auth mode if the primary is unavailable."
+              },
+              "health_probe": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL the health-probe utility hits to determine readiness. Typically <base_url-without-/v1>/health."
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

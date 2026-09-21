@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://artifact-refiner.dev/schemas/mcp-ui-resource.schema.json",
+  "title": "MCP-UI Resource (A2UI over MCP Apps)",
+  "description": "Expresses the MCP-UI resource carried inside an MCP tool-call result. This repo does NOT define MCP-UI; this file encodes someone else's transport so constraint validation has a deterministic local source of truth. The PAYLOAD, however, is deliberately constrained to A2UI: see the architecture note in $comment.",
+  "$comment": "ARCHITECTURE \u2014 WHY THE PAYLOAD IS A2UI, NOT FREE-FORM HTML. An agent exposes MCP, HTTP, A2A, and AG-UI endpoints simultaneously, and a client may arrive over any of them. The UI must be the SAME regardless of transport. A2UI is that shared vocabulary; MCP-UI is one ENVELOPE that carries it, alongside AG-UI (web) and a2ui_flutter (mobile). Admitting arbitrary HTML here would let the MCP surface drift from the AG-UI and Flutter surfaces \u2014 the exact inconsistency this content type exists to prevent. || CONSEQUENCE: `a2ui` messages are REQUIRED. The `text` field holds a minimal host page that renders them; it is generated scaffolding, not authored markup. || WHY THIS WORKS INSIDE THE SANDBOX: the A2UI renderer is FED messages (MessageProcessor.processMessages takes an array) rather than fetching them. So the surface renders with `connect-src: none` \u2014 the MCP-UI sandbox default. Verified against assets/scaffold/a2ui/a2ui-surface.tsx. || PROVENANCE. Transport: MCP-UI-Org/mcp-ui (Apache-2.0) + @modelcontextprotocol/ext-apps (MIT). Encoded against SHIPPED TYPE DECLARATIONS vendored at .kbd-orchestrator/phases/phase-9-scaffold-mcp-ui/evidence/. Payload: a2ui-project/a2ui v1.0, validated by references/schemas/a2ui-component.schema.json. || MIMETYPE: `text/html;profile=mcp-app` is what BOTH shipped packages emit (verified by grep). Bare `text/html` is the legacy spelling. `text/uri-list` appears in NEITHER package. || NARROWING: `blob`, `remoteDom`, and `externalUrl` are out of scope \u2014 the latter two are distinct CONTENT SHAPES upstream, not mimeTypes, so there is no mimeType literal to exclude; they are refused structurally by additionalProperties:false. || VALIDATOR LIMITS (verified by fixture, not assumed): the shipped validator implements `enum` but NOT `const`, and `oneOf` RETURNS EARLY so sibling keywords are never evaluated. Each branch below is therefore self-contained. Do not hoist shared constraints \u2014 that silently disables them.",
+  "upstreamPackages": {
+    "@mcp-ui/client": "7.1.1",
+    "@modelcontextprotocol/ext-apps": "1.7.5"
+  },
+  "type": "object",
+  "required": [
+    "type",
+    "resource"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "enum": [
+        "resource"
+      ],
+      "description": "EmbeddedResource discriminator. @mcp-ui/client's isUIResource narrows on this. Single-value `enum` rather than `const`: the shipped validator (scripts/normalize-a2ui.mjs) implements enum but NOT const, so a const here would be silently inert \u2014 the same defect class phase-8 found with oneOf."
+    },
+    "resource": {
+      "$ref": "#/definitions/uiResource"
+    }
+  },
+  "definitions": {
+    "uiResource": {
+      "description": "The ui:// resource. Each oneOf branch is SELF-CONTAINED because the shipped validator returns as soon as it evaluates oneOf. additionalProperties:false is what refuses the remoteDom (script/framework) and externalUrl (iframeUrl) content shapes.",
+      "oneOf": [
+        {
+          "title": "branch A \u2014 MCP Apps",
+          "description": "The spelling both shipped packages emit.",
+          "type": "object",
+          "required": [
+            "uri",
+            "mimeType",
+            "text",
+            "a2ui"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "uri": {
+              "type": "string",
+              "pattern": "^ui://",
+              "description": "The protocol's identifying marker is a URI SCHEME, not a message shape."
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Minimal host page that renders the `a2ui` messages. Generated, not authored."
+            },
+            "a2ui": {
+              "type": "array",
+              "minItems": 1,
+              "description": "The A2UI messages this surface renders \u2014 the SHARED UI vocabulary. Each element MUST validate against references/schemas/a2ui-component.schema.json. Required: a resource without it would render UI that no other transport can reproduce.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "version"
+                ],
+                "properties": {
+                  "version": {
+                    "type": "string",
+                    "pattern": "^v\\d+\\.\\d+$"
+                  }
+                }
+              }
+            },
+            "mimeType": {
+              "type": "string",
+              "enum": [
+                "text/html;profile=mcp-app"
+              ]
+            }
+          }
+        },
+        {
+          "title": "branch B \u2014 legacy",
+          "description": "Bare text/html, for a producer not using the MCP Apps adapter.",
+          "type": "object",
+          "required": [
+            "uri",
+            "mimeType",
+            "text",
+            "a2ui"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "uri": {
+              "type": "string",
+              "pattern": "^ui://",
+              "description": "The protocol's identifying marker is a URI SCHEME, not a message shape."
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Minimal host page that renders the `a2ui` messages. Generated, not authored."
+            },
+            "a2ui": {
+              "type": "array",
+              "minItems": 1,
+              "description": "The A2UI messages this surface renders \u2014 the SHARED UI vocabulary. Each element MUST validate against references/schemas/a2ui-component.schema.json. Required: a resource without it would render UI that no other transport can reproduce.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "version"
+                ],
+                "properties": {
+                  "version": {
+                    "type": "string",
+                    "pattern": "^v\\d+\\.\\d+$"
+                  }
+                }
+              }
+            },
+            "mimeType": {
+              "type": "string",
+              "enum": [
+                "text/html"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

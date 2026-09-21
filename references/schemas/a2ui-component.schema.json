@@ -1,0 +1,310 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://artifact-refiner.dev/schemas/a2ui-component.schema.json",
+  "title": "A2UI Protocol Message (v1.0)",
+  "description": "Expresses the A2UI v1.0 agent-to-renderer protocol defined by a2ui-project/a2ui (Apache-2.0). This repo does NOT define A2UI; this file encodes someone else's protocol so constraint validation has a deterministic local source of truth. Upstream authority: https://github.com/a2ui-project/a2ui \u2014 specification/v1_0/docs/a2ui_protocol.md (envelope model), specification/v1_0/common_types.json (ComponentCommon, DynamicString), specification/v1_0/catalogs/basic/catalog.json (component vocabulary). Re-verify via Context7 library id /a2ui-project/a2ui before editing. Structural rules JSON Schema cannot express \u2014 acyclicity of the component id-reference graph, reachability from the root, and catalog membership \u2014 are enforced by scripts/normalize-a2ui.mjs, not here.",
+  "targetCatalogId": "https://a2ui.org/specification/v1_0/catalogs/basic/catalog.json",
+  "upstreamSpecVersion": "v1.0",
+  "type": "object",
+  "required": [
+    "version"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Protocol version. v1.0 is the version this schema encodes.",
+      "pattern": "^v\\d+\\.\\d+$"
+    },
+    "createSurface": {
+      "$ref": "#/definitions/createSurface"
+    },
+    "updateComponents": {
+      "$ref": "#/definitions/updateComponents"
+    },
+    "updateDataModel": {
+      "$ref": "#/definitions/updateDataModel"
+    },
+    "deleteSurface": {
+      "$ref": "#/definitions/deleteSurface"
+    },
+    "callFunction": {
+      "$ref": "#/definitions/callFunction"
+    },
+    "actionResponse": {
+      "$ref": "#/definitions/actionResponse"
+    }
+  },
+  "oneOf": [
+    {
+      "required": [
+        "createSurface"
+      ]
+    },
+    {
+      "required": [
+        "updateComponents"
+      ]
+    },
+    {
+      "required": [
+        "updateDataModel"
+      ]
+    },
+    {
+      "required": [
+        "deleteSurface"
+      ]
+    },
+    {
+      "required": [
+        "callFunction"
+      ]
+    },
+    {
+      "required": [
+        "actionResponse"
+      ]
+    }
+  ],
+  "definitions": {
+    "surfaceId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifies the surface an operation applies to."
+    },
+    "componentId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique within a surface. Referenced by `child` / `children` from other components."
+    },
+    "componentName": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Za-z0-9]*$",
+      "description": "PascalCase component name. Upstream constrains this to the declared catalog; the pattern here is a shape check only. Catalog membership is enforced by scripts/normalize-a2ui.mjs, which cannot be expressed in JSON Schema without inlining a catalog."
+    },
+    "dynamicString": {
+      "description": "A leaf value: either a literal JSON primitive, or a {\"path\": \"/pointer\"} reference resolved against the surface dataModel. Anything else \u2014 notably an expression object \u2014 is rejected.",
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "path"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^/",
+              "description": "JSON Pointer into dataModel, e.g. \"/title\"."
+            }
+          }
+        }
+      ]
+    },
+    "component": {
+      "type": "object",
+      "required": [
+        "id",
+        "component"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/componentId"
+        },
+        "component": {
+          "$ref": "#/definitions/componentName"
+        },
+        "child": {
+          "$ref": "#/definitions/componentId",
+          "description": "Single child, by id. Never an inline object \u2014 the component list is flat."
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/componentId"
+          },
+          "description": "Ordered child ids. Never inline objects."
+        }
+      },
+      "not": {
+        "anyOf": [
+          {
+            "required": [
+              "type"
+            ],
+            "description": "Guard: `type` was the pre-alignment dialect's discriminator. Upstream uses `component`."
+          },
+          {
+            "required": [
+              "bindings"
+            ],
+            "description": "Guard: `bindings` was the pre-alignment dialect's data model. Upstream uses dataModel + {\"path\": \u2026}."
+          }
+        ]
+      },
+      "description": "One component. Structural keys (id, component, child, children) are fixed; every other property is catalog-specific and must be a dynamicString leaf, a plain object/array of them, or a literal. This is what closes the expression-binding hole: an unconstrained property would let {'kind':'expression'} through, which is the arbitrary-JS hazard assess Q3 flagged.",
+      "additionalProperties": {
+        "$ref": "#/definitions/dynamicStringOrStructure"
+      }
+    },
+    "componentArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/component"
+      },
+      "description": "FLAT array. Parent-child structure is expressed by id reference, not nesting."
+    },
+    "dataModel": {
+      "type": "object",
+      "description": "Values addressed by {\"path\": \"/\u2026\"} leaves."
+    },
+    "createSurface": {
+      "type": "object",
+      "required": [
+        "surfaceId",
+        "catalogId",
+        "components"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "surfaceId": {
+          "$ref": "#/definitions/surfaceId"
+        },
+        "catalogId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Identifies the component catalog this surface is authored against."
+        },
+        "components": {
+          "$ref": "#/definitions/componentArray"
+        },
+        "dataModel": {
+          "$ref": "#/definitions/dataModel"
+        },
+        "surfaceParams": {
+          "type": "object"
+        }
+      }
+    },
+    "updateComponents": {
+      "type": "object",
+      "required": [
+        "surfaceId",
+        "components"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "surfaceId": {
+          "$ref": "#/definitions/surfaceId"
+        },
+        "components": {
+          "$ref": "#/definitions/componentArray"
+        }
+      },
+      "description": "Merges by component id into an existing surface. Does not replace the surface."
+    },
+    "updateDataModel": {
+      "type": "object",
+      "required": [
+        "surfaceId",
+        "dataModel"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "surfaceId": {
+          "$ref": "#/definitions/surfaceId"
+        },
+        "dataModel": {
+          "$ref": "#/definitions/dataModel"
+        }
+      }
+    },
+    "deleteSurface": {
+      "type": "object",
+      "required": [
+        "surfaceId"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "surfaceId": {
+          "$ref": "#/definitions/surfaceId"
+        }
+      }
+    },
+    "callFunction": {
+      "type": "object",
+      "required": [
+        "surfaceId",
+        "call"
+      ],
+      "properties": {
+        "surfaceId": {
+          "$ref": "#/definitions/surfaceId"
+        },
+        "call": {
+          "type": "string",
+          "minLength": 1
+        },
+        "args": {
+          "type": "object"
+        }
+      },
+      "description": "Accepted structurally so a conformant stream validates. Round-tripping is out of scope for this repo's v1 (see p8-04)."
+    },
+    "actionResponse": {
+      "type": "object",
+      "required": [
+        "surfaceId"
+      ],
+      "properties": {
+        "surfaceId": {
+          "$ref": "#/definitions/surfaceId"
+        }
+      },
+      "description": "Accepted structurally; see callFunction."
+    },
+    "dynamicStringOrStructure": {
+      "description": "A catalog-specific property value. anyOf, not oneOf: a {\"path\": \u2026} leaf legitimately matches both the dynamicString branch and the generic-object branch, and oneOf would reject it for matching twice. The expression guard is applied to every object branch instead, so the arbitrary-JS hazard (assess Q3) is closed regardless of which branch matches.",
+      "anyOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        {
+          "type": "array"
+        },
+        {
+          "type": "object",
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "expression"
+                ]
+              },
+              {
+                "required": [
+                  "kind"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

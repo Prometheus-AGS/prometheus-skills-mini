@@ -142,3 +142,24 @@ or quietly skipped.
 
 **Check for the next plan:** for every task naming a file, ask which earlier task creates it. If none
 does, either the task is misordered or a carry step is missing.
+
+## 2026-09-21 — the carried-payload test found a dangling reference UPSTREAM
+
+`skills/refine-ui/SKILL.md` instructs an agent to use
+`assets/templates/react-components-shadcn-ui-template.ts`. That file does not exist in this project —
+and **does not exist in the upstream source pack either**, verified against
+`prometheus-skill-pack/skills/imported/artifact-refiner`.
+
+So it is a defect in the source, not a carry omission. Nobody had noticed because nothing checked: the
+skill reads fine, and the reference only fails when an agent tries to open the file mid-task.
+
+Two things worth keeping from this:
+
+1. **An extension-agnostic reference check finds more than the `.sh` problem it was written for.** The
+   requirement was scoped that way because a `.sh`-only scan would pass a broken `.mjs` skill; it also
+   caught a `.ts` asset nobody was looking for.
+2. **My first scan missed it.** I searched for script extensions (`sh|mjs|json|py|js`) and this is a
+   `.ts` template. The test, which ran over the whole payload, caught what my targeted grep did not —
+   the argument for deriving a list mechanically rather than enumerating what you expect to find.
+
+Worth reporting upstream; not fixed here, because this project does not own that repository.

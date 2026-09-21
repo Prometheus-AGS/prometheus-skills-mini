@@ -1,0 +1,222 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://artifact-refiner.dev/schemas/ag-ui-spec.schema.json",
+  "title": "AG-UI Agent Specification",
+  "description": "Schema for AG-UI agent-side specifications. Codifies the structural rules described in references/domain/ag-ui.md so that constraint validation has a deterministic source of truth. Cross-reference integrity (tool names in event_emission must reference declared tools; on_event values must be valid AG-UI event kinds) is enforced by the normalization adapter, not by this schema.",
+  "type": "object",
+  "required": [
+    "version",
+    "agent",
+    "tools",
+    "event_emission"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^ag-ui/v\\d+(\\.\\d+)*$",
+      "description": "Spec version marker, e.g. 'ag-ui/v1'. Required at the top of every AG-UI spec."
+    },
+    "agent": {
+      "$ref": "#/definitions/agentIdentity",
+      "description": "Agent identity block \u2014 name and optional description."
+    },
+    "tools": {
+      "type": "array",
+      "description": "List of tools the agent exposes. Each name must be unique within this spec.",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/definitions/toolDefinition"
+      }
+    },
+    "event_emission": {
+      "type": "array",
+      "description": "Rules declaring which tools emit which AG-UI events and which UI fragment they bind to. The normalizer validates that every tool reference resolves to a declared tool and every on_event is a valid AG-UI event kind.",
+      "items": {
+        "$ref": "#/definitions/emissionRule"
+      }
+    },
+    "custom_events": {
+      "type": "array",
+      "description": "Application-defined AG-UI CUSTOM event kinds with their payload schemas. Required whenever event_emission references on_event='CUSTOM'.",
+      "items": {
+        "$ref": "#/definitions/customEventDefinition"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional spec-level metadata. Free-form; kept opaque to validators.",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "runtime": {
+          "type": "string",
+          "description": "Target runtime identifier (e.g. 'rust-native', 'python-langchain', 'node-openai')."
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "definitions": {
+    "toolName": {
+      "type": "string",
+      "pattern": "^[a-z_][a-z0-9_]*$",
+      "description": "snake_case tool name, locally unique within the agent's tool list."
+    },
+    "agEventKind": {
+      "type": "string",
+      "enum": [
+        "RUN_STARTED",
+        "RUN_FINISHED",
+        "RUN_ERROR",
+        "STEP_STARTED",
+        "STEP_FINISHED",
+        "TEXT_MESSAGE_START",
+        "TEXT_MESSAGE_CONTENT",
+        "TEXT_MESSAGE_END",
+        "TEXT_MESSAGE_CHUNK",
+        "TOOL_CALL_START",
+        "TOOL_CALL_ARGS",
+        "TOOL_CALL_END",
+        "TOOL_CALL_CHUNK",
+        "TOOL_CALL_RESULT",
+        "REASONING_MESSAGE_START",
+        "REASONING_MESSAGE_CONTENT",
+        "REASONING_MESSAGE_END",
+        "REASONING_MESSAGE_CHUNK",
+        "STATE_SNAPSHOT",
+        "STATE_DELTA",
+        "MESSAGES_SNAPSHOT",
+        "RAW",
+        "CUSTOM"
+      ],
+      "description": "Valid AG-UI protocol event kinds per the CopilotKit AG-UI specification."
+    },
+    "customEventKind": {
+      "type": "string",
+      "pattern": "^CUSTOM_[A-Z_]+$",
+      "description": "Application-defined custom event kind. Must start with 'CUSTOM_' followed by uppercase letters and underscores."
+    },
+    "agentIdentity": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable agent name."
+        },
+        "description": {
+          "type": "string",
+          "description": "Short description of the agent's purpose."
+        }
+      }
+    },
+    "toolDefinition": {
+      "type": "object",
+      "required": [
+        "name",
+        "description"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/toolName"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable description of what the tool does. Included in the model's tool list."
+        },
+        "parameters": {
+          "type": "object",
+          "description": "JSON Schema object describing the tool's parameter envelope. Omit for tools with no parameters.",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "object"
+            },
+            "properties": {
+              "type": "object"
+            },
+            "required": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": true
+        },
+        "returns": {
+          "type": "object",
+          "description": "Optional JSON Schema describing the tool's return value shape.",
+          "additionalProperties": true
+        }
+      }
+    },
+    "emissionRule": {
+      "type": "object",
+      "required": [
+        "tool",
+        "on_event"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "tool": {
+          "$ref": "#/definitions/toolName",
+          "description": "The tool name that triggers this emission. Must reference a name in spec.tools."
+        },
+        "on_event": {
+          "$ref": "#/definitions/agEventKind",
+          "description": "The AG-UI event kind emitted when this tool is invoked. The normalizer validates this against the canonical event kind registry."
+        },
+        "fragment": {
+          "type": "string",
+          "description": "Optional UI component slot or CopilotKit component identifier bound to this event emission."
+        },
+        "condition": {
+          "type": "string",
+          "description": "Optional human-readable description of the condition under which this rule fires. Informational only \u2014 not machine-evaluated."
+        }
+      }
+    },
+    "customEventDefinition": {
+      "type": "object",
+      "required": [
+        "kind",
+        "description"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "$ref": "#/definitions/customEventKind",
+          "description": "Unique application-defined event kind. Must start with 'CUSTOM_'."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable description of when this custom event is emitted and what its payload represents."
+        },
+        "schema": {
+          "type": "object",
+          "description": "Optional JSON Schema object for the custom event payload.",
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}

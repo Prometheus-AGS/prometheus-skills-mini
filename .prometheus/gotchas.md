@@ -201,3 +201,25 @@ agents to read FIRST every turn — reports the previous phase.
 **Check:** after any `/kbd-new-phase`, confirm `prometheus kbd status --json | .activePath.phaseId`
 matches `current-waypoint.json .phase` before starting the next stage. Two sources of truth that
 disagree is worse than one that is stale.
+
+## 2026-09-21 — porting `pk` to Windows one CI failure at a time
+
+Three pushes each fixed the single defect the previous CI run revealed (an unguarded `std::os::unix` import,
+jemalloc on MSVC, `fsync` on a directory). The operator stopped the fourth. Two faults caused it, neither of
+them bad luck: each hazard class was checked only *after* CI failed on it, and `cargo test --workspace`
+**stops at the first failing test binary**, so the platform could reveal only one problem per push.
+
+Worse, a test hid the real error. It ran the worker to completion and then joined a thread blocked in
+`accept()`; a worker that exited without connecting made the test **hang instead of fail**, on a job with no
+`timeout-minutes` — up to six hours of a runner, zero output.
+
+**What the compiler could not see** (all found by one up-front audit, none by CI): `dirs::home_dir()` on
+Windows calls `SHGetKnownFolderPath` and reads **no environment variable**, so a test that injects `HOME`
+silently tests nothing there; a path validator that splits on `/` only lets `..\\..\\evil` through on Windows; a
+frontmatter parser that trims `\n` leaves `\r` in the body and changes the content hash per checkout.
+
+**Check:** before the first push of any port, sweep *every* hazard class across the whole workspace, and
+make CI report everything at once — `--no-fail-fast`, a job timeout, and no test that can block forever.
+Verify a sub-agent's proposed fix against the dependency's source before planning on it: one proposed
+`.env("USERPROFILE")`, which `dirs` does not read either. And mutation-check CI steps like tests — a
+"no `~` directory was created" assertion could never fail, because `pk context` creates nothing.

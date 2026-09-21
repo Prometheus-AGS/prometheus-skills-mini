@@ -125,3 +125,13 @@ itself.
 - CI uses `actions/checkout@v4` without submodules, so the directory is empty there. Harmless until a test needs `pk`. The repo is PUBLIC, so HTTPS would work in CI where the SSH URL needs a deploy key.
 
 **Tension with a standing constraint, stated rather than resolved:** the original brief says to support the Rust toolkit "but do not depend on loading any processes or services". A per-call CLI is not a service, but it *is* a process, and with 0 releases a user needs a Rust toolchain to get `pk` at all. Until `pk` ships binaries, this pack depends on something a clean Windows machine does not have.
+
+## 2026-09-21 — `pk` builds and passes its tests on Windows; submodule pin moved to `80e864b` (SUPERSEDES "does not build for Windows" above)
+
+The premise paragraph in the entry above — "`pk` does not build for Windows today", verified at `01a1dbe` — is **no longer true**. It is left in place as the record of what was true when the decision was made.
+
+**Observed, not asserted.** pk PR #12 (`Prometheus-AGS/prometheus-knowledge-rs`), CI run 35644261220 at head `61688f1`: ubuntu 142 s, macOS 150 s, windows 209 s, all green. On `windows-latest`: 113 passed / 0 failed (macOS 115; the two absent tests are `#[cfg(unix)]` in source — `pk-store/tests/store_tests.rs:42`, `pk-learning-worker/src/main.rs:1291`). Merged 2026-09-21T21:09Z as merge commit `80e864b`, whose tree is identical to the tested `61688f1` (`git rev-parse <rev>^{tree}` on both). The pin is now `80e864b`.
+
+**What the earlier entry got wrong.** It predicted "a handful of `cfg` guards, not a rewrite". The build did need only that (an unguarded `std::os::unix` import, jemalloc on MSVC, `fsync` on a directory). Running *correctly* needed more, none of it visible to a compiler: two competing home-directory lookups that disagree on Windows (the global KB became a literal `~` path), `is_safe_path` splitting on `/` only so `..\\..\\evil` escaped the wiki root (a security fix, and now stricter on unix too), and a CRLF body corrupting content hashes. The first three were found one CI failure at a time; the operator stopped that, and the rest came from one up-front audit. See `.prometheus/gotchas.md`.
+
+**Still true:** pk has **0 releases**, so a clean machine has no `pk` and this pack must degrade without it. `pk doctor` is expected to report FAIL on a healthy Windows machine — a hypothesis from code reading, **not observed**; do not gate on it. `pk ingest` cannot succeed without a reachable LLM.

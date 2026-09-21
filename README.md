@@ -290,7 +290,8 @@ of this design and should be measured on real Windows hardware early.
 > implementation. So the statements below that "`pk ingest` is gone" and that the result states collapse to
 > `recorded | duplicate | queued` **no longer hold**, and the OKF writer described here is `pk`'s job, not
 > this pack's. `pk` is a per-call CLI, not a service, so the two-service rule is unaffected. **Caveat:**
-> `pk` does not build for Windows today and has no releases; see `.prometheus/decisions.md` and the
+> `pk` builds and passes its tests on Windows as of the pinned commit, but it still has no releases, so a
+> clean machine has no `pk` and this pack must degrade without it; see `.prometheus/decisions.md` and the
 > `karpathy-logs-node` phase goals. This section is rewritten by the change that implements the decision.
 
 The event stream, receipts, locks and queue keep the source pack's on-disk contract, so a project can move

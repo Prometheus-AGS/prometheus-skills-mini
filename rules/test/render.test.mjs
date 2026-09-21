@@ -37,6 +37,34 @@ test('parseConf reads quoted values and ignores comments and blank lines', () =>
   assert.deepEqual(parsed, { stacks: 'rust go', cursor: 'yes' });
 });
 
+// Every parser must survive a Windows checkout or a bundle cloned from another repository.
+// readText normalises, but these functions are exported and callable without it, so each is
+// asserted directly against CRLF input rather than trusting the caller.
+const toCrlf = (text) => text.replace(/\n/g, '\r\n');
+
+test('splitFrontmatter tolerates CRLF line endings', () => {
+  const { front, body } = splitFrontmatter(toCrlf(RULE), 'tech/rust');
+
+  // The CRLF input yields CRLF output; what matters is that it PARSED — the same
+  // frontmatter and body are found, rather than the function throwing "has no paths:".
+  const lf = splitFrontmatter(RULE, 'tech/rust');
+  assert.equal(front.replace(/\r/g, ''), lf.front);
+  assert.equal(body.replace(/\r/g, ''), lf.body);
+});
+
+test('routingLayer0 tolerates CRLF line endings', () => {
+  const actual = routingLayer0(toCrlf(ROUTING));
+
+  assert.equal(actual, routingLayer0(ROUTING));
+});
+
+test('budgetErrors counts CRLF lines the same as LF lines', () => {
+  const crlf = render(sources({ constitution: toCrlf(CONSTITUTION) }), conf(), { existingDirs: [] });
+  const lf = render(sources(), conf(), { existingDirs: [] });
+
+  assert.deepEqual(budgetErrors(crlf.files), budgetErrors(lf.files));
+});
+
 test('parseConf tolerates CRLF line endings', () => {
   assert.deepEqual(parseConf('stacks="rust"\r\nmirrors="AGENTS.md"\r\n'), { stacks: 'rust', mirrors: 'AGENTS.md' });
 });

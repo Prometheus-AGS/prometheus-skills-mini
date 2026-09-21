@@ -15,6 +15,11 @@
 
 ## 3. Parsers
 
+> RED (2026-09-21): `node --test rules/test/render.test.mjs` → tests 23, pass 22, fail 1. Only
+> `splitFrontmatter tolerates CRLF line endings` fails, with the predicted
+> `tech/rust has no \`paths:\` frontmatter` — confirming parseConf, routingLayer0 and the line counter
+> were already tolerant, as the direct probe in analysis suggested.
+
 - [ ] 3.1 RED: write CRLF fixtures in `rules/test/render.test.mjs` for `splitFrontmatter`, `routingLayer0`, `parseConf` and the line counter — the `splitFrontmatter` one must fail with the "has no `paths:` frontmatter" error; run `node --test <that file>` and see it FAIL; commit the failing test on its own and paste the failure output under this task.
 - [ ] 3.2 GREEN: fix EVERY one of the four — `parseConf`, `splitFrontmatter`, `routingLayer0`, the line counter — whose CRLF fixture fails. `splitFrontmatter` is known to fail today; the other three passed a direct probe but are not trusted until their fixtures say so. Change nothing in `rules/lib/render.mjs` that a failing fixture does not require.
 - [ ] 3.3 Commit locally with an `Assisted-by` trailer and no `Signed-off-by`: `fix(rules): tolerate CRLF in splitFrontmatter`. Do not push.

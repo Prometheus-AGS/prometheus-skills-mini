@@ -2,27 +2,27 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 10,
-  "derivedRevision": 10,
+  "sourceRevision": 11,
+  "derivedRevision": 11,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 10
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 11
   },
   "conflictCount": 0,
   "phase": "hook-entry-node-only",
   "phaseId": "hook-entry-node-only",
   "parentPhase": null,
-  "last_updated": "2026-09-21T13:41:28.963829Z",
+  "last_updated": "2026-09-21T16:04:00.063898Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 2,
-  "changes_completed": 1,
+  "changes_completed": 2,
   "implementation_total": 2,
-  "implementation_completed": 1,
+  "implementation_completed": 2,
   "completion": {
     "primaryCounter": "implementation",
     "implementation": {
-      "completed": 1,
+      "completed": 2,
       "total": 2,
-      "status": "IN_PROGRESS"
+      "status": "COMPLETE"
     },
     "evidence": {
       "status": "PENDING",
@@ -55,8 +55,8 @@
     {
       "id": "artifact-refiner-node",
       "title": "Port artifact-refiner to Node and wire the QA gate",
-      "status": "IN_PROGRESS",
-      "implementation_status": "IN_PROGRESS",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
       "tasks_total": 0,
       "tasks_done": 0,
       "last_task_completed": null,

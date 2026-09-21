@@ -1,0 +1,62 @@
+{
+  "mode": "diff",
+  "change": "artifact-refiner-node",
+  "rounds_run": 1,
+  "verdict_round_1": "BLOCK (2 CRITICAL, 1 WARNING, 2 SUGGESTION)",
+  "final_state": "All findings accepted and fixed. Both CRITICALs were about the producer's TESTING CLAIM, not the implementation.",
+  "producer": "claude-opus-5",
+  "judge": "fresh-context subagent (general-purpose, opus)",
+  "cross_model_check": "NOT verified-distinct — liter-llm gateway rejects authentication this session. Same model family as the producer. It nonetheless found two real CRITICALs the producer had missed.",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "location": "scripts/lib/model-routing.mjs:71-92",
+      "finding": "The rewritten fetch health probe — the central code change of the Windows review — was never executed by any test. Making it throw left the entire suite green.",
+      "verification": "Confirmed by instrumenting the try block: 0 executions across the full suite. probeEndpoint was entered 25 times but always with no health_probe configured, returning early.",
+      "disposition": "FIXED. Exported probeEndpointForTest and added two tests driving the real path: a closed port (degrades, reason probe_failed) and a live server. Probe now executes 2 times. Mutations: making it throw → 1 failure; reverting to bash → 9 failures.",
+      "note": "The live-server test needed its server in a SEPARATE PROCESS: probeEndpoint is synchronous and spawnSync blocks the event loop, so an in-process server never accepts the connection and the probe times out against a server that is up. Cost a debugging cycle; the reason is recorded in the test."
+    },
+    {
+      "severity": "CRITICAL",
+      "location": "scripts/carried-mjs.test.mjs, six tests",
+      "finding": "Six tests guarded on `if (!existsSync(...)) return`, passing vacuously when the file under test was absent — including the only tests covering the spec requirement that the probe fix has a target.",
+      "verification": "Partially confirmed. Deleting the three files failed 2 tests, not 0 as the judge stated — but the six guarded tests did all pass vacuously, which is the substance.",
+      "disposition": "FIXED. Each silent return replaced with an assertion that the file is present, because a file the spec requires is an invariant rather than an optional fixture."
+    },
+    {
+      "severity": "WARNING",
+      "location": "scripts/lib/{model-routing,wcag-contrast,svg-validate,openai-client}.mjs",
+      "finding": "Four carried files build a self-invocation guard by string-concatenating a file:// URL, which never matches import.meta.url on Windows, so the guard silently never fires.",
+      "disposition": "FIXED in all four, plus a regression test covering all of scripts/. THIS IS THE SAME BUG change 1 fixed in hook-entry.mjs after its own diff review — the producer fixed it there and did not look for it elsewhere. That is the finding worth carrying to reflection."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": ".kbd-orchestrator/constraints.md no-stub-comments",
+      "finding": "The pathspec exclusion is legitimate scoping, not a loosened gate, but being whole-file it creates a blind spot inside the excluded file.",
+      "judge_verification": "The judge checked both directions: a TODO added to lib/refiner/state.mjs IS reported; a FIXME added inside the excluded file is NOT.",
+      "disposition": "ACCEPTED as disclosed debt. The constraint is severity:warning, the file is vendored, and the tradeoff was stated rather than hidden."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "scripts/{normalize-a2ui,convert-htmx-react}.mjs",
+      "finding": "Two carried files exceed the 500-line limit (596, 525) and were not allowlisted.",
+      "disposition": "FIXED. Allowlisted as vendored, with the reason (splitting would fork the upstream file) and the follow-up recorded."
+    }
+  ],
+  "judge_confirmed_sound": [
+    "Windows correctness in AUTHORED code: zero shell:true, zero /tmp literals, zero .cmd/.bat assumptions, os.homedir() confined to lib/platform/paths.mjs.",
+    "The QA gate works as advertised — the judge ran it end to end: absent manifest SKIPs exit 0, missing file FAILs naming it exit 2, zero-byte FAILs, valid manifest PASSes.",
+    "Mutation testing bites in the state, provider, validate and hazard-scanner sections (provider waterfall → 1 fail; state resume → 2; reference checking → 4; shell:true/tmp/.sh injection → 3).",
+    "The tiers 4-5 dead-code claim is correct, verified against upstream state-resolve-provider.sh:28,34.",
+    "The unavailable-skill declarations satisfy the spec including the refine-mcp-ui and .mjs-only scenarios.",
+    "The Delta 2 claim is accurate and appropriately bounded — execution.md states change 1 was never gated and closure is forward-only.",
+    "Structure holds: scripts/refine-validate.mjs is 42 lines of pure entry-point code."
+  ],
+  "verification_at_archive": {
+    "node --test": "220 tests, 219 pass, 0 fail, 1 skipped",
+    "constraints": "10/10 clean",
+    "rules/build --check": "21 files current",
+    "spec-validate": "9 passed, 0 failed"
+  },
+  "generated_at": "2026-09-21T16:03:28.961Z"
+}

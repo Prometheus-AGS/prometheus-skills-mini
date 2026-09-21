@@ -2,23 +2,22 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 10,
-  "derivedRevision": 10,
+  "sourceRevision": 11,
+  "derivedRevision": 11,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 10
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 11
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-21T13:41:28.963829Z",
+  "updatedAt": "2026-09-21T16:04:00.063898Z",
   "cursor": [
-    "hook-entry-node-only",
-    "artifact-refiner-node"
+    "hook-entry-node-only"
   ],
   "root": {
     "type": "phase",
     "id": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
     "status": "ready",
     "progress": {
-      "done": 7,
+      "done": 8,
       "total": 8
     },
     "children": [
@@ -28,7 +27,7 @@
         "canonicalId": "hook-entry-node-only",
         "status": "PENDING",
         "progress": {
-          "done": 1,
+          "done": 2,
           "total": 2
         },
         "children": [
@@ -44,7 +43,7 @@
           {
             "type": "change",
             "id": "artifact-refiner-node",
-            "status": "IN_PROGRESS",
+            "status": "COMPLETE",
             "progress": {
               "done": 0,
               "total": 0

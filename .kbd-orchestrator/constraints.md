@@ -31,7 +31,8 @@ requires every command to behave the same from `cmd.exe`, Windows PowerShell 5.1
 |---|---|---|
 | `CLAUDE.md`, `AGENTS.md`, `.claude/rules/`, `.cursor/rules/`, `docs/skill-routing.md` | `rules/build.mjs` | Generated. Edit `rules/src/`, then rebuild. A hand edit fails `build-passes`. |
 | `.claude/skills/openspec-*`, `.claude/commands/opsx/`, `.agents/skills/openspec-*`, `.cursor/commands/`, `.cursor/skills/`, `.opencode/` | OpenSpec CLI | Refresh with `openspec update`; do not hand-edit. |
-| `.kbd-orchestrator/project.json` | `/kbd-init` ONLY | Never written by a change. Command fields are derived from `package.json` scripts; re-run `/kbd-init --force` after they change. |
+| `.kbd-orchestrator/project.json` — everything except `activePhase` | `/kbd-init` ONLY | Never written by a change. Command fields are derived from `package.json` scripts; re-run `/kbd-init --force` after they change. |
+| `.kbd-orchestrator/project.json` — `activePhase` | `/kbd-new-phase`, `/kbd-next-phase` | Step 7 of those skills flips it at a phase bracket. Under runtime authority the runtime projects the waypoint and the phase directory but NOT this field, so the skill still writes it. A change never touches it. |
 | `.kbd-orchestrator/constraints.md` — rules and thresholds | `/kbd-init` | A change never loosens, deletes or adds a RULE here. |
 | `.kbd-orchestrator/constraints.md` — a `check:` expression | a change, with evidence | Permitted ONLY to fix a demonstrated false positive, and only when the change ALSO proves the corrected check still catches a real violation. Every such edit is called out in its own commit and in the change's tasks. Three exist (see below); each was a check matching prose rather than code. |
 | `.kbd-orchestrator/phases/**` | KBD stages | Written by the stage that owns them. |

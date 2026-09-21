@@ -2,15 +2,15 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 2,
-  "derivedRevision": 2,
+  "sourceRevision": 4,
+  "derivedRevision": 4,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 2
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 4
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-21T10:10:06.822849Z",
+  "updatedAt": "2026-09-21T10:19:09.116167Z",
   "cursor": [
-    "platform-foundation"
+    "hook-entry-node-only"
   ],
   "root": {
     "type": "phase",
@@ -21,6 +21,18 @@
       "total": 6
     },
     "children": [
+      {
+        "type": "phase",
+        "id": "hook-entry-node-only",
+        "canonicalId": "hook-entry-node-only",
+        "status": "PENDING",
+        "progress": {
+          "done": 0,
+          "total": 0
+        },
+        "children": [],
+        "annotations": []
+      },
       {
         "type": "phase",
         "id": "platform-foundation",

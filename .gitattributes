@@ -1,0 +1,12 @@
+# Normalise text to LF in the repository and in every working tree, whatever a
+# contributor's core.autocrlf says. A Windows checkout must not rewrite sources:
+# the rules build and its parsers are asserted against LF, and CI checks out the
+# Windows legs with core.autocrlf=true on purpose to prove it.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary

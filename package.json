@@ -1,0 +1,19 @@
+{
+  "name": "prometheus-skills-mini",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Windows-native, scaled-down port of prometheus-skill-pack: KBD + PMPO process skills, OpenSpec, Karpathy logging.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node rules/build.mjs --check",
+    "coverage": "node --test --experimental-test-coverage"
+  },
+  "devDependencies": {
+    "@fission-ai/openspec": "1.10.0"
+  }
+}

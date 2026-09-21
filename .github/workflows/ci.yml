@@ -53,4 +53,6 @@ jobs:
       # The pinned CLI's JavaScript entry, run by node directly: no npx, no
       # .cmd shim, no global install. platform-spawn replaces this one step
       # with `node scripts/spec-validate.mjs`.
-      - run: node node_modules/@fission-ai/openspec/bin/openspec.js validate --all --no-interactive
+      # The project's shell-free entry point: on Windows `openspec` is a .cmd that node cannot
+      # run without a shell, so spawnNodeCli starts its JavaScript entry with process.execPath.
+      - run: npm run spec:validate

@@ -28,7 +28,7 @@ test('every job runs the four verification commands in order', () => {
     'npm ci',
     'node --test',
     'node rules/build.mjs --check',
-    'node node_modules/@fission-ai/openspec/bin/openspec.js validate --all --no-interactive',
+    'npm run spec:validate',
   ];
 
   assert.deepEqual(steps.filter((step) => expected.includes(step)), expected);
@@ -43,7 +43,10 @@ test('validation uses the pinned CLI, never a shim or a global install', () => {
   // process of ours — so it is deliberately not covered by the no-shim rule.
   assert.deepEqual(commands.filter((command) => /^(openspec|tsx|prettier|eslint)\b/.test(command)), []);
   assert.deepEqual(commands.filter((command) => /^openspec\b/.test(command)), []);
-  assert.ok(commands.some((command) => command.includes('node_modules/@fission-ai/openspec/bin/openspec.js')));
+  // platform-spawn replaced the raw node_modules path with the entry point, so no step may
+  // name node_modules directly any more.
+  assert.deepEqual(commands.filter((command) => command.includes('node_modules/')), []);
+  assert.ok(commands.includes('npm run spec:validate'));
 });
 
 test('windows checks out under the hostile autocrlf default, before checkout', () => {

@@ -11,7 +11,8 @@
   "scripts": {
     "test": "node --test",
     "check": "node rules/build.mjs --check",
-    "coverage": "node scripts/coverage-report.mjs"
+    "coverage": "node scripts/coverage-report.mjs",
+    "spec:validate": "node scripts/spec-validate.mjs"
   },
   "devDependencies": {
     "@fission-ai/openspec": "1.10.0"

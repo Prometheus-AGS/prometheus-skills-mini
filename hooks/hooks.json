@@ -1,0 +1,122 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "description": "Bounded canonical KBD session adapter",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs",
+              "--hook",
+              "sessionstart-kbd-control",
+              "--harness",
+              "claude-code"
+            ],
+            "timeout": 1000
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "description": "Detect project context at session start",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs",
+              "--hook",
+              "sessionstart-detect-project-context",
+              "--harness",
+              "claude-code"
+            ],
+            "timeout": 15000
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "description": "Refresh the position reminder after a write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs",
+              "--hook",
+              "posttool-write-position-reminder",
+              "--harness",
+              "claude-code"
+            ],
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "*",
+        "description": "Backstop checkpoint when no specific subagent checkpoint matched",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs",
+              "--hook",
+              "subagent-fallback-checkpoint",
+              "--harness",
+              "claude-code"
+            ],
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "TaskCompleted": [
+      {
+        "matcher": "*",
+        "description": "Record a KBD task-completion receipt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs",
+              "--hook",
+              "taskcompleted-kbd-receipt",
+              "--harness",
+              "claude-code"
+            ],
+            "timeout": 1000
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "*",
+        "description": "Preserve KBD position across a compaction",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs",
+              "--hook",
+              "precompact-kbd-control",
+              "--harness",
+              "claude-code"
+            ],
+            "timeout": 1000
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -74,6 +74,23 @@ test('every dispatched hook id has an entry in the import map', () => {
   }
 });
 
+// Derived from the MANIFEST, not from HOOK_MODULES. Iterating the import map
+// would pass if a payload were dropped from the manifest and the map together —
+// the list has to come from the file the harness actually reads.
+test('every payload the manifest dispatches exists on disk', () => {
+  const entries = hookEntries();
+
+  const payloads = entries.map(({ hook }) => {
+    const id = valueAfter(hook.args, '--hook');
+    return { id, file: path.join(repoRoot, 'lib', 'hooks', `${id}.mjs`) };
+  });
+
+  assert.equal(payloads.length, entries.length, 'every hook entry must name a payload');
+  for (const { id, file } of payloads) {
+    assert.ok(existsSync(file), `hooks.json dispatches "${id}" but ${file} does not exist`);
+  }
+});
+
 test('every import-map entry resolves to a module file that exists', async () => {
   for (const id of Object.keys(HOOK_MODULES)) {
     const file = path.join(repoRoot, 'lib', 'hooks', `${id}.mjs`);

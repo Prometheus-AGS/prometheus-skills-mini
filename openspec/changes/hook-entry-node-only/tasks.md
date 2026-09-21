@@ -17,8 +17,8 @@
 ## 3. The manifest and its resolution test
 
 - [x] 3.1 RED (2026-09-21): `node --test hooks/hooks.test.mjs` → **fail**, `ENOENT: open .../hooks/hooks.json` (tests 7 / pass 0 / fail 7) — every test depends on the manifest, which does not exist yet. Failing test committed alone. Write the manifest-resolution test deriving its file list from `hooks/hooks.json` (never a hand-kept list): every named file resolves, every `--hook` value has a map entry, and exactly 6 distinct ids are registered; see it FAIL; commit the failing test alone and paste the output.
-- [ ] 3.2 GREEN: write `hooks/hooks.json` in exec form for the 6 ported ids until the test passes.
-- [ ] 3.3 Prove the test can fail for the reason it exists: remove a file the manifest names, confirm the test fails and names it, restore the file.
+- [x] 3.2 GREEN (2026-09-21): 8/8 pass. `hooks/hooks.json` in exec form for the 6 ported ids. `rules/build.mjs --check` then required `hooks/AGENTS.md` — `build.conf` already declares `hooks:project/node-scripts` and renders the mirror once the directory exists, so `node rules/build.mjs` generated it (20 files current).
+- [x] 3.3 **Proven, and the test was strengthened because the first attempt was too weak.** Removing `lib/hooks/taskcompleted-kbd-receipt.mjs` initially failed only ONE test — the manifest-derived tests check the entry point, which still existed. Worse, the payload check iterated `HOOK_MODULES` rather than the manifest, so dropping a hook from both the map and the manifest would have passed. Added `every payload the manifest dispatches exists on disk`, derived from `hooks.json`. Now: payload removed → 2 failures naming the file; hook dropped from manifest AND payload removed → 2 failures (import map catches the orphan, the six-id assertion catches the shrunken manifest). Neither direction can go stale silently.
 - [ ] 3.4 Commit locally with an `Assisted-by` trailer: `feat(hooks): exec-form manifest and resolution test`. Do not push.
 
 ## 4. The six payloads

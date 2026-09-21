@@ -4,7 +4,7 @@
   "__projectId_note": "kbd-memory-log derives the memory entity id from `.project // .projectId`, which the kbd-init template never writes; without this key every lifecycle event from this repo is filed under `unknown/`.",
   "description": "Windows-native, scaled-down port of prometheus-skill-pack: KBD + PMPO skills, OpenSpec, Karpathy logging, Nunjucks templates, Rust toolkit skills — Node.js-only scripts, two Docker-managed services.",
   "activePhase": "platform-foundation",
-  "updatedAt": "2026-09-21T02:30:52Z",
+  "updatedAt": "2026-09-21T09:52:35Z",
   "worktreeRoot": "${HOME}/.claude/worktrees",
   "__worktreeRoot_note": "Template default, kept verbatim because the installed KBD skills (bash originals) expand ${HOME} themselves. This repo's own code must never read it that way — use os.homedir(). Revisit when the Node port of kbd-new-child lands.",
   "maxChildDepth": 4,
@@ -17,13 +17,13 @@
   ],
   "openspec_available": true,
   "constraint_file": ".kbd-orchestrator/constraints.md",
-  "build_health_command": "node rules/build.mjs --check",
-  "__build_health_command_note": "There is no package.json and nothing to compile yet. The only generated artefacts are the agent rules, so the drift-and-budget check is the build. Replace when a real build exists.",
-  "test_command": "node --test",
+  "build_health_command": "npm run check",
+  "__build_health_command_note": "Derived from package.json scripts by /kbd-init --force on 2026-09-21, after project-scaffold landed. Was the literal node command while no manifest existed.",
+  "test_command": "npm test",
   "lint_command": null,
   "__lint_command_note": "No linter is configured in this repo and none was invented. Per-file syntax feedback is `node --check <file>` (tier T0 in .claude/rules/node-scripts.md).",
   "dev_command": null,
-  "spec_validate_command": "openspec validate --all --no-interactive",
+  "spec_validate_command": "npm run spec:validate",
   "__command_policy": "Every command here must run identically from cmd.exe, Windows PowerShell 5.1, bash and zsh: no `&&` chaining (PowerShell 5.1 rejects it), double quotes only, no grep/sed/jq/awk/curl. Nothing that starts Docker belongs in a trigger — that is tier T3.",
   "preferred_planning_agent": "claude-code",
   "__preferred_planning_agent_note": "AGENTS.md has no Agent-Specific Notes section. The kbd-init default is `antigravity`, but this repo has no Antigravity configuration; `openspec init` configured Claude Code, Codex, Cursor and OpenCode. Chosen from that evidence — change freely.",
@@ -135,5 +135,8 @@
         "write_access": false
       }
     ]
-  }
+  },
+  "coverage_command": "npm run coverage",
+  "__coverage_command_note": "Runs BOTH reports in one command (no && — PowerShell 5.1): the in-process one, and the child-process one for rules/build.mjs that the default reporter cannot see. Fails below threshold.",
+  "__spec_validate_command_note": "Was `openspec validate --all --no-interactive`, which cannot work on Windows: npm installs the CLI as openspec.cmd and Node cannot run a .cmd without a shell. Now goes through scripts/spec-validate.mjs → spawnNodeCli → the CLI's JavaScript entry."
 }

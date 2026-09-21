@@ -55,4 +55,4 @@ jobs:
       # with `node scripts/spec-validate.mjs`.
       # The project's shell-free entry point: on Windows `openspec` is a .cmd that node cannot
       # run without a shell, so spawnNodeCli starts its JavaScript entry with process.execPath.
-      - run: npm run spec:validate
+      - run: node scripts/spec-validate.mjs

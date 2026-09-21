@@ -27,10 +27,24 @@ requires every command to behave the same from `cmd.exe`, Windows PowerShell 5.1
 |---|---|---|
 | `CLAUDE.md`, `AGENTS.md`, `.claude/rules/`, `.cursor/rules/`, `docs/skill-routing.md` | `rules/build.mjs` | Generated. Edit `rules/src/`, then rebuild. A hand edit fails `build-passes`. |
 | `.claude/skills/openspec-*`, `.claude/commands/opsx/`, `.agents/skills/openspec-*`, `.cursor/commands/`, `.cursor/skills/`, `.opencode/` | OpenSpec CLI | Refresh with `openspec update`; do not hand-edit. |
-| `.kbd-orchestrator/` | KBD | Repository-owned state, tracked. Skills other than `/kbd-init` never write `project.json`. |
+| `.kbd-orchestrator/project.json` | `/kbd-init` ONLY | Never written by a change. Command fields are derived from `package.json` scripts; re-run `/kbd-init --force` after they change. |
+| `.kbd-orchestrator/constraints.md` — rules and thresholds | `/kbd-init` | A change never loosens, deletes or adds a RULE here. |
+| `.kbd-orchestrator/constraints.md` — a `check:` expression | a change, with evidence | Permitted ONLY to fix a demonstrated false positive, and only when the change ALSO proves the corrected check still catches a real violation. Every such edit is called out in its own commit and in the change's tasks. Three exist (see below); each was a check matching prose rather than code. |
+| `.kbd-orchestrator/phases/**` | KBD stages | Written by the stage that owns them. |
 | `.prometheus/` | Karpathy logging / memory | Append-only and dated. Entries are marked superseded, never deleted. |
 | `openspec/changes/archive/` | OpenSpec | History. Never rewritten. |
 | `/Users/gqadonis/Projects/prometheus/prometheus-skill-pack` | another repository | Reference only (`project.json` → `workspace`). **Never written**, including its worktrees. |
+
+### Check expressions corrected by a change
+
+| Constraint | False positive it matched | Proof it still discriminates |
+|---|---|---|
+| `no-home-or-tmp-literals` | a comment in `lib/platform/paths.mjs` naming `$HOME` while explaining the rule | `process.env.HOME` added to a code line is reported |
+| `no-console-log-in-lib` | `console.log` inside a child program that `spawn.test.mjs` spawns as a fixture | `console.log` added to `text.mjs` is reported at its line |
+| (reverted) `no-home-or-tmp-literals` v2 | — | a `grep` pipe was used, which this project forbids and Windows lacks; reverted to the plain form |
+
+Each was a check inspecting TEXT rather than CODE. None loosened a rule: the literals and prints
+they exist to catch are still caught, and the tree is clean under the original expressions too.
 
 ---
 

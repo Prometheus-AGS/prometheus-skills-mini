@@ -28,7 +28,7 @@ test('every job runs the four verification commands in order', () => {
     'npm ci',
     'node --test',
     'node rules/build.mjs --check',
-    'npm run spec:validate',
+    'node scripts/spec-validate.mjs',
   ];
 
   assert.deepEqual(steps.filter((step) => expected.includes(step)), expected);
@@ -46,7 +46,7 @@ test('validation uses the pinned CLI, never a shim or a global install', () => {
   // platform-spawn replaced the raw node_modules path with the entry point, so no step may
   // name node_modules directly any more.
   assert.deepEqual(commands.filter((command) => command.includes('node_modules/')), []);
-  assert.ok(commands.includes('npm run spec:validate'));
+  assert.ok(commands.includes('node scripts/spec-validate.mjs'));
 });
 
 test('windows checks out under the hostile autocrlf default, before checkout', () => {

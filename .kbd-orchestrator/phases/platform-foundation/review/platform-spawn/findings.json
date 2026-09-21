@@ -1,0 +1,34 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".github/workflows/ci.yml",
+      "line": 58,
+      "claim": "The CI validation step invokes the npm script instead of the required shell-free entry point command.",
+      "evidence": "The continuous-integration requirement says each job SHALL run OpenSpec validation through `node scripts/spec-validate.mjs`, and its scenario says the validation step is `node scripts/spec-validate.mjs`; the diff changes the step to `- run: npm run spec:validate`.",
+      "suggested_fix": "Change the workflow step to `- run: node scripts/spec-validate.mjs` and update `rules/test/ci-workflow.test.mjs` to expect that exact command."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "lib/platform/spawn.mjs",
+      "line": 86,
+      "claim": "spawnExecutable does not reject a bare tool name that can only resolve to a .cmd/.bat script on PATH, so the required clear refusal is only implemented for explicit script extensions.",
+      "evidence": "The Script-only tools requirement says a request that could only be satisfied by starting a `.cmd` or `.bat` SHALL be rejected with an error naming the shell limitation and spawnNodeCli alternative; `spawnExecutable` only calls `refuseScript(name)` on the literal `name` before `spawnSync(name, args, ...)`, so `spawnExecutable(\"tool\", [])` is not checked for a `tool.cmd`/`tool.bat`-only PATH resolution.",
+      "suggested_fix": "Before spawning, resolve the executable name against PATH/PATHEXT on Windows; if the only match is `.cmd` or `.bat`, throw the same refusal error instead of calling `spawnSync`."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/constraints.md",
+      "line": 106,
+      "claim": "The change hand-edits KBD-owned orchestrator state even though this platform-spawn plan explicitly excludes that file.",
+      "evidence": "The path ownership constraints mark `.kbd-orchestrator/` as KBD-owned repository state, and the platform-spawn plan says `.kbd-orchestrator/project.json` and `.kbd-orchestrator/constraints.md` are NOT edited by this or any change and the owner re-runs `/kbd-init --force`; the diff modifies `.kbd-orchestrator/constraints.md` by changing the `no-console-log-in-lib` check and adding a note.",
+      "suggested_fix": "Revert the `.kbd-orchestrator/constraints.md` edit and let `/kbd-init --force` regenerate any required constraint changes."
+    }
+  ]
+}

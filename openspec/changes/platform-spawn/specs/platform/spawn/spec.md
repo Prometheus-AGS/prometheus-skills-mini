@@ -25,6 +25,10 @@
 ### Requirement: Script-only tools are refused
 Neither function SHALL start a `.cmd` or `.bat` file, enable a shell, or accept a command string. A request that could only be satisfied that way SHALL be rejected with an error that states that Node cannot run `.cmd`/`.bat` files without a shell and names `spawnNodeCli` as the alternative.
 
+#### Scenario: A bare name that resolves to a script
+- **WHEN** `spawnExecutable("tsc", [])` is called on a system where `tsc` resolves through `PATHEXT` to `tsc.cmd`
+- **THEN** it is refused before spawning, and the error names both the spelling used and the file it resolved to
+
 #### Scenario: A .cmd path
 - **WHEN** `spawnExecutable("tool.cmd", [])` is called
 - **THEN** it rejects before spawning anything, with that explanation

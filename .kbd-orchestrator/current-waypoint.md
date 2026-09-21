@@ -1,21 +1,20 @@
 # Current waypoint
 
 - **Phase:** platform-foundation
-- **Status:** spec_ready — 0 of 6 changes complete; all 6 OpenSpec changes validate (65 tasks)
-- **Next pending change:** `project-scaffold`
-- **Exact next command:** `/kbd-execute platform-foundation` (history, not a selector)
-- **Updated:** 2026-09-21T08:34:09Z by claude-code
+- **Status:** execution_complete — 6 of 6 changes archived
+- **Exact next command:** `/kbd-reflect platform-foundation`
+- **Updated:** 2026-09-21T10:02:22Z by claude-code
 
-## Owner prerequisites
-- **P1** — DONE: baseline commit `3508cb3`.
-- **P2** — a git remote with GitHub Actions, wanted before round 3; without it the last two goals cannot be met and the phase must not be reflected as done.
+## Prerequisites — both met
+- **P1** baseline commit `3508cb3`.
+- **P2** remote `Prometheus-AGS/prometheus-skills-mini`, CI green across three OSes × Node 22 and 24.
 
-## Change order
-1. `project-scaffold` — PENDING
-2. `ci-three-os` — PENDING
-3. `platform-paths-and-text` — PENDING
-4. `platform-atomic-write-and-lock` — PENDING
-5. `platform-spawn` — PENDING
-6. `windows-evidence` — PENDING
+## Archived changes
+1. `project-scaffold` · 2. `ci-three-os` · 3. `platform-paths-and-text`
+4. `platform-atomic-write-and-lock` · 5. `platform-spawn` · 6. `windows-evidence`
 
-Plan: `.kbd-orchestrator/phases/platform-foundation/plan.md`
+## Live capabilities
+`project-tooling`, `continuous-integration`, `platform/paths`, `platform/text`,
+`platform/atomic-write`, `platform/lock`, `platform/spawn`
+
+Evidence: `phases/platform-foundation/evidence/windows.md`

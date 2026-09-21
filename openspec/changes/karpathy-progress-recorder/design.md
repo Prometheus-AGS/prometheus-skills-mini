@@ -57,6 +57,19 @@ The first draft of this change ported one secret alternative and four checks and
 
 Two departures from upstream, each stated: refusal messages never contain the text the secret pattern matched, and an unsafe `touchedFiles` entry is named by index rather than echoed as upstream does (`:256`, `{path!r}`). Field checks run *before* the secret scan, so an echoed path can carry a secret the scan never reached — and a secret in a hook log has leaked as surely as one in the session log.
 
+**Where validation differs from upstream, and which way.** Found by reading `:188-282` whole before writing `validate.mjs`; each is stricter than upstream, never looser, so nothing this pack accepts is refused there except as listed under "narrower":
+
+| | Upstream (Python) | Here | Why |
+|---|---|---|---|
+| String length | `len()` — code points | code points (`[...s].length`), **not** `String.length` | UTF-16 units would refuse 4 000 emoji that upstream accepts |
+| Size bound | 256 000 bytes of sorted-key JSON, `, `/`: ` separators, Python's float token | the same, byte for byte | a test builds an event of exactly 256 000 bytes; compact separators or the JS number token moves the boundary and fails it |
+| Pattern case | `(?i)` leads the pattern: all seven alternatives | flag `i` on the whole pattern | — |
+| `observedAt` | `datetime.fromisoformat` | a strict shape plus calendar check — **narrower** | `Date.parse` is wider than upstream (it reads `Sep 21 2026` and rolls `2026-02-30` to March 2); every timestamp either pack writes has the shape |
+| Rooted `\foo` in `touchedFiles` | `PureWindowsPath.is_absolute()` is False → accepted | `path.win32.isAbsolute` is true → refused — **narrower** | refusing a rooted path is the safe side |
+| `schemaVersion: true`, `exitCode: true` | accepted, because a Python `bool` is an `int` | refused — **narrower** | an upstream quirk, not a contract |
+| Unsafe-path message | echoes the path (`{path!r}`) | names the index | field checks run before the pattern scan, so an echoed path can carry what the scan never reached |
+| Unknown-field message | echoes every key | echoes a key only if it is 1–40 characters of `[A-Za-z0-9_.-]` | a key is event input too |
+
 `PK_BIN` is operator-controlled configuration, not event input. It is passed to `spawnExecutable`, which already refuses anything that resolves to a script and never uses a shell.
 
 ## What this change cannot prove

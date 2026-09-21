@@ -39,6 +39,9 @@ test('validation uses the pinned CLI, never a shim or a global install', () => {
   const commands = runSteps(workflow());
 
   assert.deepEqual(commands.filter((command) => /\bnpx\b/.test(command)), []);
+  // npm itself is the runner's package manager, started by GitHub's shell — not a child
+  // process of ours — so it is deliberately not covered by the no-shim rule.
+  assert.deepEqual(commands.filter((command) => /^(openspec|tsx|prettier|eslint)\b/.test(command)), []);
   assert.deepEqual(commands.filter((command) => /^openspec\b/.test(command)), []);
   assert.ok(commands.some((command) => command.includes('node_modules/@fission-ai/openspec/bin/openspec.js')));
 });

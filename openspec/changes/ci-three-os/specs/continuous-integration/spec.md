@@ -12,11 +12,15 @@ Continuous integration SHALL run on `windows-latest`, `ubuntu-latest` and `macos
 - **THEN** the other five jobs still run to completion
 
 ### Requirement: Verification commands
-Each job SHALL run, in order: `npm ci`; `node --test`; `node rules/build.mjs --check`; and OpenSpec validation of all specs and changes through the pinned CLI's JavaScript entry. No step SHALL rely on a `.cmd` shim or on a globally installed CLI.
+Each job SHALL run, in order: `npm ci`; `node --test`; `node rules/build.mjs --check`; and OpenSpec validation of all specs and changes through the pinned CLI's JavaScript entry. No step SHALL invoke a project tool through a globally installed CLI, through `npx`, or through a `.cmd` shim that this project's own code would have to spawn. The workflow runner's own package manager (`npm`, invoked by GitHub's shell and by `actions/setup-node` caching) is outside that rule: it is the harness starting the job, not this project's code starting a child process.
 
 #### Scenario: Validation uses the pinned CLI
 - **WHEN** the validation step runs on `windows-latest`
 - **THEN** it invokes `node` with a path under `node_modules/@fission-ai/openspec/`, not `openspec` or `npx`
+
+#### Scenario: The project's own tools never go through a shim
+- **WHEN** the workflow's `run:` steps are inspected
+- **THEN** none invokes `npx`, a bare `openspec`, or any project tool by a name that resolves to a `.cmd` shim
 
 #### Scenario: Any failing command fails the job
 - **WHEN** any of the four commands exits non-zero

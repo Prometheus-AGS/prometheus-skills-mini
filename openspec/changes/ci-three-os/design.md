@@ -22,6 +22,8 @@ Nothing in this repository has been observed on Windows or on an LTS Node: the h
 
 ## Risks / Trade-offs
 
+- **`npm ci` runs through `npm.cmd` on Windows, and that is intended.** Adversarial review raised this as a CRITICAL against the original wording "No step SHALL rely on a `.cmd` shim". The finding was correct about the mechanism and the requirement was overbroad: the no-shim rule exists because *this project's Node code* cannot spawn a `.bat`/`.cmd` without a shell (see `platform/spawn`). A `- run:` step is GitHub's shell invoking the runner's own package manager, not our code spawning a child — and `actions/setup-node` with `cache: npm` shells out to `npm` regardless. Invoking `npm` through `node <npm-cli.js>` would hard-code an install-layout-specific path that differs across nvm, fnm, volta and the system Node, trading a real portability guarantee for a cosmetic one. The requirement was narrowed to what it protects, and a scenario was added to keep the real guarantee enforced.
+
 - The workflow cannot be shown to pass until the owner adds a remote (P2). Until then this change is written but unverified, and that is stated rather than hidden.
 - GitHub-hosted runner images change; a failure may come from the image, not the code.
 - Six jobs per push cost minutes; acceptable for a repository this size.

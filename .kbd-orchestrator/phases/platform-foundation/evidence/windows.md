@@ -16,12 +16,24 @@ every scenario`.
 | `npm ci` + the pinned CLI work on Windows | workflow steps | 35581365409 | windows-latest · both | **OBSERVED PASS** |
 | Node 22 and 24 (LTS) both work | matrix | 35581365409 | all six jobs | **OBSERVED PASS** — the dev host runs Node 26 (Current) |
 
+## Confirmed green after the fix — run 35582174310
+
+All six jobs pass. On `windows-latest` the suite reports **72 pass, 0 fail, 0 skipped**: the real
+held-handle test RAN rather than skipping, and `scripts/coverage-report.mjs` reports
+`rules/build.mjs: 102/102 lines = 100.00%` there too. On Linux and macOS the same test correctly
+reports `# SKIP win32 only`.
+
+| Claim | Evidence |
+|---|---|
+| Bounded EPERM/EBUSY/EACCES retry replaces a genuinely held destination | `ok 10 - a destination held open by another process is still replaced`, windows-latest node 22 and 24, run 35582174310 |
+| The `wx` lock works on Windows | `lib/platform/lock.test.mjs`, 5 tests, windows-latest both versions |
+| The rules build writes atomically and single-writer on Windows | `rules/test/build.test.mjs`, 8 tests, windows-latest both versions |
+| `rules/build.mjs` coverage is real on Windows, not just macOS | 102/102 lines on windows-latest |
+
 ## Still NOT observed (later changes)
 
 | Claim | Blocked on |
 |---|---|
-| Bounded `EPERM`/`EBUSY`/`EACCES` rename retry under a real held-open destination | `platform-atomic-write-and-lock` (change 4) |
-| `wx` lock semantics on Windows | change 4 |
 | `spawnNodeCli` with `shell: false` on Windows | `platform-spawn` (change 5) |
 | A `.cmd`-only tool is refused | change 5 |
 

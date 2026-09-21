@@ -1,18 +1,17 @@
 {
   "mode": "diff",
-  "verdict": "BLOCK",
+  "verdict": "PASS",
   "judge_model": "kbd-judge",
   "producer_model": "claude-opus-5",
   "isolation_mode": "rest-gateway:http://localhost:8181/v1",
   "cross_model_check": "verified-distinct",
-  "findings": [
-    {
-      "severity": "CRITICAL",
-      "file": ".github/workflows/ci.yml",
-      "line": 44,
-      "claim": "The Windows jobs rely on the npm command shim, violating the requirement that no step rely on a .cmd shim.",
-      "evidence": "specs/continuous-integration/spec.md says: \"No step SHALL rely on a `.cmd` shim or on a globally installed CLI.\" The workflow uses `- run: npm ci`; on `windows-latest` with the default PowerShell shell, `npm` resolves through the installed `npm.cmd` shim.",
-      "suggested_fix": "Invoke npm through its JavaScript CLI with `node` instead of the `npm` command, or narrow the OpenSpec requirement if the no-shim rule was intended to apply only to the OpenSpec validation step."
-    }
+  "findings": [],
+  "checked_classes": [
+    "Spec violations \u2014 workflow matrix, fail-fast, command order, pinned OpenSpec invocation, Windows autocrlf-before-checkout, read-only permissions, triggers, and no secrets are all present in the diff",
+    "Correctness \u2014 GitHub Actions syntax and Windows run commands use forms supported by the runner shells; no inverted conditions or missing required steps were found",
+    "Regressions \u2014 the change only adds CI workflow/tests and updates the active OpenSpec change; no existing behavior in the packet is removed",
+    "Security \u2014 workflow permissions are restricted to contents: read and the diff contains no secrets references or credential literals",
+    "Constraint breaches \u2014 no added shell/Python files, shell:true, home/tmp literals, console logging in lib, forbidden service changes, or reference-repo edits appear in the diff",
+    "Silent failure \u2014 workflow run steps are separate commands without error-swallowing constructs, so non-zero exits fail the job as required"
   ]
 }

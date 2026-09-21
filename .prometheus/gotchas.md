@@ -68,3 +68,10 @@ delete them.
   with "no artifacts found" under the `openspec` backend — this project's default. Workaround used here:
   assemble the packet in the same schema from `openspec/changes/<id>/{specs/**,design.md,tasks.md}` and pass it
   to `dispatch-judge.sh --packet`. The Node port of adversarial-review must support both layouts.
+- **2026-09-21 · A diff-mode review packet scoped to one change reports earlier changes' files as missing.**
+  Twice in this phase a judge returned a false CRITICAL — "the lockfile was never committed", then "npm ci
+  will fail, there is no manifest" — because the diff covered only the change under review, so files added by
+  an earlier archived change were invisible. Both were disproved against the repository (`git cat-file -e
+  HEAD:<path>`, and a clean `git clone` of HEAD running the full command sequence). Fix for the Node port:
+  a diff packet must carry a manifest of the files the change DEPENDS ON but does not touch — at minimum
+  `git ls-tree HEAD` for the paths named in its spec — or judges will keep inventing missing-file findings.

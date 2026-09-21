@@ -1,0 +1,18 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".github/workflows/ci.yml",
+      "line": 44,
+      "claim": "The workflow will fail at `npm ci` because the repository shape in this packet does not include the package manifest/lockfile that `npm ci` requires.",
+      "evidence": "The workflow adds `- run: npm ci` in `.github/workflows/ci.yml`, while the provided `file_tree` lists no `package.json` or `package-lock.json` at the repository root; the plan also states `ci-three-os` depends on `project-scaffold`, which is where those files are supposed to be created.",
+      "suggested_fix": "Land/include the `project-scaffold` files (`package.json` and `package-lock.json`) before or with this workflow, or do not mark this CI change complete until that dependency exists in the repo."
+    }
+  ]
+}

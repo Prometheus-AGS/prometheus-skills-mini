@@ -8,27 +8,19 @@
   "findings": [
     {
       "severity": "CRITICAL",
-      "file": ".github/workflows/ci.yml",
-      "line": 58,
-      "claim": "The CI validation step invokes the npm script instead of the required shell-free entry point command.",
-      "evidence": "The continuous-integration requirement says each job SHALL run OpenSpec validation through `node scripts/spec-validate.mjs`, and its scenario says the validation step is `node scripts/spec-validate.mjs`; the diff changes the step to `- run: npm run spec:validate`.",
-      "suggested_fix": "Change the workflow step to `- run: node scripts/spec-validate.mjs` and update `rules/test/ci-workflow.test.mjs` to expect that exact command."
-    },
-    {
-      "severity": "CRITICAL",
-      "file": "lib/platform/spawn.mjs",
-      "line": 86,
-      "claim": "spawnExecutable does not reject a bare tool name that can only resolve to a .cmd/.bat script on PATH, so the required clear refusal is only implemented for explicit script extensions.",
-      "evidence": "The Script-only tools requirement says a request that could only be satisfied by starting a `.cmd` or `.bat` SHALL be rejected with an error naming the shell limitation and spawnNodeCli alternative; `spawnExecutable` only calls `refuseScript(name)` on the literal `name` before `spawnSync(name, args, ...)`, so `spawnExecutable(\"tool\", [])` is not checked for a `tool.cmd`/`tool.bat`-only PATH resolution.",
-      "suggested_fix": "Before spawning, resolve the executable name against PATH/PATHEXT on Windows; if the only match is `.cmd` or `.bat`, throw the same refusal error instead of calling `spawnSync`."
-    },
-    {
-      "severity": "CRITICAL",
       "file": ".kbd-orchestrator/constraints.md",
-      "line": 106,
-      "claim": "The change hand-edits KBD-owned orchestrator state even though this platform-spawn plan explicitly excludes that file.",
-      "evidence": "The path ownership constraints mark `.kbd-orchestrator/` as KBD-owned repository state, and the platform-spawn plan says `.kbd-orchestrator/project.json` and `.kbd-orchestrator/constraints.md` are NOT edited by this or any change and the owner re-runs `/kbd-init --force`; the diff modifies `.kbd-orchestrator/constraints.md` by changing the `no-console-log-in-lib` check and adding a note.",
-      "suggested_fix": "Revert the `.kbd-orchestrator/constraints.md` edit and let `/kbd-init --force` regenerate any required constraint changes."
+      "line": 27,
+      "claim": "The change edits `.kbd-orchestrator/constraints.md` even though this change explicitly declared editing that file out of scope and reserved constraint updates for `/kbd-init --force`.",
+      "evidence": "design.md Non-Goals says \"Editing `.kbd-orchestrator/project.json` or `constraints.md`; the owner re-runs `/kbd-init --force`\" and tasks.md 4.2 says to tell the owner to re-run `/kbd-init --force`; the diff modifies `.kbd-orchestrator/constraints.md` and changes the `no-console-log-in-lib` check.",
+      "suggested_fix": "Revert all `.kbd-orchestrator/constraints.md` edits in this change and leave constraint regeneration to `/kbd-init --force`."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "lib/platform/spawn.test.mjs",
+      "line": 67,
+      "claim": "The new test file violates the active blocking `no-console-log-in-lib` constraint because it contains `console.log` under `lib/*.mjs`.",
+      "evidence": "The packet's blocking constraint `no-console-log-in-lib` checks `git grep --no-index --exclude-standard -n -E -e \"console\\.(log|debug)\" -- \"lib/*.mjs\" \"rules/lib/*.mjs\"`; the diff adds `spawnExecutable(process.execPath, ['-e', 'console.log(JSON.stringify(process.argv.slice(1)))', ...hostile])` in `lib/platform/spawn.test.mjs`.",
+      "suggested_fix": "Avoid the literal `console.log` in `lib/platform/spawn.test.mjs`, for example by writing to `process.stdout` in the child fixture, or move the fixture out of the constrained path without editing the constraint."
     }
   ]
 }

@@ -40,11 +40,14 @@ requires every command to behave the same from `cmd.exe`, Windows PowerShell 5.1
 | Constraint | False positive it matched | Proof it still discriminates |
 |---|---|---|
 | `no-home-or-tmp-literals` | a comment in `lib/platform/paths.mjs` naming `$HOME` while explaining the rule | `process.env.HOME` added to a code line is reported |
-| `no-console-log-in-lib` | `console.log` inside a child program that `spawn.test.mjs` spawns as a fixture | `console.log` added to `text.mjs` is reported at its line |
 | (reverted) `no-home-or-tmp-literals` v2 | — | a `grep` pipe was used, which this project forbids and Windows lacks; reverted to the plain form |
 
-Each was a check inspecting TEXT rather than CODE. None loosened a rule: the literals and prints
-they exist to catch are still caught, and the tree is clean under the original expressions too.
+One correction remains (`no-home-or-tmp-literals`), and it is not circular: the text it excuses is a
+COMMENT IN THE RULE'S OWN SUBJECT — `lib/platform/paths.mjs` cannot explain why nothing else may read
+a home location without naming what it forbids. A second correction was reverted after review pointed
+out the circularity: a test fixture had tripped `no-console-log-in-lib`, and widening the check to
+excuse it was loosening a gate to fit my own code. The fixture was changed instead, and the original
+check restored. That is the standard: change the code, not the gate.
 
 ---
 
@@ -120,8 +123,7 @@ constraints:
     severity: blocking
     source: '.claude/rules/node-scripts.md — Structure (I/O lives at the edge)'
     description: 'Library modules do not print. Entry points under scripts/, hooks/ and rules/build.mjs may.'
-    check: 'git grep --no-index --exclude-standard -n -E -e "console\.(log|debug)" -- "lib/*.mjs" "rules/lib/*.mjs" ":!*.test.mjs"'
-    note: 'Test files are excluded. The rule is that library MODULES do not print — I/O lives at the edge. A test may legitimately contain the word console.log inside a child program it spawns to assert what that child received, which is what lib/platform/spawn.test.mjs does; flagging it was a false positive on prose-like content, the same class as the earlier npx-in-a-comment case.'
+    check: 'git grep --no-index --exclude-standard -n -E -e "console\.(log|debug)" -- "lib/*.mjs" "rules/lib/*.mjs"'
 
   - id: no-symlinks
     severity: blocking

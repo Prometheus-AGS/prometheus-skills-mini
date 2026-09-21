@@ -73,8 +73,8 @@ constraints:
     severity: blocking
     source: '.claude/rules/node-scripts.md — Paths'
     description: 'Paths come from os.homedir() / os.tmpdir() / path.join, never $HOME, process.env.HOME or /tmp'
-    check: 'git grep --no-index --exclude-standard -n -E -e "[$]HOME|process\.env\.HOME|/tmp/" -- "lib/*.mjs" "scripts/*.mjs" "hooks/*.mjs" "rules/*.mjs" | grep -v -E "^[^:]+:[0-9]+:[[:space:]]*(//|\*|/\*)"'
-    note: 'Comment lines are excluded: lib/platform/paths.mjs documents the rule by naming $HOME, and a rule that cannot be explained in its own source is a bad rule. The pipe means the check exits 0 when grep -v finds nothing to print, so a clean run is exit 1 from the pipeline only when git grep itself matched nothing; treat any printed line as a violation.'
+    check: 'git grep --no-index --exclude-standard -n -P -e "^(?!\s*(//|\*|/\*)).*([$]HOME|process\.env\.HOME|/tmp/)" -- "lib/*.mjs" "scripts/*.mjs" "hooks/*.mjs" "rules/*.mjs"'
+    note: 'One git grep, no pipe: the command policy forbids plain grep, which also does not exist on stock Windows. -P (PCRE) gives the negative lookahead that skips comment lines, because lib/platform/paths.mjs documents the rule by naming the very literals it forbids, and a rule that cannot be explained in its own source is a bad rule. Verified to catch code (process.env.HOME on a code line) and to ignore prose (the same text in a // comment). If a git build lacks PCRE this check errors rather than passing silently — treat that as a violation to investigate, not as clean.'
 
   - id: no-zeespec
     severity: blocking

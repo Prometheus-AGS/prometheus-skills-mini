@@ -1,5 +1,8 @@
 ## 1. Atomic write
 
+> RED (2026-09-21): `node --test` → tests 51, pass 49, fail 2; both
+> `ERR_MODULE_NOT_FOUND` for `lib/platform/atomic-write.mjs` and `lib/platform/lock.mjs`.
+
 - [ ] 1.1 RED: write `lib/platform/atomic-write.test.mjs`: success, missing parent directories created, failure-leaves-original, and the four injected retry scenarios; run `node --test <that file>` and see it FAIL; commit the failing test on its own and paste the failure output under this task.
 - [ ] 1.2 GREEN: implement `lib/platform/atomic-write.mjs` until the test passes; keep the module under 500 lines and free of any import from another `lib/platform/` module except `paths.mjs`.
 - [ ] 1.3 RED: write a `win32`-only test that holds the destination open from a child `node` process and releases it after a short delay; on other platforms it is reported as skipped with the reason; run `node --test <that file>` and see it FAIL; commit the failing test on its own and paste the failure output under this task.

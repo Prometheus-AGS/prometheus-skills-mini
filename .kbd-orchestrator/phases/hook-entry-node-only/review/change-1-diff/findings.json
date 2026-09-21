@@ -1,0 +1,53 @@
+{
+  "mode": "diff",
+  "change": "hook-entry-node-only",
+  "rounds_run": 1,
+  "verdict_round_1": "BLOCK (1 CRITICAL, 1 SUGGESTION)",
+  "final_state": "Both findings fixed and verified. A SECOND defect was found while fixing the CRITICAL, which the judge had not identified.",
+  "producer": "claude-opus-5",
+  "judge": "fresh-context subagent (general-purpose, opus)",
+  "cross_model_check": "NOT verified-distinct — the liter-llm gateway answers /health 200 but rejects /v1/models and /v1/chat/completions with \"Missing or invalid Authorization header\", and no credential exists in the environment or any config path the bridge reads. Same model family as the producer, a weaker check than the contract assumes. It nonetheless found a real CRITICAL.",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "location": "scripts/hook-entry.mjs:109-110",
+      "finding": "The self-invocation guard built a URL by string concatenation. `file://${path}` truncates at \"#\" or \"?\" and double-encodes \"%\", so the comparison against import.meta.url fails, dispatch never runs, and the process still exits 0 — every hook a silent no-op while the harness reports success.",
+      "judge_reproduction": "Copied the tree to /tmp/hash#dir with a paused project: the control at /tmp/normaldir printed KBD REANCHOR and exited 0; the #-path printed nothing and exited 0.",
+      "disposition": "ACCEPTED AND FIXED. Confirmed the divergence on four path shapes. RED test written first (fails against the old guard), then fixed."
+    },
+    {
+      "severity": "CRITICAL (second-order, found while fixing the above, NOT identified by the judge)",
+      "location": "scripts/hook-entry.mjs, same guard",
+      "finding": "pathToFileURL alone was insufficient: import.meta.url reports the REALPATH while argv[1] keeps the symlinked path. On macOS /var is a symlink to /private/var, so the two differ for anything under a temp directory. The test written for the first defect still failed after fixing it.",
+      "disposition": "FIXED. The guard now compares realpathSync(fileURLToPath(import.meta.url)) against realpathSync(process.argv[1]), which collapses both the encoding and the symlink problem."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "scripts/hook-cold-start.mjs:38-40",
+      "finding": "The measurement checked only exit status, but the entry point exits 0 on every degradation, so a no-op dispatch would have made the numbers look BETTER while measuring nothing.",
+      "disposition": "ACCEPTED AND FIXED. Measurement now runs against a fixture project with a PAUSE file and asserts per-hook liveness, plus a dispatch-reachability probe for taskcompleted-kbd-receipt, which prints nothing. My first attempt assumed one shared marker for all three hooks; the check itself caught that as wrong. Mutation-verified: forcing the guard false now fails with \"dispatch is not reachable\"."
+    }
+  ],
+  "judge_confirmed_sound": [
+    "Tests are not vacuous — the judge independently mutated the implementation and confirmed the assertions bite (degradeSafely 41/1, isPaused 2 failures, atomicWrite 1, payload deletion 2, and the six-id assertion catching a three-way drift).",
+    "Spec-vs-code clean: all five ADDED requirements implemented, exec form holds, unknown id exits 2, throwing payload exits 0, scope exactly six ids, all three 1000 ms hooks measured as distributions.",
+    "All 10 test names cited in evidence existed verbatim in the suite.",
+    "Line limits and the entry-points-only rule respected (hook-entry 114 lines, payloads under 55, no logic in scripts/).",
+    "A-2 guards each trace to a named scenario."
+  ],
+  "self_found_after_the_review": [
+    "Evidence cited run 35601170970, which tested the code BEFORE the guard fix. Re-pointed to 35602464300 and regenerated all 22 citations from that log.",
+    "One citation (\"ok 11 - ...\") was written from memory; the real line is ok 148. Corrective action 5 violated and corrected.",
+    "All ten node-24 citations carried timings from the previous run — names right, figures from a different run, so not verbatim from the cited run."
+  ],
+  "verification_at_archive": {
+    "node --test": "149 tests, 148 pass, 0 fail, 1 skipped (win32-only, correctly skipped on macOS)",
+    "node rules/build.mjs --check": "20 files current",
+    "node scripts/spec-validate.mjs": "9 passed, 0 failed",
+    "constraints": "10 of 10 automated checks clean",
+    "CI run 35602464300": "all six jobs green",
+    "cold start worst sample": "64.1 ms = 6.4% of the 1000 ms budget, ~15x headroom, every sample proven live"
+  },
+  "gate_substitution": "The contracted gate is /refine-validate then adversarial diff review. /refine-validate does not exist until change 2 delivers it, so the QA half could not run. execution.md declared this IN ADVANCE, which is the correction for platform-foundation reflection Delta 2 where the same substitution went undeclared across six changes. What ran: the 13 constraints plus the adversarial diff review.",
+  "generated_at": "2026-09-21T13:40:04.568Z"
+}

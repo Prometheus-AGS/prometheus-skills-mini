@@ -13,7 +13,7 @@
 
 ## 3. Validation — replacing the two python3 blocks
 
-- [ ] 3.1 RED: write tests for a manifest missing a required field, a manifest naming an absent file, a zero-byte referenced file, and a valid manifest. See them FAIL; commit alone; paste the output.
+- [x] 3.1 RED (2026-09-21): `node --test lib/refiner/validate.test.mjs` → **fail**, `Cannot find module .../lib/refiner/validate.mjs`. 17 tests covering both upstream scripts. Failing test committed alone. Write tests for a manifest missing a required field, a manifest naming an absent file, a zero-byte referenced file, and a valid manifest. See them FAIL; commit alone; paste the output.
 - [ ] 3.2 GREEN: implement `lib/refiner/validate.mjs` until the tests pass, replacing `validate-manifest.sh`, `validate-constraints.sh` and both `python3` blocks in `agents/artifact-validator.md`.
 - [ ] 3.3 Rewrite those two blocks in the carried `agents/artifact-validator.md` to call the Node validator. Confirm no `python3` remains in any carried agent or skill file.
 - [ ] 3.4 Self-review by mutation: revert the zero-byte check and confirm its test fails.

@@ -106,7 +106,8 @@ constraints:
     severity: blocking
     source: '.claude/rules/node-scripts.md — Structure (I/O lives at the edge)'
     description: 'Library modules do not print. Entry points under scripts/, hooks/ and rules/build.mjs may.'
-    check: 'git grep --no-index --exclude-standard -n -E -e "console\.(log|debug)" -- "lib/*.mjs" "rules/lib/*.mjs"'
+    check: 'git grep --no-index --exclude-standard -n -E -e "console\.(log|debug)" -- "lib/*.mjs" "rules/lib/*.mjs" ":!*.test.mjs"'
+    note: 'Test files are excluded. The rule is that library MODULES do not print — I/O lives at the edge. A test may legitimately contain the word console.log inside a child program it spawns to assert what that child received, which is what lib/platform/spawn.test.mjs does; flagging it was a false positive on prose-like content, the same class as the earlier npx-in-a-comment case.'
 
   - id: no-symlinks
     severity: blocking

@@ -39,7 +39,7 @@
 ## 6. Windows review of the 17 carried .mjs
 
 - [ ] 6.1 Review all **17 carried** files for `/tmp` literals, `process.env.HOME`/`USERPROFILE`, `shell: true`, `.cmd`/`.bat` assumptions and `.sh` references. Record what was checked and what was found — a review that reports nothing must say what it looked for.
-- [ ] 6.2 RED: write a test asserting no `.mjs` resolves or executes a `.sh`; see it FAIL on `scripts/lib/model-routing.mjs:36`; commit alone; paste the output.
+- [x] 6.2 RED (2026-09-21): 6 tests, **3 fail** — `no .mjs resolves or executes a shell script` (model-routing.mjs:36 and :72), `a script invoking an absent binary says so` (4 FORGE_BIN scripts), `the health probe is a Node fetch`. A fourth failure was the test flagging **itself**: it states the patterns it forbids, so it matched its own regex literals — excluded, with the reason recorded in the file.
 - [ ] 6.3 GREEN: replace the `execSync` of `check-openai-proxy-health.sh` with a Node fetch against the configured `health_probe` URL, pointed at the liter-llm gateway. Confirm no third service or port is introduced.
 - [ ] 6.4 Review the two live importers of `model-routing.mjs` — `scripts/lib/openai-client.mjs:21` (`resolvePhase`, the LLM call path) and `scripts/model-routing-probe.mjs:13` (`resolveAllPhases`) — and add a test asserting that an unhealthy or unreachable probe yields a decision with `healthy: false` and a reason rather than a throw. The behaviour exists upstream; the test is what keeps it.
 - [ ] 6.5 Commit locally with an `Assisted-by` trailer: `fix(refiner): probe endpoint health in Node, not curl via bash`. Do not push.

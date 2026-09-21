@@ -22,3 +22,13 @@ Options: assume exec form · probe empirically before designing
 Decision: **probe**, as plan task 1 after the goal-1 re-review | Provenance: research (inconclusive)
 6 live hook entries inspected, 0 use args. Different surface from a plugin hooks.json, so inconclusive
 either way. Not a detail to assume: if unsupported, a shell string re-enters the path and C1/C3 fail.
+
+### 2026-09-21T12:17Z — harness exec-form support — **RESOLVED**
+Supersedes the UNRESOLVED entry above; that entry is left in place as the record of what was known
+when the decision to probe was made.
+Decision: **exec form fires on this harness** | Provenance: observation, not documentation
+Verified by deletion-and-recreation: an exec-form `PreToolUse` hook was registered, fired, its evidence
+file deleted, and the harness recreated it at 12:17:55.820Z. argv arrived as 4 discrete tokens, so no
+shell re-tokenised it. The design proceeded unchanged and no shell-string fallback was adopted.
+Scope: Claude Code on macOS. The Windows leg is CI evidence (run 35602464300); other harnesses have no
+hooks directory and remain unverified. Evidence: `evidence/exec-form-probe.md`.

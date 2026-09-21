@@ -1,5 +1,8 @@
 ## 1. Workflow
 
+> RED (2026-09-21): `node --test rules/test/ci-workflow.test.mjs` → tests 7, pass 0, fail 7;
+> every one `ENOENT: no such file or directory, open '.github/workflows/ci.yml'`.
+
 - [ ] 1.1 Write `.github/workflows/ci.yml`: triggers `push` and `pull_request`; `permissions: contents: read`; matrix of three operating systems × Node 22 and 24; `fail-fast: false`.
 - [ ] 1.2 Windows-only step before checkout: `git config --global core.autocrlf true`.
 - [ ] 1.3 Steps: `actions/checkout`, `actions/setup-node` with the matrix version and npm cache, `npm ci`, `node --test`, `node rules/build.mjs --check`, `node node_modules/@fission-ai/openspec/bin/openspec.js validate --all --no-interactive`.

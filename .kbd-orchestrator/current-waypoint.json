@@ -1,25 +1,39 @@
 {
   "schemaVersion": "5",
-  "phase": "platform-foundation",
-  "previousPhase": null,
-  "change": null,
-  "status": "execution_complete",
-  "currentTask": "run /kbd-reflect for platform-foundation",
-  "nextPendingChange": null,
-  "sourceTool": "claude-code",
-  "exactNextCommand": "/kbd-reflect platform-foundation",
-  "parentPhase": null,
-  "childPhases": [],
-  "childPointer": null,
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 2,
+  "derivedRevision": 2,
+  "frontier": {
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 2
+  },
+  "conflictCount": 0,
+  "projectId": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
+  "runId": "platform-foundation-20260921T101006Z",
   "path": [
     "platform-foundation"
   ],
+  "phaseIds": [
+    "platform-foundation"
+  ],
+  "activePhaseId": "platform-foundation",
+  "activePhase": "platform-foundation",
+  "phase": "platform-foundation",
+  "parentPhase": "platform-foundation",
+  "childPointer": null,
+  "change": null,
+  "currentTask": "start the next phase",
+  "status": "phase_complete",
   "completionMetric": "implementation",
   "implementationCompleted": 6,
   "implementationTotal": 6,
-  "certificationStatus": "NOT_TRACKED",
-  "publicationStatus": "NOT_TRACKED",
   "planRevision": 1,
   "revision": 3,
-  "updatedAt": "2026-09-21T10:02:22Z"
+  "exactNextCommand": "/kbd-new-phase hook-entry-node-only",
+  "nextChange": null,
+  "nextTask": null,
+  "updatedAt": "2026-09-21T10:11:08Z",
+  "previousPhase": "platform-foundation",
+  "nextPendingChange": null,
+  "sourceTool": "claude-code"
 }

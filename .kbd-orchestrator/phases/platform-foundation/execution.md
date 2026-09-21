@@ -8,8 +8,8 @@ Changes: 6 · Tasks: 65
 
 ## Owner decisions carried into execution
 - **Trailer:** `Assisted-by:` only. No `Co-Authored-By`, no `Signed-off-by` (A-15, and the `commit-msg` intent recorded in `constraints.md`). Confirmed by the owner 2026-09-21 in preference to a harness default.
-- **Scope this run:** rounds 1–4 (changes 1–5). `windows-evidence` is NOT executed — it is blocked on prerequisite P2.
-- **P2 (git remote + Actions) is still open.** The owner chose to proceed without it. Consequence, stated here so it cannot be lost: `ci-three-os` is written but **never runs**, and every Windows-specific branch in changes 3–5 is written **unobserved**. Under A-6 every such behaviour stays **self-reported** until `windows-evidence` runs. This is the situation the CI-first ordering existed to avoid; proceeding is the owner's call, not a silent default.
+- **Scope at dispatch:** rounds 1–4 (changes 1–5), with `windows-evidence` blocked on prerequisite P2.
+- **SUPERSEDED 2026-09-21:** P2 was met mid-phase — the operator confirmed the remote, the repository was pushed, and CI ran. `windows-evidence` was therefore executed and archived, and all six changes are complete. The paragraph below about what completion means was written under the old scope and is superseded by `reflection.md`.
 
 ## Dispatch contract
 | # | Change | Tasks | Gate after |
@@ -19,7 +19,7 @@ Changes: 6 · Tasks: 65
 | 3 | `platform-paths-and-text` | 14 | QA + adversarial diff review |
 | 4 | `platform-atomic-write-and-lock` | 13 | QA + adversarial diff review |
 | 5 | `platform-spawn` | 12 | QA + adversarial diff review |
-| 6 | `windows-evidence` | 8 | NOT DISPATCHED — blocked on P2 |
+| 6 | `windows-evidence` | 8 | dispatched after P2 was met; QA + adversarial diff review; archived |
 
 Changes 4 and 5 are independent in the plan; this session runs them sequentially (one agent, and both touch `package.json`/CI in change 5).
 
@@ -29,8 +29,15 @@ Changes 4 and 5 are independent in the plan; this session runs them sequentially
 - No change edits `.kbd-orchestrator/project.json` or `constraints.md` (owned by `/kbd-init`).
 - Commits are local. Nothing is pushed (A-16).
 
-## QA gate per change
-`/refine-validate <change-id>` → on PASS `/adversarial-review --mode diff <change-id>` → on PASS `/opsx:verify` then `/opsx:archive`. A CRITICAL finding marks certification BLOCKED in `progress.json` and the change is fixed and re-gated. Known tool limitation recorded in `.prometheus/gotchas.md`: the packet builder reads only the native-kbd layout, so diff-mode packets are assembled from the OpenSpec layout by hand.
+## QA gate per change — AS PLANNED, AND AS IT ACTUALLY RAN
 
-## What completion means for this run
-`implementation_status: COMPLETE` for changes 1–5 does **not** mean the phase is done. Goals "three-OS CI" and "exit evidence on windows-latest" remain **NOT MET** until P2 exists and `windows-evidence` runs. `/kbd-reflect` must not report this phase complete.
+**Planned:** `/refine-validate <change-id>` → on PASS `/adversarial-review --mode diff <change-id>` → on PASS `/opsx:verify` then `/opsx:archive`.
+
+**What actually ran (corrected 2026-09-21 during reflect):** artifact-refiner was **never invoked**; `.refiner/artifacts/` does not exist. The gate that ran for every change was (1) the ten automated checks in `constraints.md` plus the three command constraints, then (2) the adversarial diff review, then (3) `openspec archive`. That is narrower than the plan — it checks project constraints, not artifact quality — and the substitution was made silently rather than declared. Recorded in `reflection.md` as Delta 2.
+
+A CRITICAL finding marked the change BLOCKED and it was fixed and re-gated. Known tool limitation in `.prometheus/gotchas.md`: the installed packet builder reads only the native-kbd layout, so diff-mode packets were assembled from the OpenSpec layout by hand.
+
+## What completion means for this run — RESOLVED
+Written at dispatch: completion of changes 1–5 would NOT have meant the phase was done, because "three-OS CI" and "exit evidence" would have stayed NOT MET without P2.
+
+**P2 was met.** The remote `Prometheus-AGS/prometheus-skills-mini` was pushed on 2026-09-21, 19 CI runs executed, and `windows-evidence` ran and archived. Both goals are MET with per-claim evidence in `evidence/windows.md`. The phase is complete; see `reflection.md` for the delta.

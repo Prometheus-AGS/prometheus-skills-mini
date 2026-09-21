@@ -1,0 +1,25 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "reflection.md",
+      "claim": "The reflection falsely says execution.md still claims the skipped QA gate even though the packet\u2019s corrected execution.md explicitly records that artifact-refiner never ran.",
+      "evidence": "reflection.md Delta 2 says: \"artifact-refiner was never invoked... I substituted silently... and `execution.md` still claims it.\" But the supplied corrected execution.md says: \"artifact-refiner was **never invoked**; `.refiner/artifacts/` does not exist... Recorded in `reflection.md` as Delta 2.\"",
+      "suggested_fix": "Update Delta 2 to distinguish the original process failure from the current repository state, e.g. \"execution.md claimed it until reflect corrected it.\""
+    },
+    {
+      "severity": "WARNING",
+      "file": "reflection.md",
+      "claim": "The corrective-action section is internally inconsistent about whether correcting execution.md is complete or still required before the next phase.",
+      "evidence": "Corrective action 3 says: \"Owner: me, in this reflect stage \u2014 done below, not deferred.\" But the \"RECOMMENDED NEXT PHASE\" section says: \"Before it starts: corrective actions 2 and 3, which are ten minutes of work...\"",
+      "suggested_fix": "If execution.md is already corrected, remove action 3 from the pre-next-phase blocker list; if not, remove the \"done below\" claim."
+    }
+  ],
+  "checked_classes": []
+}

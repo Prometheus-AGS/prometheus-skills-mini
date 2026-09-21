@@ -1,0 +1,43 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "reflection.md",
+      "line": 0,
+      "claim": "The reflection reports the phase and all six changes as complete despite the execution contract saying change 6 was not dispatched and the phase must not be reported complete.",
+      "evidence": "reflection.md says: \"Changes: 6/6 implemented, gated and archived\" and marks \"Exit evidence: every Windows claim observed\" as \"MET\". The execution contract in the same packet says: \"Scope this run: rounds 1\u20134 (changes 1\u20135). `windows-evidence` is NOT executed \u2014 it is blocked on prerequisite P2\" and \"`/kbd-reflect` must not report this phase complete.\"",
+      "suggested_fix": "Either update the packet with evidence that P2 occurred and windows-evidence actually ran, or change the reflection to state that change 6 and the Windows-evidence goal remain incomplete."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "reflection.md",
+      "line": 0,
+      "claim": "The reflection claims CI and Windows evidence artifacts exist, but the packet file tree does not contain the required implementation paths.",
+      "evidence": "reflection.md claims: \"Three-OS CI running the four commands | MET | 19 runs\" and \"Exit evidence... | MET | `evidence/windows.md`\". The file_tree contains no `.github/workflows/ci.yml`, no `evidence/windows.md`, no `package.json`, and no `lib/platform/` paths.",
+      "suggested_fix": "Make the file tree and cited artifacts available in the packet, or downgrade these goals to NOT MET / unsupported."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "reflection.md",
+      "line": 0,
+      "claim": "The reflection\u2019s recommended corrective action points downstream work at a shell script despite the project constraint forbidding shell files.",
+      "evidence": "reflection.md says: \"Fix the packet builder (`build-review-packet.sh` cannot read `openspec/changes/**`)\". The constraints say: \"No .sh, .bash, .py or .ps1 file anywhere in the repository\" and \"Node.js LTS is the only script runtime\".",
+      "suggested_fix": "Replace the corrective action with a Node-based packet builder path, for example `scripts/build-review-packet.mjs`, and do not recommend preserving or fixing a `.sh` script."
+    },
+    {
+      "severity": "WARNING",
+      "file": "reflection.md",
+      "line": 0,
+      "claim": "The corrective actions are not assigned, even though the reflection contract asks for concrete and assigned corrective actions.",
+      "evidence": "The review prompt says corrective actions should be \"concrete and assigned\". The reflection lists actions such as \"Self-review before submitting\", \"Re-review the four unreviewed fixes\", and \"Correct `execution.md`\" but names no owner, role, phase task, or gating condition for who must perform each action.",
+      "suggested_fix": "Add an owner and timing/gate to each corrective action, e.g. \"Next phase implementer, before first new change\" or \"KBD operator, before dispatch\"."
+    }
+  ],
+  "checked_classes": []
+}

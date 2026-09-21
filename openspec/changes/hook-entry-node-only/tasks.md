@@ -16,7 +16,7 @@
 
 ## 3. The manifest and its resolution test
 
-- [ ] 3.1 RED: write the manifest-resolution test deriving its file list from `hooks/hooks.json` (never a hand-kept list): every named file resolves, every `--hook` value has a map entry, and exactly 6 distinct ids are registered; see it FAIL; commit the failing test alone and paste the output.
+- [x] 3.1 RED (2026-09-21): `node --test hooks/hooks.test.mjs` → **fail**, `ENOENT: open .../hooks/hooks.json` (tests 7 / pass 0 / fail 7) — every test depends on the manifest, which does not exist yet. Failing test committed alone. Write the manifest-resolution test deriving its file list from `hooks/hooks.json` (never a hand-kept list): every named file resolves, every `--hook` value has a map entry, and exactly 6 distinct ids are registered; see it FAIL; commit the failing test alone and paste the output.
 - [ ] 3.2 GREEN: write `hooks/hooks.json` in exec form for the 6 ported ids until the test passes.
 - [ ] 3.3 Prove the test can fail for the reason it exists: remove a file the manifest names, confirm the test fails and names it, restore the file.
 - [ ] 3.4 Commit locally with an `Assisted-by` trailer: `feat(hooks): exec-form manifest and resolution test`. Do not push.

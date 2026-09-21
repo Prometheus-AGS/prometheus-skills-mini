@@ -32,9 +32,10 @@ Only the *waiting* in change 1 overlaps change 2. There is one agent and the wor
 
 ## QA gate — as contracted, and what differs
 
-For changes 2 and 3 the contracted gate runs in full: `node scripts/refine-validate.mjs` (no change id;
-it validates the project's constraints from the working directory) → adversarial diff review → verify →
+For changes 2 and 3: ~~`node scripts/refine-validate.mjs`~~ the constraint expressions → adversarial diff review → verify →
 archive.
+
+**Corrected 2026-09-21:** this named `node scripts/refine-validate.mjs` as the constraint gate. It is not: run here it prints `SKIP: constraints — constraints.json not present` and validates nothing — it checks the *refiner's* artifact manifests. The project's constraints are the `check:` and `command:` expressions in `.kbd-orchestrator/constraints.md`; there is **no runner** for them, and last phase they were executed one by one. So the gate for changes 2 and 3 is: each `check:` expression run and returning no match, each `command:` exiting 0, with the output pasted — then the adversarial diff review, `openspec-verify-change`, archive. A runner is not built here (out of scope); the absence is a known weakening.
 
 For change 1 the constraint gate is this repository's and cannot run there. The substitute, in order:
 `cargo fmt --all -- --check`, `cargo clippy --workspace --all-targets --locked -- -D warnings`,

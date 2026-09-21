@@ -107,7 +107,7 @@ One rule is added to upstream's, and it is stated as an addition: an `elapsedHou
 - **THEN** the vector test is reported as `todo`, and the phase evidence labels the hash rule "verified for one integer-valued float only"
 
 ### Requirement: Receipts keep the source pack's on-disk contract
-A receipt SHALL be written to `.prometheus/progress-memory-receipts/<sha256(eventId)>.json` by atomic write, under a per-event `wx` lock from `lib/platform/lock.mjs`, whose file is the receipt path with the suffix `.lock` — the name the source pack uses, and an exclusive-create lock like its own, so the two packs exclude each other on one project root. It SHALL carry `eventSha256` — SHA-256 of the event without `observedAt`, keys sorted, separators `,` and `:`, non-ASCII unescaped — and `eventIdentitySha256` over `schemaVersion`, `eventId`, `runId`, `boundary`, `status`, `phaseId`, `changeId`, `taskId`. `elapsedHours` SHALL be serialised as Python writes a float: an integer value gains `.0`.
+A receipt SHALL be written to `.prometheus/progress-memory-receipts/<sha256(eventId)>.json` by atomic write, under a per-event `wx` lock from `lib/platform/lock.mjs`, whose file is the receipt path with the suffix `.lock` — the name the source pack uses, and an exclusive-create lock like its own, so the two packs exclude each other on one project root. It SHALL carry `eventSha256` — SHA-256 of the event without `observedAt`, keys sorted, separators `,` and `:`, non-ASCII unescaped — and `eventIdentitySha256` over `schemaVersion`, `eventId`, `runId`, `boundary`, `status`, `phaseId`, `changeId`, `taskId`. `elapsedHours` SHALL be hashed with the numeric token the source pack would write. For an event this pack builds from a hook — where the source pack always calls `float()` — that is Python's float form, so an integer value gains `.0`. For an event that arrives as text, through `--input` or as the snapshot inside a stored receipt, it is **the token as written**: Python hashes the integer `1` as `1` and the float `1.0` as `1.0`, and after `JSON.parse` the two are the same number, so the token has to be carried from the text.
 
 #### Scenario: The recorded Python hashes are reproduced
 - **WHEN** both hashes are computed for the event inside the recorded receipt `dea37563…json`
@@ -116,6 +116,10 @@ A receipt SHALL be written to `.prometheus/progress-memory-receipts/<sha256(even
 #### Scenario: The float rule is what makes the first hash match
 - **WHEN** the same event is hashed with `elapsedHours` serialised by `JSON.stringify`
 - **THEN** the result is `ca79e321903cc10e8bf23597e19e8ea8f241dafbf476b1fb6527b7878f3ca47e`, not the recorded value — so removing the rule fails the scenario above
+
+#### Scenario: An integer and a float are different inputs, and both port
+- **WHEN** one `--input` event carries `"elapsedHours": 1` and another `"elapsedHours": 1.0`, otherwise identical
+- **THEN** their `eventSha256` values differ, and each equals the source pack's vector for that literal
 
 #### Scenario: A hook event id is derived as upstream derives it
 - **WHEN** an event is built for a boundary

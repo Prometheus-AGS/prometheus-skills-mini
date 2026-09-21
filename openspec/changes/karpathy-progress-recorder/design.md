@@ -31,6 +31,8 @@ Replay compares a *different* hash by origin (:571–576): `eventIdentitySha256`
 
 So the rule is one function on one named field, not a canonicaliser. RFC 8785 libraries were rejected for a reason that is a property of the problem: the RFC *mandates* ECMAScript number serialisation, so a conformant library must write `0`.
 
+**A gap found while preparing the vectors, before any code existed.** The first draft said only "an integer value gains `.0`". That is right for a hook event and wrong for an `--input` event carrying the integer `1`: Python hashes the token `1`, and once Node has parsed the JSON it cannot tell `1` from `1.0`. So `hash.mjs` takes the token, not just the number: events read from text carry the raw token (`"elapsedHours"\s*:\s*<number>` in the source text), and only events built here use the float form. The vector list includes `0`/`0.0`, `1`/`1.0` and `1000`/`1000.0` precisely so a test fails if this is forgotten.
+
 **What is verified and what is not.** One receipt, one value: an integer-valued float. For ordinary decimals in [0.0001, 1000] Python's `repr` and JavaScript's `toString` both produce the shortest round-tripping decimal, and agree; that is expected, not yet observed, so `tasks.md` records vectors rather than assuming. Below 0.0001 they diverge (`1e-05` against `0.00001`), so that range is refused instead of guessed. Vectors must come from a real Python run by a human, once, and be committed as data — this repository must not run Python, and a vector computed by the code under test proves nothing.
 
 ## The receipt is the outbox

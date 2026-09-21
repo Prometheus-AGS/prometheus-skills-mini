@@ -110,8 +110,10 @@ is **absent** (§F) — named, not improvised around; `prometheus-rust-auditor` 
 
 ## QA gate per change
 
-`node scripts/refine-validate.mjs` (the constraint gate; it takes no change id and validates the project's constraints from the working directory) → on PASS an adversarial **diff**
+~~`node scripts/refine-validate.mjs` (the constraint gate)~~ → on PASS an adversarial **diff**
 review, critic `MiniMax-M3`, judge `k3` → on PASS `openspec-verify-change`, then archive.
+
+**Corrected 2026-09-21:** this named `node scripts/refine-validate.mjs` as the constraint gate. It is not: run here it prints `SKIP: constraints — constraints.json not present` and validates nothing — it checks the *refiner's* artifact manifests. The project's constraints are the `check:` and `command:` expressions in `.kbd-orchestrator/constraints.md`; there is **no runner** for them, and last phase they were executed one by one. So the gate for changes 2 and 3 is: each `check:` expression run and returning no match, each `command:` exiting 0, with the output pasted — then the adversarial diff review, `openspec-verify-change`, archive. A runner is not built here (out of scope); the absence is a known weakening.
 
 For change 1 the constraint gate is this repository's and does not run there. Its gate, in order:
 (1) `cargo fmt --all -- --check`, clippy `-D warnings` and `cargo test --workspace --locked

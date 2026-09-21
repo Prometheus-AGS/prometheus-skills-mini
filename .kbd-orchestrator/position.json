@@ -2,13 +2,13 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 139,
-  "derivedRevision": 139,
+  "sourceRevision": 143,
+  "derivedRevision": 143,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 139
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 143
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-21T23:33:22.059312Z",
+  "updatedAt": "2026-09-21T23:47:44.185912Z",
   "cursor": [
     "karpathy-logs-node",
     "execute",
@@ -68,7 +68,7 @@
           {
             "type": "change",
             "id": "okf-v02-writer",
-            "status": "BLOCKED",
+            "status": "IN_PROGRESS",
             "progress": {
               "done": 22,
               "total": 23
@@ -77,9 +77,9 @@
           {
             "type": "change",
             "id": "karpathy-progress-recorder",
-            "status": "PENDING",
+            "status": "BLOCKED",
             "progress": {
-              "done": 0,
+              "done": 1,
               "total": 34
             }
           },

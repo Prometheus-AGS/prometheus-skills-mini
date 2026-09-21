@@ -2,13 +2,13 @@ Each code task is test-first: write the `node:test` file, run it and see it fail
 
 ## 1. Fixtures — before any code
 
-- [ ] 1.1 Create `lib/karpathy/fixtures/golden-receipt.json` as a copy of `.prometheus/progress-memory-receipts/dea375631f620b20970cb0d952d42dcb74503eceeaabc07482278b8f6a073676.json`. Tests read the fixture, never the live directory.
-- [ ] 1.2 Ask the operator for Python hash vectors: for `elapsedHours` in `0`, `0.0`, `1`, `0.5`, `0.25`, `1.5`, `12.75`, `0.0001`, `999.999`, `1000`, the `eventSha256` that the source pack's `event_sha256` produces for the 1.1 event with that value. Commit their output as `lib/karpathy/fixtures/python-hash-vectors.json` with the exact command they ran. **This repository never runs Python, and a vector produced by the code under test proves nothing.** Until the file exists, §2's vector test is marked `todo` and the hash claim stays "verified for one integer-valued float only".
+- [x] 1.1 Create `lib/karpathy/fixtures/golden-receipt.json` as a copy of `.prometheus/progress-memory-receipts/dea375631f620b20970cb0d952d42dcb74503eceeaabc07482278b8f6a073676.json`. Tests read the fixture, never the live directory.
+- [ ] 1.2 Ask the operator for Python hash vectors: with the exact command in `lib/karpathy/fixtures/README.md`, for `elapsedHours` in `0`, `0.0`, `1`, `1.0`, `0.5`, `0.25`, `1.5`, `12.75`, `0.0001`, `999.999`, `1000`, `1000.0` (integer and float forms are different inputs to Python — see design.md), the `eventSha256` that the source pack's `event_sha256` produces for the 1.1 event with that value. Commit their output as `lib/karpathy/fixtures/python-hash-vectors.json` with the exact command they ran. **This repository never runs Python, and a vector produced by the code under test proves nothing.** Until the file exists, §2's vector test is marked `todo` and the hash claim stays "verified for one integer-valued float only".
 
 ## 2. Hashing — `lib/karpathy/hash.mjs`
 
 - [ ] 2.1 Write `lib/karpathy/hash.test.mjs`: both recorded hashes of the 1.1 fixture are reproduced; serialising `elapsedHours` with `JSON.stringify` yields `ca79e321…` and therefore does not match; key order of the input does not change either hash; a non-ASCII string is hashed unescaped; every vector in 1.2 matches (or `todo`).
-- [ ] 2.2 Write `lib/karpathy/hash.mjs`: sorted-key compact serialisation, the Python float token for `elapsedHours` only, `eventSha256` (drops `observedAt`), `eventIdentitySha256` (the eight named fields, absent as `null`).
+- [ ] 2.2 Write `lib/karpathy/hash.mjs`: sorted-key compact serialisation; for `elapsedHours` only, the raw numeric token when the event came from text and Python's float form when it was built here; `eventSha256` (drops `observedAt`), `eventIdentitySha256` (the eight named fields, absent as `null`).
 - [ ] 2.3 Mutation: remove the float rule and confirm 2.1's first test fails; paste the output into the evidence file (11.3).
 
 ## 3. Validation — `lib/karpathy/validate.mjs`

@@ -8,8 +8,8 @@
 ## 2. Provider resolution
 
 - [x] 2.1 RED (2026-09-21): `node --test lib/refiner/provider.test.mjs` → **fail**, `Cannot find module .../lib/refiner/provider.mjs`. Failing test committed alone. Write tests for the waterfall — env var beats project-local beats global — and that the home directory comes from `lib/platform/paths.mjs`. See them FAIL; commit alone; paste the output.
-- [ ] 2.2 GREEN: implement `lib/refiner/provider.mjs` replacing `state-resolve-provider.sh` (which uses `grep` and reads `$HOME` directly) until the tests pass.
-- [ ] 2.3 Commit locally with an `Assisted-by` trailer: `feat(refiner): resolve the provider without grep or $HOME`. Do not push.
+- [x] 2.2 GREEN (2026-09-21): 10/10 pass. **4 of 6 upstream tiers ported** — tiers 4 and 5 (`command -v mcp | grep -q`) can never fire, verified. Mutation self-review, 5 reverts each biting, suite restored to 10/0: env tier dropped → 1; project-local dropped → 3; global dropped → 2; corrupt config throws → 1; **waterfall order reversed → 2**, so precedence is genuinely asserted, not just presence. Implement `lib/refiner/provider.mjs` replacing `state-resolve-provider.sh` (which uses `grep` and reads `$HOME` directly) until the tests pass.
+- [x] 2.3 Commit locally with an `Assisted-by` trailer: `feat(refiner): resolve the provider without grep or $HOME`. Do not push.
 
 ## 3. Validation — replacing the two python3 blocks
 

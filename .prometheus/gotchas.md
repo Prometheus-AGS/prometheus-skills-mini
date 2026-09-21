@@ -80,3 +80,9 @@ delete them.
   change; archiving it moved the directory and the test failed with ENOENT. CI had been green because it
   ran before the archive. Build fixtures from literals, never from repository state that a later stage
   moves. The same trap applies to any test that reads `openspec/changes/*` or `phases/*` by name.
+- **2026-09-21 · `kbd-validate-progress.sh --mark-implementation-complete` rewrites `progress.json` and
+  drops the per-stage flags.** `assessment_complete` and `plan_complete`, set by the assess and plan
+  stages, are absent after any change is marked implementation-complete; only the `completion` block and
+  the `changes` array survive. Do not read those flags to decide whether a stage ran — read
+  `handoffs/<stage>.handoff.json`, which is what the stage gate itself uses. The canonical phase status
+  lives in the runtime (`prometheus kbd status --json` → `phases.<id>.status`), not in `progress.json`.

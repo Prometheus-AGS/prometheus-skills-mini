@@ -14,11 +14,19 @@ available. On Windows both run in **Docker**; on macOS and Linux they run
 exactly as they do in the source pack today. Everything else that was a daemon
 is gone.
 
-> **Status: planning.** `openspec init` has been run, the agent rules
-> (`CLAUDE.md`, `AGENTS.md`, `.claude/rules/`) are initialized per Prometheus
-> Rules Architecture v4, and this document is the port analysis. No skills,
-> hooks, or scripts have been ported yet. Everything under "Target design" is
-> a proposal to be driven through OpenSpec changes.
+> **Status: the foundation is built and verified; the port itself has not started.**
+>
+> Phase `platform-foundation` is complete: `lib/platform/` (paths, CRLF-tolerant text
+> reading, atomic write with a bounded Windows rename retry, an exclusive-create lock,
+> shell-free process spawning), a `package.json` with the OpenSpec CLI pinned, and a
+> three-OS CI matrix. **88 tests pass on `windows-latest`, `ubuntu-latest` and
+> `macos-latest` across Node 22 and 24, with nothing skipped on Windows** — every Windows
+> claim in this document is observed, not reasoned from macOS. Per-claim evidence:
+> [`evidence/windows.md`](.kbd-orchestrator/phases/platform-foundation/evidence/windows.md).
+>
+> Still to come, each its own phase: the hooks, the KBD state machine, OKF v0.2 logging,
+> the knowledge-sources registry, the Docker services, and the `adversarial-review` and
+> `deep-research` ports. Everything under "Target design" below remains a proposal.
 
 ---
 
@@ -26,7 +34,7 @@ is gone.
 
 | # | Constraint | What it means in practice |
 |---|---|---|
-| C1 | **Windows without WSL for anything the pack runs** | Hooks, scripts, and the installer run from `cmd.exe` / PowerShell on a stock Windows 10/11 box. Git Bash may be present but is never required. Docker's own backend is the one exception — see the note below the table. |
+| C1 | **Windows without WSL for anything the pack runs** | Hooks, scripts, and the installer run from `cmd.exe` / PowerShell on a stock Windows 10/11 box. Git Bash may be present but is never required. Docker's own backend is the one exception — see the note below the table. **Verified for everything built so far** on `windows-latest`, no Git Bash, no WSL. |
 | C2 | **Node.js LTS is the only script runtime** | Every hook, state script, and installer is a `.mjs` file run as `node <script>`. Node ≥ 22 LTS required, 24 LTS recommended. |
 | C3 | **No shell-script hooks** | No `.sh`. A `.ps1` is allowed only alongside an equivalent for the other platforms, and only when Node genuinely cannot do the job. The goal is zero of either. |
 | C4 | **No Python** | Not as a runtime, not as a build step, not in rendered templates. |
@@ -624,5 +632,11 @@ Each line is one `/opsx:propose`. Order matters — later changes build on
 - **Rules v4 on non-Claude harnesses.** Path-scoped loading of `.claude/rules/` is a Claude Code feature (and reported unreliable under worktrees); named skill invocation is assumed, not tested, on Codex, Cursor, and OpenCode. The v4 document asks for one test per harness, recorded in `.prometheus/gotchas.md`.
 - **Tera templates under `skills/`.** No in-repo renderer was found for them; the conclusion that they are agent-interpreted is an inference.
 - **Memory figures in §7** are estimates, not measurements.
+
+**Settled by `platform-foundation` (2026-09-21), with run links in
+[`evidence/windows.md`](.kbd-orchestrator/phases/platform-foundation/evidence/windows.md):** that
+Node's atomic-write, locking, CRLF handling and shell-free CLI spawning work on Windows; that the
+repository survives a `core.autocrlf=true` checkout; and that Node 22 and 24 both work. Node 26 —
+what this machine runs — is still untested and unclaimed.
 - **Harness hook support on Windows.** Exec-form hooks with `${CLAUDE_PLUGIN_ROOT}` are taken from the source pack's Claude Code configuration; equivalent behaviour in Codex, Cursor, and OpenCode on Windows needs checking per harness.
 - **`ideation-mindmap`** is deferred, not rejected — decide once the core loop works.

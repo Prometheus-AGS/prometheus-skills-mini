@@ -1,69 +1,56 @@
 # Windows evidence — platform-foundation
 
-Repository: `Prometheus-AGS/prometheus-skills-mini` (public). Prerequisite P2 met 2026-09-21.
+Every Windows behaviour this phase claims, with the run and the asserting test that proves it.
+Lines in the table are copied verbatim from the job log; none is paraphrased.
 
-First green matrix: **run 35581365409**, all six jobs (`windows-latest`, `ubuntu-latest`,
-`macos-latest` × Node 22 and 24). Commit `fix(spec): platform-spawn MODIFIED delta must repeat
-every scenario`.
+- **Run:** [35585743561](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35585743561) · commit `0dc907e2` · all six jobs green
+- **Job:** `windows-latest · node 22` (the `node 24` leg is identical)
+- **Suite on Windows:** # tests 88, # pass 88, # fail 0, # skipped 0 — **nothing skipped**, so every win32-only test genuinely executed
+- **Repository:** `Prometheus-AGS/prometheus-skills-mini` (public); prerequisite P2 met 2026-09-21
 
-| Claim | Asserting test / command | Run | Job | Result |
-|---|---|---|---|---|
-| The full suite passes on Windows | `node --test` (49 tests) | 35581155724, 35581365409 | windows-latest · node 22 and node 24 | **OBSERVED PASS** |
-| `.gitattributes` survives a hostile checkout | `git config --global core.autocrlf true` before `actions/checkout`, then `node rules/build.mjs --check` | 35581155724, 35581365409 | windows-latest · both | **OBSERVED PASS** — 18 files current, no drift |
-| CRLF parser tolerance holds on Windows | `rules/test/render.test.mjs` CRLF fixtures | 35581365409 | windows-latest · both | **OBSERVED PASS** |
-| A CRLF checkout is "current", not drift | `rules/test/build-crlf.test.mjs` | 35581365409 | windows-latest · both | **OBSERVED PASS** |
-| Path helpers behave on Windows | `lib/platform/paths.test.mjs` | 35581365409 | windows-latest · both | **OBSERVED PASS** |
-| `npm ci` + the pinned CLI work on Windows | workflow steps | 35581365409 | windows-latest · both | **OBSERVED PASS** |
-| Node 22 and 24 (LTS) both work | matrix | 35581365409 | all six jobs | **OBSERVED PASS** — the dev host runs Node 26 (Current) |
+## Per-claim evidence
 
-## Confirmed green after the fix — run 35582174310
-
-All six jobs pass. On `windows-latest` the suite reports **72 pass, 0 fail, 0 skipped**: the real
-held-handle test RAN rather than skipping, and `scripts/coverage-report.mjs` reports
-`rules/build.mjs: 102/102 lines = 100.00%` there too. On Linux and macOS the same test correctly
-reports `# SKIP win32 only`.
-
-| Claim | Evidence |
+| Claim | Asserting test, verbatim from the Windows job log |
 |---|---|
-| Bounded EPERM/EBUSY/EACCES retry replaces a genuinely held destination | `ok 10 - a destination held open by another process is still replaced`, windows-latest node 22 and 24, run 35582174310 |
-| The `wx` lock works on Windows | `lib/platform/lock.test.mjs`, 5 tests, windows-latest both versions |
-| The rules build writes atomically and single-writer on Windows | `rules/test/build.test.mjs`, 8 tests, windows-latest both versions |
-| `rules/build.mjs` coverage is real on Windows, not just macOS | 102/102 lines on windows-latest |
+| Bounded EPERM/EBUSY/EACCES retry replaces a destination another process holds open | `ok 12 - a destination held open by another process is still replaced` |
+| A pre-existing file at the temporary path is never truncated | `ok 10 - a pre-existing file in the target directory is never truncated by the temporary write` |
+| `wx` lock: held then released | `ok 13 - the lock file exists while held and is gone after release` |
+| `wx` lock: a second acquisition is refused and names the file | `ok 14 - a second acquisition fails immediately and names the lock file` |
+| `wx` lock: release cannot delete a newer holder's lock | `ok 18 - release does not delete a lock that another acquisition now holds` |
+| An npm CLI runs with no global install (emptied PATH) | `ok 29 - the CLI runs with an emptied PATH, proving no global install is used` |
+| A bare name resolving to `.cmd` via PATHEXT is refused, not spawned | `ok 34 - a bare name that can only resolve to a .cmd on PATH is refused, not spawned` |
+| A CRLF checkout reports "current", not spurious drift | `ok 39 - a CRLF checkout is reported as current, not as drift` |
+| `splitFrontmatter` parses CRLF input | `ok 57 - splitFrontmatter tolerates CRLF line endings` |
 
-## Still NOT observed (later changes)
+## Whole-job evidence
 
-| Claim | Blocked on |
+| Claim | Verbatim |
 |---|---|
-| `spawnNodeCli` with `shell: false` on Windows | `platform-spawn` (change 5) |
-| A `.cmd`-only tool is refused | change 5 |
+| The rules build is clean on a Windows checkout made with `core.autocrlf=true` | `rules/build: ✓ 19 files current (1 mirror of CLAUDE.md); CLAUDE.md 57/120 lines, 10502/12500 chars` |
+| `rules/build.mjs` coverage is real on Windows, not only macOS | `rules/build.mjs: 102/102 lines = 100.00%` |
+| OpenSpec validation runs shell-free through `scripts/spec-validate.mjs` | `Totals: 8 passed, 0 failed (8 items)` |
 
-## Observed Windows behaviour that changed the implementation
+The Windows legs set `git config --global core.autocrlf true` **before** `actions/checkout`, so the
+line-ending work is tested against the default most likely to break it rather than a friendly one.
 
-**Run 35581577… (change 4, first push): `windows-latest` failed while all four other jobs passed.**
+## What CI found that this machine could not
 
-```
-not ok 10 - a destination held open by another handle is still replaced
-  error: "EPERM: operation not permitted, rename 'C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\win32-atomic-...'"
-  code: 'EPERM'
-```
+1. **A spec defect invisible locally.** The first run failed all six jobs: a MODIFIED delta in
+   `platform-spawn` omitted two scenarios its requirement still had. It only became detectable once
+   `ci-three-os` archived and made its spec canonical.
+2. **Windows really does raise `EPERM` on a rename over a held handle**, and the original retry
+   window was too short. 10 ms × 4 (150 ms) was a number guessed on macOS, where the failure cannot
+   occur; it is now 25 ms × 6 (~1.575 s). The failing run is
+   [35581871347](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35581871347).
+3. **A test that could not fail.** Its handle-release used `setTimeout`, which can never fire —
+   `atomicWrite` is synchronous and blocks the event loop for the whole retry window. The holder is
+   now a separate process that signals readiness on stdout.
 
-Two facts, neither obtainable on macOS:
+## Claims deliberately NOT made
 
-1. **Windows really does raise `EPERM` on a rename over a held handle.** The behaviour the retry
-   exists for is confirmed, not assumed. macOS and Linux replace the file happily — no failure to
-   retry, which is why the retry is `win32`-only.
-2. **The original retry window was too short.** 10 ms doubling over 4 retries (150 ms total) was a
-   number guessed on a platform where the failure cannot occur. It is now 25 ms over 6 retries
-   (~1.575 s), sized against a holder that keeps the file for a few hundred milliseconds — ordinary
-   for a scanner or the indexer.
-
-The test was also wrong in a way only Windows exposed: it released the handle with `setTimeout`,
-which can never fire, because `atomicWrite` is synchronous and blocks the event loop for the whole
-retry window. The holder is now a separate process.
-
-## What CI caught that local runs did not
-
-`openspec validate` failed on all six jobs while passing locally at the time of the push: a
-MODIFIED delta in `platform-spawn` omitted two scenarios its requirement still has. The defect
-only became detectable once `ci-three-os` archived and its spec became canonical. This is the
-argument for CI landing before the Windows-specific code, recorded as evidence rather than opinion.
+- **Node 26.** The development host runs it; CI covers 22 and 24 (the supported LTS range, which
+  `engines.node` declares). Node 26 is untested and unclaimed.
+- **Windows without Docker Desktop's backend.** No service in this phase needs Docker, so nothing
+  here exercises it. That belongs to the `docker-services` phase.
+- **Real antivirus or indexer interference.** The retry is proven against a deliberately held
+  handle, which is the same mechanism, not against a live scanner.

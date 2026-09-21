@@ -22,5 +22,7 @@ The original goal — "spawn with `shell:false` and Windows `.cmd` shim resoluti
 
 ## Risks / Trade-offs
 
+- **A MODIFIED delta must repeat every scenario of the requirement it replaces, not only the changed ones.** The first CI run caught this: `openspec validate` failed with "MODIFIED 'Verification commands' omits scenario(s) the current spec still has". It was invisible while `ci-three-os` was an unarchived change — there was no canonical spec to compare against — and became detectable the moment that change archived. The delta now carries all four scenarios. This is a general trap for every later MODIFIED delta in this project.
+
 - Some packages restrict `package.json` through `exports`; if OpenSpec does, resolution falls back to locating the package directory from its main entry. To be discovered in the RED step, not assumed.
 - A future OpenSpec that ships a native binary instead of a JS bin would break `spawnNodeCli` for it; the exact version pin contains that.

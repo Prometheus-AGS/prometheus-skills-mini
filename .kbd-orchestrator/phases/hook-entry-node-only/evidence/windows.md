@@ -3,7 +3,7 @@
 Every Windows behaviour this change claims, with the asserting test on **both** supported Node
 versions. Test lines are verbatim from the job logs; none is paraphrased.
 
-- **Run:** [35601170970](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35601170970) — all six jobs green
+- **Run:** [35602464300](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/runs/35602464300) — all six jobs green
 - **Suite:** node 22 `2026-09-21T12:43:54.5649049Z # pass 148` / `2026-09-21T12:43:54.5649320Z # fail 0`; node 24 `2026-09-21T12:43:55.7962688Z ℹ pass 148` / `2026-09-21T12:43:55.7962876Z ℹ fail 0`
 - **Repository:** `Prometheus-AGS/prometheus-skills-mini` (public)
 
@@ -14,16 +14,17 @@ spec reporter (`✔ <name>`). Both name the test, which is what the evidence req
 
 | Claim | `node 22`, verbatim | `node 24`, verbatim |
 |---|---|---|
-| Exec-form manifest: every hook registered without a shell string | `ok 8 - every hook is registered in exec form, never a shell string` | `✔ every hook is registered in exec form, never a shell string (0.6371ms)` |
-| Every file the manifest names resolves on Windows paths | `ok 2 - every file the manifest names resolves on disk` | `✔ every file the manifest names resolves on disk (0.9068ms)` |
-| Entry points import on Windows (file:// URL, not a bare D:\ path) | `ok 3 - every entry point named by the manifest is importable` | `✔ every entry point named by the manifest is importable (2.9328ms)` |
-| Manifest and import map cannot drift apart | `ok 5 - every payload the manifest dispatches exists on disk` | `✔ every payload the manifest dispatches exists on disk (0.9031ms)` |
-| Scope is exactly the six ported ids | `ok 7 - the manifest registers exactly the six ported hook ids` | `✔ the manifest registers exactly the six ported hook ids (1.4045ms)` |
-| A hook degrades rather than failing when a service is absent | `ok 39 - degradeSafely converts a thrown error into a degraded result` | `✔ degradeSafely converts a thrown error into a degraded result (2.2613ms)` |
-| The position reminder writes atomically on Windows | `ok 49 - posttool-write-position-reminder writes the reminder atomically` | `✔ posttool-write-position-reminder writes the reminder atomically (4.0749ms)` |
-| No temporary file is left behind by the atomic write | `ok 50 - posttool-write-position-reminder leaves no temporary file behind` | `✔ posttool-write-position-reminder leaves no temporary file behind (29.5066ms)` |
-| Dispatch keys on --hook, never the colon-spelled matcher id | `ok 143 - every import-map key is a dispatch id, never a colon-spelled matcher id` | `✔ every import-map key is a dispatch id, never a colon-spelled matcher id (0.3794ms)` |
-| An unknown hook id is refused, not silently ignored | `ok 141 - an unknown hook id exits non-zero and names the id` | `✔ an unknown hook id exits non-zero and names the id (71.1719ms)` |
+| Exec-form manifest: every hook registered without a shell string | `ok 8 - every hook is registered in exec form, never a shell string` | `✔ every hook is registered in exec form, never a shell string (0.5795ms)` |
+| Every file the manifest names resolves on Windows paths | `ok 2 - every file the manifest names resolves on disk` | `✔ every file the manifest names resolves on disk (0.9232ms)` |
+| Entry points import on Windows (file:// URL, not a bare D:\ path) | `ok 3 - every entry point named by the manifest is importable` | `✔ every entry point named by the manifest is importable (1.636ms)` |
+| Manifest and import map cannot drift apart | `ok 5 - every payload the manifest dispatches exists on disk` | `✔ every payload the manifest dispatches exists on disk (0.7994ms)` |
+| Scope is exactly the six ported ids | `ok 7 - the manifest registers exactly the six ported hook ids` | `✔ the manifest registers exactly the six ported hook ids (1.4091ms)` |
+| A hook degrades rather than failing when a service is absent | `ok 39 - degradeSafely converts a thrown error into a degraded result` | `✔ degradeSafely converts a thrown error into a degraded result (0.565ms)` |
+| The position reminder writes atomically on Windows | `ok 49 - posttool-write-position-reminder writes the reminder atomically` | `✔ posttool-write-position-reminder writes the reminder atomically (5.2004ms)` |
+| No temporary file is left behind by the atomic write | `ok 50 - posttool-write-position-reminder leaves no temporary file behind` | `✔ posttool-write-position-reminder leaves no temporary file behind (6.1613ms)` |
+| Dispatch keys on --hook, never the colon-spelled matcher id | `ok 143 - every import-map key is a dispatch id, never a colon-spelled matcher id` | `✔ every import-map key is a dispatch id, never a colon-spelled matcher id (0.284ms)` |
+| An unknown hook id is refused, not silently ignored | `ok 141 - an unknown hook id exits non-zero and names the id` | `✔ an unknown hook id exits non-zero and names the id (57.6086ms)` |
+| The entry point dispatches from a path containing `#` (guard resolves by real path) | `ok 148 - the entry point still dispatches from a directory whose name contains \#` | `✔ the entry point still dispatches from a directory whose name contains # (121.6137ms)` |
 
 ## Cold start against the 1 s budget
 
@@ -31,8 +32,8 @@ Measured, not asserted. Full distribution and verbatim logs in [`cold-start.md`]
 
 | Node | median | max | budget | headroom |
 |---|---|---|---|---|
-| 22 | 54 ms | 59.2 ms | 1000 ms | ~17x |
-| 24 | 58 ms | 87.2 ms | 1000 ms | ~11x |
+| 22 | 57.9 ms | 64.1 ms | 1000 ms | ~15x |
+| 24 | 54.3 ms | 58.9 ms | 1000 ms | ~17x |
 
 The **max** is the number that matters: a timeout fires on the slow run, not the typical one.
 

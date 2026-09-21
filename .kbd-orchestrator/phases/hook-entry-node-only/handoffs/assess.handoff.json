@@ -1,0 +1,11 @@
+{
+  "stage": "assess",
+  "completedAt": "2026-09-21T10:27:53Z",
+  "outputs": [
+    "assessment.md"
+  ],
+  "nextStage": "analyze",
+  "summaryForNext": "No hook exists: hooks/, scripts/hook-entry.mjs and lib/hooks/ are all absent; every goal NOT MET. lib/platform (5 modules, Windows-proven) is the inheritance and must not be re-implemented. Node cold start measured here: 46ms bare, 59ms median with three platform imports on macOS node 26 - about 6 percent of the 1s budget, but the Windows figure is the phase open question and the risk is the tail, not the median. Open for analyze: which of the 31 upstream hook ids to port and why (most serve services this project does not ship); a spawn-based fixture convention for testing hooks; harness support beyond Claude Code is unverified. BLOCKING: goal 1 (re-review the 4 unreviewed fixes, 8 UNREVIEWED markers) must precede new code on lib/platform. Operator decision still open: artifact-refiner in or out of the QA contract. Review: verified-distinct, 2 rounds, final BLOCK; both CRITICALs were my own packet errors (filtered file_tree, stale goals field); the WARNINGs were real - counts now cited with node/git only, per the command policy.",
+  "skipped": false,
+  "skipReason": null
+}

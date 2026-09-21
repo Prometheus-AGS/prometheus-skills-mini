@@ -1,0 +1,38 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "The assessment claims every count is command-sourced, but several reported counts have no producing command.",
+      "evidence": "The assessment says \"PROVENANCE \u2014 every measurement below, with the command that produced it\" and later marks the process goal as satisfied: \"the third is honoured in this document\". However it reports counts such as \"7 capabilities live\", \"88 tests green on three OSes \u00d7 Node 22 and 24\", \"progress.json ... 0/0\", \"all 10 automated checks clean; 0 symlinks\", and \"CI: green on the last run across six jobs\" without any corresponding command or CI run identifier in the provenance list.",
+      "suggested_fix": "Add the exact command or CI run source for each reported count, or remove/qualify counts that were not independently measured."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "claim": "The assessment relies on `.claude/rules/node-scripts.md` as an existing rule file even though the live file tree does not contain `.claude/`.",
+      "evidence": "Assessment: \"The rule requiring it exists (`.claude/rules/node-scripts.md`, added after the source pack shipped a payload without its own entry file)\". The live file tree includes `rules/src/project/node-scripts.md` but no `.claude/` directory or `.claude/rules/node-scripts.md`.",
+      "suggested_fix": "Either cite the existing source file `rules/src/project/node-scripts.md` and state generated `.claude` outputs are absent from HEAD, or add a build-status note proving generated `.claude/rules/node-scripts.md` exists outside the listed tree."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "The assessment says Codex, Cursor, and OpenCode are configured in this repository, but the live tree does not show those configuration paths.",
+      "evidence": "Assessment risk 4: \"Codex, Cursor and OpenCode are configured in this repo but only for skills and commands \u2014 none has a hooks directory.\" The file tree contains no `.cursor/`, `.opencode/`, `.agents/`, `skills/`, or command directories for those tools; only `.github/`, `lib/`, `openspec/`, `rules/`, and `scripts/` are listed.",
+      "suggested_fix": "Replace the claim with what the live tree supports, or cite the actual paths proving those tool configurations exist."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "The build-health section presents manual constraint results as proven despite lacking evidence in the packet.",
+      "evidence": "Assessment: \"constraints: PASS \u2014 all 10 automated checks clean; 0 symlinks\" and \"constraints.md violations: NONE. Three blocking constraints remain manual (`no-symlinks`, `exactly-two-services`, `reference-repo-untouched`)\". The constraints packet itself says `no-symlinks` has \"No portable one-line check exists ... Manual\", `exactly-two-services` is \"Manual review\", and `reference-repo-untouched` is \"Manual review of the change's file list\"; the assessment provides no manual review method or file-list evidence.",
+      "suggested_fix": "Separate automated checks from manual constraints and record the manual review evidence, or mark the manual constraints as unchecked/open."
+    }
+  ]
+}

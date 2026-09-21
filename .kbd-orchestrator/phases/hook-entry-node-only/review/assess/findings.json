@@ -1,0 +1,25 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "claim": "The assessment is scoped to hook-entry-node-only goals while the packet's authoritative `goals` field is the platform-foundation goal set, so it does not assess the goals this review packet says must be achieved.",
+      "evidence": "Packet `goals` begins with `- lib/platform/ \u2014 paths ... atomic write ... lock ... spawn with shell:false` and also requires `node:test harness`, `Three-OS CI matrix`, `.gitattributes`, and `Exit evidence`; the assessment's GOAL PROGRESS instead lists `Re-review the four unreviewed fixes`, `hooks.json + hook-entry.mjs`, `Manifest-resolution test`, `Hooks exit 0`, `Cold start measured`, and `Windows exit evidence`.",
+      "suggested_fix": "Make the packet and assessment use the same goals source. If this phase is hook-entry-node-only, replace the top-level `goals` field with the hook-entry goals before review; otherwise rewrite the assessment to assess the platform-foundation goals."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "The assessment's measurement provenance cites forbidden and non-portable shell commands, conflicting with the project's command policy.",
+      "evidence": "Constraints say: `This project forbids telling an agent to run grep, sed, jq, awk, curl, mktemp or chmod` and requires commands to behave the same across `cmd.exe`, PowerShell, bash and zsh. The assessment cites `grep -c UNREVIEWED`, `find openspec/specs -name spec.md | wc -l`, `test -e`, `find . -type l`, and `wc -l`.",
+      "suggested_fix": "Replace provenance command citations with permitted cross-platform commands, preferably Node one-liners or the sanctioned `git grep --no-index --exclude-standard` pattern where content search is required."
+    }
+  ],
+  "checked_classes": []
+}

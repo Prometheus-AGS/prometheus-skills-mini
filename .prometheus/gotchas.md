@@ -86,3 +86,11 @@ delete them.
   the `changes` array survive. Do not read those flags to decide whether a stage ran — read
   `handoffs/<stage>.handoff.json`, which is what the stage gate itself uses. The canonical phase status
   lives in the runtime (`prometheus kbd status --json` → `phases.<id>.status`), not in `progress.json`.
+- **2026-09-21 · A hand-assembled review packet inherits stale fields from whatever packet it was cloned
+  from.** Two CRITICALs in one stage came from my own packet, not the artifact: a `file_tree` filtered so
+  it hid `.claude/` (the judge then reported a cited file as nonexistent), and a `goals` field still
+  holding the previous phase's goals. When assembling by hand, rebuild `file_tree`, `goals` and
+  `producer_model` from the current phase every time — or better, finish `scripts/build-review-packet.mjs`.
+- **2026-09-21 · `git ls-files -s`, counting mode `120000`, is a portable symlink check.** `constraints.md`
+  says no portable one-line check exists for `no-symlinks`; it does, it needs no `find`, and it works
+  identically on Windows. Worth adopting as the constraint's `check:`.

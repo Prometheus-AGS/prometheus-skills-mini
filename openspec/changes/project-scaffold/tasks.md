@@ -1,5 +1,8 @@
 ## 1. Manifest
 
+> RED (2026-09-21): `node --test rules/test/scaffold.test.mjs` → tests 8, pass 1, fail 7;
+> first failure `Error: ENOENT: no such file or directory, open 'package.json'`.
+
 - [ ] 1.1 Write `package.json`: `type`, `private`, `engines.node ">=22"`, scripts `test` / `check` / `coverage`, devDependency `@fission-ai/openspec` at exactly `1.10.0`; no `dependencies`.
 - [ ] 1.2 Run `npm install` once to produce `package-lock.json`; confirm `node_modules/` is git-ignored and untracked.
 - [ ] 1.3 Run `node node_modules/@fission-ai/openspec/bin/openspec.js --version` and confirm it prints `1.10.0`.

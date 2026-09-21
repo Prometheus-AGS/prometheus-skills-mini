@@ -21,7 +21,7 @@
 
 ## 4. Dispatch, session finalize and the reflection log
 
-- [ ] 4.1 RED: write tests for workflow dispatch and session finalize, including exit 0 with a degraded result when a service is unreachable. See them FAIL; commit alone; paste the output.
+- [x] 4.1 RED (2026-09-21): `node --test lib/refiner/session.test.mjs` → **fail**, `Cannot find module .../lib/refiner/session.mjs`. 14 tests. Failing test committed alone. Write tests for workflow dispatch and session finalize, including exit 0 with a degraded result when a service is unreachable. See them FAIL; commit alone; paste the output.
 - [ ] 4.2 GREEN: implement the Node replacements for `workflow-dispatch.sh`, `post-execute-check.sh`, `finalize-session.sh` and `log-reflection.sh` until the tests pass.
 - [ ] 4.3 Commit locally with an `Assisted-by` trailer: `feat(refiner): dispatch and session finalize in Node`. Do not push.
 

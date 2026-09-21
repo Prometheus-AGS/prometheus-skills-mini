@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { cpSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { tempDir } from '../../lib/platform/paths.mjs';
@@ -25,9 +25,10 @@ test('a failing validation forwards the CLI exit code instead of masking it', ()
       cpSync(path.join(ROOT, entry), path.join(work, entry), { recursive: true, verbatimSymlinks: true });
     }
     // A change with a proposal but no deltas and no opt-out is invalid by OpenSpec's own rules.
+    // The fixture is BUILT here rather than copied from a real change: an earlier version copied
+    // openspec/changes/windows-evidence, and archiving that change broke this test.
     const broken = path.join(work, 'openspec/changes/broken');
-    cpSync(path.join(ROOT, 'openspec/changes/windows-evidence'), broken, { recursive: true });
-    rmSync(path.join(broken, '.openspec.yaml'), { force: true });
+    mkdirSync(broken, { recursive: true });
     writeFileSync(path.join(broken, 'proposal.md'), '## Why\n\nbroken on purpose\n\n## What Changes\n\n- nothing\n');
 
     const result = run(work);

@@ -75,3 +75,8 @@ delete them.
   HEAD:<path>`, and a clean `git clone` of HEAD running the full command sequence). Fix for the Node port:
   a diff packet must carry a manifest of the files the change DEPENDS ON but does not touch — at minimum
   `git ls-tree HEAD` for the paths named in its spec — or judges will keep inventing missing-file findings.
+- **2026-09-21 · A test fixture copied from a real OpenSpec change breaks when that change is archived.**
+  `rules/test/spec-validate.test.mjs` copied `openspec/changes/windows-evidence` to build an invalid
+  change; archiving it moved the directory and the test failed with ENOENT. CI had been green because it
+  ran before the archive. Build fixtures from literals, never from repository state that a later stage
+  moves. The same trap applies to any test that reads `openspec/changes/*` or `phases/*` by name.

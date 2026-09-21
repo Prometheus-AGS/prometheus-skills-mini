@@ -39,3 +39,8 @@ Decision: phase after platform-foundation | Provenance: research
 Options: keep the infeasible goal vs revise it
 Decision: revised — npm CLIs run via process.execPath + their JS entry; a .cmd-only tool is refused with a clear error | Provenance: user (accepted explicitly)
 Unblocks /kbd-plan. lib/platform contract: spawnNodeCli(package, bin, args) and spawnExecutable(name, args); no third function.
+
+### 2026-09-21T09:10Z — spec stage: adversarial review
+Round 1 BLOCK (1 CRITICAL, 2 WARNING): no acceptance criteria for "AAA, tests written first"; atomicWrite parent-directory creation untested; the CRLF GREEN task narrower than its requirement. All fixed.
+Round 2 BLOCK (1 CRITICAL): ci-three-os required the CI validation step to name node_modules/@fission-ai/openspec while platform-spawn required that no step does. Fixed with a MODIFIED delta to `continuous-integration` inside platform-spawn. Two rounds is the cap: THIS FIX IS UNREVIEWED.
+The review packet was assembled by hand: build-review-packet.sh --target spec reads only the native-kbd layout and finds nothing under the openspec backend.

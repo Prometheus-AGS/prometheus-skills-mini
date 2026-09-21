@@ -1,0 +1,34 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "project-scaffold/specs/project-tooling/spec.md",
+      "line": 0,
+      "claim": "The specs do not define acceptance criteria for the goal that tests use Arrange-Act-Assert and are written first.",
+      "evidence": "The phase goal says: \"node:test harness \u2014 Arrange-Act-Assert, tests written first; package.json with engines.node >= 22 and test/check scripts\". The project-tooling spec only adds requirements for \"Supported Node.js range\", \"npm scripts\", \"Pinned OpenSpec CLI\", and \"Line-ending normalisation\"; no requirement or scenario mentions Arrange-Act-Assert or tests-first history.",
+      "suggested_fix": "Add a project-tooling or testing-conventions requirement that requires new node:test files to be structured as Arrange-Act-Assert and requires RED-before-GREEN evidence in tasks/history for feature tests."
+    },
+    {
+      "severity": "WARNING",
+      "file": "platform-atomic-write-and-lock/tasks.md",
+      "line": 0,
+      "claim": "The atomic-write tasks omit a test for the requirement that missing parent directories are created.",
+      "evidence": "The spec requires: \"atomicWrite(path, content) SHALL write to a temporary file in the same directory as path and then rename it over path, creating missing parent directories\". The RED task lists only \"success, failure-leaves-original, and the four injected retry scenarios\" and does not mention a missing-parent-directory case.",
+      "suggested_fix": "Add a RED scenario/task asserting atomicWrite creates nested missing parent directories before writing and renaming."
+    },
+    {
+      "severity": "WARNING",
+      "file": "platform-paths-and-text/tasks.md",
+      "line": 0,
+      "claim": "The parser GREEN task is narrower than the parser requirement and may leave required CRLF-tolerant functions unfixed.",
+      "evidence": "The text spec requires: \"parseConf, splitFrontmatter, routingLayer0 and the line counter in rules/lib/render.mjs SHALL produce the same result for CRLF input as for the LF equivalent\". The task then says to write RED fixtures for all four, but the GREEN step says only: \"make splitFrontmatter accept \\\\r?\\\\n; change nothing else in rules/lib/render.mjs that the tests do not require.\"",
+      "suggested_fix": "Make the GREEN task explicitly cover every named parser/helper that fails the CRLF fixtures, not just splitFrontmatter."
+    }
+  ]
+}

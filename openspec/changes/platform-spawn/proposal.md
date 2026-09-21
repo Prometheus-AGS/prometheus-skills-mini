@@ -14,7 +14,7 @@ npm installs CLIs as `.cmd` shims on Windows, and Node documents that a `.bat` /
 - `platform/spawn`: how child processes are started on every OS, what is refused, and the shell-free invocation of the OpenSpec CLI.
 
 ### Modified Capabilities
-<!-- none — openspec/specs/ is empty; no existing requirement changes -->
+- `continuous-integration`: the "Verification commands" requirement changes — the validation step becomes `node scripts/spec-validate.mjs` instead of naming the OpenSpec JS entry under `node_modules/`. The base requirement is introduced by `ci-three-os`, which MUST be archived before this change (it is a declared dependency).
 
 ## Impact
 

@@ -1,0 +1,18 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "ci-three-os/specs/continuous-integration/spec.md",
+      "line": 0,
+      "claim": "The CI spec and the later spawn spec impose mutually exclusive acceptance criteria for the OpenSpec validation step.",
+      "evidence": "`ci-three-os/specs/continuous-integration/spec.md` requires: \"Validation uses the pinned CLI\" with \"it invokes `node` with a path under `node_modules/@fission-ai/openspec/`\". But `platform-spawn/specs/platform/spawn/spec.md` later requires: \"the validation step is `node scripts/spec-validate.mjs` and no step names `node_modules/@fission-ai/openspec` directly\".",
+      "suggested_fix": "Add a MODIFY delta to the continuous-integration capability in `platform-spawn` that replaces the direct `node_modules/@fission-ai/openspec/...` CI requirement with the `node scripts/spec-validate.mjs` entry point, while preserving the invariant that the script runs the pinned JS CLI with `shell:false`."
+    }
+  ]
+}

@@ -63,3 +63,8 @@ delete them.
 - **2026-09-21 · Replaying a real hook is not side-effect free.** Running the pack's `stop-karpathy-learning`
   hook by hand wrote a session record into the wiki of whatever directory was cwd, and its learning worker
   left a stale `index.lock` behind. Replay hooks in a throwaway directory, never in a working tree.
+- **2026-09-21 · `build-review-packet.sh --target spec` cannot see OpenSpec changes.** It looks only for
+  `.kbd-orchestrator/changes/<id>/{spec.md,tasks.json,verification.md}` (the native-kbd layout) and exits 2
+  with "no artifacts found" under the `openspec` backend — this project's default. Workaround used here:
+  assemble the packet in the same schema from `openspec/changes/<id>/{specs/**,design.md,tasks.md}` and pass it
+  to `dispatch-judge.sh --packet`. The Node port of adversarial-review must support both layouts.

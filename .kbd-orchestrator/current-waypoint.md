@@ -1,13 +1,13 @@
 # Current waypoint
 
 - **Phase:** platform-foundation
-- **Status:** plan_ready — 0 of 6 changes complete
+- **Status:** spec_ready — 0 of 6 changes complete; all 6 OpenSpec changes validate (65 tasks)
 - **Next pending change:** `project-scaffold`
-- **Exact next command:** `/kbd-spec platform-foundation` (history, not a selector)
-- **Updated:** 2026-09-21T08:16:46Z by claude-code
+- **Exact next command:** `/kbd-execute platform-foundation` (history, not a selector)
+- **Updated:** 2026-09-21T08:34:09Z by claude-code
 
 ## Owner prerequisites
-- **P1** — a baseline commit of the current tree, before `project-scaffold` (tests-first is only checkable from history).
+- **P1** — DONE: baseline commit `3508cb3`.
 - **P2** — a git remote with GitHub Actions, wanted before round 3; without it the last two goals cannot be met and the phase must not be reflected as done.
 
 ## Change order

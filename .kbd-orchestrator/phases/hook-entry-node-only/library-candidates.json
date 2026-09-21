@@ -1,0 +1,195 @@
+{
+  "phase": "hook-entry-node-only",
+  "generated_at": "2026-09-21T11:20:00Z",
+  "research_budget": {
+    "max_queries_per_tier": 8,
+    "max_minutes": 20,
+    "queries_used": {
+      "tier1": 2,
+      "tier2": 3,
+      "tier3": 3,
+      "tier4": 0
+    }
+  },
+  "gaps_addressed": [
+    "hook dispatch",
+    "hook id → payload mapping",
+    "cold-start measurement",
+    "stdin JSON parsing",
+    "manifest resolution test"
+  ],
+  "candidates": [
+    {
+      "id": "cand-101",
+      "name": "Hand-written dispatch in scripts/hook-entry.mjs",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "hook dispatch",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "The upstream hook-dispatch-v1.sh is 128 lines of bash; its bulk is argument parsing, harness validation and a path-safety guard, which in Node are a destructure, a set test and path.relative."
+        },
+        {
+          "tier": 3,
+          "claim": "No dependency evaluated: a hook with a 1 s budget must import nothing heavy, and the project ships zero runtime dependencies."
+        }
+      ]
+    },
+    {
+      "id": "cand-102",
+      "name": "Static import map from hook id to payload module",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "hook dispatch",
+      "verdict": "adopt",
+      "coverage_estimate": 0.9,
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "A static map lets the manifest-resolution test assert that every id in hooks.json has a handler WITHOUT executing it; a dynamic import path cannot express that statically."
+        },
+        {
+          "tier": 3,
+          "claim": "Cost: every payload module is loaded on every hook invocation. Measured headroom is large (48 ms floor against 1000 ms), but this is the trade the next candidate weighs."
+        },
+        {
+          "tier": 1,
+          "source_url": "prometheus-skill-pack/hooks/hooks.json",
+          "claim": "Parsing hooks.json: all 31 hooks pass `--hook <id>` in args (31 distinct ids), while the matcher-level `id` field is present on only 4 of 14 matcher entries. The two spellings also differ (`sessionstart:kbd-control` vs `sessionstart-kbd-control`)."
+        }
+      ],
+      "decision_rationale": "Keys on the `--hook` argument, never the matcher-level `id`: keying on `id` would cover 4 hooks and silently miss 27."
+    },
+    {
+      "id": "cand-103",
+      "name": "Lazy await import() per hook id",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "hook dispatch",
+      "verdict": "reject",
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "Loads only the needed payload, so marginally faster, but defeats cand-102s static assertion and makes a missing module a RUNTIME error on the hook path — the exact failure mode (MODULE_NOT_FOUND before any of our code runs) this phase exists to prevent."
+        }
+      ]
+    },
+    {
+      "id": "cand-104",
+      "name": "node:perf_hooks + spawnSync round-trips for cold-start measurement",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "cold-start measurement",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "evidence": [
+        {
+          "tier": 2,
+          "claim": "process.hrtime.bigint and performance.now are both present in Node 22+; node:test has no bench API in this version, checked directly."
+        },
+        {
+          "tier": 3,
+          "claim": "Measured on this host with 10 spawnSync round-trips per case: bare node -e 46 ms, empty .mjs 48 ms, .mjs importing three lib/platform modules 59 ms (medians)."
+        }
+      ]
+    },
+    {
+      "id": "cand-105",
+      "name": "tinybench",
+      "kind": "library",
+      "registry": "npm",
+      "repo_url": "https://github.com/tinylibs/tinybench",
+      "fit_for_gap": "cold-start measurement",
+      "verdict": "reject",
+      "license": "MIT",
+      "maintenance": {
+        "last_release": "6.2.0, registry modified 2026-09-09",
+        "dependencies": 0
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "npm view: tinybench@6.2.0, MIT, zero dependencies, modified 2026-09-09 — healthy and well maintained."
+        },
+        {
+          "tier": 3,
+          "claim": "Rejected on fit, not health: it measures in-process function throughput. The quantity that matters here is PROCESS start, which only spawn round-trips capture."
+        }
+      ]
+    },
+    {
+      "id": "cand-106",
+      "name": "mitata",
+      "kind": "library",
+      "registry": "npm",
+      "fit_for_gap": "cold-start measurement",
+      "verdict": "reject",
+      "license": "MIT",
+      "maintenance": {
+        "last_release": "1.0.34, registry modified 2025-02-04",
+        "dependencies": 0
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "npm view: mitata@1.0.34, MIT, zero dependencies, modified 2025-02-04. Same fit problem as cand-105, and a year older."
+        }
+      ]
+    },
+    {
+      "id": "cand-107",
+      "name": "readFileSync(0) for hook stdin JSON",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "stdin JSON parsing",
+      "verdict": "adopt",
+      "coverage_estimate": 0.85,
+      "evidence": [
+        {
+          "tier": 2,
+          "claim": "Hooks receive a JSON payload on stdin; node:fs readFileSync(0) reads fd 0 synchronously with no dependency, which suits a synchronous 1 s hook."
+        },
+        {
+          "tier": 3,
+          "claim": "Not covered: it must tolerate EMPTY stdin — the orchestrator action path passes none — and must not block when stdin is a TTY. Both are test cases, not assumptions."
+        }
+      ]
+    },
+    {
+      "id": "cand-108",
+      "name": "Manifest-resolution test derived from hooks.json",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "manifest resolution test",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "The source pack shipped a plugin payload whose hooks.json referenced scripts/hook-entry.mjs without packaging it; every hook event then failed in Node loader with MODULE_NOT_FOUND before any of its code ran. Fixed upstream at fcccc9d by deriving the packaged file list FROM hooks.json."
+        },
+        {
+          "tier": 3,
+          "claim": "The rule is already written in rules/src/project/node-scripts.md; this candidate is the test that enforces it here."
+        },
+        {
+          "tier": 1,
+          "source_url": "prometheus-skill-pack/hooks/hooks.json",
+          "claim": "Parsing hooks.json: all 31 hooks pass `--hook <id>` in args (31 distinct ids), while the matcher-level `id` field is present on only 4 of 14 matcher entries. The two spellings also differ (`sessionstart:kbd-control` vs `sessionstart-kbd-control`)."
+        }
+      ],
+      "decision_rationale": "Derives its id list from every `--hook` argument in hooks.json, not from matcher-level `id` and not from a hand-kept list — the hand-kept list is what shipped a payload with no entry file."
+    }
+  ],
+  "build_required": [
+    {
+      "need": "harness exec-form support probe — Does this harness accept exec form (command + args) in a project hooks.json, or only a shell-string command?",
+      "why_no_candidate": "Not a library gap: it is a property of the harness that no package can supply or settle. The source pack plugin hooks.json uses exec form for all 31 entries. Live user settings on this machine use {\"type\":\"command\",\"command\":\"<shell string>\"} with no args: 6 entries inspected across ~/.claude/settings.json, settings.local.json and .claude/settings.json, 0 using args. Different surfaces, so this is neither confirmation nor refutation. If exec form is unsupported, a shell string puts sh -c / PowerShell back in the hook path, which C1 and C3 forbid. The design would have to change before any payload is written. Resolution: Plan task 1 after the goal-1 re-review: register one trivial exec-form hook and observe whether it fires. Empirical, cheap, and blocking.",
+      "capability_gap_id": null
+    }
+  ]
+}

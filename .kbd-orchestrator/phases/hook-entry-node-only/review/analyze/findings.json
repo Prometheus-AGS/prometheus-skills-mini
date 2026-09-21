@@ -1,0 +1,24 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "analysis.md",
+      "claim": "The 6-of-31 hook scope decision is not auditable because the table's counts do not add up to 31 and contradict the stated port count.",
+      "evidence": "The analysis claims it mapped \"every id\" and concludes \"The other 25 are deferred or dropped,\" but the table counts sum to 27 total: 4 + 3 + 2 + 2 + 1 + 1 + 12 + 1 + 1 = 27. It also says \"KBD lifecycle control | 4\" while later saying \"Port now: 5 ids ... plus subagent-fallback-checkpoint = 6.\"",
+      "suggested_fix": "Replace the grouped count table with an explicit 31-row hook-id inventory, or correct the group counts so they sum to 31 and exactly identify the 6 ported ids and 25 deferred/dropped ids."
+    },
+    {
+      "severity": "WARNING",
+      "file": "library-candidates.json",
+      "claim": "The candidate file marks harness exec-form support as a gap addressed even though the analysis leaves it unresolved and blocking.",
+      "evidence": "`gaps_addressed` includes \"harness exec-form support\", but `open_questions[0]` asks \"Does this harness accept exec form (command + args) in a project hooks.json, or only a shell-string command?\" and says the resolution is a future probe.",
+      "suggested_fix": "Move \"harness exec-form support\" out of `gaps_addressed` into a separate `open_blockers` or `unresolved_gaps` field, or add an evaluated probe result before marking it addressed."
+    }
+  ]
+}

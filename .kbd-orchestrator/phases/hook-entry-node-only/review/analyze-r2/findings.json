@@ -1,0 +1,37 @@
+{
+  "stage": "analyze",
+  "phase": "hook-entry-node-only",
+  "round": 2,
+  "verdict": "PASS",
+  "producer": "claude-opus-5",
+  "judge": "fresh-context subagent (general-purpose, opus)",
+  "transport": "subagent fallback",
+  "cross_model_check": "NOT verified-distinct — the liter-llm REST gateway answered /health with 200 but rejected /v1/models and /v1/chat/completions with \"Missing or invalid Authorization header\", and no credential was present in the environment or in any config path the bridge reads. The judge is therefore from the producer's own model family, which is a WEAKER check than a cross-model judge. Recorded per the review rules, which require stating when the judge shares the producer's family.",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "location": "analysis.md scope table, 14 DEFER rows",
+      "finding": "The python3 dependency justifying 14 of 22 DEFER verdicts was asserted with no citation, contradicting this phase's own \"every count cites its command\" process goal.",
+      "disposition": "ACCEPTED AND FIXED BY VERIFICATION, not by softening. All four payloads were read at canonical source paths and each does invoke python3; the analysis now carries the per-file line citations. The claim was true but unsourced."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "analysis.md \"Two facts about the manifest\"",
+      "finding": "\"keying on id would cover 4 hooks and miss 27\" is arithmetically right for this manifest but presents a coincidence as structure; id is per-matcher and a matcher holds 1-6 hooks.",
+      "disposition": "ACCEPTED AND FIXED. Reworded to the structural point."
+    },
+    {
+      "severity": "SUGGESTION",
+      "location": "analysis.md sequencing item 5",
+      "finding": "Porting precompact-kbd-control silently widens the measurement goal from the two hooks goals.md names to three, all declared at 1000 ms.",
+      "disposition": "ACCEPTED AND FIXED. Sequencing item 5 now requires measuring all three."
+    }
+  ],
+  "verified_fixes_from_round_1": [
+    "CRITICAL (table did not sum to 31 / contradicted the port count) — CONFIRMED FIXED by independent recomputation: 31 rows, tally 6 PORT + 22 DEFER + 3 DROP = 31, every row matched against hooks.json for id, event and timeout (0 mismatches, 0 manifest ids missing) and against hook-dispatch-v1.sh for payload (0 mismatches).",
+    "WARNING (exec-form blocker listed as a gap addressed) — CONFIRMED FIXED: absent from gaps_addressed, now build_required[0] marked blocking; contract validates against the schema with additionalProperties:false honoured.",
+    "Producer-self-reported third defect (literal || in row 2 splitting the markdown row) — CONFIRMED FIXED: all 31 rows have exactly 9 cells."
+  ],
+  "notes": "PASS with 1 WARNING and 2 SUGGESTIONs, all three fixed after the verdict. The judge independently recomputed every arithmetic and structural claim and found zero defects. Caveat recorded above: same-family judge, weaker than cross-model.",
+  "generated_at": "2026-09-21T10:50:36.572Z"
+}

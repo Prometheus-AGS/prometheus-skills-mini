@@ -1,5 +1,8 @@
 ## 1. Paths
 
+> RED (2026-09-21): `node --test` → tests 37, pass 35, fail 2;
+> `ERR_MODULE_NOT_FOUND: Cannot find module .../lib/platform/paths.mjs` and `.../text.mjs`.
+
 - [ ] 1.1 RED: write `lib/platform/paths.test.mjs` covering the three paths scenarios with injected roots; run `node --test <that file>` and see it FAIL; commit the failing test on its own and paste the failure output under this task.
 - [ ] 1.2 GREEN: implement `lib/platform/paths.mjs` until the test passes; keep the module under 500 lines and free of any import from another `lib/platform/` module except `paths.mjs`.
 - [ ] 1.3 Commit locally with an `Assisted-by` trailer and no `Signed-off-by`: `feat(platform): add path helpers`. Do not push.

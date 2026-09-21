@@ -52,3 +52,23 @@ is hooks. Any scaffold-* skill that survives must call Node or be marked unavail
 change, recorded as a follow-up rather than smuggled in here.
 
 This is a narrower reading than "convert all 39 scripts". Flagged to the operator rather than assumed.
+
+## 2026-09-21 — detect-project-context reports THIS project's context, not GitOps
+
+**Decision (operator):** port `sessionstart-detect-project-context`, but change what it detects.
+
+Upstream (`shared/scripts/detect-project-context.sh`, 34 lines) detects Kustomize overlays, ArgoCD
+Application CRs and Terraform cluster resources, then advertises four devops skills:
+`gitops-bootstrap · gitops-transform · argocd-multicloud · kustomize-overlay`.
+
+README §4.3 puts devops skills out of scope here, and the analyze inventory dropped
+`posttool-validate-gitops-write` for that exact reason. Porting the detection verbatim would advertise
+four skills this project does not ship — a hook telling the operator about capabilities that do not
+exist is worse than no hook.
+
+**What it reports instead:** KBD phase and position, the spec backend and capability count, the Node
+version against `engines`, and whether the two permitted services are reachable (both optional, both
+reported as degraded when down).
+
+This is a **behaviour change from upstream, made deliberately and recorded**, not a porting error. The
+hook id, event and timeout are unchanged, so the manifest and the six-id scenario still hold.

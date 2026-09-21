@@ -1,0 +1,12 @@
+{
+  "stage": "execute",
+  "completedAt": "2026-09-21T12:25:12Z",
+  "outputs": [
+    "execution.md",
+    "openspec/changes/hook-entry-node-only/tasks.md"
+  ],
+  "nextStage": "reflect",
+  "summaryForNext": "Backend openspec; both changes registered canonically (prometheus kbd change register, revision 7) and activePath.phaseId set. Change 1 in progress: 6 of 21 tasks done. THE PHASE'S BLOCKING UNKNOWN IS RESOLVED: exec form FIRES on this harness, verified by deletion-and-recreation of the probe evidence file plus argv arriving as 4 discrete tokens; evidence/exec-form-probe.md. The design proceeds unchanged and no shell-string fallback was adopted. Section 2 (entry point + dispatch) is GREEN at 10/10 with three mutations each producing exactly one failure. Full suite: 98 tests, 97 pass, 0 fail, 1 skipped (win32-only, correctly skipped on macOS). Two defects found and fixed during implementation, both mine: readFileSync(0) blocked until EOF and hung the in-process test (fixed by reading fd 0 only when it is a pipe or file; my first TTY hypothesis was wrong), and injected test modules were a different shape from production modules (fixed in the fixtures, not by branching the implementation). REMAINING in change 1: section 3 manifest + resolution test, section 4 the six payload behaviours, section 5 CI manifest check and the Windows cold-start measurement for all THREE 1000ms hooks, section 6 exit evidence on node 22 and 24. Change 2 (artifact-refiner-node, 29 tasks) starts only when change 1 is green and archived - a rule, not a preference, because both write into scripts/ and ci.yml:45 is a bare recursive node --test. GATE NOTE: /refine-validate does not exist until change 2 lands, so change 1 is gated by the 13 constraints plus the adversarial diff review; declared in execution.md in advance rather than substituted silently as happened last phase. JUDGE CAVEAT: no cross-model judge available all phase (gateway rejects authentication).",
+  "skipped": false,
+  "skipReason": null
+}

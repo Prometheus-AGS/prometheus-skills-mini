@@ -1,5 +1,12 @@
 ## 1. spawnNodeCli
 
+> RED (2026-09-21): `node --test` → 76 tests, 74 pass, 1 fail —
+> `ERR_MODULE_NOT_FOUND: Cannot find module .../lib/platform/spawn.mjs`, which aborts the whole file.
+> Note for the implementation: `@fission-ai/openspec` declares `exports: ["."]`, so
+> `require.resolve("@fission-ai/openspec/package.json")` fails with ERR_PACKAGE_PATH_NOT_EXPORTED.
+> The documented fallback (resolve the main entry, walk up to the package.json whose `name` matches)
+> was verified to work before writing these tests.
+
 - [ ] 1.1 RED: write `lib/platform/spawn.test.mjs`: OpenSpec `--version` through its JS entry with `shell: false`, success with an emptied `PATH`, unknown bin rejected; run `node --test <that file>` and see it FAIL; commit the failing test on its own and paste the failure output under this task.
 - [ ] 1.2 GREEN: implement `spawnNodeCli` in `lib/platform/spawn.mjs`; if `exports` blocks `package.json`, implement the documented fallback and record it in `design.md` until the test passes; keep the module under 500 lines and free of any import from another `lib/platform/` module except `paths.mjs`.
 - [ ] 1.3 Commit locally with an `Assisted-by` trailer and no `Signed-off-by`: `feat(platform): run npm CLIs through their JS entry, no shell`. Do not push.

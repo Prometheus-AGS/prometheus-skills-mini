@@ -82,8 +82,8 @@ constraints:
     severity: blocking
     source: 'AGENTS.md §P — Node.js LTS is the only script runtime'
     description: 'No .sh, .bash, .py or .ps1 file anywhere in the repository'
-    check: 'git grep --no-index --exclude-standard -l -e "" -- "*.sh" "*.bash" "*.py" "*.ps1"'
-    note: 'A .ps1 is admissible only beside a cross-platform equivalent, and only through an OpenSpec change that says why Node cannot do the job. Then scope this check; do not delete it.'
+    check: 'git grep --no-index --exclude-standard -l -e "" -- "*.sh" "*.bash" "*.py" "*.ps1" ":!tools/prometheus-knowledge"'
+    note: 'One pathspec exclusion, added 2026-09-21 when the operator directed that the Rust pk CLI be vendored as a submodule at tools/prometheus-knowledge: that repository carries scripts/pk-lint-cron.sh and scripts/pmpo-reflect.sh. They are upstream files this project neither authors nor runs, and --no-index scans the working tree, so without the exclusion a vendored checkout fails a rule about what THIS project ships. The pattern is unchanged; proof it still discriminates: a .sh created anywhere else, including directly under tools/, is reported. A .ps1 is admissible only beside a cross-platform equivalent, and only through an OpenSpec change that says why Node cannot do the job. Then scope this check; do not delete it.'
 
   - id: no-shell-true
     severity: blocking

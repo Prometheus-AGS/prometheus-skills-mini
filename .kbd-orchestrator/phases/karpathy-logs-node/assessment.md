@@ -170,4 +170,17 @@ const pkg = tool.packages[platformKey]
     if (!pkg) continue
 ```
 
+ADDENDUM — 2026-09-21, after the assess stage closed (NOT reviewed; the two-round cap was already spent)
+
+Operator decisions changed the ground under Part 1. Recorded in full in `.prometheus/decisions.md`; the phase
+goals were revised to match. What analyze must now treat as the baseline:
+
+- **The knowledge/OKF half is `pk`'s, not Node's.** Vendored at `tools/prometheus-knowledge` (`01a1dbe`, pk 1.8.0). This withdraws the "MISSING" rows above for the `events.jsonl` writer, the `log.md` projection, the OKF v0.2 writer and the v0.1 reader — they are no longer this pack's to build.
+- **`pk` does not build for Windows today.** `pk-cli/src/main.rs:1216` uses `std::os::unix::fs::PermissionsExt` in a file with zero `cfg` guards (`git show origin/main:pk-cli/src/main.rs | sed -n '1216p'`). No CI workflows exist (`git ls-tree -r origin/main -- .github/workflows` → empty). `gh release list` → 0 releases. The operator's premise that it "supports windows, mac, and linux" is therefore **not yet true**, and making it true is work in another repository.
+- **`pk` has no progress recorder.** `pk --help` lists 15 subcommands, none of which records progress events or writes receipts. The float-hash finding stands and belongs to whichever component ends up computing `eventSha256`.
+- **Part 2, Gap 2 is closed by decision:** The Boss runs this pack under its bundled `bun`. Tested against The Boss's own 1.4.2 binary on macOS arm64 — six hooks, the self-invocation guard, stdin, the atomic write, the unknown-id exit code, `refine-validate` and the rules build all behave; cold start median ~22 ms vs ~40 ms under node. **Not tested on Windows.**
+- **Part 2, Gap 5 is closed by decision:** both filesystem servers ship, so the overlap is a naming problem.
+- **A third binary now needs The Boss's bundler:** `pk`, alongside compass and `rust-mcp-filesystem` — and unlike those two it has no release artifacts and no Windows build.
+- **Two gates were adjusted to admit the submodule**, each with a mutation proving it still discriminates: `no-shell-or-python-files` (pathspec for the vendored directory) and the LF-endings test (gitlink entries, identified by git mode `160000`).
+
 ASSESSMENT COMPLETE

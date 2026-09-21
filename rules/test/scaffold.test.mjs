@@ -72,12 +72,23 @@ test('.gitattributes normalises text to LF and marks images binary', () => {
 test('every tracked text file is stored with LF endings', () => {
   const listing = execFileSync('git', ['ls-files', '--eol'], { encoding: 'utf8' });
 
+  // A submodule is tracked as a gitlink (mode 160000): a commit pointer, not a file, so it has no
+  // line endings and --eol reports a bare "i/". Identified by git's own mode rather than by path,
+  // so this cannot excuse a real file that merely lives under a vendored directory.
+  const gitlinks = new Set(
+    execFileSync('git', ['ls-files', '-s'], { encoding: 'utf8' })
+      .split('\n')
+      .filter((line) => line.startsWith('160000 '))
+      .map((line) => line.split('\t')[1]),
+  );
+
   // The spec says every tracked text file reports i/lf. Filtering for i/crlf alone would let
   // i/mixed or i/cr through, so assert the positive: anything git treats as text is i/lf.
   const notLf = listing
     .split('\n')
     // i/none is an empty file (no line endings to normalise); i/-text is binary.
     .filter((line) => line.trim() && !/^i\/(lf|none|-text)/.test(line))
+    .filter((line) => !gitlinks.has(line.split('\t')[1]))
     .map((line) => line.trim().replace(/\s+/g, ' '));
 
   assert.deepEqual(notLf, []);

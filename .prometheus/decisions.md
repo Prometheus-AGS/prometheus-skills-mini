@@ -94,3 +94,34 @@ is a change with its own spec, not a line resurrected from a broken conditional.
 The filesystem default is unchanged and is what actually runs today, so no behaviour anyone depends on
 is lost. The only non-markdown reference to the script anywhere in the upstream repo is the script
 itself.
+
+## 2026-09-21 — operator decisions closing the karpathy-logs-node assessment
+
+1. **Review judge:** the liter-llm gateway key was supplied by the operator in chat. Verified: `/v1/models` → 200, routing `MiniMax-M3` (critic) and `k3` (judge); both answered a one-token smoke test. The key is passed through the environment for a single command and is **not** written to any file, commit, packet or memory. `MiniMax-M3` emits a `<think>` block in its content, so a judge-output parser must strip it before extracting JSON.
+2. **Filesystem MCP in The Boss: both.** `rust-mcp-filesystem` is embedded alongside The Boss's existing in-process TypeScript server, not instead of it. The tool-name overlap (`read, write, edit, delete, ls, glob, grep`) therefore has to be resolved by naming, not by removal.
+3. **Runtime in The Boss: the bundled `bun`.** Tested against The Boss's own binary (`resources/binaries/darwin-arm64/bun`, 1.4.2, the pinned version): all six hooks dispatch and exit 0, the `realpathSync` self-invocation guard holds, stdin is read, the atomic write through `lib/platform/` works, an unknown hook id still exits 2, and `refine-validate` and `rules/build.mjs --check` both run. Cold start under bun: median ~22 ms, max 29.7 ms, against ~40 ms / 66.8 ms under node on the same host. **Scope of that claim:** macOS arm64 only. bun on Windows is untested here, and this project's test suite runs on node in CI, not bun.
+4. **Sequencing:** `the-boss-integration` is the next phase after `karpathy-logs-node`.
+
+## 2026-09-21 — karpathy logging uses the Rust `pk` CLI, vendored as a submodule (SUPERSEDES README §5.3 in part)
+
+**Decision (operator):** do not write a Node-specific implementation of the Karpathy/OKF knowledge layer. Use the Rust `pk` CLI from `prometheus-knowledge-rs`, included here as a git submodule.
+
+**Done:** `git submodule add -b main git@github.com:Prometheus-AGS/prometheus-knowledge-rs.git tools/prometheus-knowledge` — the same path the skill pack uses — pinned at `01a1dbe` (pk 1.8.0).
+
+**What this supersedes.** README §5.3 says "`pk ingest` is gone (prometheus-knowledge is not one of the two kept services)" and collapses the result states to `recorded | duplicate | queued` on that basis. That reasoning no longer holds: `pk` is a CLI invoked per call, not a service, so it does not add a third daemon. The phase goals written from §5.3 are revised in `goals.md`.
+
+**What `pk` covers, and what it does not** (`pk --help`, 1.8.0): `ingest, lint, focus, context, snapshot, search, get, list, stats, init, doctor, codegraph, events, migrate-*`. That is the knowledge/OKF half. It has **no progress recorder** — receipts, idempotency and the replay comparison live in the Python `record-progress.py`, which *calls* `pk ingest`. So the recorder half is still open: port it to Node as a thin caller of `pk`, or add it to `pk`. The float-hash finding in the assessment applies to that half and is unaffected.
+
+**The premise that needs work: `pk` does not build for Windows today.** Verified at `origin/main` = `01a1dbe`:
+- `pk-cli/src/main.rs:1216` — `use std::os::unix::fs::PermissionsExt;` inside `run_doctor`, in a file with **zero** `cfg(unix)`/`cfg(windows)` guards. That is a compile error for the `pk` binary on `x86_64-pc-windows-msvc`.
+- `pk-learning-worker/src/main.rs` and `pk-store/src/prompt_snapshot.rs` use the same API with some guards (5 and 6); each use was **not** individually checked.
+- The repository has **no CI workflows at all**, so nothing has ever built it on Windows, and it has **0 releases**, so there is no prebuilt binary for any platform.
+- Dependencies are light (no RocksDB, SQLite or SurrealDB; `reqwest`, `tokio`, `notify`), so the port looks like a handful of `cfg` guards, not a rewrite. A patch for this was prepared in an earlier session's scratchpad and **never applied to any repository**.
+- I could not verify a fix locally: no Windows rustup target is installed, and a cross `cargo check` would be unreliable for crates whose build scripts need the MSVC toolchain. The authoritative check is a `windows-latest` CI leg in the `pk` repo.
+
+**Fallout in this repository, handled:**
+- `no-shell-or-python-files` gained a pathspec exclusion for `tools/prometheus-knowledge` (it carries two upstream `.sh` files; `--no-index` scans the working tree). Pattern unchanged; mutation: a `.sh` directly under `tools/` is still caught.
+- `rules/test/scaffold.test.mjs` now skips gitlink entries (git mode `160000`) in the LF-endings test — a submodule pointer is not a text file. Identified by mode, not path. Mutation: a genuine `i/crlf` index entry under `tools/` still fails the test. (My first mutation was invalid — `git add` normalised the CRLF — and I had to force the blob with `hash-object --no-filters`.)
+- CI uses `actions/checkout@v4` without submodules, so the directory is empty there. Harmless until a test needs `pk`. The repo is PUBLIC, so HTTPS would work in CI where the SSH URL needs a deploy key.
+
+**Tension with a standing constraint, stated rather than resolved:** the original brief says to support the Rust toolkit "but do not depend on loading any processes or services". A per-call CLI is not a service, but it *is* a process, and with 0 releases a user needs a Rust toolchain to get `pk` at all. Until `pk` ships binaries, this pack depends on something a clean Windows machine does not have.

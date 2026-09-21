@@ -285,6 +285,14 @@ of this design and should be measured on real Windows hardware early.
 
 ### 5.3 Karpathy logging and self-improvement
 
+> **SUPERSEDED IN PART (2026-09-21).** The operator decided that the Karpathy/OKF knowledge layer uses the
+> Rust `pk` CLI — vendored as a submodule at `tools/prometheus-knowledge` — instead of a Node-specific
+> implementation. So the statements below that "`pk ingest` is gone" and that the result states collapse to
+> `recorded | duplicate | queued` **no longer hold**, and the OKF writer described here is `pk`'s job, not
+> this pack's. `pk` is a per-call CLI, not a service, so the two-service rule is unaffected. **Caveat:**
+> `pk` does not build for Windows today and has no releases; see `.prometheus/decisions.md` and the
+> `karpathy-logs-node` phase goals. This section is rewritten by the change that implements the decision.
+
 The event stream, receipts, locks and queue keep the source pack's on-disk contract, so a project can move
 between packs. The human-readable layer changes: it becomes an OKF v0.2 bundle (below).
 

@@ -1,0 +1,17 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "package-lock.json",
+      "claim": "The required committed lockfile is missing, so the pinned OpenSpec CLI requirement and npm-ci scenario are not satisfied.",
+      "evidence": "specs/project-tooling/spec.md Requirement: Pinned OpenSpec CLI says the project SHALL depend on @fission-ai/openspec as a devDependency pinned to an exact version with a committed package-lock.json; artifact states \"package-lock.json is excluded from the diff as generated\" and the git diff contains no package-lock.json.",
+      "suggested_fix": "Commit the generated package-lock.json for @fission-ai/openspec@1.10.0."
+    }
+  ]
+}

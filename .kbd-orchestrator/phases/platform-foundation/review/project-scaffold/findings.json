@@ -1,0 +1,26 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "rules/test/scaffold.test.mjs",
+      "line": 73,
+      "claim": "The LF-ending regression test does not enforce the spec requirement that every tracked text file reports `i/lf`.",
+      "evidence": "Spec scenario `Text is stored as LF` says every tracked text file must report `i/lf`, but the test only filters lines starting with `i/crlf`, so `i/mixed` or other non-`i/lf` text entries would pass.",
+      "suggested_fix": "Parse `git ls-files --eol` output and fail any tracked text entry whose index EOL field is not exactly `i/lf`, while excluding binary `i/-text` entries."
+    },
+    {
+      "severity": "WARNING",
+      "file": "openspec/changes/project-scaffold/tasks.md",
+      "line": 25,
+      "claim": "The change records verification tasks as incomplete for the local commit and owner notification steps.",
+      "evidence": "The diff leaves tasks 3.5 and 3.6 as `- [ ]`, while the change\u2019s own task list requires committing locally with an `Assisted-by` trailer and telling the owner to re-run `/kbd-init --force`.",
+      "suggested_fix": "Complete and mark tasks 3.5 and 3.6 checked, or do not present the change as complete."
+    }
+  ]
+}

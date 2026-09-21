@@ -70,10 +70,13 @@ test('.gitattributes normalises text to LF and marks images binary', () => {
 test('every tracked text file is stored with LF endings', () => {
   const listing = execFileSync('git', ['ls-files', '--eol'], { encoding: 'utf8' });
 
-  const crlf = listing
+  // The spec says every tracked text file reports i/lf. Filtering for i/crlf alone would let
+  // i/mixed or i/cr through, so assert the positive: anything git treats as text is i/lf.
+  const notLf = listing
     .split('\n')
-    .filter((line) => line.startsWith('i/crlf'))
-    .map((line) => line.split('\t').pop());
+    // i/none is an empty file (no line endings to normalise); i/-text is binary.
+    .filter((line) => line.trim() && !/^i\/(lf|none|-text)/.test(line))
+    .map((line) => line.trim().replace(/\s+/g, ' '));
 
-  assert.deepEqual(crlf, []);
+  assert.deepEqual(notLf, []);
 });

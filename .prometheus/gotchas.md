@@ -248,3 +248,28 @@ disjunction needs one value per alternative, and a mutation that deletes each al
 **And count with a command.** The fix itself first said "five alternatives" — repeated from the critic's
 text and from how the regex is laid out across lines. Splitting on top-level `|` gives seven. The judge
 caught that in round 2.
+
+## 2026-09-22 — `npm run coverage` on `windows-latest` is flaky, independent of `node --test`
+
+CI run `35702985390` (`karpathy-progress-recorder`, task 1.2 closure): `windows-latest · node 24` failed
+on the `Run npm run coverage` step — `node --test` itself reported 361 tests, 360 pass, 0 fail, 1 skip
+(clean), but the coverage reporter then threw `Error [ERR_OPERATION_FAILED]: Operation failed: coverage
+file is empty: C:\Users\RUNNER~1\...\coverage-1568-....json`, and `scripts/coverage-report.mjs:29`'s
+`execFileSync` surfaced that as a non-zero exit. The same commit's `windows-latest · node 22` leg, running
+the identical `npm run coverage` script seconds apart, passed cleanly.
+
+**Cause:** Node's `--experimental-test-coverage` writes per-worker coverage files to a temp directory,
+then a separate reporting pass reads them back; on Windows this file can still be empty/not yet flushed
+when the read happens — a known class of race in the instrumentation, not in this repository's code or
+tests. It is orthogonal to test correctness: the test run it wraps was fully green.
+
+**Caught by:** re-running only the failed job (`gh run rerun <id> --failed`) without touching source —
+all six legs green on the rerun, same commit, same code. That is the confirming evidence this was
+instrumentation flake and not a real regression: nothing changed except letting the same steps run again.
+
+**Check:** before treating a `windows-latest` CI failure as a real defect, check whether the failing step
+is `node --test` itself (a real result) or `npm run coverage`/another post-processing step wrapping it (a
+tool that can fail independently of the tests it measured). Read the actual test summary line in the log
+before concluding anything regressed — `tests N / pass N / fail 0` above a later, unrelated stack trace
+means the tests passed and something downstream of them did not. A single flaky rerun is normal; a rerun
+that fails the same way twice is a real defect and should not be waved off as flake.

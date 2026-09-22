@@ -60,12 +60,22 @@ const splitPairs = (body, line) => {
 };
 
 const inlineTable = (raw, line) => {
-  const body = raw.trim().slice(1, -1);
+  // Check the closing brace explicitly. `slice(1, -1)` on an unterminated table
+  // eats a real character instead, and the corruption surfaces downstream as a
+  // misleading message — `{ built_from_submodule = true` reported `got "tru"`.
+  // A parser that names the wrong defect will eventually name none.
+  const text = raw.trim();
+  if (!text.endsWith('}')) ERR(line, 'inline table is missing its closing brace');
+
   const table = {};
-  for (const pair of splitPairs(body, line)) {
+  for (const pair of splitPairs(text.slice(1, -1), line)) {
     const at = pair.indexOf('=');
     if (at === -1) ERR(line, `inline table entry without '=': ${JSON.stringify(pair.trim())}`);
-    table[key(pair.slice(0, at), line)] = unquote(pair.slice(at + 1), line);
+    // Same rule as the table level: a duplicate silently keeping the last value
+    // is exactly the quiet drop this file exists to prevent.
+    const name = key(pair.slice(0, at), line);
+    if (name in table) ERR(line, `duplicate key ${JSON.stringify(name)} in an inline table`);
+    table[name] = unquote(pair.slice(at + 1), line);
   }
   return table;
 };

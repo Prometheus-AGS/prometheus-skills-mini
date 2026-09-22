@@ -8,35 +8,19 @@
   "findings": [
     {
       "severity": "CRITICAL",
-      "file": "openspec/changes/review-housekeeping/tasks.md",
-      "line": 8,
-      "claim": "The change does not satisfy the requirement that archiving leave `openspec list` showing only open changes.",
-      "evidence": "Spec requirement says the completed analysis change SHALL be archived \"so that `openspec list` shows only open changes\", but the task note states: \"`openspec list` still shows the PARENT phase\u2019s two changes, `karpathy-progress-recorder` and `okf-v02-via-pk`, as `\u2713 Complete` but unarchived.\"",
-      "suggested_fix": "Archive the completed changes still shown by `openspec list`, or amend the spec before claiming this requirement complete."
+      "file": "rules/lib/versions-toml.mjs",
+      "line": 66,
+      "claim": "Duplicate keys inside inline tables are silently overwritten instead of raising a parse error.",
+      "evidence": "The spec added in `openspec/changes/review-housekeeping/specs/project-tooling/versions-toml/spec.md` says \"A duplicate key is a parse error, not a silent overwrite\" and docs/versions-toml.md states \"No table declares the same key twice\"; however `inlineTable()` assigns `table[key(pair.slice(0, at), line)] = unquote(...)` without checking whether that key already exists, so `{ digest = \"a\", digest = \"b\" }` keeps the last value.",
+      "suggested_fix": "In `inlineTable()`, compute the parsed key into a variable and raise with `ERR(line, ...)` if it already exists before assigning."
     },
     {
       "severity": "CRITICAL",
       "file": "rules/lib/versions-toml.mjs",
-      "line": 144,
-      "claim": "The implementation cannot detect when `versions.toml` omits a container image the pack starts.",
-      "evidence": "The spec requires `versions.toml` to name \"every container image the pack starts\", but `compareToTree` only iterates `Object.entries(parsed.images ?? {})` and has no injected compose/service inventory to compare against.",
-      "suggested_fix": "Add an injected list of expected images/services from the tree and report any started image missing from `[images]`."
-    },
-    {
-      "severity": "CRITICAL",
-      "file": "rules/lib/versions-toml.mjs",
-      "line": 119,
-      "claim": "The submodule completeness check enforces all gitlinks in the repository instead of only submodules under `tools/`.",
-      "evidence": "The spec says `versions.toml` SHALL name \"every submodule under `tools/`\", but `compareToTree` reports every path returned by `listGitlinks()` that is absent from `[submodules]`, and `rules/test/versions-toml.test.mjs` supplies all `git ls-tree -r HEAD` gitlinks without filtering to `tools/`.",
-      "suggested_fix": "Filter completeness checks to paths equal to or below `tools/`, or rename/spec the requirement if all repository gitlinks are intended."
-    },
-    {
-      "severity": "WARNING",
-      "file": "rules/lib/versions-toml.mjs",
-      "line": 90,
-      "claim": "Duplicate keys are silently overwritten instead of rejected, allowing an invalid TOML authority to mask a pin.",
-      "evidence": "`parseVersionsToml` assigns `parsed[table][name] = ...` without checking whether `name` already exists; docs state this is a TOML subset and that unsupported or unsafe constructs should raise rather than silently misread.",
-      "suggested_fix": "Before assignment, reject duplicate keys in a table with a `versions.toml` parse error."
+      "line": 99,
+      "claim": "Malformed inline tables missing a closing brace can be accepted as valid input.",
+      "evidence": "The parser claims unsupported or malformed TOML raises (docs/versions-toml.md: \"anything richer is a parse error rather than a silent misread\"), but `parseVersionsToml()` routes any value that merely `startsWith('{')` to `inlineTable()`, and `inlineTable()` blindly does `raw.trim().slice(1, -1)` without verifying the value ends with `}`; for example `{ image = \"y:1\" ` is parsed as a valid inline table.",
+      "suggested_fix": "Require `value.trim().startsWith('{') && value.trim().endsWith('}')` before parsing an inline table, and raise on a leading `{` without a trailing `}`."
     }
   ]
 }

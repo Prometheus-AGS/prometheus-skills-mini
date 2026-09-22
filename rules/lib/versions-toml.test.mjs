@@ -173,6 +173,29 @@ test('a duplicate key is a parse error, not a silent overwrite', () => {
   );
 });
 
+// The table-level duplicate check did not extend into inline tables, so
+// `{ digest = "a", digest = "b" }` silently kept "b" — the same quiet drop,
+// one level down. Caught by round 3 of the diff review.
+test('a duplicate key inside an inline table is a parse error too', () => {
+  assert.throws(
+    () => parseVersionsToml('[images]\n"x" = { digest = "sha256:aaa", digest = "sha256:bbb" }\n'),
+    /duplicate key/,
+  );
+});
+
+// Every unbalanced-brace input already raised, but never because a brace was
+// checked: slice(1, -1) ate a real character and the corruption surfaced as a
+// misleading message (`{ built_from_submodule = true` reported `got "tru"`).
+// The input was refused for the wrong reason, which is luck, not a contract.
+test('an inline table without its closing brace is refused, and says so', () => {
+  for (const bad of [
+    '[images]\n"x" = { digest = "sha256:aaa"\n',
+    '[images]\n"x" = { built_from_submodule = true\n',
+  ]) {
+    assert.throws(() => parseVersionsToml(bad), /missing its closing brace/);
+  }
+});
+
 test('every disagreement is reported, not just the first', () => {
   const parsed = parseVersionsToml(
     '[node]\nminimum = ">=20"\n[submodules]\n"tools/a" = "aaaaaaa"\n"tools/b" = "bbbbbbb"\n',

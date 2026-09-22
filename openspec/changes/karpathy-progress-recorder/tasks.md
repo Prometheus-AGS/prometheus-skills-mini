@@ -56,8 +56,8 @@ Each code task is test-first: write the `node:test` file, run it and see it fail
 
 ## 10. The skill document
 
-- [ ] 10.1 Carry `prometheus-skill-pack/skills/process/karpathy-progress-memory/SKILL.md` to `skills/karpathy-progress-memory/SKILL.md`. Carry `references/progress-event.schema.json` beside it, which the document cites, and add a test that the schema's `properties` agree with the validator's closed field set. Rewrite every invocation to `node scripts/record-progress.mjs …`; remove the outbox and `pk-learning-worker` sections; state that no KBD skill here fires the recorder yet and name the follow-up (the phase that ports the KBD skills).
-- [ ] 10.2 Run `node --test skills/carried-payload.test.mjs`: every script the new skill names resolves, and no fenced block invokes `python3`.
+- [x] 10.1 Carry `prometheus-skill-pack/skills/process/karpathy-progress-memory/SKILL.md` to `skills/karpathy-progress-memory/SKILL.md`. Carry `references/progress-event.schema.json` beside it, which the document cites, and add a test that the schema's `properties` agree with the validator's closed field set. Rewrite every invocation to `node scripts/record-progress.mjs …`; remove the outbox and `pk-learning-worker` sections; state that no KBD skill here fires the recorder yet and name the follow-up (the phase that ports the KBD skills).
+- [x] 10.2 Run `node --test skills/carried-payload.test.mjs`: every script the new skill names resolves, and no fenced block invokes `python3`.
 
 ## 11. Evidence and close
 

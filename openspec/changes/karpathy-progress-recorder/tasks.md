@@ -74,5 +74,10 @@ Each code task is test-first: write the `node:test` file, run it and see it fail
     (the test's throwaway `env` object was never actually consulted by the real, un-injected PATH
     lookup) — fixed in `6965da7`. Re-run `35702142645`: all six legs green, including both Windows legs
     and the 1 s hook-budget measurement. Evidence recorded in `evidence/windows.md`.
-- [ ] 11.4 The PATHEXT scenario is Windows-only: copy `process.execPath` to a temp directory as `pk.exe`, put it on `PATH`, and assert the transport's program resolves. Skip with an explicit reason elsewhere — never with a silent early `return`.
+- [x] 11.4 The PATHEXT scenario is Windows-only: copy `process.execPath` to a temp directory as `pk.exe`, put it on `PATH`, and assert the transport's program resolves. Skip with an explicit reason elsewhere — never with a silent early `return`.
+  - Added to `lib/karpathy/transport.test.mjs`, skipped elsewhere via `node:test`'s `skip` option with an
+    explicit reason (never a silent early `return`), matching the precedent in `receipt.test.mjs`. First
+    version had a real bug — asserted a throwaway `env` object's PATH against itself, never actually
+    consulted by the real lookup — caught by real Windows CI (`35701850871`) and fixed in `6965da7`;
+    confirmed passing on both `windows-latest` legs in `35702142645`. See `evidence/windows.md`.
 - [x] 11.5 Record in `.prometheus/decisions.md`: the receipt-as-outbox decision, the `256_000` versus "256 KiB" upstream inconsistency, `canonicalState` as this pack's receipt extension, the stderr rule that departs from upstream (index, not path), and that `queued` is read but never emitted. Update `README.md` §5.3's superseded note to point at this capability. Checked `okf-v02-via-pk/proposal.md`: rewriting §5.3 is explicitly that change's own scope ("Rewrite README.md §5.3 ... replacing the SUPERSEDED IN PART note"), not this one's — no README edit made here, to avoid overlapping a later change's declared scope.

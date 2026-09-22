@@ -41,9 +41,9 @@ Each code task is test-first: write the `node:test` file, run it and see it fail
 
 ## 8. Transport — `lib/karpathy/transport.mjs`
 
-- [ ] 8.1 Write `lib/karpathy/transport.test.mjs` with an injected `spawn`: the argv is exactly `ingest --scope project --source karpathy-progress-memory:<eventId>`, the record arrives on stdin, `shell` is `false`; `PK_BIN` replaces the program; exit 0 → `accepted` with `receiptSha256` of stdout; non-zero, `ENOENT` and a timeout each → `degraded` with a reason; `KPM_PK_TIMEOUT_SECONDS` of `0.05`, `11` and `abc` each refused; default 5.
-- [ ] 8.2 One test with a **real** process and no injection: `PK_BIN` set to `process.execPath`, which exits non-zero for these arguments → `degraded`, exit 0. This is the only place a real child is spawned.
-- [ ] 8.3 Write `lib/karpathy/transport.mjs`.
+- [x] 8.1 Write `lib/karpathy/transport.test.mjs` with an injected `spawn`: the argv is exactly `ingest --scope project --source karpathy-progress-memory:<eventId>`, the record arrives on stdin, `shell` is `false`; `PK_BIN` replaces the program; exit 0 → `accepted` with `receiptSha256` of stdout; non-zero, `ENOENT` and a timeout each → `degraded` with a reason; `KPM_PK_TIMEOUT_SECONDS` of `0.05`, `11` and `abc` each refused; default 5.
+- [x] 8.2 One test with a **real** process and no injection: `PK_BIN` set to `process.execPath`, which exits non-zero for these arguments → `degraded`, exit 0. This is the only place a real child is spawned.
+- [x] 8.3 Write `lib/karpathy/transport.mjs`.
 
 ## 9. Orchestration and entry point
 

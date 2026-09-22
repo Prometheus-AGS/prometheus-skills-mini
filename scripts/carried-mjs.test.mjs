@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
+const SELF = fileURLToPath(import.meta.url);
 
 const allMjs = () => {
   const out = [];
@@ -20,7 +21,17 @@ const allMjs = () => {
   // This file states the patterns it forbids, so it necessarily contains them.
   // A scanner that matches its own regex literals reports itself — the same
   // self-reference that makes a naive prose grep flag its own documentation.
-  return out.map((f) => path.relative(repoRoot, f)).filter((f) => f !== 'scripts/carried-mjs.test.mjs');
+  // Excluded by absolute, OS-native path (SELF, from fileURLToPath) BEFORE the
+  // map to a relative string — never a path.relative() result compared against
+  // a hardcoded POSIX literal, which is backslash-separated on Windows and can
+  // never equal a forward-slash literal there. That exact bug was found on real
+  // windows-latest CI in lib/karpathy/knowledge-bundle.test.mjs (run
+  // 35705812317): the self-exclusion silently never fired, so the file scanned
+  // and reported itself the first time one of its own test names, assertion
+  // messages, or fixtures happened to mention a pattern it forbids.
+  return out
+    .filter((f) => f !== SELF)
+    .map((f) => path.relative(repoRoot, f));
 };
 
 // Comments describe; code executes. A scan that cannot tell them apart either

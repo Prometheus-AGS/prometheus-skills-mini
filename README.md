@@ -195,7 +195,7 @@ their own `.mcp.json`; the KBD loop must be fully functional without.
 
 | Source component | Transport / runtime | Windows-native? | Verdict | In mini |
 |---|---|---|---|---|
-| SurrealDB `:28000` | database; `surrealdb/surrealdb:v3.0.5` image, RocksDB volume | **via Docker** | ✅ keep | Windows: Compose service. macOS/Linux: unchanged from source. |
+| SurrealDB `:28000` | database; `surrealdb/surrealdb:v3.2.4` image (digest in `versions.toml`), RocksDB volume; shared by surreal-memory, compass and UAR | **via Docker** | ✅ keep | Windows: Compose service. macOS/Linux: unchanged from source. |
 | `surreal-memory` `:23001` | SSE MCP, Rust, local `bge-small-en-v1.5` embeddings; source ships a `Dockerfile` + `docker-compose.yaml` | **via Docker** | ✅ keep | Windows: Compose service depending on a healthy SurrealDB. macOS/Linux: unchanged. Same endpoint everywhere: `http://localhost:23001/mcp/sse`. |
 | `liter-llm` gateway `:4000` | OpenAI-compatible HTTP (`liter-llm api`), Rust; source ships `docker/Dockerfile` | **via Docker** | ✅ keep | Windows: Compose service. macOS/Linux: native binary under launchd/systemd as today. Serves the `kbd-judge` and `kbd-critic` models. |
 | `prometheus-knowledge` (`pk`) `:8942` | HTTP, Rust daemon | no | ❌ | local learnings file; keyword recall in Node |
@@ -462,7 +462,7 @@ launchd/systemd path as their default, so existing installs are untouched.
 
 | Service | Image / build | Host endpoint | State |
 |---|---|---|---|
-| `surrealdb` | `surrealdb/surrealdb:v3.0.5` (pinned, same as source) | `127.0.0.1:28000` | named volume `surrealdb_data` (RocksDB) |
+| `surrealdb` | `surrealdb/surrealdb:v3.2.4` (pinned by digest in `versions.toml`; the source pack uses v3.0.5, but 3.2.4 matches the `surrealdb` crate compass and UAR link) | `127.0.0.1:28000` | named volume `surrealdb_data` (RocksDB) |
 | `surreal-memory` | built from the source pack's `tools/surreal-memory-server/Dockerfile` with `--no-default-features --features server-only,palace,local-embeddings` | `127.0.0.1:23001` → container `3001` | named volume for the Hugging Face model cache |
 | `liter-llm` | built from `tools/liter-llm/docker/Dockerfile`; runs `liter-llm api --host 0.0.0.0 --port 4000` | `127.0.0.1:4000` | config mounted read-only |
 

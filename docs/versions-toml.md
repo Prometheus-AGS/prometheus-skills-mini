@@ -29,7 +29,7 @@ minimum = ">=22"          # must equal package.json engines.node, exactly
 [images]
 # "<service name as it appears in docker/compose.yaml>" = { ... }
 # Either digest (preferred — a tag is mutable) or built_from_submodule = true.
-"surrealdb"      = { image = "surrealdb/surrealdb:v3.0.5", digest = "sha256:…" }
+"surrealdb"      = { image = "surrealdb/surrealdb:v3.2.4", digest = "sha256:…" }
 "liter-llm"      = { built_from_submodule = true, submodule = "tools/liter-llm" }
 "surreal-memory" = { built_from_submodule = true, submodule = "tools/surreal-memory-server" }
 

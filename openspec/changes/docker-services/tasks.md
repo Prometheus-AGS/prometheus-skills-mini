@@ -18,7 +18,7 @@ Each code task is test-first. Blocked until `versions.toml` names the two pins.
 
 - [ ] 3.1 Write `docker/compose.test.mjs` first (spawned `docker compose config`, skipped with reason where Docker is absent): three services; three loopback bindings; no `redis`; no `6379`; no bind mounts; `mem_limit` on each; the secret scan over tracked files in `docker/`.
 - [ ] 3.2 Write `docker/compose.yaml`, `docker/.env.example`, `docker/liter-llm-proxy.example.toml` (from the key structure of the live file; values are `${…}` placeholders), `docker/README.md` (embedding-model volume, first-start cost, offline behaviour), and add `docker/.env` to `.gitignore`.
-- [ ] 3.3 Resolve the SurrealDB digest (`docker manifest inspect surrealdb/surrealdb:v3.0.5`) and record it for `versions.toml`'s operator update; pin `image:` by digest.
+- [ ] 3.3 Pin `image:` by digest: `surrealdb/surrealdb:v3.2.4@sha256:51baed8709f57f67dcf04b30e3177db846803fa9342dae2be58c6fa5f8d59843`. The digest is already resolved from the registry and recorded in `versions.toml` (2026-09-22, at the operator's instruction), where it matches UAR's pin; what remains is the compose file itself.
 
 ## 4. Service commands and installer
 

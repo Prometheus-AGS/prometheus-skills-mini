@@ -1,0 +1,42 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The sycophancy repository decision is gated too late even though change 1 must act on that repository.",
+      "evidence": "The ordering table puts `the-boss-release-infrastructure` first and says it has no dependencies; the handoff/plan describe that change as including sycophancy release infrastructure: `one CI to build from scratch` and risk handling says `sycophancy-correction has no CI at all | Sequenced last within change 1`. But the gate for settling the repository target is on change 3: `Every target repo has a release; **the sycophancy repo target is settled** (goal says Prometheus-AGS; it exists as Know-Me-Tools...)`.",
+      "suggested_fix": "Move the sycophancy repository target decision to the gate for change 1, before any CI/release work for sycophancy-correction starts."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "Change 1's gate omits required operator authorization for repository creation, violating the carried constraint.",
+      "evidence": "The constraints say: `A-11: tagging releases and creating repositories are operator-authorized, not agent-initiated.` The gate for change 1 only says: `Operator authorization to tag and run (A-11).` Goal A-3 requires creating `sycophancy-correction` under `Prometheus-AGS`: `sycophancy-correction does not exist under Prometheus-AGS. Create it...`.",
+      "suggested_fix": "Add explicit operator authorization to create the Prometheus-AGS sycophancy-correction repository before change 1 may proceed, or split repository creation into a separately gated operator step."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The dependency table omits a dependency that the plan later declares non-negotiable for `prometheus-005-mcp-server-presets`.",
+      "evidence": "The ordering table lists `prometheus-005-mcp-server-presets` as depending only on `4`: `Registers what 4 bundles.` Later, under `Dependency edges that are not negotiable`, the plan says `2 \u2192 3, 6, 7` but the explanation includes `005 resolves binaries beside it`, referring to the app-data copy installed by `prometheus-001 \u00a73`.",
+      "suggested_fix": "Either add `2` as an explicit dependency for `prometheus-005-mcp-server-presets`, or remove the claim that 005 resolves binaries beside the app-data pack if it is not true."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "`prometheus-005-mcp-server-presets` is introduced from an unsupported requirement not present in the goals or handoff.",
+      "evidence": "The plan states: `The operator's requirement is that **every binary and vendored project with an MCP server is listed as a system MCP server and configured there**. Change 5 owns this.` The supplied goals enumerate release infrastructure, vendoring, Docker services, settings UI, doctor, and skill deployment, but do not state a requirement to register every MCP-capable tool as a system MCP server. The handoff also lists only four the-boss changes: `001-skills-bundling`, `002-binary-shipping`, `003-settings-and-doctor`, `004-docker-services`.",
+      "suggested_fix": "Either tie change 5 to a concrete goal/prior finding, add the missing requirement to the phase goals, or remove/defer `prometheus-005-mcp-server-presets`."
+    }
+  ]
+}

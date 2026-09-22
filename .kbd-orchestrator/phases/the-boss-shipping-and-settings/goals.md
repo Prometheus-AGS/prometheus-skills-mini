@@ -18,9 +18,13 @@ own get their release infrastructure turned on.
    run: `GQAdonis/compass` (`compass-release.yml`, already builds both Windows arches),
    `GQAdonis/rust-mcp-filesystem` (cargo-dist), `Prometheus-AGS/openspec` (`release-prepare.yml`).
    Zero releases each. Tag and run them.
-3. **`sycophancy-correction` does not exist under `Prometheus-AGS`.** Create it from the
-   `Know-Me-Tools` fork and land the four Windows blockers already scoped in change
-   `sycophancy-correction-vendored`.
+3. **`sycophancy-correction` needs release infrastructure built from scratch.** *(Corrected
+   2026-09-22: an earlier draft said the repository did not exist — I had searched the wrong name.
+   It is `Know-Me-Tools/sycophancy-correction-skill`, operator-supplied, a Rust workspace with
+   **no `.github/workflows` at all** and 0 releases.)* Fork or transfer it to `Prometheus-AGS`,
+   build a release workflow, and land the four Windows blockers scoped in change
+   `sycophancy-correction-vendored`. Unlike the other three forks, whose workflows merely have
+   never run, this one cannot be “tagged and released” — it is the long pole of this goal.
 
 ## B · Vendoring — submodules in the mini, artifacts in the-boss
 
@@ -80,9 +84,21 @@ an unmodified component library is a failure of this goal.
     persistent notice says why** — the binding rule in `openspec/config.yaml`. This development
     machine is exactly that case: 42 mini skill copies currently sit beside a full-pack install.
 
+## E · MCP server registration
+
+*Added by the operator during planning, after this file was first written.*
+
+14. **Every binary and vendored project that exposes an MCP server is listed as a system MCP
+    server and configured there**, beside the app’s existing presets — never hard-wired invisibly.
+    That is compass, rust-mcp-filesystem and sycophancy-correction (stdio, from bundled binaries)
+    and surreal-memory (HTTP at the fixed `:23001/mcp/sse`, backed by its container). `pk` and
+    `openspec` are CLIs, not MCP servers, and are deliberately out of scope. Change
+    `prometheus-005-mcp-server-presets` owns this.
+
 ## Constraints carried in
 
 - Node LTS only for scripts; no `.sh`/`.py`; no symlinks; copies only.
-- the-boss ships `--win --x64 --arm64` — every Rust artifact needs all four platform/arch pairs.
+- the-boss ships `--win --x64 --arm64` — every Rust artifact needs FIVE targets: two Windows, two
+  macOS, one Linux. (An earlier draft said “four pairs”; five is correct.)
 - A-11: tagging releases and creating repositories are operator-authorized, not agent-initiated.
 - The mini is never installed natively beside the full pack, on any platform.

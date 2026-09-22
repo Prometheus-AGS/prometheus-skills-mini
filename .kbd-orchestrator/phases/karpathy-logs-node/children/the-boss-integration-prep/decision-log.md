@@ -95,3 +95,8 @@ Confirms analysis.md Q7. This child specs the infrastructure and the handoff; th
 Options: vendor from the current checkout · vendor at a tagged clean fork commit · rely on upstream releases only
 Decision: **tagged clean fork commit under `tools/compass`; stdio only; the-boss ships the fork's release tarball; doctor enforces no HTTP transport and no watch** | Provenance: user (scope) + research (mechanism)
 Windows is a tested CI target upstream; the fork has 0 releases and a dirty side-branch tree — the operator tags and runs `compass-release.yml`. See analysis.md Q11, cand-326..328.
+
+### 2026-09-22T12:10Z — the mini never installs natively beside the full pack (operator constraint)
+Options: coexist with namespacing · refuse native install when the full pack is present
+Decision: **refuse; app-data-only on such a machine; the full pack always wins** | Provenance: user
+Now binding in `openspec/config.yaml`. Detection markers and the three enforcement points: analysis.md Q12.

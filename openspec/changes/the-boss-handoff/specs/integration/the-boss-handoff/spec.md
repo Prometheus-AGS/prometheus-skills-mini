@@ -1,7 +1,11 @@
 ## ADDED Requirements
 
 ### Requirement: The handoff names every the-boss change with its extension point and acceptance criteria
-`docs/handoff/the-boss-integration.md` SHALL contain the nine items in the proposal, each with the the-boss file and line it extends (or "new file" with its lifecycle-service location), acceptance criteria stated as observable behaviour, and the mini artifact it consumes. Every file:line it cites SHALL exist at `the-boss` commit `10aa57f76c`.
+`docs/handoff/the-boss-integration.md` SHALL contain the ten items in the proposal (including the compass item decided in `analysis.md` Q11), each with the the-boss file and line it extends (or "new file" with its lifecycle-service location), acceptance criteria stated as observable behaviour, and the mini artifact it consumes. Every file:line it cites SHALL exist at `the-boss` commit `10aa57f76c`.
+
+#### Scenario: The full-pack rule is a named item
+- **WHEN** item 2 of the handoff is read
+- **THEN** it states that the push is skipped with a visible notice when the full pack is present, and names `lib/platform/full-pack.mjs` as the detector
 
 #### Scenario: Citations resolve
 - **WHEN** the handoff's the-boss citations are checked against the local checkout at `10aa57f76c`

@@ -2,7 +2,7 @@ Each code task is test-first. Depends on `versions.toml` for the Docusaurus pin;
 
 ## 0. Gate — versions.toml (operator-authored)
 
-- [ ] 0.1 Before any task below: `node --test rules/test/versions-toml.test.mjs` reports the test **passing**, not `todo` — i.e. the operator has authored `versions.toml` and it agrees with the tree. If it is `todo`, stop and hand the phase back to the operator; do not proceed with a pin this file does not name.
+- [ ] 0.1 Before tasks 1.2, 3.1 and 3.2 (the Docusaurus pin and the deploy) — tasks 1.1, 1.3 and 2.1 (the test, the catalog generator, the guide content) may proceed first: `node --test rules/test/versions-toml.test.mjs` reports the test **passing**, not `todo` — i.e. the operator has authored `versions.toml` and it agrees with the tree. If it is `todo`, stop and hand the phase back to the operator; do not proceed with a pin this file does not name.
 
 ## 1. Site skeleton
 

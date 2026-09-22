@@ -17,7 +17,8 @@ Each code task is test-first. Blocked until `versions.toml` names the pin (chang
 ## 3. Installer, first responsibility
 
 - [ ] 3.1 Write `scripts/install.test.mjs` first (spawned, `shell: false`): `--openspec-only` on a temp copy with an unbuilt `tools/openspec` fixture runs `npm ci --ignore-scripts` then `node build.js` (both recorded through an injected spawn) and exits 0; an absent submodule exits 2 naming `git submodule update --init`.
-- [ ] 3.2 Write `scripts/install.mjs` with `--openspec-only`; other responsibilities are added by later changes (`docker-services`, `pack-doctor`), each named there.
+- [ ] 3.1b Extend `scripts/install.test.mjs`: `--home` with an injected full-pack marker exits 2 and writes nothing; `--app-data <tmp>` with the same marker exits 0 and copies skills.
+- [ ] 3.2 Write `scripts/install.mjs` with `--home`, `--app-data <dir>` (refusing `--home` when `detectFullPack()` reports present — `lib/platform/full-pack.mjs` from change `pack-doctor` task 2.0), `--openspec-only` and `--doctor` (spawns `scripts/doctor.mjs`, created by change `pack-doctor` task 3.2, at the end of an install; `skip`-with-reason when that file is absent); `--services` is added by change `docker-services` task 4.3.
 
 ## 4. Resolver
 

@@ -1,0 +1,24 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "claim": "The docs-site gate is internally contradictory: the plan says docs content can proceed before versions.toml, but the ordered change and its task gate block the entire docs-site change.",
+      "evidence": "Plan row #6 lists `docs-site` as blocked on \"the gate (Docusaurus pin)\" and the plan says \"Changes 5\u20139 each carry task 0.1 \u2014 \\\"the real-tree test passes, or stop\\\"\"; later the Risks section says \"change 6's content work does not [wait]\". The docs-site task packet also says task 0.1 runs \"Before any task below\" and stops if `versions.toml` is `todo`.",
+      "suggested_fix": "Split docs-site into pre-gate content tasks and post-gate Docusaurus/package/workflow tasks, or remove the claim that content can start before the gate."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "claim": "The handoff change is scheduled and accepted before later compass-required handoff content is appended, so its acceptance criterion is stale by construction.",
+      "evidence": "Change 3 says it is done when \"the nine items each have acceptance criteria\". Later the dependency section says `compass-vendored` task 5.1 appends to the same handoff document: \"`compass-vendored` 5.1 \u2192 `the-boss-handoff` 1.2 (the document it appends three items to) \u2014 so 3 must be done before 9's task 5.1\". The external compass task says it will \"add the three the-boss items ... to change `the-boss-handoff`'s document.\"",
+      "suggested_fix": "Either move final handoff acceptance after compass-vendored, or make Change 3 create a draft handoff and add a final handoff verification task after Change 9 appends the compass items."
+    }
+  ]
+}

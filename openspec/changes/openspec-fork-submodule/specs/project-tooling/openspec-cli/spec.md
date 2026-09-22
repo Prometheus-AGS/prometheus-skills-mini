@@ -23,6 +23,17 @@ The OpenSpec CLI SHALL be the Prometheus fork vendored at `tools/openspec`, pinn
 - **WHEN** the top level of `node_modules` is listed with `lstat` after install
 - **THEN** no entry is a symbolic link
 
+### Requirement: The installer never installs natively beside the full pack
+`scripts/install.mjs --home` SHALL exit 2 without writing anything, naming the markers found, when `lib/platform/full-pack.mjs` reports the full pack present; `--app-data <dir>` SHALL remain available on such a machine.
+
+#### Scenario: A full-pack machine refuses a native install
+- **WHEN** `node scripts/install.mjs --home` runs with an injected home containing `.prometheus/setup-state.json`
+- **THEN** it exits 2, writes nothing under the home, and its message names `setup-state.json`
+
+#### Scenario: App-data install is allowed on the same machine
+- **WHEN** `node scripts/install.mjs --app-data <tmpdir>` runs with the same injected home
+- **THEN** it exits 0 and the skills are copied under `<tmpdir>`
+
 ### Requirement: The vendored tree is exempt from the shell ban, and nothing else is
 `.kbd-orchestrator/constraints.md`'s no-shell gate SHALL exclude `tools/openspec` by pathspec, in a commit of its own, and SHALL continue to cover `lib/`, `scripts/`, `hooks/`, `rules/` and `skills/`.
 

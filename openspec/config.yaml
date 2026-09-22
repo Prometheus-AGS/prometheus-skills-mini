@@ -85,6 +85,17 @@ context: |
     revision of this clause framed pk and a planned Node-side writer as two
     sides of one on-disk contract; that Node-side writer was never built and
     is no longer planned, so pk's bundle format stands on its own.
+  - The mini pack is NEVER installed natively on a machine that already has the
+    full skill pack/system installed — not into $HOME/.agents, $HOME/.claude,
+    or any other host location, on any platform. On such a machine it may run
+    only inside the-boss application's own data directory, internal to that
+    application. A full install is recognised by any of: the prometheus CLI on
+    PATH, ~/.prometheus/setup-state.json, a kbd-process-orchestrator skill
+    directory under ~/.claude/skills or ~/.agents/skills, or an ai.prometheus.*
+    service unit. The installer refuses native installation when any marker is
+    present, the doctor reports a native copy beside a full install as a
+    failure, and the-boss's home-directory push is skipped with a visible
+    notice on such a machine. The two must never shadow each other's skills.
   - deep-research and adversarial-review are in scope, each as its own phase
     after platform-foundation. The Rust prometheus-research server is not
     shipped; deep-research runs in checkpoint mode only.

@@ -9,7 +9,7 @@ The operator requires the `compass` fork — a Rust code-graph workbench with a 
 - `lib/platform/compass.mjs`: resolve the binary (`COMPASS_BIN`, then `PATH`, refusing `.cmd`/`.ps1`), run `compass --version`, and expose `mcpServerConfig()` = `{ command: <resolved path>, args: ['serve', '--transport', 'stdio'] }` — the only configuration the pack ever emits.
 - Doctor check `mini.compass` (in change `pack-doctor`'s registry, added by this change): binary resolvable and version reported (`warn` when absent); **`fail`** when any MCP registration the pack can see (the harness `.mcp.json`, the-boss's exported config if present) launches compass with `--transport http` or configures `compass watch`.
 - `docs/guide/compass.md`: what it is, the stdio-only rule, the `.compass/config.toml` and `COMPASS_OUT` conventions, how the-boss ships it.
-- Handoff items (in change `the-boss-handoff`): the-boss downloads `compass-<target>.tar.gz` + `.sha256` from the fork's release at build time, verifies the digest, unpacks into `resources/compass/<target>/`, and registers the stdio server; the-boss's own doctor hosts `mini.compass`.
+- Handoff item 10 (already written by change `the-boss-handoff` from `analysis.md` Q11; this change verifies it against the vendored tree, it does not append): the-boss downloads `compass-<target>.tar.gz` + `.sha256` from the fork's release at build time, verifies the digest, unpacks into `resources/compass/<target>/`, and registers the stdio server; the-boss's own doctor hosts `mini.compass`.
 
 ## Capabilities
 

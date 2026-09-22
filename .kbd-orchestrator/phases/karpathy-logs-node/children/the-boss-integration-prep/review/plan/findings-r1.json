@@ -1,0 +1,26 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "`pack-doctor` is ordered before a file it must modify exists.",
+      "evidence": "The plan orders `pack-doctor` as #2 with `Blocked on: nothing`, but the `pack-doctor` task list includes `3.2 Write scripts/doctor.mjs; write skills/doctor/SKILL.md; extend scripts/install.mjs --doctor`. `scripts/install.mjs` is missing in `cited_paths`, and the plan itself says `openspec-fork-submodule` creates it: `5 before 7: docker-services extends scripts/install.mjs, which openspec-fork-submodule creates (its task 3.2)`. That same dependency also applies to `pack-doctor`.",
+      "suggested_fix": "Move `pack-doctor` after `openspec-fork-submodule`, or split `pack-doctor` so the `scripts/install.mjs --doctor` task is a later change explicitly blocked on `openspec-fork-submodule` task 3.2."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The plan uses raw `openspec` commands despite the project constraint requiring Windows-portable wrapper commands.",
+      "evidence": "The constraints state that the replaced `openspec validate \u2026` form `could never have run on Windows` and define `specs-valid` as `command: 'npm run spec:validate'`. The plan nevertheless records validation as ``openspec validate --all`: 21/21` and makes change 1 done when ``openspec list` shows only the nine open changes`.",
+      "suggested_fix": "Replace raw `openspec` command references with the project wrapper, e.g. `npm run spec:validate` for validation and a Node wrapper using `spawnNodeCli` for list/archive operations."
+    }
+  ]
+}

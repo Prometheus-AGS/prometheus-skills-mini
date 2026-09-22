@@ -1,7 +1,7 @@
 ## 1. Handoff document
 
 - [ ] 1.1 Write `docs/handoff/the-boss-integration.test.mjs` first: parse the document's `the-boss:` citations; each resolves at `10aa57f76c` in the local checkout (skip with reason when absent); `git grep -l "the-boss" -- "lib/*.mjs" "scripts/*.mjs" "hooks/*.mjs"` is empty (code only; `lib/doctor/contract.md` is documentation and is excluded).
-- [ ] 1.2 Write `docs/handoff/the-boss-integration.md` with the nine items, citing `assessment-evidence.md` excerpts.
+- [ ] 1.2 Write `docs/handoff/the-boss-integration.md` with the ten items (compass included from Q11), citing `assessment-evidence.md` excerpts.
 
 ## 2. Design brief
 

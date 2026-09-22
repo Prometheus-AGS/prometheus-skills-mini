@@ -333,3 +333,21 @@ configured — the two-service budget is enforced where compass is spawned, beca
 `:8080` on request. `rust-mcp-filesystem`'s cargo-dist question does not arise here: compass has its
 own release workflow. Candidates: `cand-326` (adapt: vendor + certify), `cand-327` (adopt: the fork's
 `compass-release.yml` as the artifact source), `cand-328` (reject: HTTP transport and `watch`).
+
+### Q12 (addendum, plan stage) — never natively beside the full pack: detection and enforcement
+
+Operator constraint, now binding in `openspec/config.yaml`. Evidence from this host (which has a full
+install): `~/.prometheus/setup-state.json` (keys `last_run`, `components`), `~/.prometheus/capabilities.json`,
+the `prometheus` CLI at `~/.local/bin/prometheus` (1.10.0), `~/.claude/skills/kbd-process-orchestrator/` and
+`~/.agents/skills/kbd-process-orchestrator/` (608 skill directories under `~/.claude/skills`), and ten
+`ai.prometheus.*` launch agents. **Decision:** `lib/platform/full-pack.mjs` `detectFullPack()` returns the
+list of markers found among: `prometheus` resolvable on PATH (`spawnExecutable`, `--version`),
+`<home>/.prometheus/setup-state.json` present, `<home>/.claude/skills/kbd-process-orchestrator` or
+`<home>/.agents/skills/kbd-process-orchestrator` present, and — platform-specific, read-only —
+`~/Library/LaunchAgents/ai.prometheus.*.plist` (macOS), `~/.config/systemd/user/ai.prometheus.*` (Linux);
+Windows has no native full-pack service form, so the first three markers decide there. Any marker →
+`present`. Enforcement lives in three places: `scripts/install.mjs` refuses native mode (`--home`) and
+allows only `--app-data <dir>` when present; the doctor check `mini.install-scope` fails when a mini skill
+copy exists under `<home>/.agents/skills` or `<home>/.claude/skills` while the full pack is present, and
+`copy-skills` refuses on the same condition; the-boss handoff item 2 skips the push and shows a notice.
+The rule is asymmetric on purpose: the full pack may live anywhere; the mini yields.

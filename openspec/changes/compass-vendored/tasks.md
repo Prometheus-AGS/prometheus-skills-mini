@@ -25,7 +25,7 @@ Each code task is test-first. Blocked until the operator tags a clean fork commi
 
 ## 5. Docs and handoff
 
-- [ ] 5.1 Write `docs/guide/compass.md`; add the three the-boss items (download-verify-unpack, stdio registration, host `mini.compass`) to change `the-boss-handoff`'s document.
+- [ ] 5.1 Write `docs/guide/compass.md`; **verify** handoff item 10 in `docs/handoff/the-boss-integration.md` (written by change `the-boss-handoff`) against the vendored tree — binary name, tarball naming, stdio args — and correct it only if the tree contradicts it (a one-line edit noted in this task, not an append).
 
 ## 6. Close
 

@@ -9,7 +9,7 @@ Every check SHALL be an object `{ id, title, run }` where `run(ctx)` resolves to
 
 #### Scenario: A fix is offered only where one exists
 - **WHEN** the registered checks are listed
-- **THEN** exactly `mini.skill-copies` declares an action, and its `fixId` resolves to an implemented fix
+- **THEN** exactly `mini.skill-copies` declares an action, and its `fixId` resolves to an implemented fix (`mini.install-scope` declares none: there is no safe automatic repair for a copy that should not exist — the summary names the files to remove)
 
 ### Requirement: Output is one JSON object per line, then a summary
 `scripts/doctor.mjs` SHALL print one JSON object per check on stdout, each on its own line, followed by one summary object `{ summary: true, pass, warn, fail, skip }`, and SHALL exit 0 when `fail` is 0 and 1 otherwise. `--human` SHALL render a table instead. Nothing else SHALL be written to stdout.
@@ -32,6 +32,17 @@ Every check SHALL be an object `{ id, title, run }` where `run(ctx)` resolves to
 #### Scenario: A hostile name is refused
 - **WHEN** a fixture pack contains `skills/../evil/`
 - **THEN** the fix reports `refused` and writes nothing
+
+### Requirement: The mini never installs natively beside the full pack, and the doctor enforces it
+`lib/platform/full-pack.mjs` SHALL detect a native full-pack install from any of: the `prometheus` CLI resolvable on `PATH`, `<home>/.prometheus/setup-state.json`, a `kbd-process-orchestrator` directory under `<home>/.claude/skills` or `<home>/.agents/skills`, or an `ai.prometheus.*` service unit. When the full pack is present, `mini.install-scope` SHALL `fail` if any mini skill copy exists under either home skills root, `mini.skill-copies` SHALL `skip` with the reason, and the `copy-skills` fix SHALL return `refused` and write nothing.
+
+#### Scenario: A native mini copy beside a full install is a failure
+- **WHEN** a temp home has `.prometheus/setup-state.json` and `.claude/skills/refine-ui/SKILL.md`
+- **THEN** `mini.install-scope` is `fail` naming the marker and the copy, and `--fix copy-skills` returns `refused` with zero files written
+
+#### Scenario: No full pack means the rule is silent
+- **WHEN** a temp home has none of the markers
+- **THEN** `mini.install-scope` is `pass` and `copy-skills` behaves as specified above
 
 ### Requirement: Optional components degrade, never fail
 `mini.docker`, `mini.service.*`, `mini.pk` and `mini.sycophancy-correction` SHALL report `warn` (with the next step) when their component is absent or unreachable, and `fail` only when the component is present and broken (a spawn that exits non-zero, a health endpoint answering non-200).

@@ -101,6 +101,11 @@ that next phase; this child decides and prepares, and builds what belongs in the
 - Exactly two resident services; no third daemon or port. Node LTS is the only script runtime; no `.sh`,
   no `.py`; `spawn` with `shell: false`; paths via `path.join`/`os.homedir()`/`os.tmpdir()`; copies, never
   symlinks. Everything keeps working with both services down.
+- **The mini is never installed natively on a machine that has the full skill pack** (operator constraint,
+  2026-09-22, now `openspec/config.yaml`): on such a machine it runs only inside the-boss's application
+  data directory. The installer refuses, the doctor fails a native copy beside a full install, and the-boss
+  skips its home-directory push with a visible notice. Markers: the `prometheus` CLI on PATH,
+  `~/.prometheus/setup-state.json`, a `kbd-process-orchestrator` skill directory, an `ai.prometheus.*` unit.
 - `.prometheus/decisions.md` records each decision with its reason; `gotchas.md` records each learned
   constraint. `versions.toml` is read before any dependency decision and is not edited by agents.
 

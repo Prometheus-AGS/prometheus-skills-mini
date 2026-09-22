@@ -45,6 +45,7 @@ minimum = ">=22"          # must equal package.json engines.node, exactly
 |---|---|
 | The file exists | `todo` with "operator has not authored versions.toml" — never a vacuous pass |
 | Every `[submodules]` path is a gitlink in `HEAD` at that commit | names the path, the file's commit and the tree's commit |
+| Every `[submodules]` value is a commit sha (7–40 hex digits) | names the path and the value; an empty or malformed pin would prefix-match every commit |
 | Every gitlink **under `tools/`** is named by `[submodules]` | names the unlisted path. A gitlink elsewhere in the tree is not this file's business |
 | No table declares the same key twice | parsing raises; a duplicate is never silently the last value |
 | `[node] minimum` equals `package.json` `engines.node` | names both values |

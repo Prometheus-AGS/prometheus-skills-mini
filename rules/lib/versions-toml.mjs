@@ -113,6 +113,13 @@ export function parseVersionsToml(text) {
   return parsed;
 }
 
+// A pin must be a plausible git object name. Prefix matching means an empty pin
+// would match EVERY commit and an incomplete one would match a whole family, so
+// a malformed pin is rejected rather than allowed to agree with anything — the
+// same vacuous pass the absent-file `todo` exists to prevent, reached through a
+// different door. Seven hex digits is git's own short-sha floor.
+const PIN = /^[0-9a-f]{7,40}$/;
+
 const samePin = (pinned, actual) =>
   typeof actual === 'string' && actual.length >= pinned.length && actual.startsWith(pinned);
 
@@ -140,6 +147,12 @@ export function compareToTree(parsed, { lsTree, listGitlinks, packageJson }) {
   }
 
   for (const [path, pinned] of Object.entries(submodules)) {
+    if (typeof pinned !== 'string' || !PIN.test(pinned)) {
+      found.push(
+        `${path}: ${JSON.stringify(pinned)} is not a commit sha (7–40 hex digits); it cannot pin anything`,
+      );
+      continue;
+    }
     const actual = lsTree(path);
     if (actual === null) {
       found.push(`${path}: versions.toml pins ${pinned}, but HEAD has no gitlink there (not a gitlink)`);

@@ -15,6 +15,10 @@
 - **WHEN** an `[images]` entry has neither `digest` nor `built_from_submodule = true`
 - **THEN** the test fails naming the entry
 
+#### Scenario: A pin that is not a commit sha cannot match anything
+- **WHEN** a `[submodules]` value is empty or is not 7–40 hex digits
+- **THEN** the test fails naming the path and the value, rather than prefix-matching every commit
+
 #### Scenario: Submodule completeness is scoped to tools/
 - **WHEN** `HEAD` has a gitlink under `tools/` that `[submodules]` does not name
 - **THEN** the test fails naming that path; a gitlink outside `tools/` is not reported

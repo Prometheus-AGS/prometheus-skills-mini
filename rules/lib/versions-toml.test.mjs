@@ -196,6 +196,25 @@ test('an inline table without its closing brace is refused, and says so', () => 
   }
 });
 
+// Prefix matching made an empty pin match EVERY commit, so a versions.toml with
+// a blank sha reported full agreement with the tree — a vacuous pass reached
+// through a different door than the absent-file case. Caught by round 4.
+test('a pin that is not a commit sha is reported, never matched by prefix', () => {
+  for (const bad of ['', 'abc', 'zzz not a sha', 'ABB6745']) {
+    const parsed = parseVersionsToml(
+      `[node]\nminimum = ">=22"\n[submodules]\n"tools/x" = ${JSON.stringify(bad)}\n`,
+    );
+
+    const found = compareToTree(parsed, {
+      lsTree: tree({ 'tools/x': 'deadbeef1234567890abcdef1234567890abcdef' }),
+      packageJson: { engines: { node: '>=22' } },
+    });
+
+    assert.equal(found.length, 1, `${JSON.stringify(bad)} should be refused`);
+    assert.match(found[0], /not a commit sha/);
+  }
+});
+
 test('every disagreement is reported, not just the first', () => {
   const parsed = parseVersionsToml(
     '[node]\nminimum = ">=20"\n[submodules]\n"tools/a" = "aaaaaaa"\n"tools/b" = "bbbbbbb"\n',

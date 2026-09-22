@@ -1,0 +1,26 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "rules/lib/versions-toml.mjs",
+      "line": 66,
+      "claim": "Duplicate keys inside inline tables are silently overwritten instead of raising a parse error.",
+      "evidence": "The spec added in `openspec/changes/review-housekeeping/specs/project-tooling/versions-toml/spec.md` says \"A duplicate key is a parse error, not a silent overwrite\" and docs/versions-toml.md states \"No table declares the same key twice\"; however `inlineTable()` assigns `table[key(pair.slice(0, at), line)] = unquote(...)` without checking whether that key already exists, so `{ digest = \"a\", digest = \"b\" }` keeps the last value.",
+      "suggested_fix": "In `inlineTable()`, compute the parsed key into a variable and raise with `ERR(line, ...)` if it already exists before assigning."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "rules/lib/versions-toml.mjs",
+      "line": 99,
+      "claim": "Malformed inline tables missing a closing brace can be accepted as valid input.",
+      "evidence": "The parser claims unsupported or malformed TOML raises (docs/versions-toml.md: \"anything richer is a parse error rather than a silent misread\"), but `parseVersionsToml()` routes any value that merely `startsWith('{')` to `inlineTable()`, and `inlineTable()` blindly does `raw.trim().slice(1, -1)` without verifying the value ends with `}`; for example `{ image = \"y:1\" ` is parsed as a valid inline table.",
+      "suggested_fix": "Require `value.trim().startsWith('{') && value.trim().endsWith('}')` before parsing an inline table, and raise on a leading `{` without a trailing `}`."
+    }
+  ]
+}

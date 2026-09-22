@@ -26,8 +26,8 @@ Each code task is test-first: write the `node:test` file, run it and see it fail
 
 ## 5. Events — `lib/karpathy/event.mjs`
 
-- [ ] 5.1 Write `lib/karpathy/event.test.mjs`: the hook event id equals `kpm-` + the first 32 hex of SHA-256 over the seven NUL-joined parts, an absent part as the empty string, and reproduces the 1.1 fixture's `eventId` `kpm-d6f1c4a3b56523b3673b20a41c84abe3` from that fixture's event fields plus project id `78f44ea7-639e-4a07-a792-01eeb9d2a48a` (the receipt does not carry the project id; it is the waypoint's), while the `project.json` id `prometheus-skills-mini` produces a different event id; `KBD_TASK_CLASS` lower-cased, default `product`; `KBD_TASK_ELAPSED_HOURS` non-numeric refused; `--input -` reads stdin, and CRLF input parses.
-- [ ] 5.2 Write `lib/karpathy/event.mjs`. `git rev-parse HEAD` and the touched-file list go through `spawnExecutable('git', …)`; a repository with no commits yields `commitSha: null`, not an error.
+- [x] 5.1 Write `lib/karpathy/event.test.mjs`: the hook event id equals `kpm-` + the first 32 hex of SHA-256 over the seven NUL-joined parts, an absent part as the empty string, and reproduces the 1.1 fixture's `eventId` `kpm-d6f1c4a3b56523b3673b20a41c84abe3` from that fixture's event fields plus project id `78f44ea7-639e-4a07-a792-01eeb9d2a48a` (the receipt does not carry the project id; it is the waypoint's), while the `project.json` id `prometheus-skills-mini` produces a different event id; `KBD_TASK_CLASS` lower-cased, default `product`; `KBD_TASK_ELAPSED_HOURS` non-numeric refused; `--input -` reads stdin, and CRLF input parses.
+- [x] 5.2 Write `lib/karpathy/event.mjs`. `git rev-parse HEAD` and the touched-file list go through `spawnExecutable('git', …)`; a repository with no commits yields `commitSha: null`, not an error.
 
 ## 6. Receipts — `lib/karpathy/receipt.mjs`
 

@@ -129,6 +129,18 @@ A receipt SHALL be written to `.prometheus/progress-memory-receipts/<sha256(even
 - **WHEN** an event is built for a boundary
 - **THEN** `eventId` is `kpm-` plus the first 32 hex characters of SHA-256 over project id, run id, boundary, phase id, change id, task id and `complete`, joined by a NUL byte, with an absent value as the empty string
 
+#### Scenario: A hook event lists what changed, not what the recorder itself writes
+- **WHEN** a hook event is built in a repository whose changed or untracked paths include `.prometheus/session-log.md` or anything under `.prometheus/progress-memory-receipts/` or `.prometheus/memory-outbox/`
+- **THEN** `touchedFiles` omits those, is sorted, holds at most 500 entries, and is read from NUL-separated git output so a path containing a newline survives
+
+#### Scenario: KBD_HOOK_NAME names the subject
+- **WHEN** `KBD_HOOK_NAME` is `change-9/2.2` or `change-9:2.2`
+- **THEN** a task boundary records change `change-9` and task `2.2`, a change boundary records `change-9` and no task, and a phase boundary records neither; an absent part comes from the active path
+
+#### Scenario: A repository git cannot read is recorded, not refused
+- **WHEN** git is absent, cannot be spawned, or has no commits
+- **THEN** the event is built with `commitSha: null` and no touched files
+
 #### Scenario: The receipt is written before and after delivery
 - **WHEN** a new event is recorded
 - **THEN** a receipt with `complete: false` exists before the `pk` call starts, and is replaced by the final receipt after it

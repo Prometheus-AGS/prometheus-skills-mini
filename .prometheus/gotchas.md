@@ -313,3 +313,20 @@ active path already advanced. Two separate defects:
 **Check:** a non-zero `kbd_hooks_fire` during a child phase is not evidence that the transition failed.
 Verify with `prometheus kbd status --json` → `phases.<child>.changes.<id>.tasks.<id>.status` before
 reacting. Never re-run a transition on the strength of a hook's complaint.
+
+## 2026-09-22 — adversarial-review packets review the working tree, not the change
+
+`build-review-packet.sh` (~line 236) builds its diff with `git diff HEAD -- .`, which shows only
+UNCOMMITTED changes. In diff mode the target is a *change* whose work is spread across several
+commits, so the judge sees whatever happens to be unstaged at that moment — and nothing at all if
+you commit before reviewing. Rounds 1 and 2 of `review-housekeeping` reviewed ~6 KB of working-tree
+edits against a 55 KB change and reported BLOCK both times on that sliver; round 3, rebuilt on the
+cumulative range, immediately found two CRITICALs in code the earlier rounds had never been shown.
+
+**Until the skill is fixed:** after building the packet, overwrite `.diff` with
+`git diff <first-commit>~1..HEAD`, excluding `.kbd-orchestrator/phases/*/review/*` so the judge is
+not primed by the previous judge’s findings. Record the basis in the packet.
+
+The skill’s own docs say diff mode “reviews the cumulative Git diff since the last accepted local
+review receipt”, so this is a script/contract mismatch, not intended behaviour. Belongs upstream in
+`~/.claude/skills/adversarial-review`.

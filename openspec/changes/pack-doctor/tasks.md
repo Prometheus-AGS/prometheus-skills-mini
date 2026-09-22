@@ -38,14 +38,16 @@ Each code task is test-first. Runnable before its dependencies land: each depend
 
 ### 4.1 — the doctor run on this host
 
+**Re-pasted from the FINAL implementation** (round 3 of the review caught that the first paste predated three rounds of fixes and documented behaviour that no longer existed — it still showed surreal-memory unreachable at the invented `:8000/health`).
+
 ```
 {"id":"mini-node-version","status":"pass","summary":"Node 24.16.0"}
 {"id":"mini-versions-toml","status":"skip","summary":"versions.toml has not been authored yet"}
-{"id":"mini-submodules","status":"pass","summary":"1 submodule(s) are checked out"}
+{"id":"mini-submodules","status":"warn","summary":"1 submodule(s) are checked out but not built"}
 {"id":"mini-pk","status":"pass","summary":"pk 1.9.0"}
 {"id":"mini-sycophancy-correction","status":"warn","summary":"sycophancy-correction is not installed"}
 {"id":"mini-docker","status":"skip","summary":"Docker detection is not available yet"}
-{"id":"mini-service-surreal-memory","status":"warn","summary":"Not reachable at http://localhost:8000/health"}
+{"id":"mini-service-surreal-memory","status":"pass","summary":"Up at http://localhost:23001/mcp/sse"}
 {"id":"mini-service-liter-llm","status":"pass","summary":"Up at http://localhost:4000/health"}
 {"id":"mini-skill-copies","status":"skip","summary":"The full skill pack is installed here, so the mini never copies into the home directory"}
 {"id":"mini-kbd-state","status":"warn","summary":"The prometheus CLI is not available; the projection reports karpathy-logs-node"}
@@ -54,11 +56,11 @@ Each code task is test-first. Runnable before its dependencies land: each depend
 EXIT=1
 ```
 
-Every status is the real state of this machine, and each one exercises a different branch: three `skip`s for dependencies that have not landed (`versions.toml`, `docker.mjs`) or a rule that forbids the action; three `warn`s for absent optional components; four `pass`es including a live probe of the running liter-llm gateway.
+Every status is this machine’s real state, and each exercises a different branch. The two pk-related lines are the ones worth reading together: `mini-submodules` WARNS that the vendored pk is not built in this tree, while `mini-pk` PASSES on the pk that resolves — which is the FULL PACK’s `~/.local/bin/pk`, a different install. Two checks, two genuinely different questions; collapsing them would have hidden a real gap.
 
-**The `fail` is a genuine violation, not a fixture.** 42 mini skill copies are installed under `~/.agents/skills` and `~/.claude/skills` on a machine that has the full pack. Verified it is not a name collision: `refine-ui` and `scaffold-react-vite` appear nowhere in `prometheus-skill-pack`, so they came from the mini; `artifact-refiner` and `karpathy-progress-memory` exist in BOTH (`skills/imported/`, `skills/process/`) and are actively shadowing. Not repaired — the check offers no fix by design, and A-11 puts a deletion under the user’s home with the operator. Recorded in `.prometheus/gotchas.md`.
+**The one `fail` is a genuine violation, not a fixture.** 42 mini skill copies are installed under `~/.agents/skills` and `~/.claude/skills` on a machine that has the full pack. Verified it is not a name collision: `refine-ui` and `scaffold-react-vite` appear nowhere in `prometheus-skill-pack`, so they came from the mini; `artifact-refiner` and `karpathy-progress-memory` exist in BOTH (`skills/imported/`, `skills/process/`) and are actively shadowing. Not repaired — the check offers no fix by design, and A-11 puts a deletion under the user’s home with the operator. Recorded in `.prometheus/gotchas.md`.
 
-Also verified against reality rather than assumed: liter-llm’s `/health` answers 200 while `/v1/models` answers 401, which is why the check probes `/health` and treats 401 as up-and-requires-a-key.
+Endpoints were verified against the running services rather than assumed: surreal-memory answers on `:23001/mcp/sse` and SurrealDB on `:28000` (both 200); liter-llm’s `/health` answers 200 while `/v1/models` answers 401.
 
 ## 5. Review findings (diff mode)
 

@@ -348,3 +348,13 @@ Two further mismatches with the `pack-doctor` proposal’s sketch:
 - A fix returns `{ status: fixed | requires_relaunch }` or `{ status: failed, message }`. **There is no `refused`**, which `pack-doctor` requires for `copy-skills` on a full-pack machine.
 
 `the-boss-handoff`’s proposal already names the correct mechanism — the-boss **spawns `scripts/doctor.mjs` and maps its JSON lines** to its own check results. That is an adapter on the-boss side, which is where the closed union lives. The mini therefore owns a STABLE JSON LINE FORMAT, not a mirror of a TypeScript type it cannot satisfy.
+
+## 2026-09-22 — this development machine violates the mini’s own install-scope rule
+
+`node scripts/doctor.mjs` on this box reports `mini-install-scope: fail` — **42 mini skill copies installed natively beside a full skill-pack install**. This is not a test fixture; it is the real machine, and the first time the rule has been checked mechanically.
+
+Verified it is a true finding, not a name collision: `refine-ui` and `scaffold-react-vite` exist under `~/.agents/skills/` and `~/.claude/skills/` and appear NOWHERE in `prometheus-skill-pack` (searched to depth 4). They came from the mini. Meanwhile the full pack is unambiguously installed — `prometheus` on PATH, `~/.prometheus/setup-state.json`, `kbd-process-orchestrator` under both skills roots, and 14 `ai.prometheus.*` LaunchAgents.
+
+Some names (`artifact-refiner`, `karpathy-progress-memory`) DO exist in both packs, at `skills/imported/` and `skills/process/` respectively. Those are the shadowing cases the rule exists to prevent: whichever copy a tool finds first wins, silently.
+
+**Not repaired.** `mini-install-scope` deliberately offers no fix (deleting a user’s files is not an idempotent copy, and which copy is authoritative is not mechanically decidable), and A-11 puts an irreversible deletion under the user’s home with the operator. The doctor names every directory; the decision is the operator’s.

@@ -260,3 +260,19 @@ parse is worse than one that refuses to load.
 **Proposed pins are proposals.** `docs/versions-toml.md` lists them from `analysis.md` Q1/Q1a and says so
 plainly — including that `bc348fff` is the `sycophancy-correction` **audit baseline**, not the pin, and
 that the `compass` pin must be a tag on a clean commit rather than the dirty side-branch checkout.
+
+## 2026-09-22 — the doctor owns its contract; the-boss adapts it
+
+**Decision.** `scripts/doctor.mjs` emits the MINI’s JSON line format, documented in `lib/doctor/contract.md` against the-boss’s shape. It does not mirror the-boss’s `DoctorCheck` type.
+
+**Why.** The `pack-doctor` proposal originally required a field-for-field mirror so the-boss could “host it rather than duplicating it”. Verified false at `the-boss@10aa57f76c`: `DoctorCheckRegistry` is exhaustive over a closed 31-id union (“a catalog entry without an implementation is a compile error”), `DoctorDomain` has no `mini`, ids are `domain-thing` not `domain.thing`, `detail` is a catalog-declared typed variant, there is no `summary` field, and there is no `refused` fix status. `the-boss-handoff` already specified the real mechanism and contradicted the proposal: the-boss spawns this script and maps its lines. The operator approved the amendment before implementation.
+
+**Consequence.** The doctor’s stdout is a cross-process interface. Ids, the four statuses, the three fix statuses and the line shape are stable; adding a check or an optional field is compatible, renaming one is not.
+
+## 2026-09-22 — fixes are limited to idempotent copies
+
+**Decision.** Exactly one check offers a fix (`mini-skill-copies` → `copy-skills`). Everything else reports the next step and offers none.
+
+**Why.** `copy-skills` writes under the user’s home — the one real trust boundary here (A-3) — and a copy is idempotent, reversible in effect, and verifiable byte for byte. The tempting second fix, removing the mini copies that `mini-install-scope` finds, is a DELETION under the user’s home: not idempotent, not obviously reversible, and which copy is authoritative is not mechanically decidable. A-11 puts that with the operator. So the check names every offending directory and stops.
+
+**Evidence this is not theoretical.** Run on this development machine, `mini-install-scope` FAILS: 42 mini skill copies sit beside a full-pack install. `refine-ui` and `scaffold-react-vite` exist in neither the full pack nor anywhere but the mini, while `artifact-refiner` and `karpathy-progress-memory` exist in both and are actively shadowing. See `.prometheus/gotchas.md`.

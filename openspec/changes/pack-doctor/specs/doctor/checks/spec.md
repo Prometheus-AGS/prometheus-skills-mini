@@ -46,6 +46,16 @@ This is the MINI’S OWN contract, not a mirror of the-boss’s. `the-boss@10aa5
 - **WHEN** a temp home has `.prometheus/setup-state.json` and `.claude/skills/refine-ui/SKILL.md`
 - **THEN** `mini-install-scope` is `fail` naming the marker and the copy, and `--fix copy-skills` returns `refused` with zero files written
 
+Stale copies — skills a previous mini version installed and this one no longer ships — SHALL be found through an install manifest at `<home>/.prometheus-mini/installed-skills.json` (`{ "skills": […] }`), never by enumerating the home skills roots. Those roots are SHARED: on a developer machine they hold hundreds of third-party skills (612 against this pack’s 22, measured), so enumeration would report almost all of them as mini copies. Without a record of what was written, "this directory came from the mini" is not decidable from the filesystem; an absent or malformed manifest SHALL yield nothing rather than a guess.
+
+#### Scenario: A stale copy is found through the manifest
+- **WHEN** the full pack is present, `<home>/.prometheus-mini/installed-skills.json` names `retired-skill`, and `<home>/.claude/skills/retired-skill/` exists while this pack no longer ships that name
+- **THEN** `mini-install-scope` is `fail` naming that directory
+
+#### Scenario: An unrelated skill is never called a mini copy
+- **WHEN** a skill this pack does not ship, and no manifest names, sits under a home skills root
+- **THEN** `mini-install-scope` does not report it
+
 #### Scenario: No full pack means the rule is silent
 - **WHEN** a temp home has none of the markers
 - **THEN** `mini-install-scope` is `pass` and `copy-skills` behaves as specified above

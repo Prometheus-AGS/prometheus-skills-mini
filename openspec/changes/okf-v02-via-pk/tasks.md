@@ -48,5 +48,14 @@
 
 ## 6. Close
 
-- [ ] 6.1 `node --test`, `node rules/build.mjs --check`, `npx --no-install openspec validate --all --no-interactive`.
-- [ ] 6.2 Write the evidence entry required by the last scenario: the pinned commit, the ancestor check's output, and MET or NOT MET.
+- [x] 6.1 `node --test`, `node rules/build.mjs --check`, `npx --no-install openspec validate --all --no-interactive`.
+  - 367 tests, 365 pass, 0 fail, 2 skipped (Windows-only, expected on this macOS host); `node rules/build.mjs
+    --check`: 21 files current; `openspec validate --all`: 12/12 passed. `npm run check` and `npm run
+    spec:validate` (the constraint-gate commands) both re-run clean too.
+- [x] 6.2 Write the evidence entry required by the last scenario: the pinned commit, the ancestor check's output, and MET or NOT MET.
+  - `.kbd-orchestrator/phases/karpathy-logs-node/evidence/okf-v02-via-pk.md`. Verdict: **MET**. Caught and
+    fixed a real gap while writing it: task 4.2's test used four phrases I had paraphrased rather than the
+    spec's own exact wording ("the Node implementation", "log.md is rendered from it", "Never append to
+    log.md", "events.jsonl is the append-only truth") — corrected to the spec-canonical strings and
+    re-mutation-checked against the genuinely pre-amendment `config.yaml` (via `git show <commit>:path`,
+    not `git stash`, which reported nothing to stash since the amendment was already committed).

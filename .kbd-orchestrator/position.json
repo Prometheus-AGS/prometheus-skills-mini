@@ -2,26 +2,27 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 180,
-  "derivedRevision": 180,
+  "sourceRevision": 346,
+  "derivedRevision": 346,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 180
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 346
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-22T01:27:11.427805Z",
+  "updatedAt": "2026-09-22T10:57:40.431314Z",
   "cursor": [
     "karpathy-logs-node",
+    "the-boss-integration-prep",
     "execute",
-    "karpathy-progress-recorder",
-    "1.2"
+    "pack-doctor",
+    "1.1"
   ],
   "root": {
     "type": "phase",
     "id": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
     "status": "ready",
     "progress": {
-      "done": 9,
-      "total": 11
+      "done": 12,
+      "total": 20
     },
     "children": [
       {
@@ -61,10 +62,104 @@
         "canonicalId": "karpathy-logs-node",
         "status": "IN_PROGRESS",
         "progress": {
-          "done": 1,
+          "done": 3,
           "total": 3
         },
         "children": [
+          {
+            "type": "phase",
+            "id": "the-boss-integration-prep",
+            "canonicalId": "the-boss-integration-prep",
+            "status": "PENDING",
+            "progress": {
+              "done": 1,
+              "total": 9
+            },
+            "children": [
+              {
+                "type": "change",
+                "id": "review-housekeeping",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 7,
+                  "total": 7
+                }
+              },
+              {
+                "type": "change",
+                "id": "pack-doctor",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 9
+                }
+              },
+              {
+                "type": "change",
+                "id": "the-boss-handoff",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 4
+                }
+              },
+              {
+                "type": "change",
+                "id": "open-port-phases",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 4
+                }
+              },
+              {
+                "type": "change",
+                "id": "openspec-fork-submodule",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 15
+                }
+              },
+              {
+                "type": "change",
+                "id": "docs-site",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 8
+                }
+              },
+              {
+                "type": "change",
+                "id": "docker-services",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 14
+                }
+              },
+              {
+                "type": "change",
+                "id": "sycophancy-correction-vendored",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 11
+                }
+              },
+              {
+                "type": "change",
+                "id": "compass-vendored",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 10
+                }
+              }
+            ],
+            "annotations": []
+          },
           {
             "type": "change",
             "id": "okf-v02-writer",
@@ -77,18 +172,18 @@
           {
             "type": "change",
             "id": "karpathy-progress-recorder",
-            "status": "IN_PROGRESS",
+            "status": "COMPLETE",
             "progress": {
-              "done": 18,
+              "done": 34,
               "total": 34
             }
           },
           {
             "type": "change",
             "id": "okf-v02-via-pk",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
+              "done": 9,
               "total": 9
             }
           }

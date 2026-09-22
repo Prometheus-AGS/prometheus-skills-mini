@@ -2,35 +2,37 @@
   "schemaVersion": "5",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 180,
-  "derivedRevision": 180,
+  "sourceRevision": 346,
+  "derivedRevision": 346,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 180
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 346
   },
   "conflictCount": 0,
   "projectId": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
   "runId": "platform-foundation-20260921T101006Z",
   "path": [
-    "karpathy-logs-node"
+    "karpathy-logs-node",
+    "the-boss-integration-prep"
   ],
   "phaseIds": [
-    "karpathy-logs-node"
+    "karpathy-logs-node",
+    "the-boss-integration-prep"
   ],
-  "activePhaseId": "karpathy-logs-node",
-  "activePhase": "karpathy-logs-node",
+  "activePhaseId": "the-boss-integration-prep",
+  "activePhase": "the-boss-integration-prep",
   "phase": "karpathy-logs-node",
   "parentPhase": "karpathy-logs-node",
-  "childPointer": null,
-  "change": "karpathy-progress-recorder",
-  "currentTask": "1.2",
+  "childPointer": "the-boss-integration-prep",
+  "change": "pack-doctor",
+  "currentTask": "1.1",
   "status": "ready",
   "completionMetric": "implementation",
-  "implementationCompleted": 9,
-  "implementationTotal": 11,
+  "implementationCompleted": 12,
+  "implementationTotal": 20,
   "planRevision": 1,
-  "revision": 180,
-  "exactNextCommand": "/kbd-assess karpathy-logs-node",
-  "nextChange": "karpathy-progress-recorder",
-  "nextTask": "1.2",
-  "updatedAt": "2026-09-22T01:27:11.427805Z"
+  "revision": 346,
+  "exactNextCommand": "/kbd-execute the-boss-integration-prep",
+  "nextChange": "pack-doctor",
+  "nextTask": "1.1",
+  "updatedAt": "2026-09-22T10:57:40.431314Z"
 }

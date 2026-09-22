@@ -21,8 +21,8 @@ Each code task is test-first: write the `node:test` file, run it and see it fail
 
 ## 4. Canonical state — `lib/karpathy/canonical-state.mjs`
 
-- [ ] 4.1 Write `lib/karpathy/canonical-state.test.mjs` with an injected `spawn` and a temp root: CLI present → `source: "cli"`; CLI absent → `source: "projection"` read from `current-waypoint.json`; `projectId` never read from `project.json` (fixture gives the two files different ids); neither source → a typed error naming what is missing; CLI present and any of the five disagreements of `canonical_validate` (`:283-313`) → a typed error: a different `runId`, an unknown phase, an unknown change, an unknown task, a different status; CLI resolves but exits non-zero, times out or prints non-JSON → `source: "projection"`; projection mode skips the agreement check.
-- [ ] 4.2 Write `lib/karpathy/canonical-state.mjs`. The CLI is reached through `lib/platform/spawn.mjs` `spawnExecutable`.
+- [x] 4.1 Write `lib/karpathy/canonical-state.test.mjs` with an injected `spawn` and a temp root: CLI present → `source: "cli"`; CLI absent → `source: "projection"` read from `current-waypoint.json`; `projectId` never read from `project.json` (fixture gives the two files different ids); neither source → a typed error naming what is missing; CLI present and any of the five disagreements of `canonical_validate` (`:283-313`) → a typed error: a different `runId`, an unknown phase, an unknown change, an unknown task, a different status; CLI resolves but exits non-zero, times out or prints non-JSON → `source: "projection"`; projection mode skips the agreement check.
+- [x] 4.2 Write `lib/karpathy/canonical-state.mjs`. The CLI is reached through `lib/platform/spawn.mjs` `spawnExecutable`.
 
 ## 5. Events — `lib/karpathy/event.mjs`
 

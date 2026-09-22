@@ -16,7 +16,7 @@ The recorder SHALL be `scripts/record-progress.mjs`, an entry point that parses 
 - **THEN** every relative import resolves inside `lib/karpathy/` or `lib/platform/`
 
 ### Requirement: Neither `pk` nor the `prometheus` CLI is required
-The recorder SHALL complete with both binaries absent. A missing, failing or timed-out `pk` SHALL yield the result `degraded`. Canonical KBD state SHALL be read from `prometheus kbd status --json` when that executable resolves, and otherwise from `.kbd-orchestrator/current-waypoint.json`; the receipt SHALL record which source was used.
+The recorder SHALL complete with both binaries absent. A missing, failing or timed-out `pk` SHALL yield the result `degraded`. Canonical KBD state SHALL be read from `prometheus kbd status --json` — the executable named by `PROMETHEUS_BIN` when set, as in the source pack, else `prometheus` — when that call succeeds, and otherwise from `.kbd-orchestrator/current-waypoint.json`; the receipt SHALL record which source was used.
 
 #### Scenario: Both binaries absent
 - **WHEN** a hook boundary is recorded on a machine where neither `pk` nor `prometheus` resolves
@@ -24,7 +24,11 @@ The recorder SHALL complete with both binaries absent. A missing, failing or tim
 
 #### Scenario: The projection supplies identity
 - **WHEN** canonical state is read from `current-waypoint.json`
-- **THEN** `projectId`, `runId` and the active phase come from that file, and never from `project.json`, whose `projectId` is a different value
+- **THEN** `projectId`, `runId` and the active phase come from that file, and never from `.kbd-orchestrator/project.json`, whose `projectId` is a different value. (There are two files of that name: `.prometheus/project.json` carries the canonical id and reproduces the recorded event id; `.kbd-orchestrator/project.json` does not.)
+
+#### Scenario: Identity does not depend on whether the CLI is installed
+- **WHEN** state is read once through the CLI and once with the CLI missing, in the same project
+- **THEN** both give the same project id, run id and active phase, so the same boundary gets the same event id either way
 
 #### Scenario: No identity at all is a refusal, not a degradation
 - **WHEN** neither source yields a project id, a run id and an active phase
@@ -35,7 +39,7 @@ The recorder SHALL complete with both binaries absent. A missing, failing or tim
 - **THEN** each of the five cases exits 2 and nothing is written, as `canonical_validate` does (`record-progress.py:283-313`)
 
 #### Scenario: A CLI that resolves but fails is treated as absent
-- **WHEN** the CLI resolves and exits non-zero, times out, or prints something that is not JSON
+- **WHEN** the CLI resolves and exits non-zero — even while printing well-formed JSON — or times out, or prints something that is not a JSON object, or cannot be spawned
 - **THEN** canonical state is read from the projection, and the receipt's `canonicalState` is `projection` — a broken CLI is not allowed to be worse than a missing one
 
 #### Scenario: canonicalState is this pack's extension, and harmless to the source pack

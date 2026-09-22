@@ -1,0 +1,35 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment's external provenance for the source pack is contradictory, so downstream stages cannot reliably reproduce the external claims it bases planning on.",
+      "evidence": "assessment.md says: \"`P` = `prometheus-skill-pack` (`git@github.com:Prometheus-AGS/prometheus-skill-pack.git`)\". The attached evidence sidecar says: \"**P** git@github.com:Prometheus-AGS/prometheus-skill-system.git @ `fcccc9d` (/Users/gqadonis/Projects/prometheus/prometheus-skill-pack)\".",
+      "suggested_fix": "Use one canonical repository URL/name and commit for `P` in both the assessment and evidence sidecar, and include the exact commit in assessment.md."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment violates the goal that every count cites the command that produced it.",
+      "evidence": "The goals require: \"Every count cites the command that produced it.\" assessment.md promises: \"Every count below names the command that produced it.\" But multiple counts have no command, e.g. \"2 crates, one binary `sycophancy-correction`, 3,889 Rust LOC (`wc -l` on `**/*.rs`), 223 packages in `Cargo.lock`, 14 tests\" gives no command for the 223 packages or 14 tests; and \"Source `skills/research/deep-research/`: 32 `.sh`, 12 `.py`, 0 `.mjs`, 0 symlinks\" gives no command at all.",
+      "suggested_fix": "Add the exact cross-platform command or read-only inspection method for each numeric count, or remove counts that cannot be reproduced."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "Several absence claims about external repositories are not supported by excerpts or named search commands despite the assessment saying external claims are verifiable from the evidence packet.",
+      "evidence": "assessment.md says external citations are \"reproduced verbatim \u2014 file, line range, and the lines themselves\" and count claims name commands. But it asserts absence/search results such as \"`the-boss` has zero references to `rust-mcp-filesystem`, `sycophancy-correction`, `pk`, `liter-llm`, `surreal-memory`\" and \"No skills-specific check and no repair action exist\" without a quoted excerpt covering the full search space or a named command.",
+      "suggested_fix": "For each external absence claim, include the exact search command and pinned tree root, or add excerpts/search output proving the absence."
+    }
+  ],
+  "checked_classes": []
+}

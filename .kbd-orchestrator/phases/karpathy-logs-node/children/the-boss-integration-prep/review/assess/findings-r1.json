@@ -1,0 +1,34 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment treats extensive `the-boss` integration details as verified codebase facts even though the packet provides no supporting tree entries and the cited-path audit marks those files missing.",
+      "evidence": "The artifact claims: \"Built-in skills already ship and reconcile on every boot: `resources/skills/` ... `src/main/utils/builtinSkills.ts:31` ... `SkillService.ts:772` ... `AiService.ts:396-417`\" and later says the handoff points are known exactly: \"`builtinSkills.ts:31`, `SkillService.reconcileSkills` `:772`, `systemSkillSources.ts:25-27`, `AiService.ts:396-417`, `doctor/registry.ts`...\". But the packet file tree contains no `src/`, `resources/`, or `the-boss` tree, and `cited_paths` explicitly reports `MISSING  AiService.ts`, `MISSING  SkillService.ts`, `MISSING  builtinSkills.ts`, `MISSING  src/main/utils/builtinSkills.ts`, `MISSING  doctor/registry.ts`, and related paths.",
+      "suggested_fix": "Attach the inspected `the-boss` file tree/provenance to the packet or downgrade these to unverified external observations; do not use them as settled assessment findings until the paths are provided."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment presents audits of external candidate repositories as verified facts despite the packet containing no supporting files for those repositories.",
+      "evidence": "The artifact makes concrete source claims such as \"`tools/liter-llm/docker/Dockerfile` (distroless runtime...)\", \"`tools/surreal-memory-server/docker-compose.yaml` bind-mounts `${HOME}/.cache/huggingface/hub`\", \"Source `skills/research/deep-research/`: 32 `.sh`, 12 `.py`\", and \"Source `skills/process/adversarial-review/`: 20 `.sh`, 22 `.md`\". The packet file tree only shows `./tools/prometheus-knowledge` under `tools/`, and `cited_paths` marks the cited support paths as absent, including `MISSING  tools/liter-llm/docker-compose.yml`, `MISSING  tools/surreal-memory-server/docker-compose.yaml`, `MISSING  run-research.sh`, `MISSING  dispatch-judge.sh`, `MISSING  shared/scripts/lib/sycophancy.sh`, and `MISSING  assets/schemas/findings.schema.json`.",
+      "suggested_fix": "Provide snapshots, commit identifiers plus file listings, or extracted evidence for each external repository; otherwise separate these as unverified research notes rather than assessment facts that downstream analyze/plan can rely on."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment states a forced implementation sequence that conflicts with its own dependency facts for `adversarial-review` and `sycophancy-correction`.",
+      "evidence": "The artifact says `adversarial-review` includes a sycophancy dependency: \"Sycophancy client is a named pipe... only `detect_sycophancy` is ever called\" and the goal progress says `deep-research` \"depends on `adversarial-review` and `sycophancy-correction` landing first.\" But Open Question 7 states: \"Sequencing: `adversarial-review` \u2192 `sycophancy-correction` \u2192 `deep-research` is forced by dependencies\", placing `adversarial-review` before the MCP server/client it is supposed to call.",
+      "suggested_fix": "Resolve the dependency model before analyze: either sequence `sycophancy-correction` before the sycophancy-enabled `adversarial-review`, or explicitly define an initial degraded `adversarial-review` milestone that does not call sycophancy."
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Goals — the-boss-integration-prep
 
-Child of `karpathy-logs-node`. A final review of where the mini pack actually stands, grounded on
+Child of `karpathy-logs-node`. Scope amended 2026-09-22 by the operator to add `deep-research`, its prerequisite `adversarial-review`, the `openspec` fork as a submodule, and the `boss-landing-spot` site. A final review of where the mini pack actually stands, grounded on
 `COMPARE.md` and `TOOL_ANALYSIS.md`, and the preparation for the next full phase: integrating the pack with
 `the-boss` (the controller application, cross-platform, Windows being the point) so that `the-boss` ships,
 installs, checks, and controls this skill system on every host. The-boss code changes themselves belong to
@@ -34,6 +34,40 @@ that next phase; this child decides and prepares, and builds what belongs in the
   `sycophancy-correction`, Docker, the skill copies under `$HOME/.agents` and `$HOME/.claude`, the KBD state
   — reports as JSON one JSON object per line so a UI can render it, and offers automatic correction for
   what it can safely correct. Its checks are the contract `the-boss`'s settings UI will render.
+- **`adversarial-review` is shipped by the mini pack, not borrowed from the host.** Every review in this
+  project so far has run from the skill pack installed on this macOS host; the mini ships none of it
+  (`COMPARE.md`: "planned, not currently shipped"). The source is bash plus inline Python. This child
+  assesses it the way the other candidates are assessed — packet builder, preflight, model resolution,
+  critic and judge dispatch over the loopback `liter-llm` gateway, the exit contract, the
+  `harness-native` fallback with `isolation_mode` recorded, the sycophancy MCP client, the findings and
+  decision-log artifacts — and analyze decides the Node port's shape. It is a prerequisite: the
+  `deep-research` port below must call it (stage 05 verify and stage 06 resolve already do upstream), so
+  it is sequenced first and its absence on a host is a degraded review, never a skipped one.
+- **`deep-research` has a Windows-native path, and the choice between building and moving is decided.**
+  The source pack's ten-stage research pipeline (plan → search → retrieve → collect → verify → resolve →
+  graph → cite → report → export) is assessed the way the other candidates are: every executable file
+  inventoried, every POSIX-only dependency named, the Rust research server (`:7891`) and surface bridge
+  (`:7890`) treated as excluded per `config.yaml`, and "checkpoint mode only" given a concrete definition.
+  Analyze decides between (a) engineering a Node-only version for the mini pack that keeps the source
+  pack's request/report/citation contracts, or (b) moving the existing code and making it
+  Windows-compatible — with the reason recorded, and the LOC that must change counted by a command.
+  Whichever is chosen, it keeps working with both services down and never adds a third resident process.
+- **The `openspec` CLI the mini runs is the Prometheus fork with its Windows fixes, vendored as a
+  submodule.** Today the mini pins upstream `@fission-ai/openspec@1.10.0` from npm as its only dependency;
+  the fork (`Prometheus-AGS/OpenSpec`, currently 1.13.1) carries a Windows fix upstream does not — a file
+  rewritten on a CRLF checkout keeps its line endings, and `npm.cmd` is spawned through `cross-spawn`. The
+  fork becomes a submodule under `tools/`, the mini's `spawnNodeCli` resolves the CLI's JavaScript entry
+  from it, and analyze decides how the fork's `dist/` (git-ignored; built by `node build.js`) is produced on
+  a clean checkout without a symlink, a shell, or a global install — the constraints the existing
+  "pinned CLI, only dependency, runs from its JavaScript entry" tests already enforce and must keep
+  enforcing against the new source.
+- **The boss landing spot tells the truth about the application it advertises.** `boss-landing-spot`
+  (`Know-Me-Tools/boss-landing-spot`, the site at `the-boss.know-me.tools`) names the wrong GitHub
+  organisation, a download that is two minor versions and one architecture behind, and a version string
+  that matches neither the download nor the application. This child records every identity, URL, version
+  and platform claim on the site against `the-boss`'s own branding and build configuration, and the
+  handoff names what the next phase changes on the site and — where the site is right and the application
+  is wrong, as with the update server — what changes in `the-boss` instead.
 - **The handoff to the `the-boss` integration phase is written, not implied.** A handoff document that
   the next phase can execute from: (1) the skill system is part of `the-boss`'s default skill set, present
   even on a box where an older `the-boss` already ran, running from the application-data directory;

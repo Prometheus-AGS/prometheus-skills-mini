@@ -273,3 +273,17 @@ tool that can fail independently of the tests it measured). Read the actual test
 before concluding anything regressed — `tests N / pass N / fail 0` above a later, unrelated stack trace
 means the tests passed and something downstream of them did not. A single flaky rerun is normal; a rerun
 that fails the same way twice is a real defect and should not be waved off as flake.
+
+## 2026-09-22 — the orchestrator's assess hooks are not child-phase-aware
+
+`kbd_hooks_fire assess before <child>` ran the builtin `kbd-memory-recall` hook, which wrote
+`prior-context.md` to `.kbd-orchestrator/phases/<child>/` — a flat path keyed by the child's id — not to
+`phases/<parent>/children/<child>/`, where `/kbd-new-child` put `goals.md` and where the stage artifacts
+live. The file was a stub (memory endpoint unreachable), so nothing was lost; on a reachable endpoint the
+recalled context would have landed where no stage reads it. The `prometheus kbd stage` commands, by
+contrast, key on the phase id and project correctly.
+
+**Check:** after firing any `<stage> before` hook for a child phase, `ls .kbd-orchestrator/phases/` for a
+stray directory named after the child; move its contents into the nested child directory before the stage
+reads them. The adversarial-review packet builder takes the nested path (`--phase parent/children/child`)
+and works; the handoff writer takes the directory explicitly and works.

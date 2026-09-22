@@ -1,0 +1,31 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "analysis.md",
+      "claim": "The analysis decides to build service images from submodule Dockerfiles but never evaluates or plans how the liter-llm and surreal-memory-server sources become submodules/pinned inputs in this repository.",
+      "evidence": "Q1 says the service images are recorded as \"built from the submodule Dockerfile at the pinned commit\" and \"What analyze could not establish\" says \"docker/compose.yaml uses build: against the submodule Dockerfiles\", but Q7's sequence only adds `docker/`, `tools/openspec`, and `tools/sycophancy-correction`; there is no candidate or build_required item for adding/pinning `tools/liter-llm` or `tools/surreal-memory-server`. The packet file tree currently has only `./tools/prometheus-knowledge` under `tools/`.",
+      "suggested_fix": "Add explicit candidates/decisions for sourcing the liter-llm and surreal-memory-server Dockerfiles: either vendor them as pinned submodules with commit pins and constraints exemptions, or use confirmed published images/digests; include the chosen work in Q7 and build_required."
+    },
+    {
+      "severity": "WARNING",
+      "file": "library-candidates.json",
+      "claim": "Several rejected package candidates are named as candidates in analysis.md but are missing from the machine-readable candidate list.",
+      "evidence": "analysis.md says \"The machine contract is `library-candidates.json`\" and names rejected candidates: \"dockerode, `@modelcontextprotocol/sdk`, ajv, cross-spawn\"; `library-candidates.json` contains candidate IDs cand-301 through cand-319 but no records for dockerode, `@modelcontextprotocol/sdk`, ajv, or cross-spawn.",
+      "suggested_fix": "Add rejected candidate records for dockerode, `@modelcontextprotocol/sdk`, ajv, and cross-spawn with verdicts, dependency/maintenance checks, and rationale, or remove the claim that `library-candidates.json` is the machine contract."
+    },
+    {
+      "severity": "WARNING",
+      "file": "analysis.md",
+      "claim": "The adversarial-review port shape specifies home-directory literals for future library behavior without stating that they must be resolved through the platform path helpers required by constraints.",
+      "evidence": "Q6a says `lib/review/preflight.mjs` \"reads `~/.prometheus/kbd/models.toml`\"; the constraints require \"Paths come from os.homedir() / os.tmpdir() / path.join, never $HOME, process.env.HOME or /tmp\" and the project-level goals say \"paths via `path.join`/`os.homedir()`/`os.tmpdir()`\".",
+      "suggested_fix": "Rewrite the port decision to name the logical location but require resolution through `lib/platform/paths.mjs` helpers, not a literal `~` path."
+    }
+  ]
+}

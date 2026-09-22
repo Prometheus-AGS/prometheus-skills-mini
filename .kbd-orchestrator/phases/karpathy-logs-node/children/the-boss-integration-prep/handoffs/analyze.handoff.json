@@ -1,0 +1,12 @@
+{
+  "stage": "analyze",
+  "completedAt": "2026-09-22T10:12:37Z",
+  "outputs": [
+    ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/analysis.md",
+    ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/library-candidates.json"
+  ],
+  "nextStage": "spec",
+  "summaryForNext": "26 candidates, 8 build-required. Adopt: Docusaurus 3.10.2 and the full pack's site/ + docs-pages.yml shape; the-boss's existing subsystems (builtin-skill install, reconcile, doctor registry WITH a repair contract, preference schema, settings menu, stdio MCP launch) as the integration substrate; tavily-mcp/firecrawl-mcp as harness-side servers; surrealdb v3.0.5. Adapt: OpenSpec fork as tools/openspec submodule built on install (prepare script) and resolved by path — root package.json ends with zero dependencies; sycophancy-correction as a submodule at a POST-FIX fork commit (bc348fff is the audit baseline, not the pin); liter-llm and surreal-memory-server as build-context submodules until images are published. Build: lib/platform/docker.mjs (absent|daemon-down|ready; require, never install), docker/compose.yaml fresh from the Dockerfiles, the doctor mirroring the-boss's DoctorCheckRegistry, the adversarial-review port component by component (Q6a), deep-research as a Node checkpoint-mode port — decision (a), 3,463 logic lines, 0 Rust (Q6b). Reject: dockerode, @modelcontextprotocol/sdk, ajv, cross-spawn, npm git-dep form of the fork, automated Docker Desktop install. Gateway :4000 only; OKF v0.2 in the ports; rust-mcp-filesystem goes to the-boss; landing spot org is Prometheus-AGS with GitHub Releases and the-boss publish → provider: github. OPERATOR ACTIONS BEFORE PLAN: author versions.toml from the proposed pins (no pin-dependent change may start without it); confirm adversarial-review-node and deep-research-node open as sibling phases rather than being built here; create the sycophancy-correction fork; enable GitHub Pages; decide the 'built on Cherry Studio' positioning. WARNINGS carried: review cap reached after two rounds — round-2 findings (service-source submodules, four rejected packages recorded, a ~ literal) were fixed but not re-vetted; container image availability unverified (packages API scope).",
+  "skipped": false,
+  "skipReason": null
+}

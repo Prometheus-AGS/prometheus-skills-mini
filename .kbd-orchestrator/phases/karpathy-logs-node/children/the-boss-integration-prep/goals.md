@@ -1,6 +1,6 @@
 # Goals — the-boss-integration-prep
 
-Child of `karpathy-logs-node`. Scope amended 2026-09-22 by the operator to add `deep-research`, its prerequisite `adversarial-review`, the `openspec` fork as a submodule, and the `boss-landing-spot` site. A final review of where the mini pack actually stands, grounded on
+Child of `karpathy-logs-node`. Scope amended 2026-09-22 by the operator to add `deep-research`, its prerequisite `adversarial-review`, the `openspec` fork as a submodule, the `boss-landing-spot` site, and a Docusaurus documentation site with GitHub Pages. A final review of where the mini pack actually stands, grounded on
 `COMPARE.md` and `TOOL_ANALYSIS.md`, and the preparation for the next full phase: integrating the pack with
 `the-boss` (the controller application, cross-platform, Windows being the point) so that `the-boss` ships,
 installs, checks, and controls this skill system on every host. The-boss code changes themselves belong to
@@ -68,6 +68,16 @@ that next phase; this child decides and prepares, and builds what belongs in the
   and platform claim on the site against `the-boss`'s own branding and build configuration, and the
   handoff names what the next phase changes on the site and — where the site is right and the application
   is wrong, as with the update server — what changes in `the-boss` instead.
+- **The mini has its own documentation site, published the way the full pack publishes.** A `site/`
+  Docusaurus project whose content plugins point at a new `docs/guide/` (the full pack keeps its 24-page
+  guide there and its site reads it in place), a skills catalog generated from `skills/**/SKILL.md`, a
+  `.github/workflows/docs-pages.yml` that builds on push to `main` and deploys with workflow-type
+  GitHub Pages (SHA-pinned actions, as the full pack pins them), the Pages setting enabled on the
+  repository, and a link plus a build badge at the top of `README.md` — the same three things a reader
+  finds on the full pack's home page. No shell in `site/`; the generator scripts are `.mjs`. Decided
+  in analyze: the Docusaurus version to pin, whether the site directory carries its own lockfile (the
+  full pack's does, and its workflow caches on it), and how the constraint gate treats a second
+  `package.json`.
 - **The handoff to the `the-boss` integration phase is written, not implied.** A handoff document that
   the next phase can execute from: (1) the skill system is part of `the-boss`'s default skill set, present
   even on a box where an older `the-boss` already ran, running from the application-data directory;

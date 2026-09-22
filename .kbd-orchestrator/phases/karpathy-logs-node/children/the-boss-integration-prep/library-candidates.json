@@ -1,0 +1,716 @@
+{
+  "phase": "the-boss-integration-prep",
+  "parent_phase": "karpathy-logs-node",
+  "generated_at": "2026-09-22T10:20:00Z",
+  "research_budget": {
+    "max_queries_per_tier": 8,
+    "max_minutes": 20,
+    "used": {
+      "tier1_github": 8,
+      "tier2_docs": 0,
+      "tier3_registry": 8,
+      "tier4_web": 0
+    },
+    "incomplete": [
+      "GitHub packages API refused container listings (needs read:packages scope) — image availability for liter-llm and surreal-memory-server unknown",
+      "repos/GQAdonis/liter-llm lookup timed out (TLS) — local checkout facts used instead"
+    ]
+  },
+  "gaps_addressed": [
+    "docker/ and a cross-platform Node installer for the two permitted services",
+    "Docker presence detection on Windows",
+    "a home for sycophancy-correction",
+    "a home for the rust-mcp-filesystem fork",
+    "a repairing doctor",
+    "adversarial-review shipped by the mini (opened as its own phase)",
+    "deep-research Windows path (opened as its own phase)",
+    "the OpenSpec fork as a submodule",
+    "the boss-landing-spot identity/URLs",
+    "a Docusaurus documentation site on GitHub Pages",
+    "the the-boss handoff"
+  ],
+  "candidates": [
+    {
+      "id": "cand-301",
+      "name": "lib/platform/docker.mjs — probe via spawnExecutable('docker', ['version','--format','{{json .}}'])",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "Docker presence detection on Windows",
+      "verdict": "build",
+      "coverage_estimate": 1,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "No Docker detection exists in the mini (git grep over lib/scripts/hooks → one comment) or the-boss (30 src/ hits, all icon maps/file tables/i18n; invocation-pattern grep → only fileIconName.ts:8-11)."
+        },
+        {
+          "tier": 1,
+          "claim": "Source-pack precedent is bash: check-prerequisites.sh:311-312 runs `docker compose version`; :576 runs `docker compose up -d`."
+        },
+        {
+          "tier": 3,
+          "claim": "docker's own CLI reports Client and Server sections; Server absent = daemon down. No package needed; docker is a real executable that passes lib/platform/spawn.mjs's refuseScript."
+        }
+      ],
+      "risks": [
+        "Docker Desktop on Windows can take tens of seconds to start; the probe must have a bounded timeout and report daemon-down, not hang."
+      ],
+      "decision_rationale": "Zero dependencies, one platform-neutral command, consistent with the project's spawn rules."
+    },
+    {
+      "id": "cand-302",
+      "name": "Automated Docker Desktop installation (winget install Docker.DockerDesktop)",
+      "kind": "process",
+      "registry": "winget",
+      "fit_for_gap": "Docker presence detection on Windows",
+      "verdict": "reject",
+      "coverage_estimate": 0.3,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "openspec/config.yaml:42-45 — the pack never enters WSL or calls wsl.exe; Docker Desktop's backend (WSL 2 or Hyper-V) is Docker's concern."
+        },
+        {
+          "tier": 3,
+          "claim": "Docker Desktop installation requires administrator rights, may reboot, and enables a hypervisor feature — actions outside a skill pack's authority."
+        }
+      ],
+      "risks": [
+        "Silent reboots; enabling WSL 2 on a machine whose owner did not ask for it."
+      ],
+      "decision_rationale": "Handed to the-boss as a consent-gated UI action; the pack detects and instructs, never installs."
+    },
+    {
+      "id": "cand-303",
+      "name": "Hand-rolled stdio JSON-RPC client for sycophancy-correction (initialize, notifications/initialized, tools/call detect_sycophancy)",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "adversarial-review shipped by the mini",
+      "verdict": "build",
+      "coverage_estimate": 1,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "The bash client sends exactly three messages over a named pipe (shared/scripts/lib/sycophancy.sh:48-82) and only ever calls detect_sycophancy."
+        },
+        {
+          "tier": 3,
+          "claim": "@modelcontextprotocol/sdk 1.30.0 carries 17 dependencies; rules/test/scaffold.test.mjs:34 asserts the root has a single dependency."
+        }
+      ],
+      "risks": [
+        "Framing: rmcp's stdio transport is newline-delimited JSON; the client must read line-delimited responses and tolerate stderr noise on a separate pipe."
+      ],
+      "decision_rationale": "About 60 lines on top of spawnExecutable replaces mkfifo, /tmp, sleep-timed writes and `timeout` — the four things that cannot run on Windows."
+    },
+    {
+      "id": "cand-304",
+      "name": "@docusaurus/core + @docusaurus/preset-classic 3.10.2",
+      "kind": "package",
+      "registry": "npm",
+      "fit_for_gap": "a Docusaurus documentation site on GitHub Pages",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "npm view: latest 3.10.2, published 2026-09-18, engines node >=20.0, 42 dependencies, MIT."
+        },
+        {
+          "tier": 1,
+          "claim": "The full pack's site/package.json pins 3.10.2 for both core and preset-classic and builds with Node 24 in docs-pages.yml."
+        }
+      ],
+      "risks": [
+        "42 dependencies — isolated in site/package.json with its own lockfile, never in the root."
+      ],
+      "decision_rationale": "Same version as the full pack; the port is a shape copy, not a re-evaluation."
+    },
+    {
+      "id": "cand-305",
+      "name": "tavily-mcp 0.2.22 and firecrawl-mcp 3.25.2 as harness-side stdio MCP servers",
+      "kind": "package",
+      "registry": "npm",
+      "fit_for_gap": "deep-research Windows path (opened as its own phase)",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "deep-research gates on TAVILY_API_KEY / FIRECRAWL_API_KEY (run-research.sh:70-72); stage skills call firecrawl_search, tavily_search, firecrawl_scrape as MCP tools."
+        },
+        {
+          "tier": 3,
+          "claim": "npm view: tavily-mcp 0.2.22 (2026-08-05, 4 deps), firecrawl-mcp 3.25.2 (2026-09-22, node >=22, 4 deps); both MIT, both Node stdio servers."
+        }
+      ],
+      "risks": [
+        "They are the harness's (or the-boss's) MCP registrations, not mini dependencies; the port must degrade when neither is configured."
+      ],
+      "decision_rationale": "The README already names them (README.md:617); confirmed current and Node-native."
+    },
+    {
+      "id": "cand-306",
+      "name": "OpenSpec fork as tools/openspec submodule at d39ca5a, built on install by scripts/install.mjs, resolved by path in spawnNodeCli",
+      "kind": "submodule",
+      "registry": "github",
+      "fit_for_gap": "the OpenSpec fork as a submodule",
+      "verdict": "adapt",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Prometheus-AGS/OpenSpec @ d39ca5a, 1.13.1, +2/-0 vs upstream/main; 441f613 preserves CRLF on rewrite and spawns npm via cross-spawn; CI has a windows-latest leg (ci.yml:67)."
+        },
+        {
+          "tier": 1,
+          "claim": "package.json: scripts.prepare = 'node build.js', files = [dist, bin, schemas, …]; dist/ is git-ignored."
+        },
+        {
+          "tier": 1,
+          "claim": "config.yaml:18 forbids symlinks; an npm file: dependency symlinks into node_modules."
+        }
+      ],
+      "risks": [
+        "Build-on-install adds the fork's devDependencies to every fresh checkout; npm must be run by its JavaScript entry (npm-cli.js) — npm.cmd cannot be spawned without a shell."
+      ],
+      "decision_rationale": "Operator-directed submodule; the pin is visible to git, the doctor and versions.toml; no symlink; the root package.json ends with zero dependencies."
+    },
+    {
+      "id": "cand-307",
+      "name": "OpenSpec fork as an npm git dependency (github:Prometheus-AGS/OpenSpec#d39ca5a)",
+      "kind": "package",
+      "registry": "npm",
+      "fit_for_gap": "the OpenSpec fork as a submodule",
+      "verdict": "reject",
+      "coverage_estimate": 0.9,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "npm runs `prepare` for git dependencies and installs a real directory (no symlink), so this form is technically viable."
+        }
+      ],
+      "risks": [
+        "Needs network git on every npm ci; hides the pin in package-lock.json; nothing for the doctor to inspect; not what the operator asked for."
+      ],
+      "decision_rationale": "Kept as the documented fallback if build-on-install proves fragile on windows-latest."
+    },
+    {
+      "id": "cand-308",
+      "name": "Structural validator for the seven deep-research JSON schemas (in place of ajv)",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "deep-research Windows path (opened as its own phase)",
+      "verdict": "build",
+      "coverage_estimate": 0.9,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Upstream treats jsonschema as optional with a structural fallback in all three users (check-graph-claims.py:34-40, check-manifest-schema.py:16-20, export-package.py:154-160)."
+        },
+        {
+          "tier": 3,
+          "claim": "ajv 8.20.0 is a runtime dependency the root package.json may not carry."
+        }
+      ],
+      "risks": [
+        "Coverage of draft-2020 features the schemas actually use must be enumerated in the port's spec."
+      ],
+      "decision_rationale": "Upstream already runs without a validator library; the port matches that contract."
+    },
+    {
+      "id": "cand-309",
+      "name": "rust-mcp-filesystem's dist-workspace.toml (cargo-dist) as the release model for sycophancy-correction",
+      "kind": "pattern",
+      "registry": "github",
+      "fit_for_gap": "a home for sycophancy-correction",
+      "verdict": "adapt",
+      "coverage_estimate": 0.8,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "dist-workspace.toml declares x86_64-pc-windows-msvc plus shell/powershell/npm/homebrew/msi installers; release.yml builds the matrix."
+        },
+        {
+          "tier": 1,
+          "claim": "sycophancy-correction has no .github/, no release config, no rust-version; 0 releases on both repositories."
+        }
+      ],
+      "risks": [
+        "cargo-dist's generated shell/PowerShell installers are for end users of the binary, not for the mini; the mini vendors source and builds in CI."
+      ],
+      "decision_rationale": "Reuse a working release configuration from a sibling fork rather than author one."
+    },
+    {
+      "id": "cand-309a",
+      "name": "sycophancy-correction as tools/sycophancy-correction submodule at a mini-owned fork commit",
+      "kind": "submodule",
+      "registry": "github",
+      "fit_for_gap": "a home for sycophancy-correction",
+      "verdict": "adapt",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Hazard audit at bc348fff: Rust clean on every class (no unix std, rustls not openssl, no build.rs, no home/canonicalize, rmcp stdio framing, no fs writes, no Command::new, no signals, stderr-only logging)."
+        },
+        {
+          "tier": 1,
+          "claim": "Four non-code blockers: scripts/smoke-test.sh (mkfifo, /tmp, no .exe), :8181 default in skill.toml:73 and config.rs:166, no CI/rust-version/.gitattributes, stale ANTHROPIC_API_KEY references and a doc line claiming --port."
+        }
+      ],
+      "risks": [
+        "The fork commit must be pushed to a repository the operator controls before the submodule can pin it."
+      ],
+      "decision_rationale": "The mini's adversarial-review port is the only consumer; certification belongs where the consumer's CI runs."
+    },
+    {
+      "id": "cand-310",
+      "name": "the-boss's existing subsystems as the integration substrate (builtinSkills.ts, SkillService.reconcileSkills, DoctorCheckRegistry + fixes, preferenceSchemas.ts, settingsMenu.ts, mcpStdioLaunch.ts)",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "the the-boss handoff",
+      "verdict": "adopt",
+      "coverage_estimate": 0.75,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "installBuiltinSkills() (builtinSkills.ts:31) copies resources/skills/* into <userData>/Data/Skills with a .version file and is chained into reconcileSkills() from AiService.onInit() (AiService.ts:396-417) on every boot."
+        },
+        {
+          "tier": 1,
+          "claim": "DoctorService with 31 registry entries and a fixes contract (checks/config.ts:22-32); /settings/skills page exists (SkillsSettings.tsx); stdio MCP launch via @modelcontextprotocol/sdk StdioClientTransport."
+        },
+        {
+          "tier": 1,
+          "claim": "Gaps: no push into ~/.agents/skills or ~/.claude/skills (systemSkillSources.ts:25-27 is import-only); no Docker code; no references to the named tools; publish url is releases.cherry-ai.com (electron-builder.yml:173-175)."
+        }
+      ],
+      "risks": [
+        "the-boss forbids adding code in main.ts (main.ts:1-10); new work is a lifecycle service."
+      ],
+      "decision_rationale": "Three of the operator's five the-boss requirements already have a host; the handoff extends rather than duplicates."
+    },
+    {
+      "id": "cand-311",
+      "name": "docker/compose.yaml written fresh from the two Dockerfiles (never the upstream compose files)",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "docker/ and a cross-platform Node installer for the two permitted services",
+      "verdict": "build",
+      "coverage_estimate": 1,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "tools/liter-llm/docker-compose.yml defines only redis on 6379 — a prohibited third port."
+        },
+        {
+          "tier": 1,
+          "claim": "tools/surreal-memory-server/docker-compose.yaml bind-mounts ${HOME}/.cache/huggingface/hub — forbidden by config.yaml:35-36."
+        },
+        {
+          "tier": 1,
+          "claim": "Both Dockerfiles are usable: liter-llm distroless, digest-pinned, EXPOSE 4000; surreal-memory non-root, EXPOSE 3001, healthcheck /health."
+        }
+      ],
+      "risks": [
+        "The embedding model cache moves to a named volume; first start downloads the model into the volume, not the host cache — document the size and the offline behaviour."
+      ],
+      "decision_rationale": "config.yaml:34-37 is the specification; the upstream files violate it in two places each."
+    },
+    {
+      "id": "cand-312",
+      "name": "surrealdb/surrealdb:v3.0.5 (re-pinned by digest when docker/ lands)",
+      "kind": "container-image",
+      "registry": "docker-hub",
+      "fit_for_gap": "docker/ and a cross-platform Node installer for the two permitted services",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "license": "BSL-1.1 (SurrealDB)",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Both upstream compose files pin surrealdb/surrealdb:v3.0.5 with rocksdb storage and 28000:8000."
+        }
+      ],
+      "risks": [
+        "Tag pins are mutable; versions.toml records the digest once resolved."
+      ],
+      "decision_rationale": "Matches the service the fork was tested against."
+    },
+    {
+      "id": "cand-313",
+      "name": "The full pack's site/ layout and docs-pages.yml as the port template",
+      "kind": "pattern",
+      "registry": "github",
+      "fit_for_gap": "a Docusaurus documentation site on GitHub Pages",
+      "verdict": "adopt",
+      "coverage_estimate": 0.9,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "site/docusaurus.config.js reads ../docs/guide and ../docs/learn via path: plugin options; a .mjs script generates docs-catalog from skills/**/SKILL.md; onBrokenLinks: throw."
+        },
+        {
+          "tier": 1,
+          "claim": "docs-pages.yml: push to main with paths filter, SHA-pinned checkout/configure-pages/setup-node/upload-pages-artifact/deploy-pages, Node 24, npm ci in site/, workflow-type Pages; README.md:3 links the site and :13 carries the badge."
+        },
+        {
+          "tier": 1,
+          "claim": "find site -name '*.sh' -o -name '*.py' → none."
+        }
+      ],
+      "risks": [
+        "The full pack's prebuild chain runs seven check scripts the mini does not have; the port keeps only the catalog generator and a broken-links check."
+      ],
+      "decision_rationale": "The operator asked for parity with the full pack's home page; the mechanism is already shell-free."
+    },
+    {
+      "id": "cand-314",
+      "name": "lib/review/preflight.mjs — gateway probe via fetch, models.toml + project.json role resolution, key-presence-only config read, same model-preflight.json shape",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "adversarial-review shipped by the mini (opened as its own phase)",
+      "verdict": "build",
+      "coverage_estimate": 1,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "preflight-models.sh (286 lines) writes .kbd-orchestrator/model-preflight.json with status ok|degraded|needs_configure|no_providers|unavailable|no_gateway|config_broken (:16,233-254), 24 h cache (:113-132)."
+        },
+        {
+          "tier": 1,
+          "claim": "kbd-model-resolve.sh:20-34 precedence env → ~/.prometheus/kbd/models.toml → project.json model_policy."
+        }
+      ],
+      "risks": [
+        "The liter-llm config file carries master_key; the port reads presence only and never logs a value (memory: never read credential files as content)."
+      ],
+      "decision_rationale": "Same artifact shape so kbd-assess step 0 is unchanged. Rejected for every component: keep the bash under Git Bash (config.yaml:10,14 forbids .sh and Git Bash); rewrite in Rust (config.yaml:46-49: no Rust toolchain or binary required on a Windows host)."
+    },
+    {
+      "id": "cand-315",
+      "name": "lib/review/packet.mjs — packet builder for both native-kbd and OpenSpec layouts, depth-3 file tree, depends_on manifest, per-field caps with a truncation block in every mode",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "adversarial-review shipped by the mini (opened as its own phase)",
+      "verdict": "build",
+      "coverage_estimate": 1,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "build-review-packet.sh (919 lines, 9 inline Python heredocs) cannot see OpenSpec changes (gotchas.md 2026-09-21) and walks find -maxdepth 2 (gotchas.md 2026-09-21)."
+        },
+        {
+          "tier": 1,
+          "claim": "Diff packets scoped to one change report earlier changes’ files as missing (gotchas.md 2026-09-21) — a depends_on manifest fixes it."
+        }
+      ],
+      "risks": [
+        "producer_model must be required, never defaulted (SKILL.md:230-240)."
+      ],
+      "decision_rationale": "Three recorded gotchas in this repository are design inputs the bash cannot absorb. Rejected for every component: keep the bash under Git Bash (config.yaml:10,14 forbids .sh and Git Bash); rewrite in Rust (config.yaml:46-49: no Rust toolchain or binary required on a Windows host)."
+    },
+    {
+      "id": "cand-316",
+      "name": "lib/review/judge.mjs — fetch POST /chat/completions to :4000/v1 only, bearer from LITER_LLM_API_KEY, temperature omission list, 300 s × 3 retries doubling on timeout-shaped failures, exit contract 0/2/3/4, cross_model_check computed as upstream",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "adversarial-review shipped by the mini (opened as its own phase)",
+      "verdict": "build",
+      "coverage_estimate": 1,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "dispatch-judge.sh:9-15 exit contract; :71-74 GET /models probe; :156-195 request body; :215-264 timeouts/retries; :348-353 cross_model_check."
+        },
+        {
+          "tier": 1,
+          "claim": "config.yaml:31-33 names http://localhost:4000/v1; dispatch-judge.sh:81 probes :8181 first — collapsed to :4000 (Q5)."
+        }
+      ],
+      "risks": [
+        "curl’s --noproxy ’*’ behaviour must be reproduced: fetch must not route loopback through a proxy env var."
+      ],
+      "decision_rationale": "Node fetch replaces curl; the contract is preserved verbatim. Rejected for every component: keep the bash under Git Bash (config.yaml:10,14 forbids .sh and Git Bash); rewrite in Rust (config.yaml:46-49: no Rust toolchain or binary required on a Windows host)."
+    },
+    {
+      "id": "cand-317",
+      "name": "harness-native fallback made code: on exit 3 write review/<target>/harness-native-request.json {mandate, packet}; a later --ingest <findings.json> validates and stamps isolation_mode harness-native",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "adversarial-review shipped by the mini (opened as its own phase)",
+      "verdict": "build",
+      "coverage_estimate": 1,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "SKILL.md:278-283 — the fallback is a caller contract with no prompt file or scripted invocation; findings.schema.json:37-39 pattern ^(rest-gateway(:.*)?|harness-native)$."
+        }
+      ],
+      "risks": [
+        "No Node process can invoke the harness’s Agent tool; the two-step (write request, ingest result) must be stated in the skill document or the fallback stays prose."
+      ],
+      "decision_rationale": "The half that can be code becomes code; the half that cannot is made explicit. Rejected for every component: keep the bash under Git Bash (config.yaml:10,14 forbids .sh and Git Bash); rewrite in Rust (config.yaml:46-49: no Rust toolchain or binary required on a Windows host)."
+    },
+    {
+      "id": "cand-318",
+      "name": "lib/review/gate.mjs + retry.mjs + findings.mjs — sycophancy gate over cand-303 with the 1-5 reject-cap semantics, two-round retry with -r<N> naming, schema-validated findings, OKF v0.2 decision log",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "adversarial-review shipped by the mini (opened as its own phase)",
+      "verdict": "build",
+      "coverage_estimate": 1,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "check-findings-sycophancy.sh (277) reject cap PROMETHEUS_ADV_REJECT_CAP bounds 1-5, refusal above 5 (tests/test-reject-cap-override.sh); review-retry-loop.sh (129) two-round cap; decision-log.sh:23 writes OKF v0.1."
+        },
+        {
+          "tier": 1,
+          "claim": "This repository holds five real findings.json artifacts and packet-r1/findings-r1 naming from this very stage."
+        }
+      ],
+      "risks": [
+        "Absent sycophancy binary → warning, exit 0 — must not become a hard failure in the port."
+      ],
+      "decision_rationale": "Keeps the artifacts this repository already produces. Rejected for every component: keep the bash under Git Bash (config.yaml:10,14 forbids .sh and Git Bash); rewrite in Rust (config.yaml:46-49: no Rust toolchain or binary required on a Windows host)."
+    },
+    {
+      "id": "cand-319",
+      "name": "deep-research: Node-only checkpoint-mode port (decision (a)); 3,463 logic lines written new, 5,586 prose lines + 7 schemas + 3 fixtures moved unchanged, 0 Rust",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "deep-research Windows path (opened as its own phase)",
+      "verdict": "build",
+      "coverage_estimate": 1,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Executable code is 32 .sh + 12 .py (find -type f -name); config.yaml:11-16 forbids both languages, so option (b) ‘move and make Windows-compatible’ rewrites every executable line anyway."
+        },
+        {
+          "tier": 1,
+          "claim": "Counts: cat scripts/*.sh | wc -l → 1,378; cat hooks/*.sh | wc -l → 220; cat scripts/*.py | wc -l → 1,865; cat tests/*.sh | wc -l → 1,588; find -name ’*.md’ -exec cat {} + | wc -l → 5,586."
+        },
+        {
+          "tier": 1,
+          "claim": "headless-execution.md:4-9 — the Rust server calls the driver; run-research.sh:17-22,517-527 — checkpoint mode exits 3 with {next_stage, skill, package_dir}."
+        }
+      ],
+      "risks": [
+        "jq is hard-required upstream (run-research.sh:81) — every jq expression becomes a JSON operation in Node, the largest single translation surface."
+      ],
+      "decision_rationale": "Categorical: the constraints forbid the source languages, so there is nothing to move. The contracts (exit 3, checkpoint.json, manifest 2.0.0, RESEARCH_* names) are kept verbatim."
+    },
+    {
+      "id": "cand-320",
+      "name": "tools/liter-llm submodule @ c5c6caac (GQAdonis/liter-llm) as the build: context for the gateway image",
+      "kind": "submodule",
+      "registry": "github",
+      "fit_for_gap": "docker/ and a cross-platform Node installer for the two permitted services",
+      "verdict": "adapt",
+      "coverage_estimate": 1,
+      "license": "MIT (fork of xberg-io/liter-llm)",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "prometheus-skill-pack/.gitmodules pins tools/liter-llm → https://github.com/GQAdonis/liter-llm.git @ c5c6caac; tools/liter-llm/docker/Dockerfile:2,18,24,30-31 — rust:1.91 builder, distroless digest-pinned runtime, EXPOSE 4000."
+        },
+        {
+          "tier": 1,
+          "claim": "No published image could be confirmed (packages API needs read:packages); 0 releases on the fork."
+        }
+      ],
+      "risks": [
+        "First start builds a Rust workspace inside Docker (minutes, gigabytes); TOOL_ANALYSIS.md step 6 prefers published images — recorded as the operator follow-up."
+      ],
+      "decision_rationale": "The only source of the Dockerfile the mini may build from today; dropped once an image is published and digest-pinned."
+    },
+    {
+      "id": "cand-321",
+      "name": "tools/surreal-memory-server submodule @ 452dab1 (Prometheus-AGS/surreal-memory-server) as the build: context for the memory image",
+      "kind": "submodule",
+      "registry": "github",
+      "fit_for_gap": "docker/ and a cross-platform Node installer for the two permitted services",
+      "verdict": "adapt",
+      "coverage_estimate": 1,
+      "license": "see fork",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "prometheus-skill-pack/.gitmodules pins tools/surreal-memory-server → https://github.com/Prometheus-AGS/surreal-memory-server.git @ 452dab1; Dockerfile:3,40,50-51,64,66-67 — rust:1.93 builder, debian:trixie-slim runtime, non-root smserver, EXPOSE 3001, /health check."
+        },
+        {
+          "tier": 1,
+          "claim": "Upstream compose bind-mounts ${HOME}/.cache/huggingface/hub — replaced by a named volume in the mini’s compose (cand-311)."
+        }
+      ],
+      "risks": [
+        "Local embedding model download on first start goes into the named volume; size and offline behaviour must be documented; ~23k Rust LOC + RocksDB is the heavier build."
+      ],
+      "decision_rationale": "Same as cand-320; the two together are the Q1a decision."
+    },
+    {
+      "id": "cand-322",
+      "name": "dockerode 5.0.1",
+      "kind": "package",
+      "registry": "npm",
+      "fit_for_gap": "Docker presence detection on Windows",
+      "verdict": "reject",
+      "coverage_estimate": 0.8,
+      "license": "Apache-2.0",
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "npm view: 5.0.1, 2026-06-24, node >=14.17, 6 deps."
+        },
+        {
+          "tier": 1,
+          "claim": "Talks to the daemon socket directly — a named pipe on Windows, a Unix socket elsewhere — a platform branch config.yaml:30-33 forbids in this pack’s code; and a runtime dependency the root may not carry."
+        }
+      ],
+      "risks": [
+        "none beyond the two reasons"
+      ],
+      "decision_rationale": "cand-301 does the same with one CLI call and no dependency."
+    },
+    {
+      "id": "cand-323",
+      "name": "@modelcontextprotocol/sdk 1.30.0",
+      "kind": "package",
+      "registry": "npm",
+      "fit_for_gap": "adversarial-review shipped by the mini (opened as its own phase)",
+      "verdict": "reject",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "npm view: 1.30.0, 2026-09-17, node >=18, 17 deps, MIT."
+        },
+        {
+          "tier": 1,
+          "claim": "The only MCP client the port needs sends three messages (cand-303); rules/test/scaffold.test.mjs:34 asserts a single root dependency."
+        }
+      ],
+      "risks": [
+        "Well-maintained; would be the right choice if the mini ever hosts an MCP server rather than a three-message client."
+      ],
+      "decision_rationale": "17 dependencies for ~60 lines of JSON-RPC."
+    },
+    {
+      "id": "cand-324",
+      "name": "ajv 8.20.0",
+      "kind": "package",
+      "registry": "npm",
+      "fit_for_gap": "deep-research Windows path (opened as its own phase)",
+      "verdict": "reject",
+      "coverage_estimate": 1,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "npm view: 8.20.0, 2026-04-24, 4 deps, MIT."
+        },
+        {
+          "tier": 1,
+          "claim": "Upstream runs without a validator library (jsonschema optional with a structural fallback in all three users) — cand-308."
+        }
+      ],
+      "risks": [
+        "A structural validator must enumerate which draft-2020 keywords the seven schemas use."
+      ],
+      "decision_rationale": "Upstream’s own contract does not require full JSON Schema; a root dependency is not justified for it."
+    },
+    {
+      "id": "cand-325",
+      "name": "cross-spawn 7.0.6",
+      "kind": "package",
+      "registry": "npm",
+      "fit_for_gap": "the OpenSpec fork as a submodule",
+      "verdict": "reject",
+      "coverage_estimate": 0.5,
+      "license": "MIT",
+      "evidence": [
+        {
+          "tier": 3,
+          "claim": "npm view: 7.0.6, last modified 2024-11-18, 3 deps, MIT."
+        },
+        {
+          "tier": 1,
+          "claim": "The OpenSpec fork uses it to spawn npm.cmd on Windows; the mini never spawns a .cmd — spawnNodeCli runs npm CLIs by their JavaScript entry with process.execPath (lib/platform/spawn.mjs)."
+        },
+        {
+          "tier": 1,
+          "claim": ".claude/rules/node-scripts.md: anything that is only a .cmd goes through cmd.exe inside lib/platform/ and nowhere else."
+        }
+      ],
+      "risks": [
+        "none"
+      ],
+      "decision_rationale": "The problem it solves is one the mini’s spawn rules already prevent."
+    }
+  ],
+  "build_required": [
+    {
+      "need": "lib/platform/docker.mjs (absent | daemon-down | ready), scripts/services.mjs (up | down | status | logs over docker compose), scripts/install.mjs (submodule build, skill copy, service bring-up)",
+      "why_no_candidate": "Every package option adds a runtime dependency the root may not carry; the primitives already exist in lib/platform.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "scripts/doctor.mjs + lib/doctor/ + skills/doctor: checks for node version, submodule pins vs versions.toml, docker state, the two services' health endpoints, pk, sycophancy-correction binary, skill copies under ~/.agents and ~/.claude, KBD state; JSON-lines output; fix actions limited to idempotent copies",
+      "why_no_candidate": "the-boss's DoctorCheckRegistry is the target shape; nothing on npm produces it.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "docs/guide/ content for the mini (skills, tools, hooks, services, doctor, the KBD flow) and site/scripts/generate-skills-catalog.mjs",
+      "why_no_candidate": "Content is bespoke; the generator is ~100 lines over skills/**/SKILL.md frontmatter.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "The the-boss handoff document and the settings/doctor design brief",
+      "why_no_candidate": "Bespoke to the two repositories; produced with the impeccable and ui-ux-pro-max skills.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "versions.toml — authored by the operator from the pins proposed in analysis.md Q1 / decision-log.md, before any pin-dependent change starts",
+      "why_no_candidate": "CLAUDE.md §0.2: agents read it and do not edit it. The agent proposes; the operator authors.",
+      "capability_gap_id": "versions-toml-authored"
+    },
+    {
+      "need": "A post-fix fork commit of sycophancy-correction (Prometheus-AGS fork of Know-Me-Tools/sycophancy-correction-skill) applying the four audit fixes, with green three-OS CI — the landing pin; bc348fff is the audit baseline only",
+      "why_no_candidate": "The blockers are in the upstream tree at bc348fff (config.rs:166, skill.toml:73, scripts/smoke-test.sh:40-42, no .github/); only a fork commit removes them.",
+      "capability_gap_id": "sycophancy-correction-certified"
+    },
+    {
+      "need": "Two new top-level phases, adversarial-review-node and deep-research-node, implementing the shapes decided in analysis.md Q6a and Q6b (cand-314..319); assessments seeded from this child’s audits and evidence file",
+      "why_no_candidate": "config.yaml:88-90 binds each to be its own phase; the decisions are made here, the implementation there.",
+      "capability_gap_id": "sycophancy-correction-certified"
+    },
+    {
+      "need": "tools/liter-llm and tools/surreal-memory-server submodules (Q1a), plus an operator follow-up: a publish-image workflow in each fork so compose can switch to image: + digest and the submodules can be dropped",
+      "why_no_candidate": "No published image could be confirmed; the Dockerfiles exist only in the forks.",
+      "capability_gap_id": "service-images-published"
+    }
+  ]
+}

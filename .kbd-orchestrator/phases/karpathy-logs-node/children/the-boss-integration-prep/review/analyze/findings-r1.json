@@ -1,0 +1,38 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "analysis.md",
+      "claim": "The analysis proposes agent-authored `versions.toml` after making dependency decisions, contradicting the phase constraint that agents must not edit it and must read it before dependency decisions.",
+      "evidence": "Goals state: \"`versions.toml` is read before any dependency decision and is not edited by agents.\" The analysis states: \"this child makes at least six pin decisions\" and then decides: \"the plan's first change drafts `versions.toml` with every pin this analysis names ... and the operator approves the file before it lands.\"",
+      "suggested_fix": "Require an operator-authored `versions.toml` before pin decisions are finalized, or explicitly amend the constitution before relying on agent-drafted pins."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "analysis.md",
+      "claim": "The sycophancy-correction pin names the audited pre-fix commit even though the decision depends on a later fork commit fixing blockers.",
+      "evidence": "Q1 says `versions.toml` will pin \"`sycophancy-correction` `bc348fff`\" and Q3 says it lands \"pinned at `bc348fff`, with ... the `:8181` defaults repointed, the `mkfifo` smoke test replaced\". But the provided evidence for `bc348fff` shows the blockers still present: `config.rs:166` defaults to `http://localhost:8181/v1`, `skill.toml:73` defaults to `http://localhost:8181/v1`, and `scripts/smoke-test.sh:40-42` uses `mktemp -u /tmp/...` plus `mkfifo`.",
+      "suggested_fix": "Separate the audit baseline commit from the landing pin; create/name the post-fix fork commit and pin that in `versions.toml`."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "library-candidates.json",
+      "claim": "The adversarial-review port's core build-vs-adopt decision is missing; only its sycophancy MCP client is evaluated.",
+      "evidence": "The goal requires analyze to decide the Node port shape for \"packet builder, preflight, model resolution, critic and judge dispatch ... exit contract ... harness-native fallback ... findings and decision-log artifacts\". The candidate list contains `cand-303`, a \"Hand-rolled stdio JSON-RPC client for sycophancy-correction\", but no candidate or build-required entry evaluates the packet builder, preflight, model resolver, judge dispatcher, retry loop, fallback implementation, or artifact writer; `build_required` only says \"Two new top-level phases: adversarial-review-node and deep-research-node\".",
+      "suggested_fix": "Add explicit build/adapt candidates for the adversarial-review Node port components and record verdicts, dependencies, and rejected alternatives before planning."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "analysis.md",
+      "claim": "The deep-research build-vs-move decision required by the goals is deferred instead of decided.",
+      "evidence": "The goal says: \"Analyze decides between (a) engineering a Node-only version for the mini pack ... or (b) moving the existing code and making it Windows-compatible \u2014 with the reason recorded, and the LOC that must change counted by a command.\" The analysis instead says this child will \"Open `adversarial-review-node` and `deep-research-node` as sibling top-level phases ... do not start them here\" and `library-candidates.json` says the candidates for internals are \"recorded here for those phases' analyze stages,\" leaving the required build-vs-move choice to a future analyze stage.",
+      "suggested_fix": "Record the decision now: Node-only checkpoint-mode port versus moving existing code, with the commanded LOC count and rationale, even if implementation is opened as a later phase."
+    }
+  ]
+}

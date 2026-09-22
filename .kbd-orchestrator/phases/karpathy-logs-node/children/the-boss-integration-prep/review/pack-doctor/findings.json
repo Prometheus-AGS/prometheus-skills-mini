@@ -1,0 +1,50 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "lib/doctor/runtime.mjs",
+      "line": 10,
+      "claim": "The doctor will fail to start instead of skipping when the versions comparison dependency is absent.",
+      "evidence": "Acceptance criteria: \"Runnable before its dependencies land: each dependent check is `skip` with a reason until then\"; `lib/doctor/runtime.mjs` statically imports `compareToTree, parseVersionsToml` from `../../rules/lib/versions-toml.mjs`, so if that dependency has not landed, module loading aborts before `mini-versions-toml` can return `skip`.",
+      "suggested_fix": "Move the `rules/lib/versions-toml.mjs` import inside `mini-versions-toml.run()` using dynamic `import()` and catch module-not-found to return a `skip` outcome with the dependency reason."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "lib/doctor/tools.mjs",
+      "line": 36,
+      "claim": "`mini-pk` reports an installed-but-broken `pk` as `warn` unless tests inject a resolver.",
+      "evidence": "Acceptance criteria 2.1 specifies `mini-pk` and optional components \"fail only when the component is present and broken (a spawn that exits non-zero)\"; `tools.mjs` creates a default resolver, but then uses `const where = ctx.resolve ? resolve('pk') : null`, so the default resolver is never called after `pk --version` exits non-zero.",
+      "suggested_fix": "Call `const where = resolve('pk')` unconditionally after the version probe fails, and treat a resolved path as `fail`."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "lib/doctor/services.mjs",
+      "line": 125,
+      "claim": "`mini-service-liter-llm` treats a non-200 health response as pass despite the spec requiring non-200 health responses to fail.",
+      "evidence": "Acceptance criteria: `mini-docker`, `mini-service-*`, `mini-pk` and `mini-sycophancy-correction` shall \"fail only when the component is present and broken ... a health endpoint answering non-200\"; `mini-service-liter-llm` configures `okStatuses: [200, 401]`, so `/health` returning 401 becomes `pass`.",
+      "suggested_fix": "Keep `/health` success to 200 only; if a separate authenticated endpoint is probed, model that as a separate check or evidence, not as an accepted health status."
+    },
+    {
+      "severity": "WARNING",
+      "file": "lib/doctor/runtime.mjs",
+      "line": 14,
+      "claim": "Default repository-root resolution is not Windows-safe because it uses `URL.pathname` instead of `fileURLToPath`.",
+      "evidence": "`const repoRootDefault = () => path.resolve(new URL('../..', import.meta.url).pathname);` appears in `runtime.mjs` and the same pattern is used in other doctor modules; on Windows a file URL pathname is shaped like `/C:/...`, producing invalid or wrong paths, while the proposal says the doctor runs \"on any platform\".",
+      "suggested_fix": "Use `fileURLToPath(new URL('../..', import.meta.url))` and `path.resolve` that result; apply the same fix to `lib/doctor/kbd.mjs`, `lib/doctor/skills.mjs`, and `lib/doctor/scope.mjs`."
+    },
+    {
+      "severity": "WARNING",
+      "file": "lib/doctor/contract.mjs",
+      "line": 23,
+      "claim": "Runtime outcome conformance does not enforce that emitted fix actions are implemented by the owning check.",
+      "evidence": "Acceptance/spec requirement: \"Every `actions[]` entry of `kind: 'fix'` names a `fixId` that `fixes` implements\"; `outcomeConformance()` only checks `{ kind: 'fix', fixId: <non-empty string> }`, while `scripts/doctor.mjs` calls only `outcomeConformance(outcome, check.id)`, so a check can emit an unimplemented fix action and still be printed as valid.",
+      "suggested_fix": "Add a check-aware outcome validator, e.g. `checkOutcomeConformance(check, outcome)`, that verifies every emitted `fixId` is in `check.offers` and implemented in `check.fixes`, and use it in `scripts/doctor.mjs`."
+    }
+  ]
+}

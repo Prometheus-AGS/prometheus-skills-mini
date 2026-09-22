@@ -45,7 +45,9 @@ async function runAll(ctx) {
     let outcome;
     try {
       outcome = await check.run(ctx);
-      const violations = outcomeConformance(outcome, check.id);
+      // Pass the owner's implemented fixes: an outcome advertising a fix id nothing
+      // implements would render a button in the-boss's UI that cannot work.
+      const violations = outcomeConformance(outcome, check.id, Object.keys(check.fixes ?? {}));
       if (violations.length > 0) {
         // A malformed outcome is the check's bug, reported as a finding rather than
         // silently reshaped — a reshaped outcome would hide the defect.

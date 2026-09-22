@@ -11,13 +11,16 @@ minimum = ">=22"          # must equal package.json engines.node, exactly
 [submodules]
 # "<path under the repository root>" = "<full or short commit sha>"
 # Each path must be a gitlink in HEAD at exactly this commit.
-"tools/prometheus-knowledge" = "abb6745"
+"tools/prometheus-knowledge"    = "abb6745"
+"tools/liter-llm"               = "c5c6caac"   # the full skill pack's own pin
+"tools/surreal-memory-server"   = "452dab1"    # the full skill pack's own pin; UAR's 432eaa1 note is 23 commits behind
 
 [images]
 # Kept in lockstep with the SurrealDB client every consumer links: compass and the Universal Agent
 # Runtime both pin the surrealdb crate at =3.2.4, and UAR's own versions.toml pins this exact
 # digest. The one SurrealDB container is shared by surreal-memory, compass and UAR.
-#
-# liter-llm and surreal-memory are added as built_from_submodule entries when change
-# docker-services vendors their submodules; pinning them now would name gitlinks that do not exist.
-"surrealdb" = { image = "surrealdb/surrealdb:v3.2.4", digest = "sha256:51baed8709f57f67dcf04b30e3177db846803fa9342dae2be58c6fa5f8d59843" }
+# surreal-memory also links surrealdb =3.2.4, so all three clients match this server.
+"surrealdb"      = { image = "surrealdb/surrealdb:v3.2.4", digest = "sha256:51baed8709f57f67dcf04b30e3177db846803fa9342dae2be58c6fa5f8d59843" }
+# Built from their submodules; used only as `build:` contexts, so nothing under them runs on the host.
+"liter-llm"      = { built_from_submodule = true, submodule = "tools/liter-llm" }
+"surreal-memory" = { built_from_submodule = true, submodule = "tools/surreal-memory-server" }

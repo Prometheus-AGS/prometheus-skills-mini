@@ -80,6 +80,13 @@ const inlineTable = (raw, line) => {
   return table;
 };
 
+// The only tables this file has meaning for. An unknown one is refused rather than
+// ignored: `compareToTree` reads exactly these names, so `[submodule]` (singular, a
+// plausible hand-typed slip) would parse cleanly, be read by nothing, and report
+// full agreement having compared no pins at all. The parser was strict about value
+// syntax and completely permissive about vocabulary — the wrong half.
+const TABLES = new Set(['node', 'submodules', 'images', 'npm']);
+
 /** Parse the documented subset. Throws on anything outside it. */
 export function parseVersionsToml(text) {
   const parsed = {};
@@ -96,7 +103,11 @@ export function parseVersionsToml(text) {
       const name = /^\[([^\]]+)\]$/.exec(line);
       if (!name) ERR(lineNumber, `malformed table header ${JSON.stringify(line)}`);
       table = key(name[1], lineNumber);
-      parsed[table] ??= {};
+      if (!TABLES.has(table)) {
+        ERR(lineNumber, `unknown table [${table}]; expected one of ${[...TABLES].join(', ')}`);
+      }
+      if (table in parsed) ERR(lineNumber, `table [${table}] is declared twice`);
+      parsed[table] = {};
       continue;
     }
 
@@ -120,6 +131,9 @@ export function parseVersionsToml(text) {
 // different door. Seven hex digits is git's own short-sha floor.
 const PIN = /^[0-9a-f]{7,40}$/;
 
+// `sha256:<hex>` and friends. A digest that is merely truthy pins nothing.
+const DIGEST = /^[a-z0-9]+:[0-9a-f]{32,}$/;
+
 const samePin = (pinned, actual) =>
   typeof actual === 'string' && actual.length >= pinned.length && actual.startsWith(pinned);
 
@@ -128,21 +142,28 @@ const samePin = (pinned, actual) =>
  * `lsTree(path)` returns the gitlink commit at that path in HEAD, or null.
  * `listGitlinks()` returns every gitlink path in HEAD — the spec says the file names
  * EVERY submodule, so an unlisted one is a disagreement too; checking only the listed
- * pins would let an incomplete authority report itself as agreeing. Optional so the
- * unit tests that do not exercise completeness need not supply it.
+ * pins would let an incomplete authority report itself as agreeing.
+ *
+ * Both readers are REQUIRED. An injected verifier that is absent used to read as
+ * "nothing to report", so a renamed key or a spread that dropped it would turn a
+ * wiring mistake into silent non-verification. A caller that genuinely wants no
+ * completeness check passes `() => []` and says so.
  * Pure: the tree readers and the manifest are injected, so tests need no repository.
  */
 export function compareToTree(parsed, { lsTree, listGitlinks, packageJson }) {
+  if (typeof lsTree !== 'function') throw new TypeError('compareToTree requires an lsTree function');
+  if (typeof listGitlinks !== 'function') {
+    throw new TypeError('compareToTree requires a listGitlinks function (pass () => [] to opt out)');
+  }
+
   const found = [];
   const submodules = parsed.submodules ?? {};
 
   // Scoped to tools/ deliberately: the spec says "every submodule under tools/",
   // and a gitlink elsewhere in the tree is not this file's business.
-  if (typeof listGitlinks === 'function') {
-    for (const path of listGitlinks().filter((p) => p === 'tools' || p.startsWith('tools/'))) {
-      if (!(path in submodules)) {
-        found.push(`${path}: HEAD has a gitlink there, but versions.toml does not name it`);
-      }
+  for (const path of listGitlinks().filter((p) => p === 'tools' || p.startsWith('tools/'))) {
+    if (!(path in submodules)) {
+      found.push(`${path}: HEAD has a gitlink there, but versions.toml does not name it`);
     }
   }
 
@@ -163,9 +184,25 @@ export function compareToTree(parsed, { lsTree, listGitlinks, packageJson }) {
     }
   }
 
+  // Both sides optional-chain to undefined, and `undefined !== undefined` is false —
+  // so a file with no [node] table compared against a package.json with no
+  // engines.node used to pass having verified nothing, as did a caller that simply
+  // forgot to pass packageJson. Each side must be a non-empty string before the
+  // comparison means anything. This is the same guard PIN gives submodule pins; the
+  // node floor never got one.
   const declared = parsed.node?.minimum;
   const engine = packageJson?.engines?.node;
-  if (declared !== engine) {
+  const usable = (v) => typeof v === 'string' && v.trim() !== '';
+
+  if (!usable(declared)) {
+    found.push(`[node] minimum is ${JSON.stringify(declared)}; it must be a non-empty string such as ">=22"`);
+  }
+  if (!usable(engine)) {
+    found.push(
+      `package.json engines.node is ${JSON.stringify(engine)}; there is nothing to compare the [node] floor against`,
+    );
+  }
+  if (usable(declared) && usable(engine) && declared !== engine) {
     found.push(`[node] minimum is ${declared}, package.json engines.node is ${engine} — they must be equal`);
   }
 
@@ -174,14 +211,33 @@ export function compareToTree(parsed, { lsTree, listGitlinks, packageJson }) {
       found.push(`[images] ${name} must be an inline table`);
       continue;
     }
-    if (!entry.digest && entry.built_from_submodule !== true) {
+    // `!entry.digest` was a truthiness test, so `digest = true` — a valid parse —
+    // satisfied "has a digest". A digest has a documented shape; check it.
+    const hasDigest = typeof entry.digest === 'string' && DIGEST.test(entry.digest);
+    if (entry.digest !== undefined && !hasDigest) {
+      found.push(
+        `[images] ${name} has digest ${JSON.stringify(entry.digest)}, which is not an algorithm:hex digest such as "sha256:…"`,
+      );
+      continue;
+    }
+    if (!hasDigest && entry.built_from_submodule !== true) {
       found.push(`[images] ${name} has neither a digest nor built_from_submodule = true`);
       continue;
     }
-    if (entry.built_from_submodule === true && !(entry.submodule in submodules)) {
-      found.push(
-        `[images] ${name} is built_from_submodule but names ${entry.submodule ?? '(nothing)'}, which [submodules] does not pin`,
-      );
+    // `in` tests key presence only, so an image could claim to be built from a
+    // submodule whose pin was already rejected as unusable — the image's own
+    // assertion would be vacuous even while the run reported the bad pin.
+    if (entry.built_from_submodule === true) {
+      const pin = submodules[entry.submodule];
+      if (!(entry.submodule in submodules)) {
+        found.push(
+          `[images] ${name} is built_from_submodule but names ${entry.submodule ?? '(nothing)'}, which [submodules] does not pin`,
+        );
+      } else if (typeof pin !== 'string' || !PIN.test(pin)) {
+        found.push(
+          `[images] ${name} is built from ${entry.submodule}, whose pin ${JSON.stringify(pin)} is not a usable commit sha`,
+        );
+      }
     }
   }
 

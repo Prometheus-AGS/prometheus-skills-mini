@@ -23,6 +23,18 @@
 - **WHEN** `HEAD` has a gitlink under `tools/` that `[submodules]` does not name
 - **THEN** the test fails naming that path; a gitlink outside `tools/` is not reported
 
+#### Scenario: An unknown table name is refused rather than ignored
+- **WHEN** the file declares a table other than `node`, `submodules`, `images` or `npm` — for example `[submodule]`, singular
+- **THEN** parsing raises naming the unknown table, because a table nothing reads would let the file report agreement having compared no pins
+
+#### Scenario: The node floor is not verified by two undefineds agreeing
+- **WHEN** `[node] minimum` is absent, or `package.json` has no `engines.node`, or the manifest is not supplied at all
+- **THEN** the test fails naming whichever side is missing, rather than passing because `undefined !== undefined` is false
+
+#### Scenario: A tree reader that was not supplied is an error, not a silent pass
+- **WHEN** `compareToTree` is called without `lsTree` or without `listGitlinks`
+- **THEN** it raises `TypeError`; an absent injected verifier never reads as "nothing to report"
+
 #### Scenario: A duplicate key is a parse error, not a silent overwrite
 - **WHEN** a table declares the same key twice
 - **THEN** parsing raises rather than keeping the last value

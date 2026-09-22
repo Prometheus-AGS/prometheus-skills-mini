@@ -1,9 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
-import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { tempDir } from '../../lib/platform/paths.mjs';
 import { spawnExecutable } from '../../lib/platform/spawn.mjs';
 import { compareToTree, parseVersionsToml } from '../lib/versions-toml.mjs';
 
@@ -52,22 +52,29 @@ const listGitlinksFromGit = (cwd = repoRoot) => {
     .map((match) => match[1]);
 };
 
-test(
-  'versions.toml agrees with the tree',
-  { todo: existsSync(versionsToml) ? false : 'operator has not authored versions.toml' },
-  () => {
-    const parsed = parseVersionsToml(readFileSync(versionsToml, 'utf8'));
-    const packageJson = JSON.parse(readFileSync(path.join(repoRoot, 'package.json'), 'utf8'));
+// `todo` does NOT skip a body in node:test — it runs it and demotes the failure. Marking
+// the whole test `todo` therefore demoted every exception inside it the moment the file
+// was absent (the run printed an ENOENT stack under "failing tests" while exiting 0), and
+// would have demoted a real disagreement too had the file existed and the read failed.
+// The existence check is hoisted so `todo` marks a deliberate non-run, and every failure
+// of an actual comparison stays a failure.
+test('versions.toml agrees with the tree', (t) => {
+  if (!existsSync(versionsToml)) {
+    t.todo('operator has not authored versions.toml');
+    return;
+  }
 
-    const disagreements = compareToTree(parsed, {
-      lsTree: lsTreeFromGit,
-      listGitlinks: listGitlinksFromGit,
-      packageJson,
-    });
+  const parsed = parseVersionsToml(readFileSync(versionsToml, 'utf8'));
+  const packageJson = JSON.parse(readFileSync(path.join(repoRoot, 'package.json'), 'utf8'));
 
-    assert.deepEqual(disagreements, [], `versions.toml disagrees with the tree:\n${disagreements.join('\n')}`);
-  },
-);
+  const disagreements = compareToTree(parsed, {
+    lsTree: lsTreeFromGit,
+    listGitlinks: listGitlinksFromGit,
+    packageJson,
+  });
+
+  assert.deepEqual(disagreements, [], `versions.toml disagrees with the tree:\n${disagreements.join('\n')}`);
+});
 
 // Proves the gitlink reader is not vacuous: the one submodule this repository
 // already vendors must be found, and a path that is a directory rather than a
@@ -86,7 +93,7 @@ test('the gitlink readers find a real submodule and refuse a plain directory', (
 // check vacuously, and `null` named the wrong cause. A gate that cannot read the tree has not
 // verified the tree. Caught by round 5 of the diff review.
 test('a git failure raises rather than reporting an empty or absent tree', () => {
-  const notARepo = mkdtempSync(path.join(tmpdir(), 'versions-toml-'));
+  const notARepo = mkdtempSync(path.join(tempDir(), 'versions-toml-'));
   try {
     assert.throws(() => listGitlinksFromGit(notARepo), /git ls-tree/);
     assert.throws(() => lsTreeFromGit('tools/prometheus-knowledge', notARepo), /git ls-tree/);

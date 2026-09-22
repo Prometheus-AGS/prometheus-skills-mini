@@ -102,8 +102,8 @@ constraints:
     severity: blocking
     source: '.claude/rules/node-scripts.md — Paths; adversarial review of platform-paths-and-text'
     description: 'Only lib/platform/paths.mjs asks the OS where things live; every other module and test uses the helpers'
-    check: 'git grep --no-index --exclude-standard -n -E -e "os\.(tmpdir|homedir)\(\)" -- "lib/*.mjs" "scripts/*.mjs" "hooks/*.mjs" "rules/*.mjs" ":!lib/platform/paths.mjs" ":!lib/platform/paths.test.mjs"'
-    note: 'paths.test.mjs is the single documented exception: it asserts that the DEFAULT helpers delegate to the real OS, which cannot be asserted through the helper without becoming a tautology. Review caught two modules reading os.tmpdir() directly; this check makes the next one mechanical.'
+    check: 'git grep --no-index --exclude-standard -n -E -e "os\.(tmpdir|homedir)\(\)" -e "from .node:os." -- "lib/*.mjs" "scripts/*.mjs" "hooks/*.mjs" "rules/*.mjs" ":!lib/platform/paths.mjs" ":!lib/platform/paths.test.mjs"'
+    note: 'paths.test.mjs is the single documented exception: it asserts that the DEFAULT helpers delegate to the real OS, which cannot be asserted through the helper without becoming a tautology. Review caught two modules reading os.tmpdir() directly; this check makes the next one mechanical. The pattern also matches any import of node:os, because the first spelling alone missed the named-import form — `import { tmpdir } from "node:os"` then `tmpdir()` — and reported clean while four such violations sat in scripts/ (found by round 6 of the review-housekeeping diff review, which read the constraint the check failed to enforce). Matching the import is the durable form: there is no legitimate reason for a module outside lib/platform/paths.mjs to import node:os at all.'
 
   - id: no-zeespec
     severity: blocking

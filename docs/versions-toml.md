@@ -43,7 +43,11 @@ minimum = ">=22"          # must equal package.json engines.node, exactly
 
 | Rule | Failure |
 |---|---|
-| The file exists | `todo` with "operator has not authored versions.toml" — never a vacuous pass |
+| The file exists | `todo` with "operator has not authored versions.toml" — never a vacuous pass. The check is hoisted out of the test body, so `todo` marks a deliberate non-run and never demotes a real failure |
+| Only the four documented tables appear (`node`, `submodules`, `images`, `npm`), each once | parsing raises naming the unknown table. `[submodule]` singular would otherwise parse cleanly, be read by nothing, and report agreement having compared no pins |
+| `[node] minimum` and `engines.node` are each a non-empty string | names whichever is missing. Two `undefined`s comparing equal is not agreement |
+| A `digest` has the shape `algorithm:hex` | names the entry and the value; a merely truthy digest pins nothing |
+| Both tree readers are supplied | `TypeError`. An absent injected verifier must not read as "nothing to report" |
 | Every `[submodules]` path is a gitlink in `HEAD` at that commit | names the path, the file's commit and the tree's commit |
 | Every `[submodules]` value is a commit sha (7–40 hex digits) | names the path and the value; an empty or malformed pin would prefix-match every commit |
 | Every gitlink **under `tools/`** is named by `[submodules]` | names the unlisted path. A gitlink elsewhere in the tree is not this file's business |

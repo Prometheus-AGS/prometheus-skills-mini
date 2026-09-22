@@ -60,6 +60,7 @@ test('a submodule pin that disagrees with the gitlink is reported with both comm
 
   const found = compareToTree(parsed, {
     lsTree: tree({ 'tools/x': 'bbbbbbbb1234567890' }),
+    listGitlinks: () => [],
     packageJson: { engines: { node: '>=22' } },
   });
 
@@ -74,6 +75,7 @@ test('a short sha matches the tree by prefix', () => {
 
   const found = compareToTree(parsed, {
     lsTree: tree({ 'tools/x': 'abb6745e31da7577611d7c32005af26a72254484' }),
+    listGitlinks: () => [],
     packageJson: { engines: { node: '>=22' } },
   });
 
@@ -83,7 +85,11 @@ test('a short sha matches the tree by prefix', () => {
 test('a pinned path that is not a gitlink at all is reported', () => {
   const parsed = parseVersionsToml('[node]\nminimum = ">=22"\n[submodules]\n"tools/absent" = "abb6745"\n');
 
-  const found = compareToTree(parsed, { lsTree: tree({}), packageJson: { engines: { node: '>=22' } } });
+  const found = compareToTree(parsed, {
+    lsTree: tree({}),
+    listGitlinks: () => [],
+    packageJson: { engines: { node: '>=22' } },
+  });
 
   assert.equal(found.length, 1);
   assert.match(found[0], /tools\/absent/);
@@ -93,7 +99,11 @@ test('a pinned path that is not a gitlink at all is reported', () => {
 test('the node floor must equal package.json engines.node exactly', () => {
   const parsed = parseVersionsToml('[node]\nminimum = ">=22"\n');
 
-  const found = compareToTree(parsed, { lsTree: tree({}), packageJson: { engines: { node: '>=22.0.0' } } });
+  const found = compareToTree(parsed, {
+    lsTree: tree({}),
+    listGitlinks: () => [],
+    packageJson: { engines: { node: '>=22.0.0' } },
+  });
 
   assert.equal(found.length, 1);
   assert.match(found[0], />=22\b/);
@@ -105,6 +115,7 @@ test('an image needs a digest or built_from_submodule, and the submodule it name
 
   const neither = compareToTree(parseVersionsToml(`${base}"x" = { image = "y:1" }\n`), {
     lsTree: tree({ 'tools/ok': 'aaaaaaa0000' }),
+    listGitlinks: () => [],
     packageJson: { engines: { node: '>=22' } },
   });
   assert.equal(neither.length, 1);
@@ -112,14 +123,22 @@ test('an image needs a digest or built_from_submodule, and the submodule it name
 
   const dangling = compareToTree(
     parseVersionsToml(`${base}"x" = { built_from_submodule = true, submodule = "tools/nope" }\n`),
-    { lsTree: tree({ 'tools/ok': 'aaaaaaa0000' }), packageJson: { engines: { node: '>=22' } } },
+    {
+      lsTree: tree({ 'tools/ok': 'aaaaaaa0000' }),
+      listGitlinks: () => [],
+      packageJson: { engines: { node: '>=22' } },
+    },
   );
   assert.equal(dangling.length, 1);
   assert.match(dangling[0], /tools\/nope/);
 
   const fine = compareToTree(
     parseVersionsToml(`${base}"x" = { built_from_submodule = true, submodule = "tools/ok" }\n`),
-    { lsTree: tree({ 'tools/ok': 'aaaaaaa0000' }), packageJson: { engines: { node: '>=22' } } },
+    {
+      lsTree: tree({ 'tools/ok': 'aaaaaaa0000' }),
+      listGitlinks: () => [],
+      packageJson: { engines: { node: '>=22' } },
+    },
   );
   assert.deepEqual(fine, []);
 });
@@ -207,12 +226,109 @@ test('a pin that is not a commit sha is reported, never matched by prefix', () =
 
     const found = compareToTree(parsed, {
       lsTree: tree({ 'tools/x': 'deadbeef1234567890abcdef1234567890abcdef' }),
+      listGitlinks: () => [],
       packageJson: { engines: { node: '>=22' } },
     });
 
     assert.equal(found.length, 1, `${JSON.stringify(bad)} should be refused`);
     assert.match(found[0], /not a commit sha/);
   }
+});
+
+// The parser was strict about value syntax and wholly permissive about vocabulary.
+// compareToTree reads exactly four table names, so `[submodule]` (singular — a
+// plausible hand-typed slip in an operator-written file) parsed cleanly, was read by
+// nothing, and reported full agreement having compared no pins at all.
+test('an unknown table name is refused, not parsed and then ignored', () => {
+  for (const bad of ['[submodule]\n"tools/x" = "aaaaaaa"\n', '[image]\n"x" = { digest = "sha256:aa" }\n']) {
+    assert.throws(() => parseVersionsToml(bad), /unknown table/);
+  }
+});
+
+test('a table declared twice is a parse error', () => {
+  assert.throws(
+    () => parseVersionsToml('[submodules]\n"tools/a" = "aaaaaaa"\n[submodules]\n"tools/b" = "bbbbbbb"\n'),
+    /declared twice/,
+  );
+});
+
+// Both sides optional-chained to undefined, and `undefined !== undefined` is false,
+// so a file with no [node] table compared against a package.json with no
+// engines.node passed having verified nothing — as did a caller that simply forgot
+// to pass packageJson at all.
+test('the node floor is not verified by two undefineds agreeing', () => {
+  const noTable = compareToTree(parseVersionsToml('[submodules]\n'), {
+    lsTree: tree({}),
+    listGitlinks: () => [],
+    packageJson: {},
+  });
+  assert.ok(
+    noTable.some((f) => /\[node\] minimum is undefined/.test(f)),
+    JSON.stringify(noTable),
+  );
+  assert.ok(
+    noTable.some((f) => /engines\.node is undefined/.test(f)),
+    JSON.stringify(noTable),
+  );
+
+  const noManifest = compareToTree(parseVersionsToml('[node]\nminimum = ">=22"\n'), {
+    lsTree: tree({}),
+    listGitlinks: () => [],
+  });
+  assert.equal(noManifest.length, 1);
+  assert.match(noManifest[0], /nothing to compare/);
+});
+
+// `!entry.digest` was a truthiness test, so `digest = true` — a valid parse —
+// satisfied "has a digest" while pinning nothing.
+test('a digest must have the documented shape, not merely be truthy', () => {
+  const base = '[node]\nminimum = ">=22"\n[images]\n';
+  const opts = { lsTree: tree({}), listGitlinks: () => [], packageJson: { engines: { node: '>=22' } } };
+
+  for (const bad of ['true', '"no"', '"sha256:"']) {
+    const found = compareToTree(parseVersionsToml(`${base}"x" = { digest = ${bad} }\n`), opts);
+    assert.equal(found.length, 1, `${bad}: ${JSON.stringify(found)}`);
+    assert.match(found[0], /not an algorithm:hex digest|neither a digest/);
+  }
+
+  const good = compareToTree(
+    parseVersionsToml(`${base}"x" = { digest = "sha256:${'a'.repeat(64)}" }\n`),
+    opts,
+  );
+  assert.deepEqual(good, []);
+});
+
+// `in` tests key presence only, so an image could claim to be built from a submodule
+// whose pin had already been rejected as unusable — the image's own assertion was
+// vacuous even while the run reported the bad pin.
+test('an image built from a submodule whose pin is unusable is reported as such', () => {
+  const found = compareToTree(
+    parseVersionsToml(
+      '[node]\nminimum = ">=22"\n[submodules]\n"tools/bad" = ""\n[images]\n"x" = { built_from_submodule = true, submodule = "tools/bad" }\n',
+    ),
+    { lsTree: tree({}), listGitlinks: () => [], packageJson: { engines: { node: '>=22' } } },
+  );
+
+  assert.equal(found.length, 2, JSON.stringify(found));
+  assert.ok(found.some((f) => /\[images\] x is built from tools\/bad/.test(f)), JSON.stringify(found));
+});
+
+// An injected verifier that is absent used to read as "nothing to report", so a
+// renamed key or a spread that dropped it became silent non-verification.
+test('an absent tree reader is a TypeError, never a silent pass', () => {
+  const parsed = parseVersionsToml('[node]\nminimum = ">=22"\n');
+
+  // Assert the explicit guard, not merely "it threw": without the guard the call
+  // still throws later from `listGitlinks()`, so a bare assert.throws passes with
+  // the guard removed. The message and the error type are what pin the contract.
+  assert.throws(
+    () => compareToTree(parsed, { listGitlinks: () => [], packageJson: {} }),
+    { name: 'TypeError', message: /compareToTree requires an lsTree function/ },
+  );
+  assert.throws(
+    () => compareToTree(parsed, { lsTree: tree({}), packageJson: {} }),
+    { name: 'TypeError', message: /compareToTree requires a listGitlinks function/ },
+  );
 });
 
 test('every disagreement is reported, not just the first', () => {
@@ -222,6 +338,7 @@ test('every disagreement is reported, not just the first', () => {
 
   const found = compareToTree(parsed, {
     lsTree: tree({ 'tools/a': 'zzzzzzz0000', 'tools/b': 'yyyyyyy0000' }),
+    listGitlinks: () => [],
     packageJson: { engines: { node: '>=22' } },
   });
 

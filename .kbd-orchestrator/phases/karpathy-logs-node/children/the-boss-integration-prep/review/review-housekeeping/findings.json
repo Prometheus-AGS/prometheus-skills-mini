@@ -9,10 +9,10 @@
     {
       "severity": "CRITICAL",
       "file": "rules/test/versions-toml.test.mjs",
-      "line": 32,
-      "claim": "The real-tree gitlink completeness gate silently passes when `git ls-tree -r HEAD` fails, allowing an incomplete `versions.toml` to be accepted.",
-      "evidence": "`listGitlinksFromGit` returns `[]` on any non-zero git status (`if (result.status !== 0) return [];`), while the spec requires the test to fail when a gitlink under `tools/` is not named and the constraints call out silent failure as a review target.",
-      "suggested_fix": "Throw an error on non-zero `git ls-tree` status, including stderr/status, instead of returning an empty list."
+      "line": 4,
+      "claim": "The new real-tree test asks the OS for the temp directory directly instead of using the project platform path helper, violating a blocking constraint.",
+      "evidence": "The diff adds `import { tmpdir } from 'node:os';` and later uses `mkdtempSync(path.join(tmpdir(), 'versions-toml-'))`; constraint `os-locations-only-via-platform` says \"Only lib/platform/paths.mjs asks the OS where things live; every other module and test uses the helpers\" and its check covers `rules/*.mjs`.",
+      "suggested_fix": "Replace the direct `node:os` `tmpdir()` use with the repository's temp-directory helper from `lib/platform/paths.mjs`, or add an appropriate helper there and consume it from this test."
     }
   ]
 }

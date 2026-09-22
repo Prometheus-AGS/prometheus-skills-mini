@@ -1,0 +1,52 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "the-boss/prometheus-001-skills-bundling/tasks.md",
+      "claim": "The tasks omit the openspec submodule that the proposal says is required for goal B6.",
+      "evidence": "The proposal says: \"Vendor the `openspec` fork as a submodule too (goal B6).\" and its impact says: \"`.gitmodules` (two submodules: the mini and the openspec fork)\". But the tasks only include `1.1 git submodule add https://github.com/Prometheus-AGS/prometheus-skills-mini` and have no task to add or pin `Prometheus-AGS/openspec`.",
+      "suggested_fix": "Add explicit tasks to add the openspec submodule, pin it to the released commit from release infrastructure, verify the URL and pin, and include it in the change's verification steps."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "the-boss/prometheus-004-docker-services/proposal.md",
+      "claim": "The plan depends on mini Docker service files that no included change creates, leaving goal C unimplemented.",
+      "evidence": "Goal C requires: \"surrealdb, surreal-memory and liter-llm run in Docker after detection\". The docker proposal says it is \"Blocked on the mini's `docker-services` change, which creates `docker.mjs` and `services.mjs`\", and task 1.1 says to confirm those files exist. The packet's included mini changes are only `mini-vendor-submodules` and `the-boss-release-infrastructure`; neither creates `lib/platform/docker.mjs` or `scripts/services.mjs`.",
+      "suggested_fix": "Include the mini `docker-services` change in this phase packet, or explicitly mark goal C out of scope and blocked by a named prior phase artifact that creates those files."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "the-boss/prometheus-003-settings-and-doctor/tasks.md",
+      "claim": "Docker consent preference ownership is contradictory between changes, so two tasks can define the same preference independently.",
+      "evidence": "`prometheus-003` spec says Docker consent is \"owned by `prometheus-004`; declared here so the two changes cannot define it twice\". But `prometheus-004` task 3.1 says: \"Add the consent preference to `classification.json`; regenerate.\" This directly duplicates the same preference work.",
+      "suggested_fix": "Choose one owner. Either have `prometheus-003` declare all preference keys and make `prometheus-004` consume the existing Docker consent key, or remove Docker consent from `prometheus-003` and make `prometheus-004` the only change that adds it."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "mini/the-boss-release-infrastructure/tasks.md",
+      "claim": "The sycophancy-correction repository decision allows a path that contradicts goal A3.",
+      "evidence": "Goal A3 says: \"`sycophancy-correction` does not exist under `Prometheus-AGS`. Create it from the `Know-Me-Tools` fork\". Task 4.1 instead permits option \"(b) keep `Know-Me-Tools/sycophancy-correction-skill` as the source of truth and amend the goals plus the mini change to name it.\"",
+      "suggested_fix": "Remove option (b) from this phase's tasks, or revise the goals before approving the spec. As written, the task can complete while violating the stated goal."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "the-boss/prometheus-003-settings-and-doctor/specs/settings/prometheus-section/spec.md",
+      "claim": "The startup push spec instructs The Boss to implement copying even though the proposal declares reimplementing the copy a non-goal.",
+      "evidence": "The proposal says under Non-goals: \"Reimplementing the copy. The mini owns it and it is mutation-tested there.\" It also says the push \"delegates to the mini's `copy-skills`\". But the spec requirement says: \"A lifecycle service ... SHALL copy each bundled skill into `<home>/.agents/skills/<name>` and `<home>/.claude/skills/<name>`\", and the tasks say to test and implement that it \"copies when absent; copies when differing\" without requiring delegation to `doctor.mjs --fix copy-skills` or another mini entry point.",
+      "suggested_fix": "Rewrite the spec and tasks so The Boss invokes the mini's copy implementation and only owns scheduling, notices, and rendering. Acceptance criteria should assert the mini copy command is used and that The Boss does not duplicate path traversal/copy logic."
+    },
+    {
+      "severity": "WARNING",
+      "file": "mini/the-boss-release-infrastructure/specs/project-tooling/fork-releases/spec.md",
+      "claim": "The release matrix is internally inconsistent about how many platform/arch pairs are required.",
+      "evidence": "The requirement title says: \"Every Rust artifact covers the four platform/arch pairs the-boss ships\". The body then lists five targets: `x86_64-pc-windows-msvc`, `aarch64-pc-windows-msvc`, both macOS arches, and `x86_64-unknown-linux-gnu`. The binary shipping spec likewise requires five package keys: `win32-x64`, `win32-arm64`, `darwin-arm64`, `darwin-x64` and `linux-x64`.",
+      "suggested_fix": "Rename the release requirement to five platform/arch targets, or remove Linux from the required matrix if it is not actually part of this phase. Keep the count and target list identical across release infrastructure and binary shipping."
+    }
+  ]
+}

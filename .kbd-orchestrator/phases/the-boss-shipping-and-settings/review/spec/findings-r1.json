@@ -1,0 +1,50 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "the-boss/prometheus-003-settings-and-doctor/proposal.md",
+      "line": 0,
+      "claim": "The specs require spawning mini scripts from an app-data copy, but no change creates, bundles, or installs that app-data copy of the mini pack.",
+      "evidence": "prometheus-003 says: \"main spawns `node scripts/doctor.mjs` from the app-data copy\" and prometheus-004 says: \"Spawn the mini's `scripts/services.mjs status`\"; the listed changes only add a `prometheus-skills-mini` submodule for `resources/skills/`, binary TOOLS entries, settings, and Docker UI. No change ships `scripts/doctor.mjs`, `scripts/services.mjs`, or the rest of the mini into app-data.",
+      "suggested_fix": "Add an explicit the-boss change/spec for bundling and installing the mini runtime pack into app-data, including `scripts/doctor.mjs`, `scripts/services.mjs`, and their required libraries, before prometheus-003/004 depend on it."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "the-boss/prometheus-001-skills-bundling/proposal.md",
+      "line": 0,
+      "claim": "Goal B6 requires the openspec fork to be a the-boss submodule, but no the-boss change implements or specifies that submodule.",
+      "evidence": "Goals say: \"The openspec fork is the exception and must be used... Submodule, not release artifact.\" The changes include `openspec` only in `mini/mini-vendor-submodules` and the-boss submodules only for `prometheus-skills-mini`; no `the-boss` proposal or spec adds `Prometheus-AGS/openspec` as a build/dev dependency submodule.",
+      "suggested_fix": "Add a the-boss change for vendoring `Prometheus-AGS/openspec` as a submodule, wiring it into the relevant build/dev dependency path, and verifying the Windows fixes are the ones used."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "mini/the-boss-release-infrastructure/tasks.md",
+      "line": 0,
+      "claim": "The sycophancy-correction repository target contradicts the goal to create it under `Prometheus-AGS`.",
+      "evidence": "Goals say: \"`sycophancy-correction` does not exist under `Prometheus-AGS`. Create it from the `Know-Me-Tools` fork\". The tasks instead say: \"fork or transfer `Know-Me-Tools/sycophancy-correction-skill` to an org we control, or confirm we may push to it directly\", and `mini-vendor-submodules` names the source as `Know-Me-Tools/sycophancy-correction-skill` rather than a `Prometheus-AGS` repository.",
+      "suggested_fix": "Make the repository destination explicit as `Prometheus-AGS/sycophancy-correction` or update the goal if a different owner is intended; then make every submodule/release task point at the same canonical repo."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "the-boss/prometheus-003-settings-and-doctor/specs/settings/prometheus-section/spec.md",
+      "line": 0,
+      "claim": "The settings preference requirements are underspecified and omit several required keys from Goal D-9.",
+      "evidence": "Goal D-9 requires \"services enabled, gateway URL pinned to `:4000/v1`, Docker consent, home-directory push on/off, doctor auto-run\". The spec only says: \"Prometheus preference keys SHALL be added to `scripts/data-classify/data/classification.json`\" and prometheus-004 only specifies Docker consent; there is no requirement or scenario for services enabled, pinned gateway URL, home-directory push on/off, or doctor auto-run.",
+      "suggested_fix": "List each required preference key in the specs/tasks, including default values and acceptance scenarios for services enabled, gateway URL pinned to `http://localhost:4000/v1`, Docker consent, home-directory push on/off, and doctor auto-run."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "the-boss/prometheus-004-docker-services/specs/settings/prometheus-services/spec.md",
+      "line": 0,
+      "claim": "The Docker services spec omits the fixed service endpoints required by Goal C-8.",
+      "evidence": "Goal C-8 fixes endpoints on every platform: \"surreal-memory `http://localhost:23001/mcp/sse`, SurrealDB `127.0.0.1:28000`, liter-llm `http://localhost:4000/v1`\". prometheus-004's spec only requires spawning `services.mjs`, consent, and status rendering; it never asserts those endpoint values or that the three named services are represented.",
+      "suggested_fix": "Add requirements and scenarios that the services panel and spawned service contract use exactly the three required services and endpoints on every platform."
+    }
+  ]
+}

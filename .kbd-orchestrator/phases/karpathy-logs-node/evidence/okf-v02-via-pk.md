@@ -41,3 +41,24 @@ directly against the pinned commit's source, not its changelog or PR description
 genuinely upstream (not local-only), upstream CI was green on all three OSes for that exact commit, and the
 pinned writer's source confirms it emits the v0.2-current field shapes the ruling required — not merely OKF
 v0.2 conformance, which would have been true before the ruling and would have proven nothing.
+
+## Real Windows CI for this change's own new test file
+
+Not required by the scenario above, but recorded for the same reason `karpathy-progress-recorder`'s
+`evidence/windows.md` exists: a same-OS or same-logic proxy is not the same as running on the platform a
+claim is about.
+
+- CI run `35705812317` (commit `92f4a68`, the §6 close push): both `windows-latest` legs failed at
+  `node --test` itself — a real test failure, not a downstream tool. `lib/karpathy/knowledge-bundle.test.mjs`'s
+  own "no executable line ... writes beneath .prometheus/knowledge" test scanned and reported *itself*: its
+  self-exclusion filter compared `path.relative(repoRoot, file)` (backslash-separated on Windows) against a
+  hardcoded POSIX-literal string, which can never be equal there, so the file was never actually excluded
+  from its own scan on Windows and found its own test names, assertion message, and fixture string.
+- Fixed in `a6738ce`: compare `fileURLToPath(import.meta.url)` (absolute, OS-native) against the walk's own
+  already-absolute paths, never a `path.relative()` string against a POSIX literal. Confirmed the mechanism
+  directly (simulated both the old, always-unequal comparison and the new, correctly-equal one) before
+  treating it as fixed, not just re-running CI and hoping.
+- Re-run `35706098122` (same commit `a6738ce`): all six legs green, including both `windows-latest` legs.
+- `scripts/carried-mjs.test.mjs` has the identical self-exclusion pattern and is currently dormant only
+  because it doesn't yet self-match any of its own forbidden patterns — flagged as a follow-up task, not
+  fixed here (out of this change's scope).

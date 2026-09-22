@@ -51,9 +51,18 @@ context: |
     4 GB) and Rust builds.
   - Logs are Open Knowledge Format v0.2 bundles (write 0.2, read 0.1 and 0.2):
     frontmatter `type` on every non-reserved .md; generated {by, at}; verified
-    [{by, at}]; status; stale_after; sources as mappings. events.jsonl is the
-    append-only truth and is outside OKF; log.md is rendered from it, newest
-    first, by atomic rewrite. Never append to log.md.
+    [{by, at}]; status; stale_after; sources as mappings. The knowledge bundle
+    under .prometheus/knowledge/ is written exclusively by the vendored `pk`
+    CLI (tools/prometheus-knowledge submodule); no code under lib/ or
+    scripts/ writes there (lib/karpathy/knowledge-bundle.test.mjs guards
+    this). An earlier revision of this clause described a Node-side writer
+    and a separate append-only event file feeding a rendered log; that
+    design was superseded by change `okf-v02-via-pk` (see
+    .prometheus/decisions.md) — pk owns the bundle format and location
+    instead. `pk` stays optional per the clause below: with it absent, no
+    knowledge bundle is written, and the receipts and session-log.md this
+    pack writes under .prometheus/ (outside .prometheus/knowledge/) are
+    unaffected either way.
   - Three tiers of log, one format: project (.prometheus/ in the repo),
     personal (the developer's own private git repo), team (a team git repo).
     Selection is a registry merged from .prometheus/sources.json (committed),
@@ -68,9 +77,14 @@ context: |
     directly and never pushes any log, at any tier: the developer pushes.
     sources sync reports unpushed commits and uncommitted files. Promotion out of a private or client
     log needs per-entry opt-in, secret rejection and path redaction.
-  - pk (prometheus-knowledge-rs) is an optional accelerator. Nothing may
-    require it. The contract between pk and the Node implementation is the
-    on-disk OKF bundle, not an API.
+  - pk (prometheus-knowledge-rs, vendored as the tools/prometheus-knowledge
+    submodule) is the sole writer of the OKF v0.2 knowledge bundle under
+    .prometheus/knowledge/ (see the Logs clause above). It remains optional:
+    nothing may require it, and its absence never blocks the KBD loop —
+    receipts and session-log.md are written independently of it. An earlier
+    revision of this clause framed pk and a planned Node-side writer as two
+    sides of one on-disk contract; that Node-side writer was never built and
+    is no longer planned, so pk's bundle format stands on its own.
   - deep-research and adversarial-review are in scope, each as its own phase
     after platform-foundation. The Rust prometheus-research server is not
     shipped; deep-research runs in checkpoint mode only.

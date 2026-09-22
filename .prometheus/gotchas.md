@@ -330,3 +330,21 @@ not primed by the previous judge’s findings. Record the basis in the packet.
 The skill’s own docs say diff mode “reviews the cumulative Git diff since the last accepted local
 review receipt”, so this is a script/contract mismatch, not intended behaviour. Belongs upstream in
 `~/.claude/skills/adversarial-review`.
+
+## 2026-09-22 — the-boss DoctorCheckRegistry is closed; mini checks cannot be registered into it
+
+Read at `the-boss@10aa57f76c`, `src/shared/types/doctor.ts` and `src/main/services/diagnostics/doctor/types.ts`:
+
+- `DOCTOR_CHECK_IDS` is a hardcoded `as const` array of 31 ids; `DoctorCheckId` is `(typeof DOCTOR_CHECK_IDS)[number]`.
+- `DoctorCheckRegistry = { readonly [Id in DoctorCheckId]: DoctorCheckDefinition<Id> }` — exhaustive and closed. The comment says it outright: “a catalog entry without an implementation (or vice versa) is a compile error”.
+- `DoctorDomain` is a closed union of 9 domains; there is no `mini`. `DomainOfId` enforces at compile time that a check’s domain equals its id prefix, and ids are `domain-thing`, never `domain.thing`.
+- `detail` is not free text: `DoctorDetail = { variant: DoctorCheckCatalog[Id][details][number], params? }` — a typed, per-check, catalog-declared key (for i18n).
+- There is NO extension point: no plugin, dynamic or external check registration anywhere in `registry.ts`.
+
+**Consequences for the mini.** A mini check cannot be “registered in `DoctorCheckRegistry`” from outside the-boss’s compile unit, and `mini.*` ids are invalid on three counts (unknown domain, wrong separator, absent from the closed union). Mirroring the type “field for field” is also not possible in the intended direction: the mini cannot produce `DoctorDetailVariant` values, because they are declared inside the-boss’s catalog per check.
+
+Two further mismatches with the `pack-doctor` proposal’s sketch:
+- There is no `summary` field. Outcomes are `pass` (optional `detail`), `skip` (required `detail`), `warn`/`fail` (required `attribution` + `detail` + `actions`).
+- A fix returns `{ status: fixed | requires_relaunch }` or `{ status: failed, message }`. **There is no `refused`**, which `pack-doctor` requires for `copy-skills` on a full-pack machine.
+
+`the-boss-handoff`’s proposal already names the correct mechanism — the-boss **spawns `scripts/doctor.mjs` and maps its JSON lines** to its own check results. That is an adapter on the-boss side, which is where the closed union lives. The mini therefore owns a STABLE JSON LINE FORMAT, not a mirror of a TypeScript type it cannot satisfy.

@@ -124,6 +124,36 @@ test('an image needs a digest or built_from_submodule, and the submodule it name
   assert.deepEqual(fine, []);
 });
 
+// The spec says versions.toml names "every submodule under tools/". Checking only
+// the pins that ARE listed would let an unlisted submodule pass silently — an
+// incomplete version authority that reports itself as agreeing with the tree.
+// Caught by the diff-mode review of this change (CRITICAL 1).
+test('a submodule under tools/ that versions.toml does not name is reported', () => {
+  const parsed = parseVersionsToml('[node]\nminimum = ">=22"\n[submodules]\n"tools/named" = "aaaaaaa"\n');
+
+  const found = compareToTree(parsed, {
+    lsTree: tree({ 'tools/named': 'aaaaaaa0000' }),
+    listGitlinks: () => ['tools/named', 'tools/unnamed'],
+    packageJson: { engines: { node: '>=22' } },
+  });
+
+  assert.equal(found.length, 1);
+  assert.match(found[0], /tools\/unnamed/);
+  assert.match(found[0], /does not name it|not named/i);
+});
+
+test('with every gitlink named, the completeness check is silent', () => {
+  const parsed = parseVersionsToml('[node]\nminimum = ">=22"\n[submodules]\n"tools/a" = "aaaaaaa"\n');
+
+  const found = compareToTree(parsed, {
+    lsTree: tree({ 'tools/a': 'aaaaaaa0000' }),
+    listGitlinks: () => ['tools/a'],
+    packageJson: { engines: { node: '>=22' } },
+  });
+
+  assert.deepEqual(found, []);
+});
+
 test('every disagreement is reported, not just the first', () => {
   const parsed = parseVersionsToml(
     '[node]\nminimum = ">=20"\n[submodules]\n"tools/a" = "aaaaaaa"\n"tools/b" = "bbbbbbb"\n',

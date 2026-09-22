@@ -108,11 +108,23 @@ const samePin = (pinned, actual) =>
 /**
  * Every disagreement between the file and the tree, as human-readable lines.
  * `lsTree(path)` returns the gitlink commit at that path in HEAD, or null.
- * Pure: both the tree reader and the manifest are injected, so tests need no repository.
+ * `listGitlinks()` returns every gitlink path in HEAD — the spec says the file names
+ * EVERY submodule, so an unlisted one is a disagreement too; checking only the listed
+ * pins would let an incomplete authority report itself as agreeing. Optional so the
+ * unit tests that do not exercise completeness need not supply it.
+ * Pure: the tree readers and the manifest are injected, so tests need no repository.
  */
-export function compareToTree(parsed, { lsTree, packageJson }) {
+export function compareToTree(parsed, { lsTree, listGitlinks, packageJson }) {
   const found = [];
   const submodules = parsed.submodules ?? {};
+
+  if (typeof listGitlinks === 'function') {
+    for (const path of listGitlinks()) {
+      if (!(path in submodules)) {
+        found.push(`${path}: HEAD has a gitlink there, but versions.toml does not name it`);
+      }
+    }
+  }
 
   for (const [path, pinned] of Object.entries(submodules)) {
     const actual = lsTree(path);

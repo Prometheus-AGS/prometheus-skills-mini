@@ -23,6 +23,17 @@ const lsTreeFromGit = (p) => {
   return match ? match[1] : null;
 };
 
+/** Every gitlink path in HEAD — the spec's "every submodule" is checked, not only the listed ones. */
+const listGitlinksFromGit = () => {
+  const result = spawnExecutable('git', ['ls-tree', '-r', 'HEAD'], { cwd: repoRoot });
+  if (result.status !== 0) return [];
+  return (result.stdout ?? '')
+    .split('\n')
+    .map((line) => /^160000 commit [0-9a-f]{40}\t(.+)$/.exec(line))
+    .filter(Boolean)
+    .map((match) => match[1]);
+};
+
 test(
   'versions.toml agrees with the tree',
   { todo: existsSync(versionsToml) ? false : 'operator has not authored versions.toml' },
@@ -30,7 +41,11 @@ test(
     const parsed = parseVersionsToml(readFileSync(versionsToml, 'utf8'));
     const packageJson = JSON.parse(readFileSync(path.join(repoRoot, 'package.json'), 'utf8'));
 
-    const disagreements = compareToTree(parsed, { lsTree: lsTreeFromGit, packageJson });
+    const disagreements = compareToTree(parsed, {
+      lsTree: lsTreeFromGit,
+      listGitlinks: listGitlinksFromGit,
+      packageJson,
+    });
 
     assert.deepEqual(disagreements, [], `versions.toml disagrees with the tree:\n${disagreements.join('\n')}`);
   },
@@ -39,8 +54,12 @@ test(
 // Proves the gitlink reader is not vacuous: the one submodule this repository
 // already vendors must be found, and a path that is a directory rather than a
 // gitlink must not be mistaken for one.
-test('the gitlink reader finds a real submodule and refuses a plain directory', () => {
+test('the gitlink readers find a real submodule and refuse a plain directory', () => {
   assert.match(lsTreeFromGit('tools/prometheus-knowledge') ?? '', /^[0-9a-f]{40}$/);
   assert.equal(lsTreeFromGit('lib/platform'), null);
   assert.equal(lsTreeFromGit('tools/does-not-exist'), null);
+
+  const gitlinks = listGitlinksFromGit();
+  assert.ok(gitlinks.includes('tools/prometheus-knowledge'), JSON.stringify(gitlinks));
+  assert.ok(!gitlinks.includes('lib/platform'));
 });

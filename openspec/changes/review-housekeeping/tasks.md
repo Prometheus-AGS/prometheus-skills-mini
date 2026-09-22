@@ -24,6 +24,8 @@ Each code task is test-first. A task that names a file either creates it or name
       tools/prometheus-knowledge: versions.toml pins deadbee, HEAD has abb6745e31da7577611d7c32005af26a72254484
     ```
     Both commits named, as the scenario requires. Scratch file deleted; `git status --short versions.toml` → empty; the test is `todo` again.
+  - **Second mutation, after the diff review (CRITICAL 1):** a scratch `versions.toml` whose `[submodules]` omits `tools/prometheus-knowledge` entirely now fails with
+    `tools/prometheus-knowledge: HEAD has a gitlink there, but versions.toml does not name it` — the spec says the file names *every* submodule, and checking only the listed pins let an incomplete authority report itself as agreeing. `compareToTree` gained an optional injected `listGitlinks`; the gate test supplies it from `git ls-tree -r HEAD`.
 
 ## 3. Close
 

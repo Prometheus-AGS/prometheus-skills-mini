@@ -22,7 +22,7 @@ heuristics). Goal C is greenfield.
 |---|---|---|
 | A-1 Windows-on-ARM for rust-mcp-filesystem | **MET (pending merge)** | `dist-workspace.toml` now lists `aarch64-pc-windows-msvc` with a `windows-11-arm` runner; branch `feat/windows-arm64-target`, commit `3a8d182`, PR GQAdonis/rust-mcp-filesystem#1 |
 | A-2 First release on each fork | **NOT MET** | `gh release list`: `GQAdonis/compass` 0, `GQAdonis/rust-mcp-filesystem` 0, `Prometheus-AGS/openspec` 0. All three have working workflows (`compass-release.yml`, cargo-dist `release.yml`, `release-prepare.yml`) that have never run |
-| A-3 `sycophancy-correction` under Prometheus-AGS | **NOT MET** | `gh release list -R Prometheus-AGS/sycophancy-correction` → repository does not exist |
+| A-3 `sycophancy-correction` | **NOT MET — and it is the weakest of the four** | The repo is `Know-Me-Tools/sycophancy-correction-skill` (operator-supplied; my search for `Prometheus-AGS/sycophancy-correction` was the wrong name and wrongly concluded “does not exist”). It is a Rust workspace with `crates/`, `Cargo.toml`, `SKILL.md` and `claude-plugin.json` — but **no `.github/workflows` at all** and **0 releases**. Not a fork (`isFork: false`), last pushed 2026-07-02. |
 
 **Platform coverage, verified:** compass's `compass-release.yml` matrix already builds
 `x86_64-pc-windows-msvc` AND `aarch64-pc-windows-msvc` (lines 77-81), plus both macOS and both
@@ -147,7 +147,7 @@ must fold in. What is already established:
 | # | Gap | Severity | Blocked by |
 |---|---|---|---|
 | 1 | No release exists on any fork | **blocking** | operator (tag + run; A-11) |
-| 2 | `sycophancy-correction` repo absent | **blocking** | operator (create repo) |
+| 2 | `sycophancy-correction-skill` has NO CI and no releases | **blocking** | operator (fork/transfer + build CI from scratch) |
 | 3 | No Docker handling anywhere in the-boss | high | the mini's `docker-services` change |
 | 4 | No home-directory push; discovery is import-only | high | — |
 | 5 | Settings surface does not exist | high | the parallel inventory |

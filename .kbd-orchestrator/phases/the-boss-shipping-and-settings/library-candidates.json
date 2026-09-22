@@ -1,0 +1,196 @@
+{
+  "phase": "the-boss-shipping-and-settings",
+  "generated_at": "2026-09-22",
+  "mode": "stack-specified",
+  "note": "Every candidate is an in-house mechanism in the-boss or the mini, not a third-party library. Tiers 2-4 of the research pipeline were not needed and not spent. Each 'adopt' means: use this existing code, do not rebuild it.",
+  "candidates": [
+    {
+      "id": "cand-001",
+      "gap": "Ship the mini's 22 skills inside the-boss on every platform",
+      "candidate": "installBuiltinSkills() + syncBuiltinSkill(namespace)",
+      "source": "the-boss: src/main/utils/builtinSkills.ts:31, src/main/ai/skills/SkillService.ts:1119",
+      "verdict": "adopt",
+      "confidence": "high",
+      "evidence": "Runs on every startup from AiService.ts:407. Copies resources/skills/* into {userData}/Data/Skills/, registers in DB, mirrors into CLAUDE_CONFIG_DIR/skills. Updates gated on computeBuiltinDirectoryHash (SkillService.ts:1142), NOT a version string, so the 21 mini skills without `version:` are fine. The `namespace` parameter exists at :1123 with ownership guards at :1127-1137 but builtinSkills.ts:53 never passes it.",
+      "work_required": "Pass a namespace. No new installer."
+    },
+    {
+      "id": "cand-002",
+      "gap": "Keep resources/skills/ in sync with the mini submodule",
+      "candidate": "generate-cherry-assistant-knowledge --check pattern",
+      "source": "the-boss: scripts/generate-cherry-assistant-knowledge/index.ts:53-69, package.json build:builtin-knowledge:check",
+      "verdict": "adapt",
+      "confidence": "high",
+      "evidence": "Existing precedent for tracked-but-generated files: --check fails CI when an output is missing or stale. resources/skills/ is git-tracked (hand-authored commits), so making it generated-and-ignored would change how the-boss's own 5 skills are managed — out of scope.",
+      "work_required": "scripts/sync-mini-skills.ts with the same --check mode. Exclude skills/carried-payload.test.mjs and skills/AGENTS.md."
+    },
+    {
+      "id": "cand-003",
+      "gap": "Ship compass and rust-mcp-filesystem binaries per platform",
+      "candidate": "scripts/download-binaries.js TOOLS[]",
+      "source": "the-boss: scripts/download-binaries.js:244, before-pack.js:190-194",
+      "verdict": "adopt",
+      "confidence": "high",
+      "evidence": "Already ships mise, bun, uv, rg, mingit keyed platform-arch with SHA-256, a cross-worktree hard-linked cache, and verifyBundledBinaries(). Manifest fields: name, version, versionFile, required, packages, isWindowsOnly; per-package url, archive, binaries, sha256, strip, dir. compass-release.yml:106-132 emits compass-<target>.tar.gz plus a .sha256 sidecar extracting to compass-<target>/ — a direct field-for-field fit.",
+      "work_required": "Two TOOLS entries plus hashes. Blocked on cand-008."
+    },
+    {
+      "id": "cand-004",
+      "gap": "Register bundled binaries as MCP servers that resolve on Windows",
+      "candidate": "mcpLaunch.ts resolveLaunchCommand + binaryResolver",
+      "source": "the-boss: src/main/ai/mcp/mcpLaunch.ts:5-11,42-48; src/main/utils/binaryResolver.ts:15-38",
+      "verdict": "adopt",
+      "confidence": "high",
+      "evidence": "Returns resolution: 'system' | 'bundled' | 'unresolved' with unavailableReason. getBinaryName appends .exe on win32 (:15-17); getBinaryPath searches mise shims then cherry.bin (pathRegistry.ts:66). The Runner abstraction's notFound message is the established pattern for 'bundled binary missing'.",
+      "work_required": "Register compass as a stdio server, stdio transport only."
+    },
+    {
+      "id": "cand-005",
+      "gap": "Run the mini's doctor from the UI and render results progressively",
+      "candidate": "DoctorService shared-cache publishing",
+      "source": "the-boss: src/main/services/diagnostics/doctor/DoctorService.ts:288-336,452-458; src/renderer/data/hooks/useCache.ts:397-403",
+      "verdict": "adopt",
+      "confidence": "high",
+      "evidence": "Verified incremental publish at DoctorService.ts:298-301: execute() takes a callback that republishes partial results. Progress travels via a shared cache key (doctorStateCacheKey), NOT IPC; the renderer subscribes with useSharedCacheValue/useSyncExternalStore. Cancellation is AbortController-based. UI exists: DoctorChecksPanel.tsx, DoctorDialog.tsx. Failure path at :332-336 documents the must-publish-a-terminal-state rule.",
+      "work_required": "One check-source spawning scripts/doctor.mjs, mapping JSON lines per lib/doctor/contract.md. Largest scope reduction in the phase."
+    },
+    {
+      "id": "cand-006",
+      "gap": "Prometheus settings preferences",
+      "candidate": "classification.json + pnpm data:generate + preferenceTable",
+      "source": "the-boss: scripts/data-classify/data/classification.json; src/shared/data/preference/preferenceSchemas.ts (generated); src/main/data/db/schemas/preference.ts",
+      "verdict": "adopt",
+      "confidence": "high",
+      "evidence": "preferenceSchemas.ts header states it is auto-generated from classification.json — editing it directly is silently reverted by the next pnpm data:generate. preferenceTable is (scope, key, value JSON) with a composite PK, so NO Drizzle migration is needed for new keys. Key convention namespace.sub.key_name, ESLint-enforced, and deliberately different from the i18n convention.",
+      "work_required": "Add keys to classification.json, regenerate. Read via usePreference."
+    },
+    {
+      "id": "cand-007",
+      "gap": "Internationalized labels for the settings section",
+      "candidate": "i18next flat catalogs + i18n:sync",
+      "source": "the-boss: src/renderer/i18n/resolver.ts:94-95; scripts/i18n-check.ts; package.json ci:basic-check",
+      "verdict": "adopt",
+      "confidence": "high",
+      "evidence": "13 locales, 5720 keys in en-us. Catalogs are FLAT (keySeparator: false). ci:basic-check runs i18n:check && i18n:unused:check && i18n:hardcoded:strict; i18n:check throws on a missing key, an EXTRA key, or a non-string value. pnpm i18n:sync propagates.",
+      "work_required": "Keys in all 13 locales, in the same change as the components, or CI fails.",
+      "risk": "Most likely cause of a late build failure."
+    },
+    {
+      "id": "cand-008",
+      "gap": "Release artifacts to download",
+      "candidate": "existing release workflows on the forks",
+      "source": "GQAdonis/compass compass-release.yml; GQAdonis/rust-mcp-filesystem cargo-dist release.yml; Prometheus-AGS/openspec release-prepare.yml",
+      "verdict": "adopt",
+      "confidence": "medium",
+      "evidence": "All three have working workflows. All three have ZERO releases — never run. compass is the most mature (contract tests, licence checks, provenance attestation, both Windows arches). rust-mcp-filesystem gained aarch64-pc-windows-msvc in PR GQAdonis/rust-mcp-filesystem#1.",
+      "work_required": "Operator tags and runs. Confidence is medium precisely because none has executed.",
+      "blocks": [
+        "cand-003"
+      ]
+    },
+    {
+      "id": "cand-009",
+      "gap": "sycophancy-correction as a shippable artifact",
+      "candidate": "Know-Me-Tools/sycophancy-correction-skill",
+      "source": "operator-supplied URL; verified via gh api",
+      "verdict": "build",
+      "confidence": "high",
+      "evidence": "Rust workspace with crates/, Cargo.toml, SKILL.md, claude-plugin.json. NO .github/workflows at all and 0 releases. isFork: false, last pushed 2026-07-02. Unlike the other three it cannot be 'tagged and released' — CI must be built first. Matches the four blockers in the mini's sycophancy-correction-vendored change.",
+      "work_required": "Fork/transfer, then build release CI from scratch, then the four Windows fixes.",
+      "risk": "Long pole of goal A. Sequence first or defer."
+    },
+    {
+      "id": "cand-010",
+      "gap": "Docker detection for the three services",
+      "candidate": "the mini's lib/platform/docker.mjs dockerState()",
+      "source": "mini: openspec/changes/docker-services/proposal.md:12-13",
+      "verdict": "adopt",
+      "confidence": "medium",
+      "evidence": "Specified as dockerState() -> { state: 'absent' | 'daemon-down' | 'ready', client, server } via spawnExecutable('docker', ['version', '--format', '{{json .}}']), with no wsl.exe, no socket access, no dependency. the-boss has NO Docker awareness today (6 incidental mentions). Boundary: the mini probes, the-boss renders and owns consent.",
+      "work_required": "the-boss spawns the mini's services.mjs; builds only the UI and the consent preference.",
+      "risk": "docker.mjs does not exist yet — change docker-services creates it. Confidence medium for that reason."
+    },
+    {
+      "id": "cand-011",
+      "gap": "Settings section chrome",
+      "candidate": "SettingsPrimitives + @cherrystudio/ui",
+      "source": "the-boss: src/renderer/components/SettingsPrimitives.tsx; packages/ui/",
+      "verdict": "adopt",
+      "confidence": "high",
+      "evidence": "SettingsContentColumn, SettingGroup, SettingRow, SettingRowTitle, SettingDivider, SettingHelpText. Library is a local workspace package (Radix + Tailwind, vendored shadcn-style) — NOT antd, NOT a stock shadcn install. Three registries per section: route file, settingsMenu.ts (hand-maintained, order = render order), *.search.ts (auto-globbed).",
+      "work_required": "Compose within the existing vocabulary. The four design skills govern information architecture, state design and copy — not component choice; introducing a second component vocabulary would be a defect, not better design."
+    },
+    {
+      "id": "cand-012",
+      "gap": "The mini vendors compass, rust-mcp-filesystem, openspec and sycophancy-correction as SOURCE (goal B4)",
+      "candidate": "git submodules under tools/ in the mini, pinned to released commits",
+      "source": "mini: openspec/changes/sycophancy-correction-vendored/proposal.md:11; lib/doctor/runtime.mjs BUILT[]; docs/versions-toml.md",
+      "verdict": "build",
+      "confidence": "high",
+      "evidence": "Distinct from cand-003, which is how the-boss consumes ARTIFACTS. The mini needs the source: its sycophancy resolver searches tools/sycophancy-correction/target/release/ \"for developer checkouts\", mini-submodules verifies each vendored submodule is BUILT (tools/openspec/dist, tools/prometheus-knowledge/target/release/pk), and versions.toml pins each gitlink by commit. Without the submodules those checks have nothing to point at.",
+      "work_required": "Four git submodule adds in the mini, pinned to the commits cand-008 releases. Then versions.toml entries (operator-authored).",
+      "note": "compass and rust-mcp-filesystem are vendored TWICE, differently: source in the mini, binaries in the-boss. Not a choice between the two."
+    },
+    {
+      "id": "cand-013",
+      "gap": "One-click repair from the settings UI (goal D-12)",
+      "candidate": "DoctorFixAction + confirm_check, driven back to doctor.mjs --fix",
+      "source": "the-boss: src/main/services/diagnostics/doctor/checks/config.ts:22-35, src/main/ipc/handlers/doctor.ts:5-9; mini: lib/doctor/contract.md",
+      "verdict": "adapt",
+      "confidence": "high",
+      "evidence": "the-boss already models repair: a check declares actions:[{kind:\"fix\",fixId}] with a fixes handler, and diagnostics.doctor.confirm_check exists alongside run. The mini already emits the action — mini-skill-copies is the one check offering copy-skills — and contract.md specifies the mapping, including refused -> {status:\"failed\",message} for which the host has no native equivalent.",
+      "work_required": "Map our actions onto DoctorFixAction; route the host fix handler to `node scripts/doctor.mjs --fix copy-skills`.",
+      "risk": "A-11: that fix writes under the user home directory and refuses on a full-pack machine. The mini enforces this; the UI must not offer a path around it."
+    },
+    {
+      "id": "cand-014",
+      "gap": "Every-startup push of the skills to the OS home directories, with a visible notice (goal D-13)",
+      "candidate": "A lifecycle service chained after reconcileSkills(), reusing the mini copy-skills operation",
+      "source": "the-boss: src/main/ai/AiService.ts:407 (where installBuiltinSkills is already chained); mini: lib/doctor/skills.mjs",
+      "verdict": "build",
+      "confidence": "medium",
+      "evidence": "DISTINCT from cand-013. cand-013 is on-demand repair a user clicks in settings; this runs unattended on every boot, copies when absent or differing, and shows a non-modal notice while it runs. installBuiltinSkills() already demonstrates the chaining point and the every-startup cadence, but it writes to {userData}/Data/Skills — never to the user home. Nothing in the-boss writes to the home skills roots today; discovery is import-only.",
+      "work_required": "A new lifecycle service (never in main.ts) chained after reconcileSkills(); the copy itself delegates to the mini rather than being reimplemented. Plus the notice UI and the on/off preference (goal D-9).",
+      "risk": "A-11 and the binding install-scope rule: on a machine where detectFullPack() reports the full pack present the push is SKIPPED ENTIRELY with a persistent notice saying why. This development machine is exactly that case — 42 mini skill copies already sit beside a full-pack install. An unattended startup task that wrote there would violate openspec/config.yaml."
+    },
+    {
+      "id": "cand-015",
+      "gap": "The openspec fork as a the-boss submodule (goal B6)",
+      "candidate": "Prometheus-AGS/openspec vendored as source, not consumed as a release artifact",
+      "source": "mini: openspec/changes/openspec-fork-submodule; the-boss: package.json (Node toolchain)",
+      "verdict": "adopt",
+      "confidence": "medium",
+      "evidence": "The exception to cand-003. openspec is Node, it is a build/dev dependency rather than a shipped runtime binary, and it is the source of the Windows-compatibility fixes that make the pack work on Windows at all — so the-boss vendors the source and runs it, rather than downloading a built archive. It is also listed in cand-008 as having a release workflow that has never run, which is about publishing the package, not about how the-boss consumes it.",
+      "work_required": "git submodule in the-boss pinned to a released commit; spawn its resolved JS entry through Node, never a .cmd shim.",
+      "risk": "Confidence is medium because the consuming call sites in the-boss have not been inventoried — only that the fork exists and is Node."
+    }
+  ],
+  "build_required": [
+    {
+      "id": "build-001",
+      "gap": "The every-startup home-directory push AND its on-demand repair — two behaviours, not one",
+      "rationale": "Nothing in the-boss writes to the user home skills directories; discovery is import-only. Goal D-13 needs BOTH: an unattended every-startup push with a notice (cand-014) and the one-click repair a user triggers from settings (cand-013). An earlier draft of this file collapsed them into the repair path alone, which would have let a plan ship settings with no startup behaviour at all. The copy operation itself is the mini copy-skills fix — copy never symlink, refuse beside a full pack, path-escape guarded, mutation-tested — so neither path reimplements it.",
+      "capability_gap_id": "cand-014",
+      "note": "the-boss's own scripts/skills-sync.ts symlinks .agents -> .claude, but those are REPO-ROOT developer directories, not the user's home. Different target, no conflict."
+    },
+    {
+      "id": "build-002",
+      "gap": "Prometheus settings page, health panel, doctor view and push notice",
+      "rationale": "No such section exists. Composed from cand-011 primitives, driven by cand-005/006/007.",
+      "capability_gap_id": "cand-011"
+    },
+    {
+      "id": "build-003",
+      "gap": "Release CI for sycophancy-correction",
+      "rationale": "See cand-009 — the only one of the four with no workflows at all.",
+      "capability_gap_id": "cand-009"
+    }
+  ],
+  "open_questions": [
+    "Which of the eleven mini checks does the-boss surface? Each needs an id in the closed DoctorCheckId union plus a catalog detail.variant. Product call.",
+    "Does the first compass release actually succeed? Unknowable until run; gates cand-003.",
+    "Is windows-11-arm available to these repos? Both name it; neither has run.",
+    "versions.toml is still unauthored; agents may not write it and five mini changes gate on it."
+  ],
+  "verification_note": "Every the-boss citation here was read directly in /Users/gqadonis/Projects/prometheus/the-boss during this session; that repository is outside the mini and therefore outside the review packet, so a reviewer cannot confirm them from the packet alone. The two load-bearing claims were independently re-verified after the inventory that produced them: preferenceSchemas.ts auto-generation (file header) and DoctorService incremental publish (DoctorService.ts:298-301). Anything a spec depends on should be re-read in the-boss rather than trusted from this file."
+}

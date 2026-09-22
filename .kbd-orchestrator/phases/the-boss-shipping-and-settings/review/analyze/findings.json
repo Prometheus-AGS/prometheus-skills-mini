@@ -1,0 +1,26 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "analysis.md",
+      "line": 0,
+      "claim": "The analysis bases its core adopt/build decisions on the-boss source files that are not present in the review packet, making the recommendations unverifiable from the artifact packet.",
+      "evidence": "The analysis says \"Verified directly (`DoctorService.ts:298-301`)\" and builds the phase around the claim that \"the-boss already contains a streaming diagnostic runner with a settings UI,\" but `cited_paths` marks the relevant paths as missing: `MISSING  DoctorService.ts`, `MISSING  DoctorChecksPanel.tsx`, `MISSING  DoctorDialog.tsx`, `MISSING  SettingsPrimitives.tsx`, `MISSING  scripts/generate-cherry-assistant-knowledge/index.ts`, and many `src/...` paths. The artifact also admits: \"Every the-boss citation here was read directly in /Users/gqadonis/Projects/prometheus/the-boss during this session; that repository is outside the mini and therefore outside the review packet, so a reviewer cannot confirm them from the packet alone.\"",
+      "suggested_fix": "Include the relevant the-boss file excerpts or a validated source inventory in the packet, or mark the affected recommendations as unverified assumptions that must be re-checked before planning."
+    },
+    {
+      "severity": "WARNING",
+      "file": "library-candidates.json",
+      "line": 0,
+      "claim": "Several candidates are assigned high-confidence adopt verdicts even though their evidence is explicitly outside the packet and cannot be checked here.",
+      "evidence": "`cand-005` gives `verdict: \"adopt\"` and `confidence: \"high\"` for `DoctorService shared-cache publishing`, citing `the-boss: src/main/services/diagnostics/doctor/DoctorService.ts:288-336,452-458`, while `cited_paths` marks `src/main/services/diagnostics/doctor/DoctorService.ts` as missing. `cand-006`, `cand-007`, and `cand-011` similarly rely on missing the-boss paths such as `classification.json`, `preferenceSchemas.ts`, `resolver.ts`, and `SettingsPrimitives.tsx`.",
+      "suggested_fix": "Downgrade confidence or attach packet-verifiable excerpts for each high-confidence candidate whose source is outside the file tree."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "library-candidates.json",
+      "line": 0,
+      "claim": "Goal D13's automatic startup deployment to OS skill directories is reduced to an on-demand doctor repair path, so a downstream plan can miss the required every-startup push and notice behavior.",
+      "evidence": "Goal D13 requires: \"Copy (never symlink) each skill to `<home>/.agents/skills/<name>` and `<home>/.claude/skills/<name>` on every startup when absent or differing, with a visible non-modal notice while it runs.\" But build-001 says: \"the-boss drives it through the repair path in cand-013 rather than reimplementing it,\" and cand-013 is only \"One-click repair from the settings UI\" routed to `doctor.mjs --fix copy-skills`.",
+      "suggested_fix": "Add a separate analyzed candidate/work item for the startup deployment path: startup trigger, preference gate, full-pack skip, non-modal notice, absent/differing detection, and reuse of the mini copy implementation without making it only a manual repair."
+    },
+    {
+      "severity": "WARNING",
+      "file": "library-candidates.json",
+      "line": 0,
+      "claim": "Goal B6's required the-boss openspec submodule integration is not evaluated as its own candidate or work item.",
+      "evidence": "Goal B6 says: \"The openspec fork is the exception and must be used... Submodule, not release artifact.\" The candidates include cand-008 for release workflows and cand-012 for \"The mini vendors compass, rust-mcp-filesystem, openspec and sycophancy-correction as SOURCE,\" but there is no candidate whose gap/work_required is adding or wiring the openspec submodule in the-boss.",
+      "suggested_fix": "Add a candidate for the-boss consuming Prometheus-AGS/openspec as a submodule/build-dev dependency, including where it is referenced, how it is pinned, and what checks prove the Windows-fixed fork is used."
+    },
+    {
+      "severity": "WARNING",
+      "file": "analysis.md",
+      "line": 0,
+      "claim": "Several load-bearing adopt decisions rely on out-of-packet the-boss source claims that the packet itself marks as unverifiable.",
+      "evidence": "The artifact bases major recommendations on files such as `src/main/services/diagnostics/doctor/DoctorService.ts`, `src/shared/data/preference/preferenceSchemas.ts`, and `scripts/generate-cherry-assistant-knowledge/index.ts`, while `cited_paths` marks those paths as `MISSING`; the artifact also states: \"that repository is outside the mini and therefore outside the review packet, so a reviewer cannot confirm them from the packet alone.\"",
+      "suggested_fix": "Include the relevant source excerpts/provenance for the-boss files in the packet or downgrade these to assumptions that the plan must re-verify before depending on them."
+    }
+  ]
+}

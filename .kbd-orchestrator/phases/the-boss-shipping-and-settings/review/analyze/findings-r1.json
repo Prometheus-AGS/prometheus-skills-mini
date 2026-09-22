@@ -1,0 +1,38 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "analysis.md",
+      "claim": "The analysis drops the goal that the mini vendors compass, rust-mcp-filesystem, openspec, and sycophancy-correction as source submodules under tools/.",
+      "evidence": "Goal B4 says: \"The mini vendors the source. compass, rust-mcp-filesystem, openspec and sycophancy-correction as submodules under `tools/`, pinned to released commits\". The analysis instead says in D2: \"compass and rust-mcp-filesystem are Rust workspaces and nothing in an Electron build compiles Rust; they become `TOOLS` entries... The mini (markdown) and openspec ... are submodules.\" The candidate list likewise has TOOLS entries for compass/rust-mcp-filesystem and no candidate covering mini-side submodules for compass, rust-mcp-filesystem, or sycophancy-correction.",
+      "suggested_fix": "Add an explicit build-vs-adopt decision for mini-side source vendoring under tools/ for all four repositories, separate from the-boss binary artifact consumption."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "analysis.md",
+      "claim": "The analysis does not evaluate the one-click repair requirement in Goal D-12.",
+      "evidence": "Goal D-12 requires: \"One-click repair for the one check that offers a fix.\" The Doctor decision only says: \"add one check-source that shells out to `scripts/doctor.mjs` and map its JSON lines\" and candidate cand-005's work_required is only: \"One check-source spawning scripts/doctor.mjs, mapping JSON lines per lib/doctor/contract.md.\" No decision evaluates how the repair action is exposed, authorized, invoked, or mapped through the-boss Doctor UI.",
+      "suggested_fix": "Add a candidate/decision for repair action plumbing: identify the mini check that offers a fix, the JSON/action contract, the UI affordance, IPC or shared-cache route, cancellation/error behavior, and permissions/consent handling."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "library-candidates.json",
+      "claim": "The home-directory push requirement is misclassified under the Doctor candidate and is not actually evaluated.",
+      "evidence": "build_required build-001 is for \"The home-directory push to $HOME/.agents and $HOME/.claude\" but sets \"capability_gap_id\": \"cand-005\". cand-005's gap is unrelated: \"Run the mini's doctor from the UI and render results progressively.\"",
+      "suggested_fix": "Create a separate candidate for home-directory skill deployment/full-pack detection, or point build-001 at a real candidate that evaluates the mini copy-skills mechanism, startup behavior, full-pack skip, notices, and Windows paths."
+    },
+    {
+      "severity": "WARNING",
+      "file": "analysis.md",
+      "claim": "Several core adoption decisions rest on source claims that the packet marks as missing and therefore unverifiable from the provided artifact context.",
+      "evidence": "The analysis says \"Verified directly (`DoctorService.ts:298-301`)\" and relies on `DoctorService.ts`, `DoctorChecksPanel.tsx`, `SettingsPrimitives.tsx`, `classification.json`, `preferenceSchemas.ts`, and i18n files. The packet's cited_paths section marks these as missing, including: \"MISSING  DoctorService.ts\", \"MISSING  DoctorChecksPanel.tsx\", \"MISSING  SettingsPrimitives.tsx\", \"MISSING  scripts/data-classify/data/classification.json\", \"MISSING  src/shared/data/preference/preferenceSchemas.ts\", and \"MISSING  resolver.ts\".",
+      "suggested_fix": "Attach the external source provenance or excerpts for the-boss paths, or downgrade these from verified findings to assumptions that the next stage must validate before planning against them."
+    }
+  ]
+}

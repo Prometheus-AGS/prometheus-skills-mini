@@ -1,0 +1,26 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/constraints.md",
+      "line": 102,
+      "claim": "This change edits a constraint check for a false negative even though project constraints permit check-expression edits only to fix demonstrated false positives.",
+      "evidence": "Constraint packet path ownership says `.kbd-orchestrator/constraints.md \u2014 a check: expression` is permitted `ONLY to fix a demonstrated false positive`; the diff changes `os-locations-only-via-platform` from `-e \"os\\.(tmpdir|homedir)\\(\\)\"` to also include `-e \"from .node:os.\"`, and task 4.6 states the reason was that the old pattern missed named imports and was `reporting clean while FOUR pre-existing violations sat in scripts/` (a false negative).",
+      "suggested_fix": "Do not modify `.kbd-orchestrator/constraints.md` in this change; route the false-negative gate hardening through the owner-approved process or a change explicitly authorized to update constraint checks."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/constraints.md",
+      "line": 103,
+      "claim": "The updated `os-locations-only-via-platform` check claims to match any `node:os` import but still misses dynamic imports.",
+      "evidence": "The new note says `The pattern also matches any import of node:os` and `there is no legitimate reason for a module outside lib/platform/paths.mjs to import node:os at all`, but the new check only adds `-e \"from .node:os.\"`, which does not match `await import(\"node:os\")`.",
+      "suggested_fix": "Use a check pattern that actually covers all `node:os` import forms the rule forbids, or narrow the note/description so it does not claim complete import coverage."
+    }
+  ]
+}

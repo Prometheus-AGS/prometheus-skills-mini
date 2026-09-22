@@ -9,18 +9,18 @@
     {
       "severity": "CRITICAL",
       "file": ".kbd-orchestrator/constraints.md",
-      "line": 102,
-      "claim": "This change edits a constraint check for a false negative even though project constraints permit check-expression edits only to fix demonstrated false positives.",
-      "evidence": "Constraint packet path ownership says `.kbd-orchestrator/constraints.md \u2014 a check: expression` is permitted `ONLY to fix a demonstrated false positive`; the diff changes `os-locations-only-via-platform` from `-e \"os\\.(tmpdir|homedir)\\(\\)\"` to also include `-e \"from .node:os.\"`, and task 4.6 states the reason was that the old pattern missed named imports and was `reporting clean while FOUR pre-existing violations sat in scripts/` (a false negative).",
-      "suggested_fix": "Do not modify `.kbd-orchestrator/constraints.md` in this change; route the false-negative gate hardening through the owner-approved process or a change explicitly authorized to update constraint checks."
+      "line": 107,
+      "claim": "The tightened blocking `os-locations-only-via-platform` check is committed while it is known to match four existing repository violations, so the blocking gate cannot be clean.",
+      "evidence": "The hunk changes the check to `-e \"node:os\" -- \"lib/*.mjs\" \"scripts/*.mjs\" ...`; the added correction table and note state the corrected check reports `convert-htmx-pdf.mjs:18`, `design-svg-logo.mjs:36`, `hook-cold-start.mjs:13`, and `refine-moodboard.mjs:45`. The constraints command policy says a match is a violation and blocking constraints prevent archiving until resolved.",
+      "suggested_fix": "Fix the four `scripts/` violations to use `lib/platform/paths.mjs` helpers before tightening the blocking check, or explicitly scope them out in the check with a documented exclusion that still discriminates."
     },
     {
       "severity": "CRITICAL",
       "file": ".kbd-orchestrator/constraints.md",
-      "line": 103,
-      "claim": "The updated `os-locations-only-via-platform` check claims to match any `node:os` import but still misses dynamic imports.",
-      "evidence": "The new note says `The pattern also matches any import of node:os` and `there is no legitimate reason for a module outside lib/platform/paths.mjs to import node:os at all`, but the new check only adds `-e \"from .node:os.\"`, which does not match `await import(\"node:os\")`.",
-      "suggested_fix": "Use a check pattern that actually covers all `node:os` import forms the rule forbids, or narrow the note/description so it does not claim complete import coverage."
+      "line": 37,
+      "claim": "The change adds a new ownership-policy rule to `.kbd-orchestrator/constraints.md`, which changes are not authorized to do.",
+      "evidence": "The path ownership table says `.kbd-orchestrator/constraints.md` rules and thresholds are `/kbd-init` owned and that a change never loosens, deletes or adds a RULE; the diff adds a new row for `check:` expressions, `TIGHTENED`, defining when such edits are permitted.",
+      "suggested_fix": "Do not modify the governance rule in this change; have `/kbd-init` update the constraints policy, or keep this change limited to check-expression edits already authorized by the existing policy."
     }
   ]
 }

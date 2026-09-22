@@ -287,3 +287,29 @@ contrast, key on the phase id and project correctly.
 stray directory named after the child; move its contents into the nested child directory before the stage
 reads them. The adversarial-review packet builder takes the nested path (`--phase parent/children/child`)
 and works; the handoff writer takes the directory explicitly and works.
+
+## 2026-09-22 — the orchestrator's `task:after` hook cannot see a child phase, and shells out to python3
+
+Firing `kbd_hooks_fire task after <change> N T` during `/kbd-execute` of the CHILD phase
+`the-boss-integration-prep` failed twice with
+`karpathy-progress-memory: canonical task status is 'in_progress'/'pending', event reports 'complete'`
+(exit 2), while `prometheus kbd status --json` showed the child's tasks 1.1 and 1.2 as `complete` and the
+active path already advanced. Two separate defects:
+
+1. **Child-unaware.** The builtin `karpathy-progress-task-boundary` hook derives its canonical lookup from
+   the top-level phase (its log is `phases/karpathy-logs-node/hooks.log.jsonl`), so it reads the PARENT's
+   task state for a task that exists only in the child. The same class as the
+   `prior-context.md`-to-a-flat-path entry above. Hook ordering also matters: fire `task:after` **after**
+   `prometheus kbd task transition ... --status complete`, never before, or the check is guaranteed to
+   disagree with itself.
+2. **It runs Python.** `hooks/hooks.json:47` is
+   `python3 "$KBD_ORCHESTRATOR_ROOT/../karpathy-progress-memory/scripts/record-progress.py" --from-hook
+   --boundary task` — the installed source-pack hook, not this repository's `scripts/record-progress.mjs`.
+   On a machine without `python3` it fails the same way; on this one it fails on the state mismatch first.
+   It is an installed-orchestrator hook, outside this repo's `hooks/hooks.json` (six ids, all Node), so it
+   is not ours to fix here — but it is exactly what the Node recorder replaced, and the
+   `the-boss-integration-prep` handoff should name it.
+
+**Check:** a non-zero `kbd_hooks_fire` during a child phase is not evidence that the transition failed.
+Verify with `prometheus kbd status --json` → `phases.<child>.changes.<id>.tasks.<id>.status` before
+reacting. Never re-run a transition on the strength of a hook's complaint.

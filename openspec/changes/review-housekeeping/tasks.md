@@ -2,8 +2,11 @@ Each code task is test-first. A task that names a file either creates it or name
 
 ## 1. Track and archive
 
-- [ ] 1.1 `git add COMPARE.md TOOL_ANALYSIS.md openspec/changes/analyze-rust-tools-windows-portability` and commit them unmodified, with a message naming the session that produced them as another session's work.
-- [ ] 1.2 Archive `analyze-rust-tools-windows-portability` with `node scripts/spec-validate.mjs`'s CLI (`spawnNodeCli('@fission-ai/openspec', 'openspec', ['archive', …])` — until change `openspec-fork-submodule` lands, the npm-pinned CLI); confirm `openspec list` no longer shows it and `openspec/changes/archive/` does.
+- [x] 1.1 `git add COMPARE.md TOOL_ANALYSIS.md openspec/changes/analyze-rust-tools-windows-portability` and commit them unmodified, with a message naming the session that produced them as another session’s work.
+  - Done in `351cf47`. Verified unmodified before committing: mtimes 03:26 / 03:53 (the other session’s), `git status --short` showed all three only as untracked, nothing staged from them was edited.
+- [x] 1.2 Archive `analyze-rust-tools-windows-portability` with `node scripts/spec-validate.mjs`'s CLI (`spawnNodeCli('@fission-ai/openspec', 'openspec', ['archive', …])` — until change `openspec-fork-submodule` lands, the npm-pinned CLI); confirm `openspec list` no longer shows it and `openspec/changes/archive/` does.
+  - Done via `spawnNodeCli("@fission-ai/openspec", "openspec", ["archive", "analyze-rust-tools-windows-portability", "--yes", "--skip-specs"])`, exit 0 — archived as `2026-09-22-analyze-rust-tools-windows-portability`. `--no-interactive` does **not** exist on `archive` (only `validate` has it); `--skip-specs` matches the change’s own `skip_specs: true`.
+  - **Found while verifying:** `openspec list` still shows the PARENT phase’s two changes, `karpathy-progress-recorder` and `okf-v02-via-pk`, as `✓ Complete` but unarchived. Out of this task’s scope (this change tracks and archives the *analysis* change); recorded for the parent phase’s reflect stage, which is where a completed phase’s changes are archived.
 
 ## 2. versions.toml
 

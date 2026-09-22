@@ -53,6 +53,16 @@ This is the MINI’S OWN contract, not a mirror of the-boss’s. `the-boss@10aa5
 ### Requirement: Optional components degrade, never fail
 `mini-docker`, `mini-service-*`, `mini-pk` and `mini-sycophancy-correction` SHALL report `warn` (with the next step) when their component is absent or unreachable, and `fail` only when the component is present and broken (a spawn that exits non-zero, a health endpoint answering non-200).
 
+**An HTTP 401 from a service declared to require a key is an exception and SHALL be `warn`, never `fail` or `pass`** (operator decision, 2026-09-22). It is not broken — it is listening and demanding a credential — but its health is unverified, because the probe never saw a healthy body. `pass` would report a verdict never established; `fail` would turn a missing OPTIONAL credential into a fault and make the doctor exit 1 on a working machine, contradicting this requirement’s own title. Only `mini-service-liter-llm` is so declared; a 401 from any other service is a plain non-200 and fails. Reviewers have read the clause above both ways — this paragraph is the resolution.
+
+#### Scenario: An auth challenge is up-but-unverified
+- **WHEN** `mini-service-liter-llm`’s health endpoint answers 401
+- **THEN** the check is `warn`, its summary says the health is unverified and names the missing key, and the doctor does not exit 1
+
+#### Scenario: A 401 from a service with no declared auth is still a failure
+- **WHEN** `mini-service-surreal-memory`’s health endpoint answers 401
+- **THEN** the check is `fail`
+
 #### Scenario: No Docker is a warning with a next step
 - **WHEN** `lib/platform/docker.mjs` reports `absent`
 - **THEN** `mini-docker` is `warn` and its summary names the platform's install step without running it

@@ -145,3 +145,50 @@ pk PR #13 (`okf-v02-writer`) merged as `abb6745` — CI green on all three OSes 
 **Deliberately not touched:** the dozens of project-local `.prometheus/knowledge/` directories under `~/Projects/` that a `find` for `pk`-shaped mentions surfaced. Installing a new binary writes nothing to them — only `pk ingest` / `pk snapshot` do, and none was run here. Section 7 of the `okf-v02-writer` PR already establishes that a knowledge base written by 1.9.0 is unreadable by 1.8.0 (and the reverse is fine); upgrading the binary is what makes 1.9.0 the one every future write in this account uses, not a migration of existing bases.
 
 **Checked and not applicable:** `the-boss` and `compass` were checked for a pinned `pk` binary version or a `prometheus-knowledge` manifest reference — neither exists yet. That integration is unstarted (`the-boss-integration` phase), so there was nothing there to update.
+
+## 2026-09-21 — `karpathy-progress-recorder` ports `record-progress.py` to Node, minus the Python outbox
+
+The change ports `record-progress.py` (source pack, `skills/process/karpathy-progress-memory/scripts/`) to
+`lib/karpathy/` + `scripts/record-progress.mjs`, carrying the `karpathy-progress-memory` skill to
+`skills/karpathy-progress-memory/SKILL.md`. Five decisions worth recording, each stated in `design.md` and
+now closed out here as this pack's own record:
+
+- **The receipt is the outbox.** Upstream's durable-delivery answer is a Python outbox
+  (`enqueue-memory-operation.py`) drained by a `pk-learning-worker` daemon — both forbidden here (no
+  Python, no third daemon). This pack does not port that fallback. Instead, the receipt this pack already
+  writes *is* the retry queue: a receipt with `complete: false` (or `memory.status: "degraded"`) holds the
+  full event snapshot, and `--flush-degraded` retries delivery from that snapshot. One upstream state is
+  therefore unreachable on purpose and never emitted: `memory.status: "queued"` (readable from an old
+  upstream-written receipt, for compatibility, but never written by this pack — `REACHABLE_STATUSES` in
+  `lib/karpathy/record.mjs` is exactly `recorded | duplicate | degraded`).
+- **`256_000` bytes, not "256 KiB".** Upstream's own refusal message says "256 KiB" (262 144 bytes) but its
+  actual check compares against the literal `256_000`. This pack ports the number that is actually
+  enforced (`MAX_EVENT_BYTES = 256_000` in `lib/karpathy/validate.mjs`), not the message's rounder claim —
+  matching upstream's real behaviour over its own documentation of that behaviour.
+- **`canonicalState` is this pack's own receipt extension.** Upstream refuses any event it cannot confirm
+  against `prometheus kbd status --json`, and only ever has that one source. This pack's `config.yaml` bars
+  requiring the `prometheus` CLI, so resolution falls back to `.kbd-orchestrator/current-waypoint.json`
+  when the CLI does not resolve. The receipt records which source confirmed the event —
+  `canonicalState: "cli" | "projection"` — a key upstream's `write_receipt` never emits. Upstream's own
+  reader uses permissive `prior.get(...)` access, so the extra key is silently ignored by anything reading
+  a receipt this pack wrote; nothing upstream breaks.
+- **A refusal names the field by index, never by value — a departure from upstream.** Two departures from
+  `validate_event`, both intentional: a refusal for the secret pattern never echoes the matched text, and
+  an unsafe `touchedFiles` entry is named by its array index (upstream echoes the path itself, `:256`,
+  `{path!r}`). Field checks run *before* the secret scan, so an echoed path could itself carry a secret the
+  scan never reached — a secret in a hook log has leaked as surely as one in the session log.
+- **`queued` is read, never emitted.** A receipt already on disk that upstream wrote as `complete: true`
+  with `memory.status: "queued"` is read correctly (it replays as `duplicate`, matching upstream), but this
+  pack must never claim it *delivers* that memory — that delivery depended on the Python outbox having been
+  drained, which no longer runs. Stated here because the failure mode is quiet: nothing errors, the receipt
+  just silently never reaches `pk`.
+
+Mutation testing across every module in this change (18 `record.test.mjs` cases, 10 mutations; similar
+passes on `transport.mjs`, `session-log.mjs`, `hash.mjs`) found the majority of surviving mutants were test
+weaknesses, not code bugs — each was fixed by writing a more isolating test rather than touching the
+implementation. The one genuine code bug found across the whole change: `acquireLock` does not create
+parent directories, and `recordBoundary` acquired the receipt lock before the receipts directory existed
+for a brand-new event. Fixed with one `mkdirSync` before the lock acquire.
+
+`README.md` §5.3's superseded note already points at the `pk` submodule and this capability; no further
+edit needed there — checked, not assumed.

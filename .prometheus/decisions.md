@@ -276,3 +276,17 @@ that the `compass` pin must be a tag on a clean commit rather than the dirty sid
 **Why.** `copy-skills` writes under the user’s home — the one real trust boundary here (A-3) — and a copy is idempotent, reversible in effect, and verifiable byte for byte. The tempting second fix, removing the mini copies that `mini-install-scope` finds, is a DELETION under the user’s home: not idempotent, not obviously reversible, and which copy is authoritative is not mechanically decidable. A-11 puts that with the operator. So the check names every offending directory and stops.
 
 **Evidence this is not theoretical.** Run on this development machine, `mini-install-scope` FAILS: 42 mini skill copies sit beside a full-pack install. `refine-ui` and `scaffold-react-vite` exist in neither the full pack nor anywhere but the mini, while `artifact-refiner` and `karpathy-progress-memory` exist in both and are actively shadowing. See `.prometheus/gotchas.md`.
+
+## 2026-09-22 — the-boss consumes built artifacts; the mini vendors source
+
+**Decision.** compass and rust-mcp-filesystem are submodules of the MINI and `TOOLS` entries in the-boss’s `scripts/download-binaries.js` — not submodules of the-boss. The openspec fork IS a the-boss submodule.
+
+**Why.** They are Rust workspaces and nothing in an Electron build compiles Rust, so a submodule in the-boss would be cloned and never used. the-boss already has a mature per-platform binary pipeline (mise, bun, uv, ripgrep, MinGit) keyed by `platform-arch` with SHA-256 verification, a shared cache and `verifyBundledBinaries()` in `before-pack.js`. openspec is different: Node, a build/dev dependency rather than a shipped binary, and the source of the Windows compatibility fixes — so it is vendored as source.
+
+**Evidence.** `scripts/download-binaries.js:244` `TOOLS[]`; `before-pack.js:190-194`; `electron-builder.yml:114` shows the `${arch}` per-platform `extraResources` idiom.
+
+## 2026-09-22 — Windows-on-ARM was missing from the rust-mcp-filesystem release matrix
+
+**Decision.** Added `aarch64-pc-windows-msvc` to `dist-workspace.toml` targets with a native `windows-11-arm` runner. Branch `feat/windows-arm64-target`, commit `3a8d182`, unpushed.
+
+**Why.** the-boss ships `electron-builder --win --x64 --arm64`. The target list covered `x86_64-pc-windows-msvc` only, so an arm64 Windows build would have had no artifact to download. The sibling compass fork already builds both Windows arches. No workflow regeneration is needed: `release.yml` builds its matrix at runtime from `dist plan` and carries no config-freshness gate — verified by reading the generated file. `dist` is not installed locally, so CI is what confirms the new job appears.

@@ -47,12 +47,12 @@ Each code task is test-first: write the `node:test` file, run it and see it fail
 
 ## 9. Orchestration and entry point
 
-- [ ] 9.1 Write `lib/karpathy/record.test.mjs` against a temp root with injected transport and state: new event → `recorded`; replay → `duplicate`, one marker; `--input` collision → typed error, receipt unchanged; degraded then replay with working transport → `recorded`, still one marker; the receipt exists with `complete: false` *before* the transport is called (assert inside the injected transport); seams `KPM_TEST_CRASH_BEFORE_MEMORY` and `KPM_TEST_CRASH_AFTER_PK` recover on the next run; the set of reachable statuses is exactly `recorded | duplicate | degraded`.
-- [ ] 9.2 Flush: `--flush-degraded` delivers a degraded receipt, leaves a `queued`+`complete` one alone, honours `--limit`, and with no transport exits 0 reporting every visited receipt still degraded.
-- [ ] 9.3 Write `lib/karpathy/record.mjs`.
-- [ ] 9.4 Write `scripts/record-progress.test.mjs` (spawned, `shell: false`): exit 0 for `degraded` with no `pk` on `PATH`; exit 2 and an unchanged tree for a secret; exit 74 and 75 at the seams; stdout is one JSON line; the self-invocation guard uses `realpathSync(fileURLToPath(import.meta.url))`, so `scripts/carried-mjs.test.mjs`'s URL-concatenation scan stays green.
-- [ ] 9.5 Write `scripts/record-progress.mjs`: arguments, one call into `lib/karpathy/record.mjs`, one JSON line, exit code. No logic.
-- [ ] 9.6 Add a test that no `hooks/hooks.json` entry with `timeout <= 1000` dispatches to a module that imports `lib/karpathy/`, and that the manifest still declares six ids.
+- [x] 9.1 Write `lib/karpathy/record.test.mjs` against a temp root with injected transport and state: new event → `recorded`; replay → `duplicate`, one marker; `--input` collision → typed error, receipt unchanged; degraded then replay with working transport → `recorded`, still one marker; the receipt exists with `complete: false` *before* the transport is called (assert inside the injected transport); seams `KPM_TEST_CRASH_BEFORE_MEMORY` and `KPM_TEST_CRASH_AFTER_PK` recover on the next run; the set of reachable statuses is exactly `recorded | duplicate | degraded`.
+- [x] 9.2 Flush: `--flush-degraded` delivers a degraded receipt, leaves a `queued`+`complete` one alone, honours `--limit`, and with no transport exits 0 reporting every visited receipt still degraded.
+- [x] 9.3 Write `lib/karpathy/record.mjs`.
+- [x] 9.4 Write `scripts/record-progress.test.mjs` (spawned, `shell: false`): exit 0 for `degraded` with no `pk` on `PATH`; exit 2 and an unchanged tree for a secret; exit 74 and 75 at the seams; stdout is one JSON line; the self-invocation guard uses `realpathSync(fileURLToPath(import.meta.url))`, so `scripts/carried-mjs.test.mjs`'s URL-concatenation scan stays green.
+- [x] 9.5 Write `scripts/record-progress.mjs`: arguments, one call into `lib/karpathy/record.mjs`, one JSON line, exit code. No logic.
+- [x] 9.6 Add a test that no `hooks/hooks.json` entry with `timeout <= 1000` dispatches to a module that imports `lib/karpathy/`, and that the manifest still declares six ids.
 
 ## 10. The skill document
 

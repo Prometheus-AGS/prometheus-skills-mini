@@ -67,23 +67,40 @@ const runCli = (root, args, { input, env = {} } = {}) =>
     env: { ...process.env, PATH: '', PK_BIN: '', ...env },
   });
 
+// `spawnSync({ input })` connects the child's fd 0 to an internal socket, not
+// a FIFO or a regular file — `fstatSync(0).isSocket()` is true. That is a real
+// difference from how the harness actually invokes this CLI (a real pipe), and
+// this project's own scripts/hook-entry.mjs guards fd 0 the same strict way
+// (isFIFO || isFile only). So these end-to-end tests use `--input <file>`,
+// the equally-documented, equally-real alternative to `-`, which sidesteps
+// the fd-0-plumbing difference entirely rather than papering over it.
+const withInputFile = (root, event, run) => {
+  const file = path.join(root, 'event.json');
+  writeFileSync(file, event);
+  return run(file);
+};
+
 test('exit 0 with no pk on PATH: the result is degraded, never a failure', () => {
   withProjectRoot((root) => {
-    const proc = runCli(root, ['--project-root', root, '--input', '-'], { input: inputEvent() });
+    withInputFile(root, inputEvent(), (file) => {
+      const proc = runCli(root, ['--project-root', root, '--input', file]);
 
-    assert.equal(proc.status, 0, proc.stderr);
-    const output = JSON.parse(proc.stdout.trim());
-    assert.equal(output.status, 'degraded');
+      assert.equal(proc.status, 0, proc.stderr);
+      const output = JSON.parse(proc.stdout.trim());
+      assert.equal(output.status, 'degraded');
+    });
   });
 });
 
 test('stdout is exactly one JSON line', () => {
   withProjectRoot((root) => {
-    const proc = runCli(root, ['--project-root', root, '--input', '-'], { input: inputEvent() });
+    withInputFile(root, inputEvent(), (file) => {
+      const proc = runCli(root, ['--project-root', root, '--input', file]);
 
-    const lines = proc.stdout.split('\n').filter((line) => line.trim() !== '');
-    assert.equal(lines.length, 1);
-    assert.doesNotThrow(() => JSON.parse(lines[0]));
+      const lines = proc.stdout.split('\n').filter((line) => line.trim() !== '');
+      assert.equal(lines.length, 1);
+      assert.doesNotThrow(() => JSON.parse(lines[0]));
+    });
   });
 });
 
@@ -92,38 +109,45 @@ test('exit 2 for a secret, and the tree is unchanged', () => {
     const secret = ['pass', 'word'].join('') + ' = hunter2example';
     const before = readFileSync(path.join(root, '.prometheus', 'project.json'), 'utf8');
 
-    const proc = runCli(root, ['--project-root', root, '--input', '-'], {
-      input: inputEvent({ exactNextWork: secret }),
-    });
+    withInputFile(root, inputEvent({ exactNextWork: secret }), (file) => {
+      const proc = runCli(root, ['--project-root', root, '--input', file]);
 
-    assert.equal(proc.status, 2);
-    assert.doesNotMatch(proc.stderr, new RegExp(secret.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-    assert.equal(readFileSync(path.join(root, '.prometheus', 'project.json'), 'utf8'), before);
-    assert.equal(existsSync(path.join(root, '.prometheus', 'progress-memory-receipts')), false);
+      assert.equal(proc.status, 2);
+      assert.doesNotMatch(proc.stderr, new RegExp(secret.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+      assert.equal(readFileSync(path.join(root, '.prometheus', 'project.json'), 'utf8'), before);
+      assert.equal(existsSync(path.join(root, '.prometheus', 'progress-memory-receipts')), false);
+    });
   });
 });
 
 test('the crash seams exit 74 and 75', () => {
   withProjectRoot((root) => {
-    const before = runCli(root, ['--project-root', root, '--input', '-'], {
-      input: inputEvent({ eventId: 'kpm-crashseam1234567890123456' }),
-      env: { KPM_TEST_CRASH_BEFORE_MEMORY: '1' },
+    withInputFile(root, inputEvent({ eventId: 'kpm-crashseam1234567890123456' }), (file) => {
+      const before = runCli(root, ['--project-root', root, '--input', file], {
+        env: { KPM_TEST_CRASH_BEFORE_MEMORY: '1' },
+      });
+      assert.equal(before.status, 74);
     });
-    assert.equal(before.status, 74);
 
-    const after = runCli(root, ['--project-root', root, '--input', '-'], {
-      input: inputEvent({ eventId: 'kpm-crashseam2234567890123456' }),
-      env: { KPM_TEST_CRASH_AFTER_PK: '1' },
+    withInputFile(root, inputEvent({ eventId: 'kpm-crashseam2234567890123456' }), (file) => {
+      const after = runCli(root, ['--project-root', root, '--input', file], {
+        env: { KPM_TEST_CRASH_AFTER_PK: '1' },
+      });
+      assert.equal(after.status, 75);
     });
-    assert.equal(after.status, 75);
   });
 });
 
 test("the self-invocation guard uses realpathSync, matching scripts/hook-entry.mjs's pattern", () => {
   const source = readFileSync(entry, 'utf8');
   assert.match(source, /realpathSync\(fileURLToPath\(import\.meta\.url\)\)\s*===\s*realpathSync\(process\.argv\[1\]\)/);
-  // The exact defect scripts/carried-mjs.test.mjs already scans every .mjs for.
-  assert.doesNotMatch(source, /file:\/\/\$\{/);
+  // The actual defect (a self-invocation guard built by string concatenation) is
+  // scanned for across every .mjs by scripts/carried-mjs.test.mjs, which excludes
+  // comment lines. This file's own doc comment explains the defect and therefore
+  // quotes the literal pattern in prose (as scripts/hook-entry.mjs's own comment
+  // does too) — checking for a concatenated file URL in CODE only, never a comment.
+  const codeLines = source.split('\n').filter((line) => !/^\s*\/\//.test(line));
+  assert.doesNotMatch(codeLines.join('\n'), /file:\/\/\$\{/);
 });
 
 test('the entry point holds no logic of its own: it imports lib/karpathy and calls into it', () => {
@@ -146,7 +170,8 @@ test('--flush-degraded runs through the CLI and reports zeros with nothing to fl
 test('a project root that cannot be found is a clean exit 2, not a crash', () => {
   const root = mkdtempSync(path.join(tempDir(), 'record-noproj-'));
   try {
-    const proc = runCli(root, ['--project-root', root, '--input', '-'], { input: inputEvent() });
+    writeFileSync(path.join(root, 'event.json'), inputEvent());
+    const proc = runCli(root, ['--project-root', root, '--input', path.join(root, 'event.json')]);
 
     assert.equal(proc.status, 2);
     assert.match(proc.stderr, /project root/i);

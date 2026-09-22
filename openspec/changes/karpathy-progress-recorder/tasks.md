@@ -31,8 +31,8 @@ Each code task is test-first: write the `node:test` file, run it and see it fail
 
 ## 6. Receipts — `lib/karpathy/receipt.mjs`
 
-- [ ] 6.1 Write `lib/karpathy/receipt.test.mjs`: the path is `<root>/.prometheus/progress-memory-receipts/<sha256(eventId)>.json` and equals the 1.1 fixture's file name for its `eventId`; writes are atomic (`lib/platform/atomic-write.mjs`); the 1.1 fixture, which is `complete: true` + `memory.status: "queued"`, is read without error; an unreadable receipt is a typed error, never treated as absent.
-- [ ] 6.2 Write `lib/karpathy/receipt.mjs`, including `canonicalState` in what it writes.
+- [x] 6.1 Write `lib/karpathy/receipt.test.mjs`: the path is `<root>/.prometheus/progress-memory-receipts/<sha256(eventId)>.json` and equals the 1.1 fixture's file name for its `eventId`; writes are atomic (`lib/platform/atomic-write.mjs`); the 1.1 fixture, which is `complete: true` + `memory.status: "queued"`, is read without error; an unreadable receipt is a typed error, never treated as absent.
+- [x] 6.2 Write `lib/karpathy/receipt.mjs`, including `canonicalState` in what it writes.
 
 ## 7. Session log — `lib/karpathy/session-log.mjs`
 

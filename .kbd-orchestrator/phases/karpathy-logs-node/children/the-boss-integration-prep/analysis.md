@@ -313,3 +313,23 @@ Judge `kbd-judge` over `rest-gateway:http://localhost:8181/v1`, producer `claude
 4. Plan: whether the doctor's repair actions run from the CLI (`--fix`) as well as from the-boss UI, or
    report-only from the CLI — the safe default is report-only with `--fix` limited to actions that are
    idempotent file copies.
+
+### Q11 (addendum, spec stage) — `compass`: vendor at a tagged fork commit; stdio only; the-boss ships the fork's release tarball
+
+Evidence: the assessment addendum. The fork is 37 commits ahead of upstream with no releases and a dirty
+side-branch tree; upstream releases the exact MSVC tarballs the-boss needs. Two things must not happen:
+vendoring from the dirty checkout, and enabling `--transport http` or `watch`. **Decision:** (1) the
+operator tags a clean commit on `GQAdonis/compass` `main` (merging `docs/claude-md` first if those 37
+commits are wanted) and runs the fork's existing `compass-release.yml` — a "run it" problem, the
+pipeline already builds all six targets; (2) the mini vendors `tools/compass` at that tag, pinned in
+`versions.toml`, exempt from the no-shell gate (its `scripts/` are dev tooling), and its CI job runs
+`cargo test -p compass-mcp -p compass-cli` on the three OSes as certification — the pack itself never
+builds compass on a user's host; (3) the-boss downloads the fork's release tarball for the platform
+(`compass-<target>.tar.gz` + `.sha256`, verified) into `resources/` at build time and registers
+`{"command": "<resources>/compass", "args": ["serve", "--transport", "stdio"]}` as a stdio MCP server;
+(4) the doctor's `mini.compass` check resolves the binary, runs `compass --version`, and **fails** if any
+registered MCP config for compass carries `--transport http` or if a `compass watch` process is
+configured — the two-service budget is enforced where compass is spawned, because the CLI will bind
+`:8080` on request. `rust-mcp-filesystem`'s cargo-dist question does not arise here: compass has its
+own release workflow. Candidates: `cand-326` (adapt: vendor + certify), `cand-327` (adopt: the fork's
+`compass-release.yml` as the artifact source), `cand-328` (reject: HTTP transport and `watch`).

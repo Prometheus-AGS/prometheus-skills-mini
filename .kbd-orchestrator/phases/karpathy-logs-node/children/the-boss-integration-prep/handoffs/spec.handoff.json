@@ -1,0 +1,11 @@
+{
+  "stage": "spec",
+  "completedAt": "2026-09-22T10:31:42Z",
+  "outputs": [
+    "openspec/changes/review-housekeeping/proposal.md"
+  ],
+  "nextStage": "plan",
+  "summaryForNext": "9 OpenSpec changes, all validating (openspec validate --all: 21/21); zeespec: n/a. Intended order: review-housekeeping (commits the review inputs, archives the analysis change, creates rules/lib/versions-toml.mjs and the todo-until-authored test) → openspec-fork-submodule → docker-services (two build-context submodules, fresh compose, docker detection, services.mjs) → pack-doctor (the-boss's check/fix contract; sole owner of every mini.* check except mini.compass) → sycophancy-correction-vendored (post-fix fork commit; resolver only) → docs-site → compass-vendored (tagged fork commit; stdio only; doctor fails HTTP/watch) → the-boss-handoff (nine named items + the impeccable/ui-ux-pro-max design brief) → open-port-phases (creates adversarial-review-node and deep-research-node canonically, unactivated, seeded from Q6a/Q6b). GATE: every pin-dependent change carries task 0.1 — the real-tree versions.toml test must PASS (operator-authored file) before any submodule/image/Docusaurus pin task starts. OPERATOR PREREQUISITES named in tasks: author versions.toml; fork sycophancy-correction and merge the four-fix PR; tag a clean compass commit and run its release; enable GitHub Pages; decide 'built on Cherry Studio'. Review: two rounds, 4 CRITICAL + 5 WARNING total, all fixed, round 2 not re-vetted (cap) — see review/spec/README.md. WARNINGS carried to plan: the versions.toml gate is a task, not a runtime lock — plan must order it first; compass shipping by the-boss is blocked on the fork's release pipeline being run.",
+  "skipped": false,
+  "skipReason": null
+}

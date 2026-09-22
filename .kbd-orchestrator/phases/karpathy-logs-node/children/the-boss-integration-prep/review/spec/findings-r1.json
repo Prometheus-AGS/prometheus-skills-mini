@@ -1,0 +1,50 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The `open-port-phases` change violates the path-ownership constraint by modifying `.kbd-orchestrator/project.json` phase metadata from a change.",
+      "evidence": "Constraints state: \"`.kbd-orchestrator/project.json` \u2014 everything except `activePhase` | `/kbd-init` ONLY | Never written by a change.\" The `open-port-phases` proposal impact says: \"`project.json` `phaseDefinitionOrder` grows by two,\" and its spec requires the new phases to appear in `prometheus kbd status --json` `phaseDefinitionOrder`.",
+      "suggested_fix": "Do not make an OpenSpec change write `phaseDefinitionOrder`; either route phase creation through the owning KBD skill outside the change, or revise the constraint through its owner before relying on this mutation."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The Docker CI task uses forbidden shell chaining, so the requested command is not portable under the project command policy.",
+      "evidence": "Constraints require: \"No `&&`, `||` or `;` chaining \u2014 Windows PowerShell 5.1 rejects `&&`. Steps that must run in sequence are separate entries.\" `docker-services/tasks.md` task 5.2 says: \"CI: `ci.yml` gains `docker compose -f docker/compose.yaml config` on all legs and `node scripts/services.mjs up && status && down` on `ubuntu-latest` only.\"",
+      "suggested_fix": "Specify separate CI steps or a Node wrapper for `up`, `status`, and `down`, with cleanup handled without shell chaining."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "`pack-doctor` depends on a reusable `versions.toml` comparison library that `review-housekeeping` never creates.",
+      "evidence": "`pack-doctor/proposal.md` says `mini.versions-toml` \"reuses `rules/test/versions-toml`'s comparison as a library function.\" But `review-housekeeping` only adds a test: \"Add `rules/test/versions-toml.test.mjs`\" and task 2.2 says to \"Write `rules/test/versions-toml.test.mjs` first: parse with a minimal TOML reader...\" with no library module or exported comparison API.",
+      "suggested_fix": "Have `review-housekeeping` create a non-test module, e.g. `rules/lib/versions-toml.mjs`, exporting the parser/comparison, and make both the test and doctor consume it."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "`mini.sycophancy-correction` doctor check ownership is duplicated across two changes, risking duplicate IDs or conflicting implementations.",
+      "evidence": "`pack-doctor/proposal.md` includes the check in its initial set: \"`mini.sycophancy-correction` (binary resolvable; degraded-not-failed).\" Later, `sycophancy-correction-vendored/tasks.md` says: \"write `lib/doctor/sycophancy.mjs`; register `mini.sycophancy-correction`.\" The `pack-doctor` change is ordered before `sycophancy-correction-vendored`.",
+      "suggested_fix": "Assign a single owner: either `pack-doctor` registers a placeholder check that later changes only enrich through injected dependencies, or `sycophancy-correction-vendored` alone adds and registers the check."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The OpenSpec fork tasks tell agents to use an SSH submodule URL, which is not a cross-platform or generally available checkout path for CI/users.",
+      "evidence": "`openspec-fork-submodule/tasks.md` task 1.1 says: \"`git submodule add git@github.com:Prometheus-AGS/OpenSpec.git tools/openspec`\". The proposal blocks clean checkout behavior on the submodule: \"A clean checkout runs spec validation after install\" and CI adds install before tests, but no SSH key availability is specified.",
+      "suggested_fix": "Use an HTTPS submodule URL unless there is an explicit project-wide SSH credential requirement and CI setup."
+    }
+  ]
+}

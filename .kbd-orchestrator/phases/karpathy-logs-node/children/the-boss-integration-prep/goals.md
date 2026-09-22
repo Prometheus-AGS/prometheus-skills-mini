@@ -1,6 +1,6 @@
 # Goals — the-boss-integration-prep
 
-Child of `karpathy-logs-node`. Scope amended 2026-09-22 by the operator to add `deep-research`, its prerequisite `adversarial-review`, the `openspec` fork as a submodule, the `boss-landing-spot` site, and a Docusaurus documentation site with GitHub Pages. A final review of where the mini pack actually stands, grounded on
+Child of `karpathy-logs-node`. Scope amended 2026-09-22 by the operator to add `deep-research`, its prerequisite `adversarial-review`, the `openspec` fork as a submodule, the `boss-landing-spot` site, a Docusaurus documentation site with GitHub Pages, and the `compass` fork (added at spec). A final review of where the mini pack actually stands, grounded on
 `COMPARE.md` and `TOOL_ANALYSIS.md`, and the preparation for the next full phase: integrating the pack with
 `the-boss` (the controller application, cross-platform, Windows being the point) so that `the-boss` ships,
 installs, checks, and controls this skill system on every host. The-boss code changes themselves belong to
@@ -78,6 +78,13 @@ that next phase; this child decides and prepares, and builds what belongs in the
   in analyze: the Docusaurus version to pin, whether the site directory carries its own lockfile (the
   full pack's does, and its workflow caches on it), and how the constraint gate treats a second
   `package.json`.
+- **The `compass` fork is vendored, certified for Windows, and installed by `the-boss` as a platform-built
+  Rust component.** `compass` (`~/Projects/references/compass`, a Rust workspace with a CLI and MCP servers)
+  joins the pack the way `pk` did: audited on every Windows hazard class before any pin, vendored under
+  `tools/` at a named commit, built and tested on three OSes in this repository's CI, its MCP servers kept to
+  stdio with stderr-only logging and no resident process or port, and its binaries shipped by `the-boss` for
+  each platform from release artifacts — never built on the user's machine. Added at spec time; assess and
+  analyze addenda record its audit and its decisions before its change is written.
 - **The handoff to the `the-boss` integration phase is written, not implied.** A handoff document that
   the next phase can execute from: (1) the skill system is part of `the-boss`'s default skill set, present
   even on a box where an older `the-boss` already ran, running from the application-data directory;

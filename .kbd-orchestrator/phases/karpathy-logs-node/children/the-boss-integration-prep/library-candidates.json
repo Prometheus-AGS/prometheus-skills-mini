@@ -27,7 +27,8 @@
     "the OpenSpec fork as a submodule",
     "the boss-landing-spot identity/URLs",
     "a Docusaurus documentation site on GitHub Pages",
-    "the the-boss handoff"
+    "the the-boss handoff",
+    "compass vendored, Windows-certified, shipped by the-boss (added at spec)"
   ],
   "candidates": [
     {
@@ -669,6 +670,80 @@
         "none"
       ],
       "decision_rationale": "The problem it solves is one the mini’s spawn rules already prevent."
+    },
+    {
+      "id": "cand-326",
+      "name": "tools/compass submodule at a tagged fork commit (GQAdonis/compass), certified by the mini’s three-OS CI, never built on a user host",
+      "kind": "submodule",
+      "registry": "github",
+      "fit_for_gap": "compass vendored, Windows-certified, shipped by the-boss (added at spec)",
+      "verdict": "adapt",
+      "coverage_estimate": 1,
+      "license": "MIT OR Apache-2.0 (LICENSE-MIT, LICENSE-APACHE present)",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Windows is a tested CI target on two MSVC architectures (compass-ci.yml:252-290) plus a dedicated surrealdb-projection-windows job (:220-249); every production std::os::unix use is cfg(unix)-guarded with a Windows sibling; HOME falls back to USERPROFILE; stdio MCP path writes only JSON-RPC to stdout (compass-mcp/src/transport.rs)."
+        },
+        {
+          "tier": 1,
+          "claim": "Fork GQAdonis/compass @ c5bd5b97 is 37 ahead / 0 behind upstream/main, on branch docs/claude-md, dirty (94 scratch entries); 0 releases."
+        }
+      ],
+      "risks": [
+        "Vendoring must be from a tagged clean commit, never this checkout.",
+        "~15 plain fs::rename sites are the Windows runtime class upstream’s own Windows job exists for; the mini’s CI job on windows-latest is the certification.",
+        "rusqlite bundled + mimalloc + tree-sitter vendor pack: the CI build needs a C compiler; user hosts never build."
+      ],
+      "decision_rationale": "Same treatment as pk: vendor, pin, certify in CI, ship binaries from releases."
+    },
+    {
+      "id": "cand-327",
+      "name": "The fork’s own compass-release.yml as the-boss’s artifact source (compass-<target>.tar.gz + .sha256, verified at build time)",
+      "kind": "pattern",
+      "registry": "github",
+      "fit_for_gap": "compass vendored, Windows-certified, shipped by the-boss (added at spec)",
+      "verdict": "adopt",
+      "coverage_estimate": 1,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "compass-release.yml:63-82 builds x86_64/aarch64 for linux-gnu, apple-darwin and pc-windows-msvc as .tar.gz + .sha256; upstream compass-v0.3.28 ships both MSVC tarballs."
+        },
+        {
+          "tier": 1,
+          "claim": "the-boss unpacks resources/** on disk (electron-builder.yml:82-83) and launches stdio MCP servers via @modelcontextprotocol/sdk."
+        }
+      ],
+      "risks": [
+        "Until the operator tags and runs the release on the fork, the only tarballs are upstream’s — usable for development, not for shipping a fork-specific build."
+      ],
+      "decision_rationale": "The pipeline exists; it has to be run, not written."
+    },
+    {
+      "id": "cand-328",
+      "name": "compass serve --transport http (binds 127.0.0.1:8080/mcp) and compass watch",
+      "kind": "process",
+      "registry": "none",
+      "fit_for_gap": "compass vendored, Windows-certified, shipped by the-boss (added at spec)",
+      "verdict": "reject",
+      "coverage_estimate": 0,
+      "license": "n/a",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "transport.rs:44-52,174 — HTTP defaults to 127.0.0.1:8080; help.rs:279-282 — watch is a long-lived filesystem watcher."
+        },
+        {
+          "tier": 1,
+          "claim": "config.yaml:23-29 — exactly two resident services; no other daemon or listening port."
+        }
+      ],
+      "risks": [
+        "The CLI binds :8080 on request; enforcement lives in the spawner (the-boss config) and in the doctor check."
+      ],
+      "decision_rationale": "Stdio is the default and is request-scoped; both alternatives would be a third resident process."
     }
   ],
   "build_required": [

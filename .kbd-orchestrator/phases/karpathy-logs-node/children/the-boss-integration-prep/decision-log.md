@@ -90,3 +90,8 @@ submodules are dropped.
 Options: build `adversarial-review-node` and `deep-research-node` in this child · open them as sibling top-level phases
 Decision: **sibling phases** | Provenance: user
 Confirms analysis.md Q7. This child specs the infrastructure and the handoff; the two phases inherit Q6a/Q6b as their analyze inputs.
+
+### 2026-09-22T11:30Z — compass (operator scope addition at spec)
+Options: vendor from the current checkout · vendor at a tagged clean fork commit · rely on upstream releases only
+Decision: **tagged clean fork commit under `tools/compass`; stdio only; the-boss ships the fork's release tarball; doctor enforces no HTTP transport and no watch** | Provenance: user (scope) + research (mechanism)
+Windows is a tested CI target upstream; the fork has 0 releases and a dirty side-branch tree — the operator tags and runs `compass-release.yml`. See analysis.md Q11, cand-326..328.

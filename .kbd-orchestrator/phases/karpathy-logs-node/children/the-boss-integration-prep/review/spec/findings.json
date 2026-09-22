@@ -1,0 +1,42 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-fable-5-1",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The `the-boss-handoff` acceptance scenario is impossible after the earlier `pack-doctor` change creates a required file under `lib/` that contains the string `the-boss`.",
+      "evidence": "`pack-doctor` task 1.1 requires `lib/doctor/contract.md` to cite the-boss: \"Write `lib/doctor/contract.md` from the-boss's `src/main/services/diagnostics/doctor/types.ts` shape...\" but `the-boss-handoff` spec requires: \"WHEN `git grep -l \\\"the-boss\\\" -- lib scripts hooks` runs THEN there are no hits.\" The intended order runs `pack-doctor` before `the-boss-handoff`.",
+      "suggested_fix": "Change the handoff scenario to scan only implementation files, or explicitly exclude `lib/doctor/contract.md` and other intentional documentation citations."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The `versions.toml` gate is stated as blocking pin-dependent changes but the spec set contains no executable task or acceptance criterion that obtains the operator-authored file before those changes start.",
+      "evidence": "Analysis handoff says: \"OPERATOR ACTIONS BEFORE PLAN: author versions.toml... no pin-dependent change may start without it\"; `review-housekeeping` instead specifies absent-file behavior as non-blocking: \"while the file is absent the test SHALL report `todo` with the reason, never pass vacuously\". Later changes say only prose blockers such as `openspec-fork-submodule` tasks: \"Blocked until `versions.toml` names the pin\" and `docker-services` tasks: \"Blocked until `versions.toml` names the two pins,\" with no task that stops the intended order and verifies the file exists before running those changes.",
+      "suggested_fix": "Add an explicit operator-gate task before the first pin-dependent change: verify `versions.toml` exists and the `rules/test/versions-toml.test.mjs` real-tree test is no longer todo before any submodule/image/Docusaurus pin task proceeds."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "`sycophancy-correction-vendored` contradicts its own ownership rule for the doctor check by listing doctor files as new artifacts while also saying the check is solely owned by `pack-doctor`.",
+      "evidence": "The proposal states: \"The doctor check `mini.sycophancy-correction` is **owned by change `pack-doctor`**; this change only supplies the resolver (`lib/platform/sycophancy.mjs`) the check injects. No check is registered here.\" But the same change's Impact says: \"New: `.gitmodules` entry, gitlink, `lib/platform/sycophancy.mjs` + test, `lib/doctor/sycophancy.mjs` + test, CI job...\"",
+      "suggested_fix": "Remove `lib/doctor/sycophancy.mjs` from `sycophancy-correction-vendored` Impact, or move the doctor check ownership and registry tasks consistently into this change."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "`compass-vendored` modifies the doctor registry after `pack-doctor` without updating `pack-doctor`'s contract that exactly one check declares an action and without stating the cross-change registry merge point.",
+      "evidence": "`pack-doctor` spec requires: \"WHEN the registered checks are listed THEN exactly `mini.skill-copies` declares an action\" and its task 1.2 writes a conformance test over \"every registered check\". Later, `compass-vendored` says it modifies `doctor/checks`: \"Doctor check `mini.compass` ... added by this change\" and tasks: \"Write `lib/doctor/compass.mjs`; register `mini.compass`.\" The later registry edit is not reflected in the earlier doctor contract/test ownership.",
+      "suggested_fix": "Add an explicit task in `compass-vendored` to update the doctor registry contract test expectations and state that `mini.compass` must declare no fix action, preserving the `exactly mini.skill-copies` action invariant."
+    }
+  ]
+}

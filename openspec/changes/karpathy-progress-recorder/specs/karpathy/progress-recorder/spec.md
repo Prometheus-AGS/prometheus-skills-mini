@@ -169,7 +169,7 @@ When a receipt already exists for an `eventId`, the recorder SHALL compare `even
 - **THEN** the set is exactly `recorded`, `duplicate`, `degraded`
 
 ### Requirement: The session log is appended once per event
-The recorder SHALL append the markdown record to `.prometheus/session-log.md` under the lock file `.prometheus/session-log.md.karpathy-progress.lock` — the source pack's name — held across the marker check and the append, using an append-mode write, and SHALL skip the append when the marker `<!-- karpathy-progress-event:<eventId> -->` is already present. It SHALL NOT rewrite the file.
+The recorder SHALL append the markdown record to `.prometheus/session-log.md` under the lock file `.prometheus/session-log.md.karpathy-progress.lock` — the source pack's name — held across the marker check and the append, using an append-mode write, and SHALL skip the append when the marker `<!-- karpathy-progress-event:<eventId> -->` is already present. It SHALL NOT rewrite the file. The record's "Class and elapsed time" line SHALL render the `elapsedHours` **token** the event carried (per the hash requirement above), not a re-serialisation of the JS number — the source pack's f-string renders `1` and `1.0` differently, though they are the same number after `JSON.parse`.
 
 #### Scenario: One record per event
 - **WHEN** an event is recorded and then replayed after a crash at seam 74

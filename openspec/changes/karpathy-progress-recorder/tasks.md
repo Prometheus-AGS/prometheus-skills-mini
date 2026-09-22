@@ -36,8 +36,8 @@ Each code task is test-first: write the `node:test` file, run it and see it fail
 
 ## 7. Session log — `lib/karpathy/session-log.mjs`
 
-- [ ] 7.1 Write `lib/karpathy/session-log.test.mjs`: one marker per event across a replay; the previous bytes are an exact prefix after an append; a CRLF log still finds its marker and is appended with LF; the append happens under `lib/platform/lock.mjs` `acquireLock` on `.prometheus/session-log.md.karpathy-progress.lock` (the source pack's name), held across the marker check and the append, and released when the write throws.
-- [ ] 7.2 Write `lib/karpathy/session-log.mjs` using an append-mode write. It does not import `lib/refiner/`.
+- [x] 7.1 Write `lib/karpathy/session-log.test.mjs`: one marker per event across a replay; the previous bytes are an exact prefix after an append; a CRLF log still finds its marker and is appended with LF; the append happens under `lib/platform/lock.mjs` `acquireLock` on `.prometheus/session-log.md.karpathy-progress.lock` (the source pack's name), held across the marker check and the append, and released when the write throws.
+- [x] 7.2 Write `lib/karpathy/session-log.mjs` using an append-mode write. It does not import `lib/refiner/`.
 
 ## 8. Transport — `lib/karpathy/transport.mjs`
 

@@ -232,3 +232,31 @@ that exact commit — `macos-latest`, `ubuntu-latest`, `windows-latest` all `suc
 `.prometheus/decisions.md` and `gotchas.md` keep no `type` frontmatter and are not claimed as
 OKF-conformant — they sit outside `.prometheus/knowledge/`, `pk`'s bundle root, entirely. Migrating them to
 one-concept-per-file with proper OKF frontmatter is a separate, not-yet-proposed change.
+
+## 2026-09-22 — `versions.toml` is operator-authored, and a test is the gate
+
+**Decision.** `CLAUDE.md` §0.2 says agents read `versions.toml` and do not edit it. The file has never
+existed, and the child phase `the-boss-integration-prep` makes six pin decisions. The resolution is not
+an agent-drafted file awaiting a signature — that would still be an agent edit. The operator **authors**
+it; this repository supplies only the shape (`docs/versions-toml.md`), the reader and comparison
+(`rules/lib/versions-toml.mjs`), and the test that binds it to the tree
+(`rules/test/versions-toml.test.mjs`).
+
+**Why a test and not a convention.** Five of the nine changes in that phase pin something. Each begins
+with a task asserting the real-tree test **passes** — not `todo` — so `/kbd-apply` halts the change
+rather than drifting past a missing authority. The four changes that pin nothing run regardless. A
+convention would have been a sentence in a document; this is a failing task.
+
+**What the test enforces** (each failure names both sides): every `[submodules]` path is a gitlink in
+`HEAD` at that commit (short shas match by prefix); `[node] minimum` equals `package.json`
+`engines.node`; every `[images]` entry has a digest or `built_from_submodule = true`, and a
+`built_from_submodule` entry names a submodule `[submodules]` also pins. While the file is absent the
+test is `todo` with the reason, never a vacuous pass.
+
+**The parser refuses what it does not implement.** Arrays, arrays-of-tables, multi-line strings and a
+value before any table header all raise. A version authority that silently drops a pin it could not
+parse is worse than one that refuses to load.
+
+**Proposed pins are proposals.** `docs/versions-toml.md` lists them from `analysis.md` Q1/Q1a and says so
+plainly — including that `bc348fff` is the `sycophancy-correction` **audit baseline**, not the pin, and
+that the `compass` pin must be a tag on a clean commit rather than the dirty side-branch checkout.

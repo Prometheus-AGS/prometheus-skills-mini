@@ -1,0 +1,151 @@
+// `versions.toml` is the version authority CLAUDE.md §0.2 names: the operator writes
+// it, agents read it. This module is the reader and the comparison; the tests around
+// it (rules/test/versions-toml.test.mjs) are what make a disagreement with the tree a
+// failure rather than a comment.
+//
+// The grammar is deliberately the documented subset only (docs/versions-toml.md):
+// tables, quoted or bare keys, string/boolean values, inline tables, comments. Every
+// other TOML construct raises. A version authority that silently drops a pin it could
+// not parse would be worse than one that refuses to load.
+
+const ERR = (line, message) => {
+  throw new Error(`versions.toml: line ${line}: ${message}`);
+};
+
+const unquote = (raw, line) => {
+  const value = raw.trim();
+  if (value === 'true') return true;
+  if (value === 'false') return false;
+  if (value.startsWith('"""') || value.startsWith("'''")) ERR(line, 'multi-line strings are not supported');
+  if (value.startsWith('[')) ERR(line, 'arrays are not supported');
+  const quoted = /^"([^"]*)"$/.exec(value) ?? /^'([^']*)'$/.exec(value);
+  if (!quoted) ERR(line, `expected a quoted string or a boolean, got ${JSON.stringify(value)}`);
+  return quoted[1];
+};
+
+const key = (raw, line) => {
+  const text = raw.trim();
+  const quoted = /^"([^"]*)"$/.exec(text) ?? /^'([^']*)'$/.exec(text);
+  if (quoted) return quoted[1];
+  if (!/^[A-Za-z0-9_.@/-]+$/.test(text)) ERR(line, `unsupported key ${JSON.stringify(text)}`);
+  return text;
+};
+
+// Split an inline table's body on commas that are not inside quotes.
+const splitPairs = (body, line) => {
+  const out = [];
+  let current = '';
+  let quote = null;
+  for (const ch of body) {
+    if (quote) {
+      if (ch === quote) quote = null;
+      current += ch;
+      continue;
+    }
+    if (ch === '"' || ch === "'") {
+      quote = ch;
+      current += ch;
+      continue;
+    }
+    if (ch === ',') {
+      out.push(current);
+      current = '';
+      continue;
+    }
+    current += ch;
+  }
+  if (quote) ERR(line, 'unterminated string in an inline table');
+  if (current.trim() !== '') out.push(current);
+  return out;
+};
+
+const inlineTable = (raw, line) => {
+  const body = raw.trim().slice(1, -1);
+  const table = {};
+  for (const pair of splitPairs(body, line)) {
+    const at = pair.indexOf('=');
+    if (at === -1) ERR(line, `inline table entry without '=': ${JSON.stringify(pair.trim())}`);
+    table[key(pair.slice(0, at), line)] = unquote(pair.slice(at + 1), line);
+  }
+  return table;
+};
+
+/** Parse the documented subset. Throws on anything outside it. */
+export function parseVersionsToml(text) {
+  const parsed = {};
+  let table = null;
+  let lineNumber = 0;
+
+  for (const rawLine of String(text).split('\n')) {
+    lineNumber += 1;
+    const line = rawLine.replace(/\s+#.*$/, '').trim();
+    if (line === '' || line.startsWith('#')) continue;
+
+    if (line.startsWith('[[')) ERR(lineNumber, 'arrays of tables are not supported');
+    if (line.startsWith('[')) {
+      const name = /^\[([^\]]+)\]$/.exec(line);
+      if (!name) ERR(lineNumber, `malformed table header ${JSON.stringify(line)}`);
+      table = key(name[1], lineNumber);
+      parsed[table] ??= {};
+      continue;
+    }
+
+    const at = line.indexOf('=');
+    if (at === -1) ERR(lineNumber, `expected 'key = value', got ${JSON.stringify(line)}`);
+    if (table === null) ERR(lineNumber, 'a value appears before any table header');
+
+    const name = key(line.slice(0, at), lineNumber);
+    const value = line.slice(at + 1).trim();
+    parsed[table][name] = value.startsWith('{') ? inlineTable(value, lineNumber) : unquote(value, lineNumber);
+  }
+
+  return parsed;
+}
+
+const samePin = (pinned, actual) =>
+  typeof actual === 'string' && actual.length >= pinned.length && actual.startsWith(pinned);
+
+/**
+ * Every disagreement between the file and the tree, as human-readable lines.
+ * `lsTree(path)` returns the gitlink commit at that path in HEAD, or null.
+ * Pure: both the tree reader and the manifest are injected, so tests need no repository.
+ */
+export function compareToTree(parsed, { lsTree, packageJson }) {
+  const found = [];
+  const submodules = parsed.submodules ?? {};
+
+  for (const [path, pinned] of Object.entries(submodules)) {
+    const actual = lsTree(path);
+    if (actual === null) {
+      found.push(`${path}: versions.toml pins ${pinned}, but HEAD has no gitlink there (not a gitlink)`);
+      continue;
+    }
+    if (!samePin(pinned, actual)) {
+      found.push(`${path}: versions.toml pins ${pinned}, HEAD has ${actual}`);
+    }
+  }
+
+  const declared = parsed.node?.minimum;
+  const engine = packageJson?.engines?.node;
+  if (declared !== engine) {
+    found.push(`[node] minimum is ${declared}, package.json engines.node is ${engine} — they must be equal`);
+  }
+
+  for (const [name, entry] of Object.entries(parsed.images ?? {})) {
+    if (typeof entry !== 'object' || entry === null) {
+      found.push(`[images] ${name} must be an inline table`);
+      continue;
+    }
+    if (!entry.digest && entry.built_from_submodule !== true) {
+      found.push(`[images] ${name} has neither a digest nor built_from_submodule = true`);
+      continue;
+    }
+    if (entry.built_from_submodule === true && !(entry.submodule in submodules)) {
+      found.push(
+        `[images] ${name} is built_from_submodule but names ${entry.submodule ?? '(nothing)'}, which [submodules] does not pin`,
+      );
+    }
+  }
+
+  return found;
+}

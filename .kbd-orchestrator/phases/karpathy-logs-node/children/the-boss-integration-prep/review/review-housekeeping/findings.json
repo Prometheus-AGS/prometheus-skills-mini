@@ -1,0 +1,42 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/changes/review-housekeeping/tasks.md",
+      "line": 8,
+      "claim": "The change does not satisfy the requirement that archiving leave `openspec list` showing only open changes.",
+      "evidence": "Spec requirement says the completed analysis change SHALL be archived \"so that `openspec list` shows only open changes\", but the task note states: \"`openspec list` still shows the PARENT phase\u2019s two changes, `karpathy-progress-recorder` and `okf-v02-via-pk`, as `\u2713 Complete` but unarchived.\"",
+      "suggested_fix": "Archive the completed changes still shown by `openspec list`, or amend the spec before claiming this requirement complete."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "rules/lib/versions-toml.mjs",
+      "line": 144,
+      "claim": "The implementation cannot detect when `versions.toml` omits a container image the pack starts.",
+      "evidence": "The spec requires `versions.toml` to name \"every container image the pack starts\", but `compareToTree` only iterates `Object.entries(parsed.images ?? {})` and has no injected compose/service inventory to compare against.",
+      "suggested_fix": "Add an injected list of expected images/services from the tree and report any started image missing from `[images]`."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "rules/lib/versions-toml.mjs",
+      "line": 119,
+      "claim": "The submodule completeness check enforces all gitlinks in the repository instead of only submodules under `tools/`.",
+      "evidence": "The spec says `versions.toml` SHALL name \"every submodule under `tools/`\", but `compareToTree` reports every path returned by `listGitlinks()` that is absent from `[submodules]`, and `rules/test/versions-toml.test.mjs` supplies all `git ls-tree -r HEAD` gitlinks without filtering to `tools/`.",
+      "suggested_fix": "Filter completeness checks to paths equal to or below `tools/`, or rename/spec the requirement if all repository gitlinks are intended."
+    },
+    {
+      "severity": "WARNING",
+      "file": "rules/lib/versions-toml.mjs",
+      "line": 90,
+      "claim": "Duplicate keys are silently overwritten instead of rejected, allowing an invalid TOML authority to mask a pin.",
+      "evidence": "`parseVersionsToml` assigns `parsed[table][name] = ...` without checking whether `name` already exists; docs state this is a TOML subset and that unsupported or unsafe constructs should raise rather than silently misread.",
+      "suggested_fix": "Before assignment, reject duplicate keys in a table with a `versions.toml` parse error."
+    }
+  ]
+}

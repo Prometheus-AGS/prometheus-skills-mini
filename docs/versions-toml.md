@@ -45,12 +45,19 @@ minimum = ">=22"          # must equal package.json engines.node, exactly
 |---|---|
 | The file exists | `todo` with "operator has not authored versions.toml" — never a vacuous pass |
 | Every `[submodules]` path is a gitlink in `HEAD` at that commit | names the path, the file's commit and the tree's commit |
+| Every gitlink **under `tools/`** is named by `[submodules]` | names the unlisted path. A gitlink elsewhere in the tree is not this file's business |
+| No table declares the same key twice | parsing raises; a duplicate is never silently the last value |
 | `[node] minimum` equals `package.json` `engines.node` | names both values |
 | Every `[images]` entry has `digest` **or** `built_from_submodule = true` | names the entry |
 | A `built_from_submodule` entry names a `submodule` that `[submodules]` also pins | names the entry |
 
 Short shas are compared by prefix against the tree's full sha, so `abb6745` matches
 `abb6745e31da7577611d7c32005af26a72254484`.
+
+**Not yet enforced:** that every service in `docker/compose.yaml` has an `[images]` entry. That file does
+not exist until change `docker-services` creates it, and a check with nothing to compare against would
+pass vacuously — which is the failure mode this whole file exists to prevent. `docker-services` task 6.0
+adds it along with the compose file.
 
 ## Proposed values
 

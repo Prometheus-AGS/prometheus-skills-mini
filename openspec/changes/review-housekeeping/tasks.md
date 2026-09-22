@@ -31,3 +31,8 @@ Each code task is test-first. A task that names a file either creates it or name
 
 - [x] 3.1 `node --test`, `node rules/build.mjs --check`, `node scripts/spec-validate.mjs`; record in `.prometheus/decisions.md` that the operator authors `versions.toml` and the test is the gate.
   - `node --test`: 378 tests, 375 pass, 0 fail, 2 skipped (Windows-only), 1 `todo` (the gate itself). `node rules/build.mjs --check`: 21 files current. `node scripts/spec-validate.mjs`: 20/20 (one fewer than before — the analysis change archived at 1.2). Four constraint gates re-run, all exit 1 (clean). Decisions entry written.
+
+## 4. Review findings (diff mode, two rounds)
+
+- [x] 4.1 Round 1 BLOCK, 2 CRITICAL — both fixed: submodule completeness (`compareToTree` checked only listed pins; now takes an injected `listGitlinks`), and the archive had left the four files tracked at HEAD while absent from disk (`git add` staged the additions, never the deletions; `git add -A` fixed it, verified with `git ls-tree -r HEAD`).
+- [x] 4.2 Round 2 BLOCK, 3 CRITICAL + 1 WARNING — all fixed: completeness now scoped to `tools/` (a gitlink elsewhere is not this file’s business); duplicate keys raise instead of silently overwriting; and two over-claims in my own spec were corrected rather than coded around — image completeness moved to change `docker-services` (it creates `docker/compose.yaml`; nothing here can check services against a file that does not exist), and the archive requirement scoped to the one change this task archives, with the parent phase’s changes named as its reflect stage’s work. Two scenarios added for the new behaviour, one for the archive-moves-not-copies rule.

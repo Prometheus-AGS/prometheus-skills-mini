@@ -1,0 +1,26 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "rules/lib/versions-toml.mjs",
+      "line": 116,
+      "claim": "The comparison cannot detect submodules under tools/ that are missing from versions.toml, so the gate can pass with an incomplete version authority.",
+      "evidence": "Spec requirement says versions.toml \"SHALL name, for every submodule under `tools/`, the commit the parent repository's gitlink pins\"; compareToTree only iterates `Object.entries(parsed.submodules ?? {})` and has no API to enumerate existing tools/ gitlinks, while `rules/test/versions-toml.test.mjs` only separately asserts `tools/prometheus-knowledge` can be found.",
+      "suggested_fix": "Inject the list of gitlinks under tools/ into compareToTree or the gate test, and report any gitlink path absent from `[submodules]`."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/changes/analyze-rust-tools-windows-portability/.openspec.yaml",
+      "line": 1,
+      "claim": "The archived change is still present as an active change, so it was duplicated rather than archived out of openspec/changes.",
+      "evidence": "Acceptance 1.2 requires archiving `analyze-rust-tools-windows-portability` and confirming `openspec list` no longer shows it; the diff adds both `openspec/changes/analyze-rust-tools-windows-portability/*` and `openspec/changes/archive/2026-09-22-analyze-rust-tools-windows-portability/*`.",
+      "suggested_fix": "Remove `openspec/changes/analyze-rust-tools-windows-portability/` from the active changes tree, leaving only the archived copy."
+    }
+  ]
+}

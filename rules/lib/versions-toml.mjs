@@ -95,6 +95,7 @@ export function parseVersionsToml(text) {
     if (table === null) ERR(lineNumber, 'a value appears before any table header');
 
     const name = key(line.slice(0, at), lineNumber);
+    if (name in parsed[table]) ERR(lineNumber, `duplicate key ${JSON.stringify(name)} in [${table}]`);
     const value = line.slice(at + 1).trim();
     parsed[table][name] = value.startsWith('{') ? inlineTable(value, lineNumber) : unquote(value, lineNumber);
   }
@@ -118,8 +119,10 @@ export function compareToTree(parsed, { lsTree, listGitlinks, packageJson }) {
   const found = [];
   const submodules = parsed.submodules ?? {};
 
+  // Scoped to tools/ deliberately: the spec says "every submodule under tools/",
+  // and a gitlink elsewhere in the tree is not this file's business.
   if (typeof listGitlinks === 'function') {
-    for (const path of listGitlinks()) {
+    for (const path of listGitlinks().filter((p) => p === 'tools' || p.startsWith('tools/'))) {
       if (!(path in submodules)) {
         found.push(`${path}: HEAD has a gitlink there, but versions.toml does not name it`);
       }

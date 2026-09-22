@@ -154,6 +154,25 @@ test('with every gitlink named, the completeness check is silent', () => {
   assert.deepEqual(found, []);
 });
 
+test('completeness is scoped to tools/: a gitlink elsewhere is not this file’s business', () => {
+  const parsed = parseVersionsToml('[node]\nminimum = ">=22"\n[submodules]\n"tools/a" = "aaaaaaa"\n');
+
+  const found = compareToTree(parsed, {
+    lsTree: tree({ 'tools/a': 'aaaaaaa0000' }),
+    listGitlinks: () => ['tools/a', 'vendor/elsewhere', 'site/theme'],
+    packageJson: { engines: { node: '>=22' } },
+  });
+
+  assert.deepEqual(found, []);
+});
+
+test('a duplicate key is a parse error, not a silent overwrite', () => {
+  assert.throws(
+    () => parseVersionsToml('[submodules]\n"tools/a" = "aaaaaaa"\n"tools/a" = "bbbbbbb"\n'),
+    /duplicate key/,
+  );
+});
+
 test('every disagreement is reported, not just the first', () => {
   const parsed = parseVersionsToml(
     '[node]\nminimum = ">=20"\n[submodules]\n"tools/a" = "aaaaaaa"\n"tools/b" = "bbbbbbb"\n',

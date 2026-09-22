@@ -33,4 +33,5 @@ Each code task is test-first. Blocked until `versions.toml` names the two pins.
 
 ## 6. Close
 
+- [ ] 6.0 Extend `compareToTree` in `rules/lib/versions-toml.mjs` with an injected `listComposeServices()` and report any service in `docker/compose.yaml` that `[images]` does not name — the image-completeness half of the version authority, which change `review-housekeeping` scoped to this change because the compose file did not exist then. Test first, both directions; wire the real compose file into `rules/test/versions-toml.test.mjs`.
 - [ ] 6.1 Full battery; `.prometheus/decisions.md`: fresh compose, submodules-as-build-contexts with the image-publishing exit, detect-and-require; `.prometheus/gotchas.md` for anything the bring-up teaches.

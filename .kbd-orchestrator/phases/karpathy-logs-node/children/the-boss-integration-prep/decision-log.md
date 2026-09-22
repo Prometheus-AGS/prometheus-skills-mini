@@ -85,3 +85,8 @@ No published image could be confirmed (packages API needs a scope this session l
 workflow and a `write:packages` token in each fork. Build contexts only; nothing under them runs on the
 host; `.sh` gate exemption per submodule. Once images exist, compose switches to digest pins and the two
 submodules are dropped.
+
+### 2026-09-22T11:05Z — the two ports open as sibling phases (operator confirmation)
+Options: build `adversarial-review-node` and `deep-research-node` in this child · open them as sibling top-level phases
+Decision: **sibling phases** | Provenance: user
+Confirms analysis.md Q7. This child specs the infrastructure and the handoff; the two phases inherit Q6a/Q6b as their analyze inputs.

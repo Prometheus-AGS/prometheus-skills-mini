@@ -1,0 +1,26 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/constraints.md",
+      "line": 107,
+      "claim": "The tightened blocking `os-locations-only-via-platform` check is committed while it is known to match four existing repository violations, so the blocking gate cannot be clean.",
+      "evidence": "The hunk changes the check to `-e \"node:os\" -- \"lib/*.mjs\" \"scripts/*.mjs\" ...`; the added correction table and note state the corrected check reports `convert-htmx-pdf.mjs:18`, `design-svg-logo.mjs:36`, `hook-cold-start.mjs:13`, and `refine-moodboard.mjs:45`. The constraints command policy says a match is a violation and blocking constraints prevent archiving until resolved.",
+      "suggested_fix": "Fix the four `scripts/` violations to use `lib/platform/paths.mjs` helpers before tightening the blocking check, or explicitly scope them out in the check with a documented exclusion that still discriminates."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/constraints.md",
+      "line": 37,
+      "claim": "The change adds a new ownership-policy rule to `.kbd-orchestrator/constraints.md`, which changes are not authorized to do.",
+      "evidence": "The path ownership table says `.kbd-orchestrator/constraints.md` rules and thresholds are `/kbd-init` owned and that a change never loosens, deletes or adds a RULE; the diff adds a new row for `check:` expressions, `TIGHTENED`, defining when such edits are permitted.",
+      "suggested_fix": "Do not modify the governance rule in this change; have `/kbd-init` update the constraints policy, or keep this change limited to check-expression edits already authorized by the existing policy."
+    }
+  ]
+}

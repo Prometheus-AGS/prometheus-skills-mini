@@ -10,7 +10,7 @@ Each code task is test-first. Runnable before its dependencies land: each depend
 
 - [x] 2.0 Write `lib/platform/full-pack.test.mjs` first (each marker alone → present, naming it; none → absent; injected home and spawn), then `lib/platform/full-pack.mjs`.
 - [ ] 2.1 For each group, test first then module: `lib/doctor/runtime.mjs` (`mini-node-version`, `mini-versions-toml`, `mini-submodules`), `lib/doctor/services.mjs` (`mini-docker`, `mini-service-surreal-memory`, `mini-service-liter-llm`), `lib/doctor/tools.mjs` (`mini-pk`, `mini-sycophancy-correction`), `lib/doctor/skills.mjs` (`mini-skill-copies` + `copy-skills`), `lib/doctor/kbd.mjs` (`mini-kbd-state`), `lib/doctor/scope.mjs` (`mini-install-scope`; and the `skip`/`refused` behaviour of `mini-skill-copies`/`copy-skills` when the full pack is present). Every external call is injected (spawn, fetch, home dir) so tests run with nothing installed.
-- [ ] 2.2 Mutation on `copy-skills`: remove the `..` refusal and confirm the hostile-name test fails; paste the output.
+- [x] 2.2 Mutation on `copy-skills`: remove the `..` refusal and confirm the hostile-name test fails; paste the output.
 
 ## 3. Entry point and skill
 
@@ -29,3 +29,9 @@ Each code task is test-first. Runnable before its dependencies land: each depend
 - The fourth marker (`ai.prometheus.*` service units) was written against observed reality, not the spec’s wording: this development machine HAS the full pack, with 14 `ai.prometheus.*` LaunchAgents in `~/Library/LaunchAgents`. macOS reads LaunchAgents, Linux reads `~/.config/systemd/user`, and Windows is excluded — the pack installs no unit there, and looking in a macOS path on Windows would be a false marker waiting to happen.
 - Run against this real full-pack machine, the detector reports `present: true` with all five markers. That is the exact case the rule exists for: this box must never receive a native mini install.
 - Mutation-checked, three mutants, all killed (fail=1 each): fail-closed guard removed; unit prefix filter replaced with `true`; Windows exclusion replaced with the macOS path.
+
+### Notes from the skills group and 2.2
+
+- Task 2.2 asked for ONE mutation (remove the `..` refusal). I ran five, each killed (fail=1): the whole-name validation removed; `..` alone removed from `isSafeName`; the `/` and `\\` separator checks removed; the full-pack refusal removed from the fix; and the byte comparison downgraded to a size comparison. Each half of the traversal guard is therefore independently covered, and the drift test uses a same-length edit (`one` → `ONE`) so a size comparison cannot pass it.
+- The fix validates EVERY name before writing anything, so a hostile name cannot be preceded by partial writes from the safe ones. The hostile-name test asserts the home directory is still completely empty afterwards, not merely that the status was `refused`.
+- A skipped `mini-skill-copies` deliberately omits `actions`: a check that is skipping because the fix is forbidden must not also offer that fix. Asserted.

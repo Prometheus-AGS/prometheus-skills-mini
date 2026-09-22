@@ -1,0 +1,12 @@
+{
+  "stage": "execute",
+  "completedAt": "2026-09-22T10:50:08Z",
+  "outputs": [
+    "execution.md",
+    "progress.json"
+  ],
+  "nextStage": "reflect",
+  "summaryForNext": "Backend: openspec; driver /kbd-apply one task per turn (never bare /opsx:apply). Nine changes / 82 tasks already registered canonically at plan; execution.md is the dispatch contract. Changes 1-4 may run now; 5-9 sit behind the versions.toml gate (task 0.1 asserts the real-tree test PASSES, not todo, and halts the change otherwise); docs-site 1.1/1.3/2.1 run pre-gate. Ledger reconciled from the stale 0/0 written by /kbd-new-child to 0/9 (the runtime was already correct). STANDING RISK recorded in execution.md: this development host HAS the full skill pack, and config.yaml now forbids native mini installation on such a machine — every --home path in changes 2 and 5 is exercised only against an injected temp home; no task writes to ~/.agents/skills or ~/.claude/skills in this phase. QA per change: refine-validate then adversarial-review --mode diff (packet carries a depends_on manifest), archive through spawnNodeCli. First dispatch: /kbd-apply review-housekeeping, task 1.1.",
+  "skipped": false,
+  "skipReason": null
+}

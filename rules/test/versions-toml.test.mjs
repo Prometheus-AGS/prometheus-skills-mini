@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnExecutable } from '../../lib/platform/spawn.mjs';
@@ -15,18 +16,35 @@ import { compareToTree, parseVersionsToml } from '../lib/versions-toml.mjs';
 const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
 const versionsToml = path.join(repoRoot, 'versions.toml');
 
-/** The gitlink commit at `p` in HEAD, or null when there is none. */
-const lsTreeFromGit = (p) => {
-  const result = spawnExecutable('git', ['ls-tree', 'HEAD', '--', p], { cwd: repoRoot });
-  if (result.status !== 0) return null;
+/**
+ * The gitlink commit at `p` in HEAD, or null when there is none.
+ * A failed `git ls-tree` raises rather than returning null: null here is safe (it reports a
+ * disagreement rather than hiding one) but it would name the wrong cause — "no gitlink there"
+ * when the truth is "git could not be read".
+ */
+const lsTreeFromGit = (p, cwd = repoRoot) => {
+  const result = spawnExecutable('git', ['ls-tree', 'HEAD', '--', p], { cwd });
+  if (result.status !== 0) {
+    throw new Error(
+      `git ls-tree HEAD -- ${p} failed (status ${result.status}): ${(result.stderr ?? '').trim()}`,
+    );
+  }
   const match = /^160000 commit ([0-9a-f]{40})\t/.exec((result.stdout ?? '').trim());
   return match ? match[1] : null;
 };
 
-/** Every gitlink path in HEAD — the spec's "every submodule" is checked, not only the listed ones. */
-const listGitlinksFromGit = () => {
-  const result = spawnExecutable('git', ['ls-tree', '-r', 'HEAD'], { cwd: repoRoot });
-  if (result.status !== 0) return [];
+/**
+ * Every gitlink path in HEAD — the spec's "every submodule" is checked, not only the listed ones.
+ * A failed `git ls-tree` raises: returning `[]` would mean "no gitlinks", which passes the
+ * completeness check vacuously. A gate that cannot read the tree has not verified the tree.
+ */
+const listGitlinksFromGit = (cwd = repoRoot) => {
+  const result = spawnExecutable('git', ['ls-tree', '-r', 'HEAD'], { cwd });
+  if (result.status !== 0) {
+    throw new Error(
+      `git ls-tree -r HEAD failed (status ${result.status}); cannot verify submodule completeness: ${(result.stderr ?? '').trim()}`,
+    );
+  }
   return (result.stdout ?? '')
     .split('\n')
     .map((line) => /^160000 commit [0-9a-f]{40}\t(.+)$/.exec(line))
@@ -62,4 +80,17 @@ test('the gitlink readers find a real submodule and refuse a plain directory', (
   const gitlinks = listGitlinksFromGit();
   assert.ok(gitlinks.includes('tools/prometheus-knowledge'), JSON.stringify(gitlinks));
   assert.ok(!gitlinks.includes('lib/platform'));
+});
+
+// Both readers used to swallow a git failure — `[]` ("no gitlinks") passed the completeness
+// check vacuously, and `null` named the wrong cause. A gate that cannot read the tree has not
+// verified the tree. Caught by round 5 of the diff review.
+test('a git failure raises rather than reporting an empty or absent tree', () => {
+  const notARepo = mkdtempSync(path.join(tmpdir(), 'versions-toml-'));
+  try {
+    assert.throws(() => listGitlinksFromGit(notARepo), /git ls-tree/);
+    assert.throws(() => lsTreeFromGit('tools/prometheus-knowledge', notARepo), /git ls-tree/);
+  } finally {
+    rmSync(notARepo, { recursive: true, force: true });
+  }
 });

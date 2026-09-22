@@ -8,11 +8,11 @@
   "findings": [
     {
       "severity": "CRITICAL",
-      "file": "rules/lib/versions-toml.mjs",
-      "line": 128,
-      "claim": "An empty submodule pin is accepted and matches every gitlink commit, so an invalid `versions.toml` can report agreement with the tree.",
-      "evidence": "`unquote` accepts `\"\"` as a string value, and `samePin` returns `actual.length >= pinned.length && actual.startsWith(pinned)`, which is true for `pinned === \"\"`; the spec requires `[submodules] \"<path>\" = \"<sha>\"` and that every submodule commit is bound to the parent gitlink.",
-      "suggested_fix": "Validate submodule pins before comparing, e.g. require `/^[0-9a-f]{7,40}$/i` and report a disagreement or parse error for empty/non-hex pins."
+      "file": "rules/test/versions-toml.test.mjs",
+      "line": 32,
+      "claim": "The real-tree gitlink completeness gate silently passes when `git ls-tree -r HEAD` fails, allowing an incomplete `versions.toml` to be accepted.",
+      "evidence": "`listGitlinksFromGit` returns `[]` on any non-zero git status (`if (result.status !== 0) return [];`), while the spec requires the test to fail when a gitlink under `tools/` is not named and the constraints call out silent failure as a review target.",
+      "suggested_fix": "Throw an error on non-zero `git ls-tree` status, including stderr/status, instead of returning an empty list."
     }
   ]
 }

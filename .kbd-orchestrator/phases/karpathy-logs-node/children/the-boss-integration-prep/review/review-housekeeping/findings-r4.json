@@ -1,0 +1,18 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "kbd-judge",
+  "producer_model": "claude-opus-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "rules/lib/versions-toml.mjs",
+      "line": 128,
+      "claim": "An empty submodule pin is accepted and matches every gitlink commit, so an invalid `versions.toml` can report agreement with the tree.",
+      "evidence": "`unquote` accepts `\"\"` as a string value, and `samePin` returns `actual.length >= pinned.length && actual.startsWith(pinned)`, which is true for `pinned === \"\"`; the spec requires `[submodules] \"<path>\" = \"<sha>\"` and that every submodule commit is bound to the parent gitlink.",
+      "suggested_fix": "Validate submodule pins before comparing, e.g. require `/^[0-9a-f]{7,40}$/i` and report a disagreement or parse error for empty/non-hex pins."
+    }
+  ]
+}

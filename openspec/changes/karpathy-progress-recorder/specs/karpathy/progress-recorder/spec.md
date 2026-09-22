@@ -110,6 +110,10 @@ One rule is added to upstream's, and it is stated as an addition: an `elapsedHou
 - **WHEN** the Python hash vectors of `tasks.md` 1.2 are absent
 - **THEN** the vector test is reported as `todo`, and the phase evidence labels the hash rule "verified for one integer-valued float only"
 
+#### Scenario: The portability of ordinary decimals, once actually verified
+- **WHEN** the operator-supplied `lib/karpathy/fixtures/python-hash-vectors.json` is present
+- **THEN** `eventSha256` reproduces the real Python recorder's hash for every one of its twelve vectors — `0`/`0.0`, `1`/`1.0`, `1000`/`1000.0`, three ordinary fractional values, and `0.0001`, the smallest portable value — and the hash rule is verified across the integer/float and magnitude matrix, not for one value alone
+
 ### Requirement: Receipts keep the source pack's on-disk contract
 A receipt SHALL be written to `.prometheus/progress-memory-receipts/<sha256(eventId)>.json` by atomic write, under a per-event `wx` lock from `lib/platform/lock.mjs`, whose file is the receipt path with the suffix `.lock` — the name the source pack uses, and an exclusive-create lock like its own, so the two packs exclude each other on one project root. It SHALL carry `eventSha256` — SHA-256 of the event without `observedAt`, keys sorted, separators `,` and `:`, non-ASCII unescaped — and `eventIdentitySha256` over `schemaVersion`, `eventId`, `runId`, `boundary`, `status`, `phaseId`, `changeId`, `taskId`. `elapsedHours` SHALL be hashed with the numeric token the source pack would write. For an event this pack builds from a hook — where the source pack always calls `float()` — that is Python's float form, so an integer value gains `.0`. For an event that arrives as text, through `--input` or as the snapshot inside a stored receipt, it is **the token as written**: Python hashes the integer `1` as `1` and the float `1.0` as `1.0`, and after `JSON.parse` the two are the same number, so the token has to be carried from the text.
 

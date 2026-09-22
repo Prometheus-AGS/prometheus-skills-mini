@@ -10,11 +10,13 @@ never the live directory.
 writes a float that way, `JSON.stringify` writes `0`, and after `JSON.parse` the difference is gone. Any tool
 that re-serialises this file destroys the evidence the hash tests depend on.
 
-## `python-hash-vectors.json` — operator-supplied, not yet present
+## `python-hash-vectors.json` — operator-supplied
 
 This repository never runs Python, and a vector computed by the code under test proves nothing. So the
-expected hashes have to come from the real recorder, once, run by a person. From the repository root, with
-`prometheus-skill-pack` checked out beside it:
+expected hashes come from the real recorder, run once by the operator on 2026-09-22, exactly as documented
+below. `lib/karpathy/hash.test.mjs`'s `every Python vector is reproduced` test reads this file directly
+and is no longer `todo`. To reproduce or extend it, from the repository root, with `prometheus-skill-pack`
+checked out beside it:
 
 ```bash
 python3 - <<'PY' > lib/karpathy/fixtures/python-hash-vectors.json
@@ -33,5 +35,7 @@ PY
 ```
 
 `pythonLiteral` is kept as text on purpose: `0` and `0.0` are different inputs to Python and the same number
-to JavaScript, and the pair exists to pin that. Until this file exists the vector test is reported `todo` and
-the hash rule is "verified for one integer-valued float only".
+to JavaScript, and the pair exists to pin that. All 12 vectors reproduce exactly under this pack's
+`eventSha256` — the hash-portability claim is verified across the full integer/float and magnitude matrix
+(`0`/`0.0`, `1`/`1.0`, `1000`/`1000.0`, three fractional values, and `0.0001`, the smallest portable value),
+not just for one integer-valued float.

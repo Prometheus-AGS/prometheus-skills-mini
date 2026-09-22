@@ -285,73 +285,66 @@ of this design and should be measured on real Windows hardware early.
 
 ### 5.3 Karpathy logging and self-improvement
 
-> **SUPERSEDED IN PART (2026-09-21).** The operator decided that the Karpathy/OKF knowledge layer uses the
-> Rust `pk` CLI — vendored as a submodule at `tools/prometheus-knowledge` — instead of a Node-specific
-> implementation. So the statements below that "`pk ingest` is gone" and that the result states collapse to
-> `recorded | duplicate | queued` **no longer hold**, and the OKF writer described here is `pk`'s job, not
-> this pack's. `pk` is a per-call CLI, not a service, so the two-service rule is unaffected. **Caveat:**
-> `pk` builds and passes its tests on Windows as of the pinned commit, but it still has no releases, so a
-> clean machine has no `pk` and this pack must degrade without it; see `.prometheus/decisions.md` and the
-> `karpathy-logs-node` phase goals. This section is rewritten by the change that implements the decision.
+The Karpathy progress recorder (`scripts/record-progress.mjs`, `lib/karpathy/`) and the Rust `pk` CLI
+(`tools/prometheus-knowledge`, vendored as a submodule) do two separate, independent jobs. Neither can
+block the other:
 
-The event stream, receipts, locks and queue keep the source pack's on-disk contract, so a project can move
-between packs. The human-readable layer changes: it becomes an OKF v0.2 bundle (below).
+| Job | Owner | Where it writes |
+|---|---|---|
+| Record a task/change/phase boundary; make it idempotent; recover from a crash mid-write | This pack's recorder | `.prometheus/session-log.md`, `.prometheus/progress-memory-receipts/` |
+| Distil that history into a searchable, cited knowledge bundle | `pk` (optional) | `.prometheus/knowledge/` |
 
 | Path | Format | Purpose |
 |---|---|---|
-| `.prometheus/events.jsonl` | JSONL, append-only | The source of truth for progress events |
-| `.prometheus/log.md` | OKF v0.2 `log.md`, newest first | Human-readable log, rendered from `events.jsonl` (replaces the source pack's append-only `session-log.md`, which is still read for migration) |
-| `.prometheus/progress-memory-receipts/<sha256>.json` | JSON | Idempotency — one receipt per event |
-| `.prometheus/progress-memory-receipts/<sha256>.lock` | lock file | `fs.open(path, 'wx')` replaces Python's `O_EXCL` |
-| `~/.prometheus/learning-queue/{pending,retry}/` | JSON | Deferred learning jobs (`os.homedir()`, never `$HOME`) |
+| `.prometheus/session-log.md` | Markdown, append-only | Human-readable boundary log — the source pack's own on-disk format, kept unchanged so a project can move between packs |
+| `.prometheus/progress-memory-receipts/<sha256(eventId)>.json` | JSON | Idempotency — one receipt per event; `complete: false` (or `memory.status: "degraded"`) makes it a durable retry queue of one |
+| `.prometheus/progress-memory-receipts/<sha256(eventId)>.lock` | lock file | `fs.open(path, 'wx')`, the source pack's own exclusive-create discipline |
+| `.prometheus/knowledge/` | OKF v0.2 bundle | Written exclusively by `pk`; `lib/karpathy/knowledge-bundle.test.mjs` guards that no code under `lib/` or `scripts/` writes there |
 
-Changes from the source: the recorder no longer shells out to
-`prometheus kbd status --json` (a Rust binary) — it reads
-`.kbd-orchestrator/` state directly; `pk ingest` is gone (prometheus-knowledge
-is not one of the two kept services), so the result states collapse to
-`recorded` | `duplicate` | `queued`; the queue is drained at SessionStart under
-a time box instead of by a daemon. The source's 256 KiB payload bound and
+Changes from the source: the recorder no longer shells out to `prometheus kbd status --json` (a Rust
+binary) — it reads `.kbd-orchestrator/` state directly, falling back to the waypoint projection when the
+CLI does not resolve. `pk ingest` delivery is real but optional and bounded (`KPM_PK_TIMEOUT_SECONDS`,
+default 5s, 0.1–10s range): with `pk` absent or its call failing, the result is `degraded`, the receipt and
+session-log entry are already durable, and `--flush-degraded` retries later. The source's Python outbox and
+`pk-learning-worker` daemon are not ported — the receipt is the retry queue instead (see
+`.prometheus/decisions.md`). The set of reachable results is `recorded | duplicate | degraded`; the source
+pack's own `queued` state is read (for a receipt an old source-pack run wrote) but never emitted by this
+pack. The source's `256_000`-byte payload bound (its own message rounds this to "256 KiB") and
 secret-pattern rejection are kept.
 
-#### The logs are an Open Knowledge Format v0.2 bundle
+#### The knowledge bundle is `pk`'s Open Knowledge Format v0.2 bundle
 
 Google's [Open Knowledge Format](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)
 is a directory of Markdown files with YAML frontmatter — no registry, no tooling, `cat`-readable. The
-current version is **0.2** (2026-07-25). The source pack and `pk` v1.8.0 are on **0.1**; this pack targets
-0.2 from the start and reads 0.1.
+current version is **0.2** (2026-07-25). `pk`, pinned to the commit that lands its `okf-v02-writer` change,
+writes 0.2 directly: `generated: { by, at }` as a mapping and `sources` as structured entries, not the
+0.1-era `timestamp` field and body `# Citations` list.
 
-`.prometheus/` is the bundle root:
+`.prometheus/` is the bundle root; `.prometheus/knowledge/` is where `pk` writes:
 
 | Path | OKF role | Notes |
 |---|---|---|
-| `index.md` | reserved — directory listing | carries `okf_version: "0.2"` and no other frontmatter (§8) |
-| `log.md` | reserved — update history | date-grouped, **newest first** (§9) |
-| `decisions/<slug>.md` | concept, `type: Decision` | one decision per file, so each carries its own trust and lifecycle |
-| `gotchas/<slug>.md` | concept, `type: Gotcha` | `stale_after` when it describes a bug someone else will fix |
-| `postmortems/<date>-<slug>.md` | concept, `type: Postmortem` | |
-| `knowledge/**/*.md` | concept, `type` per article | what the learning loop distils |
-| `events.jsonl`, `progress-memory-receipts/` | **outside OKF** | not `.md`, so conformance ignores them |
+| `index.md` | reserved — directory listing | carries `okf_version: "0.2"` and no other frontmatter (§8) — `lib/karpathy/knowledge-bundle.test.mjs` guards this |
+| `decisions.md`, `gotchas.md`, `postmortems/` | this pack's own append-only memory, **outside** the bundle | no `type` frontmatter today; not OKF-conformant, and this section does not claim otherwise |
+| `knowledge/**/*.md` | concept, `type` per article, written by `pk` | what `pk ingest` distils from delivered events |
+| `session-log.md`, `progress-memory-receipts/` | **outside** the bundle | not `.md` under `knowledge/`, so `pk`'s conformance scope never touches them |
 
-Every concept file carries the v0.2 families, and they map directly onto rules this project already has:
+Every concept file `pk` writes carries the v0.2 families, and they map directly onto rules this project
+already has:
 
-| OKF v0.2 field | Written as | Rule it implements |
-|---|---|---|
-| `type` (required) | `Decision`, `Gotcha`, `Postmortem`, `Lesson`, … | — |
-| `generated: { by, at }` | `by: claude-code/claude-fable-5-1`, `human:<id>` or `process:<hook>` — the §7 actor convention | A-15: who produced it is on the record |
-| `verified: [{ by, at }]` | appended by the judge (`adversarial-review/<model>`) and by a person | the derived trust tier **is** D-6: *unverified* → *machine-confirmed* → *human-reviewed*. A lesson may become a rule only at *human-reviewed*. |
-| `status: draft \| stable \| deprecated` | `deprecated` instead of deleting | "mark entries superseded; never delete them" |
-| `stale_after` | an absolute instant | a gotcha about an upstream bug expires instead of misleading forever |
-| `sources: [{ id, resource, … }]` | file paths, session ids, URLs; cited in the body as `[^id]` footnotes | A-6: every claim points at its evidence |
+| OKF v0.2 field | Rule it implements |
+|---|---|
+| `type` (required) | — |
+| `generated: { by, at }` | A-15: who produced it is on the record |
+| `verified: [{ by, at }]` | the derived trust tier **is** D-6: *unverified* → *machine-confirmed* → *human-reviewed*. A lesson may become a rule only at *human-reviewed*. |
+| `status: draft \| stable \| deprecated` | `deprecated` instead of deleting — "mark entries superseded; never delete them" |
+| `stale_after` | a gotcha about an upstream bug expires instead of misleading forever |
+| `sources: [{ id, resource, … }]` | A-6: every claim points at its evidence |
 
-Two consequences of reading the spec rather than assuming:
-
-- **`log.md` is a projection, not the log.** OKF orders it newest-first, and the spec says outright that
-  it does not cover event streams or append-only records. So `events.jsonl` stays the append-only source
-  of truth (cheap, crash-safe, one `appendFile`), and `log.md` is *rendered* from it with an atomic
-  rewrite. The source pack's append-only `session-log.md` is read for migration and no longer written.
-- **v0.2 is "minor" but has two renames**: `timestamp` → `generated.at`, and the body `# Citations` list →
-  `sources` frontmatter. The reader accepts both spellings (the spec requires consumers to tolerate
-  unknown keys and older bundles); the writer emits only 0.2. `pk` emits the 0.1 spellings today — see §4.5.
+`pk` stays optional (`openspec/config.yaml`'s binding constraint): with it absent, `pk ingest` degrades and
+no knowledge bundle is written or updated, but the recorder's own receipts and `session-log.md` are
+entirely unaffected either way — they do not depend on `pk` running, ever having run, or ever running
+again.
 
 The files above remain the **primary record**. surreal-memory is the searchable
 secondary: accepted reflections are written back to it through the memory
@@ -402,9 +395,11 @@ the human merge makes it *human-reviewed*), `team-log-prune` (expire and depreca
 from a private or client log into a team log requires per-entry opt-in, secret rejection and path
 redaction — that is a real trust boundary.
 
-**Both packs.** The contract is files, not an API. The mini pack implements it natively in Node. The source
-pack takes part once `pk` accepts a repeatable `--kb <path>` beside its three fixed scopes
-(project, shared, global — all hard-wired local paths today, with no git, team or selection concept).
+**Both packs.** The contract is files, not an API: any tool that reads OKF v0.2 Markdown can read the
+bundle `pk` writes. The source pack takes part once `pk` accepts a repeatable `--kb <path>` beside its
+three fixed scopes (project, shared, global — all hard-wired local paths today, with no git, team or
+selection concept); this pack invokes `pk` as a per-call CLI (§5.3 above) and never reimplements its
+writer.
 
 ### 5.4 Template language
 

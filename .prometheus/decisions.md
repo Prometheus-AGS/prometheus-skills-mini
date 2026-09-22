@@ -192,3 +192,43 @@ for a brand-new event. Fixed with one `mkdirSync` before the lock acquire.
 
 `README.md` §5.3's superseded note already points at the `pk` submodule and this capability; no further
 edit needed there — checked, not assumed.
+
+## 2026-09-22 — `okf-v02-via-pk`: `pk` is the sole knowledge-bundle writer; the config is corrected to match
+
+**The ruling.** OKF stays version **0.2** — the operator did not lower the target — but `pk` (Rust,
+vendored as `tools/prometheus-knowledge`) replaces the Node-side v0.2 writer that `openspec/config.yaml`
+had described but that was never built. `openspec/config.yaml` is loaded into every OpenSpec artifact as
+binding context (design.md, this change), so a stale clause there is not a stale comment — it is an
+instruction an agent would follow. Two clauses instructed building the withdrawn Node writer; both are now
+amended (shown to the operator and applied only on approval, per A-12), never silently deleted:
+
+- The "Logs are Open Knowledge Format v0.2 bundles" clause no longer describes `events.jsonl` as an
+  append-only truth with `log.md` rendered from it. It states plainly: `pk` is the sole writer of
+  `.prometheus/knowledge/`; nothing under `lib/` or `scripts/` writes there
+  (`lib/karpathy/knowledge-bundle.test.mjs` is the standing guard); the recorder's own receipts and
+  `session-log.md`, written under `.prometheus/` but outside `.prometheus/knowledge/`, are unaffected by
+  `pk`'s presence or absence either way.
+- The `pk` clause drops the "contract between pk and the Node implementation is the on-disk OKF bundle"
+  framing — that framing implied a Node-side writer as `pk`'s peer, and no such writer exists or is
+  planned. `pk` is now named directly as the sole bundle writer, still optional, still never required.
+
+**Conformant versus current — the distinction that sets the real exit criterion.** OKF v0.2 §11 makes a
+bundle *conformant* with parseable frontmatter and a `type` field; what `pk` 1.8.0 already wrote met that
+bar. It was not *current*: 1.8.0 emitted a `timestamp` field and a body `# Citations` list, both of which
+§13.1 supersedes with `generated: { by, at }` (a mapping) and frontmatter `sources` (structured entries).
+The operator's ruling is about being *current*, not merely conformant — a criterion of "passes conformance"
+would already have been true of 1.8.0 and would have proven nothing about the ruling actually taking
+effect. Confirmed directly against the pinned commit's source (`pk-store/src/markdown.rs`), not assumed
+from its changelog: the writer at `abb6745` emits `generated` as a mapping and `sources` as structured
+entries — the pin genuinely closes the gap, not just nominally.
+
+**The pin.** `tools/prometheus-knowledge` was already at `abb6745` (moved in an earlier session, commit
+`dc0c964`) — the merge commit for `pk`'s own `okf-v02-writer` change (PR #13). Re-verified rather than
+trusted from memory: `git merge-base --is-ancestor abb6745 origin/main` on the submodule (`abb6745` is in
+fact the current tip of `origin/main` on `prometheus-knowledge-rs`), and upstream CI run `35669093972` for
+that exact commit — `macos-latest`, `ubuntu-latest`, `windows-latest` all `success`.
+
+**What stays out of scope, on purpose.** No Node code reads or writes OKF (`design.md`'s own non-goal).
+`.prometheus/decisions.md` and `gotchas.md` keep no `type` frontmatter and are not claimed as
+OKF-conformant — they sit outside `.prometheus/knowledge/`, `pk`'s bundle root, entirely. Migrating them to
+one-concept-per-file with proper OKF frontmatter is a separate, not-yet-proposed change.

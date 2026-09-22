@@ -35,8 +35,16 @@
 
 ## 5. Documentation
 
-- [ ] 5.1 Rewrite `README.md` §5.3: `pk` writes the bundle; this pack writes receipts and `session-log.md`; remove the "SUPERSEDED IN PART" note.
-- [ ] 5.2 Record in `.prometheus/decisions.md` the ruling, the conformant-versus-current distinction, and the pin.
+- [x] 5.1 Rewrite `README.md` §5.3: `pk` writes the bundle; this pack writes receipts and `session-log.md`; remove the "SUPERSEDED IN PART" note.
+  - Rewritten: the recorder and `pk` are described as two independent jobs with separate on-disk targets
+    (`session-log.md`/`progress-memory-receipts/` vs `.prometheus/knowledge/`), guarded by
+    `knowledge-bundle.test.mjs`. Also fixed a contradicting line further down §5.3 ("the mini pack
+    implements it natively in Node") that the SUPERSEDED note alone hadn't corrected.
+- [x] 5.2 Record in `.prometheus/decisions.md` the ruling, the conformant-versus-current distinction, and the pin.
+  - Entry added: the ruling and the two amended config.yaml clauses, the conformant-vs-current distinction
+    with its real exit criterion (verified against `pk-store/src/markdown.rs` at the pinned commit, not
+    assumed from a changelog), and the pin re-verified independently (ancestor check + upstream CI, not
+    trusted from an earlier session's memory).
 
 ## 6. Close
 

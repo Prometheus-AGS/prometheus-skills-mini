@@ -135,3 +135,13 @@ The premise paragraph in the entry above — "`pk` does not build for Windows to
 **What the earlier entry got wrong.** It predicted "a handful of `cfg` guards, not a rewrite". The build did need only that (an unguarded `std::os::unix` import, jemalloc on MSVC, `fsync` on a directory). Running *correctly* needed more, none of it visible to a compiler: two competing home-directory lookups that disagree on Windows (the global KB became a literal `~` path), `is_safe_path` splitting on `/` only so `..\\..\\evil` escaped the wiki root (a security fix, and now stricter on unix too), and a CRLF body corrupting content hashes. The first three were found one CI failure at a time; the operator stopped that, and the rest came from one up-front audit. See `.prometheus/gotchas.md`.
 
 **Still true:** pk has **0 releases**, so a clean machine has no `pk` and this pack must degrade without it. `pk doctor` is expected to report FAIL on a healthy Windows machine — a hypothesis from code reading, **not observed**; do not gate on it. `pk ingest` cannot succeed without a reachable LLM.
+
+## 2026-09-21 — submodule pin moved to `abb6745` (OKF v0.2 writer merged); local `pk` binaries upgraded to 1.9.0
+
+pk PR #13 (`okf-v02-writer`) merged as `abb6745` — CI green on all three OSes (ubuntu 151/0, macOS 151/0, windows 149/0; the two absent on Windows are the same `#[cfg(unix)]` tests noted above). The submodule pin moves from `80e864b` to `abb6745`. `git merge-base --is-ancestor abb6745 origin/main` on the pk repo: yes.
+
+**Local binaries upgraded, operator-directed, outside any KBD change.** Built `cargo build --release -p pk-cli` from `abb6745` and installed to the two real locations on this machine: `~/.local/bin/pk` and `~/.prometheus/bin/pk` (`/usr/local/bin/pk` is a symlink to the latter, so one copy covers both). All three now report `pk 1.9.0`. `pk-cherry` was rebuilt and installed the same way.
+
+**Deliberately not touched:** the dozens of project-local `.prometheus/knowledge/` directories under `~/Projects/` that a `find` for `pk`-shaped mentions surfaced. Installing a new binary writes nothing to them — only `pk ingest` / `pk snapshot` do, and none was run here. Section 7 of the `okf-v02-writer` PR already establishes that a knowledge base written by 1.9.0 is unreadable by 1.8.0 (and the reverse is fine); upgrading the binary is what makes 1.9.0 the one every future write in this account uses, not a migration of existing bases.
+
+**Checked and not applicable:** `the-boss` and `compass` were checked for a pinned `pk` binary version or a `prometheus-knowledge` manifest reference — neither exists yet. That integration is unstarted (`the-boss-integration` phase), so there was nothing there to update.

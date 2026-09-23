@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "phase": "P1",
-  "status": "planned-not-started",
+  "status": "in-progress",
   "planner": "gpt-6-astra",
   "requestedExecutor": "gpt-5.6-sol",
-  "implementationStartedAt": null,
+  "implementationStartedAt": "2026-09-23T22:49:00Z",
   "sourceFrozenAt": null,
   "installerSourceFrozenAt": null,
   "firstArtifactAt": null,
@@ -13,8 +13,14 @@
   "integrationTimeSeconds": null,
   "sourceCommits": [],
   "platformOutcomes": [],
-  "failures": [],
+  "failures": [
+    {
+      "stage": "reconciliation",
+      "kind": "local-commit-configuration",
+      "outcome": "resolved",
+      "detail": "The first signed UAR merge attempt selected GPG instead of the repository's SSH signing format; the merge was committed with explicit SSH signing and the hook-generated pnpm lock mutation was removed."
+    }
+  ],
   "humanInterventions": [],
   "claim": "No implementation or installed-success outcome is inferred from planning."
 }
-

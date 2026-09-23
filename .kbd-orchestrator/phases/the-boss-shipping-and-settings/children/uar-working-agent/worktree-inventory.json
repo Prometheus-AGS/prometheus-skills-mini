@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-23T22:49:00Z",
+  "owner": {
+    "task": "01a0cb90-3993-7592-9779-f80c3f53be07",
+    "agent": "Codex",
+    "model": "gpt-5.6-sol"
+  },
+  "worktrees": [
+    {
+      "role": "boss",
+      "path": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar",
+      "branch": "feat/uar-agent-runtime",
+      "head": "73e2ff69d09698e30e0dbb7358613ea33c707314",
+      "originMain": "8344b485203427952716cd142da28c181162be61",
+      "ahead": 1,
+      "behind": 0,
+      "status": "clean",
+      "writer": "Codex/gpt-5.6-sol",
+      "buildOutput": "worktree-local"
+    },
+    {
+      "role": "uar",
+      "path": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar",
+      "branch": "feat/the-boss-sidecar",
+      "head": "732336147b7b9b1b92b6fde410f53ebd8029d848",
+      "originMain": "5de62819caf953d37707a49eb62a15e845ca5a98",
+      "ahead": 21,
+      "behind": 0,
+      "status": "preserved-user-wip",
+      "writer": "Codex/gpt-5.6-sol",
+      "cargoTargetDir": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar/.target/p1",
+      "preservedReceipt": "plan-sources-receipt.json"
+    },
+    {
+      "role": "website",
+      "path": "/Users/gqadonis/Projects/know-me/boss-landing-spot",
+      "branch": "main",
+      "head": "d7741fb847bc68b46d50f7e40fade3f7862b5b10",
+      "originMain": "d7741fb847bc68b46d50f7e40fade3f7862b5b10",
+      "ahead": 0,
+      "behind": 0,
+      "status": "clean",
+      "writer": "reserved-for-release-task-1.10"
+    }
+  ],
+  "remoteNotes": [
+    "origin is authoritative for Boss, UAR and website baselines",
+    "UAR origin/main was merged into the feature branch before implementation",
+    "the UAR upstream fetch updated upstream/main but reported an unrelated case-colliding ref lock",
+    "the secondary UAR gqadonis remote was unavailable and is not used as an implementation baseline"
+  ],
+  "preservation": {
+    "uarWipVerifiedAgainstReceipt": true,
+    "files": 8,
+    "generatedHookMutationRemoved": "pnpm-lock.yaml",
+    "userFilesModifiedDuringReconciliation": false
+  }
+}

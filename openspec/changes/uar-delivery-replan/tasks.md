@@ -4,7 +4,7 @@ These boxes describe future implementation; none is complete merely because this
 
 ## 1. P1 — Working installed UAR agent
 
-- [ ] 1.1 After operator approval, create the P1 execution phase, reconcile existing UAR WIP with its owner, record dependency/contract baselines and isolated build directories; verify by the committed execution manifest and worktree inventory.
+- [x] 1.1 After operator approval, create the P1 execution phase, reconcile existing UAR WIP with its owner, record dependency/contract baselines and isolated build directories; verify by the committed execution manifest and worktree inventory.
 - [ ] 1.2 Complete trusted principal ownership and bounded session/run retention, preserving committed launch security; inspect that every run/approval/resume/child entry routes through verified identity and the settings-independent MCP lock. Behavioral acceptance: P1-IsolationRecovery.
 - [ ] 1.3 Complete run-scoped provider credentials, MCP resources and host-context ingress using the existing execution request; inspect that routing/child/resume paths preserve the envelope and do not write secrets to global settings. Acceptance: P1-WorkspaceTask and P1-IsolationRecovery.
 - [ ] 1.4 Add the Boss supervised sidecar service and UAR runtime driver/connection; inspect runtime registration, lifecycle, capability checks, cwd/history transfer and local startup are wired into the actual conversation path. Acceptance: P1 installed workflows.

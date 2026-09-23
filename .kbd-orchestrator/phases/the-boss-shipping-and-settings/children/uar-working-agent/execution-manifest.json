@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent",
-  "status": "planned-not-started",
+  "status": "in-progress",
   "spec": {
     "change": "uar-delivery-replan",
     "taskRange": "1.1–1.10",
@@ -11,11 +11,19 @@
   "sourceReceipt": "plan-sources-receipt.json",
   "planner": "gpt-6-astra",
   "requestedExecutor": "gpt-5.6-sol",
-  "assignedWriters": [],
-  "ownershipReconciled": false,
+  "assignedWriters": [
+    {
+      "task": "01a0cb90-3993-7592-9779-f80c3f53be07",
+      "agent": "Codex",
+      "model": "gpt-5.6-sol",
+      "scope": "P1 tasks 1.1-1.10"
+    }
+  ],
+  "ownershipReconciled": true,
   "contract": {
-    "status": "to-record-in-1.1",
-    "version": null
+    "status": "frozen-for-p1",
+    "version": "the-boss.uar.sidecar/1",
+    "path": "contract-v1.md"
   },
   "sourcesFrozen": false,
   "worktrees": [
@@ -23,14 +31,14 @@
       "role": "boss",
       "path": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar",
       "baseline": "73e2ff69d09698e30e0dbb7358613ea33c707314",
-      "ownership": "pending",
+      "ownership": "Codex/gpt-5.6-sol",
       "buildOutput": "worktree-local"
     },
     {
       "role": "uar",
       "path": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar",
-      "baseline": "cd739e82de2fe7f024545d563ad8c9f72f0023af",
-      "ownership": "pending",
+      "baseline": "732336147b7b9b1b92b6fde410f53ebd8029d848",
+      "ownership": "Codex/gpt-5.6-sol",
       "cargoTargetDir": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar/.target/p1",
       "wip": "preserve hashes from plan-sources-receipt.json"
     }
@@ -42,7 +50,7 @@
     ],
     "distribution": "GitHub Releases",
     "websiteRepository": "Know-Me-Tools/boss-landing-spot",
-    "websiteCheckout": null,
+    "websiteCheckout": "/Users/gqadonis/Projects/know-me/boss-landing-spot",
     "lovableProject": "The Boss Landing",
     "websiteDeploymentIdentityConfirmed": false,
     "candidateSourceManifest": null,
@@ -62,7 +70,7 @@
       "title": "Reconcile worktrees, ownership and trusted contract",
       "slice": "S1",
       "dependencies": [],
-      "status": "pending"
+      "status": "complete"
     },
     {
       "id": "1.2",
@@ -170,4 +178,3 @@
     "appleSiliconInstalledAcceptance": "pending"
   }
 }
-

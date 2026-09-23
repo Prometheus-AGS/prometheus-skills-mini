@@ -1,6 +1,9 @@
 <!-- prometheus-mini-context:start v1 -->
 ## Prometheus development context
 
+- The testing policy in this managed block takes precedence over conflicting
+  per-edit, unit-first, mock-first, or test-first instructions elsewhere. Report
+  the stale prose for manual cleanup; do not follow both policies.
 - Restore KBD position and read `versions.toml`, `.prometheus/decisions.md`, and
   relevant `.prometheus/gotchas.md` before dependency or architecture changes.
 - Finish a coherent set of production functionality before testing. During

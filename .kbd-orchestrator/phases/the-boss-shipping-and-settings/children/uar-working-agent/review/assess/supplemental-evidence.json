@@ -1,0 +1,64 @@
+{
+  "observedAt": "2026-09-23T22:19:25.133Z",
+  "cargo": [
+    {
+      "line": 39,
+      "text": "name = \"uar-sidecar\""
+    },
+    {
+      "line": 40,
+      "text": "path = \"src/bin/uar-sidecar.rs\""
+    },
+    {
+      "line": 115,
+      "text": "path = \"tests/sidecar_launch_security.rs\""
+    },
+    {
+      "line": 126,
+      "text": "path = \"tests/sidecar_session_principal.rs\""
+    },
+    {
+      "line": 164,
+      "text": "# version and feature set surrealdb-core already resolves, so no new lock entry."
+    },
+    {
+      "line": 176,
+      "text": "default = [\"minimal\"]"
+    },
+    {
+      "line": 179,
+      "text": "minimal = [\"server\", \"surreal-backend\"]"
+    },
+    {
+      "line": 180,
+      "text": "server-full = [\"minimal\", \"a2a-transport\", \"local-models\", \"cedar-governance\", \"response-quality\", \"document-intelligence\", \"telemetry\", \"api-docs\", \"admin-ui\", \"wasm-runtime\"]"
+    },
+    {
+      "line": 205,
+      "text": "surreal-backend = [\"dep:surrealdb\"]"
+    },
+    {
+      "line": 207,
+      "text": "## Process-local, non-durable persistence for minimal deployments and tests."
+    },
+    {
+      "line": 463,
+      "text": "surrealdb = { version = \"=3.2.4\", optional = true, features = [\"kv-surrealkv\"] }"
+    },
+    {
+      "line": 547,
+      "text": "# Leptos SSR (minimal templating)"
+    },
+    {
+      "line": 586,
+      "text": "# surrealdb, kreuzberg-tesseract, tokenizers, ...) produces very large debug"
+    }
+  ],
+  "bossMiniGitlink": "160000 commit 7d3fd056a966a1a30933c3e30c47813d6f1d3e6d\tresources/prometheus-skills-mini",
+  "miniHead": "a9ee94a2dd36e1cf52eedb56aba90372c2dc1de4",
+  "pinIsAncestorOfMiniHead": true,
+  "uarWorkflows": [
+    "deploy.yml",
+    "docs.yml"
+  ]
+}

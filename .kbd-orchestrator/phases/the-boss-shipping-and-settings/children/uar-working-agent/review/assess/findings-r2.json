@@ -1,0 +1,39 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment makes a concrete UAR Cargo feature/version claim without packet evidence, so downstream packaging may rely on an unverified storage/runtime baseline.",
+      "evidence": "Assessment quote: \"UAR Cargo minimal enables server/SurrealDB, with exact SurrealDB 3.2.4 and the embedded storage feature available.\" The packet's `source_evidence` contains no `Cargo.toml` excerpt or dependency/version snippet; `source_receipt` only lists `M Cargo.toml` with a sha256 hash.",
+      "suggested_fix": "Add the inspected Cargo.toml lines proving the minimal feature set, SurrealDB 3.2.4 pin, and embedded storage feature, or downgrade the claim to an explicit unknown requiring verification in planning."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment asserts a specific Boss mini gitlink and that it is behind the inspected planning revision without evidence in the packet.",
+      "evidence": "Assessment quote: \"Boss currently pins mini gitlink `7d3fd056a966a1a30933c3e30c47813d6f1d3e6d`, behind the planning/lifecycle revision inspected here.\" No `git ls-tree`, submodule metadata, or Boss repository excerpt in `source_evidence` shows this gitlink or proves it is behind the inspected mini revision.",
+      "suggested_fix": "Include the submodule/gitlink evidence and the compared mini revision, or state that the packaging plan must verify the gitlink before advancing/freezing it."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment concludes there is no inspected native UAR sidecar-release workflow without showing the inspected workflow surface.",
+      "evidence": "Assessment quote: \"UAR has the sidecar binary but no inspected native sidecar-release workflow.\" The provided `source_evidence` includes UAR Rust source files only and no UAR `.github/workflows`, release script, or packaging workflow listing; the mini `file_tree` cannot prove absence inside `/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar`.",
+      "suggested_fix": "Add the UAR workflow/script directory evidence used to establish absence, or recast this as a planning verification item rather than an assessed source finding."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

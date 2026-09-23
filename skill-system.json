@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "prometheus-mini-skill-system-v1",
+  "name": "prometheus-skills-mini",
+  "releaseVersion": "0.1.0",
+  "minimumActiveVersion": "0.1.0",
+  "repository": "git@github.com:Prometheus-AGS/prometheus-skills-mini.git",
+  "platforms": {
+    "skills": ["darwin", "linux", "win32"]
+  },
+  "inventory": {
+    "roots": [
+      { "id": "core", "path": "skills", "scan": "children" }
+    ]
+  },
+  "targets": [
+    { "id": "claude", "path": ".claude/skills", "mode": "copy", "sourceTreeLifecycle": "install-only", "detect": [".claude", "command:claude"] },
+    { "id": "codex", "path": ".codex/skills", "mode": "copy", "sourceTreeLifecycle": "install-only", "detect": [".codex", "command:codex"] },
+    { "id": "opencode", "path": ".opencode/skills", "mode": "copy", "sourceTreeLifecycle": "install-only", "detect": [".opencode", "command:opencode"] },
+    { "id": "agents", "path": ".agents/skills", "mode": "copy", "sourceTreeLifecycle": "install-only", "detect": [".agents"] },
+    { "id": "cursor", "path": ".cursor/skills", "mode": "copy", "sourceTreeLifecycle": "install-only", "detect": [".cursor", "command:cursor"] },
+    { "id": "gemini", "path": ".gemini/skills", "mode": "copy", "sourceTreeLifecycle": "install-only", "detect": [".gemini", "command:gemini"] },
+    { "id": "windsurf", "path": ".windsurf/skills", "mode": "copy", "sourceTreeLifecycle": "install-only", "detect": [".windsurf", "command:windsurf"] },
+    { "id": "zed", "path": ".zed/skills", "mode": "copy", "sourceTreeLifecycle": "install-only", "detect": [".zed", "command:zed"] },
+    { "id": "cline", "path": ".cline/skills", "mode": "copy", "sourceTreeLifecycle": "install-only", "detect": [".cline"] }
+  ],
+  "outputs": {
+    "skillCatalog": "SKILLS.md",
+    "claudeMarketplace": ".claude-plugin/marketplace.json",
+    "codexMarketplace": ".agents/plugins/marketplace.json",
+    "claudePackage": "dist/plugins/claude/prometheus-skills-mini",
+    "codexPackage": "dist/plugins/codex/prometheus-skills-mini"
+  }
+}

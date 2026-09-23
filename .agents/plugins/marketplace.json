@@ -1,0 +1,28 @@
+{
+  "description": "Prometheus skills-mini marketplace",
+  "interface": {
+    "displayName": "Prometheus Skills Mini"
+  },
+  "name": "prometheus-skills-mini",
+  "owner": {
+    "name": "Travis James",
+    "url": "https://travisjames.ai"
+  },
+  "plugins": [
+    {
+      "category": "productivity",
+      "description": "Windows-native, scaled-down port of the Prometheus skill system: KBD process orchestration, adversarial review, and portable agent tooling.",
+      "name": "prometheus-skills-mini",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "INSTALLED_BY_DEFAULT"
+      },
+      "source": {
+        "path": "./dist/plugins/codex/prometheus-skills-mini",
+        "source": "local"
+      },
+      "version": "0.1.0"
+    }
+  ],
+  "version": "0.1.0"
+}

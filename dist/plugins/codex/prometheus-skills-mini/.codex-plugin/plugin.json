@@ -1,0 +1,33 @@
+{
+  "author": {
+    "name": "Travis James",
+    "url": "https://travisjames.ai"
+  },
+  "description": "Windows-native, scaled-down port of the Prometheus skill system: KBD process orchestration, adversarial review, and portable agent tooling.",
+  "homepage": "https://github.com/Prometheus-AGS/prometheus-skills-mini",
+  "interface": {
+    "capabilities": [
+      "skills"
+    ],
+    "category": "productivity",
+    "defaultPrompt": "Use the Prometheus skills-mini pack to select and apply the most relevant installed skill for this task.",
+    "developerName": "Travis James",
+    "displayName": "Prometheus Skills Mini",
+    "longDescription": "A self-contained, Windows-native distribution of the Prometheus KBD process, adversarial review, and supporting agent skills -- no symlinks, no shell scripts, no Python.",
+    "shortDescription": "Portable Prometheus KBD skills for agentic software work.",
+    "websiteURL": "https://github.com/Prometheus-AGS/prometheus-skills-mini"
+  },
+  "keywords": [
+    "agent-skills",
+    "process-orchestration",
+    "kbd",
+    "windows",
+    "openspec"
+  ],
+  "license": "MIT",
+  "mcpServers": "./.mcp.json",
+  "name": "prometheus-skills-mini",
+  "repository": "https://github.com/Prometheus-AGS/prometheus-skills-mini",
+  "skills": "./skills",
+  "version": "0.1.0"
+}

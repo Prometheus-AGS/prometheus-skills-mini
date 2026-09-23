@@ -62,6 +62,18 @@ function findKbdRoot(start = process.cwd()) {
   }
 }
 
+// PACKET_FIELD_CAP_BYTES (per-field byte cap, default 40000) is the source's
+// documented override; unset means the builders' default applies.
+function readFieldCap(env) {
+  const raw = env.PACKET_FIELD_CAP_BYTES;
+  if (raw === undefined || raw === '') return undefined;
+  const value = Number(raw);
+  if (!Number.isInteger(value) || value <= 0) {
+    throw new UsageError(`PACKET_FIELD_CAP_BYTES must be a positive integer, got: ${raw}`);
+  }
+  return value;
+}
+
 function gitRunner(cwd) {
   return (gitArgs) => {
     const result = spawnExecutable('git', gitArgs, { cwd });
@@ -123,6 +135,7 @@ function writePacket(packet, out) {
 
 function run(argv) {
   const { mode, phase, target, out, intent, package: packageDir } = parseArgs(argv);
+  const capBytes = readFieldCap(process.env);
   const researchTarget = mode === 'artifact' && target === 'research';
 
   if (researchTarget) {
@@ -221,6 +234,7 @@ function run(argv) {
       producer,
       fileTree,
       constraints,
+      capBytes,
     });
   } else if (mode === 'diff') {
     let changeDir = null;
@@ -243,6 +257,7 @@ function run(argv) {
         fileTree,
         constraints,
         git: gitRunner(repoRoot),
+        capBytes,
       });
     } catch (error) {
       throw new MissingInputError(error.message);
@@ -256,6 +271,7 @@ function run(argv) {
         producer,
         fileTree,
         constraints,
+        capBytes,
       });
     } catch (error) {
       throw new MissingInputError(error.message);
@@ -269,6 +285,7 @@ function run(argv) {
         fileTree,
         constraints,
         cargoCheckOutput: existsSync(path.join(target, '.cargo-check.txt')) ? readFileSync(path.join(target, '.cargo-check.txt'), 'utf8') : null,
+        capBytes,
       });
     } catch (error) {
       throw new MissingInputError(error.message);
@@ -281,6 +298,7 @@ function run(argv) {
       producer,
       fileTree,
       constraints,
+      capBytes,
     });
   } else {
     // artifact mode, non-research
@@ -337,6 +355,7 @@ function run(argv) {
       fileTree,
       constraints,
       repoRoot,
+      capBytes,
     });
   }
 

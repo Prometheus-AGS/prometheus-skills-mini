@@ -6,11 +6,12 @@
 
 ## 2. Complete A1
 
-- [ ] 2.1 Complete legacy stdio/HTTP negotiation and SSE regression expectations, update compatibility documentation, and verify through public protocol behavior after implementation is complete.
-- [ ] 2.2 Run formatting, workspace Clippy, requested core/MCP tests, all-target checking and CLI build serially; record any reproduced baseline-only failures separately.
-- [ ] 2.3 Exercise all four protocol revisions and The Boss SDK against the fresh binary, including HTTP session bootstrap and tools/list; mutation-check removal of legacy support.
+- [x] 2.1 Complete legacy stdio/HTTP negotiation and SSE regression expectations, update compatibility documentation, and verify through public protocol behavior after implementation is complete.
+- [x] 2.2 At the completed change boundary, run formatting, focused Clippy, the stdio/HTTP protocol integrations, and host/Windows CLI builds serially; record reproduced baseline-only failures separately.
+- [x] 2.3 Exercise all four protocol revisions and The Boss SDK against the fresh binary, including HTTP session bootstrap and tools/list; use the installed pre-fix binary as a negative control for absent legacy support.
+- [x] 2.4 Build the Windows release profile with JSON, SQLite and SurrealDB remote support; prove a real update/search round trip against the pinned SurrealDB 3.2.4 service.
 
 ## 3. Review and deliver
 
-- [ ] 3.1 Review the scoped diff and fix actionable findings; record the verdict and verification evidence.
+- [x] 3.1 Review the scoped diff and fix actionable findings; record the verdict and verification evidence.
 - [ ] 3.2 Commit, push and open the Compass PR with before/after output; merge only if CI is green. Record CI and merge status without tagging or publishing.

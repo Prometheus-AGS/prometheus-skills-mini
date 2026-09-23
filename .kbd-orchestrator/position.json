@@ -2,19 +2,18 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 346,
-  "derivedRevision": 346,
+  "sourceRevision": 392,
+  "derivedRevision": 392,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 346
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 392
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-22T10:57:40.431314Z",
+  "updatedAt": "2026-09-23T04:59:44.043010Z",
   "cursor": [
-    "karpathy-logs-node",
-    "the-boss-integration-prep",
-    "execute",
-    "pack-doctor",
-    "1.1"
+    "the-boss-shipping-and-settings",
+    "the-boss-compass-integration",
+    "compass-mcp-protocol-negotiation",
+    "3.2"
   ],
   "root": {
     "type": "phase",
@@ -22,7 +21,7 @@
     "status": "ready",
     "progress": {
       "done": 12,
-      "total": 20
+      "total": 21
     },
     "children": [
       {
@@ -253,6 +252,41 @@
               "done": 0,
               "total": 0
             }
+          }
+        ],
+        "annotations": []
+      },
+      {
+        "type": "phase",
+        "id": "the-boss-shipping-and-settings",
+        "canonicalId": "the-boss-shipping-and-settings",
+        "status": "PENDING",
+        "progress": {
+          "done": 0,
+          "total": 0
+        },
+        "children": [
+          {
+            "type": "phase",
+            "id": "the-boss-compass-integration",
+            "canonicalId": "the-boss-compass-integration",
+            "status": "IN_PROGRESS",
+            "progress": {
+              "done": 0,
+              "total": 1
+            },
+            "children": [
+              {
+                "type": "change",
+                "id": "compass-mcp-protocol-negotiation",
+                "status": "PENDING",
+                "progress": {
+                  "done": 8,
+                  "total": 9
+                }
+              }
+            ],
+            "annotations": []
           }
         ],
         "annotations": []

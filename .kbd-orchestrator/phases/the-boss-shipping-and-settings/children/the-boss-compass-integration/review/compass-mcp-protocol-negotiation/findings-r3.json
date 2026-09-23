@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "SECURITY.md",
+      "claim": "The change modifies network/trust boundaries without updating SECURITY.md or a security/privacy design document.",
+      "evidence": "Constraint `security-docs-updated` requires SECURITY.md or security/privacy design docs to be updated when a trust, credential, network, path, subprocess, or disclosure boundary changes; the diff enables official binaries with `--features surreal-remote` in `.github/workflows/compass-release.yml`, adds MCP legacy HTTP sessions/session IDs in `crates/compass-mcp/src/transport.rs`, and updates only CHANGELOG/COMPATIBILITY/agent docs.",
+      "suggested_fix": "Add the relevant security/privacy documentation for the newly shipped SurrealDB remote client surface and legacy MCP HTTP session behavior, including authentication/session boundary implications."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

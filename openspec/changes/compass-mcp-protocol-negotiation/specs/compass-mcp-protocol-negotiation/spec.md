@@ -16,7 +16,7 @@ Compass SHALL support initialization for 2025-11-25, 2025-06-18 and 2025-03-26 t
 - **THEN** a session is established and subsequent tools/list succeeds with valid SSE framing
 
 ### Requirement: Preserve discovery behavior and HTTP protection
-Compass SHALL preserve 2026-07-28 discovery, reject initialize for that revision, retain authentication and host protections, and list the supported revisions in unsupported-version HTTP errors.
+Compass SHALL preserve 2026-07-28 discovery, reject initialize for that revision, retain authentication and host protections, list the supported revisions in unsupported-version HTTP errors, and bound simultaneous legacy HTTP sessions.
 
 #### Scenario: Discovery revision requests initialize
 - **WHEN** a client requests initialize with 2026-07-28
@@ -29,3 +29,18 @@ Compass SHALL preserve 2026-07-28 discovery, reject initialize for that revision
 #### Scenario: Unauthorized HTTP request
 - **WHEN** a client omits the required API credential
 - **THEN** the request remains unauthorized regardless of protocol revision
+
+#### Scenario: Legacy session capacity
+- **WHEN** 64 legacy HTTP sessions remain active and another client initializes
+- **THEN** Compass returns HTTP 429 with MCP error `-32024` without allocating more session state
+
+### Requirement: Windows release storage profile
+The official Compass Windows binary SHALL support JSON, SQLite and SurrealDB remote storage. It SHALL leave embedded SurrealKV and RocksDB disabled and SHALL interoperate with the SurrealDB 3.2.4 service supplied by surreal-memory-server.
+
+#### Scenario: Release feature compilation
+- **WHEN** Compass is built for Windows with the official release feature profile
+- **THEN** the binary links with JSON, SQLite and SurrealDB remote capabilities enabled
+
+#### Scenario: Shared remote database round trip
+- **WHEN** Compass publishes a graph to the shared SurrealDB 3.2.4 endpoint and searches it through the remote engine
+- **THEN** the search returns records written by that update without requiring an embedded Compass database

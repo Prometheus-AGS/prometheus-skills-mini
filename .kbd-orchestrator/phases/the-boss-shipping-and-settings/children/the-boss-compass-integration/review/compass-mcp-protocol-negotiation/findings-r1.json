@@ -1,0 +1,23 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/compass-mcp/src/transport.rs",
+      "line": 243,
+      "claim": "Enabling legacy HTTP sessions without any session-count cap violates the bounded-work constraint by allowing unauthenticated clients to allocate unbounded server-side session state.",
+      "evidence": "The hunk changes StreamableHttpServerConfig from `.with_legacy_session_mode(false)` to `.with_legacy_session_mode(true)`, and COMPATIBILITY.md adds: `Compass does not impose a session-count cap; clients able to reach an unauthenticated server can allocate sessions until they expire.` The blocking `bounded-work` constraint requires all work over network responses to remain bounded.",
+      "suggested_fix": "Add and enforce a bounded maximum number of legacy sessions per server and return a distinct limit error when exhausted, or require authentication before allocating sessions."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

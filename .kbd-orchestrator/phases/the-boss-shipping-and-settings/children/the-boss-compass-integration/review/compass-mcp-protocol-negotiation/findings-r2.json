@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": ".github/workflows/compass-ci.yml",
+      "claim": "The CI change removes compile coverage for the combined embedded SurrealKV plus remote feature set, so regressions in that supported feature combination can ship undetected.",
+      "evidence": "The prior steps ran `cargo check -p compass-cli --features surreal-surrealkv,surreal-remote --locked` under names explicitly covering combined embedded and standalone surfaces; both hunks replace that with `cargo check -p compass-cli --features surreal-remote --locked` only.",
+      "suggested_fix": "Keep a separate `cargo check` for `--features surreal-surrealkv,surreal-remote` if the combined feature set remains supported, and add the remote-only check as an additional release-surface gate rather than replacing it."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

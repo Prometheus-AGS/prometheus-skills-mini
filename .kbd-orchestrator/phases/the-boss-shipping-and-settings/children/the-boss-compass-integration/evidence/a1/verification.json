@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "worktree": "/private/tmp/compass-fix",
+  "baseCommit": "33ecb365c71ed6f05e9d5e78b388ac2559622efc",
+  "rmcp": "3.4.0",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "checks": [
+    {
+      "command": "cargo check --workspace --all-targets --locked",
+      "exitCode": 0,
+      "log": "cargo-check.log"
+    },
+    {
+      "command": "cargo clippy --workspace --lib --bins --locked -- -D warnings",
+      "exitCode": 0,
+      "log": "cargo-clippy.log"
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "exitCode": 0
+    },
+    {
+      "command": "cargo check --workspace --all-targets --locked",
+      "exitCode": 0,
+      "log": "cargo-check-final.log",
+      "scope": "Final production change and new HTTP integration target"
+    },
+    {
+      "command": "cargo clippy --workspace --lib --bins --locked -- -D warnings",
+      "exitCode": 0,
+      "log": "cargo-clippy-final.log",
+      "scope": "Final production change"
+    },
+    {
+      "command": "cargo test -p compass-mcp --lib --locked -j 1",
+      "exitCode": 0,
+      "log": "mcp-library-recheck.log",
+      "scope": "26 passed after SSE priming repair; subsequent header validation covered by pending public integration target"
+    }
+  ],
+  "pending": [
+    "final MCP integration run",
+    "CLI build",
+    "actual The Boss SDK stdio/HTTP smoke",
+    "CI including Windows"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "Spec violations — visible hunks add legacy MCP protocol constants, stdio initialize negotiation, HTTP legacy session mode, documentation, release build feature enablement, and CI checks matching the stated acceptance criteria portions visible in the packet.",
+    "Correctness — visible Rust changes use explicit protocol version lists, retain 2026 initialize refusal, add remote cfg coverage for projection limits/errors, and do not show an inverted condition or obvious edge-case defect in the reviewed portion.",
+    "Regressions — visible workflow changes preserve the combined SurrealKV/remote compile check while adding remote-only checks, and visible docs describe the compatibility change rather than removing existing supported behavior.",
+    "Security — visible HTTP gate keeps API-key validation before protocol/session handling, documents the legacy session capacity bound, and does not expose secrets or credentials.",
+    "Constraint breaches — visible changes keep Cargo dependencies in the workspace manifest with Cargo.lock updated, use locked workflow commands, and introduce no unsafe/unwrap/expect/panic in the reviewed hunks.",
+    "Silent failure — visible error paths return explicit MCP/HTTP errors for unsupported versions, missing 2026 method headers, and initialize misuse rather than swallowing failures."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

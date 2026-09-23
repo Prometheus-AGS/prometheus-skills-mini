@@ -8,20 +8,20 @@
     "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 392
   },
   "conflictCount": 0,
-  "phase": "the-boss-shipping-and-settings",
-  "phaseId": "the-boss-shipping-and-settings",
-  "parentPhase": null,
+  "phase": "the-boss-compass-integration",
+  "phaseId": "the-boss-compass-integration",
+  "parentPhase": "the-boss-shipping-and-settings",
   "last_updated": "2026-09-23T04:59:44.043010Z",
   "last_updated_by": "kbd-runtime",
-  "changes_total": 0,
+  "changes_total": 1,
   "changes_completed": 0,
-  "implementation_total": 0,
+  "implementation_total": 1,
   "implementation_completed": 0,
   "completion": {
     "primaryCounter": "implementation",
     "implementation": {
       "completed": 0,
-      "total": 0,
+      "total": 1,
       "status": "PENDING"
     },
     "evidence": {
@@ -40,18 +40,19 @@
       "blockers": []
     }
   },
-  "changes": [],
-  "children": {
-    "the-boss-compass-integration": {
-      "status": "IN_PROGRESS",
-      "changes_completed": 0,
-      "changes_total": 1,
-      "implementation_completed": 0,
-      "implementation_total": 1,
-      "certification_status": "NOT_TRACKED",
-      "handoff": null,
-      "completed_at": null
+  "changes": [
+    {
+      "id": "compass-mcp-protocol-negotiation",
+      "title": "A1: Negotiate MCP revisions used by The Boss",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 9,
+      "tasks_done": 8,
+      "last_task_completed": "Review the scoped diff and fix actionable findings; record the verdict and verification evidence.",
+      "next_task_pending": "Commit, push and open the Compass PR with before/after output; merge only if CI is green. Record CI and merge status without tagging or publishing.",
+      "blockers": []
     }
-  },
+  ],
+  "children": {},
   "migrationStatus": null
 }

@@ -1,5 +1,9 @@
 # prometheus-skills-mini
 
+> 📚 **Full documentation:** <https://prometheus-ags.github.io/prometheus-skills-mini/> (Docusaurus site — every skill, every `lib/` module, the KBD lifecycle, and the skills catalog)
+
+[![Docs site](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/workflows/docs-pages.yml/badge.svg?branch=main)](https://github.com/Prometheus-AGS/prometheus-skills-mini/actions/workflows/docs-pages.yml)
+
 A Windows-native, scaled-down port of
 [`prometheus-skill-pack`](../prometheus-skill-pack) that keeps one thing and
 keeps it working everywhere: **the KBD development process, driven by PMPO
@@ -49,8 +53,9 @@ is gone.
 
 Full-coverage reference documentation — every skill, every `lib/` module, the KBD lifecycle,
 adversarial review, ideation-mindmap, Karpathy progress memory, artifact refinement, scaffolding,
-conversion, plugin distribution, Docker services, and OpenSpec integration — lives in a Docusaurus
-site under [`site/`](site/), separate from this port-analysis document.
+conversion, plugin distribution, Docker services, and OpenSpec integration — is published at
+**<https://prometheus-ags.github.io/prometheus-skills-mini/>**. Its source is the Docusaurus site under
+[`site/`](site/), separate from this port-analysis document. To run it locally:
 
 ```bash
 cd site

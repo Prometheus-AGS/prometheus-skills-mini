@@ -14,19 +14,54 @@ available. On Windows both run in **Docker**; on macOS and Linux they run
 exactly as they do in the source pack today. Everything else that was a daemon
 is gone.
 
-> **Status: the foundation is built and verified; the port itself has not started.**
+> **Status: the foundation is built and verified; the KBD lifecycle, adversarial review,
+> ideation-mindmap, Karpathy progress memory, plugin distribution, and the Docker services
+> are ported and real.**
 >
 > Phase `platform-foundation` is complete: `lib/platform/` (paths, CRLF-tolerant text
 > reading, atomic write with a bounded Windows rename retry, an exclusive-create lock,
 > shell-free process spawning), a `package.json` with the OpenSpec CLI pinned, and a
 > three-OS CI matrix. **88 tests pass on `windows-latest`, `ubuntu-latest` and
 > `macos-latest` across Node 22 and 24, with nothing skipped on Windows** — every Windows
-> claim in this document is observed, not reasoned from macOS. Per-claim evidence:
+> claim about that phase is observed, not reasoned from macOS. Per-claim evidence:
 > [`evidence/windows.md`](.kbd-orchestrator/phases/platform-foundation/evidence/windows.md).
 >
-> Still to come, each its own phase: the hooks, the KBD state machine, OKF v0.2 logging,
-> the knowledge-sources registry, the Docker services, and the `adversarial-review` and
-> `deep-research` ports. Everything under "Target design" below remains a proposal.
+> A later phase ("port the KBD process orchestrator and 49 skills to Windows-native Node")
+> closed the gap this section used to describe as not-yet-started: **50 skills** now live
+> under `skills/`, including the full 24-skill KBD family (`kbd-process-orchestrator` plus
+> 22 sub-skills, `kbd-evolve`, `kbd-goal-check`), `adversarial-review`, `ideation-mindmap`,
+> `karpathy-progress-memory`, 20 artifact-refiner skills, 5 scaffold/convert skills, and the
+> plugin/marketplace distribution generator (`lib/distribution/`, `skill-system.json`).
+> **1,000+ tests pass**, `docker/compose.yaml` runs SurrealDB + surreal-memory + liter-llm
+> as three loopback-bound, digest-pinned containers, and `scripts/services.mjs` wraps their
+> lifecycle. **Windows verification for this later batch is still owed** — it ran on macOS
+> only, the same caveat recorded for every phase before it; `platform-foundation`'s own
+> Windows claims remain the ones with real CI evidence. See the
+> [Docusaurus site](#documentation-site) for full-coverage documentation of every skill and
+> `lib/` module, and [`docs/reference/comparison-with-full-pack`](site/docs/reference/comparison-with-full-pack.md)
+> for what remains a genuine gap versus what was always a deliberate exclusion.
+>
+> Still open: `deep-research` (planned as a checkpoint-only Node port; not yet a skill in
+> this checkout), the knowledge-sources registry, and Windows hardware verification of the
+> Docker services and the Phase C skill batch.
+
+## Documentation site
+
+Full-coverage reference documentation — every skill, every `lib/` module, the KBD lifecycle,
+adversarial review, ideation-mindmap, Karpathy progress memory, artifact refinement, scaffolding,
+conversion, plugin distribution, Docker services, and OpenSpec integration — lives in a Docusaurus
+site under [`site/`](site/), separate from this port-analysis document.
+
+```bash
+cd site
+npm install
+npm start
+```
+
+It deploys to GitHub Pages via
+[`.github/workflows/docs-pages.yml`](.github/workflows/docs-pages.yml) on every push to `main`
+that touches `site/`, `docs/`, or any `skills/**/SKILL.md` — the same build → upload-pages-artifact
+→ deploy-pages mechanism `prometheus-skill-pack`'s own docs site uses.
 
 ---
 
@@ -113,6 +148,19 @@ that is not Node.
 ---
 
 ## 4. Port analysis — what comes across
+
+> **This section is the original pre-implementation plan, kept as historical record.** It predates
+> the phase that actually ported the KBD family, adversarial-review, ideation-mindmap, and
+> distribution. Many rows marked with an effort estimate below (e.g. `kbd-process-orchestrator`
+> "**high**") are now **done** — see [§4](#documentation-site)'s docs site, specifically
+> [`docs/kbd/overview`](site/docs/kbd/overview.md), [`docs/review/adversarial-review`](site/docs/review/adversarial-review.md),
+> and [`docs/reference/comparison-with-full-pack`](site/docs/reference/comparison-with-full-pack.md),
+> for the current, verified state of each item. The actual on-disk layout also diverged from §5.1's
+> plan below in one significant way: **skills are flat** (`skills/<name>/`, 50 directories), not
+> grouped into `skills/kbd/`, `skills/pmpo/`, `skills/karpathy/`, `skills/rust/` subdirectories as
+> planned — and no `pmpo-*` family, `templates/`, or `tests/` top-level directory exists in this
+> checkout. Treat this section as intent-at-the-time, not current fact; treat §4.1 in the docs site
+> as current fact.
 
 Legend — **Port effort:** none (copy) · low · med · high. **Verdict:**
 ✅ port · 🔁 port with a substitution · ⏸ defer (portable, out of focus) · ❌ exclude.

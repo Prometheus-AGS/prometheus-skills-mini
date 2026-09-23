@@ -21,9 +21,10 @@ if such code ever lands here.
 |---|---|---|---|
 | planning or subagent-driven work | `superpowers` | present | `npx skills add obra/superpowers` |
 | before a PR: interrogate the change | `grill-me` | present | `npx skills add mattpocock/skills@grill-me` |
-| phase lifecycle or position | `kbd-status`, `kbd-assess`, `kbd-analyze`, `kbd-plan`, `kbd-execute`, `kbd-reflect` | present | Prometheus skill pack — the installed copies are the bash originals; this repo is porting them |
-| phase completion, before delivery, before a lesson becomes a rule | `adversarial-review` | present | Prometheus skill pack; needs the liter-llm gateway for a cross-model judge — say which judge ran |
-| any reflection or self-assessment | `sycophancy-correction` | present | Prometheus skill pack; no external equivalent |
+| phase lifecycle or position | `kbd-status`, `kbd-assess`, `kbd-analyze`, `kbd-plan`, `kbd-execute`, `kbd-reflect` | present | native to this repo — ported to Node under `skills/kbd-*` and `lib/kbd/`; no longer the bash originals |
+| structuring a one-line concept into branches | `ideation-mindmap` | present | native to this repo — `skills/ideation-mindmap`, `lib/ideation/`; needs surreal-memory |
+| phase completion, before delivery, before a lesson becomes a rule | `adversarial-review` | present | native to this repo — `skills/adversarial-review`, `lib/review/`; needs the liter-llm gateway for a cross-model judge — say which judge ran |
+| any reflection or self-assessment | `sycophancy-correction` | **absent** | not vendored in this repo; the review pipeline's own anti-theater gate (`lib/review/sycophancy-gate.mjs`) covers judge-report screening, but a standalone MCP server is not shipped |
 
 ## Specs
 | When | Invoke | Status | Install / notes |

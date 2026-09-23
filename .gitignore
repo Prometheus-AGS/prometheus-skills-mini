@@ -1,5 +1,6 @@
 # Secrets for the Docker services — referenced by .kbd-orchestrator/constraints.md (no-hardcoded-secrets)
 docker/.env
+docker/liter-llm-proxy.toml
 
 # KBD runtime artefacts — per-machine, never committed (same list as prometheus-skill-pack).
 # Everything else under .kbd-orchestrator/ is tracked project state.

@@ -1,0 +1,12 @@
+# Maintainer-only image production. Installed applications use compose.yaml and pull images.
+services:
+  surreal-memory:
+    build:
+      context: ../tools/surreal-memory-server
+      dockerfile: Dockerfile
+      args:
+        CARGO_BUILD_FLAGS: --no-default-features --features server-only,palace,local-embeddings
+  liter-llm:
+    build:
+      context: ../tools/liter-llm
+      dockerfile: docker/Dockerfile

@@ -1,0 +1,71 @@
+name: the-boss-prometheus
+
+services:
+  surrealdb:
+    image: surrealdb/surrealdb:v3.2.4@sha256:51baed8709f57f67dcf04b30e3177db846803fa9342dae2be58c6fa5f8d59843
+    restart: unless-stopped
+    mem_limit: 2g
+    command: [start, --bind, '0.0.0.0:8000', 'surrealkv:/data/database']
+    environment:
+      SURREAL_USER: ${SURREAL_ROOT_USERNAME:?Configure the database administrator}
+      SURREAL_PASS: ${SURREAL_ROOT_PASSWORD:?Configure the database administrator password}
+      RUST_LOG: info
+    ports:
+      - '127.0.0.1:${SURREAL_PORT:-28000}:8000'
+    volumes:
+      - surreal-data:/data
+    healthcheck:
+      test: [CMD, /surreal, isready, --endpoint, 'http://localhost:8000']
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  surreal-memory:
+    image: ${SURREAL_MEMORY_IMAGE:?Use the pinned release image from The Boss manifest}
+    restart: unless-stopped
+    mem_limit: 3g
+    environment:
+      SURREAL_MODE: server
+      SURREAL_ENDPOINT: ws://surrealdb:8000
+      SURREAL_USERNAME: ${MEMORY_USERNAME:?Configure the memory namespace user}
+      SURREAL_PASSWORD: ${MEMORY_PASSWORD:?Configure the memory namespace password}
+      SURREAL_NAMESPACE: memory
+      SURREAL_DATABASE: main_local_384
+      API_PORT: '3001'
+      MCP_STDIO: 'false'
+      EMBEDDING_PROVIDER: local
+      LOCAL_EMBEDDING_MODEL: BAAI/bge-small-en-v1.5
+      MODEL_CACHE_DIR: /home/smserver/.cache/huggingface
+      RUST_LOG: info
+    ports:
+      - '127.0.0.1:${MEMORY_PORT:-23001}:3001'
+    volumes:
+      - embedding-cache:/home/smserver/.cache/huggingface
+    depends_on:
+      surrealdb:
+        condition: service_healthy
+
+  liter-llm:
+    image: ${LITER_LLM_IMAGE:?Use the pinned release image from The Boss manifest}
+    restart: unless-stopped
+    mem_limit: 1g
+    command: [api, --host, '0.0.0.0', --port, '4000', --config, /etc/liter-llm/proxy.toml]
+    environment:
+      LITER_LLM_MASTER_KEY: ${LITER_LLM_MASTER_KEY:?Configure the gateway key}
+      JUDGE_API_KEY: ${JUDGE_API_KEY:-}
+      CRITIC_API_KEY: ${CRITIC_API_KEY:-}
+      RUST_LOG: info
+    ports:
+      - '127.0.0.1:${LITER_PORT:-4000}:4000'
+    configs:
+      - source: liter-config
+        target: /etc/liter-llm/proxy.toml
+
+volumes:
+  surreal-data:
+  embedding-cache:
+
+configs:
+  liter-config:
+    file: ./liter-llm-proxy.toml

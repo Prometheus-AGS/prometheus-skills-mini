@@ -1,44 +1,60 @@
-I’ll restart the comparison from verified repository evidence. First I’m restoring the mini project’s required context, then I’ll inventory both repositories and map their capabilities into a side-by-side table.
-
-The restored waypoint is `karpathy-logs-node` with 10/11 implementation tasks complete; the active OpenSpec change is `okf-v02-via-pk`. `versions.toml` is absent in this checkout, so there is no local dependency-version authority to apply; this task is read-only and does not require a dependency decision.
-
-The mini README is partly stale: it still labels several items as “target design,” while current state and decisions show that the foundation, Node hooks, KBD core, artifact-refiner port, and most of the progress recorder are already implemented. I’ll therefore compare **actual repository contents**, not just the original roadmap. Also, the required `ccc` search tool is not installed (`command not found`), so I’m using direct repository inventories instead.
-
-I’ve confirmed the editor file tools cannot directly traverse the added external root, so I’m switching to a read-only Node inventory for both directories. I’ll count and classify skills, hooks, agents, scripts, services, Rust crates, templates, and platform/runtime dependencies, then spot-check the controlling manifests.
-
-The raw full-pack count is inflated by generated distributions, worktrees, and vendored tool repositories, so it is not a fair “number of skills” comparison. I’m normalizing the full count using its own `skill-system.json` inventory rules and separating source capabilities from generated/install copies.
-
 # Mini vs. Full Skill System
+
+> **Updated for Phase C** (`feat(kbd): port the KBD process orchestrator and 49 skills to
+> Windows-native Node`). This document previously described a checkout from before that phase
+> landed; several rows below that said "not yet shipped," "planned, not currently shipped," or
+> "none shipped yet" were true then and are **no longer true**. Every row has been re-verified
+> against the current `skills/`, `lib/`, `docker/`, and `skill-system.json` trees rather than
+> trusted from the prior pass. For a always-current, generated view, see the
+> [documentation site](site/docs/reference/comparison-with-full-pack.md) — this file is a snapshot,
+> the site is maintained.
+
+Method: this comparison inventories both repositories directly — counting and classifying skills,
+hooks, agents, scripts, services, Rust crates, templates, and platform/runtime dependencies, then
+spot-checking the controlling manifests (`skill-system.json` in each repo, `docker/compose.yaml`,
+`lib/` module trees). The full pack's raw file count is inflated by generated distributions,
+worktrees, and vendored tool repositories, so counts below use each repo's own inventory rules
+rather than a naive file count.
 
 ## Executive summary
 
 The repositories serve different purposes:
 
-- **`prometheus-skills-mini`** is becoming a **portable, Windows-native core** centered on OpenSpec, artifact refinement, cross-platform Node hooks, and durable progress recording. It deliberately removes most domain skills, background services, Bash/Python dependencies, and the Rust execution substrate.
-- **`prometheus-skill-pack`** is a broad **enterprise agent-development platform** with 166 canonical skills, full KBD/PMPO orchestration, learning and research systems, React/entity development, DevOps, BDD testing, Rust tooling, MCP execution infrastructure, marketplaces, and managed services.
+- **`prometheus-skills-mini`** is a **portable, Windows-native core** centered on the KBD
+  lifecycle, adversarial review, ideation-mindmap, Karpathy progress memory, OpenSpec, artifact
+  refinement, cross-platform Node hooks, and plugin distribution for Claude Code and Codex. It
+  deliberately excludes most domain skills, background services beyond its two, Bash/Python
+  dependencies, and the Rust execution substrate.
+- **`prometheus-skill-pack`** is a broad **enterprise agent-development platform** with a much
+  larger skill catalog, full KBD/PMPO orchestration, learning and research systems, React/entity
+  development, DevOps, BDD testing, Rust tooling, MCP execution infrastructure, marketplaces, and
+  managed services.
 
-The important qualification is that the mini repository is **still under construction**. Its README describes the intended end state, but the current checkout does not yet contain the complete KBD/PMPO port, Docker services, deep research, adversarial review, installer, or Rust toolkit skills.
+The mini repository's KBD/PMPO-process core, adversarial review, ideation-mindmap, and
+distribution system are **implemented and tested**, not aspirational — see "What the mini version
+can do today" below, which is materially larger than it was before Phase C. What remains genuinely
+absent is listed honestly in "What remains exclusive to the full version."
 
 ## Capability table
 
 | Feature or capability | Mini — current checkout | Full version |
 |---|---|---|
-| **Primary purpose** | Portable subset focused on artifact refinement, OpenSpec, KBD-compatible hooks, and progress memory | Comprehensive skill and agent platform spanning development, research, learning, DevOps, testing, execution, and UI |
-| **Canonical skill catalog** | **33 unique skills:** 21 under `skills/` plus 12 OpenSpec skills replicated for supported harnesses | **166 canonical skills** according to the inventory rules in `skill-system.json`, plus harness-specific OpenSpec integrations |
-| **Skill breadth** | Primarily artifact refinement and progress-memory recording | Architecture, DevOps, document extraction, Flint SDKs, Flutter, Go, HTMX, learning, process orchestration, Python, React, research, Rust, Tauri, testing, and TypeScript |
+| **Primary purpose** | Portable core: KBD lifecycle, adversarial review, ideation-mindmap, Karpathy progress memory, OpenSpec, artifact refinement, and plugin distribution | Comprehensive skill and agent platform spanning development, research, learning, DevOps, testing, execution, and UI |
+| **Canonical skill catalog** | **50 skill directories** under `skills/` (verified by direct listing) — the full KBD family, adversarial-review, ideation-mindmap, karpathy-progress-memory, 20 artifact-refiner skills, 5 scaffold/convert skills, plus 12 OpenSpec skills replicated per harness | A much larger multi-domain catalog per the full pack's own `skill-system.json` inventory rules, plus harness-specific OpenSpec integrations |
+| **Skill breadth** | KBD process, adversarial review/ideation, artifact refinement, scaffolding, conversion, context bootstrap, Rust routing | Architecture, DevOps, document extraction, Flint SDKs, Flutter, Go, HTMX, learning, process orchestration, Python, React, research, Rust, Tauri, testing, and TypeScript |
 | **Artifact refinement** | **Implemented.** Twenty artifact-refiner skills for UI, logos, images, content, A2UI, AG-UI/MCP UI scaffolding, conversion, validation, and rebranding | Same artifact-refiner family, plus its broader upstream support files, hook integration, imported tools, and sycophancy-correction |
 | **Persistent artifact state** | Implemented through manifests, constraints, refinement logs, decisions, and output directories | Implemented, with additional provider, MCP, and system integrations |
 | **OpenSpec support** | **Implemented and the default planning backend.** Twelve skills are present for Claude, Codex/Agents, Cursor, and OpenCode | Supported alongside the larger KBD planning system and other historical backends |
-| **KBD lifecycle skills** | **Not yet shipped in `skills/`.** No local `kbd-assess`, `kbd-plan`, `kbd-execute`, `kbd-reflect`, `kbd-apply`, or related skill documents exist yet | **Complete:** 23 KBD orchestrator/root and lifecycle skills, including assess, analyze, plan, apply, execute, reflect, audit, pause/resume, child phases, status, doctor, and memory recall |
-| **KBD runtime state** | The repository itself uses `.kbd-orchestrator/`, and six hooks can read or preserve its state. That project state should not be mistaken for a distributable KBD implementation | Full KBD control plane, runtime, state machine, stage gates, transitions, hierarchy, compatibility projections, and command integration |
-| **PMPO orchestration** | Five PMPO-oriented agent prompts support artifact refinement, but the general `pmpo-elicit`, outer loop, evolver, and skill-creator ports are not yet present | Full PMPO family: elicitation, outer loop, evolver, skill creation/cloning/extension/validation, plus iterative evolution |
-| **Karpathy progress recording** | **Mostly implemented.** Records validated task/change/phase events, creates idempotent receipts, appends the session log, invokes `pk`, and retries degraded receipts | Fully integrated into KBD lifecycle hooks and background learning infrastructure |
-| **Automatic progress capture** | **Not wired yet.** `karpathy-progress-memory` explicitly says it must currently be called manually; the remaining active task is a Windows PATHEXT test | Automatically triggered at lifecycle boundaries through hooks and worker infrastructure |
-| **Knowledge/OKF support** | `pk` 1.9.0 is vendored as a Rust submodule and supports OKF v0.2, but the binding/documentation change `okf-v02-via-pk` is still **0/9 tasks** | Full `prometheus-knowledge`/`pk` integration, learning queues, context, search, ingest, knowledge services, and workers |
-| **Learning system** | No general learning curriculum yet; only progress-memory recording and planned self-improvement paths | Twelve Feynman/learning skills: survey, goals, planning, practice, grading, retention, certification, KB integration, harness learning, and UI surfaces |
-| **Adversarial review** | Planned, not currently shipped | Implemented critic/judge workflow, review packets, decision gates, isolation, anti-automation-bias checks, and model routing |
-| **Sycophancy correction** | Not shipped as a mini skill or MCP server | Canonical imported skill and MCP implementation; integrated with review/reflection paths |
-| **Deep research** | Planned checkpoint-only Node port; not present now | Ten-stage research pipeline: plan, search, retrieve, collect, verify, resolve, graph, cite, report, and export, plus a research server |
+| **KBD lifecycle skills** | **Implemented.** 24 skills: `kbd-process-orchestrator` (parent) plus 22 sub-skills (`kbd-assess`, `-analyze`, `-spec`, `-plan`, `-execute`, `-apply`, `-reflect`, `-status`, `-audit`, `-pause`, `-resume`, `-cancel`, `-goal-check`, phase/child family, `-bottleneck-detector`, `-memory-recall`, `-inject-agent-rules`, `-init`) plus `kbd-evolve`. Backed by `lib/kbd/`, 12 modules, 230 tests | A KBD orchestrator/root and lifecycle skill set, including assess, analyze, plan, apply, execute, reflect, audit, pause/resume, child phases, status, doctor, and memory recall |
+| **KBD runtime state** | `lib/kbd/` is a full Node port of the state machine: position/waypoint, progress, stage-gate, rollup, hooks dispatch, child-scope enforcement, runtime-authority checking, and the SpecBackend contract (OpenSpec + native-kbd) | Full KBD control plane, runtime, state machine, stage gates, transitions, hierarchy, compatibility projections, and command integration |
+| **PMPO orchestration** | Artifact-refiner's own PMPO cycle (`lib/refiner/`) is implemented for the refinement loop specifically. The general-purpose `pmpo-elicit`, outer loop, evolver, and skill-creator family (independent of artifact refinement) is **not** part of this repo's skill set | Full PMPO family: elicitation, outer loop, evolver, skill creation/cloning/extension/validation, plus iterative evolution |
+| **Karpathy progress recording** | **Implemented.** Records validated task/change/phase events, creates idempotent receipts, appends the session log, invokes `pk` (optional, bounded), and retries degraded receipts. See `lib/karpathy/` (8 modules) | Fully integrated into KBD lifecycle hooks and background learning infrastructure |
+| **Automatic progress capture** | Invoked at KBD stage-gate boundaries through the ported hook chain (`lib/hooks/taskcompleted-kbd-receipt.mjs` and related), not a separate manual-only step | Automatically triggered at lifecycle boundaries through hooks and worker infrastructure |
+| **Knowledge/OKF support** | `pk` is vendored as a Rust submodule (`tools/prometheus-knowledge`, pinned in `versions.toml`) and writes OKF v0.2 bundles under `.prometheus/knowledge/`; `lib/karpathy/knowledge-bundle.test.mjs` guards that no pack code writes there directly. `pk` remains fully optional | Full `prometheus-knowledge`/`pk` integration, learning queues, context, search, ingest, knowledge services, and workers |
+| **Learning system** | No Feynman-style general learning curriculum; progress-memory recording and the OKF knowledge bundle are the self-improvement surface | Twelve Feynman/learning skills: survey, goals, planning, practice, grading, retention, certification, KB integration, harness learning, and UI surfaces |
+| **Adversarial review** | **Implemented.** Cross-model judge/critic dispatch over the liter-llm gateway, review packet builder (10+ sub-modules), sycophancy anti-theater gate, decision log, judge≠producer isolation enforcement, model-role resolution. `lib/review/`, 176 tests | Implemented critic/judge workflow, review packets, decision gates, isolation, anti-automation-bias checks, and model routing |
+| **Sycophancy correction** | The review pipeline's own anti-theater gate (`lib/review/sycophancy-binary.mjs`, `sycophancy-gate.mjs`) is implemented and active inside adversarial-review. A standalone `sycophancy-correction` MCP server integration (outside the review pipeline) is not shipped | Canonical imported skill and MCP implementation; integrated with review/reflection paths |
+| **Deep research** | Still planned as a checkpoint-only Node port; not present as a skill in this checkout | Ten-stage research pipeline: plan, search, retrieve, collect, verify, resolve, graph, cite, report, and export, plus a research server |
 | **React/entity development** | Not included | 29 React/entity-management skills covering CRUD, GraphQL, Prisma, realtime, migrations, performance, relations, and auditing |
 | **DevOps/GitOps** | Deliberately excluded | ArgoCD multicloud, GitOps bootstrap/transformation, Kustomize overlays, Fabric integration, and disk-space management |
 | **Testing/BDD** | No BDD skill family | Cucumber JS and Rust, lifecycle management, compatibility alias, and signed video-proof bundles |
@@ -46,16 +62,16 @@ The important qualification is that the mini repository is **still under constru
 | **Native agent scaffolding** | Artifact-level React, Tauri, Flutter A2UI, AG-UI, and MCP UI scaffold skills are present | Full native-agent application generation, business-build flows, and Bossfang upload support |
 | **MCP server development** | Planned stdio-only Rust guidance; not currently shipped | HTTP/SSE and stdio MCP guidance plus multiple production MCP implementations |
 | **Execution substrate** | Excluded | Seventeen Rust substrate components covering local, embedded, remote, mobile, sovereign-sync, storage, FFI, UI bridging, and execution tiers |
-| **Tools and binaries** | Vendored `pk` only; Node utilities for hooks, refinement, conversion, validation, and progress recording | `prometheus-cli`, `forge-rs`, `liter-llm`, `openai-proxy`, `prometheus-knowledge`, surreal-memory, Rust auditor, disk guardian, cowork tooling, and benchmark automation |
-| **Runtime languages** | Repository-owned execution is designed around **Node.js ≥22**. No Python; no host Bash in the target design. The vendored `pk` tool is Rust | Node, Bash, Python, TypeScript, and Rust; many operational flows depend on POSIX shell tools |
-| **Windows support** | Native `cmd.exe`/PowerShell target, without requiring Git Bash or entering WSL. Implemented portions are tested on Windows, macOS, and Linux | Skills profile supports Windows only through **Git Bash or WSL**; the full profile officially supports macOS and Linux only |
-| **Hooks** | **6 hook entries across 5 events:** SessionStart, PostToolUse, SubagentStop, TaskCompleted, and PreCompact | **31 root hook entries across 7 events**, plus nested hook packs for evolution, artifact refinement, ZeeSpec, and other capabilities |
-| **Hook architecture** | Direct Node dispatch: manifest → `hook-entry.mjs` → in-process module | Node entry plus Bash/Rust dispatch layers and numerous Bash/Python payloads |
-| **Hook behavior** | Current hooks restore KBD context, detect project context, refresh position reminders, create task receipts, and preserve state before compaction | Adds KBD opening, memory outbox flushing, knowledge health, Karpathy learning, stage-specific checkpoints, evaluation, reflection, writeback, sycophancy checks, GitOps validation, and more |
-| **Managed services** | **None shipped yet in the current checkout.** The target design permits surreal-memory/SurrealDB and liter-llm only | Eleven generated service definitions, including SurrealDB, surreal-memory, liter-llm, `pk-cherry`, Forge MCP, execution daemon, surface bridge, learning worker, log rotation, sync, and periodic learning nudges |
-| **Service philosophy** | Intended to work when all optional services are down; target is three containers representing two retained service capabilities | Full profile installs and manages a larger native service ecosystem through launchd/systemd |
-| **Templates** | Planned Nunjucks renderer; no `.njk` templates currently present | Tera-based templates hosted by `forge-rs`, including large application generators |
-| **Installer/distribution** | No complete mini installer or doctor yet | Skills-only and full installation profiles, generated Claude/Codex packages, marketplaces, source lifecycle policies, installers, updaters, doctors, and health checks |
+| **Tools and binaries** | Vendored `pk`, `liter-llm`, `surreal-memory-server` (all git submodules, built as Docker contexts or optional CLIs, never required host toolchains); Node utilities for hooks, refinement, conversion, validation, review, ideation, distribution, and progress recording | `prometheus-cli`, `forge-rs`, `liter-llm`, `openai-proxy`, `prometheus-knowledge`, surreal-memory, Rust auditor, disk guardian, cowork tooling, and benchmark automation |
+| **Runtime languages** | Repository-owned execution is **Node.js ≥22** only. No Python, no host Bash anywhere in the pack's own code. The three vendored submodules (`pk`, `liter-llm`, `surreal-memory-server`) are Rust, used only as build contexts or optional CLIs | Node, Bash, Python, TypeScript, and Rust; many operational flows depend on POSIX shell tools |
+| **Windows support** | Native `cmd.exe`/PowerShell target, without requiring Git Bash or entering WSL. `platform-foundation`'s primitives (atomic write, lock, CRLF handling, shell-free spawn) are CI-verified on `windows-latest`; the later KBD/review/distribution batch (1,000+ tests) is verified on macOS only so far — Windows verification for that batch is still owed | Skills profile supports Windows only through **Git Bash or WSL**; the full profile officially supports macOS and Linux only |
+| **Hooks** | Hook payloads live under `lib/hooks/` (SessionStart, PreCompact, PostToolUse, SubagentStop, TaskCompleted adapters), dispatched by `scripts/hook-entry.mjs` in-process from `hooks/hooks.json` | Many more root hook entries across 7 events, plus nested hook packs for evolution, artifact refinement, ZeeSpec, and other capabilities |
+| **Hook architecture** | Direct Node dispatch: manifest → `hook-entry.mjs` → in-process module, no shell, no child dispatch layer | Node entry plus Bash/Rust dispatch layers and numerous Bash/Python payloads |
+| **Hook behavior** | Hooks restore KBD context, detect project context, refresh position reminders, create task receipts, and preserve state before compaction | Adds KBD opening, memory outbox flushing, knowledge health, Karpathy learning, stage-specific checkpoints, evaluation, reflection, writeback, sycophancy checks, GitOps validation, and more |
+| **Managed services** | **Implemented.** `docker/compose.yaml` runs SurrealDB, surreal-memory, and liter-llm as three loopback-bound, digest-pinned, memory-limited containers; `scripts/services.mjs` wraps the lifecycle (`status`, `pull`, `up`, `stop`, `restart`, `down`, `logs`) | Eleven generated service definitions, including SurrealDB, surreal-memory, liter-llm, `pk-cherry`, Forge MCP, execution daemon, surface bridge, learning worker, log rotation, sync, and periodic learning nudges |
+| **Service philosophy** | Designed and implemented to work when both services are down: memory writes to a durable local outbox, review falls back to a fresh-context subagent recording `isolation_mode=harness-native` | Full profile installs and manages a larger native service ecosystem through launchd/systemd |
+| **Templates** | No Nunjucks renderer or `.njk` templates in this checkout — this pack's skills that generate code (scaffold-*, convert-*) use direct Node transforms, not a template engine | Tera-based templates hosted by `forge-rs`, including large application generators |
+| **Installer/distribution** | **Implemented.** `skill-system.json` + `lib/distribution/` generate copy-mode (never symlink) Claude Code and Codex plugin packages, both marketplace listings, and Claude Code slash commands from `SKILL.md` frontmatter. `lib/doctor/` (`scripts/doctor.mjs`) covers runtime, KBD position, service health, optional tools, home-directory skill copies, and the install-scope rule | Skills-only and full installation profiles, generated Claude/Codex packages, marketplaces, source lifecycle policies, installers, updaters, doctors, and health checks |
 | **Harness targets** | OpenSpec content currently materialized for Claude, Agents/Codex, Cursor, and OpenCode | Fourteen declared targets, including Claude, OpenCode, Kimi, MiniMax, Cursor, Codex, Gemini, Roo, Devin/Windsurf, Zed, Cline, and Agents |
 | **Rules architecture** | Strong, compact generated Rules Architecture v4 with constitution, path rules, skill routing, and drift checks | Larger rule and policy surface across the complete platform |
 | **Resource profile** | Designed for 16 GB machines and few resident processes | Considerably larger disk, build, memory, service, and operational footprint |
@@ -67,7 +83,25 @@ The important qualification is that the mini repository is **still under constru
 
 The present mini checkout can reliably:
 
-1. **Run structured artifact-refinement workflows**
+1. **Run the full KBD lifecycle**
+   - Assess, analyze, spec, plan, execute, reflect — every stage as a real skill backed by `lib/kbd/`
+   - Drive OpenSpec (or native-kbd) one task at a time via `kbd-apply`, never "implement everything"
+   - Pause, resume, cancel, audit, and recover position from `.kbd-orchestrator/`
+   - Manage phase and child hierarchy (new/next phase, new/next child, child-exit)
+   - Evaluate goal completion without the implementer grading its own work (`kbd-goal-check`)
+
+2. **Run cross-model adversarial review**
+   - Dispatch a fresh-context judge over the liter-llm gateway, enforcing judge ≠ producer
+   - Build mode-specific review packets (skill, agent, diff, decision, research) with per-field
+     truncation and manifest-level-only guarantees for creation modes
+   - Screen the judge's own report for sycophantic softening before surfacing it
+   - Fall back to a harness-native subagent when the gateway is down
+
+3. **Run structurally-verified ideation**
+   - Generate independent concept branches via surreal-memory, with dispatch inputs recorded and
+     checked so branches cannot silently share context
+
+4. **Run structured artifact-refinement workflows**
    - UI and content refinement
    - Logo and image refinement
    - A2UI, AG-UI, and MCP UI normalization
@@ -75,26 +109,29 @@ The present mini checkout can reliably:
    - Markdown → HTMX, HTMX → React, and HTMX → PDF conversion
    - Schema-based refinement validation
 
-2. **Plan and manage changes with OpenSpec**
+5. **Plan and manage changes with OpenSpec**
    - Propose, create, continue, apply, verify, sync, update, and archive changes
    - Use the same OpenSpec skills across four harness layouts
 
-3. **Provide portable hook infrastructure**
-   - Restore project/KBD context at session start
-   - Preserve position before compaction
-   - Refresh position reminders after writes
-   - Produce task-completion receipts
-   - Fall back safely when optional context is unavailable
-
-4. **Record durable KBD progress manually**
+6. **Record durable KBD progress**
    - Validate bounded event payloads
    - Reject secrets and unsafe file paths
    - Produce deterministic hashes and idempotent receipts
    - Append one session-log record per event
-   - Deliver records through `pk ingest`
+   - Deliver records through `pk ingest` (optional, bounded)
    - Preserve degraded records and retry them later
 
-5. **Provide tested cross-platform primitives**
+7. **Generate and distribute plugin packages**
+   - Build Claude Code and Codex plugin packages plus both marketplace listings, copy-mode only
+   - Generate typeable slash commands from `SKILL.md` frontmatter
+   - Detect drift with `--check` before it ships
+
+8. **Run the two-service Docker stack**
+   - SurrealDB + surreal-memory + liter-llm via `docker/compose.yaml`, loopback-bound and
+     digest-pinned
+   - Report service health via `scripts/services.mjs status` and the `doctor` skill
+
+9. **Provide tested cross-platform primitives**
    - Portable paths and CRLF-tolerant text handling
    - Atomic writes with Windows rename retry
    - Exclusive file locks
@@ -105,26 +142,31 @@ The present mini checkout can reliably:
 
 The full pack is required today if you need:
 
-- The complete KBD lifecycle and automatic phase execution
-- General PMPO elicitation, evolution, and skill creation
-- Automated adversarial review and sycophancy correction
-- Deep research
+- General-purpose PMPO elicitation, outer-loop, evolver, and skill-creator skills (independent of
+  artifact refinement, which has its own PMPO-style cycle in this pack)
+- Deep research (this pack has it planned as a checkpoint-only Node port, not yet a shipped skill)
 - Feynman learning workflows
 - React/entity-management development
 - GitOps and multicloud DevOps
 - BDD/Cucumber testing and certification bundles
-- Broad Rust, Go, Flutter, Tauri, Python, TypeScript, and Flint guidance
-- Native-agent generation
+- Broad Rust, Go, Flutter, Tauri, Python, TypeScript, and Flint guidance beyond this pack's single
+  Rust-routing skill
+- Native-agent generation (the full application-stack generator, distinct from this pack's
+  artifact-level scaffold-* skills)
 - The execution substrate and remote execution tiers
-- Full MCP/service infrastructure
-- Multi-harness marketplace packaging and installation
-- Managed background workers, health checks, and service orchestration
+- A standalone `sycophancy-correction` MCP server integration outside the review pipeline
+- Multi-harness marketplace packaging beyond Claude Code and Codex
+- Managed background workers (a learning-worker timer daemon; this pack uses opportunistic
+  SessionStart draining instead) and the broader native service ecosystem
 
 ## Bottom line
 
-The mini system is **not a smaller copy containing a representative sample of everything**. It is a deliberate rewrite around a narrower core:
+The mini system is **not a smaller copy containing a representative sample of everything**. It is a
+deliberate rewrite around a specific, now largely-implemented core:
 
-> **Portable artifact refinement + OpenSpec + KBD-compatible state/hooks + durable progress knowledge.**
+> **The KBD lifecycle + adversarial review + ideation-mindmap + artifact refinement + OpenSpec +
+> Karpathy progress memory + plugin distribution — on Windows, macOS, and Linux, with no shell
+> scripts, no Python, and no symlinks.**
 
 The full pack is instead:
 
@@ -136,13 +178,18 @@ For Windows-native operation without Git Bash or WSL dependencies, the mini arch
 
 - Mini architecture and roadmap: `prometheus-skills-mini/README.md`
 - Mini constraints: `prometheus-skills-mini/openspec/config.yaml`
-- Mini hooks: `prometheus-skills-mini/hooks/hooks.json`
-- Mini implemented skills: `prometheus-skills-mini/skills/`
-- Mini progress recorder status: `prometheus-skills-mini/openspec/changes/karpathy-progress-recorder/tasks.md`
-- Mini OKF status: `prometheus-skills-mini/openspec/changes/okf-v02-via-pk/tasks.md`
+- Mini hooks: `prometheus-skills-mini/hooks/hooks.json`, `prometheus-skills-mini/lib/hooks/`
+- Mini implemented skills: `prometheus-skills-mini/skills/` (direct directory listing, 50 entries)
+- Mini KBD core: `prometheus-skills-mini/lib/kbd/`
+- Mini review pipeline: `prometheus-skills-mini/lib/review/`
+- Mini distribution: `prometheus-skills-mini/lib/distribution/`, `prometheus-skills-mini/skill-system.json`
+- Mini services: `prometheus-skills-mini/docker/compose.yaml`, `prometheus-skills-mini/scripts/services.mjs`
+- Mini Phase C commit: `8497ae8` ("feat(kbd): port the KBD process orchestrator and 49 skills to Windows-native Node")
 - Full catalog/profile definition: `/Users/gqadonis/Projects/prometheus/prometheus-skill-pack/skill-system.json`
 - Full runtime scripts: `/Users/gqadonis/Projects/prometheus/prometheus-skill-pack/package.json`
 - Full hooks: `/Users/gqadonis/Projects/prometheus/prometheus-skill-pack/hooks/hooks.json`
 - Full services: `/Users/gqadonis/Projects/prometheus/prometheus-skill-pack/shared/services.manifest.json`
 
-This was a read-only analysis. I did not run the test suites; I verified repository inventories, manifests, current OpenSpec progress, and controlling documentation.
+Updated for Phase C by direct inspection of the current trees rather than trusted from the prior
+pass of this document. Test suites were not re-run as part of this update; skill/module presence was
+verified by directory listing and by reading module header comments, not by executing them.

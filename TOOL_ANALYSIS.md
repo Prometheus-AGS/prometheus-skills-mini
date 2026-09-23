@@ -1,5 +1,19 @@
 # Rust Tool Analysis: Windows Portability and Mini-Pack Fit
 
+> **Status update (post-Phase C):** the recommendations below were written as forward-looking
+> disposition guidance, not as a record of completed work — the analysis explicitly states it
+> "moved or certified no tool." Since this document was written, `versions.toml` has been authored
+> (contra this document's own note that it was absent) with `[node]`, `[submodules]`, and
+> `[images]` tables, and `docker/compose.yaml` now implements exactly the **C (permitted service)**
+> recommendation below for `liter-llm` and `surreal-memory` + SurrealDB: three loopback-bound,
+> memory-limited, digest/build-pinned containers. See
+> [Docker Services](site/docs/services/docker-services.md) for the as-shipped configuration. The
+> **A/B/D/E** dispositions for `pk`, `sycophancy-correction`, `rust-mcp-filesystem`,
+> `learner-model`, and the excluded Rust substrate remain accurate as of this update — none of
+> those has moved from its recommended class. This analysis is Rust-tool-specific and was largely
+> unaffected by the separate Node-only KBD/adversarial-review/ideation-mindmap/distribution port
+> (commit `8497ae8`), which touched no Rust surface.
+
 ## Executive recommendation
 
 The full `prometheus-skill-pack` is not a safe unit to move into `prometheus-skills-mini`. Its Rust surface combines portable libraries, Unix-bound execution machinery, imported products, and several resident network services. Windows portability and mini architectural fit must therefore be decided independently.

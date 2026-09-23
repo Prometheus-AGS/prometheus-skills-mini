@@ -1,0 +1,31 @@
+.heroTitle {
+  font-size: clamp(2.25rem, 1.5rem + 3vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.heroTagline {
+  font-size: 1.25rem;
+  color: var(--knowme-text-muted);
+  max-width: 42rem;
+  margin: 0 auto 2rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.25rem;
+  margin: 2rem 0;
+}
+
+.constraintList {
+  max-width: 48rem;
+  margin: 0 auto;
+}

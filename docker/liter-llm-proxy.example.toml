@@ -1,0 +1,13 @@
+[server]
+host = "0.0.0.0"
+port = 4000
+
+[general]
+master_key = "${LITER_LLM_MASTER_KEY}"
+
+[security]
+outbound_policy = "deny_private"
+
+# The Boss writes provider/model selections to the private proxy configuration.
+# Add [[models]] entries named kbd-judge and kbd-critic with provider_model,
+# api_key = "${JUDGE_API_KEY}" / "${CRITIC_API_KEY}", and optional base_url.

@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "phaseId": "the-boss-shipping-and-settings::uar-working-agent",
+  "status": "planned-not-started",
+  "spec": {
+    "change": "uar-delivery-replan",
+    "taskRange": "1.1–1.10",
+    "path": "openspec/changes/uar-delivery-replan",
+    "archiveAtP1": false
+  },
+  "sourceReceipt": "plan-sources-receipt.json",
+  "planner": "gpt-6-astra",
+  "requestedExecutor": "gpt-5.6-sol",
+  "assignedWriters": [],
+  "ownershipReconciled": false,
+  "contract": {
+    "status": "to-record-in-1.1",
+    "version": null
+  },
+  "sourcesFrozen": false,
+  "worktrees": [
+    {
+      "role": "boss",
+      "path": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar",
+      "baseline": "73e2ff69d09698e30e0dbb7358613ea33c707314",
+      "ownership": "pending",
+      "buildOutput": "worktree-local"
+    },
+    {
+      "role": "uar",
+      "path": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar",
+      "baseline": "cd739e82de2fe7f024545d563ad8c9f72f0023af",
+      "ownership": "pending",
+      "cargoTargetDir": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar/.target/p1",
+      "wip": "preserve hashes from plan-sources-receipt.json"
+    }
+  ],
+  "release": {
+    "platformOrder": [
+      "win32-x64",
+      "darwin-arm64"
+    ],
+    "distribution": "GitHub Releases",
+    "websiteRepository": "Know-Me-Tools/boss-landing-spot",
+    "websiteCheckout": null,
+    "lovableProject": "The Boss Landing",
+    "websiteDeploymentIdentityConfirmed": false,
+    "candidateSourceManifest": null,
+    "installerSourceManifest": null,
+    "publicDistributionRequires": "Complete installed platform gate; Windows operator acceptance remains pending until observed",
+    "features": [
+      "minimal",
+      "local-models",
+      "document-intelligence",
+      "wasm-runtime"
+    ],
+    "panic": "unwind"
+  },
+  "tasks": [
+    {
+      "id": "1.1",
+      "title": "Reconcile worktrees, ownership and trusted contract",
+      "slice": "S1",
+      "dependencies": [],
+      "status": "pending"
+    },
+    {
+      "id": "1.2",
+      "title": "Complete principal isolation, managed locks and retention",
+      "slice": "S2",
+      "dependencies": [
+        "1.1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "1.3",
+      "title": "Bind run credentials, MCP resources and host context",
+      "slice": "S2",
+      "dependencies": [
+        "1.1",
+        "1.2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "1.4",
+      "title": "Wire supervised Boss UAR service and driver",
+      "slice": "S2",
+      "dependencies": [
+        "1.1",
+        "1.2",
+        "1.3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "1.5",
+      "title": "Enforce host MCP bridge approvals and call identity",
+      "slice": "S3",
+      "dependencies": [
+        "1.3",
+        "1.4"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "1.6",
+      "title": "Complete AG-UI adaptation, cancellation and recovery",
+      "slice": "S4",
+      "dependencies": [
+        "1.4",
+        "1.5"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "1.7",
+      "title": "Finish P1 settings, locales, diagnostics and skills",
+      "slice": "S4",
+      "dependencies": [
+        "1.4",
+        "1.5",
+        "1.6"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "1.8",
+      "title": "Complete native payload recipe and immutable manifests",
+      "slice": "S5",
+      "dependencies": [
+        "1.1",
+        "1.4",
+        "1.7"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "1.9",
+      "title": "Build actual customer installers and run installed P1 gate",
+      "slice": "S6",
+      "dependencies": [
+        "1.2",
+        "1.3",
+        "1.4",
+        "1.5",
+        "1.6",
+        "1.7"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "1.10",
+      "title": "Fix observed failures and publish accepted platforms",
+      "slice": "S6",
+      "dependencies": [
+        "1.8",
+        "1.9"
+      ],
+      "status": "pending"
+    }
+  ],
+  "packagingDependency": "1.8 recipe/source-ready precedes builds. Native payload builds finalize 1.8 URLs/checksums, then freeze final Boss installer source; only then build installers under 1.9. Task 1.9 cannot complete before 1.8.",
+  "evidence": {
+    "productionEdits": false,
+    "buildsRun": 0,
+    "testsRun": 0,
+    "windowsInstalledAcceptance": "pending",
+    "appleSiliconInstalledAcceptance": "pending"
+  }
+}
+

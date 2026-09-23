@@ -1,0 +1,21 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "ordering errors — the slices run S1 contract/ownership before S2 runtime wiring, S3 approvals after/alongside the frozen contract, S4 recovery/settings after runtime and bridge wiring, S5 packaging configuration after production wiring, and S6 builds/gate/publication after freeze; no dependency is scheduled after its consumer",
+    "missing dependencies — each stated goal is covered by a slice or gate: worktree reconciliation in S1, envelope/isolation/approvals/AG-UI/recovery/startup in S2–S4, packaging and native assets in S5, installed gate/publication in S6, and outcome ledger in the completion section",
+    "untestable or ambiguous acceptance criteria — the P1 gate uses observable installed behaviors, named scenarios, pass/fail/pending evidence, exact artifact/version/checksum validation, and explicit blocking failures rather than generic 'works correctly' criteria",
+    "scope smuggling — P2–P5 capabilities are explicitly deferred or isolated, while P1 scope maps to OpenSpec tasks 1.1–1.10 and the assessment findings; website/GitHub release updates are within the stated goals",
+    "constraint violations — the plan remains planning-only for this turn, reuses the existing OpenSpec change/tasks, requires complete P1 wiring before builds/gates, avoids per-edit/unit/review loops, orders Windows x64 before Apple Silicon, uses GitHub Releases rather than IPFS, and permits only one isolated successor overlap after freeze"
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

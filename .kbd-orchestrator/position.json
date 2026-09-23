@@ -2,24 +2,26 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 448,
-  "derivedRevision": 448,
+  "sourceRevision": 462,
+  "derivedRevision": 462,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 448
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 462
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-23T22:19:59.360892Z",
+  "updatedAt": "2026-09-23T22:35:09.157025Z",
   "cursor": [
     "the-boss-shipping-and-settings",
-    "uar-working-agent"
+    "uar-working-agent",
+    "uar-delivery-replan",
+    "1.1"
   ],
   "root": {
     "type": "phase",
     "id": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
     "status": "ready",
     "progress": {
-      "done": 0,
-      "total": 0
+      "done": 15,
+      "total": 33
     },
     "children": [
       {
@@ -305,9 +307,19 @@
             "status": "IN_PROGRESS",
             "progress": {
               "done": 0,
-              "total": 0
+              "total": 1
             },
-            "children": [],
+            "children": [
+              {
+                "type": "change",
+                "id": "uar-delivery-replan",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 10
+                }
+              }
+            ],
             "annotations": []
           },
           {

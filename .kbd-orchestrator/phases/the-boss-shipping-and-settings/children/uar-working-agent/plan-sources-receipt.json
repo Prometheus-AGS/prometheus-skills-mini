@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "stage": "plan",
+  "observedAt": "2026-09-23T22:32:41.734Z",
+  "method": "Local read-only snapshot; no remote sync, production edits, builds or tests",
+  "sources": [
+    {
+      "name": "boss",
+      "root": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar",
+      "commit": "73e2ff69d09698e30e0dbb7358613ea33c707314",
+      "branch": "feat/uar-agent-runtime",
+      "dirty": [],
+      "wip": []
+    },
+    {
+      "name": "uar",
+      "root": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar",
+      "commit": "cd739e82de2fe7f024545d563ad8c9f72f0023af",
+      "branch": "feat/the-boss-sidecar",
+      "dirty": [
+        "M Cargo.toml",
+        "?? tests/run_retention.rs",
+        "?? tests/run_retention/runs.rs",
+        "?? tests/run_retention/sessions.rs",
+        "?? tests/sidecar_session_principal.rs",
+        "?? tests/sidecar_session_principal/admission.rs",
+        "?? tests/sidecar_session_principal/isolation.rs",
+        "?? tests/support/principal_host.rs"
+      ],
+      "wip": [
+        {
+          "path": "tests/run_retention.rs",
+          "sha256": "97e27c24917b0ce173a4cc269f81bb73d85d30b2ca7e126bc53f1600b128bee8"
+        },
+        {
+          "path": "tests/run_retention/runs.rs",
+          "sha256": "96f0f59abd776c9337e11260ae52bedd05cdb5a510b99244e93838906f0b0293"
+        },
+        {
+          "path": "tests/run_retention/sessions.rs",
+          "sha256": "50e9c341fa7c272c0b2bd4817ba607fcbe06b909e739f340aa2296ce719aece4"
+        },
+        {
+          "path": "tests/sidecar_session_principal.rs",
+          "sha256": "c0d6462ff8a9717bae5d9020f1814ae2c4be26b95c671f7b87217d48db39b32e"
+        },
+        {
+          "path": "tests/sidecar_session_principal/admission.rs",
+          "sha256": "e0c0934499ea94fd934b64739776aebff61e44b74641c8980a2bfc9a3ad8b37e"
+        },
+        {
+          "path": "tests/sidecar_session_principal/isolation.rs",
+          "sha256": "9a076f486fd3d89802316aa94ed1e73a5288f6ff7fd3e82aec8f20382372cdf7"
+        },
+        {
+          "path": "tests/support/principal_host.rs",
+          "sha256": "b1abc496be5d2d1f4902e5f8654effa2b888a85e63f0ff953d3d0ff3dbd59dc4"
+        },
+        {
+          "path": "Cargo.toml",
+          "sha256": "9d27b14cbbc88e3992e790439e47c4637d88f4bcdce821e593f25a3435b6bbe3"
+        }
+      ]
+    }
+  ]
+}

@@ -2,26 +2,26 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 447,
-  "derivedRevision": 447,
+  "sourceRevision": 461,
+  "derivedRevision": 461,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 447
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 461
   },
   "conflictCount": 0,
   "phase": "uar-working-agent",
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent",
   "parentPhase": "the-boss-shipping-and-settings",
-  "last_updated": "2026-09-23T22:19:58.480169Z",
+  "last_updated": "2026-09-23T22:35:08.293888Z",
   "last_updated_by": "kbd-runtime",
-  "changes_total": 0,
+  "changes_total": 1,
   "changes_completed": 0,
-  "implementation_total": 0,
+  "implementation_total": 1,
   "implementation_completed": 0,
   "completion": {
     "primaryCounter": "implementation",
     "implementation": {
       "completed": 0,
-      "total": 0,
+      "total": 1,
       "status": "PENDING"
     },
     "evidence": {
@@ -40,7 +40,19 @@
       "blockers": []
     }
   },
-  "changes": [],
+  "changes": [
+    {
+      "id": "uar-delivery-replan",
+      "title": "P1 working installed UAR agent (OpenSpec tasks 1.1–1.10)",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 10,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "Reconcile worktrees, ownership and trusted contract",
+      "blockers": []
+    }
+  ],
   "children": {},
   "migrationStatus": null
 }

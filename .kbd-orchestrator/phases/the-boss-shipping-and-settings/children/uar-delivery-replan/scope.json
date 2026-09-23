@@ -1,0 +1,15 @@
+{
+  "allowedWritePaths": [
+    ".kbd-orchestrator/phases/the-boss-shipping-and-settings/children/uar-delivery-replan/**",
+    "openspec/changes/uar-delivery-replan/**",
+    ".kbd-orchestrator/**"
+  ],
+  "deniedPaths": [
+    "src/**",
+    "lib/**",
+    "scripts/**",
+    "tools/**"
+  ],
+  "inheritsConstraints": true,
+  "note": "Planning/process artifacts only. Cross-repository application and runtime checkouts are read-only. No Cargo, application builds, tests or implementation."
+}

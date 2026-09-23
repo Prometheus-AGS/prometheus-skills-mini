@@ -1,0 +1,29 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "claim": "The remaining-platform delivery order is internally contradictory and can cause downstream executors to delay Mac Intel and other platform work until after P4 despite the plan also saying they should follow P1 customer artifacts.",
+      "evidence": "The phase table places “P5 — Remaining platforms and final release” after P4 with outcome “Same completed experience on Mac Intel, then Windows ARM64/Linux x64/ARM64,” but the objective says “Mac Intel follows; Windows ARM64/Linux x64/ARM64 follow together and never delay customer platforms,” and Section 5 says “Mac Intel may build after the customer P1 artifacts are published.”",
+      "suggested_fix": "Split platform delivery into explicit lanes tied to each completed customer-platform release, or state unambiguously that P5 is not chronologically after P4 and that Mac Intel may start immediately after P1 Windows x64/Apple Silicon publication."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "claim": "P2 includes trace work that depends on P4-owned budget, execution-control and sub-agent lifecycle features.",
+      "evidence": "The P2 production row includes “visible skill/context/budget/sub-agent traces as supported,” while P4 owns “budgets and execution controls constrain it” and “execution modes and sub-agent lifecycle; complete feature/trace inventory.”",
+      "suggested_fix": "Limit P2 to A2UI surface/action/continuation traces that exist after P1, and move budget/sub-agent trace requirements to P4 with their implementing features."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

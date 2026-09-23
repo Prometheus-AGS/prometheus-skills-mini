@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-23T21:30:46.304Z",
+  "method": "Read-only local source inspection; no fetch, merge or builds in planning phase",
+  "sources": [
+    {
+      "name": "mini",
+      "root": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini",
+      "commit": "11b821fcd1995faaab3636950206c94a65cde128",
+      "dirty": [
+        "M .kbd-orchestrator/current-waypoint.json",
+        " M .kbd-orchestrator/phases/the-boss-shipping-and-settings/progress.json",
+        " M .kbd-orchestrator/position.json",
+        " M openspec/changes/compass-mcp-protocol-negotiation/verification.md",
+        " M tools/prometheus-knowledge",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/evidence/a1/cargo-check-final.log",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/evidence/a1/cargo-check.log",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/evidence/a1/cargo-clippy-final.log",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/evidence/a1/cargo-clippy.log",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/evidence/a1/installed-baseline.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/evidence/a1/mcp-integration-final.log",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/evidence/a1/mcp-library-recheck.log",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/evidence/a1/tests-before-priming-fix.log",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/handoffs/a1-in-progress.diff",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/handoffs/codex-prompt.txt",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/a1/",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/findings-ci-r10.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/findings-ci-r11.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/findings-ci-r2.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/findings-ci-r3.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/findings-ci-r4.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/findings-ci-r5.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/findings-ci-r6.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/findings-ci-r7.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/findings-ci-r8.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/findings-ci-r9.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/findings-ci.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-ci-r10.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-ci-r11.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-ci-r2.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-ci-r3.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-ci-r4.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-ci-r5.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-ci-r6.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-ci-r7.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-ci-r8.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-ci-r9.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-ci.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-r1.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-r2.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet-r3.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/review/compass-mcp-protocol-negotiation/packet.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-universal-agent-runtime/review/impl/sidecar-launch-security.packet.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-universal-agent-runtime/review/impl/sidecar-launch-security.r2.packet.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-universal-agent-runtime/review/impl/sidecar-launch-security.r3.packet.json",
+        "?? .kbd-orchestrator/phases/the-boss-shipping-and-settings/children/uar-delivery-replan/",
+        "?? openspec/changes/uar-delivery-replan/"
+      ]
+    },
+    {
+      "name": "boss",
+      "root": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar",
+      "commit": "73e2ff69d09698e30e0dbb7358613ea33c707314",
+      "dirty": []
+    },
+    {
+      "name": "uar",
+      "root": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar",
+      "commit": "cd739e82de2fe7f024545d563ad8c9f72f0023af",
+      "dirty": [
+        "M Cargo.toml",
+        "?? tests/run_retention.rs",
+        "?? tests/run_retention/",
+        "?? tests/sidecar_session_principal.rs",
+        "?? tests/sidecar_session_principal/",
+        "?? tests/support/principal_host.rs"
+      ]
+    }
+  ],
+  "externalSources": [
+    "https://github.com/ag-ui-protocol/ag-ui/blob/main/docs/concepts/events.mdx",
+    "https://github.com/a2ui-project/a2ui/blob/main/renderers/react/README.md",
+    "https://a2ui.org/concepts/actions/",
+    "https://a2ui.org/renderers/",
+    "https://github.com/modelcontextprotocol/typescript-sdk/blob/v1.x/docs/server.md"
+  ],
+  "limitations": [
+    "Main-branch documentation is guidance, not proof of compatibility with installed versions.",
+    "No runtime behavior or native build was exercised in this planning phase."
+  ]
+}

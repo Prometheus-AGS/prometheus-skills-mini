@@ -1,0 +1,29 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "claim": "The plan instructs execution to skip unit-test and legacy-suite gates, contradicting blocking project constraints that require npm check/test/spec validation.",
+      "evidence": "Plan §3 says: \"No unit-test targets, per-edit runs, mocked-function completion claims...\" and \"Do not gate the phase on unrelated legacy suites.\" The constraints list blocking gates: `build-passes` command `npm run check`, `tests-pass` command `npm test`, and `specs-valid` command `npm run spec:validate`.",
+      "suggested_fix": "Clarify that the phase integration gate is additional release evidence and does not replace mandatory KBD/archive gates; explicitly require `npm run check`, `npm test`, and `npm run spec:validate` at the project-required completion point."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "claim": "Several acceptance criteria are too ambiguous to prevent downstream implementers from satisfying them with trivial or inconsistent scenarios.",
+      "evidence": "P1 gate requires \"real configured provider completes a task\" without defining the task. P4 gate requires \"meaningful task set with real skill corpus/model\" without naming the tasks, corpus, expected outputs, or pass/fail thresholds.",
+      "suggested_fix": "Replace vague phrases with named scenarios, fixtures/data sets, expected observable outcomes, and failure thresholds for each phase gate."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

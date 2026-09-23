@@ -1,9 +1,11 @@
 # Current waypoint
 
-Active: **the-boss-shipping-and-settings → the-boss-universal-agent-runtime**.
+Active: **the-boss-shipping-and-settings → uar-delivery-replan**. Canonical revision 425.
 
-Canonical source: current-waypoint.json and position-reminder.txt, revision 415. Implementation: 15/32 changes project-wide; 1/10 registered UAR changes complete. This is implementation progress, not certification.
+Planning-only child: research and plan complete; independent plan review PASS, with two narrow warning clarifications recorded. No implementation, application builds or code tests in this phase.
 
-Next: continue sidecar-session-principal in the existing UAR worktree, preserving its uncommitted work. The Boss application worktree is synchronized to release baseline 8344b48520; its UAR driver remains to be implemented.
+Read [the delivery plan](phases/the-boss-shipping-and-settings/children/uar-delivery-replan/plan.md), [review disposition](phases/the-boss-shipping-and-settings/children/uar-delivery-replan/review/disposition.md) and [execution handoff](phases/the-boss-shipping-and-settings/children/uar-delivery-replan/execution-handoff.md).
 
-The Boss 2.1.3 publication is complete on GitHub Releases and the website. Windows installed acceptance remains pending. See [release-to-UAR handoff](phases/the-boss-shipping-and-settings/handoffs/release-to-uar.md) for commits, worktrees, independent delivery status and superseding execution instructions.
+**Next:** reflect with the operator; after explicit approval create a separate P1 execution phase with GPT-5.6-sol. Do not start application implementation from this waypoint.
+
+The existing UAR implementation child/WIP is preserved. Previous Boss 2.1.3 publication is complete; installed Windows acceptance remains pending.

@@ -31,7 +31,7 @@ is gone.
 > [`evidence/windows.md`](.kbd-orchestrator/phases/platform-foundation/evidence/windows.md).
 >
 > A later phase ("port the KBD process orchestrator and 49 skills to Windows-native Node")
-> closed the gap this section used to describe as not-yet-started: **50 skills** now live
+> closed the gap this section used to describe as not-yet-started: **53 skills** now live
 > under `skills/`, including the full 24-skill KBD family (`kbd-process-orchestrator` plus
 > 22 sub-skills, `kbd-evolve`, `kbd-goal-check`), `adversarial-review`, `ideation-mindmap`,
 > `karpathy-progress-memory`, 20 artifact-refiner skills, 5 scaffold/convert skills, and the
@@ -161,7 +161,7 @@ that is not Node.
 > [`docs/kbd/overview`](site/docs/kbd/overview.md), [`docs/review/adversarial-review`](site/docs/review/adversarial-review.md),
 > and [`docs/reference/comparison-with-full-pack`](site/docs/reference/comparison-with-full-pack.md),
 > for the current, verified state of each item. The actual on-disk layout also diverged from §5.1's
-> plan below in one significant way: **skills are flat** (`skills/<name>/`, 50 directories), not
+> plan below in one significant way: **skills are flat** (`skills/<name>/`, 53 directories), not
 > grouped into `skills/kbd/`, `skills/pmpo/`, `skills/karpathy/`, `skills/rust/` subdirectories as
 > planned — and no `pmpo-*` family, `templates/`, or `tests/` top-level directory exists in this
 > checkout. Treat this section as intent-at-the-time, not current fact; treat §4.1 in the docs site

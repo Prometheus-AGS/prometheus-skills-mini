@@ -1,3 +1,5 @@
+> Current status and superseding operator instructions: [release-to-uar handoff](../../handoffs/release-to-uar.md). The historical plan below is retained for provenance.
+
 # A1 execution plan
 
 The executable plan is openspec/changes/compass-mcp-protocol-negotiation/{proposal.md,design.md,tasks.md,specs/compass-mcp-protocol-negotiation/spec.md} in this repository. Implementation is in /private/tmp/compass-fix, branch fix/mcp-protocol-negotiation, owned by the Compass fork.

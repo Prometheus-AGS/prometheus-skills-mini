@@ -1,8 +1,8 @@
 # Universal Agent Runtime as a the-boss agent runtime
 
 Parent: the-boss-shipping-and-settings. Canonically created with `prometheus kbd phase create --parent`
-on 2026-09-23 and deliberately **not activated**: the active child stays `the-boss-compass-integration`,
-which continues in parallel.
+on 2026-09-23. Activated after publication of The Boss 2.1.3; Compass delivery remains open only for
+installed Windows acceptance. See `../../handoffs/release-to-uar.md` for the current baseline and WIP.
 
 Operator-approved plan: `~/.claude/plans/agile-exploring-oasis.md` (decisions settled 2026-09-23).
 

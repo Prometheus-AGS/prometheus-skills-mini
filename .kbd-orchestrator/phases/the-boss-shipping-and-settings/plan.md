@@ -1,3 +1,5 @@
+> Current status and superseding operator instructions: [release-to-uar handoff](handoffs/release-to-uar.md). The historical plan below is retained for provenance.
+
 # Plan — the-boss-shipping-and-settings
 
 Seven changes across two repositories, plus four pre-existing mini changes this phase depends on

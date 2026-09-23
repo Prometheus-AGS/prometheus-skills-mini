@@ -2,26 +2,25 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 392,
-  "derivedRevision": 392,
+  "sourceRevision": 415,
+  "derivedRevision": 415,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 392
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 415
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-23T04:59:44.043010Z",
+  "updatedAt": "2026-09-23T20:18:24.152050Z",
   "cursor": [
     "the-boss-shipping-and-settings",
-    "the-boss-compass-integration",
-    "compass-mcp-protocol-negotiation",
-    "3.2"
+    "the-boss-universal-agent-runtime",
+    "sidecar-session-principal"
   ],
   "root": {
     "type": "phase",
     "id": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
     "status": "ready",
     "progress": {
-      "done": 12,
-      "total": 21
+      "done": 15,
+      "total": 32
     },
     "children": [
       {
@@ -260,10 +259,10 @@
         "type": "phase",
         "id": "the-boss-shipping-and-settings",
         "canonicalId": "the-boss-shipping-and-settings",
-        "status": "PENDING",
+        "status": "IN_PROGRESS",
         "progress": {
-          "done": 0,
-          "total": 0
+          "done": 1,
+          "total": 1
         },
         "children": [
           {
@@ -272,21 +271,133 @@
             "canonicalId": "the-boss-compass-integration",
             "status": "IN_PROGRESS",
             "progress": {
-              "done": 0,
+              "done": 1,
               "total": 1
             },
             "children": [
               {
                 "type": "change",
                 "id": "compass-mcp-protocol-negotiation",
-                "status": "PENDING",
+                "status": "COMPLETE",
                 "progress": {
-                  "done": 8,
+                  "done": 9,
                   "total": 9
                 }
               }
             ],
             "annotations": []
+          },
+          {
+            "type": "phase",
+            "id": "the-boss-universal-agent-runtime",
+            "canonicalId": "the-boss-universal-agent-runtime",
+            "status": "IN_PROGRESS",
+            "progress": {
+              "done": 1,
+              "total": 10
+            },
+            "children": [
+              {
+                "type": "change",
+                "id": "sidecar-launch-security",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 0,
+                  "total": 0
+                }
+              },
+              {
+                "type": "change",
+                "id": "sidecar-session-principal",
+                "status": "IN_PROGRESS",
+                "progress": {
+                  "done": 0,
+                  "total": 0
+                }
+              },
+              {
+                "type": "change",
+                "id": "run-scoped-credentials-and-mcp-servers",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 0
+                }
+              },
+              {
+                "type": "change",
+                "id": "run-request-host-context",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 0
+                }
+              },
+              {
+                "type": "change",
+                "id": "agui-runs-stream-fidelity",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 0
+                }
+              },
+              {
+                "type": "change",
+                "id": "encrypt-persisted-secrets",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 0
+                }
+              },
+              {
+                "type": "change",
+                "id": "surreal-scoped-signin-and-embedded-fallback",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 0
+                }
+              },
+              {
+                "type": "change",
+                "id": "skill-matching-llm-and-local-embedding",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 0
+                }
+              },
+              {
+                "type": "change",
+                "id": "agentic-chunking",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 0
+                }
+              },
+              {
+                "type": "change",
+                "id": "sidecar-release-pipeline",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 0
+                }
+              }
+            ],
+            "annotations": []
+          },
+          {
+            "type": "change",
+            "id": "the-boss-2.1.3-publication",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
           }
         ],
         "annotations": []

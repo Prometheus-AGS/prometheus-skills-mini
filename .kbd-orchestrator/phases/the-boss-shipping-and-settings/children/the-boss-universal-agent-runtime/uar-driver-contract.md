@@ -20,8 +20,10 @@ when a UAR change lands; the-boss code must cite the change by name.
    All calls come from the Electron main process; the renderer never talks to the sidecar.
 6. **Capabilities.** Call `GET /api/uar/capabilities` after `READY`. Refuse UAR agents with a clear
    message when a required capability flag is missing (flags are added as the later changes land).
-7. **Global MCP is off.** Global MCP registration returns 409 in sidecar mode; the driver passes MCP
-   servers per run (`run-scoped-credentials-and-mcp-servers`).
+7. **Global MCP is off in the current bootstrap.** Global MCP registration returns 409 through the
+   settings-manager lock; the driver passes MCP servers per run (`run-scoped-credentials-and-mcp-servers`).
+   Commit `cd739e82` records that the lock depends on persistence/settings-manager initialization.
+   `surreal-scoped-signin-and-embedded-fallback` must preserve it on every new fallback path.
 8. **Governance is on.** A token-authenticated sidecar reports governance `required`
    (`host_token_required`); run-policy denials and approvals are enforced.
 

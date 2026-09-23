@@ -14,4 +14,4 @@
 ## 3. Review and deliver
 
 - [x] 3.1 Review the scoped diff and fix actionable findings; record the verdict and verification evidence.
-- [ ] 3.2 Commit, push and open the Compass PR with before/after output; merge only if CI is green. Record CI and merge status without tagging or publishing.
+- [x] 3.2 Deliver the Compass change: PR #7 merged as a403339287c385d4fd48b42759f1e09045a0ac4d and published under the later operator-approved release plan. Shipped pin d0b9e0fb uses rmcp =3.4.0. See the phase release-to-uar handoff; installed Windows acceptance remains pending.

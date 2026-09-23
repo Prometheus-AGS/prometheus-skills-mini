@@ -29,6 +29,7 @@ services:
       SURREAL_MODE: server
       SURREAL_ENDPOINT: ws://surrealdb:8000
       SURREAL_USERNAME: ${MEMORY_USERNAME:?Configure the memory namespace user}
+      SURREAL_AUTH_LEVEL: namespace
       SURREAL_PASSWORD: ${MEMORY_PASSWORD:?Configure the memory namespace password}
       SURREAL_NAMESPACE: memory
       SURREAL_DATABASE: main_local_384

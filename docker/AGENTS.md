@@ -27,7 +27,7 @@ the process starts differs.
 - Credentials and provider keys come from a git-ignored env file through `env_file:` / `${VAR}`. Never
   inline `--user=root --pass=root`. Ship `.env.example` with names and no values.
 - Named volumes only. `HOME` is not set in `cmd.exe`; NTFS bind mounts are slow.
-- A `memory` limit on every service; pinned image versions (`surrealdb/surrealdb:v3.0.5`), digests once
+- A `memory` limit on every service; pinned image versions (`surrealdb/surrealdb:v3.2.4`), digests once
   prebuilt images exist. `RUST_LOG=info` — debug logs of a memory server contain user content.
 - `restart: unless-stopped`. No Windows service, no Task Scheduler, no native daemon on Windows.
 - The pack never enters WSL or calls `wsl.exe`. Docker Desktop's backend (WSL 2, or Hyper-V on

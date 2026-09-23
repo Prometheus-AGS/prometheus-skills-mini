@@ -12,6 +12,8 @@
     "test": "node --test",
     "check": "node rules/build.mjs --check",
     "coverage": "node scripts/coverage-report.mjs",
+    "context:bootstrap": "node scripts/prometheus-context-bootstrap.mjs",
+    "context:check": "node scripts/prometheus-context-bootstrap.mjs --check",
     "spec:validate": "node scripts/spec-validate.mjs"
   },
   "devDependencies": {

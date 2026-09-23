@@ -9,12 +9,13 @@ Loaded when a script, hook or package file is read. Not resident.
 Every script in this repo has to behave identically from `cmd.exe`, PowerShell, bash and zsh. Node.js LTS
 (>= 22) is the only runtime; files are ESM `.mjs`, invoked as `node <file>`.
 
-| Tier | Commands |
-|---|---|
-| T0 every edit | `node --check <file>`; the project linter on the touched file, if one is configured |
-| T1 unit complete | `node --test <the one test file>` |
-| T2 phase complete | `node --test`; `node rules/build.mjs --check`; `openspec validate --all --no-interactive` |
-| T3 milestone only | the three-OS CI matrix; anything that starts Docker |
+Batch implementation until a real entry-point flow is complete. Use `node --check`
+earlier only when syntax feedback is required to unblock work. At a completed change
+boundary, run the smallest integration scenario that exercises the real script,
+filesystem, process, protocol, or service boundary. Unit, mock-only, and per-edit
+tests are not completion evidence. Run `node rules/build.mjs --check`, applicable
+OpenSpec validation, broad integration flows, three-OS checks, and Docker scenarios
+only at the final boundary where they prove the completed set.
 
 ## Hard rules
 
@@ -48,14 +49,16 @@ Every script in this repo has to behave identically from `cmd.exe`, PowerShell, 
 
 ## Structure
 
-- `lib/<capability>/` — `kbd`, `spec-backend`, `karpathy`, `memory`, `review`, `template`, `platform`.
+- `lib/<capability>/` — `kbd`, `spec-backend`, `karpathy`, `memory`, `review`, `template`, `platform`, `context-bootstrap`.
   Organised by capability, never `utils/` or `helpers/`. Capabilities do not import each other; what two
   share moves to `lib/platform/`.
 - `scripts/` and `hooks/` are entry points only: parse arguments, call `lib/`, print, exit. No logic.
 - Pure functions take data and return data; I/O lives at the edge. That is what makes `node:test` cheap.
 - Data is immutable: return a new object, never mutate an argument.
 
-## Tests
+## Integration evidence
 
-`node:test` + `node:assert/strict`, Arrange–Act–Assert, names that state the behaviour. Write the test
-first and watch it fail. The `bats` tests of the source pack do not come across.
+Use `node:test` + `node:assert/strict` only for scenarios that drive a completed
+entry point across its real filesystem, process, protocol, or service boundary.
+State the production failure the scenario would catch. The `bats` tests of the
+source pack do not come across.

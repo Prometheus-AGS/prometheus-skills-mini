@@ -1,0 +1,65 @@
+{
+  "mode": "decision",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "Decision / Agent definition and Assumptions",
+      "claim": "The decision claims the-boss agent rows remain the source of truth while explicitly dropping or hiding existing run fields, and the falsifier is constructed so those losses cannot fail the decision.",
+      "evidence": "Decision says \"the-boss's agent row is the source of truth for running agents\" but the mapping table marks `permission_mode` as \"partial: `plan` and `acceptEdits` have no UAR equivalent\" and `plan/small model tiers, service_tier, env_vars, slash_commands, scheduler, heartbeat` as \"none | not sent; capability flags hide them for UAR agents\". The assumption then asserts, without evidence, that \"unsupported fields are either host-side features or can be hidden for UAR agents without surprising users.\" The artifact-parity falsifier only uses \"every supported field in the table\" and therefore cannot catch regression from unsupported fields being omitted.",
+      "suggested_fix": "Define an explicit compatibility contract for every existing agent-row field: preserve, emulate, intentionally disable with UX copy, or block UAR selection. Add falsifiers that fail on unacknowledged loss of any existing field, including `plan`, `acceptEdits`, env vars, scheduler, heartbeat, model tiers, and service tier."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "Decision / Shared UAR process and Falsifier",
+      "claim": "A single shared UAR process for all sessions is accepted without a falsifier for cross-session conversation, compaction, history, or memory leakage.",
+      "evidence": "Decision commits to \"One shared UAR process serves all the-boss sessions, multiplexed by UAR `session_id`\" and says UAR owns \"the agent loop, skill selection, context compaction and A2UI\" with \"session history reload\" in scope. The falsifiers test credential isolation, tool isolation, approvals, artifact parity, and import/export, but none test that session history, compacted context, memory state, AG-UI/A2UI events, or resumed-run state cannot leak between `session_id`s inside the shared process.",
+      "suggested_fix": "Add isolation tests with two concurrent and resumed sessions containing distinguishable private messages, compacted summaries, memory writes, and A2UI/AG-UI events; fail if either session can observe the other's state or if restart/reload binds history to the wrong session."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "Decision / Credentials and Falsifier",
+      "claim": "The credential falsifier does not cover the decision's own promises about child runs, resumed runs, checkpointing, serialization, or logs.",
+      "evidence": "Decision says run-scoped credentials are \"never serialized, never persisted or checkpointed\" and are \"propagated to child and resumed runs.\" The falsifier only checks \"two concurrent runs with different run-scoped keys\" and then scans \"UAR's settings and database\" after both runs end. It does not test child runs, resumed runs, checkpoints, request/response traces, logs, crash dumps, serialized artifacts, or any non-database persistence path.",
+      "suggested_fix": "Expand the credential falsifier to include child-run and resumed-run execution, checkpoint creation/reload, logging/tracing output, serialized run artifacts, crash/error paths, and all on-disk UAR data directories, not just settings and database."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "Assumptions / Tools",
+      "claim": "The security of exposing the-boss's in-process tools over loopback HTTP is delegated to unspecified D4 controls, so D1 commits to the attack surface without enough stated reasoning to evaluate it.",
+      "evidence": "Decision says the-boss tools including \"cherry-tools, agent-memory, skills, assistant, browser\" are \"served as per-session Streamable HTTP MCP endpoints on loopback\". The only stated security assumption is \"Serving host tools over Streamable HTTP MCP on loopback is secure with the controls in D4.\" D4's controls are not included in this packet, and D1's falsifier only tests one approval bypass case; it does not state or test endpoint authentication, unguessable binding, origin protection, request signing, localhost cross-process access, port discovery resistance, or teardown under crash/restart.",
+      "suggested_fix": "Move the required loopback security controls into D1 or make D1 conditional on D4. Add tests for unauthorized local clients, guessed/reused session IDs, stale endpoints after run end, restart/backoff races, and request replay against the MCP endpoint."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Decision / Approvals",
+      "claim": "Approval binding by `(toolCallId, hash of arguments)` omits session, run, tool, and server identity, leaving replay or cross-run approval reuse unaddressed.",
+      "evidence": "Decision says \"before executing, the-boss's MCP endpoint checks that an approval record exists for `(toolCallId, hash of arguments)`\". The stated key does not include `session_id`, run id, agent id, server id, tool name, workspace, or credential scope. The falsifier only checks that a host tool call \"without a matching approval record\" is refused; it does not test whether a matching approval from another run/session/tool can be replayed.",
+      "suggested_fix": "Bind approval records to run id, session id, agent id, server id, tool name, workspace, arguments hash, expiry, and nonce; add a falsifier proving approvals cannot be replayed across sessions, runs, tools, or restarts."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Decision / UAR changes in scope",
+      "claim": "The decision depends on multiple unimplemented UAR API changes but does not state feasibility, ownership, sequencing, or rollback if UAR rejects the required model.",
+      "evidence": "Decision lists \"run-scoped credentials, run-scoped MCP servers, `working_directory` and `reasoning_effort` on the run request, session history reload\" as \"UAR changes in scope for D1\" and several table entries only \"map after UAR change\" or say \"UAR change: add it.\" The packet contains no alternative if these changes conflict with UAR architecture, no prior decision approving UAR modification, and no falsifier for implementation feasibility before committing to loop ownership.",
+      "suggested_fix": "Split D1 into a conditional decision gated by a UAR spike/patch acceptance checklist, or add an explicit fallback architecture if run-scoped credentials/MCP/session reload cannot be implemented cleanly."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Decision / Alternatives",
+      "claim": "The decision selects shared-process UAR loop ownership without naming or rejecting the obvious alternatives, so the reasoning cannot show this is the least-risk architecture.",
+      "evidence": "The Decision directly states \"UAR becomes a fourth `the-boss` agent runtime\" and \"One shared UAR process serves all the-boss sessions\". The packet contains no comparison against per-session UAR processes, per-agent UAR processes, the-boss-owned loop with UAR as library/service, UAR owning agent definitions/settings, or disabling high-risk UAR features behind a narrower adapter.",
+      "suggested_fix": "Add an alternatives section comparing isolation, credential exposure, feature parity, restart behavior, resource cost, and implementation complexity for shared-process, per-session-process, and host-loop adapter designs."
+    }
+  ],
+  "checked_classes": [],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "mode": "decision",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document / Decision / UAR-side stream fixes and History",
+      "claim": "The decision depends on changing UAR behavior without establishing that this project can modify or require those UAR-side changes.",
+      "evidence": "The decision puts in scope: \"UAR-side stream fixes (in scope): emit TEXT_MESSAGE_START/END ... signal lagged subscribers\" and later \"UAR change: accept host-supplied history on the runs API\". The constraints identify an external/reference repository as untouchable: \"Reference only (`project.json` → `workspace`). Never written, including its worktrees.\" The packet does not state that UAR itself is writable in this phase or that a released UAR version with these API changes will exist before the-boss commits to this integration.",
+      "suggested_fix": "Split host-only decisions from UAR API changes, and add an explicit dependency/version gate: the-boss integration may only ship against a UAR release that exposes the required stream markers, lag signaling, action route behavior, and host-supplied history API."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document / Decision / Scope",
+      "claim": "The decision claims to cover \"ALL\" UAR features but reduces multiple features to run-trace display rather than functional support.",
+      "evidence": "The scope table says \"everything else UAR emits (skills activated, memory, guardrails, sycophancy, budget, context, sub-agents, citations) | this decision (run-trace parts)\". The original intent asked for \"full support ... and ALL the features it provides\". Persisted `data-uar-*` run-trace parts are only described as compact telemetry display, not as support for configuring, invoking, enforcing, or round-tripping those features.",
+      "suggested_fix": "Define what \"support\" means per feature: display-only trace, host-controlled configuration, UAR-controlled execution, persistence, replay, user settings, and failure behavior. Do not mark a feature covered by this decision unless its operational path is specified and falsified."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Assumptions and Falsifier",
+      "claim": "A load-bearing renderer compatibility assumption remains unchecked even though the decision says it was locally checked.",
+      "evidence": "The header says the revision followed \"a local check of the official A2UI renderer\", but the assumptions say \"The official `@a2ui/react` renders UAR's catalog correctly with the-boss's own components ... not yet run.\" The decision commits to `@a2ui/react` 0.10.2 and writing 9 components before this compatibility is executed.",
+      "suggested_fix": "Run the minimal renderer spike before committing: install the exact package version, render all 9 UAR-emitted component APIs under both catalog IDs inside the-boss's React bundle, and record the result as evidence rather than an assumption."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Falsifier / A2UI snapshots",
+      "claim": "The 50 ms rendering threshold is arbitrary and tied to one machine, so it cannot falsify whether the design is viable for supported platforms.",
+      "evidence": "The falsifier requires \"re-renders each update within 50 ms on the operator's development machine\". The original intent explicitly targets platform support across \"windows arm/x64, macos arm/x64, linux, etc.\", and the constraints include a Windows verification warning. No source is given for 50 ms and no platform or hardware matrix is specified.",
+      "suggested_fix": "Replace this with platform-specific budgets or a rationale-derived threshold, and include at least the slowest supported platform class or mark the decision blocked until cross-platform performance is measured."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Falsifier / Restart",
+      "claim": "The restart falsifier only checks conversational text recall, not whether UAR stateful features survive restart.",
+      "evidence": "The decision states \"UAR's session context is in memory only and has no history route\" and proposes to \"re-send history\". The falsifier only requires that after killing the sidecar, the reply \"uses the earlier turns' content\". That does not test restored skill activations, memory state, guardrails, budget/context state, A2UI surfaces, pending approvals, or sub-agent state—the same features the scope table claims are covered.",
+      "suggested_fix": "Add restart fixtures for at least one active A2UI surface, one pending/declared action, one tool approval state, one selected skill, and one memory/context artifact; require either exact restoration or explicit user-visible degradation."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Assumptions and Falsifier",
+      "claim": "The assumption that \"a continuation run appearing as a new turn\" is acceptable is not actually falsified by the round-trip test.",
+      "evidence": "The assumption says \"A continuation run appearing as a new turn is an acceptable experience for A2UI replies.\" The falsifier only checks that \"the continuation run appears as a new turn\". It verifies the chosen behavior occurs, not that it is acceptable or preserves A2UI interaction semantics.",
+      "suggested_fix": "Define acceptance criteria for A2UI action UX: whether the action updates the originating surface, creates a new assistant turn, preserves focus/context, and remains understandable in history. Test those criteria instead of only checking that the implementation does what the decision already chose."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

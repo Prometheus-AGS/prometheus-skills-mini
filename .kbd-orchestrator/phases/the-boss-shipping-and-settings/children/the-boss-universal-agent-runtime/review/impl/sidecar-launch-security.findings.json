@@ -1,0 +1,55 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/changes/sidecar-launch-security/tasks.md",
+      "line": 22,
+      "claim": "The required KBD progress registration for this change is still incomplete.",
+      "evidence": "Acceptance criterion 1.2 remains unchecked in the diff: `- [ ] 1.2 Register this change in the-boss child phase ... and in this repo's .kbd-orchestrator/ ...; verify both files name the change.`",
+      "suggested_fix": "Update the required KBD progress files and check off 1.2 only after verifying both files name `sidecar-launch-security`."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/changes/sidecar-launch-security/tasks.md",
+      "line": 105,
+      "claim": "The required crash-report token-confinement evidence was not produced.",
+      "evidence": "Acceptance criterion 2.23 remains unchecked: `- [ ] 2.23 Manual evidence: force an abort of a running sidecar ... search the OS crash-report directory for the token; record the result in evidence/crash-report.md.` The diff adds no `openspec/changes/sidecar-launch-security/evidence/crash-report.md` file.",
+      "suggested_fix": "Run the crash-report check or explicitly record the unverified/not-tested result in `evidence/crash-report.md` as required."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/changes/sidecar-launch-security/tasks.md",
+      "line": 193,
+      "claim": "The required cross-platform listener and process-inspection verification is still incomplete.",
+      "evidence": "Acceptance criterion 4.2 remains unchecked: `- [ ] 4.2 Run 2.13 and 2.19 on Linux, Windows x64 and Windows ARM64 ...; record per-platform output or record the platform as unverified.` The implementation notes also state `Linux and Windows runs are open under 4.2.`",
+      "suggested_fix": "Add per-platform evidence for Linux, Windows x64, and Windows ARM64, or record each platform as unverified per the criterion."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/changes/sidecar-launch-security/tasks.md",
+      "line": 196,
+      "claim": "The required the-boss driver contract update was not completed.",
+      "evidence": "Acceptance criterion 4.4 remains unchecked: `- [ ] 4.4 Update the-boss's UAR driver contract note: write the token line first, send it on every request, connect to 127.0.0.1. Verify the the-boss change references this change by name.`",
+      "suggested_fix": "Update the-boss driver contract documentation and add evidence that it references `sidecar-launch-security`."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/changes/sidecar-launch-security/tasks.md",
+      "line": 218,
+      "claim": "The stdio child environment requirement excludes one explicitly required spawn path.",
+      "evidence": "Acceptance criterion 2.21 requires exercising `StdioMcpClient::spawn`, but the implementation notes say `src/mcp/stdio_client.rs (StdioMcpClient::spawn) is not declared as a module and is not compiled, so it has no runtime path and was left unchanged.`",
+      "suggested_fix": "Either wire and secure `StdioMcpClient::spawn` if it is part of the accepted scope, or amend the OpenSpec criteria before marking 2.21/3.6 complete."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

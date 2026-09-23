@@ -1,0 +1,71 @@
+{
+  "mode": "decision",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document / Assumptions",
+      "claim": "The decision relies on UAR inline artifacts fully representing the-boss agents, but that is an unchecked load-bearing assumption rather than evidence.",
+      "evidence": "Assumption: \"UAR's inline-artifact runs API carries everything a the-boss agent row can express (system prompt, tools allow/deny, skills, memory/knowledge bases, model policy).\" The decision then commits to \"builds UAR's agent artifact inline from its own agent row\" and rejects \"UAR's stored agents or `.agent.md` files\" as source of truth.",
+      "suggested_fix": "Before committing, map every the-boss agent-row field to a concrete UAR inline-artifact field and identify unsupported fields; make unsupported fields a blocker or change the ownership model."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document / Decision",
+      "claim": "The key-registration design treats global sidecar provider state as safe per-run configuration without establishing per-agent/session isolation.",
+      "evidence": "Decision: \"registers the provider and API key with UAR before the run (`POST /api/uar/providers`), because UAR accepts no per-run key\". Assumption: \"Registering keys with UAR before each run is acceptable, given UAR is a local sidecar the-boss launched.\" The only stated justification is locality, not isolation, deletion semantics, concurrent-run behavior, or storage behavior.",
+      "suggested_fix": "Require a provider namespace/delete/ephemeral-token design before accepting this ownership model; otherwise defer to a UAR change that supports per-run credentials."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Falsifier",
+      "claim": "The falsifier contains subjective and unmeasurable conditions, so it may not actually falsify the decision in practice.",
+      "evidence": "Falsifier: \"cannot reproduce what an equivalent the-boss agent does\" has no equivalence test or threshold; \"The deep research finds a documented pattern ... materially simpler with no loss of the-boss features\" depends on subjective judgments of \"materially simpler\" and \"no loss\".",
+      "suggested_fix": "Replace these with executable checks: a fixed fixture agent, expected prompt/tool/KB/memory/model-policy projection, concurrent-session isolation test, and a written comparison matrix with defined acceptance criteria."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Assumptions",
+      "claim": "The decision uses `dsh` as proof that the-boss's driver contract fits UAR, but the packet gives no evidence that `dsh` has the same control boundary as UAR.",
+      "evidence": "Assumption: \"The the-boss driver contract (`connect` → events/send/close/reconcile) already fits a runtime that owns its whole loop; `dsh` proves it.\" Original intent context only says `dsh` is \"a Bun child process\", while UAR is \"a Rust/Axum server with its own agent loop, 300+ providers, skill selection, context compaction, RAG, AG-UI streaming and A2UI v0.9.1 surfaces.\"",
+      "suggested_fix": "Document the exact `dsh` capabilities that match UAR's loop ownership, streaming, approvals, tools, persistence, and reconciliation semantics; if they differ, do not use `dsh` as the proof."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Decision",
+      "claim": "The decision risks solving a different problem than the operator intent by subordinating UAR's agent definitions to the-boss rows while the intent asks for full UAR/A2UI feature support.",
+      "evidence": "Original intent asks for \"full support for A2UI and its agent definitions standards, content management algorithm selection, skill selection algorithms, and ALL the features it provides\". Decision says \"the-boss's agent database is the source of truth, not UAR's stored agents or `.agent.md` files\" and assumes the inline API carries \"skills, memory/knowledge bases, model policy\".",
+      "suggested_fix": "Explicitly list which UAR agent-definition, content-management, skill-selection, RAG, and A2UI features are preserved, adapted, or lost under the-boss-as-source-of-truth."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Decision",
+      "claim": "The loopback MCP tool bridge is accepted without addressing the security and workspace-isolation boundary it creates.",
+      "evidence": "Decision: \"exposes its own tools ... to UAR as a loopback, token-protected MCP HTTP endpoint\" and falsifier only checks whether \"concurrent sessions in different workspaces see or call each other's tools\". There is no stated assumption or falsifier for token scope, token lifetime, replay, localhost origin abuse, or whether UAR plugins/tools can reach the endpoint outside the intended run.",
+      "suggested_fix": "Define per-run tokens, expiry, audience binding, workspace binding, and negative tests for cross-session replay and unauthorized loopback access."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Assumptions",
+      "claim": "Approval behavior is reduced to latency even though the ownership model depends on correctness of approval identity, scope, and denial semantics.",
+      "evidence": "Assumption: \"Approval latency is acceptable: UAR auto-denies an unanswered approval after 300 s.\" Decision: \"relays approvals: UAR's `CUSTOM uar.tool.approval_required` becomes a the-boss approval card, answered via `POST /api/uar/runs/{id}/tool-approval`.\" The assumption does not cover whether the approval request uniquely identifies the tool call, workspace, arguments, user, or run.",
+      "suggested_fix": "Add acceptance criteria requiring approval cards to display and bind run id, tool name, arguments, workspace, agent, and call id; reject stale or mismatched approval responses."
+    },
+    {
+      "severity": "WARNING",
+      "file": "constraints / services-degrade vs decision_document",
+      "claim": "The decision does not address the project requirement that service-dependent features degrade when Docker services are down.",
+      "evidence": "Constraints: \"everything must still work with both services down\" and original intent notes \"the mini skill pack's rules require everything to keep working when the Docker services ... are down.\" Decision includes \"memory, knowledge bases\" in the UAR tool path but has no assumption or falsifier for behavior when SurrealDB or surreal-memory is unavailable.",
+      "suggested_fix": "Add a falsifier that UAR runs with memory/knowledge integrations enabled still start, stream, and fail soft when SurrealDB and surreal-memory are stopped."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

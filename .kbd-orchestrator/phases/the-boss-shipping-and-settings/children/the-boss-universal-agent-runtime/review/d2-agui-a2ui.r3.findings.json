@@ -1,0 +1,64 @@
+{
+  "mode": "decision",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document / Decision",
+      "claim": "The decision moves credentials and MCP execution into UAR without a falsifier proving the-boss still owns credentials, MCP connections, and approval boundaries as required by the runtime context.",
+      "evidence": "Original intent context states: \"the host owns model credentials, the system prompt, skills, memory, every MCP connection, every approval decision, and message persistence.\" The decision requires a UAR release exposing \"run-scoped credentials and MCP servers\" and says actions go through UAR, but the falsifier has no test for credential non-persistence, per-run isolation, MCP ownership, or approval enforcement.",
+      "suggested_fix": "Add explicit architecture and tests proving credentials are injected only per run, never persisted by UAR, cannot be reused across agents/sessions, and all MCP/tool approvals remain enforced by the-boss."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document / Falsifier",
+      "claim": "The restart falsifier is subjective and can pass or fail by interpretation rather than measurement.",
+      "evidence": "Falsifier 7 says: \"after killing the sidecar mid-conversation, a follow-up question that needs earlier turns is answered correctly in the same session.\" It gives no deterministic fixture, expected answer, scoring threshold, timeout, or distinction between model luck and successful history reload.",
+      "suggested_fix": "Replace it with a deterministic fixture: fixed prior turns, fixed question, expected required facts/citations/tool calls, timeout, and explicit failure conditions for missing or cross-session history."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Assumptions",
+      "claim": "A load-bearing renderer compatibility assumption was not actually executed despite being cheap to check now.",
+      "evidence": "Assumption says: \"The official `@a2ui/react` renders UAR's catalog with the-boss's components (verified in source, not run).\" The decision depends on \"Official `@a2ui/react` 0.10.2\" rendering all surfaces and actions, but source inspection does not prove React runtime compatibility, catalog registration, action dispatch, or theme behavior.",
+      "suggested_fix": "Run a minimal renderer spike before committing: mount all 9 components under both catalog IDs in the actual the-boss React environment and dispatch at least one action through the intended handler."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Falsifier",
+      "claim": "The A2UI performance falsifier is non-portable and has an unsupported threshold.",
+      "evidence": "Falsifier 5 says: \"re-renders each update within 50 ms on the development machine\" but does not define the development machine, OS, renderer environment, measurement method, sample size, or why 50 ms is the correct threshold.",
+      "suggested_fix": "Define the benchmark environment and measurement method, or use a user-visible threshold such as no dropped frames/p95 latency under a specified fixture on supported platforms."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Decision",
+      "claim": "The decision claims bounded A2UI surface size but gives no absolute bound, so pathological surfaces can still exhaust storage or memory while passing the falsifier.",
+      "evidence": "Decision says \"bounded surface size\" and falsifier 5 only requires \"persisted size stays within the final surface size + 10% per surface.\" If the final surface is enormous, the test can pass while the app persists an enormous snapshot.",
+      "suggested_fix": "State hard per-surface, per-message, and per-session byte limits, define truncation/error behavior, and add tests for over-limit surfaces and patch growth."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Decision",
+      "claim": "The decision redefines \"support ALL the features\" to configure-and-see but does not prove this satisfies the operator's broader request for full support.",
+      "evidence": "Original intent asks for \"full support for A2UI and its agent definitions standards, content management algorithm selection, skill selection algorithms, and ALL the features it provides.\" The decision narrows this to: \"operator decision: configure + see\" and explicitly excludes \"dedicated management screens (a memory browser, sub-agent inspector, guardrail history).\" No evidence in the packet shows the operator accepted loss of management capability for features whose normal use may require inspection or editing.",
+      "suggested_fix": "Record the operator decision explicitly with scope examples, or split unsupported management capabilities into named out-of-scope items with follow-up decisions."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Falsifier",
+      "claim": "Feature coverage tests can pass while exercising only stubs or superficial visibility rather than functional UAR behavior.",
+      "evidence": "Falsifier 2 requires \"one test shows the configure path reaches UAR\" and \"one fixture shows the see path renders.\" That does not prove context compaction compacts correctly, skill selection chooses the intended skill, memory recall/mutation works, guardrails block or flag correctly, budgets enforce, or sub-agents execute safely.",
+      "suggested_fix": "For each feature row, require at least one end-to-end behavioral assertion that the feature changes runtime behavior, not just that settings are sent and a trace renders."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

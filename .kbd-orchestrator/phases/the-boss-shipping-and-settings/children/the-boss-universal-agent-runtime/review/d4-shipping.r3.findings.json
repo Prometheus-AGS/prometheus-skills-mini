@@ -1,0 +1,64 @@
+{
+  "mode": "decision",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "decision_fields.assumptions / Decision — Release pipeline",
+      "claim": "The release plan depends on a cheaply checkable infrastructure assumption that is not evidenced and may be false for at least one required target.",
+      "evidence": "Assumption: \"Native GitHub-hosted runners exist for all six targets.\" Decision: \"builds all six targets on every push to `main` (native GitHub-hosted runners, no cross-compiling)\". Original intent requires \"windows arm/x64, macos arm/x64, linux, etc.\"",
+      "suggested_fix": "Enumerate the exact six target triples and exact GitHub runner labels, verify each exists and can build a trivial UAR job now, or change the decision to use cross-compilation/self-hosted runners for unsupported targets."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Falsifier — Build",
+      "claim": "The build falsifier weakens the decision from 'ship all six targets' to 'drop failing targets', which contradicts the stated release pipeline and operator intent without a decision boundary.",
+      "evidence": "Decision says the workflow \"builds all six targets on every push to `main`\" and original intent asks for versions for \"all supported platforms\"; falsifier says \"a target still failing is dropped from the first release and reported, and a failing Windows target reopens this decision.\"",
+      "suggested_fix": "Define which targets are mandatory for first release, which are optional, and what authority permits dropping a non-Windows target."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "Decision — Secret storage / Falsifier — Secrets at rest",
+      "claim": "The secrets-at-rest test can pass while the design still stores recoverable secrets insecurely because key management is unspecified and byte-search only detects plaintext copies.",
+      "evidence": "Decision says secrets \"go through UAR's encrypted credential store or are not persisted\" but never states where encryption keys live; falsifiers only require that \"a byte search of all UAR settings, database, backup and log files finds neither value.\"",
+      "suggested_fix": "Specify the credential-store backend and key source per OS, require that decryption keys are not stored beside ciphertext, and add a falsifier that verifies secrets cannot be recovered from the UAR data directory alone."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Falsifier — Transport security",
+      "claim": "The transport-security remediation is not tied to the failures it claims to handle; switching to UDS/named pipes would not fix several listed failure modes.",
+      "evidence": "Decision says \"A failed security test (falsifier 2) moves the transport to UDS / named pipes.\" Falsifier 2 includes token leakage into \"stdout/stderr logs, traces, crash reports, or any file\", and bad handling of `Origin`/`Host`; those defects can persist unchanged over UDS/named pipes.",
+      "suggested_fix": "Split falsifier 2 into transport-reachability failures versus token-handling/logging/header-validation failures, with separate required remediations for each."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Decision — Request controls",
+      "claim": "The host-validation control is partly assigned to the wrong implementation stack and leaves the Rust sidecar requirement ambiguous.",
+      "evidence": "The sidecar is described as \"a Rust/Axum server\" in original intent context, but request controls end with \"MCP TypeScript SDK ≥ 1.24.0 with host validation\" for \"UAR sidecar port and the-boss MCP endpoints.\"",
+      "suggested_fix": "State separately how Host/Origin validation is implemented and tested in Rust/Axum for UAR and in the TypeScript SDK for the-boss MCP endpoints."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Falsifier — Fallback",
+      "claim": "The fallback test omits Linux even though Linux is part of the supported shipping matrix and the constraints require operation with Docker down.",
+      "evidence": "Original intent includes \"linux\" among supported platforms; constraints say \"everything must still work when the Docker services ... are down\"; fallback falsifier tests only \"macOS and Windows\".",
+      "suggested_fix": "Add Linux to the SurrealKV fallback falsifier or explicitly remove Linux from the supported fallback scope and explain how that satisfies the Docker-down constraint."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Falsifier — Transport security",
+      "claim": "The process-inspection portion of the falsifier is not operationally defined across platforms and uses POSIX-specific examples for a cross-platform decision.",
+      "evidence": "Falsifier 2 requires checking argv/environment via \"`ps eww` / `/proc/*/environ` / Windows process inspection\" without naming a concrete Windows method, target processes, or pass/fail procedure.",
+      "suggested_fix": "Replace this with platform-specific, runnable inspection steps for macOS, Linux, Windows x64, and Windows ARM64, including child-process coverage."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

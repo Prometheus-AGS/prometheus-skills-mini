@@ -1,0 +1,71 @@
+{
+  "mode": "decision",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document / Credentials",
+      "line": 0,
+      "claim": "The credential design contradicts itself on resumed runs: secrets are required after resume but are neither persisted nor checkpointed.",
+      "evidence": "The decision says provider credentials are \"never serialized, never persisted, checkpointed, logged or traced\" while also saying they are \"propagated in memory to child and resumed runs\"; the falsifier then requires \"a checkpoint write and reload\" and \"a resumed run\" to use its own key. If the process restarts, the in-memory secret is gone; if the host resupplies it, that mechanism is not specified.",
+      "suggested_fix": "Define the resume credential source explicitly: either resumed runs require the-boss to reattach credentials on resume, or resume is unsupported after process restart, or credentials are stored in an OS keychain with a stated threat model and tests."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "decision_fields.assumptions",
+      "line": 0,
+      "claim": "The decision depends on major UAR API and persistence changes that are not listed as assumptions and are treated as already available.",
+      "evidence": "The decision requires new behavior such as \"add to the run request\" for working directory and reasoning_effort, a run-scoped credential \"on CreateRunRequest\", \"run-scoped MCP servers\" that are \"never written to UAR's global registry or settings\", and `artifact.extensions[\"uar.run_policy\"]`; the assumptions list only says the driver contract fits, sessions are separated, and `Selected` MCP policy is sound.",
+      "suggested_fix": "Add an explicit assumption that UAR can be changed to support these APIs without breaking its model, then require a spike or failing/passing contract tests against the UAR branch before committing to this ownership model."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document / Assumptions",
+      "line": 0,
+      "claim": "The shared-process isolation assumption is broader than its evidence and does not cover the highest-risk state being shared.",
+      "evidence": "The assumption cites only \"session context is keyed by `session_id` (`manager.rs:2400-2407`) and compaction, memory and A2UI state are per session,\" but the decision puts credentials, tool endpoints, approval flow, run policy, MCP server selection, child/resumed runs, traces, logs, and crash output into one shared UAR process.",
+      "suggested_fix": "Either isolate UAR per the-boss session until credentials/tools/approval/logging are proven per-session, or expand the cited evidence to cover every shared mutable store and side channel used by those components."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Approvals",
+      "line": 0,
+      "claim": "The approval defense key is under-scoped and could authorize the wrong operation across sessions or tools.",
+      "evidence": "The endpoint refuses a host tool call unless an approval record exists for only \"(toolCallId, hash of arguments)\"; the key does not include run id, session id, MCP server id, tool name, workspace, user, or approval expiry.",
+      "suggested_fix": "Bind approval records to at least runId/sessionId, tool/server identity, tool name, normalized arguments hash, workspace, requesting user, and an expiry; add a cross-session reused-toolCallId test."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_fields.falsifier",
+      "line": 0,
+      "claim": "The credential containment falsifier can pass while secrets are still persisted in transformed form.",
+      "evidence": "The test requires only that \"a byte search of every UAR data directory, log, trace and crash output finds no key\"; this misses base64, JSON-escaped, chunked, encrypted-with-local-key, hashed, or provider-wrapped forms of the same credential.",
+      "suggested_fix": "Use high-entropy canary credentials and scan for raw, escaped, base64/base64url, hex, chunked substrings, and known provider header/body encodings; also assert the serialization schema rejects secret fields."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Decision",
+      "line": 0,
+      "claim": "The decision claims UAR will own skill selection while the field contract routes skills through the-boss MCP tools, leaving ownership of UAR's native skill-selection system unresolved.",
+      "evidence": "The opening decision says \"UAR runs the agent loop, skill selection, context compaction and A2UI,\" but the field table says \"skills, knowledge bases, memory on/off\" are preserved \"via the-boss's skills/KB MCP tools and `memory.conversation.enabled`\" rather than UAR's own skill registry/selection algorithms.",
+      "suggested_fix": "State whether UAR native skill selection is used, bypassed, or fed by translated the-boss skills; add a falsifier that verifies the intended selector actually chooses skills."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Decision",
+      "line": 0,
+      "claim": "The decision does not address the original requirement for UAR-specific configuration/settings despite choosing the runtime ownership model.",
+      "evidence": "The original intent asks for UAR \"as an `agent runtime` ... with its own configuration/settings, sidecar configuration\"; this decision disables several settings with UI copy and defines run policy, credentials, tools, approvals, and import/export, but does not say where UAR-specific runtime settings live or who owns them.",
+      "suggested_fix": "Add the settings ownership boundary to D1 or explicitly defer it to D3/D4 with the fields that remain undecided."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

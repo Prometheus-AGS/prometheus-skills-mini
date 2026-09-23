@@ -1,0 +1,64 @@
+{
+  "mode": "decision",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document: Falsifier",
+      "claim": "The falsifier does not cover most settings the decision commits to exposing, so the central claim that every exposed UAR option actually works can pass while many shipped options are untested.",
+      "evidence": "Decision exposes per-agent context compaction strategies, skill prefer/max_active, tool approval and execution mode, memory/knowledge bases, app-wide thresholds, activation mode, guardrails, and sycophancy, but the falsifier only has gates for LLM matching, LocalEmbedding, agentic chunking, budgets, and the stop rule.",
+      "suggested_fix": "Add explicit pass/fail gates for each exposed setting class, including precedence, stricter-only guardrails/sycophancy, persistence/push behavior, and per-run application."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document: Budget and stop rule / Falsifier 5",
+      "claim": "The stop rule is not falsifiable in practice because its unit and trigger are ambiguous.",
+      "evidence": "The decision says the builds are capped at \"8 focused engineering days\" and each item stops after \"1.5× its estimate\", but two estimates are ranges — \"1–2 days\" and \"2–3 days\" — and no measurement method for a \"focused engineering day\" is defined.",
+      "suggested_fix": "Define the tracked unit, who records it, whether ranges use lower or upper bounds, and the exact point at which work must stop."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document: Assumptions",
+      "claim": "A load-bearing deployment assumption is stated without evidence even though it determines whether app-wide settings are actually global.",
+      "evidence": "Assumption: \"One UAR process serves all sessions, so app-wide settings are genuinely global for UAR\"; original intent only says UAR ships a sidecar binary that \"binds a random loopback port and prints `READY:{port}`\", not that there is exactly one sidecar per app across sessions/windows/profiles.",
+      "suggested_fix": "Verify and document the sidecar lifecycle model, or change the settings design to scope app-wide settings to each sidecar instance and synchronize across instances."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document: Persistence",
+      "claim": "The persistence design assumes restart recovery but lacks a gate for the failure mode it names.",
+      "evidence": "Decision: \"UAR keeps the skill-matching config in memory only; the-boss is the persisted source and pushes it on every start, so a UAR restart never loses it.\" The falsifier has no test for sidecar restart, failed push, changed settings while UAR is already running, or multiple UAR processes.",
+      "suggested_fix": "Add a restart test: change persisted settings in the-boss, restart UAR, assert the effective UAR config matches; also define behavior when push fails."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document: Falsifier 1",
+      "claim": "The LLM matching gate can pass without proving the real exposed LLM matcher works with real driver binding or model selection.",
+      "evidence": "Falsifier 1 runs \"with a deterministic mock driver\" while the decision specifically requires running on \"the run's bound LLM driver\" and honoring \"model_name\".",
+      "suggested_fix": "Add an integration gate proving the matcher uses the run-bound driver and requested model_name, with credential binding verified by a recording or fake bound driver at the runtime boundary."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document: Falsifier 2",
+      "claim": "The LocalEmbedding gate proves only that the remote backend is not called, not that the local embedding option is usable or portable.",
+      "evidence": "Decision commits to \"on-device fastembed (feature `local-models`)\" while original intent requires UAR versions for \"windows arm/x64, macos arm/x64, linux, etc.\"; Falsifier 2 only requires \"zero calls to the remote embedding backend\" and matching with persistence off.",
+      "suggested_fix": "Add gates for model availability/download behavior, supported-platform startup, cache rebuild on reconciliation, and a minimal retrieval-quality threshold."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document: Falsifier 3",
+      "claim": "The agentic chunking gate does not test the long-document/windowing behavior the decision says will be built.",
+      "evidence": "Decision: \"LLM-proposed boundary offsets, windowing for long documents, a reconstruction check\"; Falsifier 3 only uses \"a three-topic fixture document with a mock LLM\" and checks concatenation plus mock offsets.",
+      "suggested_fix": "Add a long-document fixture that exceeds the LLM window, asserts all windows are processed, verifies exact reconstruction, and checks fallback behavior per failed window."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "mode": "decision",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "Falsifier",
+      "claim": "The falsifier does not test that many exposed options actually work; it only tests that their configured values are carried or reported.",
+      "evidence": "Decision claim: \"Every UAR option the-boss exposes must actually work.\" Falsifier #4 only requires \"UAR's recorded run policy for a run from that agent carries the value\" for compaction, skill prefer/max_active, tool approval mode, execution mode, and memory/KB. Falsifier #6 only requires \"UAR's settings API reports the new value\" for app-wide settings. Neither proves compaction changes context, prefer/max_active changes activation, sandbox/direct changes execution, memory/KB changes retrieval, guardrails deny unsafe actions, or sycophancy changes behavior.",
+      "suggested_fix": "Add behavior-level gates for each exposed setting, not just policy propagation/API echo tests; hide any setting that lacks a behavioral test."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "Decision / Assumptions",
+      "claim": "The decision depends on a self-reported effort stop rule with no independent enforcement, making the fallback that protects scope unreliable.",
+      "evidence": "Decision: \"Effort is tracked as focused working days, recorded by the implementer in the KBD task log\" and \"reaching the cap stops whichever items are still open.\" Assumption: \"The recorded-effort stop rule is followed.\" Falsifier #8 only checks \"the KBD task log shows recorded effort per item,\" which can pass even if entries are incomplete, undercounted, or added after the fact.",
+      "suggested_fix": "Define an enforceable mechanism: dated task start/stop records required before work begins, reviewer verification at each threshold, and an automatic settings-hide task triggered when the threshold is reached."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Decision / Falsifier",
+      "claim": "The LocalEmbedding option assumes native on-device fastembed can be shipped and run across the required platform matrix, but the decision provides no gate for that.",
+      "evidence": "Decision: \"A distinct `LocalEmbedding` matcher ... on-device fastembed with an in-memory skill-vector cache.\" Original intent requires sidecar releases \"for all supported platforms (windows arm/x64, macos arm/x64, linux, etc.).\" Falsifier #2 only checks \"zero calls to the remote embedding backend\" and \"still matches with persistence off\"; it does not test Windows/macOS/Linux native availability, model packaging/download, startup failure, or architecture compatibility.",
+      "suggested_fix": "Add platform/package acceptance tests or explicitly hide LocalEmbedding until fastembed and its model assets are verified on every supported sidecar target."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Falsifier",
+      "claim": "The LLM matching gate can pass without proving the implementation uses the run's bound driver or honors model_name in real execution.",
+      "evidence": "Decision requires LLM matching to \"run on the run's bound driver, honour `model_name`.\" Falsifier #1 uses \"a deterministic mock driver\" and measures only skill choice on five paraphrase cases plus malformed fallback; it does not assert that the configured driver/model_name were invoked or that a non-default model path is exercised.",
+      "suggested_fix": "Add a test double that records driver identity and model_name, plus a test with two configured models whose outputs differ so using the wrong model fails."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Falsifier",
+      "claim": "The agentic chunking gate validates offset plumbing against a mock but not whether agentic chunking produces useful boundaries on real inputs.",
+      "evidence": "Decision calls for \"LLM boundary offsets, windowing, reconstruction check, `Recursive` fallback.\" Falsifier #3 only requires \"on a three-topic fixture with a mock LLM: > 1 chunk, chunks concatenate to the exact input, boundaries match the mock's offsets; LLM error → `Recursive`.\" A mock can return preselected offsets, so this does not falsify bad prompts, bad boundary selection, or unusable chunks.",
+      "suggested_fix": "Add at least one non-mock golden fixture with expected acceptable boundary ranges and failure cases for invalid/out-of-order/out-of-window offsets."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Decision",
+      "claim": "The decision exposes memory and knowledge-base settings without a degradation gate despite the project constraint that service-dependent features keep working when Docker services are down.",
+      "evidence": "Decision: per-agent settings include \"memory on/off and knowledge bases.\" Constraints warning `services-degrade`: \"everything must still work with both services down\" and \"A change touching lib/memory or lib/review was exercised with the containers stopped; service-touching hooks exit 0.\" The falsifier contains no test for memory/KB behavior when surreal-memory or SurrealDB is unavailable.",
+      "suggested_fix": "Add a services-down acceptance test for memory/KB settings, defining whether they no-op, warn, or fall back without breaking runs."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

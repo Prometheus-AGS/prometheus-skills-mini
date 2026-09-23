@@ -1,0 +1,78 @@
+{
+  "mode": "decision",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document / Falsifier / Security",
+      "claim": "The security falsifier is impossible to satisfy as written because the decision passes bearer tokens through environment variables while requiring that tokens never appear in crash reports or files on disk.",
+      "evidence": "Decision: \"tokens generated per launch ... passed through environment variables at spawn\". Falsifier: \"tokens never appear in the process list, logs, crash reports or files on disk.\" Environment blocks are commonly captured by crash reporters, diagnostics, child-process inheritance, and process inspection; the decision provides no containment mechanism that makes the stated invariant true.",
+      "suggested_fix": "Do not use environment variables for long-lived bearer secrets, or narrow the falsifier to measurable exposure paths. Prefer an authenticated one-time pipe/stdio bootstrap, inherited file descriptor, platform keychain, or parent-created local socket handoff, and explicitly test child inheritance and crash dump behavior per OS."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document / Secret storage and Falsifier / Secrets at rest",
+      "claim": "The falsifier does not test the plaintext migration the decision commits to, so existing leaked secrets could remain after this decision passes.",
+      "evidence": "Decision: \"Existing plaintext rows are migrated (encrypted or stripped) and the migration is logged without values.\" Falsifier only tests new writes: \"after registering a provider key and an MCP server with an `env` secret through the UAR API, a byte search ... finds neither value.\"",
+      "suggested_fix": "Add a migration fixture containing pre-existing plaintext provider keys and MCP env secrets, run the migration, then byte-search all settings/database/backup/log files for the old values and verify the migrated records are either encrypted and usable or stripped with an explicit user-visible state."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Assumptions",
+      "claim": "A cheap, load-bearing release assumption is left unverified before committing to the pipeline.",
+      "evidence": "Assumption: \"Native GitHub-hosted runners exist for all six targets (including `windows-11-arm` and `ubuntu-24.04-arm`).\" Decision: \"builds all six targets on every push to `main` ... native runners for each, no cross-compiling.\" This can be checked against GitHub Actions runner labels before the decision is committed.",
+      "suggested_fix": "Verify the exact GitHub-hosted runner labels and availability now, record the evidence, and define the fallback for any target without a native hosted runner before choosing the release architecture."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Falsifier / Build",
+      "claim": "The build falsifier can pass without proving the binary works because \"working `uar-sidecar`\" is undefined.",
+      "evidence": "Falsifier: \"the `main`-branch workflow produces a working `uar-sidecar` for all six targets within 4 working days...\" No smoke-test criteria are stated for startup, READY output, authenticated request handling, AG-UI/A2UI behavior, storage connection, fallback, or document/model features.",
+      "suggested_fix": "Replace \"working\" with a per-platform smoke suite: launch binary, observe `READY:{port}`, authenticate a health request, reject unauthenticated requests, exercise one AG-UI stream, verify storage connection/fallback, and validate required feature flags."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Falsifier / Fallback",
+      "claim": "The fallback falsifier omits Linux even though Linux is a first-release target and the project constraint requires service-down behavior generally.",
+      "evidence": "Decision: \"builds all six targets ... Linux x64/arm64\". Constraint: \"everything must still work with both services down\". Falsifier: \"with Docker stopped, the sidecar starts on SurrealKV within 10 s on macOS and Windows\".",
+      "suggested_fix": "Run the same Docker-stopped fallback test on Linux x64 and Linux arm64, or explicitly state why Linux is excluded from fallback support."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Transport and Security controls",
+      "claim": "The decision treats loopback TCP plus bearer tokens as equivalent to restricted IPC without addressing same-user local process access, which is the main threat difference between TCP and UDS/named pipes.",
+      "evidence": "Decision: \"research and the MCP specification treat loopback plus the controls below as equivalent to restricted IPC\" and \"Loopback TCP on `127.0.0.1`\". Controls listed are bearer token, Host/Origin rejection, no CORS, and renderer proxying; none restrict which same-user local process can open `127.0.0.1:<port>` if it obtains or observes the token.",
+      "suggested_fix": "State the local attacker model explicitly. If same-user local processes are in scope, use platform IPC with filesystem/ACL permissions or add OS-level peer validation where available; if they are out of scope, say so and make the residual risk explicit."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Falsifier / Isolation",
+      "claim": "The isolation test is too narrow to prove namespace isolation for the chosen database credential.",
+      "evidence": "Decision: \"UAR uses the shared Docker SurrealDB 3.2.4 in its own `uar` namespace with a namespace-scoped system user (role `EDITOR`), never root.\" Falsifier only checks: \"`SELECT` and `INFO` on the `memory` and `compass` namespaces fail.\" It does not test writes, deletes, namespace/database switching, DEFINE statements, LIVE queries, or access to root/system metadata.",
+      "suggested_fix": "Add a permission test matrix for SELECT/CREATE/UPDATE/DELETE/INFO/DEFINE/USE NS/USE DB/LIVE across `uar`, `memory`, and `compass`, and fail on any operation outside the intended namespace/database."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Decision / Binary",
+      "claim": "The binary feature selection is not tied back to the operator requirement for AG-UI, A2UI, agent definitions, content management algorithm selection, skill selection algorithms, and all UAR features.",
+      "evidence": "Original intent asks for \"AG-UI ... full support for A2UI and its agent definitions standards, content management algorithm selection, skill selection algorithms, and ALL the features it provides\". Decision selects features `minimal,local-models,document-intelligence,wasm-runtime` and disables extra listeners including \"A2A gRPC\" and \"operator UI\", but does not map the selected feature flags to the required UAR capabilities.",
+      "suggested_fix": "Add a feature-to-requirement matrix showing which Cargo features and runtime endpoints provide each required UAR capability, and identify any intentionally excluded capability as a separate operator decision."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Release pipeline",
+      "claim": "The decision commits to building all six targets on every push to main without addressing CI cost, queue time, or failure blast radius.",
+      "evidence": "Decision: \"builds all six targets on every push to `main`\". The document says \"there is no hard installer-size limit\" but gives no budget or limit for CI minutes, runner availability, release latency, or how non-release pushes avoid blocking on six native builds.",
+      "suggested_fix": "Define which checks run on every push versus release tags, set maximum acceptable CI duration/cost, and specify whether failures on non-primary architectures block main."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

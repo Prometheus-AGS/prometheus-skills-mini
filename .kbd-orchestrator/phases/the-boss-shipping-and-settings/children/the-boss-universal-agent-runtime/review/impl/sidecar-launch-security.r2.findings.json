@@ -1,0 +1,47 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "src/server.rs",
+      "line": 2122,
+      "claim": "The public sidecar listener entrypoints still start an unguarded server by passing `None` for the launch token, bypassing the sidecar authentication and surface-reduction path.",
+      "evidence": "`run_server_with_listener` derives `sidecar_mode` from `launch_token.map(...)` and only enables `SidecarGuard` when the token is `Some`, but `start_server_sidecar_with_listeners` passes `None` at the new `launch_token` argument and `start_server_sidecar_with_listeners_and_shutdowns` also passes `None`.",
+      "suggested_fix": "Require a `SidecarLaunchToken` for every sidecar-named start function, or explicitly rename/test-only isolate the unguarded helpers so they cannot be used as sidecar entrypoints."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/changes/sidecar-launch-security/tasks.md",
+      "line": 128,
+      "claim": "Acceptance criterion 4.3 is still incomplete despite being part of the change boundary verification.",
+      "evidence": "The acceptance criteria include `- [ ] 4.3 Run the existing governance, middleware and live-harness tests once to confirm no regression; record output.` and the diff leaves it unchecked; the implementation notes further state `the lib unit tests in runtime_control.rs and middleware.rs were not run (4.3 open)`.",
+      "suggested_fix": "Run and record the existing governance, middleware, and live-harness regression tests, then mark 4.3 complete only if they pass."
+    },
+    {
+      "severity": "WARNING",
+      "file": "openspec/changes/sidecar-launch-security/tasks.md",
+      "line": 136,
+      "claim": "Task 1.4 is marked complete even though its required standalone build/default-build absence verification was not performed.",
+      "evidence": "Criterion 1.4 requires verifying `cargo build --bin uar-env-probe --features server,test-probes` produces the probe and the default build does not, but the implementation notes say `cargo build --bin uar-env-probe` and the default-build absence were not run separately.",
+      "suggested_fix": "Run the two explicit build checks and record the output, or uncheck 1.4 until that verification exists."
+    },
+    {
+      "severity": "WARNING",
+      "file": "openspec/changes/sidecar-launch-security/tasks.md",
+      "line": 139,
+      "claim": "Several tests no longer match the specified acceptance method because the implementation notes say they use a real standalone process instead of the required in-process server path.",
+      "evidence": "Criterion 2.15 requires `in-process standalone start via start_server_with_listener-backed entry`, and criterion 2.31 also says `standalone in-process server`; the implementation notes state `2.15, 2.17, 2.18 (regression guard), 2.30, 2.31: the standalone server runs as the real universal-agent-runtime process rather than in-process`.",
+      "suggested_fix": "Either restore the specified in-process coverage or amend the acceptance criteria before marking those items complete."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

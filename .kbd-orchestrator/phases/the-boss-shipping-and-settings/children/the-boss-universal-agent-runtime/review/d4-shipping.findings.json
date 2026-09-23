@@ -1,0 +1,64 @@
+{
+  "mode": "decision",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "decision_fields.falsifier",
+      "claim": "The falsifier is not operational because key failure thresholds are subjective and have no measurement source, owner, or timeframe.",
+      "evidence": "The falsifier says the decision is wrong if build effort is \"disproportionate\", installer size grows beyond \"what the operator will accept\", or an alternative exists at \"similar cost\"; none defines a threshold, measurement method, or when the test must be run.",
+      "suggested_fix": "Replace subjective triggers with concrete gates, e.g. max build-debugging days per target, max compressed/uncompressed installer size per platform, max startup latency/memory overhead, and a dated research cutoff."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "Decision / Falsifier",
+      "claim": "The decision commits to loopback HTTP security before completing the research that could invalidate the entire transport choice.",
+      "evidence": "Decision: \"the sidecar requires a per-launch token ... and serves no CORS\"; falsifier: \"The research shows a standard, better-supported pattern ... Unix socket / named pipe instead of loopback TCP ... that removes the network attack surface entirely at similar cost.\"",
+      "suggested_fix": "Do the transport/supervision research before committing to loopback HTTP; make loopback TCP a fallback only after named pipe / Unix socket feasibility is tested."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "Decision / Assumptions",
+      "claim": "The storage fallback decision rests on an unproven data-consistency assumption with no migration, reconciliation, or single-writer design.",
+      "evidence": "Decision: \"falls back to its embedded SurrealKV store when Docker is down\"; assumption: \"Falling back from the shared database to the embedded store does not strand data\"; falsifier: \"Switching between the shared database and the embedded fallback loses or silently forks a user's sessions, memory or knowledge bases.\" The document names the hazard but no mechanism preventing it.",
+      "suggested_fix": "Specify the fallback semantics before implementation: read-only degraded mode, explicit import/export, sync protocol, conflict resolution, or a rule that sessions created in fallback remain local and visibly separate."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Decision / original_intent",
+      "claim": "The release plan conflicts with the operator's stated CI/CD shape without acknowledging the change.",
+      "evidence": "Original intent asks for \"a github releases setup for universal agent runtime that uses CI/CD on main branch to create versions\"; the decision says \"build on a release tag\".",
+      "suggested_fix": "State whether releases are tag-driven, main-branch-driven, or both, and explain why this differs from the operator's wording if tag-driven releases are intended."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Assumptions",
+      "claim": "The build/release feasibility assumption omits the CI runner and cross-compilation availability needed for the six-target promise.",
+      "evidence": "Decision promises a GitHub Actions workflow for \"6 targets (macOS x64/arm64, Linux x64/arm64, Windows x64/arm64)\"; assumptions mention crate/native risks such as \"aws-lc-sys\", \"Tesseract\" and \"ONNX Runtime's prebuilt download for windows-arm64\" but do not state that GitHub Actions can actually build those targets with the needed native dependencies.",
+      "suggested_fix": "Add an explicit CI feasibility spike: prove each target can build in the intended GitHub Actions environment, including native dependencies and archive generation, before treating the release plan as decided."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Decision",
+      "claim": "The binary-size decision is circular: it decides to ship every heavy feature while deferring the measurement that determines whether that is acceptable.",
+      "evidence": "Decision: \"built with every decided feature\" and \"Measure the real per-platform size, then decide whether to cut features\"; assumption: \"current estimate ~232 MB before a release profile; unmeasured with the full feature set.\"",
+      "suggested_fix": "Make this a gated experiment rather than a shipping decision: first build the full matrix, record compressed archive and installed sizes, then decide which feature profile ships."
+    },
+    {
+      "severity": "WARNING",
+      "file": "Security",
+      "claim": "The token design is underspecified at the exact point where the stated attack depends on implementation details.",
+      "evidence": "Decision says \"the-boss hands it at spawn\"; assumption says the token closes the attack path; falsifier lists leakage through \"process list, environment, logs or a readable file\". The document never specifies whether the token is passed via argv, env, stdin, pipe, inherited handle, or another channel.",
+      "suggested_fix": "Specify the token delivery channel and prove it is not exposed through argv, environment inspection, logs, crash reports, or persisted configuration."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

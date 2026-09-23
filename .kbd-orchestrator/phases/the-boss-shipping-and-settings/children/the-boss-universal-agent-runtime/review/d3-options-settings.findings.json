@@ -1,0 +1,71 @@
+{
+  "mode": "decision",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document / Assumptions",
+      "claim": "The decision makes implementation of multiple UAR stubs load-bearing while admitting feasibility is unverified.",
+      "evidence": "Assumption: \"Implementing the stubs is feasible inside this effort's budget (in particular the WASM classifier and agentic chunking have enough design in UAR's code to finish).\" The decision then commits: \"Several are stubs or silent fallbacks today, so they are implemented in UAR as part of this work, then exposed.\" No evidence, estimate, spike result, or implementation boundary is provided.",
+      "suggested_fix": "Do a bounded spike for each stub before committing, or split the decision: expose only working options now and open separate implementation decisions for WASM classifier, LLM/local embedding matching, and agentic chunking."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "decision_document / Falsifier",
+      "claim": "The falsifier is not operational enough to falsify the decision before damage is done.",
+      "evidence": "The falsifier uses undefined thresholds: \"measurably behaves differently\", \"representative evaluation set\", \"costs more than the rest of the integration combined\", \"delays a usable UAR runtime\", and \"operator-visible benefit\". None has a metric, baseline, timeframe, owner, or pass/fail threshold.",
+      "suggested_fix": "Define measurable gates before implementation, e.g. named evaluation corpus, minimum behavioral delta, maximum calendar/engineering budget, and an explicit stop point after which non-working options are hidden instead of implemented."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Assumptions",
+      "claim": "A checkable uncertainty about budgets is left as an assumption even though the decision depends on it.",
+      "evidence": "Assumption: \"Budgets in `extensions[\"budgets\"]` are enforced on root runs (the survey only saw them read for thread delegation — unverified).\" Decision: per-agent settings include \"budgets.\" Falsifier: \"Budgets turn out not to be enforced on root runs, so exposing them per agent would be a setting that does nothing.\"",
+      "suggested_fix": "Verify root-run budget enforcement in UAR before including budgets in the settings surface; if not enforced, hide the setting or implement enforcement first."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Decision",
+      "claim": "The app-wide/per-agent split depends on an unstated single-tenant global-configuration model that may not hold for concurrent agents.",
+      "evidence": "Decision: app-wide settings include \"the skill-matching algorithm and thresholds, skill activation mode, guardrails, sycophancy\" and are \"pushed to UAR every time the-boss starts the sidecar.\" Per-agent settings include \"skill preferences and `max_active`, tool approval and execution mode.\" No assumption states that two agents cannot require different matching algorithms, thresholds, guardrails, activation modes, or sycophancy settings in the same app session.",
+      "suggested_fix": "Document whether UAR global settings are truly process-global and whether the-boss runs one sidecar per app, per workspace, or per agent; if concurrent agents can need different values, move those settings to per-run configuration or isolate sidecars."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Decision and Falsifier",
+      "claim": "The decision knowingly places guardrails app-wide while tool approval is per-agent without defining precedence, then treats conflict as a future falsifier.",
+      "evidence": "Decision: app-wide settings include \"guardrails\" while per-agent settings include \"tool approval and execution mode.\" Falsifier: \"An app-wide setting pushed at sidecar start conflicts with per-agent settings in a way the user cannot predict (for example, a global guardrail silently overrides a per-agent tool approval).\"",
+      "suggested_fix": "Define precedence and UI disclosure before committing: either global guardrails are hard safety ceilings visibly inherited by agents, or guardrails become per-agent/per-run settings."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Decision",
+      "claim": "The decision treats sidecar-start pushing as sufficient persistence even though the stated problem is only that UAR keeps config in memory.",
+      "evidence": "Decision: \"UAR keeps the skill-matching config in memory only today, so it is lost on restart; pushing on start fixes that.\" This assumes the-boss is the sole source of truth, that no runtime-side changes need persistence, and that start-time push covers all configuration drift; none of those assumptions is stated.",
+      "suggested_fix": "Specify the source of truth and synchronization model: host-owned immutable config pushed on every run/start, or UAR-owned persistent config with read/write reconciliation."
+    },
+    {
+      "severity": "WARNING",
+      "file": "decision_document / Decision",
+      "claim": "The decision considers only one implementation strategy while the falsifier itself names a less risky alternative.",
+      "evidence": "Decision commits to \"implemented in UAR as part of this work, then exposed.\" Falsifier mentions the alternative \"exposing only the working options first\" but the decision does not compare it against implementing all stubs now.",
+      "suggested_fix": "Add an alternatives section comparing: hide non-working options, expose disabled/preview options with explanations, implement only cheap stubs now, or implement all stubs before exposure."
+    },
+    {
+      "severity": "WARNING",
+      "file": "original_intent vs decision_document / Decision",
+      "claim": "The decision may solve a narrower problem than the operator intent by focusing on option realism rather than full AG-UI/A2UI feature support.",
+      "evidence": "Original intent requires UAR support \"with full support for A2UI and its agent definitions standards, content management algorithm selection, skill selection algorithms, and ALL the features it provides.\" The decision covers selected algorithm options and settings locations, but does not state how this settings split preserves A2UI agent-definition semantics or full feature coverage.",
+      "suggested_fix": "Map every UAR/A2UI feature surface to either per-agent, app-wide, per-KB, hidden-not-supported, or deferred-with-reason before committing this settings model."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

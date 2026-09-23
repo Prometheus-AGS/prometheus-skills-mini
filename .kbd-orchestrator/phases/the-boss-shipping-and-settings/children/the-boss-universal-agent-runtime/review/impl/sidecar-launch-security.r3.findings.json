@@ -1,0 +1,23 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "claude-opus-5-5",
+  "isolation_mode": "rest-gateway:http://localhost:8181/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "src/uar/api/mcp_admin.rs",
+      "line": 94,
+      "claim": "A sidecar started without a settings manager can still accept global MCP server mutations, violating the requirement that global MCP mutation is always disabled in sidecar mode.",
+      "evidence": "Acceptance criteria 2.27/3.8 require `PUT` and `DELETE /api/uar/mcp/servers/x` to return 409 in sidecar mode; `sidecar_locked` returns true only when `state.settings_manager.as_ref().is_some_and(|manager| manager.sidecar_feature_locks())`, and `save_server`/`delete_server` only refuse when that returns true, while `src/server.rs` only applies `with_sidecar_feature_locks()` inside `if let Some(p) = &persistence`.",
+      "suggested_fix": "Store an explicit sidecar-mode flag in `AppState`/MCP admin state and reject global MCP mutations based on that flag, independent of whether persistence/settings storage is configured."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

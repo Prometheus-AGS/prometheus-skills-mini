@@ -1,11 +1,11 @@
 # Current waypoint
 
-Active: **the-boss-shipping-and-settings → uar-delivery-replan**. Canonical revision 425.
+Active: **the-boss-shipping-and-settings → uar-working-agent**. Canonical revision 445.
 
-Planning-only child: research and plan complete; independent plan review PASS, with two narrow warning clarifications recorded. No implementation, application builds or code tests in this phase.
+P1 execution child: deliver the installed UAR agent across The Boss and UAR, with Windows x64 first and Apple Silicon second. GPT-5.6-sol is the recommended implementation model.
 
-Read [the delivery plan](phases/the-boss-shipping-and-settings/children/uar-delivery-replan/plan.md), [review disposition](phases/the-boss-shipping-and-settings/children/uar-delivery-replan/review/disposition.md) and [execution handoff](phases/the-boss-shipping-and-settings/children/uar-delivery-replan/execution-handoff.md).
+Read [the delivery plan](phases/the-boss-shipping-and-settings/children/uar-delivery-replan/plan.md), [reflection](phases/the-boss-shipping-and-settings/children/uar-delivery-replan/reflection.md), [review disposition](phases/the-boss-shipping-and-settings/children/uar-delivery-replan/review/disposition.md), and [execution handoff](phases/the-boss-shipping-and-settings/children/uar-delivery-replan/execution-handoff.md).
 
-**Next:** reflect with the operator; after explicit approval create a separate P1 execution phase with GPT-5.6-sol. Do not start application implementation from this waypoint.
+**Next:** `/kbd-assess the-boss-shipping-and-settings › uar-working-agent`. Reconcile both worktrees before implementation and drive assessment from the complete P1 installed outcome.
 
-The existing UAR implementation child/WIP is preserved. Previous Boss 2.1.3 publication is complete; installed Windows acceptance remains pending.
+The existing UAR principal/retention WIP is preserved and must not be overwritten. Previous Boss 2.1.3 publication is complete; its installed Windows acceptance remains separate from P1.

@@ -1,0 +1,11 @@
+{
+  "allowedWritePaths": [
+    ".kbd-orchestrator/phases/the-boss-shipping-and-settings/children/uar-working-agent/**",
+    "openspec/changes/uar-delivery-replan/**",
+    "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar/**",
+    "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar/**"
+  ],
+  "deniedPaths": [],
+  "inheritsConstraints": true,
+  "__note": "P1 spans the existing Boss and UAR worktrees plus its active OpenSpec package. Reconcile existing dirty UAR files before assigning a writer. Other repositories remain read-only unless the assessed plan explicitly widens this scope. .kbd-orchestrator/** and SCRATCHPAD.md are always allowed. Enforced advisorily by check-child-scope.mjs."
+}

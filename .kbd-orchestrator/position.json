@@ -2,17 +2,19 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 593,
-  "derivedRevision": 593,
+  "sourceRevision": 617,
+  "derivedRevision": 617,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 584,
-    "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 9
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 586,
+    "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 31
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-24T14:32:08.525313Z",
+  "updatedAt": "2026-09-24T15:05:53.954767Z",
   "cursor": [
     "agent-team-creator",
-    "spec"
+    "execute",
+    "kbd-consistency-before-agent-teams",
+    "2.1"
   ],
   "root": {
     "type": "phase",
@@ -20,7 +22,7 @@
     "status": "ready",
     "progress": {
       "done": 15,
-      "total": 34
+      "total": 36
     },
     "children": [
       {
@@ -30,9 +32,28 @@
         "status": "IN_PROGRESS",
         "progress": {
           "done": 0,
-          "total": 0
+          "total": 2
         },
-        "children": [],
+        "children": [
+          {
+            "type": "change",
+            "id": "kbd-consistency-before-agent-teams",
+            "status": "IN_PROGRESS",
+            "progress": {
+              "done": 1,
+              "total": 3
+            }
+          },
+          {
+            "type": "change",
+            "id": "agent-team-creator",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 4
+            }
+          }
+        ],
         "annotations": []
       },
       {
@@ -336,7 +357,7 @@
                     "id": "integration-administration",
                     "status": "IN_PROGRESS",
                     "progress": {
-                      "done": 13,
+                      "done": 14,
                       "total": 37
                     }
                   }

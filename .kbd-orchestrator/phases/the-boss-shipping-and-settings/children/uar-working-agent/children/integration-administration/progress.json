@@ -2,17 +2,17 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 624,
-  "derivedRevision": 624,
+  "sourceRevision": 627,
+  "derivedRevision": 627,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 588,
-    "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 36
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 590,
+    "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 37
   },
   "conflictCount": 0,
   "phase": "integration-administration",
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
   "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
-  "last_updated": "2026-09-24T15:25:44.813525Z",
+  "last_updated": "2026-09-24T15:55:05.841209Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
   "changes_completed": 0,
@@ -48,9 +48,9 @@
       "status": "IN_PROGRESS",
       "implementation_status": "IN_PROGRESS",
       "tasks_total": 37,
-      "tasks_done": 15,
-      "last_task_completed": "Implement Boss-linked, gateway-linked and UAR-owned provider/model assignments for inference and every enabled model-bearing consumer, with policy-bound overrides, safe credential brokerage and effective identity display.",
-      "next_task_pending": "Complete schema-driven runtime/security/provider/model controls, source management links, secret set/clear semantics, all locale strings and actual supported capability states; preserve existing app settings migrations.",
+      "tasks_done": 16,
+      "last_task_completed": "Complete schema-driven runtime/security/provider/model controls, source management links, secret set/clear semantics, all locale strings and actual supported capability states; preserve existing app settings migrations.",
+      "next_task_pending": "Run Gate U once through actual admin IPC/REST and runtime consumers: Boss-linked, UAR-owned and existing-gateway-linked models, nonconversation model operation, restart, secret changes, live/deferred settings, conflicts/partial saves and admin/owner isolation; Gate C adds editor-to-UAR propagation after new gateway editing exists.",
       "blockers": []
     }
   ],

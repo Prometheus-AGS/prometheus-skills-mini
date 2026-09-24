@@ -23,25 +23,6 @@ The project SHALL provide npm scripts `test` (`node --test`), `check` (`node rul
 - **WHEN** the `scripts` values are inspected
 - **THEN** none contains `&&`, `||` or `;`
 
-### Requirement: Testing conventions
-Tests SHALL use `node:test` with `node:assert/strict` and no other framework. Each test SHALL be structured as Arrange, then Act, then Assert, in that order, with one behaviour per test and a name that states the behaviour; marker comments are optional. Behaviour SHALL be added test-first, and the evidence SHALL be in history: for every change that adds or alters behaviour, a commit containing the failing test precedes the commit that makes it pass, and the change's `tasks.md` records the failing output under its RED task.
-
-#### Scenario: Test-first is visible in history
-- **WHEN** `git log --reverse` is read for a change that added behaviour
-- **THEN** the commit that introduces the test file comes before the commit that introduces or changes the implementation it tests
-
-#### Scenario: RED output is recorded
-- **WHEN** a completed change's `tasks.md` is read
-- **THEN** each RED task carries the failing assertion or error message it produced
-
-#### Scenario: Structure is reviewable
-- **WHEN** a test is reviewed
-- **THEN** its arrangement, its single action and its assertions appear in that order, and it asserts one behaviour
-
-#### Scenario: No test framework is installed
-- **WHEN** `package.json` is read
-- **THEN** it lists no test runner or assertion library
-
 ### Requirement: Pinned OpenSpec CLI
 The project SHALL depend on `@fission-ai/openspec` as a devDependency pinned to an exact version with a committed `package-lock.json`, and SHALL have no runtime dependencies.
 
@@ -63,3 +44,18 @@ The repository SHALL contain a `.gitattributes` that normalises text to LF on co
 #### Scenario: Hostile autocrlf does not rewrite sources
 - **WHEN** the repository is checked out with `core.autocrlf=true`
 - **THEN** working-tree text files are LF
+
+### Requirement: Completed-behavior integration conventions
+New acceptance tests SHALL use node:test with node:assert/strict and SHALL exercise completed production entry points across real collaborating boundaries. Production implementation SHALL be coherent before tests are authored or run. Unit, module-local, mocked-only and per-edit tests SHALL NOT count as completion evidence. Existing legacy tests MAY remain; their presence does not authorize test-first implementation. Arrange, Act and Assert order SHALL remain reviewable.
+#### Scenario: Completed production behavior
+- **WHEN** a change adds behavior
+- **THEN** its production path is implemented before its integration acceptance scenario is authored and run
+#### Scenario: Evidence records the actual boundary
+- **WHEN** a completed change is reported
+- **THEN** tasks.md records the real integration command and result without requiring fabricated RED history
+#### Scenario: Structure is reviewable
+- **WHEN** an integration test is reviewed
+- **THEN** arrangement, action and assertions appear in that order and exercise actual collaborators
+#### Scenario: No test framework is installed
+- **WHEN** package.json is read
+- **THEN** it lists no additional test runner or assertion library

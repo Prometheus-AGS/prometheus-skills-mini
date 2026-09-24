@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "2",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 654,
+  "derivedRevision": 654,
+  "frontier": {
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 590,
+    "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
+  },
+  "conflictCount": 0,
+  "phase": "agent-team-creator",
+  "phaseId": "agent-team-creator",
+  "parentPhase": null,
+  "last_updated": "2026-09-24T16:56:19.446462Z",
+  "last_updated_by": "kbd-runtime",
+  "changes_total": 2,
+  "changes_completed": 2,
+  "implementation_total": 2,
+  "implementation_completed": 2,
+  "completion": {
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 2,
+      "total": 2,
+      "status": "COMPLETE"
+    },
+    "evidence": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "certification": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "publication": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    }
+  },
+  "completionScopes": {
+    "completion": "phase",
+    "runCompletion": "run"
+  },
+  "runCompletion": {
+    "scope": "run",
+    "runId": "platform-foundation-20260921T101006Z",
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 17,
+      "total": 36,
+      "status": "IN_PROGRESS"
+    },
+    "evidence": {
+      "status": "PENDING",
+      "summary": null,
+      "blockers": []
+    },
+    "certification": {
+      "status": "PENDING",
+      "summary": null,
+      "blockers": []
+    },
+    "publication": {
+      "status": "PENDING",
+      "summary": null,
+      "blockers": []
+    }
+  },
+  "changes": [
+    {
+      "id": "kbd-consistency-before-agent-teams",
+      "title": "kbd-consistency-before-agent-teams",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 3,
+      "tasks_done": 3,
+      "last_task_completed": "Run deterministic QA and independent cumulative diff review, resolve findings, record correction ledger and commit.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "agent-team-creator",
+      "title": "agent-team-creator",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 4,
+      "tasks_done": 4,
+      "last_task_completed": "Run deterministic QA and independent cumulative diff review; resolve findings, verify/archive changes, commit and push both branches, and reflect through KBD.",
+      "next_task_pending": null,
+      "blockers": []
+    }
+  ],
+  "children": {},
+  "migrationStatus": null
+}

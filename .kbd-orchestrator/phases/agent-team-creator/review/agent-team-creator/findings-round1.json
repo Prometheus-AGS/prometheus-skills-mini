@@ -1,0 +1,18 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "skills/agent-team-creator/runtime/src/guidance.mts",
+      "line": 40,
+      "claim": "The complex-team guide does not propose file ownership even though the spec requires bounded roles with file ownership.",
+      "evidence": "Acceptance criterion `Guided team selection / Scenario: Complex work` requires guidance to propose bounded roles with `inputs, outputs, skills, dependencies and file ownership`, but `guide()` constructs every proposed role with `owns: []` for the implementer, specialists, and reviewer in the new hunk.",
+      "suggested_fix": "Populate role `owns` with concrete proposed ownership based on supplied areas/deliverables/scope, or treat missing ownership as an unanswered required intake field before returning a team."
+    }
+  ]
+}

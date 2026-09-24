@@ -49,6 +49,32 @@ is gone.
 > this checkout), the knowledge-sources registry, and Windows hardware verification of the
 > Docker services and the Phase C skill batch.
 
+## Agent teams
+
+Four sibling skills help turn an outcome into a small, explicit team:
+`agent-team-creator`, `agent-team-manage`, `agent-team-models`, and `agent-team-handoff`.
+Start with one implementer; add an independent reviewer or specialist when the work needs
+separate ownership. The guided flow explains roles, skills, models, and harnesses before
+producing an editable manifest.
+
+The shared full/mini runtime stages native artifacts for **UAR, Codex, Claude Code, GitHub
+Copilot CLI, Kimi Code, MiniMax CLI (`mcode`), OpenCode, and DeepSeek Harness**. **BossFang**
+is a separate registration/export target. Export does not install agents, register services,
+or launch teams. Native options retain source/version provenance and explicit limitations.
+
+Task state uses revision checks and local atomic writes; cross-harness handoffs transfer
+ownership only after acceptance. Model selection uses declared tiers and explicit price
+limits. Memory is optional, with a local outbox; no service is added beyond the existing
+surreal-memory and liter-llm integrations. The runtime ships compiled `.mjs` for **Node >=22**,
+authored in **TypeScript 7.0.2**, without repository-root runtime dependencies.
+
+Read the [agent teams guide](docs/agent-teams.md), the
+[site overview](https://prometheus-ags.github.io/prometheus-skills-mini/docs/agent-teams/overview),
+and the [task/handoff request reference](skills/agent-team-creator/references/task-handoff.md).
+Native CLI acceptance and Windows execution for this new family require their own evidence;
+historical platform verification below does not certify these new adapters. Local ownership
+is coordination, not Cedar authorization, sandbox enforcement, or a distributed lease.
+
 ## Documentation site
 
 Full-coverage reference documentation — every skill, every `lib/` module, the KBD lifecycle,

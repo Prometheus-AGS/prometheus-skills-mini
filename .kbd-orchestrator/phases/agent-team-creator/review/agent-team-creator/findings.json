@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "Spec violations — checked guided team selection, native export coverage/limitations, model policy handling, durable task revisions, handoff acceptance semantics, optional memory/Karpathy boundaries, packaged execution evidence, and KBD discipline against the cited acceptance criteria; the diff includes implementation, docs, tests, generated provenance, and explicit unverified limits for live/native/Windows behavior.",
+    "Correctness — checked revision checks, lock/atomic write flow, terminal task handling, dependency validation, export collision/path validation, model selection constraints, and handoff stale/idempotent behavior in the shown code; no concrete defect was provable from the packet.",
+    "Regressions — checked modified routing docs, generated AGENTS/CLAUDE routing parity via rules/src, distribution parity test changes, carried payload reference resolution, site catalog tags, and sidebar/docs additions; no dependency-breaking regression was evident in the provided hunks.",
+    "Security — checked for committed secret literals, unsafe endpoint/auth handling, path traversal in export/native files, shell:true use, symlink/state-file handling, and credential persistence; no concrete violation was present in the packet.",
+    "Constraint breaches — checked C-01 generated artifact receipts/source parity, C-02 secrets, C-03 docs for surface changes, C-04 generator/idempotency evidence, no shell/python file additions, forbidden command instructions, and docs/site updates; no breach was provable from the packet.",
+    "Silent failure — checked swallowed errors, unverified native/live behavior disclosure, memory retry uncertainty, KBD failure handling, and stale revision rejection; the code/docs surface failures or record limitations rather than silently passing them."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

@@ -21,6 +21,11 @@ const sidebars = {
     },
     {
       type: 'category',
+      label: 'Agent Teams',
+      items: ['agent-teams/overview'],
+    },
+    {
+      type: 'category',
       label: 'Karpathy Logging',
       items: ['karpathy/progress-memory'],
     },

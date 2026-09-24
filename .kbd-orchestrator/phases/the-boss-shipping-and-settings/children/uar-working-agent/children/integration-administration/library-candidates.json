@@ -1,6 +1,6 @@
 {
   "phase": "integration-administration",
-  "generated_at": "2026-09-24T07:12:38.983Z",
+  "generated_at": "2026-09-24T08:08:01.223Z",
   "mode": "stack-specified",
   "candidates": [
     {
@@ -118,6 +118,139 @@
       "source": "Boss settingsMenu.ts; routes/settings/prometheus.tsx; scripts/data-classify/README.md; shared/ipc/schemas/prometheus.ts; main/renderer i18n/locales",
       "evidence": "Existing additive registration points and generated Preference definitions. Both locale catalogs have 13 files. Upstream main changed renderer locale files since inspected checkout.",
       "work_required": "Separate feature pages, narrow registration edits, feature-scoped revisioned config updates, generate schemas, translate new keys in both applicable catalogs. No new settings framework."
+    },
+    {
+      "id": "cand-010",
+      "gaps": [
+        "G15",
+        "G16"
+      ],
+      "candidate": "UAR agent_store, resolve_registered_agent and immutable turn kernel",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "src/uar/domain/agent_store.rs; src/uar/runtime/manager.rs:1778; openspec/specs/turn-assembly-kernel/spec.md",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "src/uar/domain/agent_store.rs; src/uar/runtime/manager.rs:1778; openspec/specs/turn-assembly-kernel/spec.md",
+          "claim": "Shared CRUD and strict actor resolver already exist; Boss and REST create bypass registered selection."
+        }
+      ],
+      "work_required": "Unify explicit-ID resolution, pin artifact snapshots, catalog revisions and host-resource admission."
+    },
+    {
+      "id": "cand-011",
+      "gaps": [
+        "G14",
+        "G17",
+        "G18",
+        "G21",
+        "G24"
+      ],
+      "candidate": "Mounted UAR REST services and Boss typed settings shell",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "src/server.rs; src/uar/api/settings.rs; frontend/src/pages/admin-page.tsx",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "src/server.rs; src/uar/api/settings.rs; frontend/src/pages/admin-page.tsx",
+          "claim": "Broad routers exist but admin capability/apply contract is incomplete, SPA unavailable in sidecar."
+        }
+      ],
+      "work_required": "Main-only allowlisted adapters, admin authority, route coverage and missing administration metadata."
+    },
+    {
+      "id": "cand-012",
+      "gaps": [
+        "G17",
+        "G19"
+      ],
+      "candidate": "UAR encrypted credentials and Boss protected secret store",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "src/uar/settings/manager.rs:850; src/server.rs credential initialization; src/uar/api/credentials.rs",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "src/uar/settings/manager.rs:850; src/server.rs credential initialization; src/uar/api/credentials.rs",
+          "claim": "Provider configs are serialized whole; encrypted credential service is separate and optional."
+        }
+      ],
+      "work_required": "Secret references, protected key lifecycle, scoped credential brokerage for all configured consumers and explicit migration."
+    },
+    {
+      "id": "cand-013",
+      "gaps": [
+        "G20",
+        "G21"
+      ],
+      "candidate": "UAR presentation CRUD, A2UI registry and agui_spec contract",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "src/uar/api/presentations.rs; src/uar/a2ui/routes.rs; docs/protocols/ag-ui-profile.md",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "src/uar/api/presentations.rs; src/uar/a2ui/routes.rs; docs/protocols/ag-ui-profile.md",
+          "claim": "Presentation CAS exists, schemas/components have partial lifecycle; AG-UI replay exists."
+        }
+      ],
+      "work_required": "Persistent custom catalog lifecycle and safe approved rendering, owner sharing, run administration."
+    },
+    {
+      "id": "cand-014",
+      "gaps": [
+        "G22",
+        "G23"
+      ],
+      "candidate": "RunMcpConnector and rmcp 3.1.2 snapshot transport",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "src/mcp/runtime.rs:66; src/uar/runtime/turn/host/mcp.rs:56; src/mcp/registry.rs:745; https://github.com/Prometheus-AGS/universal-agent-runtime/issues/296",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "src/mcp/runtime.rs:66; src/uar/runtime/turn/host/mcp.rs:56; src/mcp/registry.rs:745; https://github.com/Prometheus-AGS/universal-agent-runtime/issues/296",
+          "claim": "Run-owned headers already reach loopback transport; RemoteHttp config lacks headers and remote grants are refused."
+        }
+      ],
+      "work_required": "Extend trusted host admission, static secret references, exact destination grants, frozen run identity and safe renewal at boundaries."
+    },
+    {
+      "id": "cand-015",
+      "gaps": [
+        "G23"
+      ],
+      "candidate": "Mutable per-call headers on one shared MCP session",
+      "verdict": "reject",
+      "confidence": "high",
+      "source": "openspec/specs/mcp-runtime-projection/spec.md; pinned rmcp transport source",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "openspec/specs/mcp-runtime-projection/spec.md; pinned rmcp transport source",
+          "claim": "Existing run-owned cache and frozen snapshots solve per-run identity without shared mutable credentials."
+        }
+      ],
+      "work_required": "Reject ambient or global mutable identity; fresh binding on credential revision."
+    },
+    {
+      "id": "cand-016",
+      "gaps": [
+        "G10"
+      ],
+      "candidate": "Existing Boss GitHub publisher and landing release synchronizer",
+      "verdict": "adapt",
+      "confidence": "high",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "Boss scripts/publish-installers.cjs; scripts/update-release-entry.cjs; scripts/verify-github-release.cjs; landing scripts/sync-release.mjs; src/lib/release.ts",
+          "claim": "GitHub asset upload/hash metadata and generated site sync already exist; old IPFS fallback still exists in site consumer."
+        }
+      ],
+      "work_required": "Independent customer publication, serialize metadata merges, remove IPFS fallback, verify final bytes and deployed links, preserve old per-platform entries."
     }
   ],
   "build_required": [
@@ -134,7 +267,22 @@
     {
       "id": "build-003",
       "gap": "G10",
-      "rationale": "Native artifacts, packaging and installed acceptance for both customer platforms."
+      "rationale": "Adapt existing native build/GitHub publisher, RELEASES.md/manifest merge and landing sync/deployment for each customer platform; byte/hash/live-link and installed acceptance evidence."
+    },
+    {
+      "id": "build-004",
+      "gap": "G24",
+      "rationale": "Versioned admin capability/apply/route coverage contract and typed Boss adapters."
+    },
+    {
+      "id": "build-005",
+      "gap": "G16",
+      "rationale": "Catalog provenance/revision snapshots and Boss catalog links."
+    },
+    {
+      "id": "build-006",
+      "gap": "G23",
+      "rationale": "Trusted remote grant admission and expiry/renewal ownership on existing run-scoped resources."
     }
   ],
   "open_questions": [],
@@ -142,5 +290,43 @@
     "max_queries_per_tier": 8,
     "max_minutes": 20,
     "within_budget": true
+  },
+  "research_budget": {
+    "revision": 2,
+    "max_queries_per_tier": 8,
+    "max_minutes": 20,
+    "queries_used": {
+      "tier1": 4,
+      "tier2": 2,
+      "tier3": 2,
+      "tier4": 2
+    },
+    "notes": "Reuse source inspection and linked issue; no new dependency selected. Firecrawl plus official retrieval requested by operator."
+  },
+  "gap_definitions": {
+    "G1": "UAR can select embedded or existing SurrealDB",
+    "G2": "Existing scoped database accounts work",
+    "G3": "Discover full-pack or manually configured instances",
+    "G4": "Visible progress and full logs",
+    "G5": "Durable project administration",
+    "G6": "Real graph drift and update",
+    "G7": "Full gateway provider/model and role administration",
+    "G8": "Existing gateway config applied accurately",
+    "G9": "Separate UAR/Compass/liter-llm/Services navigation, schema/i18n",
+    "G10": "Complete customer releases",
+    "G14": "Complete UAR admin with internal navigation",
+    "G15": "Catalog is authoritative for execution",
+    "G16": "Reliable catalog writes and continuation",
+    "G17": "Safe administrator authority and ownership",
+    "G18": "Settings saved versus effective",
+    "G19": "UAR-specific providers/models",
+    "G20": "A2UI and standards administration",
+    "G21": "AG-UI and run administration",
+    "G22": "Issue #296 static outbound headers",
+    "G23": "Issue #296 trusted remote run identity",
+    "G24": "Enforceable API coverage",
+    "G11": "Typed persisted preferences and IPC",
+    "G12": "All main and renderer locale catalogs",
+    "G13": "Upstream-compatible registration seams"
   }
 }

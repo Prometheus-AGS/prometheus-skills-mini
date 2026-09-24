@@ -1,0 +1,32 @@
+{
+  "revision": 2,
+  "inspectedAt": "2026-09-24T08:14:58.465Z",
+  "mode": "planning-only",
+  "issue": {
+    "url": "https://github.com/Prometheus-AGS/universal-agent-runtime/issues/296",
+    "state": "OPEN",
+    "comments": 0,
+    "updatedAt": "2026-09-24T07:13:31Z",
+    "classification": "requirement plus proposal; source claims independently checked"
+  },
+  "repos": {
+    "uar": {
+      "path": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar",
+      "commit": "c29af47be3439c69e1a3c124fdcf09ce4cbb5cba"
+    },
+    "boss": {
+      "path": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar",
+      "commit": "afd4deefd5aa802dc681d9860f9469359e9646ca"
+    },
+    "landing": {
+      "path": "/Users/gqadonis/Projects/know-me/boss-landing-spot",
+      "commit": "215a5c9ebcf5c610292921df2da6cccdf37de98a"
+    }
+  },
+  "documentation": [
+    "https://docs.rs/rmcp/3.1.2/rmcp/transport/streamable_http_client/struct.StreamableHttpClientTransportConfig.html",
+    "https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices"
+  ],
+  "localSdk": "~/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rmcp-3.1.2/src/transport/streamable_http_client.rs",
+  "validation": "source inspection and independent planning reviews only; no builds, unit suites or installed functional verification"
+}

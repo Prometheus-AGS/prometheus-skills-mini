@@ -2,16 +2,16 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 559,
-  "derivedRevision": 559,
+  "sourceRevision": 563,
+  "derivedRevision": 563,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 559
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 563
   },
   "conflictCount": 0,
   "phase": "integration-administration",
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
   "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
-  "last_updated": "2026-09-24T09:06:42.378345Z",
+  "last_updated": "2026-09-24T09:22:59.176073Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
   "changes_completed": 0,
@@ -47,9 +47,9 @@
       "status": "PENDING",
       "implementation_status": "PENDING",
       "tasks_total": 37,
-      "tasks_done": 4,
-      "last_task_completed": "Implement bounded full-pack/app/manual service discovery and independent ownership profiles in mini and Boss; verify mixed managed/external discovery and no lifecycle takeover at Gate A.",
-      "next_task_pending": "Add UAR scoped SurrealDB auth and deterministic sidecar configuration, active-run-aware apply/restart with rollback and effective backend status; verify embedded and external scoped-auth launches at Gate A.",
+      "tasks_done": 5,
+      "last_task_completed": "Add UAR scoped SurrealDB auth and deterministic sidecar configuration, active-run-aware apply/restart with rollback and effective backend status; verify embedded and external scoped-auth launches at Gate A.",
+      "next_task_pending": "Add dedicated UAR/Compass/liter-llm/Services route, sidebar and search entries, UAR administration and complete applicable translations; verify UI configuration and persistence at Gate A.",
       "blockers": []
     }
   ],

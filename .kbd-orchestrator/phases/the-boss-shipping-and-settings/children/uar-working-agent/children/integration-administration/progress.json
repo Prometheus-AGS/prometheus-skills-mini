@@ -2,16 +2,16 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 571,
-  "derivedRevision": 571,
+  "sourceRevision": 573,
+  "derivedRevision": 573,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 571
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 573
   },
   "conflictCount": 0,
   "phase": "integration-administration",
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
   "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
-  "last_updated": "2026-09-24T10:32:50.323928Z",
+  "last_updated": "2026-09-24T10:51:43.093631Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
   "changes_completed": 0,
@@ -47,9 +47,9 @@
       "status": "PENDING",
       "implementation_status": "PENDING",
       "tasks_total": 37,
-      "tasks_done": 7,
-      "last_task_completed": "Run Gate A once after complete wiring: actual migrated Boss settings/IPC, discovery, UAR conversation using embedded then remote storage, invalid credentials, active-run apply and restart; record observed results and fix failures without unit loops.",
-      "next_task_pending": "Unify catalog write/resolution and typed registered-agent admission across REST/chat/MCP/actor paths, preserving explicit inline compatibility and rejecting unknown explicit IDs/backend failure; demonstrate at Gate R.",
+      "tasks_done": 8,
+      "last_task_completed": "Unify catalog write/resolution and typed registered-agent admission across REST/chat/MCP/actor paths, preserving explicit inline compatibility and rejecting unknown explicit IDs/backend failure; demonstrate at Gate R.",
+      "next_task_pending": "Add artifact revision/source snapshots and continuation compatibility, and replace Boss per-turn artifact synthesis with catalog links plus conflict-aware migration; preserve policy/model/UI/skill semantics at Gate R.",
       "blockers": []
     }
   ],

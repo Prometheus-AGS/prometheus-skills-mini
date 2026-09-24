@@ -2,17 +2,17 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 656,
-  "derivedRevision": 656,
+  "sourceRevision": 658,
+  "derivedRevision": 658,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 592,
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 594,
     "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
   "phase": "integration-administration",
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
   "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
-  "last_updated": "2026-09-24T17:29:44.688051Z",
+  "last_updated": "2026-09-24T18:06:29.766680Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
   "changes_completed": 0,
@@ -24,6 +24,35 @@
       "completed": 0,
       "total": 1,
       "status": "PENDING"
+    },
+    "evidence": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "certification": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "publication": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    }
+  },
+  "completionScopes": {
+    "completion": "phase",
+    "runCompletion": "run"
+  },
+  "runCompletion": {
+    "scope": "run",
+    "runId": "platform-foundation-20260921T101006Z",
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 17,
+      "total": 36,
+      "status": "IN_PROGRESS"
     },
     "evidence": {
       "status": "PENDING",
@@ -48,9 +77,9 @@
       "status": "IN_PROGRESS",
       "implementation_status": "IN_PROGRESS",
       "tasks_total": 37,
-      "tasks_done": 17,
-      "last_task_completed": "Run Gate U once through actual admin IPC/REST and runtime consumers: Boss-linked, UAR-owned and existing-gateway-linked models, nonconversation model operation, restart, secret changes, live/deferred settings, conflicts/partial saves and admin/owner isolation; Gate C adds editor-to-UAR propagation after new gateway editing exists.",
-      "next_task_pending": "Complete agent catalog/definitions/compiler/skills UI, native format import/export, validated registration, revisions/origin/policy/model bindings and federation configuration using shared UAR services.",
+      "tasks_done": 18,
+      "last_task_completed": "Complete agent catalog/definitions/compiler/skills UI, native format import/export, validated registration, revisions/origin/policy/model bindings and federation configuration using shared UAR services.",
+      "next_task_pending": "Complete persistent custom A2UI/schema/component lifecycle and presentation assignments/sharing, builtin protections and approved shared renderer packaging; expose preview and safe reference handling.",
       "blockers": []
     }
   ],

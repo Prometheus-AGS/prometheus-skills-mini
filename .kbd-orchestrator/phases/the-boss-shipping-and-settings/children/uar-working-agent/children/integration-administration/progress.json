@@ -2,16 +2,16 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 568,
-  "derivedRevision": 568,
+  "sourceRevision": 571,
+  "derivedRevision": 571,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 568
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 571
   },
   "conflictCount": 0,
   "phase": "integration-administration",
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
   "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
-  "last_updated": "2026-09-24T09:43:28.246051Z",
+  "last_updated": "2026-09-24T10:32:50.323928Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
   "changes_completed": 0,
@@ -47,9 +47,9 @@
       "status": "PENDING",
       "implementation_status": "PENDING",
       "tasks_total": 37,
-      "tasks_done": 6,
-      "last_task_completed": "Add dedicated UAR/Compass/liter-llm/Services route, sidebar and search entries, UAR administration and complete applicable translations; verify UI configuration and persistence at Gate A.",
-      "next_task_pending": "Run Gate A once after complete wiring: actual migrated Boss settings/IPC, discovery, UAR conversation using embedded then remote storage, invalid credentials, active-run apply and restart; record observed results and fix failures without unit loops.",
+      "tasks_done": 7,
+      "last_task_completed": "Run Gate A once after complete wiring: actual migrated Boss settings/IPC, discovery, UAR conversation using embedded then remote storage, invalid credentials, active-run apply and restart; record observed results and fix failures without unit loops.",
+      "next_task_pending": "Unify catalog write/resolution and typed registered-agent admission across REST/chat/MCP/actor paths, preserving explicit inline compatibility and rejecting unknown explicit IDs/backend failure; demonstrate at Gate R.",
       "blockers": []
     }
   ],

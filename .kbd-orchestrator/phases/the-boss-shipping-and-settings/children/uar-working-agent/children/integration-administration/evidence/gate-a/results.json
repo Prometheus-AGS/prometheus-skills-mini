@@ -1,0 +1,26 @@
+{
+  "gate": "A",
+  "schemaVersion": 4,
+  "migratedRevisions": {
+    "compass": 2,
+    "filesystem": 1,
+    "uar": 3,
+    "services": 4
+  },
+  "embeddedConversation": "completed",
+  "activeRunRestart": "failed",
+  "invalidCredentials": "failed",
+  "remoteConversation": "completed",
+  "remoteRestart": "done",
+  "effectiveBackend": "remote",
+  "authLevel": "namespace",
+  "topology": {
+    "surrealdb": "external",
+    "memory": "managed",
+    "liter": "external"
+  },
+  "providerRequestCount": 2,
+  "providerPaths": [
+    "/v1/chat/completions"
+  ]
+}

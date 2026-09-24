@@ -2,16 +2,16 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 539,
-  "derivedRevision": 539,
+  "sourceRevision": 547,
+  "derivedRevision": 547,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 539
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 547
   },
   "conflictCount": 0,
   "phase": "integration-administration",
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
   "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
-  "last_updated": "2026-09-24T08:21:29.616183Z",
+  "last_updated": "2026-09-24T08:31:51.585902Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
   "changes_completed": 0,
@@ -47,9 +47,9 @@
       "status": "PENDING",
       "implementation_status": "PENDING",
       "tasks_total": 37,
-      "tasks_done": 0,
-      "last_task_completed": null,
-      "next_task_pending": "Record independent plan findings, UX evidence, cross-repo ownership and canonical child/change registration; completion evidence is the checked-in reviewed plan and current waypoint.",
+      "tasks_done": 1,
+      "last_task_completed": "Record independent plan findings, UX evidence, cross-repo ownership and canonical child/change registration; completion evidence is the checked-in reviewed plan and current waypoint.",
+      "next_task_pending": "Integrate latest Boss main, inspect fork patches, merge liter-llm upstream into its fork, and freeze catalog/source revisions; verify by recorded Git ancestry and catalog provenance, preserving unrelated worktree changes.",
       "blockers": []
     }
   ],

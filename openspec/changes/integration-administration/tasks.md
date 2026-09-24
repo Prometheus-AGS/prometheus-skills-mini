@@ -35,7 +35,7 @@ Dependency order: 1 → 2 → 6 → 7 → 8 → 3 → 4 → 5. All 37 tasks are 
 - [ ] 8.1 Complete agent catalog/definitions/compiler/skills UI, native format import/export, validated registration, revisions/origin/policy/model bindings and federation configuration using shared UAR services.
 - [ ] 8.2 Complete persistent custom A2UI/schema/component lifecycle and presentation assignments/sharing, builtin protections and approved shared renderer packaging; expose preview and safe reference handling.
 - [ ] 8.3 Complete owned runs/AG-UI/approvals/checkpoints and contextual policies, knowledge/memory/tools/protocol administration and missing list/detail APIs; reconcile actual methods/feature gates against the API coverage ledger.
-- [ ] 8.4 Wire configure-agent→save→run through the real Boss runtime, stage-local recovery, retained editing context, effective agent/model/presentation display, keyboard/compact navigation and all locales.
+- [x] 8.4 Wire configure-agent→save→run through the real Boss runtime, stage-local recovery, retained editing context, effective agent/model/presentation display, keyboard/compact navigation and all locales.
 - [ ] 8.5 Run Gate V once for the complete catalog-to-conversation workflow, actual presentation/AG-UI/knowledge operations, capability-specific administration and route coverage; record the bounded Impeccable/accessibility outcomes without per-component test loops.
 
 ## 3. Complete observable services and Compass administration

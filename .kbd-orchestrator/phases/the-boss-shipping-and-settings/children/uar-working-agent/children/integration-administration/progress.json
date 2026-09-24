@@ -2,16 +2,16 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 575,
-  "derivedRevision": 575,
+  "sourceRevision": 578,
+  "derivedRevision": 578,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 575
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 578
   },
   "conflictCount": 0,
   "phase": "integration-administration",
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
   "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
-  "last_updated": "2026-09-24T11:17:56.415829Z",
+  "last_updated": "2026-09-24T11:47:30.927035Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
   "changes_completed": 0,
@@ -44,12 +44,12 @@
     {
       "id": "integration-administration",
       "title": "Complete integration administration",
-      "status": "PENDING",
-      "implementation_status": "PENDING",
+      "status": "IN_PROGRESS",
+      "implementation_status": "IN_PROGRESS",
       "tasks_total": 37,
-      "tasks_done": 9,
-      "last_task_completed": "Add artifact revision/source snapshots and continuation compatibility, and replace Boss per-turn artifact synthesis with catalog links plus conflict-aware migration; preserve policy/model/UI/skill semantics at Gate R.",
-      "next_task_pending": "Add RemoteHttp static header/secret-reference support and trusted-host remote destination/grant admission using existing verifier and run-owned connector; preserve sidecar incoming guards and owner isolation; demonstrate at Gate R.",
+      "tasks_done": 10,
+      "last_task_completed": "Add RemoteHttp static header/secret-reference support and trusted-host remote destination/grant admission using existing verifier and run-owned connector; preserve sidecar incoming guards and owner isolation; demonstrate at Gate R.",
+      "next_task_pending": "Complete #296 credential expiry/renewal/revocation, frozen reconnect, child narrowing, cleanup and secret-free observability; document the BFF caller contract and keep returned runtime URLs accurate; demonstrate at Gate R.",
       "blockers": []
     }
   ],

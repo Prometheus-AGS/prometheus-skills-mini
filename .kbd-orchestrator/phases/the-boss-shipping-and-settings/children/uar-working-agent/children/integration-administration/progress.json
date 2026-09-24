@@ -2,16 +2,16 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 551,
-  "derivedRevision": 551,
+  "sourceRevision": 555,
+  "derivedRevision": 555,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 551
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 555
   },
   "conflictCount": 0,
   "phase": "integration-administration",
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
   "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
-  "last_updated": "2026-09-24T08:40:12.916041Z",
+  "last_updated": "2026-09-24T08:52:41.379494Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
   "changes_completed": 0,
@@ -47,9 +47,9 @@
       "status": "PENDING",
       "implementation_status": "PENDING",
       "tasks_total": 37,
-      "tasks_done": 2,
-      "last_task_completed": "Integrate latest Boss main, inspect fork patches, merge liter-llm upstream into its fork, and freeze catalog/source revisions; verify by recorded Git ancestry and catalog provenance, preserving unrelated worktree changes.",
-      "next_task_pending": "Add versioned integration preference conversion, feature-scoped revision-checked updates, protected secret set/clear contracts and generated schemas; verify through existing-config migration and persistence at Gate A.",
+      "tasks_done": 3,
+      "last_task_completed": "Add versioned integration preference conversion, feature-scoped revision-checked updates, protected secret set/clear contracts and generated schemas; verify through existing-config migration and persistence at Gate A.",
+      "next_task_pending": "Implement bounded full-pack/app/manual service discovery and independent ownership profiles in mini and Boss; verify mixed managed/external discovery and no lifecycle takeover at Gate A.",
       "blockers": []
     }
   ],

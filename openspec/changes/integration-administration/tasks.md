@@ -8,7 +8,7 @@ Dependency order: 1 → 2 → 6 → 7 → 8 → 3 → 4 → 5. All 37 tasks are 
 
 ## 2. Complete persistence, discovery and settings foundation
 
-- [ ] 2.1 Add versioned integration preference conversion, feature-scoped revision-checked updates, protected secret set/clear contracts and generated schemas; verify through existing-config migration and persistence at Gate A.
+- [x] 2.1 Add versioned integration preference conversion, feature-scoped revision-checked updates, protected secret set/clear contracts and generated schemas; verify through existing-config migration and persistence at Gate A.
 - [ ] 2.2 Implement bounded full-pack/app/manual service discovery and independent ownership profiles in mini and Boss; verify mixed managed/external discovery and no lifecycle takeover at Gate A.
 - [ ] 2.3 Add UAR scoped SurrealDB auth and deterministic sidecar configuration, active-run-aware apply/restart with rollback and effective backend status; verify embedded and external scoped-auth launches at Gate A.
 - [ ] 2.4 Add dedicated UAR/Compass/liter-llm/Services route, sidebar and search entries, UAR administration and complete applicable translations; verify UI configuration and persistence at Gate A.

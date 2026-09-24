@@ -2,26 +2,24 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 627,
-  "derivedRevision": 627,
+  "sourceRevision": 656,
+  "derivedRevision": 656,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 590,
-    "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 37
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 592,
+    "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-24T15:55:05.841209Z",
+  "updatedAt": "2026-09-24T17:29:44.688051Z",
   "cursor": [
     "agent-team-creator",
-    "execute",
-    "kbd-consistency-before-agent-teams",
-    "3.1"
+    "reflect"
   ],
   "root": {
     "type": "phase",
     "id": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
     "status": "ready",
     "progress": {
-      "done": 15,
+      "done": 17,
       "total": 36
     },
     "children": [
@@ -29,27 +27,27 @@
         "type": "phase",
         "id": "agent-team-creator",
         "canonicalId": "agent-team-creator",
-        "status": "IN_PROGRESS",
+        "status": "COMPLETE",
         "progress": {
-          "done": 0,
+          "done": 2,
           "total": 2
         },
         "children": [
           {
             "type": "change",
             "id": "kbd-consistency-before-agent-teams",
-            "status": "IN_PROGRESS",
+            "status": "COMPLETE",
             "progress": {
-              "done": 2,
+              "done": 3,
               "total": 3
             }
           },
           {
             "type": "change",
             "id": "agent-team-creator",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
+              "done": 4,
               "total": 4
             }
           }
@@ -357,7 +355,7 @@
                     "id": "integration-administration",
                     "status": "IN_PROGRESS",
                     "progress": {
-                      "done": 16,
+                      "done": 17,
                       "total": 37
                     }
                   }

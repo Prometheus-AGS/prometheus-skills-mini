@@ -2,17 +2,17 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 627,
-  "derivedRevision": 627,
+  "sourceRevision": 656,
+  "derivedRevision": 656,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 590,
-    "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 37
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 592,
+    "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
   "phase": "integration-administration",
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
   "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
-  "last_updated": "2026-09-24T15:55:05.841209Z",
+  "last_updated": "2026-09-24T17:29:44.688051Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
   "changes_completed": 0,
@@ -48,9 +48,9 @@
       "status": "IN_PROGRESS",
       "implementation_status": "IN_PROGRESS",
       "tasks_total": 37,
-      "tasks_done": 16,
-      "last_task_completed": "Complete schema-driven runtime/security/provider/model controls, source management links, secret set/clear semantics, all locale strings and actual supported capability states; preserve existing app settings migrations.",
-      "next_task_pending": "Run Gate U once through actual admin IPC/REST and runtime consumers: Boss-linked, UAR-owned and existing-gateway-linked models, nonconversation model operation, restart, secret changes, live/deferred settings, conflicts/partial saves and admin/owner isolation; Gate C adds editor-to-UAR propagation after new gateway editing exists.",
+      "tasks_done": 17,
+      "last_task_completed": "Run Gate U once through actual admin IPC/REST and runtime consumers: Boss-linked, UAR-owned and existing-gateway-linked models, nonconversation model operation, restart, secret changes, live/deferred settings, conflicts/partial saves and admin/owner isolation; Gate C adds editor-to-UAR propagation after new gateway editing exists.",
+      "next_task_pending": "Complete agent catalog/definitions/compiler/skills UI, native format import/export, validated registration, revisions/origin/policy/model bindings and federation configuration using shared UAR services.",
       "blockers": []
     }
   ],

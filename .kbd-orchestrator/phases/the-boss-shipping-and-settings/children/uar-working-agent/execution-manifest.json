@@ -25,7 +25,7 @@
     "version": "the-boss.uar.sidecar/1",
     "path": "contract-v1.md"
   },
-  "sourcesFrozen": false,
+  "sourcesFrozen": true,
   "worktrees": [
     {
       "role": "boss",
@@ -53,8 +53,17 @@
     "websiteCheckout": "/Users/gqadonis/Projects/know-me/boss-landing-spot",
     "lovableProject": "The Boss Landing",
     "websiteDeploymentIdentityConfirmed": false,
-    "candidateSourceManifest": null,
-    "installerSourceManifest": null,
+    "candidateSourceManifest": {
+      "url": "https://github.com/Prometheus-AGS/universal-agent-runtime/releases/download/boss-sidecar-win32-x64-v1.0.0-p1.8/uar-sidecar-win32-x64.json",
+      "sha256": "ceb2b74d3e144eddf12183bb0b4ac7d52dc611fbfb67b32197953436cb2cd46f",
+      "source": "c29af47be3439c69e1a3c124fdcf09ce4cbb5cba",
+      "payloadSha256": "849aacc54e4e9a695699420f6b042d1c0126905d4005c16447e535782f1917ea"
+    },
+    "installerSourceManifest": {
+      "repository": "Prometheus-AGS/the-boss",
+      "revision": "2b379b4d686fa1f2b0ebdf505e59b6750bcd6ae3",
+      "path": "build/integration-artifacts.json"
+    },
     "publicDistributionRequires": "Complete installed platform gate; Windows operator acceptance remains pending until observed",
     "features": [
       "minimal",
@@ -103,7 +112,8 @@
         "1.2",
         "1.3"
       ],
-      "status": "pending"
+      "status": "complete",
+      "commit": "d6eb43bc76f2945d8f967871e886b291c1b1aaee"
     },
     {
       "id": "1.5",
@@ -113,7 +123,8 @@
         "1.3",
         "1.4"
       ],
-      "status": "pending"
+      "status": "complete",
+      "commit": "31c17d220d5681686b50c1fd08bc384cec169423"
     },
     {
       "id": "1.6",
@@ -123,7 +134,9 @@
         "1.4",
         "1.5"
       ],
-      "status": "pending"
+      "status": "complete",
+      "commit": "12ba26ac638098b0938bdc8994eddab14b5c2b06",
+      "dependencyCommit": "uar:30941a727268d4e0551c93b97255c945286f85d1"
     },
     {
       "id": "1.7",
@@ -134,7 +147,8 @@
         "1.5",
         "1.6"
       ],
-      "status": "pending"
+      "status": "complete",
+      "commit": "90a6097cf7582cfd42d7aae65fb14a949ecd804d"
     },
     {
       "id": "1.8",
@@ -145,7 +159,10 @@
         "1.4",
         "1.7"
       ],
-      "status": "pending"
+      "status": "complete",
+      "commit": "2b379b4d686fa1f2b0ebdf505e59b6750bcd6ae3",
+      "dependencyCommit": "uar:c29af47be3439c69e1a3c124fdcf09ce4cbb5cba",
+      "buildRun": "https://github.com/Prometheus-AGS/universal-agent-runtime/actions/runs/35955347827"
     },
     {
       "id": "1.9",
@@ -175,7 +192,7 @@
   "packagingDependency": "1.8 recipe/source-ready precedes builds. Native payload builds finalize 1.8 URLs/checksums, then freeze final Boss installer source; only then build installers under 1.9. Task 1.9 cannot complete before 1.8.",
   "evidence": {
     "productionEdits": true,
-    "buildsRun": 0,
+    "buildsRun": 3,
     "testsRun": 0,
     "windowsInstalledAcceptance": "pending",
     "appleSiliconInstalledAcceptance": "pending"

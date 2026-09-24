@@ -1,0 +1,21 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "ordering errors — dependencies for lifecycle closeout, OpenSpec archive before reflection, and independent Windows/Apple platform branches are explicitly ordered; shared preparation gates platform branches without serializing one behind the other",
+    "missing dependencies — each goal area is covered by concrete tasks: UAR storage/discovery, dedicated settings/schema/i18n, operations/logs, Compass drift/indexing, liter-llm providers/roles, build/publish, installed acceptances, certification/archive/reflection",
+    "untestable or ambiguous acceptance criteria — gate criteria specify real integration evidence and concrete scenarios rather than generic correctness claims",
+    "scope smuggling — listed work maps to stated goals, prior analysis reuse decisions, or mandatory lifecycle/release obligations; no unrelated new daemon/framework/network-scan/unit-loop work is introduced",
+    "constraint violations — the plan preserves external installs/secrets/unrelated work, avoids unit/per-edit test loops and new daemons, requires both customer platforms and both installed acceptances, and separates implementation tasks from mandatory closeout"
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

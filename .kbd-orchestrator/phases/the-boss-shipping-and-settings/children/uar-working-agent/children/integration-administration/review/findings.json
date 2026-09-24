@@ -1,0 +1,21 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "ordering errors — checklist gates are sequenced so baseline/schema/discovery/UAR foundation precedes operations, Compass, gateway administration, and release work; no dependency was found that is scheduled after its consumer",
+    "missing dependencies — each stated goal is covered by explicit decisions and checklist work: UAR embedded/remote SurrealDB, dedicated UAR/Compass/liter-llm settings, observable operations, i18n/schema handling, upstream mergeability, and installed acceptance",
+    "ambiguous acceptance criteria — gate criteria include concrete integration demonstrations such as migrated settings/IPC, embedded then remote UAR storage, invalid credentials, Docker failure, two projects, logs beyond 256 KiB, real inference, and installed walkthrough",
+    "scope smuggling — release, website, visual pass, upstream merge, catalog pinning, and runtime payload work are tied to the stated installed acceptance, mergeability, settings, and publishing constraints; no unrelated work item was identified",
+    "constraint violations — the plan preserves unrelated changes, avoids unit/per-edit test loops, rejects new resident services, protects secrets, preserves external ownership, schedules Windows x64 before Apple Silicon, and treats remote legacy gateway config export as an explicit compatibility limit"
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

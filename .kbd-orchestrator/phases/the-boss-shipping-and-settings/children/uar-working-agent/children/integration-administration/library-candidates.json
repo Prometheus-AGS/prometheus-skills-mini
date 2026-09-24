@@ -1,0 +1,146 @@
+{
+  "phase": "integration-administration",
+  "generated_at": "2026-09-24T07:12:38.983Z",
+  "mode": "stack-specified",
+  "candidates": [
+    {
+      "id": "cand-001",
+      "gaps": [
+        "G1",
+        "G2"
+      ],
+      "candidate": "Existing UAR PersistenceConfig and SurrealDB 3.2.4 any engine",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "UAR src/config.rs:676; src/uar/persistence/providers/surreal.rs:20-60; https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/index/languages/rust.mdx",
+      "evidence": "URL/user/password/ns/db already exist, SDK supports remote and embedded, but UAR signs in as Root only.",
+      "work_required": "Add auth scope and reuse existing provider/engine; Boss resolves selected config and reports effective backend. Keep exact current SurrealDB pin."
+    },
+    {
+      "id": "cand-002",
+      "gaps": [
+        "G4"
+      ],
+      "candidate": "Boss integration operation runner plus existing typed IPC lifecycle",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "Boss integrationProcess.ts; PrometheusIntegrationService.ts; shared/ipc/schemas/prometheus.ts",
+      "evidence": "Already owns cancellable processes and operation IDs, but tail caps at 262144 and UI polls; no durable cursor/full logs.",
+      "work_required": "Durable log/state adapter and ordered events, per-target locks, redaction before persistence, cross-platform process-tree cancellation. No second operation engine."
+    },
+    {
+      "id": "cand-003",
+      "gaps": [
+        "G5",
+        "G6"
+      ],
+      "candidate": "Compass check-update marker command",
+      "verdict": "reject",
+      "confidence": "high",
+      "source": "Compass crates/compass-cli/src/integration_commands.rs:299-313",
+      "evidence": "Only checks output_root()/needs_update existence; returns empty success otherwise. Cannot demonstrate source freshness.",
+      "work_required": "Do not use as source-drift evidence."
+    },
+    {
+      "id": "cand-004",
+      "gaps": [
+        "G5",
+        "G6"
+      ],
+      "candidate": "Compass detect/Manifest and immutable BuildGuard used by doctor",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "Compass crates/compass-cli/src/agent_commands.rs:1199-1269; crates/compass-files/src/manifest.rs",
+      "evidence": "Doctor resolves snapshot, detects corpus, compares manifest hashes; is_unchanged compares added/deleted sets. Existing hashes use mtime shortcut.",
+      "work_required": "Expose structured freshness with explicit graph/output and saved extraction config identity. Use complete content checks for requested drift check; report empty/missing/invalid manifests explicitly. Reuse source inclusion/extraction options rather than duplicate scanner."
+    },
+    {
+      "id": "cand-005",
+      "gaps": [
+        "G7",
+        "G8"
+      ],
+      "candidate": "liter-llm provider/model catalogs and ProxyConfig parser/watch",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "liter-llm schemas/providers.json; schemas/catalog.json; proxy config/mod.rs:426; CLI commands/api.rs",
+      "evidence": "providers lists capability metadata; catalog models supply choices; ProxyConfig::from_toml_str validates actual config; --watch exists; CLI currently only Api/Mcp, no nonstarting check command.",
+      "work_required": "Package both catalogs from merged fork. Add minimal nonstarting config-check CLI that invokes parser, emits redacted structured errors, and bundle native liter-llm CLI for both customer platforms. Use native binary manager; users require no Rust toolchain."
+    },
+    {
+      "id": "cand-006",
+      "gaps": [
+        "G8"
+      ],
+      "candidate": "smol-toml existing Boss dependency",
+      "verdict": "adopt",
+      "confidence": "high",
+      "source": "Boss package.json:157; https://github.com/squirrelchat/smol-toml",
+      "evidence": "Already available for parse/stringify. Registry latest 1.9.0 dated 2026-09-22; no upgrade needed solely for this feature. Plain stringify does not preserve original comments/layout.",
+      "work_required": "Use existing pinned version for read/model conversion only; reject whole-document parse/stringify for external config editing."
+    },
+    {
+      "id": "cand-007",
+      "gaps": [
+        "G8"
+      ],
+      "candidate": "@rainbowatcher/toml-edit-js 0.6.5",
+      "verdict": "adopt",
+      "confidence": "medium",
+      "source": "https://github.com/rainbowatcher/toml-edit-js; tests/array_edit.test.ts; src/ops/set.rs",
+      "evidence": "Rust toml_edit compiled to WASM supports value/delete/array-of-table indexed edits and preserves local decor. Source/tests inspected, not executed. Registry version 0.6.5 modified 2026-03-13.",
+      "work_required": "Pin dependency and package WASM as main-process resource. Edit individual fields in selected tables, preserve other sections and environment references. Verify comment preservation and WASM packaged loading in completed Gate C on both platforms, not a standalone prototype suite."
+    },
+    {
+      "id": "cand-008",
+      "gaps": [
+        "G3",
+        "G4"
+      ],
+      "candidate": "Existing mini Compose service runner and Docker Desktop host networking",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "mini docker/compose.yaml; https://docs.docker.com/desktop/features/networking/networking-how-tos/; https://docs.docker.com/reference/cli/docker/compose/up/",
+      "evidence": "Current compose hardwires memory to ws://surrealdb:8000 and depends_on surrealdb. Desktop documents host.docker.internal; compose --wait waits running/healthy only.",
+      "work_required": "Generate selected managed subset and endpoint config, remove dependencies on external DB, translate container-to-host endpoints separately from host clients, preserve loopback port bindings and named volumes. Check accessibility from actual container and distinguish health from auth/application function."
+    },
+    {
+      "id": "cand-009",
+      "gaps": [
+        "G9",
+        "G11",
+        "G12",
+        "G13"
+      ],
+      "candidate": "Boss SettingsPrimitives, UI package, Preference generator and IPC registries",
+      "verdict": "adopt",
+      "confidence": "high",
+      "source": "Boss settingsMenu.ts; routes/settings/prometheus.tsx; scripts/data-classify/README.md; shared/ipc/schemas/prometheus.ts; main/renderer i18n/locales",
+      "evidence": "Existing additive registration points and generated Preference definitions. Both locale catalogs have 13 files. Upstream main changed renderer locale files since inspected checkout.",
+      "work_required": "Separate feature pages, narrow registration edits, feature-scoped revisioned config updates, generate schemas, translate new keys in both applicable catalogs. No new settings framework."
+    }
+  ],
+  "build_required": [
+    {
+      "id": "build-001",
+      "gap": "G3",
+      "rationale": "Discovery adapters for actual full-pack service metadata plus manual endpoints; markers alone are not service discovery."
+    },
+    {
+      "id": "build-002",
+      "gap": "G7",
+      "rationale": "Provider connections/model roles and canonical identity resolution are application-specific; reuse catalogs and transport."
+    },
+    {
+      "id": "build-003",
+      "gap": "G10",
+      "rationale": "Native artifacts, packaging and installed acceptance for both customer platforms."
+    }
+  ],
+  "open_questions": [],
+  "research_limits": {
+    "max_queries_per_tier": 8,
+    "max_minutes": 20,
+    "within_budget": true
+  }
+}

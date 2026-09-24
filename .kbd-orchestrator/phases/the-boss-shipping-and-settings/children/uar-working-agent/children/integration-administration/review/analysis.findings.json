@@ -1,0 +1,20 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "build-vs-adopt blind spots — each stated gap area G1-G13 is either tied to an evaluated reuse candidate with verdict/work_required or listed as application-specific build_required with rationale; no hand-rolled replacement contradicts an identified adopt/adapt option",
+    "candidate evaluation completeness — all nine candidates include verdict, confidence, source, evidence, and work_required; rejected and adopted/adapted options have explicit reasons",
+    "stale or unverifiable landscape claims — package/date/source claims are accompanied by named sources or explicitly marked as unverified/residual uncertainty where integration evidence is still pending",
+    "assessment or constraint contradictions — recommendations preserve the specified Electron/TypeScript/Node mini/Rust-component stack, reject new daemons, avoid secret exposure/takeover of external installs, and keep both customer platforms in scope"
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

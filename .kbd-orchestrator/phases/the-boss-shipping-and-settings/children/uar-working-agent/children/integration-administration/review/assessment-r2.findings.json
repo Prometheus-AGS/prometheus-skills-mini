@@ -1,0 +1,21 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "missed goal coverage — each stated goal maps to assessment gaps: UAR embedded/remote SurrealDB in G1-G3, dedicated UAR/Compass/liter-llm administration and observable operations in G4 and G6-G9, schema/i18n/mergeability/acceptance in G10-G13",
+    "unsupported or contradicted codebase claims — the packet's file_tree only lists repository roots and does not contradict the named source locations; the artifact labels source-inspection confidence and does not claim installed verification",
+    "vague findings — gap rows identify concrete files/modules and specific missing capabilities rather than generic restatements",
+    "goals merely restated — assessment includes observed current behavior and locations for each required outcome, not just repeats of desired outcomes",
+    "constraint conflicts — the artifact explicitly avoids installed-verification claims, notes no tests/build ran, protects external lifecycle/secrets boundaries, and scopes findings to operator-reported administration requirements"
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

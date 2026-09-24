@@ -8,9 +8,9 @@
     "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 515
   },
   "conflictCount": 0,
-  "phase": "uar-working-agent",
-  "phaseId": "the-boss-shipping-and-settings::uar-working-agent",
-  "parentPhase": "the-boss-shipping-and-settings",
+  "phase": "integration-administration",
+  "phaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
+  "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
   "last_updated": "2026-09-24T07:23:57.573621Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
@@ -42,28 +42,17 @@
   },
   "changes": [
     {
-      "id": "uar-delivery-replan",
-      "title": "P1 working installed UAR agent (OpenSpec tasks 1.1–1.10)",
-      "status": "IN_PROGRESS",
-      "implementation_status": "IN_PROGRESS",
-      "tasks_total": 10,
-      "tasks_done": 8,
-      "last_task_completed": "Complete native payload recipe and immutable manifests",
-      "next_task_pending": "Build actual customer installers and run installed P1 gate",
+      "id": "integration-administration",
+      "title": "Complete integration administration",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 22,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "Record independent plan findings, UX evidence, cross-repo ownership and canonical child/change registration; completion evidence is the checked-in reviewed plan and current waypoint.",
       "blockers": []
     }
   ],
-  "children": {
-    "integration-administration": {
-      "status": "IN_PROGRESS",
-      "changes_completed": 0,
-      "changes_total": 1,
-      "implementation_completed": 0,
-      "implementation_total": 1,
-      "certification_status": "NOT_TRACKED",
-      "handoff": null,
-      "completed_at": null
-    }
-  },
+  "children": {},
   "migrationStatus": null
 }

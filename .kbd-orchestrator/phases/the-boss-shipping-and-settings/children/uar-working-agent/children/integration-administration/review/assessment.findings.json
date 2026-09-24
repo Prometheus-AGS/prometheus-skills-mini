@@ -1,0 +1,23 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment does not separately assess the goal to preserve upstream mergeability, schema coverage, and internationalization.",
+      "evidence": "The goals require: \"Preserve upstream mergeability schemas internationalization and installed acceptance\". The only related gap row is G9: \"Separate UAR/Compass/liter-llm navigation, schema/i18n | One Prometheus integration page owns all these controls. Preference JSON comes from generated source definitions; no UAR storage selection schema yet.\" This mentions one missing UAR storage schema but gives no assessment of upstream mergeability risk, no i18n locations or missing keys, and no schema coverage beyond UAR storage selection.",
+      "suggested_fix": "Add explicit assessment rows for upstream mergeability boundaries, schema additions/compatibility, and i18n coverage, with concrete locations and observed gaps."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

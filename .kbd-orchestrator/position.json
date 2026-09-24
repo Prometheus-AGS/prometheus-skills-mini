@@ -2,19 +2,19 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 480,
-  "derivedRevision": 480,
+  "sourceRevision": 516,
+  "derivedRevision": 516,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 480
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 516
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-24T05:33:08.460139Z",
+  "updatedAt": "2026-09-24T07:25:10.235909Z",
   "cursor": [
     "the-boss-shipping-and-settings",
     "uar-working-agent",
-    "execute",
-    "uar-delivery-replan",
-    "1.9"
+    "integration-administration",
+    "integration-administration",
+    "1.1"
   ],
   "root": {
     "type": "phase",
@@ -22,7 +22,7 @@
     "status": "ready",
     "progress": {
       "done": 15,
-      "total": 33
+      "total": 34
     },
     "children": [
       {
@@ -311,6 +311,28 @@
               "total": 1
             },
             "children": [
+              {
+                "type": "phase",
+                "id": "integration-administration",
+                "canonicalId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
+                "status": "IN_PROGRESS",
+                "progress": {
+                  "done": 0,
+                  "total": 1
+                },
+                "children": [
+                  {
+                    "type": "change",
+                    "id": "integration-administration",
+                    "status": "PENDING",
+                    "progress": {
+                      "done": 0,
+                      "total": 22
+                    }
+                  }
+                ],
+                "annotations": []
+              },
               {
                 "type": "change",
                 "id": "uar-delivery-replan",

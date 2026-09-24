@@ -1,0 +1,14 @@
+{
+  "stage": "analyze",
+  "completedAt": "2026-09-24T07:13:43.094Z",
+  "outputs": [
+    "analysis.md",
+    "library-candidates.json",
+    "decision-log.md",
+    "review/analysis.findings.json"
+  ],
+  "nextStage": "spec",
+  "summaryForNext": "Nine candidates evaluated; reuse app contracts and UAR persistence, adapt actual Compass manifest comparison rather than marker check, adopt TOML WASM editor and add native liter config-check. Both customer platforms essential. No unresolved review findings; integration behavior remains unverified.",
+  "skipped": false,
+  "skipReason": null
+}

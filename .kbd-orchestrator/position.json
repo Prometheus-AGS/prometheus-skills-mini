@@ -2,19 +2,16 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 580,
-  "derivedRevision": 580,
+  "sourceRevision": 586,
+  "derivedRevision": 586,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 580
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 582,
+    "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 4
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-24T12:03:03.202318Z",
+  "updatedAt": "2026-09-24T14:03:03.203816Z",
   "cursor": [
-    "the-boss-shipping-and-settings",
-    "uar-working-agent",
-    "integration-administration",
-    "integration-administration",
-    "6.5"
+    "agent-team-creator"
   ],
   "root": {
     "type": "phase",
@@ -25,6 +22,18 @@
       "total": 34
     },
     "children": [
+      {
+        "type": "phase",
+        "id": "agent-team-creator",
+        "canonicalId": "agent-team-creator",
+        "status": "IN_PROGRESS",
+        "progress": {
+          "done": 0,
+          "total": 0
+        },
+        "children": [],
+        "annotations": []
+      },
       {
         "type": "phase",
         "id": "hook-entry-node-only",
@@ -326,7 +335,7 @@
                     "id": "integration-administration",
                     "status": "IN_PROGRESS",
                     "progress": {
-                      "done": 11,
+                      "done": 12,
                       "total": 37
                     }
                   }

@@ -7,9 +7,9 @@
 
 ## Progress
 
-- completed: 3
+- completed: 4
 - total: 37
-- active_task: 2.2
+- active_task: 2.3
 
 ## Tasks
 
@@ -18,7 +18,8 @@
 | 1.1 | complete | 0 |
 | 1.2 | complete | 0 |
 | 2.1 | complete | 0 |
-| 2.2 | in_progress | 0 |
+| 2.2 | complete | 0 |
+| 2.3 | in_progress | 0 |
 
 ## Escalations
 

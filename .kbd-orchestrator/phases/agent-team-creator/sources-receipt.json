@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "stage": "assess",
+  "recordedAt": "2026-09-24T14:14:10.544Z",
+  "sources": [
+    {
+      "id": "project",
+      "scope": "project",
+      "commit": "5509abe715f9d302777a678be25977b3f2374248",
+      "branch": "codex/agent-team-creator",
+      "baseline": "bb641a8fc569d97e19c9e3fa667ca24d7bebf43d",
+      "dirty": true,
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "sha256": "54fc113d4aaef794006a3fdba678d4e67201a1edfcfb853c11a45c495e5c5ba8"
+        },
+        {
+          "path": ".kbd-orchestrator/constraints.md",
+          "sha256": "22bf811754755da377156a63ad63dfff98e735dc1fb4cf13827ab95c524f985a"
+        },
+        {
+          "path": "skill-system.json",
+          "sha256": "eae089838210fab3df5a4da1fe8b597efb3bee7dc199dc51636edadfaf571f96"
+        },
+        {
+          "path": "package.json",
+          "sha256": "5712fdd3be0b10569075b68d4452e8e0e25822f61ef2070dde1ddafe00bcd9c0"
+        }
+      ]
+    }
+  ],
+  "registrySources": [],
+  "registryStatus": "No project, project-local or personal source registry exists; no private or team sources selected.",
+  "sync": "origin/main fetched before isolated worktree creation; no log sync command in installed pk; no log repositories configured."
+}

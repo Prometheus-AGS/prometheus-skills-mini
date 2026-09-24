@@ -5,8 +5,8 @@ The canonical task wording and dependency order live in `openspec/changes/integr
 ## Checklist
 
 - [x] 1.1 Freeze reviewed plan and canonical registration.
-- [/] 1.2 Integrate and freeze repository baselines.
-- [ ] 2.1 Version integration preferences and protected secret contracts.
+- [x] 1.2 Integrate and freeze repository baselines.
+- [/] 2.1 Version integration preferences and protected secret contracts.
 - [ ] 2.2 Implement bounded service discovery and ownership profiles.
 - [ ] 2.3 Add scoped UAR SurrealDB configuration and apply lifecycle.
 - [ ] 2.4 Add dedicated translated administration navigation.

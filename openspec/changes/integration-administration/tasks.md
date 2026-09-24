@@ -4,7 +4,7 @@ Dependency order: 1 → 2 → 6 → 7 → 8 → 3 → 4 → 5. All 37 tasks are 
 ## 1. Freeze reviewed architecture and baselines
 
 - [x] 1.1 Record independent plan findings, UX evidence, cross-repo ownership and completed assess/analyze/plan handoffs and canonical child/change registration; completion evidence is the checked-in reviewed plan and current waypoint.
-- [ ] 1.2 Integrate latest Boss main, inspect fork patches, merge liter-llm upstream into its fork, and freeze catalog/source revisions; verify by recorded Git ancestry and catalog provenance, preserving unrelated worktree changes.
+- [x] 1.2 Integrate latest Boss main, inspect fork patches, merge liter-llm upstream into its fork, and freeze catalog/source revisions; verify by recorded Git ancestry and catalog provenance, preserving unrelated worktree changes.
 
 ## 2. Complete persistence, discovery and settings foundation
 

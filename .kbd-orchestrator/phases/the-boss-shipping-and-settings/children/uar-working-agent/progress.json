@@ -2,16 +2,16 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 466,
-  "derivedRevision": 466,
+  "sourceRevision": 470,
+  "derivedRevision": 470,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 466
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 470
   },
   "conflictCount": 0,
   "phase": "uar-working-agent",
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent",
   "parentPhase": "the-boss-shipping-and-settings",
-  "last_updated": "2026-09-23T22:54:59.134085Z",
+  "last_updated": "2026-09-24T00:09:01.247741Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
   "changes_completed": 0,
@@ -47,9 +47,9 @@
       "status": "IN_PROGRESS",
       "implementation_status": "IN_PROGRESS",
       "tasks_total": 10,
-      "tasks_done": 1,
-      "last_task_completed": "Reconcile worktrees, ownership and trusted contract",
-      "next_task_pending": "Complete principal isolation, managed locks and retention",
+      "tasks_done": 3,
+      "last_task_completed": "Bind run credentials, MCP resources and host context",
+      "next_task_pending": "Wire supervised Boss UAR service and driver",
       "blockers": []
     }
   ],

@@ -17,6 +17,18 @@
       "commit": "a21b00153dc6ecf95ea8e5ec2ee476d5e9b82c69",
       "task": "1.2",
       "verification": "static source inspection; behavioral acceptance deferred to the installed P1 gate"
+    },
+    {
+      "repository": "universal-agent-runtime",
+      "commit": "3444c1fc3fea94d8a270c9ee94df16be30263a6c",
+      "task": "1.3",
+      "verification": "rustfmt and static source inspection; behavioral acceptance deferred to the installed P1 gate"
+    },
+    {
+      "repository": "liter-llm",
+      "commit": "e627af981bcb06c7fc5da027731c182b044e25d1",
+      "task": "1.3 dependency",
+      "verification": "rustfmt and source inspection of authenticated HTTP transport; behavioral acceptance deferred to the installed P1 gate"
     }
   ],
   "platformOutcomes": [],

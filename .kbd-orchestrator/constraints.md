@@ -204,7 +204,7 @@ constraints:
     note: 'Until the three-OS CI matrix exists (OpenSpec change platform-foundation), every Windows claim made from macOS is self-reported.'
 ```
 
-Dropped from the generic template, with reasons: `no-any-type` (no TypeScript here), `accessibility-basics`
+Dropped from the generic template, with reasons: `no-any-type` (legacy code is JavaScript; the agent-team runtime has a pinned TypeScript 7 strict build), `accessibility-basics`
 (no UI), `no-unused-imports` and `no-lint-warnings` (no linter is configured; `lint_command` is `null` — add
 them back in the change that introduces one).
 

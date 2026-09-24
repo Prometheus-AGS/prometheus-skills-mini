@@ -24,6 +24,10 @@ const outDir = join(siteDir, 'docs-catalog');
 // Skill name -> category, for this repo's flat layout. Anything not listed falls into "other".
 const CATEGORY_OF = new Map(
   Object.entries({
+    'agent-team-creator': 'Agent Teams',
+    'agent-team-manage': 'Agent Teams',
+    'agent-team-models': 'Agent Teams',
+    'agent-team-handoff': 'Agent Teams',
     'kbd-process-orchestrator': 'KBD Process',
     'kbd-init': 'KBD Process',
     'kbd-assess': 'KBD Process',
@@ -133,7 +137,10 @@ for (const file of files) {
   const dirName = rel.split('/')[0];
   const name = (fm && fm.name) || dirName;
   const description = ((fm && fm.description) || '').toString().trim().replace(/\s+/g, ' ');
-  const tags = fm && fm.metadata && Array.isArray(fm.metadata.tags) ? fm.metadata.tags : [];
+  const rawTags = fm && fm.metadata && fm.metadata.tags;
+  const tags = (Array.isArray(rawTags) ? rawTags : typeof rawTags === 'string' ? rawTags.split(/[,\s]+/) : [])
+    .filter((tag) => typeof tag === 'string' && tag.trim())
+    .map((tag) => tag.trim());
   const version = (fm && (fm.version || (fm.metadata && fm.metadata.version))) || '';
   const category = categoryFor(dirName);
   if (!byCategory.has(category)) byCategory.set(category, []);

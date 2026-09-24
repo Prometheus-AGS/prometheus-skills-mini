@@ -1,0 +1,53 @@
+{
+  "outcome": "pass",
+  "authoritativeRevision": 654,
+  "sourceRevision": 653,
+  "position": "agent-team-creator",
+  "findings": [],
+  "outstandingObligations": {
+    "change:compass-mcp-protocol-negotiation": {
+      "key": "change:compass-mcp-protocol-negotiation",
+      "receiptId": "17d93dfe21f4068fc533f14de85f809efe493a2cc4a6b89fe315bce91713bfd4",
+      "boundary": "change",
+      "subject": "compass-mcp-protocol-negotiation",
+      "sourceRevision": 379,
+      "exactSignal": "Starting change 1 out of 1: A1: Negotiate MCP revisions used by The Boss"
+    },
+    "change:integration-administration": {
+      "key": "change:integration-administration",
+      "receiptId": "7ba274e35f659c24d4d9baadc0826e99884da6417c6c0ba7e93c491ae325ac10",
+      "boundary": "change",
+      "subject": "integration-administration",
+      "sourceRevision": 543,
+      "exactSignal": "Starting change 1 out of 1: Complete integration administration"
+    },
+    "phase:the-boss-shipping-and-settings::uar-working-agent": {
+      "key": "phase:the-boss-shipping-and-settings::uar-working-agent",
+      "receiptId": "83f1b4608bf1d938f28a2df79d45c19ea050a73186cab7ad3b4698d3838d560a",
+      "boundary": "phase",
+      "subject": "the-boss-shipping-and-settings::uar-working-agent",
+      "sourceRevision": 437,
+      "exactSignal": "Starting phase 4 out of 4: uar-working-agent"
+    },
+    "phase:the-boss-shipping-and-settings::uar-working-agent::integration-administration": {
+      "key": "phase:the-boss-shipping-and-settings::uar-working-agent::integration-administration",
+      "receiptId": "e9132e8d59f73b8e6e43c0d349d34b2a78a1011a5e5772b6c95d5dc4bd1411c2",
+      "boundary": "phase",
+      "subject": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
+      "sourceRevision": 483,
+      "exactSignal": "Starting phase 1 out of 1: integration-administration"
+    },
+    "task:integration-administration/2.5": {
+      "key": "task:integration-administration/2.5",
+      "receiptId": "3847afdfd17aca94e5e1a9858257fa04b689b8da31291af02face3ec9cf10b88",
+      "boundary": "task",
+      "subject": "integration-administration/2.5",
+      "sourceRevision": 569,
+      "exactSignal": "Starting task 7 out of 37: Run Gate A once after complete wiring: actual migrated Boss settings/IPC, discovery, UAR conversation using embedded then remote storage, invalid credentials, active-run apply and restart; record observed results and fix failures without unit loops."
+    }
+  },
+  "exactSignal": "Completed phase 5 out of 5: agent-team-creator",
+  "repairedProjections": [],
+  "receiptId": "6f9524d909b5ab3268c85e4ace5d2efe8f373dd3b5d2b91a44b81db30c99eccb",
+  "precommit": false
+}

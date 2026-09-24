@@ -8,6 +8,17 @@ own job, not a change editing its gates — the ownership table below distinguis
 derived from its §P project block and §A constitution, and from the hard constraints in
 `openspec/config.yaml`. Each rule names its source.
 
+## Authority and phase-specific scope
+
+The operator explicitly requested correcting conflicting KBD guidance in phase
+`agent-team-creator` and authorized changes, commits and branch pushes in both
+skill repositories. See `phases/agent-team-creator/operator-authorization.md`.
+This dated exception permits the consistency corrections recorded by that change;
+it does not grant general gate-editing authority or permission to publish knowledge
+logs. Governing AGENTS.md A-9 controls implementation-first integration acceptance.
+The full pack and mini retain their own validation policies; all evidence for this
+phase is local.
+
 ## Command policy (applies to every `check:`, `command:` and `target:` below)
 
 This project forbids telling an agent to run `grep`, `sed`, `jq`, `awk`, `curl`, `mktemp` or `chmod`, and
@@ -31,14 +42,14 @@ requires every command to behave the same from `cmd.exe`, Windows PowerShell 5.1
 |---|---|---|
 | `CLAUDE.md`, `AGENTS.md`, `.claude/rules/`, `.cursor/rules/`, `docs/skill-routing.md` | `rules/build.mjs` | Generated. Edit `rules/src/`, then rebuild. A hand edit fails `build-passes`. |
 | `.claude/skills/openspec-*`, `.claude/commands/opsx/`, `.agents/skills/openspec-*`, `.cursor/commands/`, `.cursor/skills/`, `.opencode/` | OpenSpec CLI | Refresh with `openspec update`; do not hand-edit. |
-| `.kbd-orchestrator/project.json` — everything except `activePhase` | `/kbd-init` ONLY | Never written by a change. Command fields are derived from `package.json` scripts; re-run `/kbd-init --force` after they change. |
+| `.kbd-orchestrator/project.json` — everything except `activePhase` | `/kbd-init` ONLY | Initialization owns full configuration; phase creation may bootstrap minimal missing metadata without replacing existing fields. Command fields are derived from `package.json` scripts; re-run `/kbd-init --force` after they change. |
 | `.kbd-orchestrator/project.json` — `activePhase` | `/kbd-new-phase`, `/kbd-next-phase` | Step 7 of those skills flips it at a phase bracket. Under runtime authority the runtime projects the waypoint and the phase directory but NOT this field, so the skill still writes it. A change never touches it. |
-| `.kbd-orchestrator/constraints.md` — rules and thresholds | `/kbd-init` | A change never loosens, deletes or adds a RULE here. |
+| `.kbd-orchestrator/constraints.md` — rules and thresholds | `/kbd-init` | Changes do not alter rules without explicit operator authorization. The dated consistency correction above reconciles stale prose with governing rules; it does not waive QA. |
 | `.kbd-orchestrator/constraints.md` — a `check:` expression | a change, with evidence | Permitted ONLY to fix a demonstrated false positive, and only when the change ALSO proves the corrected check still catches a real violation. Every such edit is called out in its own commit and in the change's tasks. Three exist (see below); each was a check matching prose rather than code. |
 | `.kbd-orchestrator/phases/**` | KBD stages | Written by the stage that owns them. |
 | `.prometheus/` | Karpathy logging / memory | Append-only and dated. Entries are marked superseded, never deleted. |
 | `openspec/changes/archive/` | OpenSpec | History. Never rewritten. |
-| `/Users/gqadonis/Projects/prometheus/prometheus-skill-pack` | another repository | Reference only (`project.json` → `workspace`). **Never written**, including its worktrees. |
+| `/Users/gqadonis/Projects/prometheus/prometheus-skill-pack` | another repository | Reference only by default (`project.json` → `workspace`), including worktrees. The explicit two-repository authorization above applies only to the named phase. |
 
 ### Check expressions corrected by a change
 
@@ -70,7 +81,7 @@ constraints:
   - id: tests-pass
     severity: blocking
     source: 'openspec/config.yaml conventions'
-    description: 'The node:test suite passes'
+    description: 'The existing node:test compatibility suite passes after completed production; real integration evidence is separately required by A-9'
     command: 'npm test'
 
   - id: specs-valid
@@ -146,7 +157,7 @@ constraints:
   - id: reference-repo-untouched
     severity: blocking
     source: 'project.json workspace roles'
-    description: 'Nothing under prometheus-skill-pack (the port source) is created, modified or deleted'
+    description: 'The source pack is reference-only unless an explicit operator instruction names it as an authorized write target'
     note: 'Manual review of the change''s file list.'
 ```
 
@@ -157,8 +168,8 @@ constraints:
 ```yaml
   - id: tests-for-new-features
     severity: warning
-    source: 'openspec/config.yaml conventions — tests written first'
-    description: 'Every new module under lib/ has a node:test file that was seen to fail before it passed'
+    source: 'AGENTS.md A-9; openspec/config.yaml completed-behavior conventions'
+    description: 'New behavior has real integration evidence authored and run after its production path is complete; RED history is not required'
 
   - id: no-forbidden-tools-in-instructions
     severity: warning
@@ -218,18 +229,11 @@ workflow_triggers:
       type: command
       target: 'npm run spec:validate'
 
-  - event: on_refinement_complete
-    action:
-      type: command
-      target: 'git add -A'
-
-  - event: on_refinement_complete
-    action:
-      type: command
-      target: 'git commit -m "kbd: refine <change-id>" -m "Assisted-by: <AGENT>:<MODEL> [<tools>]"'
 ```
 
-Notes on the last two: they are separate entries because of the no-chaining policy. The `Assisted-by` trailer
-is required by A-15, and `Signed-off-by` must never be added. They commit locally only — nothing here pushes,
-files or publishes (A-16). The repository was initialized on 2026-09-20 (`git init -b main`); it has no commits
-and no remote yet, so these triggers will create the first commits and nothing can be pushed.
+Commit preparation is an explicit operator-authorized procedure after review.
+Stage only the reviewed change paths, then commit with the A-15 `Assisted-by`
+trailer; never use `Signed-off-by`. Code-repository publication requires explicit
+operator authorization and passing local gates; this phase has that authorization.
+The repository now has commits and a configured remote. Personal/team knowledge-log
+publication remains operator-owned and is not covered by code-branch push authorization.

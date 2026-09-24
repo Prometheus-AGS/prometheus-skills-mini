@@ -1,0 +1,61 @@
+{
+  "artifact_type": "content",
+  "generated_at": "2026-09-24T15:37:45.746Z",
+  "variants": [
+    {
+      "name": "consistency-correction",
+      "files": [
+        "dist/source-inventory.json",
+        "dist/verification.json",
+        "../../../.kbd-orchestrator/constraints.md",
+        "../../../.kbd-orchestrator/current-waypoint.json",
+        "../../../.kbd-orchestrator/position.json",
+        "../../../.kbd-orchestrator/project.json",
+        "../../../AGENTS.md",
+        "../../../CLAUDE.md",
+        "../../../dist/plugins/claude/prometheus-skills-mini/skills/kbd-assess/SKILL.md",
+        "../../../dist/plugins/claude/prometheus-skills-mini/skills/kbd-execute/SKILL.md",
+        "../../../dist/plugins/claude/prometheus-skills-mini/skills/kbd-init/SKILL.md",
+        "../../../dist/plugins/claude/prometheus-skills-mini/skills/kbd-plan/SKILL.md",
+        "../../../dist/plugins/claude/prometheus-skills-mini/skills/kbd-process-orchestrator/SKILL.md",
+        "../../../dist/plugins/claude/prometheus-skills-mini/skills/kbd-reflect/SKILL.md",
+        "../../../dist/plugins/claude/prometheus-skills-mini/skills/kbd-spec/SKILL.md",
+        "../../../dist/plugins/codex/prometheus-skills-mini/skills/kbd-assess/SKILL.md",
+        "../../../dist/plugins/codex/prometheus-skills-mini/skills/kbd-execute/SKILL.md",
+        "../../../dist/plugins/codex/prometheus-skills-mini/skills/kbd-init/SKILL.md",
+        "../../../dist/plugins/codex/prometheus-skills-mini/skills/kbd-plan/SKILL.md",
+        "../../../dist/plugins/codex/prometheus-skills-mini/skills/kbd-process-orchestrator/SKILL.md",
+        "../../../dist/plugins/codex/prometheus-skills-mini/skills/kbd-reflect/SKILL.md",
+        "../../../dist/plugins/codex/prometheus-skills-mini/skills/kbd-spec/SKILL.md",
+        "../../../docs/skill-routing.md",
+        "../../../lib/doctor/skills.test.mjs",
+        "../../../lib/kbd/spec-backend.mjs",
+        "../../../lib/kbd/stage-gate.mjs",
+        "../../../openspec/changes/kbd-consistency-before-agent-teams/design.md",
+        "../../../openspec/changes/kbd-consistency-before-agent-teams/specs/kbd-phase-consistency/spec.md",
+        "../../../openspec/changes/kbd-consistency-before-agent-teams/tasks.md",
+        "../../../openspec/config.yaml",
+        "../../../rules/src/routing.md",
+        "../../../scripts/kbd-apply.mjs",
+        "../../../scripts/kbd-new-phase.mjs",
+        "../../../skills/kbd-assess/SKILL.md",
+        "../../../skills/kbd-execute/SKILL.md",
+        "../../../skills/kbd-init/SKILL.md",
+        "../../../skills/kbd-plan/SKILL.md",
+        "../../../skills/kbd-process-orchestrator/SKILL.md",
+        "../../../skills/kbd-reflect/SKILL.md",
+        "../../../skills/kbd-spec/SKILL.md",
+        "../../../scripts/kbd-new-phase.integration.test.mjs",
+        "../../../.gitignore"
+      ],
+      "format": "source-and-evidence",
+      "description": "Current source and verification evidence; source files are referenced in place to avoid duplicate authority."
+    }
+  ],
+  "validation": {
+    "notes": [
+      "Source references are real working-tree files. dist holds inventory and evidence.",
+      "Independent review is pending; this manifest does not certify publication."
+    ]
+  }
+}

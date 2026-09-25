@@ -1,0 +1,18 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "src/main/ai/runtime/uar/UarToolApprovalController.ts",
+      "line": 123,
+      "claim": "A stale host admission leaves the UAR approval unresolved, so the run can remain blocked waiting for a decision that will never be delivered.",
+      "evidence": "In `recordAndResolve`, `bridge.recordHumanDecision(...)` returning false immediately throws `uar_approval_stale` before calling `resolve`; the caller only emits an error in the catch path. Acceptance criterion 2.3 requires decision acknowledgments and delivery failures to be correlated and 2.4 requires recovery/error states, but this path neither rejects nor resolves the pending UAR approval.",
+      "suggested_fix": "When `recordHumanDecision` returns false, also resolve the UAR approval as rejected or explicitly cancel the pending approval/run before surfacing the stale-approval error."
+    }
+  ]
+}

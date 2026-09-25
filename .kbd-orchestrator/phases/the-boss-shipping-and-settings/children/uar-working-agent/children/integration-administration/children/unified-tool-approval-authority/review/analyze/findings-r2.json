@@ -1,0 +1,16 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "build-vs-adopt blind spots — candidates cover the consolidation mechanisms, KBD conflict handling, manifest adaptation, Codex reference patterns, rmcp metadata transport, renderer projection, reconnect/cancellation semantics, and explicitly list the repository-specific work that must be built rather than adopted",
+    "candidates listed but not evaluated — every candidate in library-candidates.json has a verdict, fit_for_gap, evidence, risks, and decision_rationale",
+    "stale or unverifiable landscape claims — version/revision boundaries are stated for Codex, rmcp, and surveyed harnesses; unsupported runtime behavior claims are labeled as not established or requiring later validation",
+    "missing category of solution — the analysis considers preserving native gates, runtime-owned broker/admission, manifest-based baseline, live pending replay, rejection of wholesale merges, and rejection of durable restart/edit semantics beyond scope",
+    "recommendations contradicting assessment or constraints — the analysis preserves UAR as run-policy owner, Boss as stricter host authority, treats Gate V as non-evidence, keeps worktree consolidation as proposal-only, and does not direct production code changes in this stage"
+  ]
+}

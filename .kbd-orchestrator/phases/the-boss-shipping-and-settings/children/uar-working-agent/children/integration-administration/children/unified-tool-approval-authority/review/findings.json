@@ -1,0 +1,34 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment does not satisfy the assessment exit requirement to provide a reproduced failure.",
+      "evidence": "Goals require: \"Produce an evidence-backed `assessment.md` with the reproduced failure\"; the artifact states: \"It has NOT been rerun here\" and \"No new tests, builds, or production edits.\"",
+      "suggested_fix": "Either reproduce the Gate V failure and record the retained tool-error payload, or explicitly revise the assessment handoff/exit status to say the reproduced-failure exit criterion is unmet and cannot be used as completed evidence."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment cites research artifact paths that are not present in the supplied file tree, making its provenance trail non-locatable for downstream stages.",
+      "evidence": "The artifact says \"research/local-evidence.json records inspected file hashes and excerpts\" and \"The external harness evidence and pinned sources are in research/landscape/harness-landscape.md\", but the provided file_tree contains no `./research` directory or either cited file.",
+      "suggested_fix": "Either add the cited research files to the phase artifact set/file tree, or update the assessment to cite the actual provided evidence locations/names."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment misses a concrete current-state gap analysis for the secrecy/renderer-boundary constraint.",
+      "evidence": "The goals include the constraint: \"Decisions and secrets remain main-process scoped; renderer messages carry opaque identifiers only.\" The artifact only gives a future recommendation, \"Raw secrets must not become renderer-visible digests/payloads or logs,\" and a broad statement that \"Existing prompt and opaque ID response path is reusable\"; it does not assess whether current AG-UI approval events, registry/UI state, or retained run details already expose arguments, decisions, or secrets to the renderer.",
+      "suggested_fix": "Add an explicit current-state assessment row for renderer-visible approval payloads/run detail/logging, stating whether current code is compliant, noncompliant, or unknown, with the concrete paths inspected."
+    }
+  ]
+}

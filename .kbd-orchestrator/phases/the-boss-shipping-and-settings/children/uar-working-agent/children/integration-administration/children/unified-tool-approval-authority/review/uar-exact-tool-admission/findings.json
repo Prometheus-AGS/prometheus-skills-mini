@@ -1,0 +1,39 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "src/uar/runtime/manager.rs",
+      "line": 4901,
+      "claim": "Local governance is evaluated against the host safe display instead of the frozen validated tool arguments, which can bypass argument-sensitive deny/approval rules.",
+      "evidence": "The gate unwraps the prepared invocation, then replaces the previous tool arguments with `let arguments_json = action_display.to_string();` before the governance decision path; acceptance criterion 2.1 requires carrying frozen arguments through governance and 2.3 requires restrictive composition.",
+      "suggested_fix": "Use `serde_json::to_string(&invocation.validated_arguments)` for governance evaluation and keep `action_display` only for renderer/approval display."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "scripts/gates/uar-exact-tool-admission.ts",
+      "line": 20,
+      "claim": "Gate A1 is not a production-path integration boundary because it instantiates `UarHostToolAdmission` directly instead of exercising the Boss bridge plus UAR adapter path.",
+      "evidence": "The gate imports and constructs `new UarHostToolAdmission(...)` directly and posts to its handler; acceptance criterion 2.5 requires 'one production-path integration boundary' after the full slice is wired, and criterion 2.2 specifically requires the existing Boss bridge listener and UAR adapter contract.",
+      "suggested_fix": "Run the gate through `createUarHostMcpBridge` and the UAR HTTP admission adapter/managed MCP dispatch path so prepare, resolve, metadata injection, claim, and bridge authentication are exercised together."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src/main/ai/runtime/uar/UarToolApprovalController.ts",
+      "line": 116,
+      "claim": "New user-facing approval failure text is added without any locale updates, leaving the changed UI text untranslated.",
+      "evidence": "The diff adds the emitted error text `The tool approval no longer matches the prepared host admission`; acceptance criterion 2.4 requires 'translate all changed text across existing locales', but the diff contains no locale/resource updates.",
+      "suggested_fix": "Move the new approval/admission error strings into the existing localization resources and update all supported locales, or reuse an existing localized error key."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

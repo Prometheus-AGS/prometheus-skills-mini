@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-24T21:42:06.835Z",
+  "method": "Read-only source inspection, no tests or builds",
+  "repositories": [
+    {
+      "name": "boss",
+      "root": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar",
+      "head": "2fa0b4b87f0e8991a97873590d093991b91b395f",
+      "status": "M release-manifest.json\n M scripts/build-integration-tools.cjs\n M scripts/commit-release-entry.cjs\n M scripts/prepare-service-image.cjs\n M scripts/publish-integration-payload.cjs\n M scripts/reuse-integration-tools.cjs\n M src/main/ai/mcp/mcpTransport.ts\n M src/main/ai/runtime/uar/UarOperationalAdministrationAdapter.ts\n M src/main/ai/runtime/uar/UarSidecarService.ts\n M src/main/ai/runtime/uar/uarPrincipal.ts\n M src/main/ai/tools/adapters/aiSdk/mcp/resolveAssistantMcpTools.ts\n M src/main/main.ts\n M src/main/services/prometheus/commandPath.ts\n M src/main/services/prometheus/fullPackDetection.ts\n M src/main/services/prometheus/integrationProcess.ts\n M src/main/services/prometheus/ownedSkillCopy.ts\n M src/main/services/prometheus/pushSkills.ts\n M src/main/services/prometheus/surrealConnection.ts\n M src/renderer/pages/settings/PrometheusSettings/IntegrationFields.tsx\n M src/shared/types/prometheusIntegration.ts\n?? tests/e2e/gates/uarExperienceGate.test.ts",
+      "files": [
+        {
+          "path": "src/main/ai/runtime/uar/UarToolApprovalController.ts",
+          "sha256": "f3939ed991b9933a7c876b3c4a713c3c3cec3a9f895cecca2f2b7b113a6c1742"
+        },
+        {
+          "path": "src/main/ai/runtime/uar/UarHostMcpBridge.ts",
+          "sha256": "0b5b66ca673d666cb46fa4cedc24fc29d81befb5f30c47efa898d86430ae9ee9"
+        },
+        {
+          "path": "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
+          "sha256": "554ae6395c8fcac631cd09de68a99f9960874bb1cd338a5fa3af4ac2dd3f8204"
+        },
+        {
+          "path": "src/main/ai/runtime/uar/UarAguiAdapter.ts",
+          "sha256": "d505e708e59910b83bf4f64a55ad296878a063f86e40e2d39124e99a2c977422"
+        },
+        {
+          "path": "src/main/ai/mcp/servers/filesystem/tools/write.ts",
+          "sha256": "0fae6035747b00d732272f555f20ec8050bef35ca146de0252297a258c7ac7f2"
+        },
+        {
+          "path": "tests/e2e/gates/uarExperienceGate.test.ts",
+          "sha256": "c52bf2a746c059a531466ca52a5476bd3b54c8873f1311231ab0ba30ad871903"
+        },
+        {
+          "path": "test-results/gates/uarExperienceGate-Gate-V-a-90fdc-val-reconnect-and-knowledge/error-context.md",
+          "sha256": "5ae61e6ef306377b537f63d10c701964353208143230c627a5c94e0b6cf87b1b"
+        }
+      ]
+    },
+    {
+      "name": "uar",
+      "root": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar",
+      "head": "19e2ad1575621fcd76d01d16a8ef96aa5751a843",
+      "status": "M pnpm-lock.yaml\n M src/mcp/runtime.rs\n M src/server.rs\n M src/uar/a2ui/routes.rs\n M src/uar/api/routes.rs\n M src/uar/runtime/manager.rs\n M tests/integration/live/stub_llm.rs\n M tests/remote_mcp_run_grants.rs\n M tests/run_retention/runs.rs\n M tests/run_retention/sessions.rs\n M tests/sidecar_session_principal/admission.rs\n M tests/sidecar_session_principal/isolation.rs\n M tests/support/principal_host.rs",
+      "files": [
+        {
+          "path": "src/uar/runtime/manager.rs",
+          "sha256": "e75c7f68dfa6d2d1efae46261eafc2386edb22d6990d34a925ed378a05de79d6"
+        },
+        {
+          "path": "src/uar/runtime/thread/approvals.rs",
+          "sha256": "76fac32dde2fdd5f82739d1dcb425910124113797b4992864ec08a66667bebf1"
+        },
+        {
+          "path": "src/llm/orchestrator.rs",
+          "sha256": "0ea6d2a342838d5e85e9f8785a6a15245ccb9bb06087c62e83a4c0ebddb8200f"
+        },
+        {
+          "path": "src/uar/tools/validate.rs",
+          "sha256": "6844e755160be3cf7593124947a7851fcdc519b095dd960f29215e3487116695"
+        },
+        {
+          "path": "src/mcp/registry.rs",
+          "sha256": "f1d8f9dc2fc78cdced3ccd1504530940571d8efd3b499bfe2916ef00f8daa044"
+        },
+        {
+          "path": "src/mcp/runtime.rs",
+          "sha256": "24b7c68aad151bff5f35239fe11f1a58d5c1bce87fe6f34ce8b872c0636bb190"
+        }
+      ]
+    },
+    {
+      "name": "codex",
+      "root": "/Users/gqadonis/Projects/references/codex",
+      "head": "986ff1cc7ced0081ec5014b700a376333d87f869",
+      "status": "",
+      "files": [
+        {
+          "path": "codex-rs/core/src/tools/approvals.rs",
+          "sha256": "042a434bd1638744ab6646af56c83f6de28ac785a0aabd1502d7327bccce8fd8"
+        },
+        {
+          "path": "codex-rs/core/src/tools/orchestrator.rs",
+          "sha256": "dd18c5d27d5f1d91f390d1329d811ff0cc42a01b6773098c0ab798922e9c6b06"
+        },
+        {
+          "path": "codex-rs/app-server/src/outgoing_message.rs",
+          "sha256": "df283be051d56d4615472c137b2d827ccbb9e392675d3c10fbe46990e15bdd9c"
+        },
+        {
+          "path": "codex-rs/codex-mcp/src/binding.rs",
+          "sha256": "c9f46b498a98c739eeb57b973f6a22aadd57f1c7189ad71570ffe8dd0904d84e"
+        }
+      ]
+    }
+  ]
+}

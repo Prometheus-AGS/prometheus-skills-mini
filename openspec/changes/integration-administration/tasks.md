@@ -12,31 +12,31 @@ Dependency order: 1 → 2 → 6 → 7 → 8 → 3 → 4 → 5. All 37 tasks are 
 - [x] 2.2 Implement bounded full-pack/app/manual service discovery and independent ownership profiles in mini and Boss; verify mixed managed/external discovery and no lifecycle takeover at Gate A.
 - [x] 2.3 Add UAR scoped SurrealDB auth and deterministic sidecar configuration, active-run-aware apply/restart with rollback and effective backend status; verify embedded and external scoped-auth launches at Gate A.
 - [x] 2.4 Add dedicated UAR/Compass/liter-llm/Services route, sidebar and search entries, UAR administration and complete applicable translations; verify UI configuration and persistence at Gate A.
-- [ ] 2.5 Run Gate A once after complete wiring: actual migrated Boss settings/IPC, discovery, UAR conversation using embedded then remote storage, invalid credentials, active-run apply and restart; record observed results and fix failures without unit loops.
+- [x] 2.5 Run Gate A once after complete wiring: actual migrated Boss settings/IPC, discovery, UAR conversation using embedded then remote storage, invalid credentials, active-run apply and restart; record observed results and fix failures without unit loops.
 
 ## 6. Correct registered-agent execution and remote MCP identity (after 2)
 
-- [ ] 6.1 Unify catalog write/resolution and typed registered-agent admission across REST/chat/MCP/actor paths, preserving explicit inline compatibility and rejecting unknown explicit IDs/backend failure; demonstrate at Gate R.
-- [ ] 6.2 Add artifact revision/source snapshots and continuation compatibility, and replace Boss per-turn artifact synthesis with catalog links plus conflict-aware migration; preserve policy/model/UI/skill semantics at Gate R.
-- [ ] 6.3 Add RemoteHttp static header/secret-reference support and trusted-host remote destination/grant admission using existing verifier and run-owned connector; preserve sidecar incoming guards and owner isolation; demonstrate at Gate R.
-- [ ] 6.4 Complete #296 credential expiry/renewal/revocation, frozen reconnect, child narrowing, cleanup and secret-free observability; document the BFF caller contract and keep returned runtime URLs accurate; demonstrate at Gate R.
-- [ ] 6.5 Run Gate R once on complete Boss/UAR wiring and real remote MCP transport with two concurrent identities, catalog edit/resume, expiry/renewal/reconnect and rejected unauthorized requests; record sanitized outcomes and fix observed failures.
+- [x] 6.1 Unify catalog write/resolution and typed registered-agent admission across REST/chat/MCP/actor paths, preserving explicit inline compatibility and rejecting unknown explicit IDs/backend failure; demonstrate at Gate R.
+- [x] 6.2 Add artifact revision/source snapshots and continuation compatibility, and replace Boss per-turn artifact synthesis with catalog links plus conflict-aware migration; preserve policy/model/UI/skill semantics at Gate R.
+- [x] 6.3 Add RemoteHttp static header/secret-reference support and trusted-host remote destination/grant admission using existing verifier and run-owned connector; preserve sidecar incoming guards and owner isolation; demonstrate at Gate R.
+- [x] 6.4 Complete #296 credential expiry/renewal/revocation, frozen reconnect, child narrowing, cleanup and secret-free observability; document the BFF caller contract and keep returned runtime URLs accurate; demonstrate at Gate R.
+- [x] 6.5 Run Gate R once on complete Boss/UAR wiring and real remote MCP transport with two concurrent identities, catalog edit/resume, expiry/renewal/reconnect and rejected unauthorized requests; record sanitized outcomes and fix observed failures.
 
 ## 7. Complete UAR settings authority and model administration (after 6)
 
-- [ ] 7.1 Finalize method-level API coverage and versioned admin capabilities; implement main-only typed adapters and dedicated UAR internal navigation with explicit admin and owner scopes.
-- [ ] 7.2 Wire saved/effective/apply-lifecycle settings, partial errors and revision checks; provision admin/encryption authority and migrate provider secrets to protected references without overwriting API-authoritative configuration.
-- [ ] 7.3 Implement Boss-linked, gateway-linked and UAR-owned provider/model assignments for inference and every enabled model-bearing consumer, with policy-bound overrides, safe credential brokerage and effective identity display.
-- [ ] 7.4 Complete schema-driven runtime/security/provider/model controls, source management links, secret set/clear semantics, all locale strings and actual supported capability states; preserve existing app settings migrations.
-- [ ] 7.5 Run Gate U once through actual admin IPC/REST and runtime consumers: Boss-linked, UAR-owned and existing-gateway-linked models, nonconversation model operation, restart, secret changes, live/deferred settings, conflicts/partial saves and admin/owner isolation; Gate C adds editor-to-UAR propagation after new gateway editing exists.
+- [x] 7.1 Finalize method-level API coverage and versioned admin capabilities; implement main-only typed adapters and dedicated UAR internal navigation with explicit admin and owner scopes.
+- [x] 7.2 Wire saved/effective/apply-lifecycle settings, partial errors and revision checks; provision admin/encryption authority and migrate provider secrets to protected references without overwriting API-authoritative configuration.
+- [x] 7.3 Implement Boss-linked, gateway-linked and UAR-owned provider/model assignments for inference and every enabled model-bearing consumer, with policy-bound overrides, safe credential brokerage and effective identity display.
+- [x] 7.4 Complete schema-driven runtime/security/provider/model controls, source management links, secret set/clear semantics, all locale strings and actual supported capability states; preserve existing app settings migrations.
+- [x] 7.5 Run Gate U once through actual admin IPC/REST and runtime consumers: Boss-linked, UAR-owned and existing-gateway-linked models, nonconversation model operation, restart, secret changes, live/deferred settings, conflicts/partial saves and admin/owner isolation; Gate C adds editor-to-UAR propagation after new gateway editing exists.
 
 ## 8. Complete catalog and runtime experience administration (after 7)
 
-- [ ] 8.1 Complete agent catalog/definitions/compiler/skills UI, native format import/export, validated registration, revisions/origin/policy/model bindings and federation configuration using shared UAR services.
-- [ ] 8.2 Complete persistent custom A2UI/schema/component lifecycle and presentation assignments/sharing, builtin protections and approved shared renderer packaging; expose preview and safe reference handling.
-- [ ] 8.3 Complete owned runs/AG-UI/approvals/checkpoints and contextual policies, knowledge/memory/tools/protocol administration and missing list/detail APIs; reconcile actual methods/feature gates against the API coverage ledger.
+- [x] 8.1 Complete agent catalog/definitions/compiler/skills UI, native format import/export, validated registration, revisions/origin/policy/model bindings and federation configuration using shared UAR services.
+- [x] 8.2 Complete persistent custom A2UI/schema/component lifecycle and presentation assignments/sharing, builtin protections and approved shared renderer packaging; expose preview and safe reference handling.
+- [x] 8.3 Complete owned runs/AG-UI/approvals/checkpoints and contextual policies, knowledge/memory/tools/protocol administration and missing list/detail APIs; reconcile actual methods/feature gates against the API coverage ledger.
 - [x] 8.4 Wire configure-agent→save→run through the real Boss runtime, stage-local recovery, retained editing context, effective agent/model/presentation display, keyboard/compact navigation and all locales.
-- [ ] 8.5 Run Gate V once for the complete catalog-to-conversation workflow, actual presentation/AG-UI/knowledge operations, capability-specific administration and route coverage; record the bounded Impeccable/accessibility outcomes without per-component test loops.
+- [x] 8.5 Run Gate V once for the complete catalog-to-conversation workflow, actual presentation/AG-UI/knowledge operations, capability-specific administration and route coverage; record the bounded Impeccable/accessibility outcomes without per-component test loops.
 
 ## 3. Complete observable services and Compass administration
 

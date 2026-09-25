@@ -1,0 +1,31 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment bases core release findings on a Boss worktree and GitHub state that are not present in the packet, so downstream planning would rely on unverifiable codebase claims.",
+      "evidence": "The assessment says, \"The claims below were verified against that Boss worktree and the `Prometheus-AGS/the-boss` GitHub repository, rather than inferred from the mini file tree,\" and cites paths such as `/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar/package.json`; the supplied `file_tree` contains no `/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar` tree and no Boss repository contents.",
+      "suggested_fix": "Include the relevant Boss file tree/excerpts or constrain the assessment to packet-supported facts, explicitly marking unprovided external repository claims as assumptions requiring verification before planning."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The completion boundary tells downstream stages that Boss production builds supersede required mini-repository gates, contradicting the packet constraints.",
+      "evidence": "The assessment states, \"Those production builds include compilation and packaging checks and supersede generic mini-repository `npm` commands that do not build or validate the Boss product.\" The constraints list blocking archive gates `build-passes` with command `npm run check`, `tests-pass` with command `npm test`, and `specs-valid` with command `npm run spec:validate`.",
+      "suggested_fix": "Do not state that release builds supersede the blocking mini gates; require both the Boss release gates and the packet's mandatory `npm run check`, `npm test`, and `npm run spec:validate` gates unless an authorized constraint change removes them."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

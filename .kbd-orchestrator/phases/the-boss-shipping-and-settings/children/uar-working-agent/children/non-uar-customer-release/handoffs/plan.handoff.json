@@ -1,0 +1,13 @@
+{
+  "stage": "plan",
+  "completedAt": "2026-09-25T11:30:10.529Z",
+  "outputs": [
+    "plan.md",
+    "sources-receipt.json",
+    "openspec/changes/ship-non-uar-desktop-release/tasks.md"
+  ],
+  "nextStage": "execute",
+  "summaryForNext": "One OpenSpec change with eight ordered tasks: disable and remove UAR reachability, make payloads profile-aware, publish four native Windows/macOS installers, update the site, then restore the parent. First task: create the clean 2.2.1 release worktree and implement the immutable capability gate. Independent adversarial review remains pending because no distinct configured judge or funded fallback was available.",
+  "skipped": false,
+  "skipReason": null
+}

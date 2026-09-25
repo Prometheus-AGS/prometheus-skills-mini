@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1",
+  "kind": "desktop-release-receipt",
+  "release": {
+    "product": "The Boss",
+    "version": "2.2.1",
+    "tag": "v2.2.1",
+    "profile": "non-uar",
+    "featureCapabilities": {
+      "uar": false
+    },
+    "sourceCommit": "7f1b0d16d84196f3002f6e8dcaae55336c1f2fe8",
+    "metadataCommit": "aa9a022364ca4de8483e67385e2ef740edc70e26",
+    "repository": "https://github.com/Prometheus-AGS/the-boss",
+    "releaseUrl": "https://github.com/Prometheus-AGS/the-boss/releases/tag/v2.2.1",
+    "publishedAt": "2026-09-25T13:32:35Z"
+  },
+  "payload": {
+    "uarBinaryPresent": false,
+    "retainedNativeTools": [
+      "compass",
+      "rust-mcp-filesystem",
+      "prometheus",
+      "pk",
+      "node"
+    ],
+    "skills": {
+      "sourceCommit": "9959b72e22b3abe71cddca49fb8267349a09a3d5",
+      "skillCount": 60,
+      "runtimeFileCount": 2774
+    }
+  },
+  "localAppleSiliconGate": {
+    "command": "pnpm build:mac:arm64",
+    "worktree": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-release-2.2.1",
+    "result": "passed",
+    "installedImageValidation": "passed",
+    "artifact": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-release-2.2.1/dist/The-Boss-2.2.1-mac-arm64.dmg",
+    "size": 480971438,
+    "sha256": "7a54361a7eb16c28f4667031f307618d64dfaab52394f45b655185430c7d0d18"
+  },
+  "nativeWorkflow": {
+    "provider": "GitHub Actions",
+    "runId": 36137797825,
+    "url": "https://github.com/Prometheus-AGS/the-boss/actions/runs/36137797825",
+    "result": "success",
+    "sourceCommit": "7f1b0d16d84196f3002f6e8dcaae55336c1f2fe8"
+  },
+  "artifacts": [
+    {
+      "platform": "darwin",
+      "architecture": "arm64",
+      "name": "The-Boss-2.2.1-mac-arm64.dmg",
+      "url": "https://github.com/Prometheus-AGS/the-boss/releases/download/v2.2.1/The-Boss-2.2.1-mac-arm64.dmg",
+      "size": 484511193,
+      "sha256": "a30611801164a8a443e592b9d0ef620929cb10a4806e2c740284babc5605c841",
+      "signing": "unsigned (not notarized)",
+      "liveHttpStatus": 200,
+      "liveContentLength": 484511193
+    },
+    {
+      "platform": "darwin",
+      "architecture": "x64",
+      "name": "The-Boss-2.2.1-mac-x64.dmg",
+      "url": "https://github.com/Prometheus-AGS/the-boss/releases/download/v2.2.1/The-Boss-2.2.1-mac-x64.dmg",
+      "size": 505203418,
+      "sha256": "f18d591b9ec88f270b383e0e808f25426fcab77df69d58f13bc015884ec5cefa",
+      "signing": "unsigned (not notarized)",
+      "liveHttpStatus": 200,
+      "liveContentLength": 505203418
+    },
+    {
+      "platform": "win32",
+      "architecture": "x64",
+      "name": "The-Boss-2.2.1-win-x64-setup.exe",
+      "url": "https://github.com/Prometheus-AGS/the-boss/releases/download/v2.2.1/The-Boss-2.2.1-win-x64-setup.exe",
+      "size": 379349891,
+      "sha256": "91b0a71cc98e01575917d68c1cf9f1e6b425f864c59ada0e81ba77b8d3b3b421",
+      "signing": "unsigned",
+      "liveHttpStatus": 200,
+      "liveContentLength": 379349891
+    },
+    {
+      "platform": "win32",
+      "architecture": "arm64",
+      "name": "The-Boss-2.2.1-win-arm64-setup.exe",
+      "url": "https://github.com/Prometheus-AGS/the-boss/releases/download/v2.2.1/The-Boss-2.2.1-win-arm64-setup.exe",
+      "size": 353653104,
+      "sha256": "800ff483d9dfb7943ffa89531971fba2071cdb7448709836897d529ca8e16eaf",
+      "signing": "unsigned",
+      "liveHttpStatus": 200,
+      "liveContentLength": 353653104
+    }
+  ],
+  "website": {
+    "repository": "https://github.com/Know-Me-Tools/boss-landing-spot",
+    "commit": "66e87492ac45784ad1b39a36a61efb93990f7144",
+    "workflowRun": "https://github.com/Know-Me-Tools/boss-landing-spot/actions/runs/36141924323",
+    "deploymentProvider": "Lovable",
+    "project": "https://lovable.dev/projects/c0ca344c-ebc5-4be2-9d02-46d3d9631118",
+    "url": "https://the-boss.know-me.tools",
+    "deploymentResult": "updated",
+    "liveVersion": "2.2.1",
+    "visiblePlatforms": [
+      "darwin-arm64",
+      "darwin-x64",
+      "win32-x64",
+      "win32-arm64"
+    ],
+    "linuxDownloadVisible": false,
+    "ipfsDownloadVisible": false,
+    "verifiedAt": "2026-09-25T14:02:35Z"
+  }
+}

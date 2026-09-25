@@ -1,0 +1,39 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "analysis.md",
+      "line": 0,
+      "claim": "The analysis bases the release plan on adapting packaging and release files that the packet declares missing.",
+      "evidence": "analysis.md recommends adapting `integration-binaries.js`, `before-pack.js`, `after-pack.js`, and `RELEASES.md`, but `cited_paths` says: `MISSING  RELEASES.md`, `MISSING  after-pack.js`, `MISSING  before-pack.js`, `MISSING  integration-binaries.js`.",
+      "suggested_fix": "Resolve the actual repository/worktree paths for these files and cite existing paths, or change the recommendation to first create the missing packaging/release artifacts."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "library-candidates.json",
+      "line": 0,
+      "claim": "The candidate evaluation relies on source paths outside the supplied file tree, so the stated existing Electron, packaging, workflow, and landing-site seams are unverifiable from the packet.",
+      "evidence": "Candidates cite `/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar/electron.vite.config.ts`, `/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar/.github/workflows/the-boss-release.yml`, and `Know-Me-Tools/boss-landing-spot scripts/sync-release.mjs`; the supplied file tree contains no `.github/`, no `electron.vite.config.ts`, no `build/integration-artifacts.json`, and no `boss-landing-spot` path.",
+      "suggested_fix": "Include the referenced repository/worktree in the packet or revise the analysis to only recommend work against paths present in the actual target tree."
+    },
+    {
+      "severity": "WARNING",
+      "file": "library-candidates.json",
+      "line": 0,
+      "claim": "The gap IDs used to justify candidates are undefined in the packet, making traceability from goals to recommendations ambiguous.",
+      "evidence": "`library-candidates.json` maps candidates to `G1` through `G5` and `build_required` references `G1`, but the `goals` section contains only four bullet goals and the prior handoff summary does not define `G1`-`G5`.",
+      "suggested_fix": "Add explicit gap definitions or replace the opaque `G1`-`G5` references with the corresponding goal text or assessment finding IDs."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

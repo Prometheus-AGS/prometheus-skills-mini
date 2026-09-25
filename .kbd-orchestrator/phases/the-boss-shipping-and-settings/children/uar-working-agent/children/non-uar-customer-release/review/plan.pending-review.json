@@ -1,0 +1,25 @@
+{
+  "mode": "artifact",
+  "target": "plan",
+  "status": "pending_review",
+  "producer_model": "gpt-6-astra",
+  "packet": "plan.packet.json",
+  "attempts": [
+    {
+      "isolation": "rest-gateway",
+      "result": "JUDGE_MODEL_COLLISION",
+      "detail": "Configured judge and critic aliases did not resolve to canonical model identities; no distinct backup was configured."
+    },
+    {
+      "isolation": "harness-native",
+      "judge_model": "glm-5.3:cloud",
+      "result": "provider_usage_unavailable"
+    },
+    {
+      "isolation": "harness-native",
+      "judge_model": "deepseek-v4.1-flash:cloud",
+      "result": "provider_usage_unavailable"
+    }
+  ],
+  "required_resolution": "Complete an independent cumulative review before final release certification."
+}

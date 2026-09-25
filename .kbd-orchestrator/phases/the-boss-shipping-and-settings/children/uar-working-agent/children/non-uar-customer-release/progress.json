@@ -2,28 +2,28 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 911,
-  "derivedRevision": 911,
+  "sourceRevision": 906,
+  "derivedRevision": 906,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 847,
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 842,
     "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
-  "phase": "uar-working-agent",
-  "phaseId": "the-boss-shipping-and-settings::uar-working-agent",
-  "parentPhase": "the-boss-shipping-and-settings",
-  "last_updated": "2026-09-25T13:54:15.836236Z",
+  "phase": "non-uar-customer-release",
+  "phaseId": "the-boss-shipping-and-settings::uar-working-agent::non-uar-customer-release",
+  "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
+  "last_updated": "2026-09-25T13:53:49.526564Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
-  "changes_completed": 0,
+  "changes_completed": 1,
   "implementation_total": 1,
-  "implementation_completed": 0,
+  "implementation_completed": 1,
   "completion": {
     "primaryCounter": "implementation",
     "implementation": {
-      "completed": 0,
+      "completed": 1,
       "total": 1,
-      "status": "PENDING"
+      "status": "COMPLETE"
     },
     "evidence": {
       "status": "NOT_TRACKED",
@@ -72,38 +72,17 @@
   },
   "changes": [
     {
-      "id": "uar-delivery-replan",
-      "title": "P1 working installed UAR agent (OpenSpec tasks 1.1–1.10)",
-      "status": "IN_PROGRESS",
-      "implementation_status": "IN_PROGRESS",
-      "tasks_total": 10,
+      "id": "ship-non-uar-desktop-release",
+      "title": "Ship four-platform non-UAR desktop release",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 8,
       "tasks_done": 8,
-      "last_task_completed": "Complete native payload recipe and immutable manifests",
-      "next_task_pending": "Build actual customer installers and run installed P1 gate",
+      "last_task_completed": "Write release receipt and restore integration-administration task 4.5",
+      "next_task_pending": null,
       "blockers": []
     }
   ],
-  "children": {
-    "integration-administration": {
-      "status": "IN_PROGRESS",
-      "changes_completed": 0,
-      "changes_total": 1,
-      "implementation_completed": 0,
-      "implementation_total": 1,
-      "certification_status": "NOT_TRACKED",
-      "handoff": null,
-      "completed_at": null
-    },
-    "non-uar-customer-release": {
-      "status": "DONE",
-      "changes_completed": 1,
-      "changes_total": 1,
-      "implementation_completed": 1,
-      "implementation_total": 1,
-      "certification_status": "NOT_TRACKED",
-      "handoff": null,
-      "completed_at": null
-    }
-  },
+  "children": {},
   "migrationStatus": null
 }

@@ -1,0 +1,31 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "analysis.md",
+      "line": 0,
+      "claim": "The analysis does not cover the goal requiring a verified release handoff to integration-administration.",
+      "evidence": "Goals include: \"Return a verified release handoff to `integration-administration` before the UAR sidecar repair child begins.\" The named gaps are only `release-capability-contract`, `payload-profile`, `native-publication`, and `site-platform-policy`, and the ordering/recommendation only say to publish/update the site and then \"resume Gate C and the dedicated UAR repair child\" without analyzing the integration-administration handoff.",
+      "suggested_fix": "Add a named gap and candidate/decision for the verified release handoff, including what artifact proves release verification and how it is delivered to `integration-administration` before UAR repair resumes."
+    },
+    {
+      "severity": "WARNING",
+      "file": "analysis.md",
+      "line": 0,
+      "claim": "The analysis relies on external target-worktree source claims that are not supported by the packet file tree or cited-path metadata.",
+      "evidence": "The artifact says \"Evidence excerpts from the target worktree\" and cites paths such as `/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar/electron.vite.config.ts`, but the packet `file_tree` contains no `the-boss-uar` worktree and `cited_paths` says \"(no file paths cited in this artifact)\".",
+      "suggested_fix": "Include the target worktree file tree or concrete source excerpts/provenance in the packet metadata, or downgrade unsupported codebase claims to assumptions that the plan must verify before implementation."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

@@ -2,28 +2,28 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 840,
-  "derivedRevision": 840,
+  "sourceRevision": 911,
+  "derivedRevision": 911,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 776,
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 847,
     "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-25T09:44:51.943681Z",
+  "updatedAt": "2026-09-25T13:54:15.836236Z",
   "cursor": [
     "the-boss-shipping-and-settings",
     "uar-working-agent",
     "integration-administration",
     "integration-administration",
-    "4.1"
+    "4.5"
   ],
   "root": {
     "type": "phase",
     "id": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
     "status": "ready",
     "progress": {
-      "done": 21,
-      "total": 40
+      "done": 22,
+      "total": 41
     },
     "children": [
       {
@@ -355,6 +355,18 @@
                 "children": [
                   {
                     "type": "phase",
+                    "id": "non-uar-customer-release",
+                    "canonicalId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration::non-uar-customer-release",
+                    "status": "SKIPPED",
+                    "progress": {
+                      "done": 0,
+                      "total": 0
+                    },
+                    "children": [],
+                    "annotations": []
+                  },
+                  {
+                    "type": "phase",
                     "id": "unified-tool-approval-authority",
                     "canonicalId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration::unified-tool-approval-authority",
                     "status": "COMPLETE",
@@ -407,8 +419,30 @@
                     "id": "integration-administration",
                     "status": "IN_PROGRESS",
                     "progress": {
-                      "done": 27,
+                      "done": 31,
                       "total": 37
+                    }
+                  }
+                ],
+                "annotations": []
+              },
+              {
+                "type": "phase",
+                "id": "non-uar-customer-release",
+                "canonicalId": "the-boss-shipping-and-settings::uar-working-agent::non-uar-customer-release",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 1,
+                  "total": 1
+                },
+                "children": [
+                  {
+                    "type": "change",
+                    "id": "ship-non-uar-desktop-release",
+                    "status": "COMPLETE",
+                    "progress": {
+                      "done": 8,
+                      "total": 8
                     }
                   }
                 ],

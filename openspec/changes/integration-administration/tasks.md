@@ -48,7 +48,7 @@ Dependency order: 1 → 2 → 6 → 7 → 8 → 3 → 4 → 5. All 37 tasks are 
 
 ## 4. Complete gateway administration and review roles
 
-- [ ] 4.1 Package pinned provider and model catalogs and implement typed provider/model/connection identities, live catalog reconciliation and safe credential edits; verify selectable known/custom models at Gate C.
+- [x] 4.1 Package pinned provider and model catalogs and implement typed provider/model/connection identities, live catalog reconciliation and safe credential edits; verify selectable known/custom models at Gate C.
 - [ ] 4.2 Add actual-parser nonstarting liter-llm config-check and package its native customer-platform binaries; implement WASM comment-preserving managed and selected existing-local config edits, preservation/backup/revision checks, apply status and remote deployment export; verify real gateway reload or accurately reported restart requirement at Gate C.
 - [ ] 4.3 Implement critic/judge/backup assignment and canonical identity collision resolution in mini and full-pack consumers, with explicit cross-harness config export/apply; verify same-model aliases and producing-model collision at Gate C.
 - [ ] 4.4 Complete liter-llm settings/provider/model/roles UI, connection diagnostics and all translations; verify complete configured gateway request flow at Gate C.

@@ -10,13 +10,13 @@ Loaded when a script, hook or package file is read. Not resident.
 Every script in this repo has to behave identically from `cmd.exe`, PowerShell, bash and zsh. Node.js LTS
 (>= 22) is the only runtime; files are ESM `.mjs`, invoked as `node <file>`.
 
-Batch implementation until a real entry-point flow is complete. Use `node --check`
-earlier only when syntax feedback is required to unblock work. At a completed change
-boundary, run the smallest integration scenario that exercises the real script,
-filesystem, process, protocol, or service boundary. Unit, mock-only, and per-edit
-tests are not completion evidence. Run `node rules/build.mjs --check`, applicable
-OpenSpec validation, broad integration flows, three-OS checks, and Docker scenarios
-only at the final boundary where they prove the completed set.
+Batch implementation until every planned production entry-point flow in the phase is
+complete. Use `node --check` earlier only when an observed syntax error blocks further
+implementation. Do not run a script scenario at a task or change boundary. Unit,
+mock-only, per-edit and partial-flow tests are not completion evidence. Run the one
+production-path integration scenario, `node rules/build.mjs --check`, applicable
+OpenSpec validation, broad integration flows, three-OS checks and Docker scenarios
+only at the final phase boundary where they prove the completed set.
 
 ## Hard rules
 

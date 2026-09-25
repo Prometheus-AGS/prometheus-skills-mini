@@ -40,8 +40,8 @@ Dependency order: 1 → 2 → 6 → 7 → 8 → 3 → 4 → 5. All 37 tasks are 
 
 ## 3. Complete observable services and Compass administration
 
-- [ ] 3.1 Add durable operation state, ordered progress events/cursor replay, redacted disk logs with paging/export, Windows process-tree cancellation and conflict-scoped scheduling; verify through completed service/index flows at Gate B.
-- [ ] 3.2 Add Docker/service status and stage-local feedback, per-service managed/external composition and credential provisioning for UAR; verify mixed topology setup/start/stop/restart/failure at Gate B.
+- [x] 3.1 Add durable operation state, ordered progress events/cursor replay, redacted disk logs with paging/export, Windows process-tree cancellation and conflict-scoped scheduling; verify through completed service/index flows at Gate B.
+- [x] 3.2 Add Docker/service status and stage-local feedback, per-service managed/external composition and credential provisioning for UAR; verify mixed topology setup/start/stop/restart/failure at Gate B.
 - [ ] 3.3 Persist Compass project enablement across MCP regeneration/runtime paths, adapt native Manifest/detect/BuildGuard freshness with content/config identity and explicit application-owned output, and wire project index/update/log actions; verify two-project drift/disable/update/cancel at Gate B.
 - [ ] 3.4 Finish Services and Compass UI with immediate progress, terminal results/recovery, project-specific full-log viewer and all locale strings; verify long-log navigation/restart and supported window sizes at Gate B.
 - [ ] 3.5 Run Gate B once after complete wiring: real Docker setup and intentional failure, external service preservation, two isolated projects, uncommitted drift, index/cancel, retained full log beyond 256 KiB; record actual outcomes.

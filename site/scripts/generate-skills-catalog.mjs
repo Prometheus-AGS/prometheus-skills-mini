@@ -9,7 +9,7 @@
 //
 // Walks ../skills/*/SKILL.md, parses YAML frontmatter, and emits one Markdown page per category
 // plus an index into site/docs-catalog/ (generated, gitignored). Wired via `build:deploy` and
-// `generate:catalog`. Idempotent: output depends only on the SKILL.md inputs.
+// `generate:catalog`. Output derives from SKILL.md inputs and the shared UI catalog lock.
 
 import { readdirSync, readFileSync, lstatSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join, dirname, relative } from 'node:path';
@@ -20,6 +20,8 @@ const siteDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const repoRoot = dirname(siteDir);
 const skillsRoot = join(repoRoot, 'skills');
 const outDir = join(siteDir, 'docs-catalog');
+const uiCatalog = JSON.parse(readFileSync(join(skillsRoot, 'prometheus-ui-ux/references/catalog.lock.json'), 'utf8'));
+const uiEntries = new Map(uiCatalog.skills.map((entry) => [entry.id, entry]));
 
 // Skill name -> category, for this repo's flat layout. Anything not listed falls into "other".
 const CATEGORY_OF = new Map(
@@ -82,7 +84,7 @@ const CATEGORY_OF = new Map(
 );
 
 function categoryFor(name) {
-  return CATEGORY_OF.get(name) || 'Other';
+  return uiEntries.has(name) ? 'UI & UX' : CATEGORY_OF.get(name) || 'Other';
 }
 
 /** Recursively find SKILL.md files under skillsRoot, one level deep per skill directory. */
@@ -144,7 +146,8 @@ for (const file of files) {
   const version = (fm && (fm.version || (fm.metadata && fm.metadata.version))) || '';
   const category = categoryFor(dirName);
   if (!byCategory.has(category)) byCategory.set(category, []);
-  byCategory.get(category).push({ name, description, tags, version, rel });
+  const invocation = uiEntries.get(dirName)?.invocation;
+  byCategory.get(category).push({ name, description, tags, version, rel, invocation });
   count += 1;
 }
 
@@ -164,11 +167,15 @@ for (const cat of categories) {
 
   let body = `---\ntitle: ${cat}\nsidebar_label: ${cat}\n---\n\n# ${cat}\n\n`;
   body += `${skills.length} skill${skills.length === 1 ? '' : 's'}. Source of truth: [\`skills/\`](https://github.com/Prometheus-AGS/prometheus-skills-mini/tree/main/skills).\n\n`;
+  if (cat === 'UI & UX') {
+    body += 'The shared catalog has 41 entries; mini carries 40 portable entries. Full-only Impeccable is excluded; prometheus-impeccable-core is a bounded adaptation, not native-engine parity. See [UI/UX routing](/docs/ui-ux/overview) for selective loading, project authority and completed-phase review. User-only entries are never invoked automatically.\n\n';
+  }
   for (const s of skills.sort((a, b) => a.name.localeCompare(b.name, 'en'))) {
     body += `## ${esc(s.name)}\n\n`;
     if (s.description) body += `${esc(s.description)}\n\n`;
     const meta = [];
     if (s.version) meta.push(`v${s.version}`);
+    if (s.invocation === 'user-only') meta.push('**User-only invocation**');
     if (s.tags.length) meta.push(s.tags.map((t) => `\`${t}\``).join(' '));
     meta.push(
       `[source](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/skills/${s.rel})`,

@@ -22,7 +22,7 @@ not claims that those skills are installed or bundled in mini.
 
 | Skill | Use it for |
 | --- | --- |
-| `agent-team-creator` | Guided selection or an expert manifest, validation, and native artifact staging |
+| `agent-team-creator` | Guided selection or an expert manifest, validation, native artifact staging, and project installation |
 | `agent-team-manage` | Assignment, status, dependencies, cancellation, reassignment, and KBD-linked completion |
 | `agent-team-models` | Model discovery, catalog interpretation, and explicit policy selection |
 | `agent-team-handoff` | Context capture and acceptance when work moves to another owner or harness |
@@ -60,13 +60,15 @@ Save `guide.json`:
 node skills/agent-team-creator/scripts/cli.mjs guide --input guide.json
 ```
 
-The response contains a proposed `team`, role reasons, and single-agent alternatives. Missing
-inputs return questions rather than creating state. `review` is a JSON boolean; `complexity`
+The response includes role reasons and single-agent alternatives. Missing inputs return
+questions rather than creating state. Once scope is known, it returns `proposedRoles` and
+ownership questions; only `ready: true` returns a `team`. `review` is a JSON boolean; `complexity`
 is `simple` or `complex`, and `budget` is `economy`, `balanced`, or `quality`. The budget answer
 sets a declared tier preference, not a dollar budget or a verified model ranking.
 
-Inspect the returned roles. Remove unnecessary specialists, choose available skills, and set
-`owns` paths before parallel work. Empty ownership is not permission to edit the whole project.
+Inspect `proposedRoles`. Supply `ownership` for every proposed role, for example
+`{"implementer": ["docs/**"], "reviewer": ["reviews/docs.md"]}`, then rerun `guide`.
+Remove unnecessary specialists and choose available skills before accepting the ready team. Empty ownership is not permission to edit the whole project.
 Expert users can write a manifest directly and skip `guide`.
 
 ## Initialize and stage an export
@@ -122,7 +124,78 @@ Read the returned diagnostics, instructions, source/version verification, and ex
 Export stages proposals; it does not install native files, register service agents, or execute
 a team. Existing files and path collisions are refused. Inspect the artifacts and native
 permissions, validate them with the intended installed harness, then deliberately install or
-register the chosen deployment form. Source-verified export is not live native acceptance.
+register the chosen deployment form. For normal project creation, continue below with
+`install-project`. Source-verified export is not live native acceptance.
+
+## Install the project team
+
+Normal project-team creation continues after export inspection with `install-project`.
+Save `install-request.json` with the accepted manifest as `team` (the same manifest used
+in `init.json`) and the authorized project path:
+
+```json
+{
+  "project": "../My Project",
+  "team": {
+    "schemaVersion": 1,
+    "id": "docs-team",
+    "outcome": "Clarify the setup guide and verify its examples",
+    "scope": "project",
+    "harness": "codex",
+    "roles": [{
+      "id": "implementer",
+      "description": "Owns the documentation change",
+      "prompt": "Update the assigned guide and report evidence and remaining work.",
+      "skills": [], "owns": ["docs/**"],
+      "inputs": ["Requested setup clarification"],
+      "outputs": ["Updated guide", "Verification notes"],
+      "dependsOn": []
+    }],
+    "modelPolicy": {"tier": "medium"}
+  }
+}
+```
+
+```text
+node skills/agent-team-creator/scripts/cli.mjs install-project --input install-request.json --dry-run
+node skills/agent-team-creator/scripts/cli.mjs install-project --input install-request.json
+node skills/agent-team-creator/scripts/cli.mjs install-project --project "../My Project" --check
+```
+
+The installer writes `.agent-team/docs-team/team.json`, `.agent-team/project-routing.json`,
+managed discovery instructions and missing native project definitions. The earlier
+`.agent-teams/docs-team.json` file is the separate mutable task ledger; installation does
+not turn its filename into a discovery manifest. `export` remains proposal-only.
+
+For an existing team, omit the JSON manifest and use `--project`. An explicit recorded
+selection wins; a sole `.agent-team/<id>/team.json` is adopted automatically. If several
+remain ambiguous, choose with `--team <id>`. A stale selection raises an error. Intentional
+replacement of a differing manifest requires `updateTeam: true` in the request.
+
+For **all code tasks**, read the active record and real manifest, then use relevant existing
+roles. Preserve IDs, ownership, model policy, native permissions and concurrency. Existing
+native files are kept byte-for-byte; differences are reported for a deliberate merge. The
+installer creates definitions and instructions, not running agents or new permission grants.
+Where native delegation is unavailable, use role instructions sequentially and disclose that
+limitation. Independent review requires a separate context after the production phase.
+
+UI roles conditionally bind `prometheus-ui-ux`; UI reviewers bind `prometheus-ui-review`.
+Backend-only work does not load UI guidance. Project `.agents/UI_UX_PROTOCOL.md` wins over
+the bundled protocol; refinement/review exclude taste. User-only `interface-review`,
+`break`, `variant` and `explain-interface` are not automatically preloaded or read to
+bypass their invocation restriction. Explicit conflicting native preload overrides retain
+diagnostics for resolution before invocation.
+
+Zed's first effective existing instruction file also receives the discovery pointer, in
+addition to `AGENTS.md` and `CLAUDE.md`. Inspect `instructionFiles` in the active record.
+External ACP agents retain their native configuration; parallel threads are not a delegation
+API. Local recovery records preserve prior instruction bytes, including CRLF and supported
+in-project links. The installer never creates links. Creator `--check` exits 2 for drift
+and 1 for errors; dry-run/check write nothing.
+
+See [UI/UX routing](ui-ux-routing.md) for installation, routing requests, Zed precedence,
+platform limits and troubleshooting, and the [project installation contract](../skills/agent-team-creator/references/project-installation.md)
+for all request fields and recovery behavior.
 
 ## Eight execution harnesses and a separate BossFang target
 
@@ -233,5 +306,3 @@ without either. Live model discovery and remote publication need their configure
 The runtime is shipped as portable Node modules, but native harness availability, installed
 configuration acceptance, service authentication, and Windows execution require separate
 live evidence. No new Windows or cross-harness live certification is claimed by this guide.
-
-Guided creation resolves ownership before producing a ready team. For example, after reviewing proposed roles, add `"ownership": {"implementer": ["src/checkout/**"], "reviewer": ["reviews/checkout.md"]}` for a two-role checkout task. Use paths actually appropriate to the project and include every proposed role. Missing ownership returns `ready: false`, `proposedRoles`, and focused questions without a `team` value; it does not grant access to the whole repository.

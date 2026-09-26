@@ -23,10 +23,10 @@ marked absent are flagged in `CLAUDE.md`. Re-check with a directory listing of `
 | phase lifecycle or position | `kbd-status`, `kbd-assess`, `kbd-analyze`, `kbd-plan`, `kbd-execute`, `kbd-reflect` | present | native to this repo — ported to Node under `skills/kbd-*` and `lib/kbd/`; no longer the bash originals |
 | implementing KBD-owned change tasks | `kbd-apply` | present | use `begin-task` / `end-task` for every task, then driver `verify` / `archive`; never bare OpenSpec apply inside KBD |
 | structuring a one-line concept into branches | `ideation-mindmap` | present | native to this repo — `skills/ideation-mindmap`, `lib/ideation/`; needs surreal-memory |
-| choosing roles and staging native agent definitions | `agent-team-creator` | present | guided or expert manifest; propose the smallest useful team; staged exports do not install or execute agents |
-| assigning, blocking, cancelling or reassigning team tasks | `agent-team-manage` | present | creator's shared compiled Node runtime; state/task revisions and explicit ownership; KBD completion stays canonical |
-| discovering models or choosing task model policy | `agent-team-models` | present | declared tiers, capabilities and explicit price ceilings; unknown cost cannot satisfy a ceiling |
-| moving unfinished work between harnesses | `agent-team-handoff` | present | fresh-context packet, Git identity and explicit acceptance; local coordination is not transferable native authority |
+| team creation/export | `agent-team-creator` | present | guided or expert manifest; propose the smallest useful team; staged exports do not install or execute agents |
+| team task management | `agent-team-manage` | present | creator's shared compiled Node runtime; state/task revisions and explicit ownership; KBD completion stays canonical |
+| team models/policy | `agent-team-models` | present | declared tiers, capabilities and explicit price ceilings; unknown cost cannot satisfy a ceiling |
+| team handoff | `agent-team-handoff` | present | fresh-context packet, Git identity and explicit acceptance; local coordination is not transferable native authority |
 | phase completion, before delivery, before a lesson becomes a rule | `adversarial-review` | present | native to this repo — `skills/adversarial-review`, `lib/review/`; needs the liter-llm gateway for a cross-model judge — say which judge ran |
 | any reflection or self-assessment | `sycophancy-correction` | **absent** | not vendored in this repo; the review pipeline's own anti-theater gate (`lib/review/sycophancy-gate.mjs`) covers judge-report screening, but a standalone MCP server is not shipped |
 
@@ -68,6 +68,6 @@ vendor-official repos link from here) → agenticskills.io (curated, audit notes
 ## UI and project teams
 | When | Invoke | Status | Install / notes |
 |---|---|---|---|
-| rendered UI, interaction, styles, tokens, motion or on-screen copy | `prometheus-ui-ux` | present | project .agents/UI_UX_PROTOCOL.md overrides bundled protocol; selective context/craft/platform routing |
+| UI, styles, tokens, motion or copy | `prometheus-ui-ux` | present | project .agents/UI_UX_PROTOCOL.md overrides bundled protocol; selective context/craft/platform routing |
 | completed UI phase review | `prometheus-ui-review` | present | independent read-only context; no taste or bypass of user-only skills |
-| any code work when a project team exists | `agent-team-creator` | present | read .agent-team/project-routing.json and real manifests; select relevant existing roles, preserve explicit team; sole team auto-adopt, ambiguous teams ask; sequential fallback when delegation unavailable |
+| code with an existing team | `agent-team-creator` | present | read .agent-team/project-routing.json and real manifests; select relevant existing roles, preserve explicit team; sole team auto-adopt, ambiguous teams ask; sequential fallback when delegation unavailable |

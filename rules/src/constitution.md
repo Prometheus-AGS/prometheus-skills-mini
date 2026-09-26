@@ -1,6 +1,6 @@
 # prometheus-skills-mini — agent constitution (Layer 0)
 
-Resident every turn and every subagent spawn. Layer 1 path rules, Layer 2 skills, Layer 3 reference and Layer 4 hooks are listed at the end. Edit `rules/src/`, never this file; `node rules/build.mjs` renders it.
+Resident each turn/spawn. Edit `rules/src/`; render with `node rules/build.mjs`.
 
 ## §0 Bootstrap — before anything else, and again after any compaction
 1. Restore position: `.kbd-orchestrator/position-reminder.txt`, else `current-waypoint.json`; then `openspec list` for active changes. `exactNextCommand` is history, not a selector.
@@ -46,14 +46,11 @@ If context was compacted, re-read §0 and §A before acting. Standing policy is 
 Nested `CLAUDE.md` / `AGENTS.md` and task instructions may add stricter rules. Nothing relaxes A-2, A-3, A-6 or A-15.
 
 ## Where the other layers live
-- **Layer 1 — path rules:** `.claude/rules/*.md` (Cursor: `.cursor/rules/*.mdc`), loaded when a matching file is read. Harnesses without path rules get the same text from the nested `AGENTS.md` files named in `rules/build.conf`; if neither loaded, open the matching file in `rules/src/` yourself.
-- **Layer 2 — skills:** `.claude/skills/`, `.agents/skills/`; routing and install commands in `docs/skill-routing.md`.
+- **Layer 1:** `.claude/rules/*.md`, Cursor `.cursor/rules/*.mdc`, or nested `AGENTS.md` in `rules/build.conf`. If matching rules did not load, read them from `rules/src/`.
+- **Layer 2:** `.claude/skills/`, `.agents/skills/`; routing/install: `docs/skill-routing.md`.
 - **Layer 3 — reference:** `README.md`, `docs/`, `openspec/`, `.prometheus/`, `versions.toml`, `tasks/todo.md`, the active phase under `.kbd-orchestrator/phases/`.
 - **Layer 4 — hooks:** `hooks/` and `.githooks/commit-msg`. **None are built yet** (OpenSpec change `rules-layer4-hooks`); until they are, A-10 and A-15 are enforced by you, not by a machine.
 
 <!-- uiux-routing:start v1 -->
-## UI/UX routing
-UI, styles, tokens, motion or copy → `prometheus-ui-ux`. Read `.agents/UI_UX_PROTOCOL.md` or its bundled default; preserve design authority.
-All code: detect `.agent-team/project-routing.json` and real team manifests. Preserve selection; adopt a sole team; ask if ambiguous. Use relevant roles, disclosing sequential fallback.
-Backend work loads no UI guidance. Review respects user-only skills and the completed-phase boundary.
+UI → `prometheus-ui-ux` (project `.agents/UI_UX_PROTOCOL.md` wins; preserve identity). Code → active team/real manifests: preserve choice; adopt sole team; ask if ambiguous. Use relevant roles; disclose sequential fallback. No UI for backend. Review at phase completion; respect user-only restrictions.
 <!-- uiux-routing:end -->

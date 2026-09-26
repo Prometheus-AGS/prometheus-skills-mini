@@ -14,7 +14,12 @@ import path from 'node:path';
 import { homeDir } from '../../lib/platform/paths.mjs';
 import { atomicWrite } from '../../lib/platform/atomic-write.mjs';
 import { detectProviders, detectConfigDefects, computeStatus, isCacheFresh } from '../../lib/review/preflight.mjs';
-import { parseModelsToml, resolveRole, resolveGateway } from '../../lib/review/model-resolution.mjs';
+import {
+  parseModelsToml,
+  resolveRoleAssignment,
+  resolveGateway,
+  resolvedModelIdentityKey,
+} from '../../lib/review/model-resolution.mjs';
 
 function findKbdRoot(start = process.cwd()) {
   let cursor = path.resolve(start);
@@ -52,12 +57,22 @@ async function run(argv) {
   const kbdRoot = findKbdRoot();
   const cache = kbdRoot ? path.join(kbdRoot, 'model-preflight.json') : null;
   const configPath = process.env.LITER_LLM_CONFIG || path.join(homeDir(), '.config', 'liter-llm', 'liter-llm-proxy.toml');
+  const modelsTomlPath =
+    process.env.PROMETHEUS_KBD_MODELS_CONFIG || path.join(homeDir(), '.prometheus', 'kbd', 'models.toml');
 
   if (!force && cache && existsSync(cache)) {
     try {
       const cacheStat = statSync(cache);
       const configMtime = existsSync(configPath) ? statSync(configPath).mtimeMs : null;
-      if (isCacheFresh({ cacheMtimeMs: cacheStat.mtimeMs, configMtimeMs: configMtime, nowMs: Date.now() })) {
+      const modelsMtime = existsSync(modelsTomlPath) ? statSync(modelsTomlPath).mtimeMs : null;
+      if (
+        isCacheFresh({
+          cacheMtimeMs: cacheStat.mtimeMs,
+          configMtimeMs: configMtime,
+          modelsMtimeMs: modelsMtime,
+          nowMs: Date.now(),
+        })
+      ) {
         process.stdout.write(readFileSync(cache, 'utf8'));
         return;
       }
@@ -66,25 +81,27 @@ async function run(argv) {
     }
   }
 
-  const modelsTomlPath = path.join(homeDir(), '.prometheus', 'kbd', 'models.toml');
   const modelsToml = parseModelsToml(existsSync(modelsTomlPath) ? readFileSync(modelsTomlPath, 'utf8') : '');
   const configText = existsSync(configPath) ? readFileSync(configPath, 'utf8') : '';
 
   const { providers, coverage } = detectProviders(process.env);
   const configDefects = detectConfigDefects(configText);
   const gateway = await resolveGateway({ env: process.env, modelsToml, probe: probeEndpoint });
-  const judge = resolveRole('judge', { env: process.env, modelsToml });
-  const critic = resolveRole('critic', { env: process.env, modelsToml });
-  const generator = resolveRole('generator', { env: process.env, modelsToml });
+  const judge = resolveRoleAssignment('judge', { env: process.env, modelsToml });
+  const critic = resolveRoleAssignment('critic', { env: process.env, modelsToml });
+  const backup = resolveRoleAssignment('backup', { env: process.env, modelsToml });
+  const generator = resolveRoleAssignment('generator', { env: process.env, modelsToml });
 
-  const dispatchable = new Set([judge.model, critic.model].filter(Boolean));
+  const dispatchable = new Set(
+    [judge, critic, backup].map((assignment) => resolvedModelIdentityKey(assignment.identity)).filter(Boolean),
+  );
   const status = computeStatus({
     binaryPresent: true, // JUDGMENT CALL: the mini has no `liter-llm` binary concept (Node speaks REST
     // directly via fetch), so "binary present" is always true here — the real
     // unavailability signal is no_gateway, which subsumes it. See report.
     gateway: gateway ?? '',
     configDefects,
-    judgeModel: judge.model,
+    judgeModel: judge.alias,
     distinctModels: dispatchable.size,
   });
 
@@ -92,9 +109,10 @@ async function run(argv) {
     status,
     gateway: gateway ?? '',
     roles: {
-      judge: { model: judge.model, source: judge.source },
-      critic: { model: critic.model, source: critic.source },
-      generator: { model: generator.model, source: generator.source },
+      judge: { alias: judge.alias, identity: judge.identity, source: judge.source },
+      critic: { alias: critic.alias, identity: critic.identity, source: critic.source },
+      backup: { alias: backup.alias, identity: backup.identity, source: backup.source },
+      generator: { alias: generator.alias, identity: generator.identity, source: generator.source },
     },
     providers_detected: Object.entries(providers)
       .filter(([, v]) => v.present)

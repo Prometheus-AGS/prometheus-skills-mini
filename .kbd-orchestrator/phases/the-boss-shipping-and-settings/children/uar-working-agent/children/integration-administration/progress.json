@@ -2,17 +2,17 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 923,
-  "derivedRevision": 923,
+  "sourceRevision": 929,
+  "derivedRevision": 929,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 859,
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 865,
     "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
   "phase": "integration-administration",
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
   "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
-  "last_updated": "2026-09-26T05:06:18.920468Z",
+  "last_updated": "2026-09-26T09:11:22.720044Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
   "changes_completed": 0,
@@ -74,11 +74,11 @@
     {
       "id": "integration-administration",
       "title": "Complete integration administration",
-      "status": "PENDING",
-      "implementation_status": "PENDING",
+      "status": "IN_PROGRESS",
+      "implementation_status": "IN_PROGRESS",
       "tasks_total": 37,
-      "tasks_done": 34,
-      "last_task_completed": "Run the completed app integration gate and one bounded Impeccable visual pass, then build actual Windows x64 installer; verify installer artifact metadata and record signed/unsigned status accurately.",
+      "tasks_done": 35,
+      "last_task_completed": "Build Apple Silicon including local pnpm build:mac:arm64 copy and publish/update repository and website immediately; verify actual DMG artifact and current link without blocking Windows delivery.",
       "next_task_pending": "Publish Windows x64 to GitHub Releases and immediately update RELEASES.md, release manifest and live landing-site download URLs; verify the published artifact and live link and request installed acceptance.",
       "blockers": []
     }

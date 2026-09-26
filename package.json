@@ -9,7 +9,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "test": "node --test",
+    "test": "node scripts/run-tests.mjs",
     "check": "node rules/build.mjs --check",
     "coverage": "node scripts/coverage-report.mjs",
     "context:bootstrap": "node scripts/prometheus-context-bootstrap.mjs",

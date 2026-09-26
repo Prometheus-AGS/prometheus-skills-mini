@@ -12,6 +12,31 @@
       { "id": "core", "path": "skills", "scan": "children" }
     ]
   },
+  "imports": [
+    {
+      "id": "hybrid-mobile-architecture",
+      "path": "plugins/hybrid-mobile-architecture",
+      "repository": "https://github.com/Know-Me-Tools/hybrid-mobile-architecture-skill.git",
+      "commit": "6b115ccc334f698d19f03592d2fd534fae5b89d7",
+      "requiredFor": ["skills"],
+      "distribution": {
+        "mode": "adjacent-plugin",
+        "version": "2.0.0-alpha.4",
+        "category": "development",
+        "stageScript": "scripts/stage-skill-package.mjs",
+        "stageVariant": "mini",
+        "installByDefault": true,
+        "manifests": {
+          "claude": ".claude-plugin/plugin.json",
+          "codex": ".codex-plugin/plugin.json"
+        },
+        "outputs": {
+          "claude": "dist/plugins/claude/hybrid-mobile-architecture",
+          "codex": "dist/plugins/codex/hybrid-mobile-architecture"
+        }
+      }
+    }
+  ],
   "targets": [
     { "id": "claude", "path": ".claude/skills", "mode": "copy", "sourceTreeLifecycle": "install-only", "detect": [".claude", "command:claude"] },
     { "id": "codex", "path": ".codex/skills", "mode": "copy", "sourceTreeLifecycle": "install-only", "detect": [".codex", "command:codex"] },

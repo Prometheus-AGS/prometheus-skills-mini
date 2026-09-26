@@ -16,7 +16,7 @@ test('package.json declares the supported runtime', () => {
 test('package.json defines test, check and coverage scripts', () => {
   const { scripts } = readJson('package.json');
 
-  assert.equal(scripts.test, 'node --test');
+  assert.equal(scripts.test, 'node scripts/run-tests.mjs');
   assert.equal(scripts.check, 'node rules/build.mjs --check');
   // coverage runs BOTH reports from one command: the in-process one, and the child-process
   // one for rules/build.mjs that the default reporter cannot see. No && — PowerShell 5.1.

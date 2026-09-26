@@ -26,7 +26,7 @@ test('every job runs the four verification commands in order', () => {
 
   const expected = [
     'npm ci',
-    'node --test',
+    'npm test',
     'node rules/build.mjs --check',
     'node scripts/spec-validate.mjs',
   ];

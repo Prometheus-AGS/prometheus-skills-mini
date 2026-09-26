@@ -14,14 +14,17 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { collectAdjacentPlugins } from '../../lib/distribution/adjacent-plugins.mjs';
 import { readSkillSystem, collectDistributionSkills } from '../../lib/distribution/skill-system.mjs';
 import { canonicalBytes } from '../../lib/distribution/canonical-bytes.mjs';
-import { homeDir } from '../../lib/platform/paths.mjs';
+import { homeDir, tempDir } from '../../lib/platform/paths.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const contract = readSkillSystem(root);
 const skills = collectDistributionSkills(root, contract);
+const adjacent = collectAdjacentPlugins(root, contract);
 
 // Source-only build caches are excluded by the package contract. Packaged trees are
 // read without exclusions so an accidentally shipped dependency still fails parity.
@@ -42,6 +45,18 @@ function digestTree(directory, relative = '', source = false) {
 test('the manifest declares a distinct name for every distributed skill', () => {
   assert.equal(new Set(skills.map((skill) => skill.name)).size, skills.length);
   assert.ok(skills.length > 0, 'no distributable skills found under skills/');
+});
+
+test('hybrid-mobile-architecture remains a separately pinned adjacent plugin', () => {
+  assert.equal(adjacent.length, 1);
+  const [plugin] = adjacent;
+  assert.equal(plugin.entry.id, 'hybrid-mobile-architecture');
+  assert.equal(plugin.entry.path, 'plugins/hybrid-mobile-architecture');
+  assert.equal(plugin.distribution.mode, 'adjacent-plugin');
+  assert.ok(!skills.some((skill) => skill.name === plugin.entry.id), 'adjacent package was flattened into the mini inventory');
+  const tree = spawnSync('git', ['ls-tree', 'HEAD', '--', plugin.entry.path], { cwd: root, encoding: 'utf8', shell: false });
+  assert.equal(tree.status, 0, tree.stderr);
+  assert.match(tree.stdout, new RegExp(`^160000 commit ${plugin.entry.commit}\\t`));
 });
 
 for (const platform of ['claude', 'codex']) {
@@ -112,9 +127,42 @@ for (const outputsKey of ['claudeMarketplace', 'codexMarketplace']) {
     const marketplace = JSON.parse(fs.readFileSync(path.join(root, contract.outputs[outputsKey]), 'utf8'));
     assert.equal(marketplace.version, contract.releaseVersion);
     assert.equal(new Set(marketplace.plugins.map((plugin) => plugin.name)).size, marketplace.plugins.length);
+    const imported = marketplace.plugins.find((plugin) => plugin.name === 'hybrid-mobile-architecture');
+    assert.equal(imported.version, adjacent[0].distribution.version);
   });
 }
 
-test(`PASS: ${skills.length} canonical skill(s), payload parity, manifests, and marketplaces`, () => {
+test('adjacent Claude and Codex payloads exactly match the imported mini staging contract', () => {
+  const [plugin] = adjacent;
+  const workspace = fs.mkdtempSync(path.join(tempDir(), 'prometheus-mini-adjacent-test-'));
+  const staged = path.join(workspace, 'staged');
+  try {
+    const result = spawnSync(
+      process.execPath,
+      [plugin.stageScript, '--output', staged, '--variant', plugin.distribution.stageVariant],
+      { cwd: plugin.importRoot, encoding: 'utf8', shell: false },
+    );
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    const expected = digestTree(path.join(staged, 'package'));
+    const expectedReceipt = JSON.parse(fs.readFileSync(path.join(staged, 'receipt.json'), 'utf8'));
+    for (const platform of ['claude', 'codex']) {
+      const outputRoot = path.join(root, plugin.outputs[platform]);
+      const packageRoot = path.join(outputRoot, 'package');
+      assert.deepEqual(digestTree(packageRoot), expected, `${platform} adjacent payload differs from its source package`);
+      const receipt = JSON.parse(fs.readFileSync(path.join(outputRoot, 'receipt.json'), 'utf8'));
+      assert.equal(receipt.variant, 'mini');
+      assert.equal(receipt.payloadSha256, expectedReceipt.payloadSha256);
+      const manifest = JSON.parse(
+        fs.readFileSync(path.join(packageRoot, plugin.manifests[platform].relative), 'utf8'),
+      );
+      assert.equal(manifest.name, plugin.entry.id);
+      assert.equal(manifest.version, plugin.distribution.version);
+    }
+  } finally {
+    fs.rmSync(workspace, { recursive: true, force: true });
+  }
+});
+
+test(`PASS: ${skills.length} canonical skill(s), ${adjacent.length} adjacent plugin(s), payload parity, manifests, and marketplaces`, () => {
   assert.ok(true);
 });

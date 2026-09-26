@@ -22,6 +22,9 @@ is gone.
 > The shared full/mini catalog has 41 UI/UX entries; its full-only Impeccable native engine
 > is excluded from mini. Mini ships the bounded `prometheus-impeccable-core` adaptation,
 > shared UI routing and review, TypeScript 7/Node Pro Max, and automatic project-team adoption.
+> KnowMe Builder (`hybrid-mobile-architecture`) ships beside that inventory as a separately pinned
+> plugin. Its skills stay under its own package boundary; the Claude and Codex marketplaces point to
+> generated mini-variant payloads built by the imported package's own staging contract.
 >
 > The KBD lifecycle, adversarial review, Karpathy progress memory and plugin distribution
 > are implemented. Verification belongs to a specific phase and environment: the historical

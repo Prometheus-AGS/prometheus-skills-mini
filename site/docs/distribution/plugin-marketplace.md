@@ -7,7 +7,7 @@ sidebar_label: Overview
 
 `lib/distribution/` and the `skill-system.json` manifest at the repo root generate installable
 plugin packages and marketplace listings for Claude Code and Codex, purely from the real `skills/`
-tree (50 directories) — copy-mode throughout, never symlink.
+tree (97 distributed skill directories) — copy-mode throughout, never symlink.
 
 ## `lib/distribution/` modules
 
@@ -46,3 +46,14 @@ the one deliberate divergence from the full pack's own generator that this repo'
 
 - [Installation](/docs/getting-started/installation) — `skill-system.json`'s full shape and the install-scope rule.
 - [Doctor](/docs/platform/doctor) — checks the home-directory skill copies distribution produces.
+
+## Project UI routing and teams
+
+Distribution makes skill payloads available. Project adoption also needs managed instructions,
+the UI protocol and an active-team record. Follow [UI/UX routing and adoption](/docs/ui-ux/overview)
+for bootstrap or separate UI/creator commands. The current inventory includes 40 portable UI
+entries from the shared 41-entry catalog. Local helpers run directly with Node 22+ and bundled
+assets; they need neither optional service. The full-pack anti-shadowing constraint still applies.
+
+Proposal-only creator `export` does not install a project team; normal project creation finishes
+with `install-project`. Writing definitions does not prove native discovery or invocation.

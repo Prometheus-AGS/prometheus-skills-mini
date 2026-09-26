@@ -15,7 +15,7 @@ runs.
 
 ## Why a mini port exists
 
-The full pack's own `skill-system.json` states its Windows posture plainly: Windows is supported
+The original port analysis recorded that the full pack's `skill-system.json` stated its Windows posture plainly: Windows is supported
 only through Git Bash or WSL, and the "full" install profile is macOS/Linux only. The full pack's
 tree has 73 `.sh` files under `shared/scripts/`, 117 more under `skills/process/`, hooks that
 probe for `bash -c 'exit 0'` and fail with `MISSING_SHELL` when neither Git Bash nor a compiled
@@ -29,12 +29,16 @@ install or runtime path.
 
 ## What's actually ported today
 
-As of the `feat(kbd): port the KBD process orchestrator and 49 skills to Windows-native Node`
-commit, this is **not** a proposal document — the KBD lifecycle, adversarial review,
-ideation-mindmap, Karpathy progress memory, and the plugin distribution system are real, tested
-Node.js code:
+The current distribution contains **97 skills**, including **40 portable UI/UX entries**
+from the shared 41-entry catalog. Mini excludes the full-only Impeccable native engine and
+ships a bounded context/workflow adaptation. See the [Skills Catalog](/docs/catalog) for
+actual frontmatter descriptions and user-only invocation labels.
 
-- **50 skills** under [`skills/`](https://github.com/Prometheus-AGS/prometheus-skills-mini/tree/main/skills) — see the [Skills Catalog](/docs/catalog) for the full list with real frontmatter descriptions.
+- **UI/UX routing** — context-first selection, TypeScript 7/Node Pro Max, craft and platform
+  guidance, and independent completed-phase review. [UI/UX routing and adoption](/docs/ui-ux/overview).
+- **Agent teams** — proposal export plus project installation, active-team discovery and
+  preservation of native ownership/configuration. [Agent Teams](/docs/agent-teams/overview).
+
 - **`lib/kbd/`** — the 12-module KBD state-machine core (position, progress, waypoint, stage
   gates, hooks, memory, rollup, and more). See [KBD Overview](/docs/kbd/overview).
 - **`lib/review/`** — the adversarial-review judge/producer isolation pipeline. See
@@ -46,11 +50,12 @@ Node.js code:
 - **`lib/distribution/`** — the plugin/marketplace generator for Claude Code and Codex. See
   [Plugin Distribution](/docs/distribution/plugin-marketplace).
 
-Over 1,000 tests pass on macOS as of that commit. **Windows itself remains unverified for the
-Phase C work** — everything in that batch ran on macOS; Windows verification for the newest code
-is still owed, the same caveat the project has recorded for every phase before it. The
-`platform-foundation` phase's own Windows claims (atomic writes, locking, CRLF handling,
-shell-free spawning) *are* independently CI-verified on `windows-latest`.
+Verification is scoped to a recorded phase and environment. Historical platform-foundation
+Windows CI does not certify new UI/team behavior. The
+[UI/team delivery record](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/docs/research/ui-ux-routing/DELIVERY.md)
+records macOS and offline Linux-container integration evidence. Native Windows execution,
+live invocation of every harness and full Electron installed-app acceptance remain open;
+no release certification is claimed here.
 
 ## Two services, not eleven
 
@@ -71,6 +76,8 @@ to a durable local outbox, and review falls back to a fresh-context subagent rec
 
 - [Installation](/docs/getting-started/installation) — how this pack is distributed and installed.
 - [npm scripts](/docs/getting-started/npm-scripts) — every script in `package.json` explained.
+- [UI/UX routing and adoption](/docs/ui-ux/overview) — project installation, selective skills and evidence.
+- [Agent Teams](/docs/agent-teams/overview) — creation, project adoption and native limits.
 - [KBD Overview](/docs/kbd/overview) — the lifecycle state machine.
 - [Windows constraints](/docs/platform/windows-constraints) — the rules every contribution follows.
 - [Comparison with the full pack](/docs/reference/comparison-with-full-pack) — what's ported, what's deliberately excluded, what's still a gap.
@@ -79,7 +86,8 @@ to a durable local outbox, and review falls back to a fresh-context subagent rec
 
 ```bash
 cd site
-npm install
+npm ci
+npm run generate:catalog
 npm start
 ```
 

@@ -7,4 +7,4 @@
 ## 2. Completed documentation boundary
 
 - [x] 2.1 Run local production documentation builds/checks and independent review after all edits; record results and fix blocking documentation defects in one batch.
-- [ ] 2.2 Commit and push only scoped documentation changes and create three linked, non-draft documentation PRs; verify their URLs, bases and changed-file scope without using hosted test workflows as evidence.
+- [x] 2.2 Commit and push only scoped documentation changes and create three linked, non-draft documentation PRs; verify their URLs, bases and changed-file scope without using hosted test workflows as evidence.

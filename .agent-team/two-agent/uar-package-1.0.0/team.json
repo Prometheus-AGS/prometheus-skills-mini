@@ -1,0 +1,112 @@
+{
+  "profile": "urn:prometheus:uar:collaboration:0.1.0-draft.1",
+  "kind": "TeamDefinition",
+  "id": "urn:example:two-agent/team",
+  "version": "1.0.0",
+  "provenance": {
+    "source": "agent-team-creator bundled two-agent authoring example",
+    "authors": [
+      "Prometheus-AGS"
+    ]
+  },
+  "requiredCapabilities": [],
+  "extensions": {},
+  "title": "Two-agent team",
+  "purpose": "Demonstrate immutable multi-agent catalog authoring without activation.",
+  "members": [
+    {
+      "role": "coordinator",
+      "kind": "agent",
+      "definition": {
+        "id": "urn:example:two-agent/coordinator",
+        "version": "1.0.0",
+        "digest": "sha256:2255173bc10d57d6e72847949949656dcb33abfbf4accf779a44765ba7f6dd65"
+      },
+      "min": 1,
+      "max": 1,
+      "responsibility": "Coordinate the bounded workflow."
+    },
+    {
+      "role": "worker",
+      "kind": "agent",
+      "definition": {
+        "id": "urn:example:two-agent/worker",
+        "version": "1.0.0",
+        "digest": "sha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717"
+      },
+      "min": 1,
+      "max": 1,
+      "responsibility": "Produce the assigned artifact."
+    }
+  ],
+  "coordinatorRole": "coordinator",
+  "communication": [
+    {
+      "fromRole": "coordinator",
+      "toRole": "worker",
+      "modes": [
+        "queue-only",
+        "trigger-turn"
+      ]
+    },
+    {
+      "fromRole": "worker",
+      "toRole": "coordinator",
+      "modes": [
+        "queue-only"
+      ]
+    }
+  ],
+  "taskAcceptance": {
+    "mode": "coordinator-within-binding",
+    "allowedWorkflows": [
+      {
+        "id": "urn:example:two-agent/workflow",
+        "version": "1.0.0",
+        "digest": "sha256:e4e5e1168512821fd684ca57306996ba8dccec4fea937e970b5903ffc51960fb"
+      }
+    ]
+  },
+  "routing": {
+    "eligibilityFirst": true,
+    "strategy": "operator-role-capacity-cost-stable-id",
+    "explain": true
+  },
+  "limits": {
+    "concurrentTurns": 2,
+    "maxMembers": 2,
+    "maxDepth": 1,
+    "maxPendingTasks": 100
+  },
+  "budget": {
+    "maxTokens": 100000,
+    "maxCostMicrounits": 5000000,
+    "currency": "USD",
+    "maxElapsedSeconds": 3600
+  },
+  "input": {
+    "type": "object",
+    "properties": {
+      "brief": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "brief"
+    ],
+    "additionalProperties": false
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "brief": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "brief"
+    ],
+    "additionalProperties": false
+  },
+  "contentDigest": "sha256:bc2c2df2abf973769e3d714704283092d0267fe6b4615799e15303c7a4e85b15"
+}

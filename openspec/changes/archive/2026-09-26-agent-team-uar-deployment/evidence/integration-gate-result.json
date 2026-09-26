@@ -1,0 +1,844 @@
+{
+  "surrealDb": "3.3.0",
+  "capabilities": [
+    "approval_lifecycle_v1",
+    "collaboration_definition_packages_v1",
+    "collaboration_deployment_bindings_v1",
+    "host_history",
+    "reasoning_effort",
+    "run_scoped_credentials",
+    "run_scoped_mcp_servers",
+    "session_principal",
+    "working_directory"
+  ],
+  "packagePreflight": {
+    "operation": "package-preflight",
+    "response": {
+      "package": {
+        "id": "urn:example:two-agent/package",
+        "version": "1.0.0",
+        "digest": "sha256:b18c0c1e75b3281a42a8f4e2f7005f6547f228aa95a03949c16d86f30ce60b30"
+      },
+      "definitions": [
+        {
+          "id": "urn:example:two-agent/coordinator",
+          "version": "1.0.0",
+          "digest": "sha256:2255173bc10d57d6e72847949949656dcb33abfbf4accf779a44765ba7f6dd65"
+        },
+        {
+          "id": "urn:example:two-agent/team",
+          "version": "1.0.0",
+          "digest": "sha256:bc2c2df2abf973769e3d714704283092d0267fe6b4615799e15303c7a4e85b15"
+        },
+        {
+          "id": "urn:example:two-agent/worker",
+          "version": "1.0.0",
+          "digest": "sha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717"
+        },
+        {
+          "id": "urn:example:two-agent/workflow",
+          "version": "1.0.0",
+          "digest": "sha256:e4e5e1168512821fd684ca57306996ba8dccec4fea937e970b5903ffc51960fb"
+        }
+      ],
+      "diagnostics": [
+        {
+          "field": "title",
+          "disposition": "exact",
+          "message": "'title' is preserved in the compatibility projection"
+        },
+        {
+          "field": "role",
+          "disposition": "exact",
+          "message": "'role' is preserved in the compatibility projection"
+        },
+        {
+          "field": "whenToUse",
+          "disposition": "exact",
+          "message": "'whenToUse' is preserved in the compatibility projection"
+        },
+        {
+          "field": "instructions",
+          "disposition": "exact",
+          "message": "'instructions' is preserved in the compatibility projection"
+        },
+        {
+          "field": "input",
+          "disposition": "exact",
+          "message": "'input' is preserved in the compatibility projection"
+        },
+        {
+          "field": "output",
+          "disposition": "exact",
+          "message": "'output' is preserved in the compatibility projection"
+        },
+        {
+          "field": "skills",
+          "disposition": "translated",
+          "message": "'skills' is retained losslessly; only supported legacy runtime semantics are projected"
+        },
+        {
+          "field": "models",
+          "disposition": "translated",
+          "message": "'models' is retained losslessly; only supported legacy runtime semantics are projected"
+        },
+        {
+          "field": "context",
+          "disposition": "translated",
+          "message": "'context' is retained losslessly; only supported legacy runtime semantics are projected"
+        },
+        {
+          "field": "requestedLimits",
+          "disposition": "translated",
+          "message": "'requestedLimits' is retained losslessly; only supported legacy runtime semantics are projected"
+        },
+        {
+          "field": "permittedChildren",
+          "disposition": "translated",
+          "message": "'permittedChildren' is retained losslessly; only supported legacy runtime semantics are projected"
+        },
+        {
+          "field": "kind",
+          "disposition": "required-unsupported",
+          "message": "TeamDefinition is cataloged but is not executable until durable collaboration runtime support lands"
+        },
+        {
+          "field": "title",
+          "disposition": "exact",
+          "message": "'title' is preserved in the compatibility projection"
+        },
+        {
+          "field": "role",
+          "disposition": "exact",
+          "message": "'role' is preserved in the compatibility projection"
+        },
+        {
+          "field": "whenToUse",
+          "disposition": "exact",
+          "message": "'whenToUse' is preserved in the compatibility projection"
+        },
+        {
+          "field": "instructions",
+          "disposition": "exact",
+          "message": "'instructions' is preserved in the compatibility projection"
+        },
+        {
+          "field": "input",
+          "disposition": "exact",
+          "message": "'input' is preserved in the compatibility projection"
+        },
+        {
+          "field": "output",
+          "disposition": "exact",
+          "message": "'output' is preserved in the compatibility projection"
+        },
+        {
+          "field": "skills",
+          "disposition": "translated",
+          "message": "'skills' is retained losslessly; only supported legacy runtime semantics are projected"
+        },
+        {
+          "field": "models",
+          "disposition": "translated",
+          "message": "'models' is retained losslessly; only supported legacy runtime semantics are projected"
+        },
+        {
+          "field": "context",
+          "disposition": "translated",
+          "message": "'context' is retained losslessly; only supported legacy runtime semantics are projected"
+        },
+        {
+          "field": "requestedLimits",
+          "disposition": "translated",
+          "message": "'requestedLimits' is retained losslessly; only supported legacy runtime semantics are projected"
+        },
+        {
+          "field": "permittedChildren",
+          "disposition": "translated",
+          "message": "'permittedChildren' is retained losslessly; only supported legacy runtime semantics are projected"
+        },
+        {
+          "field": "kind",
+          "disposition": "required-unsupported",
+          "message": "WorkflowDefinition is cataloged but is not executable until durable collaboration runtime support lands"
+        }
+      ],
+      "activationSupported": false,
+      "requestDigest": "sha256:60d736301eacc03ebffc3a8364926076d0623107e3c77005b1be6666672634f2"
+    },
+    "catalogOnly": true,
+    "activation": {
+      "supported": false,
+      "reason": "Team activation is unavailable until the durable local-team I2 runtime is implemented.",
+      "nextPhase": "I2"
+    }
+  },
+  "packageInstall": {
+    "operation": "package-install",
+    "response": {
+      "preflight": {
+        "package": {
+          "id": "urn:example:two-agent/package",
+          "version": "1.0.0",
+          "digest": "sha256:b18c0c1e75b3281a42a8f4e2f7005f6547f228aa95a03949c16d86f30ce60b30"
+        },
+        "definitions": [
+          {
+            "id": "urn:example:two-agent/coordinator",
+            "version": "1.0.0",
+            "digest": "sha256:2255173bc10d57d6e72847949949656dcb33abfbf4accf779a44765ba7f6dd65"
+          },
+          {
+            "id": "urn:example:two-agent/team",
+            "version": "1.0.0",
+            "digest": "sha256:bc2c2df2abf973769e3d714704283092d0267fe6b4615799e15303c7a4e85b15"
+          },
+          {
+            "id": "urn:example:two-agent/worker",
+            "version": "1.0.0",
+            "digest": "sha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717"
+          },
+          {
+            "id": "urn:example:two-agent/workflow",
+            "version": "1.0.0",
+            "digest": "sha256:e4e5e1168512821fd684ca57306996ba8dccec4fea937e970b5903ffc51960fb"
+          }
+        ],
+        "diagnostics": [
+          {
+            "field": "title",
+            "disposition": "exact",
+            "message": "'title' is preserved in the compatibility projection"
+          },
+          {
+            "field": "role",
+            "disposition": "exact",
+            "message": "'role' is preserved in the compatibility projection"
+          },
+          {
+            "field": "whenToUse",
+            "disposition": "exact",
+            "message": "'whenToUse' is preserved in the compatibility projection"
+          },
+          {
+            "field": "instructions",
+            "disposition": "exact",
+            "message": "'instructions' is preserved in the compatibility projection"
+          },
+          {
+            "field": "input",
+            "disposition": "exact",
+            "message": "'input' is preserved in the compatibility projection"
+          },
+          {
+            "field": "output",
+            "disposition": "exact",
+            "message": "'output' is preserved in the compatibility projection"
+          },
+          {
+            "field": "skills",
+            "disposition": "translated",
+            "message": "'skills' is retained losslessly; only supported legacy runtime semantics are projected"
+          },
+          {
+            "field": "models",
+            "disposition": "translated",
+            "message": "'models' is retained losslessly; only supported legacy runtime semantics are projected"
+          },
+          {
+            "field": "context",
+            "disposition": "translated",
+            "message": "'context' is retained losslessly; only supported legacy runtime semantics are projected"
+          },
+          {
+            "field": "requestedLimits",
+            "disposition": "translated",
+            "message": "'requestedLimits' is retained losslessly; only supported legacy runtime semantics are projected"
+          },
+          {
+            "field": "permittedChildren",
+            "disposition": "translated",
+            "message": "'permittedChildren' is retained losslessly; only supported legacy runtime semantics are projected"
+          },
+          {
+            "field": "kind",
+            "disposition": "required-unsupported",
+            "message": "TeamDefinition is cataloged but is not executable until durable collaboration runtime support lands"
+          },
+          {
+            "field": "title",
+            "disposition": "exact",
+            "message": "'title' is preserved in the compatibility projection"
+          },
+          {
+            "field": "role",
+            "disposition": "exact",
+            "message": "'role' is preserved in the compatibility projection"
+          },
+          {
+            "field": "whenToUse",
+            "disposition": "exact",
+            "message": "'whenToUse' is preserved in the compatibility projection"
+          },
+          {
+            "field": "instructions",
+            "disposition": "exact",
+            "message": "'instructions' is preserved in the compatibility projection"
+          },
+          {
+            "field": "input",
+            "disposition": "exact",
+            "message": "'input' is preserved in the compatibility projection"
+          },
+          {
+            "field": "output",
+            "disposition": "exact",
+            "message": "'output' is preserved in the compatibility projection"
+          },
+          {
+            "field": "skills",
+            "disposition": "translated",
+            "message": "'skills' is retained losslessly; only supported legacy runtime semantics are projected"
+          },
+          {
+            "field": "models",
+            "disposition": "translated",
+            "message": "'models' is retained losslessly; only supported legacy runtime semantics are projected"
+          },
+          {
+            "field": "context",
+            "disposition": "translated",
+            "message": "'context' is retained losslessly; only supported legacy runtime semantics are projected"
+          },
+          {
+            "field": "requestedLimits",
+            "disposition": "translated",
+            "message": "'requestedLimits' is retained losslessly; only supported legacy runtime semantics are projected"
+          },
+          {
+            "field": "permittedChildren",
+            "disposition": "translated",
+            "message": "'permittedChildren' is retained losslessly; only supported legacy runtime semantics are projected"
+          },
+          {
+            "field": "kind",
+            "disposition": "required-unsupported",
+            "message": "WorkflowDefinition is cataloged but is not executable until durable collaboration runtime support lands"
+          }
+        ],
+        "activationSupported": false,
+        "requestDigest": "sha256:f7eaa078fe7cd43ac620ffc2b920dc1696a1274738758b2f722eb8c1782ee53a"
+      },
+      "receipt": {
+        "commandId": "i1-gate-package-install-v1",
+        "ownerId": "v1:s:10:gate-owner",
+        "requestDigest": "sha256:f7eaa078fe7cd43ac620ffc2b920dc1696a1274738758b2f722eb8c1782ee53a",
+        "operation": "install-package",
+        "resourceId": "urn:example:two-agent/package",
+        "catalogRevision": 1,
+        "bindingRevision": null,
+        "committedAt": "2026-09-26T19:40:17.319048Z"
+      }
+    },
+    "catalogOnly": true,
+    "activation": {
+      "supported": false,
+      "reason": "Team activation is unavailable until the durable local-team I2 runtime is implemented.",
+      "nextPhase": "I2"
+    }
+  },
+  "packageStatus": {
+    "operation": "package-status",
+    "response": {
+      "identity": {
+        "id": "urn:example:two-agent/package",
+        "version": "1.0.0",
+        "digest": "sha256:b18c0c1e75b3281a42a8f4e2f7005f6547f228aa95a03949c16d86f30ce60b30"
+      },
+      "manifest": {
+        "capabilityDeclarations": [
+          {
+            "capability": "collaboration_definition_packages_v1",
+            "required": true
+          }
+        ],
+        "contentDigest": "sha256:b18c0c1e75b3281a42a8f4e2f7005f6547f228aa95a03949c16d86f30ce60b30",
+        "entrypoints": [
+          {
+            "digest": "sha256:bc2c2df2abf973769e3d714704283092d0267fe6b4615799e15303c7a4e85b15",
+            "id": "urn:example:two-agent/team",
+            "version": "1.0.0"
+          }
+        ],
+        "extensions": {},
+        "files": [
+          {
+            "byteDigest": "sha256:c11789c326edba7b64651d4e17f75660645b4b9cea73ac3ea4e83ea277bb43f5",
+            "definition": {
+              "digest": "sha256:2255173bc10d57d6e72847949949656dcb33abfbf4accf779a44765ba7f6dd65",
+              "id": "urn:example:two-agent/coordinator",
+              "version": "1.0.0"
+            },
+            "kind": "AgentDefinition",
+            "path": "coordinator.json"
+          },
+          {
+            "byteDigest": "sha256:af06e624e812f35adadaea0b3ef577b001d4f05335d171876d8fcc2bb7a78eec",
+            "definition": {
+              "digest": "sha256:bc2c2df2abf973769e3d714704283092d0267fe6b4615799e15303c7a4e85b15",
+              "id": "urn:example:two-agent/team",
+              "version": "1.0.0"
+            },
+            "kind": "TeamDefinition",
+            "path": "team.json"
+          },
+          {
+            "byteDigest": "sha256:c54fd975ba08e31890f09250640df000db6282b55b7a442a2d4f57c4573bda52",
+            "definition": {
+              "digest": "sha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717",
+              "id": "urn:example:two-agent/worker",
+              "version": "1.0.0"
+            },
+            "kind": "AgentDefinition",
+            "path": "worker.json"
+          },
+          {
+            "byteDigest": "sha256:390edc970fb75d827a2686286dbcf142067163c29d89aaf791911b8a0d789880",
+            "definition": {
+              "digest": "sha256:e4e5e1168512821fd684ca57306996ba8dccec4fea937e970b5903ffc51960fb",
+              "id": "urn:example:two-agent/workflow",
+              "version": "1.0.0"
+            },
+            "kind": "WorkflowDefinition",
+            "path": "workflow.json"
+          }
+        ],
+        "id": "urn:example:two-agent/package",
+        "kind": "PackageManifest",
+        "lock": [
+          {
+            "reference": {
+              "digest": "sha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717",
+              "id": "urn:example:two-agent/worker",
+              "version": "1.0.0"
+            },
+            "requestedBy": "urn:example:two-agent/coordinator",
+            "resolvedPath": "worker.json"
+          },
+          {
+            "reference": {
+              "digest": "sha256:2255173bc10d57d6e72847949949656dcb33abfbf4accf779a44765ba7f6dd65",
+              "id": "urn:example:two-agent/coordinator",
+              "version": "1.0.0"
+            },
+            "requestedBy": "urn:example:two-agent/team",
+            "resolvedPath": "coordinator.json"
+          },
+          {
+            "reference": {
+              "digest": "sha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717",
+              "id": "urn:example:two-agent/worker",
+              "version": "1.0.0"
+            },
+            "requestedBy": "urn:example:two-agent/team",
+            "resolvedPath": "worker.json"
+          },
+          {
+            "reference": {
+              "digest": "sha256:e4e5e1168512821fd684ca57306996ba8dccec4fea937e970b5903ffc51960fb",
+              "id": "urn:example:two-agent/workflow",
+              "version": "1.0.0"
+            },
+            "requestedBy": "urn:example:two-agent/team",
+            "resolvedPath": "workflow.json"
+          }
+        ],
+        "profile": "urn:prometheus:uar:collaboration:0.1.0-draft.1",
+        "provenance": {
+          "authors": [
+            "Prometheus-AGS"
+          ],
+          "source": "agent-team-creator bundled two-agent authoring example"
+        },
+        "requiredCapabilities": [
+          "collaboration_definition_packages_v1"
+        ],
+        "resolution": "exact-version-and-digest",
+        "version": "1.0.0"
+      },
+      "sourceJson": "{\n  \"profile\": \"urn:prometheus:uar:collaboration:0.1.0-draft.1\",\n  \"kind\": \"PackageManifest\",\n  \"id\": \"urn:example:two-agent/package\",\n  \"version\": \"1.0.0\",\n  \"provenance\": {\n    \"source\": \"agent-team-creator bundled two-agent authoring example\",\n    \"authors\": [\n      \"Prometheus-AGS\"\n    ]\n  },\n  \"requiredCapabilities\": [\n    \"collaboration_definition_packages_v1\"\n  ],\n  \"extensions\": {},\n  \"entrypoints\": [\n    {\n      \"id\": \"urn:example:two-agent/team\",\n      \"version\": \"1.0.0\",\n      \"digest\": \"sha256:bc2c2df2abf973769e3d714704283092d0267fe6b4615799e15303c7a4e85b15\"\n    }\n  ],\n  \"capabilityDeclarations\": [\n    {\n      \"capability\": \"collaboration_definition_packages_v1\",\n      \"required\": true\n    }\n  ],\n  \"resolution\": \"exact-version-and-digest\",\n  \"files\": [\n    {\n      \"path\": \"coordinator.json\",\n      \"kind\": \"AgentDefinition\",\n      \"definition\": {\n        \"id\": \"urn:example:two-agent/coordinator\",\n        \"version\": \"1.0.0\",\n        \"digest\": \"sha256:2255173bc10d57d6e72847949949656dcb33abfbf4accf779a44765ba7f6dd65\"\n      },\n      \"byteDigest\": \"sha256:c11789c326edba7b64651d4e17f75660645b4b9cea73ac3ea4e83ea277bb43f5\"\n    },\n    {\n      \"path\": \"team.json\",\n      \"kind\": \"TeamDefinition\",\n      \"definition\": {\n        \"id\": \"urn:example:two-agent/team\",\n        \"version\": \"1.0.0\",\n        \"digest\": \"sha256:bc2c2df2abf973769e3d714704283092d0267fe6b4615799e15303c7a4e85b15\"\n      },\n      \"byteDigest\": \"sha256:af06e624e812f35adadaea0b3ef577b001d4f05335d171876d8fcc2bb7a78eec\"\n    },\n    {\n      \"path\": \"worker.json\",\n      \"kind\": \"AgentDefinition\",\n      \"definition\": {\n        \"id\": \"urn:example:two-agent/worker\",\n        \"version\": \"1.0.0\",\n        \"digest\": \"sha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717\"\n      },\n      \"byteDigest\": \"sha256:c54fd975ba08e31890f09250640df000db6282b55b7a442a2d4f57c4573bda52\"\n    },\n    {\n      \"path\": \"workflow.json\",\n      \"kind\": \"WorkflowDefinition\",\n      \"definition\": {\n        \"id\": \"urn:example:two-agent/workflow\",\n        \"version\": \"1.0.0\",\n        \"digest\": \"sha256:e4e5e1168512821fd684ca57306996ba8dccec4fea937e970b5903ffc51960fb\"\n      },\n      \"byteDigest\": \"sha256:390edc970fb75d827a2686286dbcf142067163c29d89aaf791911b8a0d789880\"\n    }\n  ],\n  \"lock\": [\n    {\n      \"requestedBy\": \"urn:example:two-agent/coordinator\",\n      \"reference\": {\n        \"id\": \"urn:example:two-agent/worker\",\n        \"version\": \"1.0.0\",\n        \"digest\": \"sha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717\"\n      },\n      \"resolvedPath\": \"worker.json\"\n    },\n    {\n      \"requestedBy\": \"urn:example:two-agent/team\",\n      \"reference\": {\n        \"id\": \"urn:example:two-agent/coordinator\",\n        \"version\": \"1.0.0\",\n        \"digest\": \"sha256:2255173bc10d57d6e72847949949656dcb33abfbf4accf779a44765ba7f6dd65\"\n      },\n      \"resolvedPath\": \"coordinator.json\"\n    },\n    {\n      \"requestedBy\": \"urn:example:two-agent/team\",\n      \"reference\": {\n        \"id\": \"urn:example:two-agent/worker\",\n        \"version\": \"1.0.0\",\n        \"digest\": \"sha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717\"\n      },\n      \"resolvedPath\": \"worker.json\"\n    },\n    {\n      \"requestedBy\": \"urn:example:two-agent/team\",\n      \"reference\": {\n        \"id\": \"urn:example:two-agent/workflow\",\n        \"version\": \"1.0.0\",\n        \"digest\": \"sha256:e4e5e1168512821fd684ca57306996ba8dccec4fea937e970b5903ffc51960fb\"\n      },\n      \"resolvedPath\": \"workflow.json\"\n    }\n  ],\n  \"contentDigest\": \"sha256:b18c0c1e75b3281a42a8f4e2f7005f6547f228aa95a03949c16d86f30ce60b30\"\n}\n",
+      "definitionKeys": [
+        "urn:example:two-agent/coordinator\u001f1.0.0\u001fsha256:2255173bc10d57d6e72847949949656dcb33abfbf4accf779a44765ba7f6dd65",
+        "urn:example:two-agent/team\u001f1.0.0\u001fsha256:bc2c2df2abf973769e3d714704283092d0267fe6b4615799e15303c7a4e85b15",
+        "urn:example:two-agent/worker\u001f1.0.0\u001fsha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717",
+        "urn:example:two-agent/workflow\u001f1.0.0\u001fsha256:e4e5e1168512821fd684ca57306996ba8dccec4fea937e970b5903ffc51960fb"
+      ],
+      "installedAt": "2026-09-26T19:40:17.319046Z"
+    },
+    "catalogOnly": true,
+    "activation": {
+      "supported": false,
+      "reason": "Team activation is unavailable until the durable local-team I2 runtime is implemented.",
+      "nextPhase": "I2"
+    }
+  },
+  "bindingPreflight": {
+    "operation": "binding-preflight",
+    "response": {
+      "bindingId": "urn:example:two-agent/binding/20260926-final",
+      "package": {
+        "id": "urn:example:two-agent/package",
+        "version": "1.0.0",
+        "digest": "sha256:b18c0c1e75b3281a42a8f4e2f7005f6547f228aa95a03949c16d86f30ce60b30"
+      },
+      "diagnostics": [
+        {
+          "field": "status",
+          "disposition": "required-unsupported",
+          "message": "binding is installed, but TeamInstance activation is unavailable until I2"
+        }
+      ],
+      "activationSupported": false,
+      "requestDigest": "sha256:d28e42e815662259080c23de8ea3c14e5f486498cd8304eb3509c97fde9a78ff"
+    },
+    "catalogOnly": true,
+    "activation": {
+      "supported": false,
+      "reason": "Team activation is unavailable until the durable local-team I2 runtime is implemented.",
+      "nextPhase": "I2"
+    }
+  },
+  "bindingInstall": {
+    "operation": "binding-install",
+    "response": {
+      "preflight": {
+        "bindingId": "urn:example:two-agent/binding/20260926-final",
+        "package": {
+          "id": "urn:example:two-agent/package",
+          "version": "1.0.0",
+          "digest": "sha256:b18c0c1e75b3281a42a8f4e2f7005f6547f228aa95a03949c16d86f30ce60b30"
+        },
+        "diagnostics": [
+          {
+            "field": "status",
+            "disposition": "required-unsupported",
+            "message": "binding is installed, but TeamInstance activation is unavailable until I2"
+          }
+        ],
+        "activationSupported": false,
+        "requestDigest": "sha256:29b1034390a9e864af60a6e7870b79a7f5d6cbe53bea8744376562b508afb450"
+      },
+      "binding": {
+        "id": "urn:example:two-agent/binding/20260926-final",
+        "ownerId": "v1:s:10:gate-owner",
+        "workspaceId": "gate-workspace",
+        "revision": 1,
+        "document": {
+          "contentDigest": "sha256:3726f72e9ea089f58a1b525438ab47cc23fe7fe3403b0fc69cb57a4cfad2feb7",
+          "contextGrants": [],
+          "effectiveBudget": {
+            "currency": "USD",
+            "maxCostMicrounits": 5000000,
+            "maxElapsedSeconds": 3600,
+            "maxTokens": 100000
+          },
+          "effectiveLimits": {
+            "concurrentTurns": 2,
+            "maxDepth": 1,
+            "maxMembers": 2,
+            "maxPendingTasks": 100
+          },
+          "exportClass": "private-installed-state",
+          "extensions": {},
+          "id": "urn:example:two-agent/binding/20260926-final",
+          "kind": "DeploymentBinding",
+          "modelBindings": [
+            {
+              "credentialRef": "secret-store://gate/provider",
+              "modelId": "gate-model",
+              "providerId": "gate-provider",
+              "requestedAlias": "team-default"
+            }
+          ],
+          "ownerId": "v1:s:10:gate-owner",
+          "package": {
+            "digest": "sha256:b18c0c1e75b3281a42a8f4e2f7005f6547f228aa95a03949c16d86f30ce60b30",
+            "id": "urn:example:two-agent/package",
+            "version": "1.0.0"
+          },
+          "policyRevision": "gate-policy-1",
+          "profile": "urn:prometheus:uar:collaboration:0.1.0-draft.1",
+          "provenance": {
+            "authors": [
+              "Prometheus-AGS"
+            ],
+            "source": "I1 creator-to-UAR integration gate"
+          },
+          "representationGrantRefs": [],
+          "requiredCapabilities": [
+            "collaboration_deployment_bindings_v1"
+          ],
+          "revision": 1,
+          "runtimeInstanceId": "gate-uar",
+          "skillBindings": [],
+          "status": "inactive",
+          "storage": {
+            "backend": "surrealdb-3.3.0",
+            "connectionRef": "connection-store://gate/team-state",
+            "durableTransactions": true
+          },
+          "version": "1.0.0",
+          "workspaceId": "gate-workspace"
+        },
+        "package": {
+          "id": "urn:example:two-agent/package",
+          "version": "1.0.0",
+          "digest": "sha256:b18c0c1e75b3281a42a8f4e2f7005f6547f228aa95a03949c16d86f30ce60b30"
+        },
+        "activationSupported": false,
+        "preflightDiagnostics": [
+          {
+            "field": "status",
+            "disposition": "required-unsupported",
+            "message": "binding is installed, but TeamInstance activation is unavailable until I2"
+          }
+        ],
+        "updatedAt": "2026-09-26T19:58:13.698285Z"
+      },
+      "receipt": {
+        "commandId": "i1-gate-binding-install-v1:20260926-final",
+        "ownerId": "v1:s:10:gate-owner",
+        "requestDigest": "sha256:29b1034390a9e864af60a6e7870b79a7f5d6cbe53bea8744376562b508afb450",
+        "operation": "install-binding",
+        "resourceId": "urn:example:two-agent/binding/20260926-final",
+        "catalogRevision": 1,
+        "bindingRevision": 1,
+        "committedAt": "2026-09-26T19:58:13.698378Z"
+      }
+    },
+    "catalogOnly": true,
+    "activation": {
+      "supported": false,
+      "reason": "Team activation is unavailable until the durable local-team I2 runtime is implemented.",
+      "nextPhase": "I2"
+    }
+  },
+  "bindingStatus": {
+    "operation": "binding-status",
+    "response": {
+      "id": "urn:example:two-agent/binding/20260926-final",
+      "ownerId": "v1:s:10:gate-owner",
+      "workspaceId": "gate-workspace",
+      "revision": 1,
+      "document": {
+        "contentDigest": "sha256:3726f72e9ea089f58a1b525438ab47cc23fe7fe3403b0fc69cb57a4cfad2feb7",
+        "contextGrants": [],
+        "effectiveBudget": {
+          "currency": "USD",
+          "maxCostMicrounits": 5000000,
+          "maxElapsedSeconds": 3600,
+          "maxTokens": 100000
+        },
+        "effectiveLimits": {
+          "concurrentTurns": 2,
+          "maxDepth": 1,
+          "maxMembers": 2,
+          "maxPendingTasks": 100
+        },
+        "exportClass": "private-installed-state",
+        "extensions": {},
+        "id": "urn:example:two-agent/binding/20260926-final",
+        "kind": "DeploymentBinding",
+        "modelBindings": [
+          {
+            "credentialRef": "secret-store://gate/provider",
+            "modelId": "gate-model",
+            "providerId": "gate-provider",
+            "requestedAlias": "team-default"
+          }
+        ],
+        "ownerId": "v1:s:10:gate-owner",
+        "package": {
+          "digest": "sha256:b18c0c1e75b3281a42a8f4e2f7005f6547f228aa95a03949c16d86f30ce60b30",
+          "id": "urn:example:two-agent/package",
+          "version": "1.0.0"
+        },
+        "policyRevision": "gate-policy-1",
+        "profile": "urn:prometheus:uar:collaboration:0.1.0-draft.1",
+        "provenance": {
+          "authors": [
+            "Prometheus-AGS"
+          ],
+          "source": "I1 creator-to-UAR integration gate"
+        },
+        "representationGrantRefs": [],
+        "requiredCapabilities": [
+          "collaboration_deployment_bindings_v1"
+        ],
+        "revision": 1,
+        "runtimeInstanceId": "gate-uar",
+        "skillBindings": [],
+        "status": "inactive",
+        "storage": {
+          "backend": "surrealdb-3.3.0",
+          "connectionRef": "connection-store://gate/team-state",
+          "durableTransactions": true
+        },
+        "version": "1.0.0",
+        "workspaceId": "gate-workspace"
+      },
+      "package": {
+        "id": "urn:example:two-agent/package",
+        "version": "1.0.0",
+        "digest": "sha256:b18c0c1e75b3281a42a8f4e2f7005f6547f228aa95a03949c16d86f30ce60b30"
+      },
+      "activationSupported": false,
+      "preflightDiagnostics": [
+        {
+          "field": "status",
+          "disposition": "required-unsupported",
+          "message": "binding is installed, but TeamInstance activation is unavailable until I2"
+        }
+      ],
+      "updatedAt": "2026-09-26T19:58:13.698285Z"
+    },
+    "catalogOnly": true,
+    "activation": {
+      "supported": false,
+      "reason": "Team activation is unavailable until the durable local-team I2 runtime is implemented.",
+      "nextPhase": "I2"
+    }
+  },
+  "unsupportedCapability": {
+    "status": 200,
+    "activationSupported": false,
+    "diagnostics": [
+      {
+        "field": "requiredCapabilities",
+        "disposition": "required-unsupported",
+        "message": "required capability 'unsupported_gate_capability_v1' is not implemented"
+      },
+      {
+        "field": "title",
+        "disposition": "exact",
+        "message": "'title' is preserved in the compatibility projection"
+      },
+      {
+        "field": "role",
+        "disposition": "exact",
+        "message": "'role' is preserved in the compatibility projection"
+      },
+      {
+        "field": "whenToUse",
+        "disposition": "exact",
+        "message": "'whenToUse' is preserved in the compatibility projection"
+      },
+      {
+        "field": "instructions",
+        "disposition": "exact",
+        "message": "'instructions' is preserved in the compatibility projection"
+      },
+      {
+        "field": "input",
+        "disposition": "exact",
+        "message": "'input' is preserved in the compatibility projection"
+      },
+      {
+        "field": "output",
+        "disposition": "exact",
+        "message": "'output' is preserved in the compatibility projection"
+      },
+      {
+        "field": "skills",
+        "disposition": "translated",
+        "message": "'skills' is retained losslessly; only supported legacy runtime semantics are projected"
+      },
+      {
+        "field": "models",
+        "disposition": "translated",
+        "message": "'models' is retained losslessly; only supported legacy runtime semantics are projected"
+      },
+      {
+        "field": "context",
+        "disposition": "translated",
+        "message": "'context' is retained losslessly; only supported legacy runtime semantics are projected"
+      },
+      {
+        "field": "requestedLimits",
+        "disposition": "translated",
+        "message": "'requestedLimits' is retained losslessly; only supported legacy runtime semantics are projected"
+      },
+      {
+        "field": "permittedChildren",
+        "disposition": "translated",
+        "message": "'permittedChildren' is retained losslessly; only supported legacy runtime semantics are projected"
+      },
+      {
+        "field": "kind",
+        "disposition": "required-unsupported",
+        "message": "TeamDefinition is cataloged but is not executable until durable collaboration runtime support lands"
+      },
+      {
+        "field": "title",
+        "disposition": "exact",
+        "message": "'title' is preserved in the compatibility projection"
+      },
+      {
+        "field": "role",
+        "disposition": "exact",
+        "message": "'role' is preserved in the compatibility projection"
+      },
+      {
+        "field": "whenToUse",
+        "disposition": "exact",
+        "message": "'whenToUse' is preserved in the compatibility projection"
+      },
+      {
+        "field": "instructions",
+        "disposition": "exact",
+        "message": "'instructions' is preserved in the compatibility projection"
+      },
+      {
+        "field": "input",
+        "disposition": "exact",
+        "message": "'input' is preserved in the compatibility projection"
+      },
+      {
+        "field": "output",
+        "disposition": "exact",
+        "message": "'output' is preserved in the compatibility projection"
+      },
+      {
+        "field": "skills",
+        "disposition": "translated",
+        "message": "'skills' is retained losslessly; only supported legacy runtime semantics are projected"
+      },
+      {
+        "field": "models",
+        "disposition": "translated",
+        "message": "'models' is retained losslessly; only supported legacy runtime semantics are projected"
+      },
+      {
+        "field": "context",
+        "disposition": "translated",
+        "message": "'context' is retained losslessly; only supported legacy runtime semantics are projected"
+      },
+      {
+        "field": "requestedLimits",
+        "disposition": "translated",
+        "message": "'requestedLimits' is retained losslessly; only supported legacy runtime semantics are projected"
+      },
+      {
+        "field": "permittedChildren",
+        "disposition": "translated",
+        "message": "'permittedChildren' is retained losslessly; only supported legacy runtime semantics are projected"
+      },
+      {
+        "field": "kind",
+        "disposition": "required-unsupported",
+        "message": "WorkflowDefinition is cataloged but is not executable until durable collaboration runtime support lands"
+      }
+    ]
+  },
+  "activationRefusal": "UAR team activation is not implemented in I1. Install definitions and an inactive or ready binding, then wait for the durable local-team I2 runtime."
+}

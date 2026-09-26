@@ -12,9 +12,7 @@ from this file, and fall back to the Layer 1 rules. Never narrate what it "would
 
 "Status" is `present`, `**absent**` or `check` for the machine this was last built on (2026-09-22); rows
 marked absent are flagged in `CLAUDE.md`. Re-check with a directory listing of `.agents/skills` and
-`~/.agents/skills` before trusting it elsewhere. Rows for stacks this repo does not contain — design/UI,
-React, Flutter, Tauri — are deliberately omitted; restore them from the Prometheus pack's v4 routing source
-if such code ever lands here.
+`~/.agents/skills` before trusting it elsewhere. UI routes below are conditional; backend work does not load them.
 
 ## Process
 | When | Invoke | Status | Install / notes |
@@ -22,7 +20,12 @@ if such code ever lands here.
 | planning or subagent-driven work | `superpowers` | present | `npx skills add obra/superpowers` |
 | before a PR: interrogate the change | `grill-me` | present | `npx skills add mattpocock/skills@grill-me` |
 | phase lifecycle or position | `kbd-status`, `kbd-assess`, `kbd-analyze`, `kbd-plan`, `kbd-execute`, `kbd-reflect` | present | native to this repo — ported to Node under `skills/kbd-*` and `lib/kbd/`; no longer the bash originals |
+| implementing KBD-owned change tasks | `kbd-apply` | present | use `begin-task` / `end-task` for every task, then driver `verify` / `archive`; never bare OpenSpec apply inside KBD |
 | structuring a one-line concept into branches | `ideation-mindmap` | present | native to this repo — `skills/ideation-mindmap`, `lib/ideation/`; needs surreal-memory |
+| team creation/export | `agent-team-creator` | present | guided or expert manifest; propose the smallest useful team; staged exports do not install or execute agents |
+| team task management | `agent-team-manage` | present | creator's shared compiled Node runtime; state/task revisions and explicit ownership; KBD completion stays canonical |
+| team models/policy | `agent-team-models` | present | declared tiers, capabilities and explicit price ceilings; unknown cost cannot satisfy a ceiling |
+| team handoff | `agent-team-handoff` | present | fresh-context packet, Git identity and explicit acceptance; local coordination is not transferable native authority |
 | phase completion, before delivery, before a lesson becomes a rule | `adversarial-review` | present | native to this repo — `skills/adversarial-review`, `lib/review/`; needs the liter-llm gateway for a cross-model judge — say which judge ran |
 | any reflection or self-assessment | `sycophancy-correction` | **absent** | not vendored in this repo; the review pipeline's own anti-theater gate (`lib/review/sycophancy-gate.mjs`) covers judge-report screening, but a standalone MCP server is not shipped |
 
@@ -30,8 +33,8 @@ if such code ever lands here.
 | When | Invoke | Status | Install / notes |
 |---|---|---|---|
 | any new change, and any plan under A-17 | `openspec-propose` | present | installed by `openspec init`; `/opsx:propose` in Claude Code |
-| implement a change's tasks | `openspec-apply-change` | present | per task — never "implement everything" |
-| check the work against the change before archiving | `openspec-verify-change` | present | then `openspec-archive-change` |
+| implement an OpenSpec change outside KBD | `openspec-apply-change` | present | per task — never "implement everything"; KBD-owned tasks use `kbd-apply` |
+| check an OpenSpec change outside KBD before archiving | `openspec-verify-change` | present | then `openspec-archive-change` |
 
 ## Rust
 | When | Invoke | Status | Install / notes |
@@ -60,3 +63,10 @@ if such code ever lands here.
 
 Search order: skills.sh (install telemetry is a real usage signal) → agentskills.io (the standard;
 vendor-official repos link from here) → agenticskills.io (curated, audit notes) → GitHub.
+
+## UI and project teams
+| When | Invoke | Status | Install / notes |
+|---|---|---|---|
+| UI, styles, tokens, motion or copy | `prometheus-ui-ux` | present | project .agents/UI_UX_PROTOCOL.md overrides bundled protocol; selective context/craft/platform routing |
+| completed UI phase review | `prometheus-ui-review` | present | independent read-only context; no taste or bypass of user-only skills |
+| code with an existing team | `agent-team-creator` | present | read .agent-team/project-routing.json and real manifests; select relevant existing roles, preserve explicit team; sole team auto-adopt, ambiguous teams ask; sequential fallback when delegation unavailable |

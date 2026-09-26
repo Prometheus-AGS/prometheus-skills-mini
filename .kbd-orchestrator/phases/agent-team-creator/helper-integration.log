@@ -1,0 +1,33 @@
+✔ legacy: phase postconditions preserve metadata and invoke real hook exactly once (205.569208ms)
+✔ legacy: invalid project {broken refuses all phase and canonical writes (144.697583ms)
+✔ legacy: invalid project [] refuses all phase and canonical writes (132.4045ms)
+✔ legacy: invalid project null refuses all phase and canonical writes (244.553292ms)
+✔ legacy: invalid project 42 refuses all phase and canonical writes (86.166333ms)
+✔ legacy: invalid project "scalar" refuses all phase and canonical writes (84.315875ms)
+✔ legacy: missing metadata bootstraps only the documented minimal fields (152.804959ms)
+✔ legacy: real failing hook is reported and keeps the activated phase (159.816667ms)
+✔ legacy: begin-task preserves pending tasks when real OpenSpec cannot load its schema (878.167875ms)
+✔ legacy: begin-task refuses missing backend data before mutation or completion (433.685958ms)
+✔ legacy: end-task preserves pending tasks when real OpenSpec cannot load its schema (1108.430209ms)
+✔ legacy: end-task refuses missing backend data before mutation or completion (903.531541ms)
+✔ runtime: phase postconditions preserve metadata and invoke real hook exactly once (5062.249125ms)
+✔ runtime: invalid project {broken refuses all phase and canonical writes (1646.110917ms)
+✔ runtime: invalid project [] refuses all phase and canonical writes (1331.963709ms)
+✔ runtime: invalid project null refuses all phase and canonical writes (1327.707709ms)
+✔ runtime: invalid project 42 refuses all phase and canonical writes (1323.41975ms)
+✔ runtime: invalid project "scalar" refuses all phase and canonical writes (1307.955917ms)
+✔ runtime: missing metadata bootstraps only the documented minimal fields (3673.453041ms)
+✔ runtime: real failing hook is reported and keeps the activated phase (4050.812292ms)
+✔ runtime: begin-task preserves pending tasks when real OpenSpec cannot load its schema (1754.456875ms)
+✔ runtime: begin-task refuses missing backend data before mutation or completion (1492.319709ms)
+✔ runtime: end-task preserves pending tasks when real OpenSpec cannot load its schema (1676.0955ms)
+✔ runtime: end-task refuses missing backend data before mutation or completion (1506.236375ms)
+✔ actual OpenSpec apply retains remaining work and reports completion only after the last task (3303.0835ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34081.084083

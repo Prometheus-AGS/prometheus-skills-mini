@@ -43,7 +43,7 @@ node scripts/generate-skill-system-distribution.mjs           # writes dist/ and
 node scripts/generate-skill-system-distribution.mjs --check   # verifies, exits non-zero on drift
 ```
 
-This reads `skill-system.json`, scans `skills/` (50 directories), and produces:
+This reads `skill-system.json`, scans `skills/` (97 distributed skill directories), and produces:
 
 - `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json` — one plugin listed
   (itself), per `lib/distribution/marketplace.mjs`.
@@ -96,3 +96,14 @@ find them. Because this writes under the user's home directory, it only ever wri
 roots, only for names the pack actually has, refuses any name that is not a single plain directory
 component, never deletes, and refuses outright when `lib/platform/full-pack.mjs` detects a native
 full-pack install.
+
+## Project UI routing and teams
+
+Distribution makes skill payloads available. Project adoption also needs managed instructions,
+the UI protocol and an active-team record. Follow [UI/UX routing and adoption](/docs/ui-ux/overview)
+for bootstrap or separate UI/creator commands. The current inventory includes 40 portable UI
+entries from the shared 41-entry catalog. Local helpers run directly with Node 22+ and bundled
+assets; they need neither optional service. The full-pack anti-shadowing constraint still applies.
+
+Proposal-only creator `export` does not install a project team; normal project creation finishes
+with `install-project`. Writing definitions does not prove native discovery or invocation.

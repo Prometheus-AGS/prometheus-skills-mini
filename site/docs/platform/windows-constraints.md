@@ -78,6 +78,17 @@ mindmap/distribution port (1,000+ tests) ran on macOS only as of that commit; Wi
 for that batch is still owed, and this documentation states that plainly rather than implying
 otherwise.
 
+The newer UI/team work has separate
+[macOS and offline Linux-container evidence](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/docs/research/ui-ux-routing/DELIVERY.md).
+Native Windows execution remains unverified, as do live invocation of every harness and
+full Electron installed-app acceptance. A Windows-like path tested on macOS is not native
+Windows evidence. [The platform matrix](/docs/ui-ux/overview#platform-and-acceptance-matrix)
+separates portable helpers from SDK, browser and harness prerequisites.
+
+The project installers create copies, while preserving supported existing in-project linked
+instruction entrypoints. Preservation of an existing link does not make symlink creation a
+mini runtime requirement.
+
 ## See also
 
 - [Docker Services](/docs/services/docker-services)

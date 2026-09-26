@@ -23,13 +23,17 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const contract = readSkillSystem(root);
 const skills = collectDistributionSkills(root, contract);
 
-function digestTree(directory, relative = '') {
+// Source-only build caches are excluded by the package contract. Packaged trees are
+// read without exclusions so an accidentally shipped dependency still fails parity.
+const localOnly = new Set(['.git', 'node_modules', 'target', '.kbd-orchestrator', '__pycache__']);
+function digestTree(directory, relative = '', source = false) {
   const result = [];
   for (const name of fs.readdirSync(path.join(directory, relative)).sort()) {
+    if (source && localOnly.has(name)) continue;
     const child = path.join(relative, name);
     const absolute = path.join(directory, child);
     const stat = fs.lstatSync(absolute);
-    if (stat.isDirectory()) result.push(...digestTree(directory, child));
+    if (stat.isDirectory()) result.push(...digestTree(directory, child, source));
     else result.push({ path: child.split(path.sep).join('/'), bytes: canonicalBytes(absolute).toString('base64') });
   }
   return result;
@@ -57,7 +61,7 @@ for (const platform of ['claude', 'codex']) {
     for (const skill of skills) {
       assert.deepEqual(
         digestTree(path.join(packageRoot, 'skills', skill.name)),
-        digestTree(skill.source),
+        digestTree(skill.source, '', true),
         `${platform}/${skill.name}`,
       );
     }

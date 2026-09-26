@@ -18,36 +18,63 @@ available. On Windows both run in **Docker**; on macOS and Linux they run
 exactly as they do in the source pack today. Everything else that was a daemon
 is gone.
 
-> **Status: the foundation is built and verified; the KBD lifecycle, adversarial review,
-> ideation-mindmap, Karpathy progress memory, plugin distribution, and the Docker services
-> are ported and real.**
+> **Current inventory: 97 distributed skills, including 40 portable UI/UX entries.**
+> The shared full/mini catalog has 41 UI/UX entries; its full-only Impeccable native engine
+> is excluded from mini. Mini ships the bounded `prometheus-impeccable-core` adaptation,
+> shared UI routing and review, TypeScript 7/Node Pro Max, and automatic project-team adoption.
 >
-> Phase `platform-foundation` is complete: `lib/platform/` (paths, CRLF-tolerant text
-> reading, atomic write with a bounded Windows rename retry, an exclusive-create lock,
-> shell-free process spawning), a `package.json` with the OpenSpec CLI pinned, and a
-> three-OS CI matrix. **88 tests pass on `windows-latest`, `ubuntu-latest` and
-> `macos-latest` across Node 22 and 24, with nothing skipped on Windows** — every Windows
-> claim about that phase is observed, not reasoned from macOS. Per-claim evidence:
-> [`evidence/windows.md`](.kbd-orchestrator/phases/platform-foundation/evidence/windows.md).
->
-> A later phase ("port the KBD process orchestrator and 49 skills to Windows-native Node")
-> closed the gap this section used to describe as not-yet-started: **53 skills** now live
-> under `skills/`, including the full 24-skill KBD family (`kbd-process-orchestrator` plus
-> 22 sub-skills, `kbd-evolve`, `kbd-goal-check`), `adversarial-review`, `ideation-mindmap`,
-> `karpathy-progress-memory`, 20 artifact-refiner skills, 5 scaffold/convert skills, and the
-> plugin/marketplace distribution generator (`lib/distribution/`, `skill-system.json`).
-> **1,000+ tests pass**, `docker/compose.yaml` runs SurrealDB + surreal-memory + liter-llm
-> as three loopback-bound, digest-pinned containers, and `scripts/services.mjs` wraps their
-> lifecycle. **Windows verification for this later batch is still owed** — it ran on macOS
-> only, the same caveat recorded for every phase before it; `platform-foundation`'s own
-> Windows claims remain the ones with real CI evidence. See the
-> [Docusaurus site](#documentation-site) for full-coverage documentation of every skill and
-> `lib/` module, and [`docs/reference/comparison-with-full-pack`](site/docs/reference/comparison-with-full-pack.md)
-> for what remains a genuine gap versus what was always a deliberate exclusion.
->
-> Still open: `deep-research` (planned as a checkpoint-only Node port; not yet a skill in
-> this checkout), the knowledge-sources registry, and Windows hardware verification of the
-> Docker services and the Phase C skill batch.
+> The KBD lifecycle, adversarial review, Karpathy progress memory and plugin distribution
+> are implemented. Verification belongs to a specific phase and environment: the historical
+> [platform-foundation Windows evidence](.kbd-orchestrator/phases/platform-foundation/evidence/windows.md)
+> does not certify later UI/team work. The [UI/team delivery record](docs/research/ui-ux-routing/DELIVERY.md)
+> records macOS and offline Linux-container integration evidence. Native Windows execution,
+> live invocation of every harness and full Electron installed-app acceptance remain unverified.
+> This documentation does not claim release certification.
+
+## UI/UX routing
+
+Use `prometheus-ui-ux` for rendered UI, styles, tokens, interaction, motion or on-screen copy.
+Read project context first; `.agents/UI_UX_PROTOCOL.md` overrides the bundled protocol.
+The router chooses a focused Pro Max query, one craft skill and relevant platform guidance.
+New work may use taste based on the **actual model**; refinement and review exclude taste.
+Completed UI phases use independent `prometheus-ui-review` with real evidence. Upstream
+`interface-review`, `break`, `variant` and `explain-interface` remain user-only.
+
+Start with the [UI/UX routing how-to](docs/ui-ux-routing.md), including project installation,
+request examples, platform limits, offline use and troubleshooting. Helpers ship as Node ESM;
+no Python, engine download, extra service or runtime dependency installation is needed.
+
+## Agent teams
+
+Four sibling skills help turn an outcome into a small, explicit team:
+`agent-team-creator`, `agent-team-manage`, `agent-team-models`, and `agent-team-handoff`.
+Start with one implementer; add an independent reviewer or specialist when the work needs
+separate ownership. The guided flow explains roles, skills, models, and harnesses before
+producing an editable manifest.
+
+The shared full/mini runtime stages native artifacts for **UAR, Codex, Claude Code, GitHub
+Copilot CLI, Kimi Code, MiniMax CLI (`mcode`), OpenCode, and DeepSeek Harness**. **BossFang**
+is a separate registration/export target. Export stages proposals. Normal project-team creation continues with `install-project`, which
+installs discovery instructions and missing native project definitions. Neither operation launches
+agents or registers services. Native options retain source/version provenance and explicit limitations.
+
+For all code tasks, preserve the explicit active team; adopt a sole existing team, and ask when
+several remain ambiguous. Use relevant roles with their existing ownership and native permissions.
+When delegation is unavailable, use role instructions sequentially and disclose that limit. Zed
+instruction discovery is supported; its parallel-thread UI is not a delegation API.
+
+Task state uses revision checks and local atomic writes; cross-harness handoffs transfer
+ownership only after acceptance. Model selection uses declared tiers and explicit price
+limits. Memory is optional, with a local outbox; no service is added beyond the existing
+surreal-memory and liter-llm integrations. The runtime ships compiled `.mjs` for **Node >=22**,
+authored in **TypeScript 7.0.2**, without repository-root runtime dependencies.
+
+Read the [agent teams guide](docs/agent-teams.md), the
+[site overview](https://prometheus-ags.github.io/prometheus-skills-mini/docs/agent-teams/overview),
+and the [task/handoff request reference](skills/agent-team-creator/references/task-handoff.md).
+Native CLI acceptance and Windows execution for this new family require their own evidence;
+historical platform verification below does not certify these new adapters. Local ownership
+is coordination, not Cedar authorization, sandbox enforcement, or a distributed lease.
 
 ## Documentation site
 
@@ -59,7 +86,8 @@ conversion, plugin distribution, Docker services, and OpenSpec integration — i
 
 ```bash
 cd site
-npm install
+npm ci
+npm run generate:catalog
 npm start
 ```
 
@@ -74,7 +102,7 @@ that touches `site/`, `docs/`, or any `skills/**/SKILL.md` — the same build �
 
 | # | Constraint | What it means in practice |
 |---|---|---|
-| C1 | **Windows without WSL for anything the pack runs** | Hooks, scripts, and the installer run from `cmd.exe` / PowerShell on a stock Windows 10/11 box. Git Bash may be present but is never required. Docker's own backend is the one exception — see the note below the table. **Verified for everything built so far** on `windows-latest`, no Git Bash, no WSL. |
+| C1 | **Windows without WSL for anything the pack runs** | Hooks, scripts, and the installer run from `cmd.exe` / PowerShell on a stock Windows 10/11 box. Git Bash may be present but is never required. Docker's own backend is the one exception — see the note below the table. Historical Windows evidence covers `platform-foundation`; later UI/team native Windows acceptance remains open. |
 | C2 | **Node.js LTS is the only script runtime** | Every hook, state script, and installer is a `.mjs` file run as `node <script>`. Node ≥ 22 LTS required, 24 LTS recommended. |
 | C3 | **No shell-script hooks** | No `.sh`. A `.ps1` is allowed only alongside an equivalent for the other platforms, and only when Node genuinely cannot do the job. The goal is zero of either. |
 | C4 | **No Python** | Not as a runtime, not as a build step, not in rendered templates. |
@@ -95,7 +123,7 @@ same backend requirement, so they do not change this.
 
 ---
 
-## 2. What `openspec init` created
+## 2. What `openspec init` created (historical setup)
 
 Run with OpenSpec CLI **1.10.0**:
 
@@ -119,7 +147,7 @@ runtime. Start the first change with `/opsx:propose "<idea>"`.
 
 ---
 
-## 3. Why this is a port and not a repackage
+## 3. Why this is a port and not a repackage (original analysis)
 
 The source pack (v1.10.0) states its own Windows posture in `skill-system.json`:
 
@@ -160,8 +188,8 @@ that is not Node.
 > "**high**") are now **done** — see [§4](#documentation-site)'s docs site, specifically
 > [`docs/kbd/overview`](site/docs/kbd/overview.md), [`docs/review/adversarial-review`](site/docs/review/adversarial-review.md),
 > and [`docs/reference/comparison-with-full-pack`](site/docs/reference/comparison-with-full-pack.md),
-> for the current, verified state of each item. The actual on-disk layout also diverged from §5.1's
-> plan below in one significant way: **skills are flat** (`skills/<name>/`, 53 directories), not
+> for current capability descriptions and their evidence limits. The actual on-disk layout also diverged from §5.1's
+> plan below in one significant way: **skills are flat** (`skills/<name>/`, now 97 distributed skill directories), not
 > grouped into `skills/kbd/`, `skills/pmpo/`, `skills/karpathy/`, `skills/rust/` subdirectories as
 > planned — and no `pmpo-*` family, `templates/`, or `tests/` top-level directory exists in this
 > checkout. Treat this section as intent-at-the-time, not current fact; treat §4.1 in the docs site
@@ -651,9 +679,10 @@ only, prefer a small dependency set for stdio MCP servers (`rmcp` +
 
 ---
 
-## 8. Roadmap as OpenSpec changes
+## 8. Roadmap as OpenSpec changes (historical plan)
 
-Each line is one `/opsx:propose`. Order matters — later changes build on
+This original roadmap is retained as intent at the time, not a current completion ledger.
+Use `openspec list` and phase evidence for current status. Each line was one `/opsx:propose`. Order matters — later changes build on
 `lib/platform`.
 
 1. `platform-foundation` — `lib/platform/` (paths, atomic write, lock, spawn with `.cmd` resolution), `node:test` harness, 3-OS CI, `.gitattributes`.
@@ -678,7 +707,7 @@ Each line is one `/opsx:propose`. Order matters — later changes build on
 
 ---
 
-## 9. Open questions and unverified claims
+## 9. Open questions and unverified claims (historical analysis)
 
 - **Hook cold-start on Windows.** Whether a Node process fits the source's 1 s hook budgets on typical Windows hardware is untested. If it does not, raise the budgets before reaching for a compiled dispatcher.
 - **Neither container stack has been run on Windows.** The Compose design in §5.6 is derived from reading the source pack's Dockerfiles and Compose files on macOS. Image build time, VM memory during the build, and first-start model download for local embeddings are all unmeasured.
@@ -696,4 +725,4 @@ Node's atomic-write, locking, CRLF handling and shell-free CLI spawning work on 
 repository survives a `core.autocrlf=true` checkout; and that Node 22 and 24 both work. Node 26 —
 what this machine runs — is still untested and unclaimed.
 - **Harness hook support on Windows.** Exec-form hooks with `${CLAUDE_PLUGIN_ROOT}` are taken from the source pack's Claude Code configuration; equivalent behaviour in Codex, Cursor, and OpenCode on Windows needs checking per harness.
-- **`ideation-mindmap`** is deferred, not rejected — decide once the core loop works.
+- **`ideation-mindmap`** was deferred in the original analysis and has since been ported; see the current documentation site.

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "verifiedBeforeReview": true,
+  "method": "Primary pinned source static inspection; official documents bounded to public contract; scores are assessor judgments, not measurements",
+  "classes": [
+    {
+      "type": "pinned-source",
+      "credibility": 95,
+      "limits": "Static claims only, deployed parity unknown"
+    },
+    {
+      "type": "official-docs",
+      "credibility": 90,
+      "limits": "Contract, not closed implementation proof"
+    },
+    {
+      "type": "generated-search-synthesis",
+      "credibility": 30,
+      "limits": "Discovery only; not standalone evidence"
+    }
+  ],
+  "criticalClaimLabels": [
+    {
+      "id": "C1",
+      "label": "verified"
+    },
+    {
+      "id": "C2",
+      "label": "inferred"
+    },
+    {
+      "id": "C3",
+      "label": "verified"
+    },
+    {
+      "id": "C4",
+      "label": "verified"
+    },
+    {
+      "id": "C5",
+      "label": "verified"
+    },
+    {
+      "id": "C6",
+      "label": "inferred"
+    },
+    {
+      "id": "C7",
+      "label": "blocked"
+    }
+  ],
+  "feynmanGrade": null
+}

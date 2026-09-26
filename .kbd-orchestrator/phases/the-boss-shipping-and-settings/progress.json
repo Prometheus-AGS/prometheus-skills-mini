@@ -2,16 +2,17 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 515,
-  "derivedRevision": 515,
+  "sourceRevision": 931,
+  "derivedRevision": 931,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 515
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 867,
+    "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
   "phase": "the-boss-shipping-and-settings",
   "phaseId": "the-boss-shipping-and-settings",
   "parentPhase": null,
-  "last_updated": "2026-09-24T07:23:57.573621Z",
+  "last_updated": "2026-09-26T09:15:27.298708Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
   "changes_completed": 1,
@@ -23,6 +24,35 @@
       "completed": 1,
       "total": 1,
       "status": "COMPLETE"
+    },
+    "evidence": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "certification": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "publication": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    }
+  },
+  "completionScopes": {
+    "completion": "phase",
+    "runCompletion": "run"
+  },
+  "runCompletion": {
+    "scope": "run",
+    "runId": "platform-foundation-20260921T101006Z",
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 22,
+      "total": 41,
+      "status": "IN_PROGRESS"
     },
     "evidence": {
       "status": "PENDING",

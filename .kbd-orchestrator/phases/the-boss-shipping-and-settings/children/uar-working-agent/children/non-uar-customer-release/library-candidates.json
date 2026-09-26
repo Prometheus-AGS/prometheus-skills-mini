@@ -1,0 +1,63 @@
+{
+  "phase": "non-uar-customer-release",
+  "generated_at": "2026-09-25T11:15:00Z",
+  "mode": "stack-specified",
+  "candidates": [
+    {
+      "id": "cand-001",
+      "gaps": ["release-capability-contract"],
+      "candidate": "Existing Electron Vite compile-time define contract",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar/electron.vite.config.ts",
+      "evidence": "The main bundle already injects __APP_EDITION__; the same configuration can inject one immutable UAR release capability into every application bundle.",
+      "work_required": "Add one strict shared resolver and declarations for main/renderer/preload/utility builds."
+    },
+    {
+      "id": "cand-002",
+      "gaps": ["payload-profile"],
+      "candidate": "Existing integration artifact manifest and packaging hooks",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar/build/integration-artifacts.json; scripts/integration-binaries.js; scripts/before-pack.js; scripts/after-pack.js",
+      "evidence": "The manifest already records per-platform file inventory, URLs, and SHA-256 values, but package loading is unconditional.",
+      "work_required": "Select tools by release profile, derive UAR exclusions from inventory, assert absence when disabled, and remove the nonexistent native liter-llm requirement."
+    },
+    {
+      "id": "cand-003",
+      "gaps": ["native-publication"],
+      "candidate": "Existing The Boss native GitHub Release workflow",
+      "verdict": "adopt",
+      "confidence": "high",
+      "source": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar/.github/workflows/the-boss-release.yml",
+      "evidence": "The workflow already selects explicit platform keys, builds on native runners, uploads installers, aggregates release metadata, publishes, and verifies public assets.",
+      "work_required": "Set the disabled profile at workflow scope and record it in per-platform manifests."
+    },
+    {
+      "id": "cand-004",
+      "gaps": ["site-platform-policy"],
+      "candidate": "Existing boss-landing-spot release synchronizer",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "Know-Me-Tools/boss-landing-spot scripts/sync-release.mjs",
+      "evidence": "Current synchronization validates release metadata but retains older platform artifacts.",
+      "work_required": "Add a supported-platform policy so this release carries four desktop targets and omits Linux."
+    },
+    {
+      "id": "cand-005",
+      "gaps": ["parent-release-handoff"],
+      "candidate": "Existing KBD child-exit handoff with a structured release receipt",
+      "verdict": "adapt",
+      "confidence": "high",
+      "source": "/Users/gqadonis/.codex/skills/kbd-child-exit/SKILL.md",
+      "evidence": "The lifecycle already restores a parent cursor and records handoff-out.md; this release needs a product receipt linked from that handoff.",
+      "work_required": "Record source, assets, digests, signing state, validation, workflow, site commit/deployment, and live-link results before returning to integration-administration task 4.5."
+    }
+  ],
+  "build_required": [
+    {
+      "gap": "release-capability-contract",
+      "reason": "No current release capability contract spans UI, runtime, service actions, and payload composition."
+    }
+  ]
+}

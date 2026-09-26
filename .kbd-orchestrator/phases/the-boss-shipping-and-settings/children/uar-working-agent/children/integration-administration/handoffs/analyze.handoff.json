@@ -1,14 +1,14 @@
 {
   "stage": "analyze",
-  "completedAt": "2026-09-24T07:13:43.094Z",
+  "completedAt": "2026-09-24T08:10:58.197Z",
   "outputs": [
     "analysis.md",
     "library-candidates.json",
-    "decision-log.md",
-    "review/analysis.findings.json"
+    "uar-admin-surface.md",
+    "review/analyze-uar-admin-r2.findings.json"
   ],
   "nextStage": "spec",
-  "summaryForNext": "Nine candidates evaluated; reuse app contracts and UAR persistence, adapt actual Compass manifest comparison rather than marker check, adopt TOML WASM editor and add native liter config-check. Both customer platforms essential. No unresolved review findings; integration behavior remains unverified.",
+  "summaryForNext": "Revision2: sixteen candidates; reuse catalog/turn kernel, REST services, encrypted credentials, A2UI and run-owned MCP. Remote identity requires trusted admission, isolated bindings and boundary renewal. Analysis review PASS with two warnings corrected (historical review wording and gap legend). Release/site reuse inspected; no live deployment claim. Execution remains held.",
   "skipped": false,
   "skipReason": null
 }

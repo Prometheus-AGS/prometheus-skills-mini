@@ -1,0 +1,13 @@
+{
+  "stage": "analyze",
+  "completedAt": "2026-09-25T11:20:21Z",
+  "outputs": [
+    "analysis.md",
+    "library-candidates.json",
+    "decision-log.md"
+  ],
+  "nextStage": "spec",
+  "summaryForNext": "Five existing seams will be adapted: compile-time feature definition, manifest-driven payload selection, native GitHub Release workflow, landing-site sync, and KBD release receipt. No new dependency. Review passed with two packet-scope warnings documented in analysis.md.",
+  "skipped": false,
+  "skipReason": null
+}

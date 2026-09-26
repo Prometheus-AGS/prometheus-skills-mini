@@ -1,0 +1,96 @@
+{
+  "recordedAt": "2026-09-24T08:40:00Z",
+  "task": "1.2",
+  "releaseBaseline": {
+    "repository": "Prometheus-AGS/the-boss",
+    "tag": "v2.2.0",
+    "publishedAt": "2026-09-24T06:02:51Z",
+    "assets": [
+      {
+        "name": "The-Boss-2.2.0-win-x64-setup.exe",
+        "size": 443787267,
+        "url": "https://github.com/Prometheus-AGS/the-boss/releases/download/v2.2.0/The-Boss-2.2.0-win-x64-setup.exe"
+      }
+    ],
+    "missingEssentialCustomerArtifact": "darwin-arm64"
+  },
+  "sources": {
+    "theBoss": {
+      "worktree": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar",
+      "before": "afd4deefd5aa802dc681d9860f9469359e9646ca",
+      "after": "6c18cdf0ad3e17fa9d1ac3b747c12810eb02a3c5",
+      "originMain": "6c18cdf0ad3e17fa9d1ac3b747c12810eb02a3c5",
+      "integration": "fast-forward; 42 commits; clean; pushed to origin/feat/uar-agent-runtime",
+      "ancestryVerified": true
+    },
+    "uar": {
+      "worktree": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar",
+      "head": "c29af47be3439c69e1a3c124fdcf09ce4cbb5cba",
+      "originMain": "c29af47be3439c69e1a3c124fdcf09ce4cbb5cba",
+      "divergence": "0 0",
+      "preservedUnrelatedChange": "pnpm-lock.yaml sha256 6671f9b795e9940c1f552780ef8d977dc617da50fcb7aae9755b0e94453990e7",
+      "ancestryVerified": true
+    },
+    "literLlm": {
+      "submodule": "tools/liter-llm",
+      "initialPin": "c5c6caac617eb931cd5009146a70831422ec236c",
+      "forkMainBefore": "d27dfa23525aa9f807fb85e3c373a82aa910355b",
+      "upstreamMain": "3b426cb0d11d854d74689d6b7fa0f670231779f5",
+      "mergedForkMain": "928c41a6e882bff13f372fac1fb4f237efbe4874",
+      "catalogPath": "crates/liter-llm/schemas/catalog.json",
+      "catalogSha256": "5209cd4e3c539757d49613fdba31d9572f29b0abc54dc548975a96c5d78da68e",
+      "remainingForkFiles": 14,
+      "candidatePatch": "origin/codex/uar-host-transport@e627af981bcb06c7fc5da027731c182b044e25d1",
+      "ancestryVerified": true,
+      "pushed": "origin/main"
+    },
+    "surrealMemoryPayload": {
+      "submodule": "tools/surreal-memory-server",
+      "before": "6acb60565949334beda22f52bcd36b33895b1db6",
+      "after": "4ed6b2c79b9a28b56e53f208fcb85306ec443ae2",
+      "integration": "fast-forward to origin/main; pushed to origin/codex/boss-namespace-auth"
+    },
+    "mini": {
+      "headAtTaskStart": "4eca56f825d145806d140e653e220e23a55a5f89",
+      "originMain": "bb641a8fc569d97e19c9e3fa667ca24d7bebf43d"
+    },
+    "compass": {
+      "head": "33ecb365c71ed6f05e9d5e78b388ac2559622efc",
+      "originMain": "a403339287c385d4fd48b42759f1e09045a0ac4d",
+      "upstreamMain": "f3a8711e909fcc2fe2d90b369285745fcb6fa557",
+      "upstreamDivergence": "47 41",
+      "integrationDeferredReason": "active checkout contains unrelated operator configuration and generated knowledge; Compass refresh remains scoped to task 5.1"
+    },
+    "fullSkillPack": {
+      "head": "10a416589b06c5f22f4ca32b3c0414fdd3026603",
+      "originMain": "e57421a86fae08ac4d1e3a625a213cf3f3eb98bc",
+      "divergence": "0 8",
+      "integrationDeferredReason": "active checkout contains unrelated edits; full-pack synchronization remains scoped to tasks 4.3 and 5.1"
+    },
+    "rustFilesystem": {
+      "head": "3a8d18233aa666f7cf776d5d998a28e7b2b88d0d",
+      "originMain": "cecaae85a1d12b5e02e4c69a4eb80e49c147054c"
+    },
+    "landingSite": {
+      "head": "215a5c9ebcf5c610292921df2da6cccdf37de98a",
+      "originMain": "215a5c9ebcf5c610292921df2da6cccdf37de98a"
+    }
+  },
+  "pinPolicy": {
+    "versionsTomlEdited": false,
+    "reason": "versions.toml is read-only for agents under the project constitution; release pin reconciliation is retained for task 5.1",
+    "parentGitlinksAdvanced": [
+      "tools/liter-llm@928c41a6e882bff13f372fac1fb4f237efbe4874",
+      "tools/surreal-memory-server@4ed6b2c79b9a28b56e53f208fcb85306ec443ae2"
+    ]
+  },
+  "verification": {
+    "testsRun": false,
+    "checks": [
+      "Git ancestry and divergence",
+      "clean status for integrated Boss, liter-llm and payload submodules",
+      "liter-llm git diff --check",
+      "GitHub release asset inventory"
+    ]
+  }
+}

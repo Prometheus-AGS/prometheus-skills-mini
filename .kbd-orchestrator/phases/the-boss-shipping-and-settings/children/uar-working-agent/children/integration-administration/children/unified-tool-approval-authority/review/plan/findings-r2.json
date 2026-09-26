@@ -1,0 +1,16 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "ordering errors — the plan serializes baseline consolidation before admission work, admission before lifecycle/reconnect semantics, and delivery/payload publication after corrected source commits; no task depends on an artifact scheduled later.",
+    "missing dependencies — the plan covers the goal-required policy owner, restrictive policy composition, exact invocation identity, host admission, renderer/main-process boundary, replay/detach, cancellation/children, restart invalidation, and production integration evidence.",
+    "untestable or ambiguous acceptance criteria — the plan defines concrete gates A1/A2/B0 with policy matrices, identical-call cases, replay/restart/cancellation scenarios, source hashes, binary hashes, and expected effect/non-effect evidence.",
+    "scope smuggling — baseline, Liter, packaging, and worktree-preservation tasks are traceable to the analysis handoff and operator context as prerequisites for proving the approval architecture against the actual shipped Boss/UAR pair; unrelated historical recovery is explicitly deferred.",
+    "constraint violations — the plan does not instruct forbidden POSIX-only tools, does not edit generated constraint files, preserves unrelated WIP through scoped staging, keeps versions.toml operator-authored, and confines full-pack/reference-repo writes to the explicitly superseded integration scope described in the packet."
+  ]
+}

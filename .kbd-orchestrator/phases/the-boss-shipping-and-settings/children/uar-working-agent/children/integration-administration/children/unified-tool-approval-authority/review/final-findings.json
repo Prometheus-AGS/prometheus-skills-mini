@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "mode": "cumulative-diff",
+  "reviewedAt": "2026-09-25T04:50:00Z",
+  "verdict": "PASS_AFTER_FIXES",
+  "counts": {
+    "critical": 0,
+    "high": 1,
+    "medium": 1,
+    "unresolved": 0
+  },
+  "findings": [
+    {
+      "severity": "HIGH",
+      "status": "resolved",
+      "summary": "Installation-scoped UAR administration state was queried once per Boss conversation and relabelled as conversation-owned.",
+      "resolution": [
+        "Prometheus-AGS/the-boss@958c67b56d queries the shared principal once and attributes run-scoped records only from explicit host conversation identity.",
+        "Prometheus-AGS/the-boss@1229c49c58 exposes resources without host identity once as Shared installation across all locales.",
+        "Gate V uses two distinct Boss conversations and proves the run and approval lifecycle appear exactly once under the originating conversation."
+      ]
+    },
+    {
+      "severity": "MEDIUM",
+      "status": "resolved",
+      "summary": "Dynamic UAR settings and federated agent controls lacked programmatic names and linked feedback.",
+      "resolution": [
+        "Prometheus-AGS/the-boss@be0c9bc011 adds labels, described validation errors and live status/error semantics.",
+        "Gate V reports zero unnamed visible controls, operational keyboard focus and no narrow-layout overflow."
+      ]
+    }
+  ],
+  "reviewCoverage": [
+    "exact admission and dispatch authority",
+    "run-scoped MCP selection",
+    "approval lifecycle persistence, reconnect and restart invalidation",
+    "safe renderer projection",
+    "approval administration capability mapping",
+    "multi-session administration attribution",
+    "responsive and accessible UAR administration"
+  ],
+  "integrationEvidence": "evidence/gate-v.json"
+}

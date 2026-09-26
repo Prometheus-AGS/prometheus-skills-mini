@@ -1,0 +1,531 @@
+{
+  "schemaVersion": 1,
+  "accessed": "2026-09-24",
+  "method": "Firecrawl discovery/docs; Context7 library docs; GitHub API revision resolution and pinned raw source fetch. Static source inspection only.",
+  "revisions": [
+    {
+      "id": "claude-sdk",
+      "repo": "anthropics/claude-agent-sdk-python",
+      "sha": "588905686e40dffa32e2f889ce7164df01ff7c8b",
+      "commitDate": "2026-09-24T20:51:26Z",
+      "accessed": "2026-09-24T21:35:17.056Z"
+    },
+    {
+      "id": "opencode",
+      "repo": "anomalyco/opencode",
+      "sha": "6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef",
+      "commitDate": "2026-09-24T19:26:39Z",
+      "accessed": "2026-09-24T21:35:16.065Z"
+    },
+    {
+      "id": "gemini",
+      "repo": "google-gemini/gemini-cli",
+      "sha": "a3d69c14200ab65d0f66f703a6c60ad644647138",
+      "commitDate": "2026-09-24T21:07:04Z",
+      "accessed": "2026-09-24T21:35:16.437Z"
+    },
+    {
+      "id": "deepseek",
+      "repo": "deepseek-ai/deepseek-harness",
+      "sha": "477b4f420553e8a52c2fbccc464d7561b239c443",
+      "commitDate": "2026-09-24T13:39:59Z",
+      "accessed": "2026-09-24T21:35:40.322Z"
+    }
+  ],
+  "sources": [
+    {
+      "product": "claude-sdk",
+      "repository": "anthropics/claude-agent-sdk-python",
+      "revision": "588905686e40dffa32e2f889ce7164df01ff7c8b",
+      "commitDate": "2026-09-24T20:51:26Z",
+      "accessed": "2026-09-24T21:35:17.056Z",
+      "originalPath": "src/claude_agent_sdk/types.py",
+      "url": "https://github.com/anthropics/claude-agent-sdk-python/blob/588905686e40dffa32e2f889ce7164df01ff7c8b/src/claude_agent_sdk/types.py",
+      "rawUrl": "https://raw.githubusercontent.com/anthropics/claude-agent-sdk-python/588905686e40dffa32e2f889ce7164df01ff7c8b/src/claude_agent_sdk/types.py",
+      "snapshot": "sources/claude-sdk/src/claude_agent_sdk/types.py.txt",
+      "sha256": "b1054473280782ab57b2b0690a49a820a2f97dbd2eb6b2ff1bbd3e6205b71bdb",
+      "bytes": 93134
+    },
+    {
+      "product": "claude-sdk",
+      "repository": "anthropics/claude-agent-sdk-python",
+      "revision": "588905686e40dffa32e2f889ce7164df01ff7c8b",
+      "commitDate": "2026-09-24T20:51:26Z",
+      "accessed": "2026-09-24T21:35:17.056Z",
+      "originalPath": "src/claude_agent_sdk/_internal/query.py",
+      "url": "https://github.com/anthropics/claude-agent-sdk-python/blob/588905686e40dffa32e2f889ce7164df01ff7c8b/src/claude_agent_sdk/_internal/query.py",
+      "rawUrl": "https://raw.githubusercontent.com/anthropics/claude-agent-sdk-python/588905686e40dffa32e2f889ce7164df01ff7c8b/src/claude_agent_sdk/_internal/query.py",
+      "snapshot": "sources/claude-sdk/src/claude_agent_sdk/_internal/query.py.txt",
+      "sha256": "b2cb42c7d51bdb0613f0517954420fadd76967b78fd4bf5176c234246e379e94",
+      "bytes": 46592
+    },
+    {
+      "product": "claude-sdk",
+      "repository": "anthropics/claude-agent-sdk-python",
+      "revision": "588905686e40dffa32e2f889ce7164df01ff7c8b",
+      "commitDate": "2026-09-24T20:51:26Z",
+      "accessed": "2026-09-24T21:35:17.056Z",
+      "originalPath": "src/claude_agent_sdk/_internal/session_resume.py",
+      "url": "https://github.com/anthropics/claude-agent-sdk-python/blob/588905686e40dffa32e2f889ce7164df01ff7c8b/src/claude_agent_sdk/_internal/session_resume.py",
+      "rawUrl": "https://raw.githubusercontent.com/anthropics/claude-agent-sdk-python/588905686e40dffa32e2f889ce7164df01ff7c8b/src/claude_agent_sdk/_internal/session_resume.py",
+      "snapshot": "sources/claude-sdk/src/claude_agent_sdk/_internal/session_resume.py.txt",
+      "sha256": "0dd9ab8d14b7641a46d166423844cf11adbfa7b8e1f1bf63c696f581f91e8726",
+      "bytes": 24137
+    },
+    {
+      "product": "opencode",
+      "repository": "anomalyco/opencode",
+      "revision": "6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef",
+      "commitDate": "2026-09-24T19:26:39Z",
+      "accessed": "2026-09-24T21:35:16.065Z",
+      "originalPath": "packages/core/src/permission.ts",
+      "url": "https://github.com/anomalyco/opencode/blob/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/core/src/permission.ts",
+      "rawUrl": "https://raw.githubusercontent.com/anomalyco/opencode/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/core/src/permission.ts",
+      "snapshot": "sources/opencode/packages/core/src/permission.ts.txt",
+      "sha256": "f5d5b295452f2ddf17c475a24e77e302bb2b4b65d8a9e02a0f7bc5ef5504a0ba",
+      "bytes": 11753
+    },
+    {
+      "product": "opencode",
+      "repository": "anomalyco/opencode",
+      "revision": "6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef",
+      "commitDate": "2026-09-24T19:26:39Z",
+      "accessed": "2026-09-24T21:35:16.065Z",
+      "originalPath": "packages/schema/src/permission.ts",
+      "url": "https://github.com/anomalyco/opencode/blob/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/schema/src/permission.ts",
+      "rawUrl": "https://raw.githubusercontent.com/anomalyco/opencode/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/schema/src/permission.ts",
+      "snapshot": "sources/opencode/packages/schema/src/permission.ts.txt",
+      "sha256": "229f2da7d245bf86deffed59b10cddf2dd04ffa05d10ef97fc5df289d0e6fb98",
+      "bytes": 2184
+    },
+    {
+      "product": "opencode",
+      "repository": "anomalyco/opencode",
+      "revision": "6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef",
+      "commitDate": "2026-09-24T19:26:39Z",
+      "accessed": "2026-09-24T21:35:16.065Z",
+      "originalPath": "packages/core/src/permission/saved.ts",
+      "url": "https://github.com/anomalyco/opencode/blob/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/core/src/permission/saved.ts",
+      "rawUrl": "https://raw.githubusercontent.com/anomalyco/opencode/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/core/src/permission/saved.ts",
+      "snapshot": "sources/opencode/packages/core/src/permission/saved.ts.txt",
+      "sha256": "069ad0d31169e71f1383cd8960d4ea1d78b1eca48e0dc2e1e1e00db1b5f7854b",
+      "bytes": 2631
+    },
+    {
+      "product": "opencode",
+      "repository": "anomalyco/opencode",
+      "revision": "6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef",
+      "commitDate": "2026-09-24T19:26:39Z",
+      "accessed": "2026-09-24T21:35:16.065Z",
+      "originalPath": "packages/core/src/permission/sql.ts",
+      "url": "https://github.com/anomalyco/opencode/blob/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/core/src/permission/sql.ts",
+      "rawUrl": "https://raw.githubusercontent.com/anomalyco/opencode/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/core/src/permission/sql.ts",
+      "snapshot": "sources/opencode/packages/core/src/permission/sql.ts.txt",
+      "sha256": "527fd7335a017e02b49d359e318f957a18722f9ec005c75653a2d7d5e973a46a",
+      "bytes": 724
+    },
+    {
+      "product": "opencode",
+      "repository": "anomalyco/opencode",
+      "revision": "6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef",
+      "commitDate": "2026-09-24T19:26:39Z",
+      "accessed": "2026-09-24T21:35:16.065Z",
+      "originalPath": "packages/core/src/tool/edit.ts",
+      "url": "https://github.com/anomalyco/opencode/blob/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/core/src/tool/edit.ts",
+      "rawUrl": "https://raw.githubusercontent.com/anomalyco/opencode/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/core/src/tool/edit.ts",
+      "snapshot": "sources/opencode/packages/core/src/tool/edit.ts.txt",
+      "sha256": "527fe2d1fa70481c8aed6d6930866d136a1fd4aaea881e4ae8df33a9d7e7d8af",
+      "bytes": 9620
+    },
+    {
+      "product": "opencode",
+      "repository": "anomalyco/opencode",
+      "revision": "6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef",
+      "commitDate": "2026-09-24T19:26:39Z",
+      "accessed": "2026-09-24T21:35:16.065Z",
+      "originalPath": "packages/core/src/tool/registry.ts",
+      "url": "https://github.com/anomalyco/opencode/blob/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/core/src/tool/registry.ts",
+      "rawUrl": "https://raw.githubusercontent.com/anomalyco/opencode/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/core/src/tool/registry.ts",
+      "snapshot": "sources/opencode/packages/core/src/tool/registry.ts.txt",
+      "sha256": "cf2f73a4c6ed6ede7ba1cac30dac9bdf004142461d5bbcc8d55421cb2def7254",
+      "bytes": 6301
+    },
+    {
+      "product": "opencode",
+      "repository": "anomalyco/opencode",
+      "revision": "6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef",
+      "commitDate": "2026-09-24T19:26:39Z",
+      "accessed": "2026-09-24T21:35:16.065Z",
+      "originalPath": "packages/opencode/src/permission/index.ts",
+      "url": "https://github.com/anomalyco/opencode/blob/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/opencode/src/permission/index.ts",
+      "rawUrl": "https://raw.githubusercontent.com/anomalyco/opencode/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/opencode/src/permission/index.ts",
+      "snapshot": "sources/opencode/packages/opencode/src/permission/index.ts.txt",
+      "sha256": "5b9e4aa65290a39363722b9fae4c68080188d8ed76896afa0d96cd9dbfd2821d",
+      "bytes": 7861
+    },
+    {
+      "product": "opencode",
+      "repository": "anomalyco/opencode",
+      "revision": "6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef",
+      "commitDate": "2026-09-24T19:26:39Z",
+      "accessed": "2026-09-24T21:35:16.065Z",
+      "originalPath": "packages/server/src/handlers/permission.ts",
+      "url": "https://github.com/anomalyco/opencode/blob/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/server/src/handlers/permission.ts",
+      "rawUrl": "https://raw.githubusercontent.com/anomalyco/opencode/6df0d5d951e0bb8c82dd1a7f9315eff4efd7f1ef/packages/server/src/handlers/permission.ts",
+      "snapshot": "sources/opencode/packages/server/src/handlers/permission.ts.txt",
+      "sha256": "1a168aa5a9ded49eb967778ec06387e3d532c5a47bb31bdcdf01cbcfbaf10b53",
+      "bytes": 3710
+    },
+    {
+      "product": "gemini",
+      "repository": "google-gemini/gemini-cli",
+      "revision": "a3d69c14200ab65d0f66f703a6c60ad644647138",
+      "commitDate": "2026-09-24T21:07:04Z",
+      "accessed": "2026-09-24T21:35:16.437Z",
+      "originalPath": "docs/reference/policy-engine.md",
+      "url": "https://github.com/google-gemini/gemini-cli/blob/a3d69c14200ab65d0f66f703a6c60ad644647138/docs/reference/policy-engine.md",
+      "rawUrl": "https://raw.githubusercontent.com/google-gemini/gemini-cli/a3d69c14200ab65d0f66f703a6c60ad644647138/docs/reference/policy-engine.md",
+      "snapshot": "sources/gemini/docs/reference/policy-engine.md",
+      "sha256": "4895bc05bccef1a16ab1442c7a9b12ebe61945f0f079e9fca3261cf8b9e2d0f5",
+      "bytes": 19414
+    },
+    {
+      "product": "gemini",
+      "repository": "google-gemini/gemini-cli",
+      "revision": "a3d69c14200ab65d0f66f703a6c60ad644647138",
+      "commitDate": "2026-09-24T21:07:04Z",
+      "accessed": "2026-09-24T21:35:16.437Z",
+      "originalPath": "packages/core/src/confirmation-bus/message-bus.ts",
+      "url": "https://github.com/google-gemini/gemini-cli/blob/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/confirmation-bus/message-bus.ts",
+      "rawUrl": "https://raw.githubusercontent.com/google-gemini/gemini-cli/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/confirmation-bus/message-bus.ts",
+      "snapshot": "sources/gemini/packages/core/src/confirmation-bus/message-bus.ts.txt",
+      "sha256": "7afa837306964256efb079aa9453e0218cb46948b189ac5c0ca3043f9c9f7307",
+      "bytes": 8351
+    },
+    {
+      "product": "gemini",
+      "repository": "google-gemini/gemini-cli",
+      "revision": "a3d69c14200ab65d0f66f703a6c60ad644647138",
+      "commitDate": "2026-09-24T21:07:04Z",
+      "accessed": "2026-09-24T21:35:16.437Z",
+      "originalPath": "packages/core/src/confirmation-bus/types.ts",
+      "url": "https://github.com/google-gemini/gemini-cli/blob/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/confirmation-bus/types.ts",
+      "rawUrl": "https://raw.githubusercontent.com/google-gemini/gemini-cli/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/confirmation-bus/types.ts",
+      "snapshot": "sources/gemini/packages/core/src/confirmation-bus/types.ts.txt",
+      "sha256": "7f89e4019f1e548d9857459fc770153007047cb8bb96dc78c0a1f9c1be722b7c",
+      "bytes": 6378
+    },
+    {
+      "product": "gemini",
+      "repository": "google-gemini/gemini-cli",
+      "revision": "a3d69c14200ab65d0f66f703a6c60ad644647138",
+      "commitDate": "2026-09-24T21:07:04Z",
+      "accessed": "2026-09-24T21:35:16.437Z",
+      "originalPath": "packages/core/src/scheduler/confirmation.ts",
+      "url": "https://github.com/google-gemini/gemini-cli/blob/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/scheduler/confirmation.ts",
+      "rawUrl": "https://raw.githubusercontent.com/google-gemini/gemini-cli/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/scheduler/confirmation.ts",
+      "snapshot": "sources/gemini/packages/core/src/scheduler/confirmation.ts.txt",
+      "sha256": "afb0ac02016ac2797f25894c605a81db8116f2701dd716d2e11191346839eb5a",
+      "bytes": 10843
+    },
+    {
+      "product": "gemini",
+      "repository": "google-gemini/gemini-cli",
+      "revision": "a3d69c14200ab65d0f66f703a6c60ad644647138",
+      "commitDate": "2026-09-24T21:07:04Z",
+      "accessed": "2026-09-24T21:35:16.437Z",
+      "originalPath": "packages/core/src/scheduler/policy.ts",
+      "url": "https://github.com/google-gemini/gemini-cli/blob/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/scheduler/policy.ts",
+      "rawUrl": "https://raw.githubusercontent.com/google-gemini/gemini-cli/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/scheduler/policy.ts",
+      "snapshot": "sources/gemini/packages/core/src/scheduler/policy.ts.txt",
+      "sha256": "b299bc6f2a24b67c99996eab18f3009d0a22bd81456c5e2e54eab7c5d33ce6ef",
+      "bytes": 8336
+    },
+    {
+      "product": "gemini",
+      "repository": "google-gemini/gemini-cli",
+      "revision": "a3d69c14200ab65d0f66f703a6c60ad644647138",
+      "commitDate": "2026-09-24T21:07:04Z",
+      "accessed": "2026-09-24T21:35:16.437Z",
+      "originalPath": "packages/core/src/scheduler/scheduler.ts",
+      "url": "https://github.com/google-gemini/gemini-cli/blob/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/scheduler/scheduler.ts",
+      "rawUrl": "https://raw.githubusercontent.com/google-gemini/gemini-cli/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/scheduler/scheduler.ts",
+      "snapshot": "sources/gemini/packages/core/src/scheduler/scheduler.ts.txt",
+      "sha256": "75f39d7daed17f7a1f73a48bacf0c239214ead672110e7f8898fe2b846bc5f1c",
+      "bytes": 30145
+    },
+    {
+      "product": "gemini",
+      "repository": "google-gemini/gemini-cli",
+      "revision": "a3d69c14200ab65d0f66f703a6c60ad644647138",
+      "commitDate": "2026-09-24T21:07:04Z",
+      "accessed": "2026-09-24T21:35:16.437Z",
+      "originalPath": "packages/core/src/scheduler/state-manager.ts",
+      "url": "https://github.com/google-gemini/gemini-cli/blob/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/scheduler/state-manager.ts",
+      "rawUrl": "https://raw.githubusercontent.com/google-gemini/gemini-cli/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/scheduler/state-manager.ts",
+      "snapshot": "sources/gemini/packages/core/src/scheduler/state-manager.ts.txt",
+      "sha256": "8b3bf0a51c94b3683b24ff6289a4d8705ce4195a6d8606f47a1e471d3ff5af15",
+      "bytes": 17991
+    },
+    {
+      "product": "gemini",
+      "repository": "google-gemini/gemini-cli",
+      "revision": "a3d69c14200ab65d0f66f703a6c60ad644647138",
+      "commitDate": "2026-09-24T21:07:04Z",
+      "accessed": "2026-09-24T21:35:16.437Z",
+      "originalPath": "packages/core/src/scheduler/tool-executor.ts",
+      "url": "https://github.com/google-gemini/gemini-cli/blob/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/scheduler/tool-executor.ts",
+      "rawUrl": "https://raw.githubusercontent.com/google-gemini/gemini-cli/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/scheduler/tool-executor.ts",
+      "snapshot": "sources/gemini/packages/core/src/scheduler/tool-executor.ts.txt",
+      "sha256": "a70086b7ecda8edb1701ce1918410d5471f78bd84d1cee5017af808652fec593",
+      "bytes": 15017
+    },
+    {
+      "product": "gemini",
+      "repository": "google-gemini/gemini-cli",
+      "revision": "a3d69c14200ab65d0f66f703a6c60ad644647138",
+      "commitDate": "2026-09-24T21:07:04Z",
+      "accessed": "2026-09-24T21:35:16.437Z",
+      "originalPath": "packages/core/src/scheduler/tool-modifier.ts",
+      "url": "https://github.com/google-gemini/gemini-cli/blob/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/scheduler/tool-modifier.ts",
+      "rawUrl": "https://raw.githubusercontent.com/google-gemini/gemini-cli/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/core/src/scheduler/tool-modifier.ts",
+      "snapshot": "sources/gemini/packages/core/src/scheduler/tool-modifier.ts.txt",
+      "sha256": "a8a7013c9122a08fd9915e686de69441dda1cf73f954f61cde1e81b087062b56",
+      "bytes": 2870
+    },
+    {
+      "product": "gemini",
+      "repository": "google-gemini/gemini-cli",
+      "revision": "a3d69c14200ab65d0f66f703a6c60ad644647138",
+      "commitDate": "2026-09-24T21:07:04Z",
+      "accessed": "2026-09-24T21:35:16.437Z",
+      "originalPath": "packages/cli/src/ui/hooks/useSessionResume.ts",
+      "url": "https://github.com/google-gemini/gemini-cli/blob/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/cli/src/ui/hooks/useSessionResume.ts",
+      "rawUrl": "https://raw.githubusercontent.com/google-gemini/gemini-cli/a3d69c14200ab65d0f66f703a6c60ad644647138/packages/cli/src/ui/hooks/useSessionResume.ts",
+      "snapshot": "sources/gemini/packages/cli/src/ui/hooks/useSessionResume.ts.txt",
+      "sha256": "1803bbf1be9ba23044bc045104a44c7614836afa9b5892267f8a526cc54085cf",
+      "bytes": 4155
+    },
+    {
+      "product": "deepseek",
+      "repository": "deepseek-ai/deepseek-harness",
+      "revision": "477b4f420553e8a52c2fbccc464d7561b239c443",
+      "commitDate": "2026-09-24T13:39:59Z",
+      "accessed": "2026-09-24T21:35:40.322Z",
+      "originalPath": "docs/subsystems/approval.md",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/477b4f420553e8a52c2fbccc464d7561b239c443/docs/subsystems/approval.md",
+      "rawUrl": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/477b4f420553e8a52c2fbccc464d7561b239c443/docs/subsystems/approval.md",
+      "snapshot": "sources/deepseek/docs/subsystems/approval.md",
+      "sha256": "795418a89bbd276c9fa9ea7144730761def6d55259b4815955ded718877f2cdd",
+      "bytes": 9459
+    },
+    {
+      "product": "deepseek",
+      "repository": "deepseek-ai/deepseek-harness",
+      "revision": "477b4f420553e8a52c2fbccc464d7561b239c443",
+      "commitDate": "2026-09-24T13:39:59Z",
+      "accessed": "2026-09-24T21:35:40.322Z",
+      "originalPath": "docs/subsystems/permission-presets.md",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/477b4f420553e8a52c2fbccc464d7561b239c443/docs/subsystems/permission-presets.md",
+      "rawUrl": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/477b4f420553e8a52c2fbccc464d7561b239c443/docs/subsystems/permission-presets.md",
+      "snapshot": "sources/deepseek/docs/subsystems/permission-presets.md",
+      "sha256": "85b999fb796fc714a61091139a1d93caa6f8bbe923590373cf1da5da01a22b2c",
+      "bytes": 11047
+    },
+    {
+      "product": "deepseek",
+      "repository": "deepseek-ai/deepseek-harness",
+      "revision": "477b4f420553e8a52c2fbccc464d7561b239c443",
+      "commitDate": "2026-09-24T13:39:59Z",
+      "accessed": "2026-09-24T21:35:40.322Z",
+      "originalPath": "packages/api/gateway/src/index.ts",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/477b4f420553e8a52c2fbccc464d7561b239c443/packages/api/gateway/src/index.ts",
+      "rawUrl": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/477b4f420553e8a52c2fbccc464d7561b239c443/packages/api/gateway/src/index.ts",
+      "snapshot": "sources/deepseek/packages/api/gateway/src/index.ts.txt",
+      "sha256": "f071ca7d2dfb8aa3de54645877108b979bec52ae57b04647544a5a745364a66b",
+      "bytes": 59949
+    },
+    {
+      "product": "deepseek",
+      "repository": "deepseek-ai/deepseek-harness",
+      "revision": "477b4f420553e8a52c2fbccc464d7561b239c443",
+      "commitDate": "2026-09-24T13:39:59Z",
+      "accessed": "2026-09-24T21:35:40.322Z",
+      "originalPath": "packages/api/gateway/src/types.ts",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/477b4f420553e8a52c2fbccc464d7561b239c443/packages/api/gateway/src/types.ts",
+      "rawUrl": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/477b4f420553e8a52c2fbccc464d7561b239c443/packages/api/gateway/src/types.ts",
+      "snapshot": "sources/deepseek/packages/api/gateway/src/types.ts.txt",
+      "sha256": "33e515da6627feab28c7b6ce4dba0e79b55bbcf08f07ec866b05371539bf8ddb",
+      "bytes": 7097
+    },
+    {
+      "product": "deepseek",
+      "repository": "deepseek-ai/deepseek-harness",
+      "revision": "477b4f420553e8a52c2fbccc464d7561b239c443",
+      "commitDate": "2026-09-24T13:39:59Z",
+      "accessed": "2026-09-24T21:35:40.322Z",
+      "originalPath": "packages/api/remotes/src/index.ts",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/477b4f420553e8a52c2fbccc464d7561b239c443/packages/api/remotes/src/index.ts",
+      "rawUrl": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/477b4f420553e8a52c2fbccc464d7561b239c443/packages/api/remotes/src/index.ts",
+      "snapshot": "sources/deepseek/packages/api/remotes/src/index.ts.txt",
+      "sha256": "50a9d1dadedbd61d5cc8f12a1ce7c88797c006ffa32a9d5230c24b4e6f521f2f",
+      "bytes": 6298
+    },
+    {
+      "product": "deepseek",
+      "repository": "deepseek-ai/deepseek-harness",
+      "revision": "477b4f420553e8a52c2fbccc464d7561b239c443",
+      "commitDate": "2026-09-24T13:39:59Z",
+      "accessed": "2026-09-24T21:35:40.322Z",
+      "originalPath": "packages/core/tools/src/index.ts",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/477b4f420553e8a52c2fbccc464d7561b239c443/packages/core/tools/src/index.ts",
+      "rawUrl": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/477b4f420553e8a52c2fbccc464d7561b239c443/packages/core/tools/src/index.ts",
+      "snapshot": "sources/deepseek/packages/core/tools/src/index.ts.txt",
+      "sha256": "9107a2b6447b10c2ecb90429d7c1b80b956759e96d35230af16f5a88f5d3eccd",
+      "bytes": 90679
+    },
+    {
+      "product": "deepseek",
+      "repository": "deepseek-ai/deepseek-harness",
+      "revision": "477b4f420553e8a52c2fbccc464d7561b239c443",
+      "commitDate": "2026-09-24T13:39:59Z",
+      "accessed": "2026-09-24T21:35:40.322Z",
+      "originalPath": "packages/interaction/user-approval/src/index.ts",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/477b4f420553e8a52c2fbccc464d7561b239c443/packages/interaction/user-approval/src/index.ts",
+      "rawUrl": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/477b4f420553e8a52c2fbccc464d7561b239c443/packages/interaction/user-approval/src/index.ts",
+      "snapshot": "sources/deepseek/packages/interaction/user-approval/src/index.ts.txt",
+      "sha256": "6bba9feef5257063aa41d89ddd51c31a1a474b5920c256c65d5ec2857cff1ff6",
+      "bytes": 13582
+    },
+    {
+      "product": "deepseek",
+      "repository": "deepseek-ai/deepseek-harness",
+      "revision": "477b4f420553e8a52c2fbccc464d7561b239c443",
+      "commitDate": "2026-09-24T13:39:59Z",
+      "accessed": "2026-09-24T21:35:40.322Z",
+      "originalPath": "packages/interaction/user-approval/src/types.ts",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/477b4f420553e8a52c2fbccc464d7561b239c443/packages/interaction/user-approval/src/types.ts",
+      "rawUrl": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/477b4f420553e8a52c2fbccc464d7561b239c443/packages/interaction/user-approval/src/types.ts",
+      "snapshot": "sources/deepseek/packages/interaction/user-approval/src/types.ts.txt",
+      "sha256": "4413da55040e100e5700b5b89dccf387e08275587ac21876cba8cbab2df34037",
+      "bytes": 3435
+    },
+    {
+      "product": "deepseek",
+      "repository": "deepseek-ai/deepseek-harness",
+      "revision": "477b4f420553e8a52c2fbccc464d7561b239c443",
+      "commitDate": "2026-09-24T13:39:59Z",
+      "accessed": "2026-09-24T21:35:40.322Z",
+      "originalPath": "packages/client/ui-approval/src/client/ApprovalPanel.tsx",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/477b4f420553e8a52c2fbccc464d7561b239c443/packages/client/ui-approval/src/client/ApprovalPanel.tsx",
+      "rawUrl": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/477b4f420553e8a52c2fbccc464d7561b239c443/packages/client/ui-approval/src/client/ApprovalPanel.tsx",
+      "snapshot": "sources/deepseek/packages/client/ui-approval/src/client/ApprovalPanel.tsx.txt",
+      "sha256": "40ddd5fa3a2ed9888b053ca1bea8a064ae582f8a991f20727fdc55d5b1fa7f95",
+      "bytes": 3994
+    },
+    {
+      "product": "deepseek",
+      "repository": "deepseek-ai/deepseek-harness",
+      "revision": "477b4f420553e8a52c2fbccc464d7561b239c443",
+      "commitDate": "2026-09-24T13:39:59Z",
+      "accessed": "2026-09-24T21:35:40.322Z",
+      "originalPath": "packages/client/ui-approval/src/client/index.ts",
+      "url": "https://github.com/deepseek-ai/deepseek-harness/blob/477b4f420553e8a52c2fbccc464d7561b239c443/packages/client/ui-approval/src/client/index.ts",
+      "rawUrl": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/477b4f420553e8a52c2fbccc464d7561b239c443/packages/client/ui-approval/src/client/index.ts",
+      "snapshot": "sources/deepseek/packages/client/ui-approval/src/client/index.ts.txt",
+      "sha256": "84b65998d054bd0dad5604e18da58fd4bd76a40510411f6a03ddda1c757f507f",
+      "bytes": 4570
+    }
+  ],
+  "documentation": [
+    {
+      "snapshot": "sources/claude-input.md",
+      "url": "https://code.claude.com/docs/en/agent-sdk/user-input",
+      "accessed": "2026-09-24",
+      "sha256": "e0e6e6b16613979cf7e9a10a47c50c01cd08d3a25c2151e48672469eb182ea85",
+      "bytes": 35713
+    },
+    {
+      "snapshot": "sources/claude-permissions.md",
+      "url": "https://code.claude.com/docs/en/agent-sdk/permissions",
+      "accessed": "2026-09-24",
+      "sha256": "3dd491a006a903cf4ca695a9dd96727beab0ad74fa0c4da89e4d90f006675387",
+      "bytes": 24430
+    },
+    {
+      "snapshot": "sources/claude-sessions.md",
+      "url": "https://code.claude.com/docs/en/agent-sdk/sessions",
+      "accessed": "2026-09-24",
+      "sha256": "8f96093ae512d03b3d13f191968957b6652e4e5a936da23aea9b50e0adb2437a",
+      "bytes": 23676
+    },
+    {
+      "snapshot": "sources/deepseek-harness.md",
+      "url": "https://www.deepseek.com/harness/en/",
+      "accessed": "2026-09-24",
+      "sha256": "aac98307ff68e45abc6845b1fd4047e982d5616d8501bf804c5041bf118658b9",
+      "bytes": 7141
+    },
+    {
+      "snapshot": "sources/opencode-permissions.md",
+      "url": "https://opencode.ai/docs/permissions/",
+      "accessed": "2026-09-24",
+      "sha256": "25e072c9569c6ed031bc827fd553757d1b8b4149bd1cc30c0f1e64a2d9f92d47",
+      "bytes": 7827
+    },
+    {
+      "snapshot": "sources/opencode-v2-doc.md",
+      "url": "https://v2.opencode.ai/docs/permissions",
+      "accessed": "2026-09-24",
+      "sha256": "49a91e7af032b33b8091f189c336706906192b011b114d8f26de43fdd3a37f8d",
+      "bytes": 9762
+    }
+  ],
+  "localReferences": [
+    {
+      "product": "codex",
+      "root": "/Users/gqadonis/Projects/references/codex/codex-rs/",
+      "revision": "986ff1cc7ced0081ec5014b700a376333d87f869",
+      "observedAt": "2026-09-24T21:55:23.074Z",
+      "method": "Local source inspection; not a web retrieval; no tests",
+      "files": [
+        {
+          "path": "core/src/tools/approvals.rs",
+          "sha256": "042a434bd1638744ab6646af56c83f6de28ac785a0aabd1502d7327bccce8fd8"
+        },
+        {
+          "path": "core/src/tools/orchestrator.rs",
+          "sha256": "dd18c5d27d5f1d91f390d1329d811ff0cc42a01b6773098c0ab798922e9c6b06"
+        },
+        {
+          "path": "core/src/mcp_tool_call.rs",
+          "sha256": "05accfcf9bf7855df31bd81fbe65f8beba53b86154cda0dc398bbf4c1cba0396"
+        },
+        {
+          "path": "codex-mcp/src/binding.rs",
+          "sha256": "c9f46b498a98c739eeb57b973f6a22aadd57f1c7189ad71570ffe8dd0904d84e"
+        },
+        {
+          "path": "core/src/session/mod.rs",
+          "sha256": "e0dc0cc17aee56854e81ae3a11a69d85c1f3c9d5cfbc92638d9ada483e639bdd"
+        },
+        {
+          "path": "core/src/state/turn.rs",
+          "sha256": "194cb5be1769574ca6e11adebbfcfbc109169d090de97a0a028cba9c62331467"
+        },
+        {
+          "path": "app-server/src/outgoing_message.rs",
+          "sha256": "df283be051d56d4615472c137b2d827ccbb9e392675d3c10fbe46990e15bdd9c"
+        },
+        {
+          "path": "app-server/src/bespoke_event_handling.rs",
+          "sha256": "8ec48efacb97e78b53e7483c137b1f0a1896e166dbbe331d5f01f314b14cc5b1"
+        },
+        {
+          "path": "app-server/src/request_processors/thread_lifecycle.rs",
+          "sha256": "66326bc54dc38fad512db26f1f9a388fd171eb1a79b870a91877b754efe44262"
+        }
+      ]
+    }
+  ]
+}

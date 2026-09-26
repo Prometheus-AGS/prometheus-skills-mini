@@ -1,0 +1,39 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "Gate D is scheduled before the native installers it is supposed to validate exist.",
+      "evidence": "The artifact defines Gate D as installed/payload validation: “Gate D covers the complete installed application and payload, not duplicate unit suites.” The inherited plan is even stricter: “Gate D: one completed app build/installed walkthrough covering all pages...” But task 5.2 says “Run the completed app integration gate ... prepare native jobs... This shared preparation unblocks independent parallel branches 5.3 and 5.4; it does not build either installer.” Tasks 5.3 and 5.4 build the Windows and Apple Silicon installers only after 5.2.",
+      "suggested_fix": "Move Gate D installed/payload acceptance after 5.3 and 5.4, or split 5.2 into a preflight integration gate and define separate post-build installed Gate D acceptance for each customer platform."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The plan requires serialized release metadata/site updates but schedules independent platform branches to update the same release files/site immediately, creating a race.",
+      "evidence": "The publication contract says: “Serialize release metadata and website commits while native builds run independently.” However task 5.3 says the Windows branch must “immediately update RELEASES.md, release manifest and live landing-site URLs,” and task 5.4 independently says the Apple Silicon branch must “publish to GitHub Releases and immediately update repository and live website. ... Neither platform branch waits for the other.”",
+      "suggested_fix": "Keep native build/publish jobs independent, but add an explicit serialized release-metadata/site update step or lock/merge protocol so 5.3 and 5.4 cannot overwrite or publish stale platform data."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The required Gateway model source in UAR Providers & Models is not covered by the Gate U acceptance criteria and is ordered after UAR model administration.",
+      "evidence": "The runtime contract requires “Providers & Models offers The Boss / Gateway / UAR as explicit sources per assignment,” and task 7.3 says to implement “Boss-linked, gateway-linked and UAR-owned provider/model assignments.” But Gate U only requires “Configure one Boss-linked and one UAR-owned provider/model,” omitting Gateway. The top-level order places gateway administration later: “7. Complete UAR administrative authority... 8... 3... 4. Complete liter-llm provider/model configuration...”",
+      "suggested_fix": "Either move the gateway/liter-llm model-source work needed by UAR Providers & Models before Gate U, or add an explicit Gate U/Gate C acceptance item that exercises a gateway-linked UAR model assignment through the UAR admin surface."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

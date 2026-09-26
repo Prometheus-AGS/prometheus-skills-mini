@@ -1,0 +1,26 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The plan tells execution to override project workflow constraints without a packet-supported operator authorization.",
+      "evidence": "The constraints define workflow triggers including `on_iteration_complete` → `npm run check`, `on_change_complete` → `npm test`, and `on_refinement_complete` → `git add -A`, but the plan states: `Operator instructions override stale generated constraints demanding tests-first, per-iteration npm test, blanket git add...` and then instructs `Preserve unrelated changes; stage explicit paths.` The provided operator_context only says `Completed integration boundaries only; no per-edit/unit loops` and does not authorize overriding the blanket `git add -A` trigger or declaring generated constraints stale.",
+      "suggested_fix": "Either remove the unsupported override and comply with the listed workflow constraints, or add an explicit pre-execution operator/constraint-owner decision that supersedes the affected triggers and records the exact replacement staging/test policy."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "OpenSpec creation is not represented as an ordered dependency before implementation work despite the plan declaring four OpenSpec changes.",
+      "evidence": "The header says `OpenSpec: YES, local store. Changes: 4`, and the plan lists `OpenSpec creation commands (planning only; structures are emitted after review)`, but the ordered changes start with source consolidation and production fixture/build work, while OpenSpec evidence/archive appears only in task `4.4 Complete child OpenSpec evidence/archive`. The constraints require `specs-valid` and the prior handoff says the next stage is `spec`.",
+      "suggested_fix": "Add an explicit pre-change step or change 0 that creates the four OpenSpec change directories/spec deltas and validates them before code/source mutation begins, with archive only after implementation evidence is complete."
+    }
+  ]
+}

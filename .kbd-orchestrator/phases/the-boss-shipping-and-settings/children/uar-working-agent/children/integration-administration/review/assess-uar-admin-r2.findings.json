@@ -1,0 +1,23 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment does not assess the required GitHub release metadata and website-update work for completed Windows and Mac releases.",
+      "evidence": "Goals require: \"Build and publish BOTH Windows x64 and Mac Apple Silicon as essential customer platforms, updating GitHub release metadata and website per completed platform.\" The only matching assessment entry is G10: \"Complete customer releases | User requires both Windows x64 and Apple Silicon; only existing Windows 2.2.0 publication evidence is available. New repairs need fresh payloads/installers and acceptance.\" This omits any gap analysis for GitHub release metadata or website updates.",
+      "suggested_fix": "Add an explicit release-publication gap covering GitHub release metadata and website update requirements per platform, including current evidence/location and acceptance needed."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

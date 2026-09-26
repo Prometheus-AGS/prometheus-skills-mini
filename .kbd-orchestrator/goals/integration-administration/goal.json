@@ -1,0 +1,31 @@
+{
+  "name": "Complete and ship The Boss UAR, service, Compass, and liter-llm administration with registered-agent catalog correctness and remote MCP identity",
+  "slug": "integration-administration",
+  "description": "Complete and ship The Boss UAR, service, Compass, and liter-llm administration with registered-agent catalog correctness and remote MCP identity",
+  "phases": [
+  {
+    "name": "creation",
+    "type": "creation",
+    "stopping_condition": "All 37 implementation and delivery tasks plus C1-C5 are complete; Windows x64 and Apple Silicon GitHub release artifacts and live site links are current; Windows and Apple installed acceptance are recorded; OpenSpec is archived; KBD reflection and parent handoff are complete",
+    "human_gate": false
+  }
+],
+  "active_phase": "creation",
+  "status": "running",
+  "tool": "codex",
+  "token_budget": 200000,
+  "max_turns_per_phase": 50,
+  "max_no_progress_turns": 3,
+  "auto_gates": true,
+  "loop_controller": {
+    "owner": "kbd",
+    "tool": "codex",
+    "mode": "native-goal-supervised",
+    "native_goal_supported": true,
+    "evaluator_mode": "native-goal+continuation-prompt",
+    "stop_guard": "position-stop-gate",
+    "checkpoint_files": ["STATE.md", "TASKS.md", "SPEC.md"]
+  },
+  "created": "2026-09-24T08:29:24Z",
+  "updated": "2026-09-24T08:29:24Z"
+}

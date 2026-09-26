@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "release": "2.2.2",
+  "profile": "uar-enabled",
+  "recordedAt": "2026-09-26T09:16:00Z",
+  "status": "pending-windows-installed-acceptance",
+  "source": {
+    "releaseCommit": "6bed52493bd3b2e097318b18cd9c11e259aa8799",
+    "theBossMain": "4c55a198352fed379b24d8548206c56b86ea8839",
+    "theBossIntegrationMerge": "aca673c14b9012d64c30b7999566b859b00cb562",
+    "uarSidecarSource": "fd7567a95c4ed18da7fb7996fae3925c84d2e96e",
+    "uarMainMerge": "12876b30c87a47949e4dfeecb9dfd5e9663f4b32",
+    "uarIssue296": {
+      "url": "https://github.com/Prometheus-AGS/universal-agent-runtime/issues/296",
+      "state": "closed-completed",
+      "closedAt": "2026-09-26T09:14:24Z"
+    },
+    "miniPayloadSource": "2650b3d470373d822f9cfd2349229942c05c1566",
+    "literLlmManagedImageSource": "4f25d39f0075656b70bf945880d6033beda6d663",
+    "literLlmNativeSource": "7a8c7540a77962112e7ca99a2f77f2316ed86601"
+  },
+  "payload": {
+    "tag": "boss-tools-2.2.2-uar-p1.17",
+    "manifestUrl": "https://github.com/Prometheus-AGS/the-boss/releases/download/boss-tools-2.2.2-uar-p1.17/integration-artifacts.json",
+    "manifestSha256": "4a95a405cda3a1ba5665a0fb49b7c735eb5148f7f78663c1fd1bdffc66002d40",
+    "packagedSkills": 104,
+    "packagedRuntimeFiles": 3687,
+    "identityNote": "The managed image and native liter-llm artifacts have separate source revisions; both are recorded because the integration manifest has one legacy sources.liter-llm field."
+  },
+  "platforms": {
+    "win32-x64": {
+      "buildRun": "https://github.com/Prometheus-AGS/the-boss/actions/runs/36228785541",
+      "publicationRun": "https://github.com/Prometheus-AGS/the-boss/actions/runs/36230022621",
+      "landingRun": "https://github.com/Know-Me-Tools/boss-landing-spot/actions/runs/36230069980",
+      "artifactUrl": "https://github.com/Prometheus-AGS/the-boss/releases/download/v2.2.2/The-Boss-2.2.2-win-x64-setup.exe",
+      "immutableRecordUrl": "https://github.com/Prometheus-AGS/the-boss/releases/download/v2.2.2/release-platform-v2.2.2-uar-enabled-win32-x64-6bed52493bd3b2e097318b18cd9c11e259aa8799.json",
+      "size": 454328685,
+      "sha256": "1825ca5626900dbcdaee77717bdc0b5bdc4666b2f598e6026b47796160fc4673",
+      "signing": "unsigned",
+      "publication": "verified",
+      "installedAcceptance": "pending-operator"
+    },
+    "darwin-arm64": {
+      "buildRun": "https://github.com/Prometheus-AGS/the-boss/actions/runs/36230158747",
+      "publicationRun": "https://github.com/Prometheus-AGS/the-boss/actions/runs/36231565511",
+      "landingRun": "https://github.com/Know-Me-Tools/boss-landing-spot/actions/runs/36231619715",
+      "artifactUrl": "https://github.com/Prometheus-AGS/the-boss/releases/download/v2.2.2/The-Boss-2.2.2-mac-arm64.dmg",
+      "immutableRecordUrl": "https://github.com/Prometheus-AGS/the-boss/releases/download/v2.2.2/release-platform-v2.2.2-uar-enabled-darwin-arm64-6bed52493bd3b2e097318b18cd9c11e259aa8799.json",
+      "size": 598413475,
+      "sha256": "c2cf4d6bc0c4d87178eb82beecbf8d8f69cff191e97ec0ac8834ceaa0ce93d0b",
+      "signing": "Developer ID (notarized)",
+      "publication": "verified",
+      "installedAcceptance": "accepted-local"
+    }
+  },
+  "localMacAcceptance": {
+    "command": "pnpm build:mac:arm64:release:uar",
+    "reasonForVariant": "The base build:mac:arm64 command disables UAR; the release:uar variant exercises the requested customer build with the release feature enabled.",
+    "artifactPath": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar-consolidation/dist/The-Boss-2.2.2-mac-arm64.dmg",
+    "size": 497428180,
+    "sha256": "71ddc127894c09e3375da35684bd068a0a9d965dc71c4026f82908a37d6a1132",
+    "imageVerified": true,
+    "codeSignatureVerified": true,
+    "gateAccepted": true,
+    "uarVersion": "1.0.0",
+    "adminPanelsRendered": 12,
+    "adminPanelFailures": 0,
+    "availableSurfaces": 12,
+    "unavailableAdapters": 0,
+    "catalogAgents": 5,
+    "catalogSkills": 1320,
+    "authority": "operational",
+    "ownerIsolation": "operational"
+  },
+  "publication": {
+    "releaseUrl": "https://github.com/Prometheus-AGS/the-boss/releases/tag/v2.2.2",
+    "repositoryCommit": "4c55a198352fed379b24d8548206c56b86ea8839",
+    "landingCommit": "51a88ea9be550f87c1f6196d84314b9a2ea8c910",
+    "website": "https://the-boss.know-me.tools",
+    "lovablePublished": true,
+    "pendingPlatforms": [],
+    "publicMacByteVerification": {
+      "status": 200,
+      "declaredBytes": 598413475,
+      "observedBytes": 598413475,
+      "sha256": "c2cf4d6bc0c4d87178eb82beecbf8d8f69cff191e97ec0ac8834ceaa0ce93d0b"
+    },
+    "liveBundle": "assets/index-BBpS-fvL.js",
+    "liveBundleContainsBothCustomerChecksums": true
+  },
+  "remaining": [
+    "Install the published Windows x64 setup on the operator's Windows machine and confirm Gate D-Windows behavior.",
+    "Complete task 5.3, task 5.5 and lifecycle closeout C1-C5 only after that operator acceptance."
+  ]
+}

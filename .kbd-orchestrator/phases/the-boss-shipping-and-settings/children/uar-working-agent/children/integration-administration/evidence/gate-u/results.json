@@ -1,0 +1,42 @@
+{
+  "gate": "U",
+  "modelSources": [
+    "boss",
+    "gateway",
+    "uar"
+  ],
+  "inferenceModels": [
+    "uar-model",
+    "boss-model",
+    "gateway-model"
+  ],
+  "providerCredentialStates": [
+    "gateway",
+    "uarV1",
+    "uarV2",
+    "boss"
+  ],
+  "nonConversationProviderCheck": "operational",
+  "applyModes": [
+    "live",
+    "next_turn",
+    "restart"
+  ],
+  "partialSave": "partial",
+  "authority": [
+    {
+      "id": "uar-admin-authority",
+      "state": "operational"
+    },
+    {
+      "id": "uar-owner-isolation",
+      "state": "operational"
+    }
+  ],
+  "activeStorage": "remote",
+  "isolatedCatalogs": {
+    "embedded": "gate-u-embedded-1790270771112",
+    "remote": "gate-u-remote-1790270771112"
+  },
+  "restartPersistence": "operational"
+}

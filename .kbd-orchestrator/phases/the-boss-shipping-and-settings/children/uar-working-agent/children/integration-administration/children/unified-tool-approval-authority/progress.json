@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "2",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 921,
+  "derivedRevision": 921,
+  "frontier": {
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 857,
+    "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
+  },
+  "conflictCount": 0,
+  "phase": "unified-tool-approval-authority",
+  "phaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration::unified-tool-approval-authority",
+  "parentPhase": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
+  "last_updated": "2026-09-26T04:51:52.592720Z",
+  "last_updated_by": "kbd-runtime",
+  "changes_total": 4,
+  "changes_completed": 4,
+  "implementation_total": 4,
+  "implementation_completed": 4,
+  "completion": {
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 4,
+      "total": 4,
+      "status": "COMPLETE"
+    },
+    "evidence": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "certification": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "publication": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    }
+  },
+  "completionScopes": {
+    "completion": "phase",
+    "runCompletion": "run"
+  },
+  "runCompletion": {
+    "scope": "run",
+    "runId": "platform-foundation-20260921T101006Z",
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 22,
+      "total": 41,
+      "status": "IN_PROGRESS"
+    },
+    "evidence": {
+      "status": "PENDING",
+      "summary": null,
+      "blockers": []
+    },
+    "certification": {
+      "status": "PENDING",
+      "summary": null,
+      "blockers": []
+    },
+    "publication": {
+      "status": "PENDING",
+      "summary": null,
+      "blockers": []
+    }
+  },
+  "changes": [
+    {
+      "id": "approval-integration-baseline",
+      "title": "Establish a traceable Boss/UAR baseline",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 8,
+      "tasks_done": 8,
+      "last_task_completed": "At the complete consolidation boundary, use the actual selected production pair once to capture catalog → conversation → UAR → MCP behavior. Reuse a matching already-built pair if provenance is proven; otherwise one real application/sidecar build supplies the baseline. Retain the first decisive failure, then proceed to change 2; do not chase a green baseline by fixing unrelated work. Completion evidence: Preserved refs, recovery locations and source diff/ancestry records; runtime claims are demonstrated only at Gate B0.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "uar-exact-tool-admission",
+      "title": "Bind approval to one prepared tool invocation",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 10,
+      "tasks_done": 10,
+      "last_task_completed": "Run the completed exact-admission production-path integration boundary",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "uar-approval-lifecycle",
+      "title": "Make approval reconnect and interruption explicit",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 4,
+      "tasks_done": 4,
+      "last_task_completed": "Complete actionable pending/interrupted/result UI, typed contracts and translations; enforce persistence-before-dispatch and report storage failure without performing the tool. Run the final child integration matrix once on complete wiring, covering live replay, child isolation, cancellation races, crash before/after dispatch, stale replies and failure-result visibility. Completion evidence: Static lifecycle/state inspection during implementation; completed behavior is demonstrated at Gate A2.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "approval-delivery-checkpoint",
+      "title": "Publish corrected native inputs and return to parent delivery",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 4,
+      "tasks_done": 4,
+      "last_task_completed": "Prepare the child closeout evidence and parent re-entry checklist. After all four changes are implemented and archived, run the separate mandatory kbd-reflect phase and return to the parent. Parent 5.2–5.5 owns installers, RELEASES.md, GitHub Releases, website updates and installed acceptance for both customer platforms. Successful child integration is not Windows or Mac installed acceptance. Completion evidence: Recorded immutable artifacts and manifest/handoff evidence; installed acceptance belongs to parent gates.",
+      "next_task_pending": null,
+      "blockers": []
+    }
+  ],
+  "children": {},
+  "migrationStatus": null
+}

@@ -1,0 +1,31 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment misses the explicit goal to deliver dedicated Services settings.",
+      "evidence": "Goals require: \"Deliver dedicated UAR, Compass, liter-llm and Services settings with persisted schema-backed configuration, full internationalization and narrow upstream integration seams.\" The corresponding gap entry G9 only covers \"Separate UAR/Compass/liter-llm navigation, schema/i18n\" and omits Services; later Services mentions are incidental, e.g. \"expose external memory through Services,\" not an assessment of current Services settings gaps.",
+      "suggested_fix": "Add a Services-specific gap covering current settings location, schema/i18n state, persistence ownership, navigation/search seams, and required integration changes."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment does not analyze the required operation recovery capability, only progress, visibility, and logging.",
+      "evidence": "Goals require \"visible operation progress/results/recovery and complete retained logs.\" G4 is titled \"Visible progress and full logs\" and observes collapsed output, shared busy/dirty locks, output caps, and replaced callback output, but contains no gap about recovery behavior, retry/resume/cancel-after-failure semantics, or where recovery state is persisted. G12 only says new i18n keys are needed for \"operation stages/recovery,\" which is not a functional gap analysis.",
+      "suggested_fix": "Add an operation recovery gap identifying existing operation state storage, failure/cancellation/retry behavior, persistence across restart, and UI/API work needed for recovery."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "status": "published",
+  "recordedAt": "2026-09-25T06:12:29Z",
+  "sources": {
+    "universalAgentRuntime": {
+      "repository": "Prometheus-AGS/universal-agent-runtime",
+      "branch": "feat/the-boss-sidecar",
+      "commit": "0f2ea3d4a8111bea3a425bfb6596acbc9fb09d26",
+      "features": ["minimal", "a2a-transport", "local-models", "document-intelligence", "wasm-runtime"],
+      "packagingFix": "Pinned protoc-bin-vendored 3.2.0 supplies protoc to the A2A build on every customer platform."
+    },
+    "theBoss": {
+      "repository": "Prometheus-AGS/the-boss",
+      "branch": "feat/uar-agent-runtime",
+      "commit": "42052486566adf90ef433353d60ac8f2bd49ca7a",
+      "uarSourcePin": "0f2ea3d4a8111bea3a425bfb6596acbc9fb09d26"
+    },
+    "miniSkillPack": {
+      "repository": "Prometheus-AGS/prometheus-skills-mini",
+      "commit": "ed01fd2955325af6e93390048e7390acf774129f"
+    },
+    "fullSkillPack": {
+      "repository": "Prometheus-AGS/prometheus-skill-system",
+      "commit": "cf104c9626c93bbfc4e569e29fe33ca2d55678d1"
+    }
+  },
+  "supersededNativeRuns": {
+    "win32-x64": {
+      "tag": "boss-sidecar-win32-x64-v1.0.0-p1.14",
+      "runId": 36093337127,
+      "status": "cancelled",
+      "reason": "Cancelled after the matching macOS job exposed the missing protoc packaging dependency."
+    },
+    "darwin-arm64": {
+      "tag": "boss-sidecar-darwin-arm64-v1.0.0-p1.14",
+      "runId": 36093337474,
+      "status": "failed",
+      "reason": "A2A protobuf generation could not find protoc on the native runner."
+    }
+  },
+  "nativePayloads": {
+    "win32-x64": {
+      "tag": "boss-sidecar-win32-x64-v1.0.0-p1.15",
+      "runId": 36096688097,
+      "runUrl": "https://github.com/Prometheus-AGS/universal-agent-runtime/actions/runs/36096688097",
+      "status": "published",
+      "completedAt": "2026-09-25T06:12:29Z",
+      "releaseUrl": "https://github.com/Prometheus-AGS/universal-agent-runtime/releases/tag/boss-sidecar-win32-x64-v1.0.0-p1.15",
+      "recordUrl": "https://github.com/Prometheus-AGS/universal-agent-runtime/releases/download/boss-sidecar-win32-x64-v1.0.0-p1.15/uar-sidecar-win32-x64.json",
+      "assetUrl": "https://github.com/Prometheus-AGS/universal-agent-runtime/releases/download/boss-sidecar-win32-x64-v1.0.0-p1.15/uar-sidecar-win32-x64.tar.gz",
+      "size": 101291740,
+      "sha256": "9defb5af33ca524d93b69828061e38cca60e35d0c8b39fc11ed1812080d6a4f0"
+    },
+    "darwin-arm64": {
+      "tag": "boss-sidecar-darwin-arm64-v1.0.0-p1.15",
+      "runId": 36096688190,
+      "runUrl": "https://github.com/Prometheus-AGS/universal-agent-runtime/actions/runs/36096688190",
+      "status": "published",
+      "completedAt": "2026-09-25T05:38:22Z",
+      "releaseUrl": "https://github.com/Prometheus-AGS/universal-agent-runtime/releases/tag/boss-sidecar-darwin-arm64-v1.0.0-p1.15",
+      "recordUrl": "https://github.com/Prometheus-AGS/universal-agent-runtime/releases/download/boss-sidecar-darwin-arm64-v1.0.0-p1.15/uar-sidecar-darwin-arm64.json",
+      "assetUrl": "https://github.com/Prometheus-AGS/universal-agent-runtime/releases/download/boss-sidecar-darwin-arm64-v1.0.0-p1.15/uar-sidecar-darwin-arm64.tar.gz",
+      "size": 99263427,
+      "sha256": "aa75f5b231fbe532dc400b0c62e3290287bdd4073d74eb9dce54ad94464c770d"
+    }
+  },
+  "localIntegrationInputs": {
+    "theBossBuild": {
+      "command": "pnpm build",
+      "status": "passed",
+      "sourceCommit": "b69777b1e679ecfa6b33eecc38a125e3569177ee",
+      "completedAt": "2026-09-25T04:47:00Z"
+    },
+    "theBossAppleSiliconInstaller": {
+      "command": "pnpm build:mac:arm64",
+      "status": "passed",
+      "artifact": "dist/The-Boss-2.2.0-mac-arm64.dmg",
+      "size": 579043305,
+      "sha256": "43dc2468c3acf225af1cb22c9d2a8eb7a97f17fbc9f4fa85af6fd4475c5448f2",
+      "completedAt": "2026-09-25T06:05:00Z"
+    },
+    "uarAppleSiliconReleaseBuild": {
+      "command": "cargo build --release --locked --no-default-features --features minimal,a2a-transport,local-models,document-intelligence,wasm-runtime --bin uar-sidecar --target aarch64-apple-darwin",
+      "status": "passed",
+      "productSourceCommit": "a22b437e923058dbf1452ede35b7815207d6df6d",
+      "completedAt": "2026-09-25T04:06:00Z"
+    },
+    "gateV": {
+      "command": "pnpm exec playwright test --config tests/e2e/gates/playwright.config.ts tests/e2e/gates/uarExperienceGate.test.ts",
+      "status": "passed",
+      "bossSourceCommit": "b69777b1e679ecfa6b33eecc38a125e3569177ee",
+      "uarProductSourceCommit": "a22b437e923058dbf1452ede35b7815207d6df6d",
+      "evidence": "evidence/gate-v.json",
+      "completedAt": "2026-09-25T04:49:00Z"
+    }
+  },
+  "review": {
+    "critical": 0,
+    "high": 1,
+    "medium": 1,
+    "unresolved": 0,
+    "evidence": "review/final-findings.json"
+  },
+  "distribution": "github-releases",
+  "ipfs": false
+}

@@ -21,6 +21,11 @@ const sidebars = {
     },
     {
       type: 'category',
+      label: 'UI/UX',
+      items: ['ui-ux/overview'],
+    },
+    {
+      type: 'category',
       label: 'Agent Teams',
       items: ['agent-teams/overview'],
     },

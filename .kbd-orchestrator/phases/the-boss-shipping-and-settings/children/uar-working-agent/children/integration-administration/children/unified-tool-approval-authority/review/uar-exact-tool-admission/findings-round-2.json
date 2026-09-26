@@ -1,0 +1,31 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "src/uar/api/routes.rs",
+      "line": 398,
+      "claim": "The run API accepts a client-supplied paired-host admission endpoint, allowing the caller to make UAR POST frozen tool invocations and raw validated arguments to an arbitrary loopback URL they provide.",
+      "evidence": "create_run deserializes `req.tool_admission` and installs `HttpHostToolAdmissionPort::from_input(input)` as `request.host_tool_admission`; `src/uar/runtime/tool_admission/http.rs` then serializes `PrepareRequest { invocation: &PreparedToolInvocation }`, and `PreparedToolInvocation` includes `validated_arguments`. The only URL validation in `from_input` is loopback `/uar/admission/v1` plus caller-provided Authorization.",
+      "suggested_fix": "Do not accept `tool_admission` directly from general create-run JSON; construct/install the host admission port only from the authenticated Boss bridge/host-resource path, or bind it to a server-generated capability that untrusted API clients cannot choose."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
+      "line": 290,
+      "claim": "Boss binds admission to a canonicalized workspace string while UAR is asked to run with the original workspace string, so valid paired runs can fail admission when the two path spellings differ.",
+      "evidence": "The create-run payload sends `working_directory: session.workspace.path` at line 190, but the bridge admission options use `workspace: realpathSync.native(session.workspace.path)` at line 290; UAR freezes `world_state.directory().display().to_string()` into `ToolAdmissionContext::new` and Boss `UarHostToolAdmission.binds` rejects any invocation whose `workspace !== this.options.workspace`.",
+      "suggested_fix": "Use one workspace identity for both fields: either send the same canonical path as `working_directory`, or have UAR return/derive the exact workspace string that Boss stores for admission comparison."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

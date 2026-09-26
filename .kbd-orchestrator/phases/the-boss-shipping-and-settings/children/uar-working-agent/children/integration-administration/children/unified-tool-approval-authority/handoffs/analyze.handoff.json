@@ -1,0 +1,22 @@
+{
+  "stage": "analyze",
+  "completedAt": "2026-09-24T22:14:51.234Z",
+  "outputs": [
+    "analysis.md",
+    "library-candidates.json",
+    "decision-log.md",
+    "worktree-disposition.md",
+    "research/landscape/harness-landscape.md",
+    "research/landscape/source-manifest.json",
+    "research/consolidation/ref-refresh.json",
+    "research/consolidation/merge-analysis.json",
+    "research/consolidation/baseline-candidate.json",
+    "research/consolidation/rmcp-metadata.json",
+    "review/analyze/findings-r2.json",
+    "review/analyze/resolution.md"
+  ],
+  "nextStage": "spec",
+  "summaryForNext": "10 candidates; consolidate active Boss/UAR and required Liter dependency before approval implementation. Preserve all 33 worktree registrations; historical recovery does not block critical baseline. Refreshed origin refs across 8 repos. Codex Rust incorporated into combined landscape. Resolve UAR-owned continuation, monotonic host restrictions, authenticated exact-invocation admission via managed MCP metadata, safe renderer replies, live replay and restart epoch invalidation. Independent review round 2 PASS, 0 findings; screen 0. No production code, merges, builds or behavioral tests. Pin-authority reconciliation, legacy WIP semantics and actual binary provenance remain explicit plan requirements. User must see plan before execution.",
+  "skipped": false,
+  "skipReason": null
+}

@@ -1,0 +1,62 @@
+{
+  "gate": "A1",
+  "protocolVersion": 1,
+  "productionBridge": true,
+  "matrix": [
+    {
+      "host": "auto",
+      "local": "auto",
+      "result": "authorized"
+    },
+    {
+      "host": "auto",
+      "local": "ask",
+      "result": "approved"
+    },
+    {
+      "host": "auto",
+      "local": "deny",
+      "result": "denied"
+    },
+    {
+      "host": "ask",
+      "local": "auto",
+      "result": "approved"
+    },
+    {
+      "host": "ask",
+      "local": "ask",
+      "result": "approved"
+    },
+    {
+      "host": "ask",
+      "local": "deny",
+      "result": "denied"
+    },
+    {
+      "host": "deny",
+      "local": "auto",
+      "result": "denied"
+    },
+    {
+      "host": "deny",
+      "local": "ask",
+      "result": "denied"
+    },
+    {
+      "host": "deny",
+      "local": "deny",
+      "result": "denied"
+    }
+  ],
+  "identicalCalls": {
+    "distinctAdmissions": true,
+    "replayRejected": true
+  },
+  "mismatchRejected": true,
+  "identityFreeRejected": true,
+  "batchRejected": true,
+  "incompatibleVersionRejected": true,
+  "safeProjection": true,
+  "toolEffectObserved": true
+}

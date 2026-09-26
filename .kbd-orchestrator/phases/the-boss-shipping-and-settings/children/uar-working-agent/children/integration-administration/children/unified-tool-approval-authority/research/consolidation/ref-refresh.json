@@ -1,0 +1,329 @@
+{
+  "observedAt": "2026-09-24T21:59:49.381Z",
+  "operation": "fetch --no-tags --no-write-fetch-head origin +refs/heads/*:refs/remotes/origin/*",
+  "allFetchesSucceeded": true,
+  "prune": false,
+  "checkoutsChanged": false,
+  "correction": "Prior broad pattern main also matched Boss refs/heads/changeset-release/main; exact Boss refs/heads/main is f1314b46ad464aedb5d446c586a824b326bae7a4",
+  "repositories": [
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/the-boss",
+      "originMain": "f1314b46ad464aedb5d446c586a824b326bae7a4",
+      "localHeads": "chore/boss-assistant-names|640fde2a5bff20381293bb9e526fe1407f838338\nchore/openspec-init|8357be942a8630a04f2a3028aec4e1e1b025ae12\ncodex/agent-fabric-convergence|2b57fa0164a558fecaefa72ce5309445602fbfb7\ncodex/update-agent-team-skills-mini|719716e62f12b6c640897647b453a356ee580c82\nfeat/uar-agent-runtime|2fa0b4b87f0e8991a97873590d093991b91b395f\nfix/window-titles-branding|8344b485203427952716cd142da28c181162be61\nmain|6f2cec47b0839598d17e67e5d9f7c787e5dcaa8e\nmerge/upstream-2026-09-22|25486291403703a979f353167f1faf57200180ef",
+      "worktrees": [
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/the-boss",
+          "exists": true,
+          "head": "8344b485203427952716cd142da28c181162be61",
+          "branch": "fix/window-titles-branding",
+          "vsOriginMain": "53\t0",
+          "trackedDirty": ".prometheus/knowledge/wiki/index.md\n.prometheus/knowledge/wiki/log.md"
+        },
+        {
+          "path": "/private/tmp/the-boss-apple-release",
+          "exists": true,
+          "head": "ce115a8d27ef3e8439a7bd9739848ba5df78fea2",
+          "branch": "",
+          "vsOriginMain": "58\t0",
+          "trackedDirty": "resources/skills/adversarial-review/SKILL.md\nresources/skills/convert-htmx-pdf/SKILL.md\nresources/skills/convert-htmx-react/SKILL.md\nresources/skills/convert-md-to-htmx/SKILL.md\nresources/skills/design-svg-logo/SKILL.md\nresources/skills/doctor/SKILL.md\nresources/skills/ideation-mindmap/SKILL.md\nresources/skills/ideation-mindmap/references/harness-delivery.md\nresources/skills/karpathy-progress-memory/SKILL.md\nresources/skills/kbd-apply/SKILL.md\nresources/skills/kbd-bottleneck-detector/SKILL.md\nresources/skills/kbd-child-exit/SKILL.md\nresources/skills/kbd-inject-agent-rules/SKILL.md\nresources/skills/kbd-memory-recall/SKILL.md\nresources/skills/kbd-new-child/SKILL.md\nresources/skills/kbd-new-phase/SKILL.md\nresources/skills/kbd-next-child/SKILL.md\nresources/skills/kbd-next-phase/SKILL.md\nresources/skills/prometheus-context-bootstrap/SKILL.md\nresources/skills/rebrand-artifact/SKILL.md\nresources/skills/refine-mcp-ui/SKILL.md\nresources/skills/refine-moodboard/SKILL.md"
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/the-boss/.worktrees/update-agent-team-skills-mini",
+          "exists": true,
+          "head": "719716e62f12b6c640897647b453a356ee580c82",
+          "branch": "codex/update-agent-team-skills-mini",
+          "vsOriginMain": "2\t0",
+          "trackedDirty": ""
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-convergence/the-boss",
+          "exists": true,
+          "head": "2b57fa0164a558fecaefa72ce5309445602fbfb7",
+          "branch": "codex/agent-fabric-convergence",
+          "vsOriginMain": "1\t0",
+          "trackedDirty": ""
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar",
+          "exists": true,
+          "head": "2fa0b4b87f0e8991a97873590d093991b91b395f",
+          "branch": "feat/uar-agent-runtime",
+          "vsOriginMain": "3\t15",
+          "trackedDirty": "release-manifest.json\nscripts/build-integration-tools.cjs\nscripts/commit-release-entry.cjs\nscripts/prepare-service-image.cjs\nscripts/publish-integration-payload.cjs\nscripts/reuse-integration-tools.cjs\nsrc/main/ai/mcp/mcpTransport.ts\nsrc/main/ai/runtime/uar/UarOperationalAdministrationAdapter.ts\nsrc/main/ai/runtime/uar/UarSidecarService.ts\nsrc/main/ai/runtime/uar/uarPrincipal.ts\nsrc/main/ai/tools/adapters/aiSdk/mcp/resolveAssistantMcpTools.ts\nsrc/main/main.ts\nsrc/main/services/prometheus/commandPath.ts\nsrc/main/services/prometheus/fullPackDetection.ts\nsrc/main/services/prometheus/integrationProcess.ts\nsrc/main/services/prometheus/ownedSkillCopy.ts\nsrc/main/services/prometheus/pushSkills.ts\nsrc/main/services/prometheus/surrealConnection.ts\nsrc/renderer/pages/settings/PrometheusSettings/IntegrationFields.tsx\nsrc/shared/types/prometheusIntegration.ts"
+        }
+      ]
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime",
+      "originMain": "c29af47be3439c69e1a3c124fdcf09ce4cbb5cba",
+      "localHeads": "codex/agent-fabric-convergence|c29af47be3439c69e1a3c124fdcf09ce4cbb5cba\ncodex/uar-presentation-wip|aa553c6e5f85cc54634c70e3e9954bfc2dc2fabe\nfeat/context-history-integrity|ba12845138104d3c8c3b8bca8bc7c5be24004e91\nfeat/the-boss-sidecar|19e2ad1575621fcd76d01d16a8ef96aa5751a843\nmain|dce44e78d13b8cf031ea7b4ee116c4a74c0da9b2",
+      "worktrees": [
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime",
+          "exists": true,
+          "head": "ba12845138104d3c8c3b8bca8bc7c5be24004e91",
+          "branch": "feat/context-history-integrity",
+          "vsOriginMain": "20\t0",
+          "trackedDirty": ".claude/settings.local.json\n.mcp.json\ncrates/prometheus-skill-system\nfrontend/packages/prometheus-entity-management"
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/runtime-harness-baseline",
+          "exists": true,
+          "head": "226d4a0af89811975662cf3f203c699f70e8cebc",
+          "branch": "",
+          "vsOriginMain": "28\t0",
+          "trackedDirty": "AGENTS.md\nfrontend/packages/prometheus-entity-management\ntests/context_history_integrity.rs"
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/runtime-harness-checkpoint-d586c75d",
+          "exists": true,
+          "head": "d586c75d9d69cf94a54d62e95ade78ae94147745",
+          "branch": "",
+          "vsOriginMain": "25\t0",
+          "trackedDirty": "AGENTS.md\ncrates/prometheus-skill-system\nfrontend/packages/prometheus-entity-management"
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/uar-presentation-wip",
+          "exists": true,
+          "head": "aa553c6e5f85cc54634c70e3e9954bfc2dc2fabe",
+          "branch": "codex/uar-presentation-wip",
+          "vsOriginMain": "45\t2",
+          "trackedDirty": ".agents/skills/impeccable/SKILL.md\n.agents/skills/impeccable/scripts/detector/engines/static-html/css-cascade.mjs\nAGENTS.md\nfrontend/packages/a2ui-inspector/src/components/InspectorPanel.tsx\nfrontend/packages/a2ui-inspector/test/cross-renderer-conformance.test.tsx\nfrontend/packages/a2ui-uar/src/dev/build-surface.tsx\nfrontend/packages/a2ui-uar/src/index.ts\nfrontend/packages/a2ui-uar/src/react/SurfaceErrorBoundary.tsx\nfrontend/packages/a2ui-uar/src/react/UarSurface.tsx\nfrontend/packages/a2ui-uar/test/accessibility.test.tsx\nfrontend/packages/a2ui-uar/test/cross-reference.test.tsx\nfrontend/packages/a2ui-uar/test/entity-card.test.tsx\nfrontend/packages/a2ui-uar/test/helpers.ts\nfrontend/packages/a2ui-uar/test/inputs.test.tsx\nfrontend/packages/a2ui-uar/test/perf/render-budget.test.tsx\nfrontend/packages/a2ui-uar/test/surface.test.tsx\nfrontend/packages/a2ui-uar/test/ux.test.tsx\nfrontend/src/components/assistant-ui/enhanced-thread.tsx\nfrontend/src/features/chat/components/a2ui-artifact-block.test.tsx\nfrontend/src/features/chat/components/a2ui-artifact-block.tsx\nfrontend/src/features/chat/ui/chunks/a2ui-chunk.tsx\nfrontend/src/features/chat/use-chat-runtime.ts\nfrontend/src/features/presentation/index.ts\nfrontend/src/features/presentation/ui/presentation-example-preview.tsx\nfrontend/src/features/runtime/ui/runtime-console-page.tsx\nfrontend/src/features/runtime/ui/runtime-runs-trace.test.tsx\nfrontend/src/features/skills/model/skills-graph.ts\nfrontend/src/features/skills/model/skills-page.utils.test.ts\nfrontend/src/features/skills/model/skills-page.utils.ts\nfrontend/src/features/skills/model/use-skills-admin.ts\nfrontend/src/features/skills/model/use-skills.ts\nfrontend/src/features/skills/ui/rich-markdown-editor.tsx\nfrontend/src/features/skills/ui/skill-editor-page.tsx\nfrontend/src/features/skills/ui/skill-import-dialog.tsx\nfrontend/src/features/skills/ui/skills-registry-page.tsx\nfrontend/src/platform/agui/agui-adapter.test.ts\nfrontend/src/platform/agui/agui-adapter.ts\nfrontend/src/platform/agui/agui-normalizer.test.ts\nfrontend/src/platform/agui/runtime-chunk-projection.ts\nfrontend/src/platform/entities/presentation-decision/actions.test.ts\nfrontend/src/platform/entities/presentation-decision/actions.ts\nfrontend/src/platform/entities/presentation-decision/api.test.ts\nfrontend/src/platform/entities/presentation-decision/api.ts\nfrontend/src/platform/entities/presentation-decision/contracts.ts\nfrontend/src/platform/entities/presentation-decision/domain.test.ts\nfrontend/src/platform/entities/presentation-decision/domain.ts\nfrontend/src/platform/entities/presentation-decision/index.ts\nfrontend/src/platform/entities/presentation-decision/realtime.test.ts\nfrontend/src/platform/entities/presentation-decision/realtime.ts\nfrontend/src/platform/entities/presentation-decision/use-presentation-decision.ts\nfrontend/src/platform/entities/presentation/lifecycle-contracts.ts\nfrontend/src/platform/entities/skill/api/skill-api.ts\nfrontend/src/platform/entities/skill/contracts.ts\nfrontend/src/platform/entities/skill/domain.test.ts\nfrontend/src/platform/entities/skill/domain.ts\nfrontend/src/platform/entities/skill/index.ts\nfrontend/src/platform/entities/skill/use-skills.ts\nfrontend/src/stores/chat-stream-store.ts\nfrontend/src/types/index.ts\nopenspec/changes/migrate-skills-page-direct-and-redesign/tasks.md\nopenspec/changes/select-and-observe-presentations/tasks.md\nsrc/uar/api/skills.rs\nsrc/uar/domain/skills.rs\nsrc/uar/presentation/routes.rs\nsrc/uar/presentation/selection/service.rs\nsrc/uar/presentation/selection/types.rs\nsrc/uar/presentation/surreal_store.rs\nsrc/uar/runtime/manager.rs\nsrc/uar/runtime/skills/builtin_loader.rs\nsrc/uar/runtime/skills/service.rs\nsrc/uar/runtime/skills/storage/filesystem.rs\nstatic/.vite/markdown-engine-graph.json\nstatic/index.html\ntests/fixtures/presentation/selection-lifecycle-v1.json\ntests/integration/live/baseline_cases.rs"
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-convergence/universal-agent-runtime",
+          "exists": true,
+          "head": "c29af47be3439c69e1a3c124fdcf09ce4cbb5cba",
+          "branch": "codex/agent-fabric-convergence",
+          "vsOriginMain": "0\t0",
+          "trackedDirty": ""
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar",
+          "exists": true,
+          "head": "19e2ad1575621fcd76d01d16a8ef96aa5751a843",
+          "branch": "feat/the-boss-sidecar",
+          "vsOriginMain": "0\t15",
+          "trackedDirty": "pnpm-lock.yaml\nsrc/mcp/runtime.rs\nsrc/server.rs\nsrc/uar/a2ui/routes.rs\nsrc/uar/api/routes.rs\nsrc/uar/runtime/manager.rs\ntests/integration/live/stub_llm.rs\ntests/remote_mcp_run_grants.rs\ntests/run_retention/runs.rs\ntests/run_retention/sessions.rs\ntests/sidecar_session_principal/admission.rs\ntests/sidecar_session_principal/isolation.rs\ntests/support/principal_host.rs"
+        }
+      ]
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini",
+      "originMain": "2782c3a2d3d0b2bf3b969a5f55352be48b87d7f6",
+      "localHeads": "codex/agent-fabric-convergence|2782c3a2d3d0b2bf3b969a5f55352be48b87d7f6\ncodex/agent-team-creator|3a5f3c45596272d5fbba74ebd28d27db03bf7b13\nmain|4178a489b3b6a9a199447cb63ec826d914af03d4",
+      "worktrees": [
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini",
+          "exists": true,
+          "head": "4178a489b3b6a9a199447cb63ec826d914af03d4",
+          "branch": "main",
+          "vsOriginMain": "9\t23",
+          "trackedDirty": ".kbd-orchestrator/current-waypoint.json\n.kbd-orchestrator/phases/the-boss-shipping-and-settings/children/uar-working-agent/children/integration-administration/progress.json\n.kbd-orchestrator/phases/the-boss-shipping-and-settings/children/uar-working-agent/children/integration-administration/tasks.md\n.kbd-orchestrator/phases/the-boss-shipping-and-settings/children/uar-working-agent/progress.json\n.kbd-orchestrator/phases/the-boss-shipping-and-settings/children/uar-working-agent/tasks.md\n.kbd-orchestrator/phases/the-boss-shipping-and-settings/progress.json\n.kbd-orchestrator/position.json\nopenspec/changes/compass-mcp-protocol-negotiation/verification.md\ntools/prometheus-knowledge"
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/.worktrees/agent-team-creator",
+          "exists": true,
+          "head": "3a5f3c45596272d5fbba74ebd28d27db03bf7b13",
+          "branch": "codex/agent-team-creator",
+          "vsOriginMain": "1\t0",
+          "trackedDirty": ""
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-convergence/prometheus-skills-mini",
+          "exists": true,
+          "head": "2782c3a2d3d0b2bf3b969a5f55352be48b87d7f6",
+          "branch": "codex/agent-fabric-convergence",
+          "vsOriginMain": "0\t0",
+          "trackedDirty": ""
+        }
+      ]
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack",
+      "originMain": "add9b48949371f647350ee0d318bfc0672a861ff",
+      "localHeads": "backup/skill-pack-1-10-pre-push-rewrite|45b61a2bef130a3e98f0b917b0159ab4be08ce55\ncodex/agent-fabric-convergence|add9b48949371f647350ee0d318bfc0672a861ff\ncodex/agent-team-creator|5f48b933ac6dbd430b92699598cf5e11cadbe327\ncodex/boss-cli-windows|e57421a86fae08ac4d1e3a625a213cf3f3eb98bc\ncodex/kbd-uds-control-repair|2e89568a4ae0f06ca646fd349b46b69927fc8264\ncodex/skill-pack-1-10-0-recovery|29050ebe314e74229a90446b3baab5c1093e3fda\nfeat/cpc-001-002-integration-contract|35d2f7b304fd3544326914d9493ce74932a2c96f\nfix/kbd-waypoint-path-reset|74b936f00c4f2cb07e141341a84d9c0ecd5a83c3\ngofast/liter-llm-mcp-secrets|2b1ce32c04317aecfbe235e559a0fccee120c964\ngomark/kbd-orchestrator-writable|37aa5bc518f75c9fddb3b5581440c94295eb70cb\ngomark/rules-architecture-v4|7421aa8d79e82e099b542edea318395ab0260499\nmain|10a416589b06c5f22f4ca32b3c0414fdd3026603",
+      "worktrees": [
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack",
+          "exists": true,
+          "head": "10a416589b06c5f22f4ca32b3c0414fdd3026603",
+          "branch": "main",
+          "vsOriginMain": "17\t0",
+          "trackedDirty": "AGENTS.md\nCLAUDE.md\ndist/plugins/claude/prometheus-skill-pack/shared/scripts/detect-project-context.sh\nscripts/generate-skill-system-distribution.js\nscripts/tests/skill-system-distribution.test.mjs\nshared/scripts/detect-project-context.sh\ntools/surreal-memory-server"
+        },
+        {
+          "path": "/private/tmp/boss-prometheus-cli",
+          "exists": true,
+          "head": "e57421a86fae08ac4d1e3a625a213cf3f3eb98bc",
+          "branch": "codex/boss-cli-windows",
+          "vsOriginMain": "9\t0",
+          "trackedDirty": ""
+        },
+        {
+          "path": "/private/tmp/claude-501/pr-kbd-path-fix",
+          "exists": false,
+          "head": "74b936f00c4f2cb07e141341a84d9c0ecd5a83c3",
+          "vsOriginMain": null,
+          "trackedDirty": null
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/kbd-qualified-task-subjects",
+          "exists": true,
+          "head": "1dc5a670fa0659a41fc9cedea2020db19e4a59a3",
+          "branch": "",
+          "vsOriginMain": "90\t0",
+          "trackedDirty": "tools/prometheus-cli/crates/prometheus-cli/src/commands/kbd.rs"
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/skill-pack-1-10-0-recovery",
+          "exists": true,
+          "head": "29050ebe314e74229a90446b3baab5c1093e3fda",
+          "branch": "codex/skill-pack-1-10-0-recovery",
+          "vsOriginMain": "62\t0",
+          "trackedDirty": ""
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack/.worktrees/agent-team-creator",
+          "exists": true,
+          "head": "5f48b933ac6dbd430b92699598cf5e11cadbe327",
+          "branch": "codex/agent-team-creator",
+          "vsOriginMain": "1\t0",
+          "trackedDirty": ""
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack/.worktrees/gofast-liter-llm-mcp-secrets",
+          "exists": true,
+          "head": "2b1ce32c04317aecfbe235e559a0fccee120c964",
+          "branch": "gofast/liter-llm-mcp-secrets",
+          "vsOriginMain": "35\t1",
+          "trackedDirty": ""
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack/.worktrees/gomark-kbd-orchestrator-writable",
+          "exists": true,
+          "head": "37aa5bc518f75c9fddb3b5581440c94295eb70cb",
+          "branch": "gomark/kbd-orchestrator-writable",
+          "vsOriginMain": "43\t0",
+          "trackedDirty": ""
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack/.worktrees/gomark-rules-architecture-v4",
+          "exists": true,
+          "head": "7421aa8d79e82e099b542edea318395ab0260499",
+          "branch": "gomark/rules-architecture-v4",
+          "vsOriginMain": "21\t0",
+          "trackedDirty": ""
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-convergence/prometheus-skill-pack",
+          "exists": true,
+          "head": "add9b48949371f647350ee0d318bfc0672a861ff",
+          "branch": "codex/agent-fabric-convergence",
+          "vsOriginMain": "0\t0",
+          "trackedDirty": ""
+        }
+      ]
+    },
+    {
+      "root": "/Users/gqadonis/Projects/references/compass",
+      "originMain": "a403339287c385d4fd48b42759f1e09045a0ac4d",
+      "localHeads": "backup/pre-cleanup-merge-20260915-055328|1363dcaef46cd0bf6de9e2d6eaf4415f4c11a67a\nbackup/pre-upstream-0.3.28-20260921-043447|33f473b1c1be13d8c3786f7d13eff6068b031948\nbackup/pre-upstream-325-20260922-111240|f5f9b24821a4bd9bcf372e401f9a643d336a61af\nbackup/pre-upstream-merge-20260913-163338|2d385deee7932aa6d11d419525c4d6fa512e3864\ncodex/fix-preflight-size-gate|54dbee765623483e7bd14f2b6aec90d99305547d\ncodex/fix-preflight-size-gate-fork|16a2e202e52221f7fc43b70199ac20c82275e302\ncodex/legacy-artifact-boundary|39dc7fbcac0d08d8ddb3be3b5e9b110897d2bb64\ncodex/optional-surreal-graph-backend|a7d715f7f72e0f8daf814447457207e74a433f8f\ndocs/claude-md|c5bd5b97c48526efa134cd9f8d9b81d8f7dd69ed\nfix/mcp-protocol-negotiation|d0b9e0fb3cc62a1985bd6a83c5b5ea7798d937f9\nfix/remove-hardcoded-build-volume|269e6947693d324a8dbcdc89ac3f5c25630b92d3\nfix/windows-source-confinement-degrade|30cc5158434f683df8ddf7a9bae13781ff622ca9\nmain|33ecb365c71ed6f05e9d5e78b388ac2559622efc",
+      "worktrees": [
+        {
+          "path": "/Users/gqadonis/Projects/references/compass",
+          "exists": true,
+          "head": "33ecb365c71ed6f05e9d5e78b388ac2559622efc",
+          "branch": "main",
+          "vsOriginMain": "9\t0",
+          "trackedDirty": ".prometheus/knowledge/wiki/index.md\n.prometheus/knowledge/wiki/log.md\nAGENTS.md\nCLAUDE.md"
+        },
+        {
+          "path": "/private/tmp/compass-fix",
+          "exists": true,
+          "head": "d0b9e0fb3cc62a1985bd6a83c5b5ea7798d937f9",
+          "branch": "fix/mcp-protocol-negotiation",
+          "vsOriginMain": "1\t0",
+          "trackedDirty": ""
+        },
+        {
+          "path": "/Users/gqadonis/Projects/references/compass-preflight",
+          "exists": true,
+          "head": "54dbee765623483e7bd14f2b6aec90d99305547d",
+          "branch": "codex/fix-preflight-size-gate",
+          "vsOriginMain": "89\t1",
+          "trackedDirty": "AGENTS.md"
+        },
+        {
+          "path": "/Users/gqadonis/Projects/references/compass-preflight-fork",
+          "exists": true,
+          "head": "16a2e202e52221f7fc43b70199ac20c82275e302",
+          "branch": "codex/fix-preflight-size-gate-fork",
+          "vsOriginMain": "78\t0",
+          "trackedDirty": "AGENTS.md\nCLAUDE.md"
+        },
+        {
+          "path": "/Users/gqadonis/Projects/references/compass-upstream-surreal",
+          "exists": true,
+          "head": "39dc7fbcac0d08d8ddb3be3b5e9b110897d2bb64",
+          "branch": "codex/legacy-artifact-boundary",
+          "vsOriginMain": "66\t0",
+          "trackedDirty": ".kbd-orchestrator/current-waypoint.json\n.kbd-orchestrator/model-preflight.json\n.kbd-orchestrator/phases/compass-scoping-and-bounds/progress.json\n.kbd-orchestrator/position-reminder.txt\n.kbd-orchestrator/position.json\nAGENTS.md\nCLAUDE.md"
+        }
+      ]
+    },
+    {
+      "root": "/Users/gqadonis/Projects/references/liter-llm",
+      "originMain": "928c41a6e882bff13f372fac1fb4f237efbe4874",
+      "localHeads": "codex/know-me-a2ui-repair|d27dfa23525aa9f807fb85e3c373a82aa910355b\nmain|d27dfa23525aa9f807fb85e3c373a82aa910355b",
+      "worktrees": [
+        {
+          "path": "/Users/gqadonis/Projects/references/liter-llm",
+          "exists": true,
+          "head": "d27dfa23525aa9f807fb85e3c373a82aa910355b",
+          "branch": "main",
+          "vsOriginMain": "169\t0",
+          "trackedDirty": ".prometheus/knowledge/wiki/index.md\n.prometheus/knowledge/wiki/log.md\ncrates/liter-llm/src/tower/service.rs"
+        }
+      ]
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/surreal-memory-server",
+      "originMain": "4ed6b2c79b9a28b56e53f208fcb85306ec443ae2",
+      "localHeads": "chore/surrealdb-3.2.4-and-storage-fixes|98b48ad0b9eac7c23f5894731709166a00a5bded\nchore/update-dependencies|dd7fdcd6d8974af4059d1d51401bd33ae29f65db\ncodex/agent-fabric-convergence|4ed6b2c79b9a28b56e53f208fcb85306ec443ae2\nfix/hf-cache-hub-subdir-and-executor-readiness|e05e6ad6594d8f654d472961f56596cd79b3341e\nfix/issue-5-embedding-executor-stability|2ebc9d7ec470c533200e5725560ebe225d4fc1a2\nmain|c288f33ab42ede367827f40f43be714cc52ea466",
+      "worktrees": [
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/surreal-memory-server",
+          "exists": true,
+          "head": "dd7fdcd6d8974af4059d1d51401bd33ae29f65db",
+          "branch": "chore/update-dependencies",
+          "vsOriginMain": "33\t1",
+          "trackedDirty": ".claude/settings.local.json\n.prometheus/knowledge/wiki/index.md\n.prometheus/knowledge/wiki/log.md\nAGENTS.md\nCLAUDE.md"
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-convergence/surreal-memory-server",
+          "exists": true,
+          "head": "4ed6b2c79b9a28b56e53f208fcb85306ec443ae2",
+          "branch": "codex/agent-fabric-convergence",
+          "vsOriginMain": "0\t0",
+          "trackedDirty": ""
+        }
+      ]
+    },
+    {
+      "root": "/Users/gqadonis/Projects/references/rust-mcp-filesystem",
+      "originMain": "cecaae85a1d12b5e02e4c69a4eb80e49c147054c",
+      "localHeads": "feat/windows-arm64-target|3a8d18233aa666f7cf776d5d998a28e7b2b88d0d\nmain|d977fbdff4e36a5228cf2b867366e39fe99ff353",
+      "worktrees": [
+        {
+          "path": "/Users/gqadonis/Projects/references/rust-mcp-filesystem",
+          "exists": true,
+          "head": "3a8d18233aa666f7cf776d5d998a28e7b2b88d0d",
+          "branch": "feat/windows-arm64-target",
+          "vsOriginMain": "1\t0",
+          "trackedDirty": ""
+        }
+      ]
+    }
+  ]
+}

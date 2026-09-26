@@ -19,11 +19,30 @@ executable bit required.
 The implementation module backing this skill. It is invoked via:
 
 ```bash
-node scripts/prometheus-context-bootstrap.mjs          # install/refresh
-node scripts/prometheus-context-bootstrap.mjs --check   # verify without writing
+node scripts/prometheus-context-bootstrap.mjs --path "../My Project" --dry-run
+node scripts/prometheus-context-bootstrap.mjs --path "../My Project"
+node scripts/prometheus-context-bootstrap.mjs --path "../My Project" --check
 ```
 
 Per `package.json`, these are wired as `npm run context:bootstrap` and `npm run context:check`.
+
+## UI routing and existing teams
+
+Bootstrap now installs the portable UI catalog into project `.agents/skills` and
+`.claude/skills`, merges UI routing pointers and preserves a project
+`.agents/UI_UX_PROTOCOL.md` override. It also adopts resolvable existing teams through
+creator's `install-project`: an explicit selection wins, a sole team is selected, and
+ambiguous teams require an explicit choice. It does not invent a new team.
+
+Select ambiguous teams with creator `--team <id>` before rerunning bootstrap. Existing
+native files, permissions and ownership are preserved; missing definitions and discovery
+instructions are installed. No native agents are launched. All code uses relevant team roles;
+only UI work loads UI guidance. With delegation unavailable, use sequential role instructions
+and report that limit.
+
+See [UI/UX routing and adoption](/docs/ui-ux/overview) for commands, Zed instruction precedence,
+recovery, optional-services behavior and the full-pack anti-shadowing constraint. Use the full
+pack's bootstrap on full-pack machines; mini belongs in The Boss's internal data directory there.
 
 ## Relationship to this repo's own rules layer
 

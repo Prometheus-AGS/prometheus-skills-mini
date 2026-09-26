@@ -21,7 +21,12 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { homeDir } from '../../lib/platform/paths.mjs';
 import { atomicWrite } from '../../lib/platform/atomic-write.mjs';
-import { parseModelsToml, resolveRole, resolveGateway, sameModel } from '../../lib/review/model-resolution.mjs';
+import {
+  parseModelsToml,
+  resolveRoleAssignment,
+  resolveGateway,
+  selectIndependentReviewer,
+} from '../../lib/review/model-resolution.mjs';
 import { dispatchJudge, JudgeUnavailableError } from '../../lib/review/judge-client.mjs';
 import { extractJsonFromCompletion, normalizeFindings } from '../../lib/review/judge-findings.mjs';
 
@@ -63,6 +68,20 @@ async function probeEndpoint(url) {
   }
 }
 
+async function readAvailableAliases(baseUrl, authToken) {
+  try {
+    const response = await fetch(`${baseUrl.replace(/\/$/, '')}/models`, {
+      headers: { authorization: `Bearer ${authToken}` },
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!response.ok) return null;
+    const body = await response.json();
+    return new Set((Array.isArray(body?.data) ? body.data : []).map((model) => model?.id).filter(Boolean));
+  } catch {
+    return null;
+  }
+}
+
 async function run(argv) {
   const { mode, packet: packetPath, mandate: mandateArg, feedback: feedbackArg, out } = parseArgs(argv);
 
@@ -73,7 +92,8 @@ async function run(argv) {
   if (!existsSync(mandatePath)) throw new ExitError(4, `mandate not found: ${mandatePath}`);
 
   // --- judge transport -----------------------------------------------------
-  const modelsTomlPath = path.join(homeDir(), '.prometheus', 'kbd', 'models.toml');
+  const modelsTomlPath =
+    process.env.PROMETHEUS_KBD_MODELS_CONFIG || path.join(homeDir(), '.prometheus', 'kbd', 'models.toml');
   const modelsToml = parseModelsToml(existsSync(modelsTomlPath) ? readFileSync(modelsTomlPath, 'utf8') : '');
 
   const gatewayBaseUrl = await resolveGateway({ env: process.env, modelsToml, probe: probeEndpoint });
@@ -96,22 +116,32 @@ async function run(argv) {
     packetDoc = {};
   }
   const producer = packetDoc.producer_model || 'unknown';
-
-  const { model: initialJudgeModel } = resolveRole('judge', { env: process.env, modelsToml });
-  const { model: criticModel } = resolveRole('critic', { env: process.env, modelsToml });
-  let judgeModel = initialJudgeModel;
-
-  if (sameModel(judgeModel, producer)) {
-    if (criticModel && !sameModel(criticModel, producer)) {
-      process.stderr.write(`[judge] NOTE: judge model matched producer — switching to '${criticModel}'\n`);
-      judgeModel = criticModel;
-    } else {
-      process.stderr.write(
-        `[judge] WARN: JUDGE_MODEL_COLLISION — every configured model matches producer\n` +
-          `[judge]       (${producer}); proceeding same-model. Configure a second provider\n` +
-          '[judge]       to restore the cross-model guarantee.\n',
-      );
-    }
+  const producerIdentity = packetDoc.producer_identity ?? null;
+  const authToken = process.env.LITER_LLM_MASTER_KEY || process.env.OPENAI_API_KEY || 'sk-local';
+  const availableAliases = await readAvailableAliases(gatewayBaseUrl, authToken);
+  const assignments = Object.fromEntries(
+    ['critic', 'judge', 'backup'].map((role) => [
+      role,
+      resolveRoleAssignment(role, { env: process.env, modelsToml }),
+    ]),
+  );
+  const selection = selectIndependentReviewer({ assignments, producerIdentity, availableAliases });
+  if (!selection.assignment) {
+    process.stderr.write(
+      `[judge] WARN: JUDGE_MODEL_COLLISION — ${selection.reason}; no distinct available backup is configured.\n` +
+        '[judge]       Review remains pending until critic, judge, backup and producer resolve to canonical identities.\n',
+    );
+    throw new ExitError(4);
+  }
+  const judgeModel = selection.assignment.alias;
+  const judgeIdentity = selection.assignment.identity;
+  if (selection.selectedRole === 'backup') {
+    process.stderr.write(
+      `[judge] NOTE: judge collision, missing identity, or unavailability detected — switching to configured backup '${judgeModel}'\n`,
+    );
+  }
+  if (selection.status === 'degraded') {
+    process.stderr.write(`[judge] WARN: review independence is degraded: ${selection.reason}\n`);
   }
 
   if (producer === 'unknown') {
@@ -129,8 +159,6 @@ async function run(argv) {
     system += '\n\n## Previous report rejected — address this feedback\n\n' + readFileSync(feedbackArg, 'utf8');
   }
 
-  const authToken =
-    process.env.LITER_LLM_MASTER_KEY || process.env.OPENAI_API_KEY || 'sk-local';
   const timeoutMs = process.env.ADV_JUDGE_TIMEOUT ? Number(process.env.ADV_JUDGE_TIMEOUT) * 1000 : 300_000;
   const maxAttempts = process.env.ADV_JUDGE_RETRIES ? Number(process.env.ADV_JUDGE_RETRIES) : 3;
 
@@ -157,7 +185,14 @@ async function run(argv) {
   const extracted = extractJsonFromCompletion(completion);
   let normalized;
   try {
-    normalized = normalizeFindings(extracted, { mode, judgeModel, producer, endpoint: gatewayBaseUrl });
+    normalized = normalizeFindings(extracted, {
+      mode,
+      judgeModel,
+      judgeIdentity,
+      producer,
+      producerIdentity,
+      endpoint: gatewayBaseUrl,
+    });
   } catch (error) {
     process.stderr.write(`[judge] ERROR: ${error.message}\n`);
     throw new ExitError(2, 'unusable judge output');

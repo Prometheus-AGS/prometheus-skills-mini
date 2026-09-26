@@ -1,0 +1,314 @@
+{
+  "mode": "artifact",
+  "target": "analyze",
+  "phase": "integration-administration",
+  "producer_model": "gpt-6-astra",
+  "artifact": "# Analysis — integration-administration\n\nInputs: assessment.md (review round 2 PASS), parent spec, pinned versions and explicit dual customer-platform requirement. Stack is already specified: Electron/TypeScript, Node mini, existing Rust components. No greenfield stack recommendation is needed. The candidate ledger contains nine evaluated reuse choices and three application-specific build areas.\n\n## Research performed\n\nTier 1: local source inspection and GitHub fork metadata/repository/README/source queries. Tier 2: Context7 confirmed SurrealDB SDK remote/embedded contract; TOML lookup did not resolve the exact JS package and returned general Rust TOML docs, which are NOT evidence of comment preservation. Tier 3: npm metadata for smol-toml and toml-edit-js. Tier 4: operator-requested Firecrawl searches found official Docker networking/Compose docs and upstream liter-llm proxy/watch documentation; package claims were checked against its own GitHub README/source instead of third-party search hits. Research stayed under eight queries per tier and twenty minutes.\n\n## Decisions and corrections to provisional plan\n\n1. Reuse UAR persistence and exact SurrealDB 3.2.4 SDK; add scoped auth and selected-profile launch. No database technology replacement. Config apply remains explicit and restores previous profile on failed restart.\n2. Compass check-update is rejected for source drift: it checks a marker only. Adapt doctor’s detect/Manifest/BuildGuard path into structured freshness with explicit app-owned output. Reuse inclusion/config identity and compare content on user-requested checks, including new/deleted source files; legacy manifest cannot prove current configuration and should report unknown until indexed.\n3. Reuse existing Boss operation lifecycle; add durable log/state plus typed events. No queue daemon or UI-only operation truth.\n4. Full pack's actual launch templates identify SurrealDB at loopback 28000 and memory at 23001; metadata paths include shared/services.manifest.json and installed ai.prometheus.* plist/unit files. Gateway launcher selects ~/.config/liter-llm/liter-llm-proxy.toml and loads private credentials separately. Discovery reads only endpoint/ownership fields and leaves secrets to explicit protected credential input/import. It never treats legacy template credentials as defaults.\n5. Mixed topology needs a generated Compose subset: current depends_on and hardwired surrealdb hostname are wrong for external DB. Docker Desktop container clients use host.docker.internal when the selected endpoint is on the host; host-side UAR and Compass keep their host endpoint. Endpoint reachability must be checked from the relevant network context. Never rebind an existing host DB or take over its lifecycle. If its bind/firewall makes it unreachable from Docker, explain the needed owner action or select existing native memory; no false success.\n6. Existing full-pack liter launcher does not pass --watch, so save must show restart-required when it cannot prove application. Do not silently restart it. Use provider and model catalog JSON plus live aliases.\n7. Existing smol-toml handles reading but cannot preserve the external document. Adopt pinned toml-edit-js WASM for individual-path edits; source supports arrays of tables. Packaging/WASM behavior remains unverified until completed integration, explicitly part of Gate C. No hand-written TOML parser.\n8. liter-llm currently has no standalone config validation command. Add a small nonstarting config-check command calling its existing ProxyConfig parser, and package its native CLI via the existing binary manager for BOTH Windows x64 and Apple Silicon. Managed images use the same source. Parser errors must not echo secrets or raw TOML. This closes an implementation dependency absent from the provisional plan.\n9. Preserve feature boundaries and generated outputs. Renderer and main have 13 locale catalogs each; existing strings can be reused, all new statuses/navigation/errors require complete translations. New document fields live in existing preference storage; SQL migration only if an actual table changes.\n\n## Sources\n\n- SurrealDB: https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/index/languages/rust.mdx\n- Docker: https://docs.docker.com/desktop/features/networking/networking-how-tos/ and https://docs.docker.com/reference/cli/docker/compose/up/\n- liter-llm: https://github.com/kreuzberg-dev/liter-llm/blob/3b426cb0d11d854d74689d6b7fa0f670231779f5/docs-site/src/content/docs/server/proxy-server.mdx (search index); live GitHub fork metadata names xberg-io/liter-llm as parent, to resolve/freeze on fetch before merging.\n- TOML editors: https://github.com/squirrelchat/smol-toml and https://github.com/rainbowatcher/toml-edit-js\n- Repository evidence: library-candidates.json cites exact local source paths; sources-receipt.json records inspected commits.\n\n## Residual uncertainty and integration boundary\n\nExact full-pack-specific sidecar failure remains unproven. Real configured launch, service discovery and mixed container networking are integration evidence, not documentation assertions. New external config changes are explicit, backed up and revision checked. A remote gateway with no config-write interface supports inference plus deployment export; do not claim a remote apply. No secret values or private service config are in research artifacts.\n\n## Release and process\n\nWindows x64 and Mac Apple Silicon are equally essential. Build on independent native runners, publish each successful customer artifact immediately, and do not let lower-priority platforms block either. Keep overall goal and reflection prerequisites pending until completed implementation, evidence and installed acceptance. Assess/analyze/plan/execute/reflect must all have actual stage records, hooks and handoffs.\n\n## Revision 2 — UAR is the runtime authority\n\nInputs: revision2 assessment/handoff and uar-admin-surface.md. Assessment review reached its two-round cap with a release-baseline finding; no assertion that it passed. Baseline task must inspect actual release metadata and site before release changes. This does not require rebuilding installers during planning.\n\n1. **Adapt shared agent store and strict registered-agent resolver (cand-010).** Consolidate resolution for explicit IDs across REST runs, MCP entrypoints, chat, actors and continuation around persisted-first semantics and the existing turn kernel. Only an omitted agent selection may choose the default. Explicit missing agents and persistence errors remain errors. Catalog mutation is admin-owned; run clients select authorized IDs. Boss links to a stored artifact instead of rebuilding it each turn. Native/compiled imported agent semantics must survive intact.\n2. **Pin artifact source and revision per run.** A new run resolves the selected catalog revision once; source, revision/content hash and the non-secret artifact snapshot become run/checkpoint provenance. Resume uses that snapshot and reauthorizes resources, not current mutable catalog contents. No tokens in persisted artifacts. Existing inline API remains an explicit compatibility mode, separately marked. Existing Boss agents gain a managed catalog mapping on first use, with content hash, update conflict and detach semantics rather than silent overwrites.\n3. **Adapt UAR REST services, not its standalone application shell (cand-011).** Use typed main-process adapters into mounted route families; add narrowly missing APIs for actual requested administration. Existing frontend is contract/reference material only, because path mismatches and sidecar SPA absence are observed. Renderer does not accept arbitrary REST URLs. Route coverage is an implementation ledger with methods, UI/action, auth, availability and application lifecycle; optional and host-controlled functions remain visible with reasons.\n4. **Separate stored choices from active runtime state.** Extend capability/schema metadata to identify live, next-turn, restart, host-controlled and unavailable settings. Wire consumers for advertised editable keys, preserve API settings over initial YAML seed, return per-field errors for partial saves, and publish effective revisions only after application. Do not expose inert toggles as successful functionality. Provision settings-admin authority separately in Boss main and retain current launch guard and session principals.\n5. **Reuse credentials carefully (cand-012).** UAR's provider settings method serializes the whole ProviderConfig (manager.rs:863); masking ProviderView is insufficient for secret storage. Boss-linked provider credentials stay in Boss protected storage and are granted for the relevant run or nonconversation operation. UAR-owned persistent credentials must use its encrypted credential store, with a protected deployment key, and secret references in ordinary settings. Existing embedded and remote records need an explicit migration/rollback that preserves references and does not log plaintext. No new general secret vault service. Scope administrative catalogs globally where already runtime-global; use explicit authorized owner scopes for personal KB/presentations/runs, not a shared session principal.\n6. **Reuse presentation policy and approved A2UI renderer (cand-013).** Existing owner/revision CRUD is reusable. Add persistent custom schema/component catalog operations and referential validation where missing. Builtins stay read-only. Publish/share admin-owned presentation entries with explicit read/assignment scope so session agents can use them without impersonating the admin. Only known renderer components are executable; schema catalogs are declarative. Preserve AG-UI v1/agui_spec replay, approval and ownership contracts; UI display preferences must not silently change wire protocol.\n\n## Issue #296 — reuse run-owned transport; close the remote trust gap\n\nThe issue proposes several possible remedies. Its substantive requirement is per-run human/tenant authority reaching the downstream MCP server. The inspected code already isolates loopback run headers in a dedicated binding cache. Adopt that design (cand-014), extended through an explicit trusted-host admission path. Do not recreate a transport per tool call and do not mutate a process-global header map.\n\n- Add optional static header/secret-reference configuration for RemoteHttp, resolved into private frozen binding inputs. Preserve existing url/env configurations. Static headers prove a service identity only.\n- General remote grants refer to a registered destination and arrive from a verified host/BFF authorized to delegate that principal. Derive tenant/user from verified authentication/delegation, not model arguments or an arbitrary x-tenant header. Reuse UAR's existing issuer/audience verifier and principal types, adding a trusted delegation capability and destination policy where absent. Keep the Boss sidecar's loopback host-launch guard; remote outbound access does not authorize a remote listener or weaken incoming authentication.\n- Use a downstream-specific token issued for the MCP resource, separate from the UAR API/launch token. A trusted BFF may supply this credential through authenticated run admission; UAR does not pretend it can validate opaque token claims. The configured issuer/downstream verifier enforces audience, expiry and scopes. Retain host-authorized expiry and credential revision in private run resource metadata; keep secret bytes out of catalog hashes, JSON, checkpoints and logs.\n- Use one isolated transport/session per run and selected server credential revision, reused for that run's calls. Transport configuration includes identity on initialization, discovery, calls, SSE/reconnect and cleanup. Cache identity includes owner, run, destination and non-secret credential revision. Static and run headers merge only by explicit declaration; ambiguous duplicates and transport-owned headers are rejected. Never implicitly copy inbound headers. Preserve destination scheme/address policy, no redirect credential forwarding, and no ambient proxy leaks.\n- Expiry or revocation stops new calls with auth_required. A trusted host may reattach a fresh same-owner grant at a safe step/continuation boundary; invalidate the old binding and establish a new session, then re-project tools. No model-controlled credential refresh, no silent widening, and no automatic replay of an uncertain mutating call. A missing renewal source is an actionable auth-required result, not fallback to another tenant or global service key. Bound cleanup and revoke run credentials on cancel/end.\n- Local delegated children receive narrowed frozen bindings; remote peers obtain their own authenticated root grants. Catalog MCP references select from the authorized host universe, never embed live credentials or override its authority.\n\nThis supplies a run-specific identity on every outbound request. Arbitrary identity changes within one run are deliberately rejected; per-call authorization can narrow the effective grant but cannot switch tenant. A custom dynamic rmcp transport is unnecessary for this requirement and is rejected (cand-015). If future callers require a different identity per call, that is a distinct authorization contract, not mutable ambient state.\n\nSDK evidence: UAR pins rmcp =3.1.2; its installed StreamableHttpClientTransportConfig has auth_header/custom_headers and the worker copies those into request/reconnect/cleanup. Context7 current documentation confirms the general API but is not substituted for pinned source. No automatic bump to Compass's =3.4.0. Firecrawl located the official MCP security guidance; identity/audience separation is consistent with its token-passthrough prohibition: https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices . Review claims are source-based; actual concurrency, reconnect and expiry behavior awaits the completed integration gate.\n\n## Revision 2 research accounting and choices\n\nNo new admin framework or MCP transport dependency is selected. Tier1 uses inspected existing source and the linked GitHub issue; Tier2 used Context7 resolve/query (2) and pinned crate source; Tier3 is not needed because no new dependency is selected; operator-requested Firecrawl search (1) plus official page retrieval supplied the protocol security reference. Existing research from revision1 remains valid for Docker/TOML/gateway. The bounded external lookup completed within20 minutes, with each tier below8 queries; further work is local application design. No claim of a new package maintenance survey.\n\nFull administration is materially larger than storage settings. Deliver runtime correctness/catalog first, complete admin capabilities/models second, agent/presentation experience third, then original service/Compass/gateway increments. No intermediate unit loops; each slice ends in one real integrated demonstration. All required slices precede release. Lower-priority platforms do not delay Windows x64 or Apple Silicon. Before execute, show the revised plan and wait for operator review.\n",
+  "goals": "# Goals — integration-administration\n\n- Configure UAR with retained embedded storage or explicitly selected compatible existing SurrealDB, including full-pack installations.\n- Deliver dedicated UAR, Compass, liter-llm and Services settings with persisted schema-backed configuration, full internationalization and narrow upstream integration seams.\n- Deliver visible operation progress/results/recovery and complete retained logs; administer project enablement/indexing/drift and gateway providers/models/critic/judge/backup.\n- Build and publish BOTH Windows x64 and Mac Apple Silicon as essential customer platforms, updating GitHub release metadata and website per completed platform.\n- Follow assess → analyze → plan → execute → reflect without skipping, and retain the goal until installed Windows acceptance.\n\n## Revision 2 — operator additions, 2026-09-24\n\n- Make The Boss the complete administration face of UAR, with an internal UAR navigation and coverage of every available REST route family, including runtime models, agent definitions/catalog, skills, A2UI/presentations, AG-UI, knowledge, security and protocols.\n- Correct UAR and Boss execution to use the authoritative registered agent catalog as designed. Catalog editing must affect selected future runs without replacing definitions with simplified host-generated artifacts.\n- Resolve UAR issue #296: authenticated outbound remote MCP with run-specific identity, preserving tenant isolation, frozen policy, governance, reconnect and credential lifecycle. Static headers alone are not completion.\n- Re-run assess → analyze → plan for these additions, obtain independent adversarial review, and SHOW the revised plan for operator changes before execute. The earlier execute-start handoff is superseded; no production code is authorized by this revision until that review.\n",
+  "constraints": "No claims of installed verification from static inspection. No unit loops. Protect external installations and secrets. Scope is operator-reported defects and explicit administration requirements. Planning only. Judge architecture against pinned source evidence; no tests/builds run. Scope includes UAR admin, catalog correction, remote MCP tenant identity issue296. Existing source is preferred over new frameworks.",
+  "file_tree": [
+    "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini",
+    "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar",
+    "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar",
+    "/Users/gqadonis/Projects/references/compass",
+    "tools/liter-llm"
+  ],
+  "truncation": {
+    "cap_bytes": 40000,
+    "fields": {
+      "artifact": {
+        "bytes": 15120,
+        "truncated": false
+      }
+    }
+  },
+  "candidates": {
+    "phase": "integration-administration",
+    "generated_at": "2026-09-24T08:08:01.223Z",
+    "mode": "stack-specified",
+    "candidates": [
+      {
+        "id": "cand-001",
+        "gaps": [
+          "G1",
+          "G2"
+        ],
+        "candidate": "Existing UAR PersistenceConfig and SurrealDB 3.2.4 any engine",
+        "verdict": "adapt",
+        "confidence": "high",
+        "source": "UAR src/config.rs:676; src/uar/persistence/providers/surreal.rs:20-60; https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/index/languages/rust.mdx",
+        "evidence": "URL/user/password/ns/db already exist, SDK supports remote and embedded, but UAR signs in as Root only.",
+        "work_required": "Add auth scope and reuse existing provider/engine; Boss resolves selected config and reports effective backend. Keep exact current SurrealDB pin."
+      },
+      {
+        "id": "cand-002",
+        "gaps": [
+          "G4"
+        ],
+        "candidate": "Boss integration operation runner plus existing typed IPC lifecycle",
+        "verdict": "adapt",
+        "confidence": "high",
+        "source": "Boss integrationProcess.ts; PrometheusIntegrationService.ts; shared/ipc/schemas/prometheus.ts",
+        "evidence": "Already owns cancellable processes and operation IDs, but tail caps at 262144 and UI polls; no durable cursor/full logs.",
+        "work_required": "Durable log/state adapter and ordered events, per-target locks, redaction before persistence, cross-platform process-tree cancellation. No second operation engine."
+      },
+      {
+        "id": "cand-003",
+        "gaps": [
+          "G5",
+          "G6"
+        ],
+        "candidate": "Compass check-update marker command",
+        "verdict": "reject",
+        "confidence": "high",
+        "source": "Compass crates/compass-cli/src/integration_commands.rs:299-313",
+        "evidence": "Only checks output_root()/needs_update existence; returns empty success otherwise. Cannot demonstrate source freshness.",
+        "work_required": "Do not use as source-drift evidence."
+      },
+      {
+        "id": "cand-004",
+        "gaps": [
+          "G5",
+          "G6"
+        ],
+        "candidate": "Compass detect/Manifest and immutable BuildGuard used by doctor",
+        "verdict": "adapt",
+        "confidence": "high",
+        "source": "Compass crates/compass-cli/src/agent_commands.rs:1199-1269; crates/compass-files/src/manifest.rs",
+        "evidence": "Doctor resolves snapshot, detects corpus, compares manifest hashes; is_unchanged compares added/deleted sets. Existing hashes use mtime shortcut.",
+        "work_required": "Expose structured freshness with explicit graph/output and saved extraction config identity. Use complete content checks for requested drift check; report empty/missing/invalid manifests explicitly. Reuse source inclusion/extraction options rather than duplicate scanner."
+      },
+      {
+        "id": "cand-005",
+        "gaps": [
+          "G7",
+          "G8"
+        ],
+        "candidate": "liter-llm provider/model catalogs and ProxyConfig parser/watch",
+        "verdict": "adapt",
+        "confidence": "high",
+        "source": "liter-llm schemas/providers.json; schemas/catalog.json; proxy config/mod.rs:426; CLI commands/api.rs",
+        "evidence": "providers lists capability metadata; catalog models supply choices; ProxyConfig::from_toml_str validates actual config; --watch exists; CLI currently only Api/Mcp, no nonstarting check command.",
+        "work_required": "Package both catalogs from merged fork. Add minimal nonstarting config-check CLI that invokes parser, emits redacted structured errors, and bundle native liter-llm CLI for both customer platforms. Use native binary manager; users require no Rust toolchain."
+      },
+      {
+        "id": "cand-006",
+        "gaps": [
+          "G8"
+        ],
+        "candidate": "smol-toml existing Boss dependency",
+        "verdict": "adopt",
+        "confidence": "high",
+        "source": "Boss package.json:157; https://github.com/squirrelchat/smol-toml",
+        "evidence": "Already available for parse/stringify. Registry latest 1.9.0 dated 2026-09-22; no upgrade needed solely for this feature. Plain stringify does not preserve original comments/layout.",
+        "work_required": "Use existing pinned version for read/model conversion only; reject whole-document parse/stringify for external config editing."
+      },
+      {
+        "id": "cand-007",
+        "gaps": [
+          "G8"
+        ],
+        "candidate": "@rainbowatcher/toml-edit-js 0.6.5",
+        "verdict": "adopt",
+        "confidence": "medium",
+        "source": "https://github.com/rainbowatcher/toml-edit-js; tests/array_edit.test.ts; src/ops/set.rs",
+        "evidence": "Rust toml_edit compiled to WASM supports value/delete/array-of-table indexed edits and preserves local decor. Source/tests inspected, not executed. Registry version 0.6.5 modified 2026-03-13.",
+        "work_required": "Pin dependency and package WASM as main-process resource. Edit individual fields in selected tables, preserve other sections and environment references. Verify comment preservation and WASM packaged loading in completed Gate C on both platforms, not a standalone prototype suite."
+      },
+      {
+        "id": "cand-008",
+        "gaps": [
+          "G3",
+          "G4"
+        ],
+        "candidate": "Existing mini Compose service runner and Docker Desktop host networking",
+        "verdict": "adapt",
+        "confidence": "high",
+        "source": "mini docker/compose.yaml; https://docs.docker.com/desktop/features/networking/networking-how-tos/; https://docs.docker.com/reference/cli/docker/compose/up/",
+        "evidence": "Current compose hardwires memory to ws://surrealdb:8000 and depends_on surrealdb. Desktop documents host.docker.internal; compose --wait waits running/healthy only.",
+        "work_required": "Generate selected managed subset and endpoint config, remove dependencies on external DB, translate container-to-host endpoints separately from host clients, preserve loopback port bindings and named volumes. Check accessibility from actual container and distinguish health from auth/application function."
+      },
+      {
+        "id": "cand-009",
+        "gaps": [
+          "G9",
+          "G11",
+          "G12",
+          "G13"
+        ],
+        "candidate": "Boss SettingsPrimitives, UI package, Preference generator and IPC registries",
+        "verdict": "adopt",
+        "confidence": "high",
+        "source": "Boss settingsMenu.ts; routes/settings/prometheus.tsx; scripts/data-classify/README.md; shared/ipc/schemas/prometheus.ts; main/renderer i18n/locales",
+        "evidence": "Existing additive registration points and generated Preference definitions. Both locale catalogs have 13 files. Upstream main changed renderer locale files since inspected checkout.",
+        "work_required": "Separate feature pages, narrow registration edits, feature-scoped revisioned config updates, generate schemas, translate new keys in both applicable catalogs. No new settings framework."
+      },
+      {
+        "id": "cand-010",
+        "gaps": [
+          "G15",
+          "G16"
+        ],
+        "candidate": "UAR agent_store, resolve_registered_agent and immutable turn kernel",
+        "verdict": "adapt",
+        "confidence": "high",
+        "source": "src/uar/domain/agent_store.rs; src/uar/runtime/manager.rs:1778; openspec/specs/turn-assembly-kernel/spec.md",
+        "evidence": [
+          {
+            "tier": 1,
+            "source_url": "src/uar/domain/agent_store.rs; src/uar/runtime/manager.rs:1778; openspec/specs/turn-assembly-kernel/spec.md",
+            "claim": "Shared CRUD and strict actor resolver already exist; Boss and REST create bypass registered selection."
+          }
+        ],
+        "work_required": "Unify explicit-ID resolution, pin artifact snapshots, catalog revisions and host-resource admission."
+      },
+      {
+        "id": "cand-011",
+        "gaps": [
+          "G14",
+          "G17",
+          "G18",
+          "G21",
+          "G24"
+        ],
+        "candidate": "Mounted UAR REST services and Boss typed settings shell",
+        "verdict": "adapt",
+        "confidence": "high",
+        "source": "src/server.rs; src/uar/api/settings.rs; frontend/src/pages/admin-page.tsx",
+        "evidence": [
+          {
+            "tier": 1,
+            "source_url": "src/server.rs; src/uar/api/settings.rs; frontend/src/pages/admin-page.tsx",
+            "claim": "Broad routers exist but admin capability/apply contract is incomplete, SPA unavailable in sidecar."
+          }
+        ],
+        "work_required": "Main-only allowlisted adapters, admin authority, route coverage and missing administration metadata."
+      },
+      {
+        "id": "cand-012",
+        "gaps": [
+          "G17",
+          "G19"
+        ],
+        "candidate": "UAR encrypted credentials and Boss protected secret store",
+        "verdict": "adapt",
+        "confidence": "high",
+        "source": "src/uar/settings/manager.rs:850; src/server.rs credential initialization; src/uar/api/credentials.rs",
+        "evidence": [
+          {
+            "tier": 1,
+            "source_url": "src/uar/settings/manager.rs:850; src/server.rs credential initialization; src/uar/api/credentials.rs",
+            "claim": "Provider configs are serialized whole; encrypted credential service is separate and optional."
+          }
+        ],
+        "work_required": "Secret references, protected key lifecycle, scoped credential brokerage for all configured consumers and explicit migration."
+      },
+      {
+        "id": "cand-013",
+        "gaps": [
+          "G20",
+          "G21"
+        ],
+        "candidate": "UAR presentation CRUD, A2UI registry and agui_spec contract",
+        "verdict": "adapt",
+        "confidence": "high",
+        "source": "src/uar/api/presentations.rs; src/uar/a2ui/routes.rs; docs/protocols/ag-ui-profile.md",
+        "evidence": [
+          {
+            "tier": 1,
+            "source_url": "src/uar/api/presentations.rs; src/uar/a2ui/routes.rs; docs/protocols/ag-ui-profile.md",
+            "claim": "Presentation CAS exists, schemas/components have partial lifecycle; AG-UI replay exists."
+          }
+        ],
+        "work_required": "Persistent custom catalog lifecycle and safe approved rendering, owner sharing, run administration."
+      },
+      {
+        "id": "cand-014",
+        "gaps": [
+          "G22",
+          "G23"
+        ],
+        "candidate": "RunMcpConnector and rmcp 3.1.2 snapshot transport",
+        "verdict": "adapt",
+        "confidence": "high",
+        "source": "src/mcp/runtime.rs:66; src/uar/runtime/turn/host/mcp.rs:56; src/mcp/registry.rs:745; https://github.com/Prometheus-AGS/universal-agent-runtime/issues/296",
+        "evidence": [
+          {
+            "tier": 1,
+            "source_url": "src/mcp/runtime.rs:66; src/uar/runtime/turn/host/mcp.rs:56; src/mcp/registry.rs:745; https://github.com/Prometheus-AGS/universal-agent-runtime/issues/296",
+            "claim": "Run-owned headers already reach loopback transport; RemoteHttp config lacks headers and remote grants are refused."
+          }
+        ],
+        "work_required": "Extend trusted host admission, static secret references, exact destination grants, frozen run identity and safe renewal at boundaries."
+      },
+      {
+        "id": "cand-015",
+        "gaps": [
+          "G23"
+        ],
+        "candidate": "Mutable per-call headers on one shared MCP session",
+        "verdict": "reject",
+        "confidence": "high",
+        "source": "openspec/specs/mcp-runtime-projection/spec.md; pinned rmcp transport source",
+        "evidence": [
+          {
+            "tier": 1,
+            "source_url": "openspec/specs/mcp-runtime-projection/spec.md; pinned rmcp transport source",
+            "claim": "Existing run-owned cache and frozen snapshots solve per-run identity without shared mutable credentials."
+          }
+        ],
+        "work_required": "Reject ambient or global mutable identity; fresh binding on credential revision."
+      }
+    ],
+    "build_required": [
+      {
+        "id": "build-001",
+        "gap": "G3",
+        "rationale": "Discovery adapters for actual full-pack service metadata plus manual endpoints; markers alone are not service discovery."
+      },
+      {
+        "id": "build-002",
+        "gap": "G7",
+        "rationale": "Provider connections/model roles and canonical identity resolution are application-specific; reuse catalogs and transport."
+      },
+      {
+        "id": "build-003",
+        "gap": "G10",
+        "rationale": "Native artifacts, packaging and installed acceptance for both customer platforms."
+      },
+      {
+        "id": "build-004",
+        "gap": "G24",
+        "rationale": "Versioned admin capability/apply/route coverage contract and typed Boss adapters."
+      },
+      {
+        "id": "build-005",
+        "gap": "G16",
+        "rationale": "Catalog provenance/revision snapshots and Boss catalog links."
+      },
+      {
+        "id": "build-006",
+        "gap": "G23",
+        "rationale": "Trusted remote grant admission and expiry/renewal ownership on existing run-scoped resources."
+      }
+    ],
+    "open_questions": [],
+    "research_limits": {
+      "max_queries_per_tier": 8,
+      "max_minutes": 20,
+      "within_budget": true
+    },
+    "research_budget": {
+      "revision": 2,
+      "max_queries_per_tier": 8,
+      "max_minutes": 20,
+      "queries_used": {
+        "tier1": 1,
+        "tier2": 2,
+        "tier3": 0,
+        "tier4": 2
+      },
+      "notes": "Reuse source inspection and linked issue; no new dependency selected. Firecrawl plus official retrieval requested by operator."
+    }
+  }
+}

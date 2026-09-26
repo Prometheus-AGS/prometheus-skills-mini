@@ -1,0 +1,31 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "analysis.md",
+      "line": 0,
+      "claim": "The analysis contains contradictory process status about whether the assessment review passed.",
+      "evidence": "The opening states: \"Inputs: assessment.md (review round 2 PASS)\" but Revision 2 says: \"Assessment review reached its two-round cap with a release-baseline finding; no assertion that it passed.\"",
+      "suggested_fix": "Remove the PASS claim or replace it with the later corrected status, and state what the unresolved release-baseline finding requires before planning."
+    },
+    {
+      "severity": "WARNING",
+      "file": "library-candidates.json",
+      "line": 0,
+      "claim": "The candidate ledger uses gap IDs that are not defined in the packet, making coverage of goals and assessment findings untraceable.",
+      "evidence": "Candidates reference opaque IDs such as \"G1\", \"G2\", \"G14\", \"G24\" in their \"gaps\" arrays, but the provided goals list has no G-numbered identifiers and the artifact includes no gap legend mapping those IDs to concrete findings.",
+      "suggested_fix": "Add a gap-definition table or include the assessment gap text with each candidate so downstream planning can verify every goal/finding is covered."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

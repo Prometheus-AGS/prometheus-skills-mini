@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-24T23:24:21Z",
+  "host": {
+    "platform": "darwin",
+    "architecture": "arm64"
+  },
+  "selectedSources": {
+    "theBoss": {
+      "path": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar",
+      "commit": "749278ad2e2e9d1cc2295ef109eb12c0db492984",
+      "tree": "a190a9fadb2e4c92fa7681e11a4a1c14deabc084",
+      "version": "2.2.0",
+      "originMain": "f1314b46ad464aedb5d446c586a824b326bae7a4",
+      "lockSha256": "9d9b3ab25f5129a989eb62de11194ad0b713d94c28f1fe019cc234de8ccf2e71"
+    },
+    "uar": {
+      "path": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar",
+      "commit": "a50b9ce419fd8a66778b5ed5de5a62779451ec70",
+      "tree": "5b86ad2ea0aecfb25eb34f80cc18ecf0d4f4862f",
+      "version": "1.0.0",
+      "originMain": "c29af47be3439c69e1a3c124fdcf09ce4cbb5cba",
+      "cargoTomlSha256": "bca142f05205815a6a2b109d18d30a6189518808437352ed950947b69be57a21",
+      "cargoLockSha256": "7bdb571b7256ad210eb9cfa62b3e4ef979145da00920c31f3a47afb964470cba",
+      "pnpmLockSha256": "2c835619e74a6592892a5448e00d303ee2b5b996edc28d4618da3e6611898f1f"
+    },
+    "literLlm": {
+      "path": "/Users/gqadonis/.claude/worktrees/liter-uar-host-transport",
+      "commit": "046c998eaf86ff46512a64723613c736b5b313f9",
+      "tree": "03af54efd34efb2dc3d3b6a918e554dc012d8cd0",
+      "originMain": "928c41a6e882bff13f372fac1fb4f237efbe4874",
+      "cargoTomlSha256": "dc1a03b2b7ff58dba6c881a2063faec8c06490fddc81f91052dca1b5c1b7d03c",
+      "cargoLockSha256": "8acc453a47303faf02bc724601cb974b73a8c78c009838c7b7e87a9feeee9a33"
+    }
+  },
+  "recursivePins": {
+    "theBoss": {
+      "resources/prometheus-skills-mini": "86b2c7e1a7ea21d416782ed90fba19e496f02f88",
+      "resources/prometheus-skills-mini/tools/liter-llm": "c5c6caac617eb931cd5009146a70831422ec236c",
+      "resources/prometheus-skills-mini/tools/prometheus-knowledge": "abb6745e31da7577611d7c32005af26a72254484",
+      "resources/prometheus-skills-mini/tools/surreal-memory-server": "6acb60565949334beda22f52bcd36b33895b1db6"
+    },
+    "uar": {
+      "crates/prometheus-skill-system": "e57421a86fae08ac4d1e3a625a213cf3f3eb98bc",
+      "frontend/packages/prometheus-entity-management": "959839a88e65704014bab0bdd055df17fb210298",
+      "models.dev": "f97df19af40bc322ccbffc91138f360154940a63",
+      "vendor/git/liter-llm": "046c998eaf86ff46512a64723613c736b5b313f9",
+      "vendor/git/rust-mcp-filesystem": "21f5f684c0a15a7536b947c5c02a8949e49d3062"
+    }
+  },
+  "buildSelection": {
+    "theBossProfile": "development application for Gate B0; release packaging remains a later change",
+    "uarBinary": "universal-agent-runtime",
+    "uarFeatures": [
+      "minimal",
+      "local-models",
+      "document-intelligence",
+      "wasm-runtime"
+    ],
+    "integrationSourceManifestSha256": "6b9a95581d98bebe5d4153e18c974dfe2d6d195c516b1a5808258461436a019f",
+    "integrationPayloadManifestSha256": "2ca989af44e0eea2e6e76b04e1a3d249fa3f2d1e607580d5fec271a45734493c",
+    "recordedPayloadUarSource": "c29af47be3439c69e1a3c124fdcf09ce4cbb5cba",
+    "recordedPayloadUarSha256": "849aacc54e4e9a695699420f6b042d1c0126905d4005c16447e535782f1917ea",
+    "recordedPayloadPlatform": "win32-x64",
+    "payloadMatchesSelectedSource": false
+  },
+  "observedExecutables": {
+    "installedTheBoss": {
+      "path": "/Applications/The Boss.app/Contents/MacOS/The Boss",
+      "version": "2.1.3",
+      "size": 52976,
+      "sha256": "6625b2a771e2a30531ea02a527cfdadf4b0ed7a94a76584c3d54e2bff38f0218",
+      "appAsarSha256": "9a70b7098aa86f7d41a263d2aed1befb651e57b5366a28ced4d37de35f4c2b13",
+      "matchesSelectedSource": false
+    },
+    "preexistingUarDebug": {
+      "path": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar/target/debug/universal-agent-runtime",
+      "reportedVersion": "1.0.0",
+      "size": 296978296,
+      "modifiedAt": "2026-09-24T08:58:55Z",
+      "sha256": "756a0da5f9a3f78521705f4c039d936dc182289af8cc6f8c2f2aa62aa2ec5c21",
+      "matchesSelectedSource": "unproven; binary predates the selected source commits"
+    }
+  },
+  "sanitizedGateConfiguration": {
+    "provider": "ephemeral loopback OpenAI-compatible fixture",
+    "providerCredentialsCaptured": false,
+    "workspace": "fresh disposable directory",
+    "filesystemServer": "@cherry/filesystem",
+    "filesystemWriteArgument": "file_path",
+    "toolApproval": "ask",
+    "uarSidecarOverride": "THE_BOSS_UAR_SIDECAR_PATH",
+    "secretValuesCaptured": false,
+    "endpointPortsCaptured": false
+  },
+  "boundaryPair": {
+    "status": "built-gate-blocked",
+    "theBoss": {
+      "commit": "749278ad2e2e9d1cc2295ef109eb12c0db492984",
+      "buildCommand": "pnpm build",
+      "mainSha256": "0ad8dbd91756047e212fa6647eea249f6394b4fbb11ed6b4b04b2264e78c64af",
+      "preloadSha256": "9a1afe7ac20bbda0f63e93864c67c2b2aa26ccfa6382f43c08aedcdb56af8a92",
+      "rendererEntrySha256": "134360aa10103d7b6eaa62ac0092a3c3f2d29ec7ce51e1536083158f3387de22",
+      "electronSha256": "d3762bdff983315f18c07c3754175c4aa5b49d80977e1c33eb226b8189b447ed"
+    },
+    "uar": {
+      "commit": "a50b9ce419fd8a66778b5ed5de5a62779451ec70",
+      "buildCommand": "cargo build --bin universal-agent-runtime --features minimal,local-models,document-intelligence,wasm-runtime",
+      "path": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar/target/debug/universal-agent-runtime",
+      "size": 384397592,
+      "sha256": "aaa655e9b581ba00959f6bec5bb4aca72ff355b99e69971286e15648c0dbd4fe"
+    },
+    "gateB0": {
+      "ranAt": "2026-09-24T23:22:00Z",
+      "result": "blocked-before-runtime-flow",
+      "firstDecisiveFailure": "UAR sidecar exited before readiness because its configured loopback address was already in use (os error 48).",
+      "scope": "The production-path catalog-to-conversation-to-UAR-to-MCP flow did not begin; no later assertion result is claimed.",
+      "evidence": "evidence/baseline/gate-b0/playwright"
+    }
+  }
+}

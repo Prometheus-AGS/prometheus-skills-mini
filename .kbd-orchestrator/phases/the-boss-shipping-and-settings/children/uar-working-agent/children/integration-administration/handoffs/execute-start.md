@@ -1,5 +1,7 @@
 # Execution starting point
 
+> SUPERSEDED / EXECUTION HOLD — 2026-09-24 revision2. The operator explicitly requested review of the expanded plan BEFORE execution. Read the new plan.md and revision2 handoffs. The text below is historical context only; its earlier execution authorization is withdrawn. New scope includes all UAR administration, authoritative catalog execution and issue296. Do not invoke execute or switch models until the operator reviews and authorizes the revised plan.
+
 The operator authorized execution and all necessary commits, pushes, merges, GitHub releases and landing-site publication. Latest priority: Windows x64 AND Apple Silicon are essential. No IPFS. No unit/per-edit test loops. Use GPT-5.6-sol for execution; planning used GPT-6 Astra.
 
 ## Lifecycle

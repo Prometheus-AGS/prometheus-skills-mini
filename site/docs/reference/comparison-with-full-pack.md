@@ -5,15 +5,35 @@ sidebar_label: Comparison
 
 # Comparison with `prometheus-skill-pack`
 
-This page reflects the tree as of commit `8497ae8` ("port the KBD process orchestrator and 49
-skills to Windows-native Node") — the Phase C port that closed the KBD/adversarial-review/
-ideation-mindmap/distribution gap. Every claim below is checked against the actual `skills/`,
-`lib/`, `scripts/`, and `docker/` trees, not against this repository's own earlier planning
-documents, which predate that commit and are stale in places (notably, an earlier `README.md`
-revision stated flatly "the foundation is built and verified; the port itself has not started" —
-that sentence is no longer true for the KBD family).
+The current mini distribution contains **97 skills**, including **40 portable UI/UX entries**
+from a shared 41-entry catalog. Selected React/Vercel and mobile UI guidance is now included;
+the broader entity-management, DevOps and testing families remain outside this port.
 
-## What is ported and real today
+## UI/UX and project teams
+
+| Capability | Current scope |
+| --- | --- |
+| Shared UI/UX protocol and router | Context first, project protocol override, focused Pro Max query, one craft selection and manifest-based platform guidance. |
+| Taste selection | New work uses the actual model family; explicit redesign uses redesign guidance. Refinement and review exclude taste and overlays. |
+| Pro Max | TypeScript 7 with shipped Node ESM and pinned assets; no Python, runtime download or extra service. |
+| Impeccable | Full-only native engine is excluded. Mini carries bounded `prometheus-impeccable-core` context/workflow guidance, without native detector/browser parity. |
+| Completed-phase review | `phase-boundary` emits an unexecuted evidence contract; `prometheus-ui-review` requires independent read-only review and real acceptance evidence. User-only skills remain user-only. |
+| Project teams | Creator `install-project` installs discovery records/instructions and missing native definitions. Explicit team selection wins, a sole team is adopted, and ambiguity requires a choice. Export alone remains proposal-only. |
+| Native authority | Existing files, role ownership, permissions, model configuration and concurrency are preserved. Zed instructions are supported; unavailable native delegation uses disclosed sequential role instructions. |
+
+Follow [UI/UX routing and adoption](/docs/ui-ux/overview) and [Agent Teams](/docs/agent-teams/overview).
+The [prior delivery record](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/docs/research/ui-ux-routing/DELIVERY.md)
+records macOS and offline Linux-container integration plus packaged-helper evidence. Native
+Windows execution, live invocation of every harness and full Electron installed-app acceptance
+remain unverified. These are implementation/evidence limits, not current release certification.
+
+## Historical process-port baseline
+
+The following process-port snapshot was recorded at commit `8497ae8` (the Phase C KBD port).
+Its module test totals and older platform gaps describe that boundary only. They do not report
+results from the current documentation change or certify the later UI/team implementation.
+
+### Process capabilities at the recorded boundary
 
 | Capability | Status |
 |---|---|
@@ -42,14 +62,14 @@ These are excluded by explicit constraint, not because porting them was deferred
 | Symlink-based installs | This pack's installer and distribution generator are copy-mode only — the full pack symlinks 11 of 13 install targets, which needs Developer Mode or elevation on Windows. |
 | The Rust execution substrate (`prometheus-exec`, `substrate/*`, the research daemon, the surface bridge) | Unix-socket daemons and sandbox machinery with no Windows-native design; explicitly out of scope for this pack's process-focused architecture. |
 | `prometheus-knowledge`'s HTTP companion (`pk-cherry`) and its learning-worker timer daemon | This pack replaced the timer/worker model with durable receipts flushed opportunistically at SessionStart — see [Karpathy Progress Memory](/docs/karpathy/progress-memory). |
-| React/entity-management skills, DevOps/GitOps skills, BDD/Cucumber testing skills | Deliberately out of this pack's scope; the full pack's breadth in these areas is not being replicated here. |
+| Entity-management, DevOps/GitOps and BDD/Cucumber families | Deliberately outside this port. Selected React/Vercel UI guidance is now included through the UI catalog; that does not add the full entity-development family. |
 | `karpathy-tokenizer` | Despite the name, it trains BPE tokenizers via Python (`rustbpe`, `tiktoken`) — unrelated to Karpathy *logging*, and a Python dependency either way. |
 | `native-agent` / `start-business-build` | Generates a full service stack by design (Docker + surreal-memory + `pk` + liter-llm as *application* dependencies, not this pack's own two services) — out of scope for a process-focused mini pack. |
 
-## Genuine remaining gaps
+## Recorded gaps and acceptance limits
 
-These are things the project has named as still missing, distinct from the deliberate exclusions
-above:
+The UI/team acceptance gaps are listed above. The historical process-port notes below remain
+boundary-scoped records, distinct from the deliberate exclusions:
 
 - **Deep research.** Planned as a checkpoint-only Node port (`openspec/config.yaml`: "deep-research
   ... runs in checkpoint mode only"; the Rust `prometheus-research` server is explicitly not
@@ -80,9 +100,9 @@ above:
 
 ## Skill count
 
-This pack ships **50 skill directories** under `skills/` (confirmed by direct directory listing),
+This pack ships **97 distributed skill directories** under `skills/`,
 versus the full pack's much larger multi-hundred-skill catalog spanning many domains this pack does
-not attempt to cover (React/entity development, DevOps/GitOps, BDD testing, Feynman learning,
+not attempt to cover (entity development, DevOps/GitOps, BDD testing, Feynman learning,
 broad multi-language guidance, native-agent generation, and more). See the
 [Skills Catalog](/docs/catalog) for the complete, generated list.
 

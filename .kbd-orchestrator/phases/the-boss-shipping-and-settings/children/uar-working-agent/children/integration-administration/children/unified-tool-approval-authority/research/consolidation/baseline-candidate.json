@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "status": "proposal-not-buildable-checkpoint",
+  "observedAt": "2026-09-24T22:06:07.815Z",
+  "purpose": "Source selection for consolidation planning; final accepted commit hashes remain unset until WIP recovery and integration.",
+  "repositories": [
+    {
+      "id": "boss",
+      "remoteMain": "f1314b46ad464aedb5d446c586a824b326bae7a4",
+      "integrationHead": "2fa0b4b87f0e8991a97873590d093991b91b395f",
+      "selectedWorktree": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-uar",
+      "action": "checkpoint intended WIP; merge main; align actual source selectors",
+      "acceptedCommit": null
+    },
+    {
+      "id": "uar",
+      "remoteMain": "c29af47be3439c69e1a3c124fdcf09ce4cbb5cba",
+      "integrationHead": "19e2ad1575621fcd76d01d16a8ef96aa5751a843",
+      "selectedWorktree": "/Users/gqadonis/Projects/prometheus/worktrees/uar-the-boss-sidecar",
+      "action": "checkpoint intended WIP; resolve lockfile; retain current main ancestor",
+      "acceptedCommit": null
+    },
+    {
+      "id": "mini",
+      "remoteMain": "2782c3a2d3d0b2bf3b969a5f55352be48b87d7f6",
+      "integrationHead": "4178a489b3b6a9a199447cb63ec826d914af03d4",
+      "selectedWorktree": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini",
+      "action": "preserve canonical state/evidence; merge histories; regenerate projections; pin complete payload",
+      "acceptedCommit": null
+    },
+    {
+      "id": "full-pack",
+      "remoteMain": "add9b48949371f647350ee0d318bfc0672a861ff",
+      "integrationHead": "10a416589b06c5f22f4ca32b3c0414fdd3026603",
+      "action": "preserve source WIP; advance base; regenerate distribution; choose CLI/library source explicitly",
+      "acceptedCommit": null
+    },
+    {
+      "id": "liter-llm",
+      "remoteMain": "928c41a6e882bff13f372fac1fb4f237efbe4874",
+      "requiredDependencyCommit": "e627af981bcb06c7fc5da027731c182b044e25d1",
+      "action": "reconcile host isolation plus streaming WIP against updated main; publish dependency before consumer pin",
+      "acceptedCommit": null
+    },
+    {
+      "id": "compass",
+      "remoteMain": "a403339287c385d4fd48b42759f1e09045a0ac4d",
+      "currentPackagingPin": "d0b9e0fb3cc62a1985bd6a83c5b5ea7798d937f9",
+      "action": "retain packaging provenance; explicit current-main adoption decision; separate legacy preflight recovery",
+      "acceptedCommit": null
+    },
+    {
+      "id": "surreal-memory",
+      "remoteMain": "4ed6b2c79b9a28b56e53f208fcb85306ec443ae2",
+      "currentPackagingPin": "6acb60565949334beda22f52bcd36b33895b1db6",
+      "action": "align accepted auth/API source with mini; recover dependency-update intent without blind lockfile merge",
+      "acceptedCommit": null
+    },
+    {
+      "id": "rust-filesystem",
+      "remoteMain": "cecaae85a1d12b5e02e4c69a4eb80e49c147054c",
+      "currentPackagingPin": "3a8d18233aa666f7cf776d5d998a28e7b2b88d0d",
+      "action": "record explicit adoption or retention; instruction WIP separately preserved",
+      "acceptedCommit": null
+    }
+  ],
+  "behavior": {
+    "status": "not-established",
+    "nextBoundary": "actual built Boss/UAR catalog-to-MCP integration using valid file_path fixture and recorded source/binary/config provenance",
+    "knownFailure": "Existing Gate V zero approvals; malformed fixture confirmed, historical cause not freshly reproduced"
+  },
+  "prohibitedInAnalysis": [
+    "merge",
+    "reset",
+    "rebase",
+    "delete-worktree",
+    "commit-product-wip",
+    "push",
+    "build",
+    "test"
+  ],
+  "refUpdatesCompleted": true
+}

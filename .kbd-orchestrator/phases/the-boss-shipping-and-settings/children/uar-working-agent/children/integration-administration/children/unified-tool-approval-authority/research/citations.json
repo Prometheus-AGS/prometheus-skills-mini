@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "claims": [
+    {
+      "id": "C1",
+      "claim": "Gate V emits path but the selected built-in write schema requires file_path",
+      "label": "verified",
+      "basis": "static-source",
+      "sources": [
+        "local:Boss Gate V:119",
+        "local:Boss filesystem write.ts:8"
+      ]
+    },
+    {
+      "id": "C2",
+      "claim": "This mismatch caused the historical zero-prompt result",
+      "label": "inferred",
+      "basis": "validation precedes approval; saved tool error absent",
+      "sources": [
+        "local:UAR orchestrator.rs:2309",
+        "local:error-context.md"
+      ]
+    },
+    {
+      "id": "C3",
+      "claim": "Boss Ask handling can resolve automatically under permissive local modes",
+      "label": "verified",
+      "basis": "static-source",
+      "sources": [
+        "local:UarToolApprovalController.ts:139"
+      ]
+    },
+    {
+      "id": "C4",
+      "claim": "Bridge consumes a tool+args FIFO entry without matching incoming call ID",
+      "label": "verified",
+      "basis": "static-source",
+      "sources": [
+        "local:UarHostMcpBridge.ts:152"
+      ]
+    },
+    {
+      "id": "C5",
+      "claim": "Surveyed live pending callbacks do not establish crash-restorable execution",
+      "label": "verified",
+      "basis": "bounded source observation, not universal impossibility",
+      "sources": [
+        "local:Codex outgoing_message.rs:104",
+        "landscape:OpenCode",
+        "landscape:Gemini",
+        "landscape:DeepSeek"
+      ]
+    },
+    {
+      "id": "C6",
+      "claim": "UAR coordinator plus independent Boss admission is the best bounded correction",
+      "label": "inferred",
+      "basis": "architecture recommendation against actual trust boundary",
+      "sources": [
+        "C3",
+        "C4",
+        "C5"
+      ]
+    },
+    {
+      "id": "C7",
+      "claim": "Pinned MCP metadata API supports the proposed admission transport",
+      "label": "blocked",
+      "basis": "Transport not selected; current docs cannot certify pinned crate",
+      "sources": []
+    }
+  ],
+  "sourceRegistry": "landscape/source-manifest.json",
+  "localRegistry": "local-evidence.json",
+  "primaryDocs": [
+    {
+      "url": "https://docs.ag-ui.com/concepts/interrupts",
+      "snapshot": "raw/approval-primary-1.json",
+      "label": "retrieved-primary-document",
+      "credibility": 90
+    },
+    {
+      "url": "https://docs.langchain.com/oss/javascript/langgraph/interrupts",
+      "snapshot": "raw/approval-primary-2.json",
+      "label": "retrieved-primary-document",
+      "credibility": 90
+    }
+  ]
+}

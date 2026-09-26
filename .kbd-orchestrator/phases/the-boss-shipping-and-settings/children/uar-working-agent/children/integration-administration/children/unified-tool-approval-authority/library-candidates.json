@@ -1,0 +1,236 @@
+{
+  "phase": "unified-tool-approval-authority",
+  "generated_at": "2026-09-24T22:11:47.380Z",
+  "research_budget": {
+    "max_queries_per_tier": 8,
+    "max_minutes": 20,
+    "queries_used": {
+      "tier1": 1,
+      "tier2": 2,
+      "tier3": 0,
+      "tier4": 0
+    }
+  },
+  "gaps_addressed": [
+    "distributed-worktree-baseline",
+    "uncommitted-behavior-provenance",
+    "payload-source-drift",
+    "approval-execution-identity",
+    "policy-precedence-and-execution-ownership",
+    "exact-call-identity-and-transport",
+    "renderer-display-and-secret-boundary",
+    "reconnect-children-cancellation-restart",
+    "crash-recovery-and-edited-call-semantics"
+  ],
+  "candidates": [
+    {
+      "id": "cand-001",
+      "name": "Existing Git worktree, commit and merge-tree mechanisms",
+      "kind": "pattern",
+      "registry": "none",
+      "repo_url": "https://github.com/git/git",
+      "verdict": "adopt",
+      "fit_for_gap": "Preserve source provenance and consolidate histories without directory copying",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/git/git",
+          "claim": "Official source repository located via gh search repos; local Git is 2.54.0."
+        },
+        {
+          "tier": 2,
+          "source_url": "https://git-scm.com/docs/git-merge-tree",
+          "claim": "merge-tree inspects committed merge without changing index/worktree; actual simulations retained under research/consolidation/."
+        }
+      ],
+      "risks": [
+        "Merge simulation omits dirty/untracked changes and does not establish behavior",
+        "Bundle alone omits working files"
+      ],
+      "decision_rationale": "Already installed, sufficient; no added consolidation framework."
+    },
+    {
+      "id": "cand-002",
+      "name": "Existing KBD canonical state and replica/conflict interfaces",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "adapt",
+      "fit_for_gap": "Resolve mini generated projection conflicts without choosing one worktree's process history",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Installed prometheus kbd help exposes replicas, conflicts, resolve, status and typed phase/stage transitions; mini conflicts are current-waypoint.json and position.json."
+        }
+      ],
+      "risks": [
+        "Canonical state/replica evidence must be preserved separately from Git",
+        "Operator-signed adjudication may be required for genuine conflicts"
+      ],
+      "decision_rationale": "Preserve one shipping identity; independent convergence KBD identity remains separate."
+    },
+    {
+      "id": "cand-003",
+      "name": "Existing integration-sources and tool/payload manifests",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "adapt",
+      "fit_for_gap": "Bind source baseline, dependency closure and actual binaries across repositories",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Active Boss build/integration-sources.json pins UAR c29af47be3 and mini 86b2c7e1a7 while active source has later changes; UAR vendor Liter pin differs from mini."
+        }
+      ],
+      "risks": [
+        "Manifest consistency alone does not prove deployed binary provenance",
+        "Operator-authored versions.toml cannot be silently edited"
+      ],
+      "decision_rationale": "Extend existing manifest contracts, avoid a new registry or daemon."
+    },
+    {
+      "id": "cand-004",
+      "name": "Codex Rust prepared execution and correlated approval",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "reference",
+      "fit_for_gap": "Approval/execution identity and live pending-request recovery",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Local Codex 986ff1cc7ced: core tools/approvals.rs, tools/orchestrator.rs, codex-mcp/binding.rs and app-server/outgoing_message.rs inspected; integrated landscape report includes source links."
+        }
+      ],
+      "risks": [
+        "Not a drop-in cross-process Boss authorization receipt",
+        "Live callback replay does not guarantee crash continuation or exactly-once effects"
+      ],
+      "decision_rationale": "Closest inspected Rust reference; adapt concepts within existing UAR after baseline consolidation."
+    },
+    {
+      "id": "cand-005",
+      "name": "Wholesale merge or directory-copy every worktree",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "reject",
+      "fit_for_gap": "Apparent one-tree consolidation",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "UAR presentation merge has 80 conflicted paths before dirty work; local configuration and generated files coexist with product WIP."
+        }
+      ],
+      "risks": [
+        "Can resurrect obsolete behavior, lose WIP/identity, or publish private local config"
+      ],
+      "decision_rationale": "Explicit feature recovery and archive disposition are faster and more reliable than absorbing every experiment."
+    },
+    {
+      "id": "cand-006",
+      "name": "Runtime-owned broker with monotonic Boss host admission",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "adapt",
+      "fit_for_gap": "policy-precedence-and-execution-ownership",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "UAR existing broker and Ask preservation; Boss controller disposition and bridge ledger documented in assessment/local evidence."
+        }
+      ],
+      "risks": [
+        "Host auto must not downgrade UAR Ask; independent host deny remains final."
+      ],
+      "decision_rationale": "Extend existing coordinator and adapter; one human decision, independently enforced host restrictions."
+    },
+    {
+      "id": "cand-007",
+      "name": "Prepared invocation and managed MCP metadata admission",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "adapt",
+      "fit_for_gap": "exact-call-identity-and-transport",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Pinned rmcp 3.1.2 CallToolRequestParams exposes _meta; Codex prepared bindings and current Boss FIFO bridge inspected."
+        }
+      ],
+      "risks": [
+        "Metadata is not authority without authenticated control exchange, stored binding and atomic single consumption."
+      ],
+      "decision_rationale": "Use immutable invocation binding and host-issued opaque admission on existing managed channel; no external server schema change."
+    },
+    {
+      "id": "cand-008",
+      "name": "Safe renderer presentation and opaque decision replies",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "adapt",
+      "fit_for_gap": "renderer-display-and-secret-boundary",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Assessment source traces distinguish raw tool arguments from pending decision correlation; Codex app-server maps pending reply IDs."
+        }
+      ],
+      "risks": [
+        "Over-redaction hides effects; insufficient redaction leaks credentials; renderer must not replace arguments."
+      ],
+      "decision_rationale": "Main-process safe display projection with meaningful targets; allow/deny only, edits require a new invocation."
+    },
+    {
+      "id": "cand-009",
+      "name": "Live pending replay with cancellation and epoch invalidation",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "adapt",
+      "fit_for_gap": "reconnect-children-cancellation-restart",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "UAR root/child broker, generation and SSE cursor exist; Codex outgoing request map and pending replay inspected."
+        }
+      ],
+      "risks": [
+        "A live waiter cannot survive process loss; post-dispatch effects may be outcome-unknown."
+      ],
+      "decision_rationale": "Reuse live continuations and single-consumption decisions; invalidate on process restart, audit interruption, no automatic write replay."
+    },
+    {
+      "id": "cand-010",
+      "name": "Transparent durable restart and approval-time mutation",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "reject",
+      "fit_for_gap": "crash-recovery-and-edited-call-semantics",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Inspected Codex replay concerns live callbacks, not a universal durable external-effects transaction."
+        }
+      ],
+      "risks": [
+        "Would require durable execution/idempotency contracts across arbitrary tools and revalidation after argument edits."
+      ],
+      "decision_rationale": "Defer transparent crash continuation; new invocation for edited actions or intentional retry."
+    }
+  ],
+  "build_required": [
+    {
+      "need": "Create scoped recoverable product checkpoints and reconcile dirty work before main integration",
+      "why_no_candidate": "Git preserves objects but cannot determine user intent or whether a legacy feature supersedes current behavior."
+    },
+    {
+      "need": "Reconcile Liter host credential isolation, streaming WIP and actual UAR/mini consumer pins",
+      "why_no_candidate": "Three HTTP transport conflicts and distinct consumer requirements need repository-specific integration."
+    },
+    {
+      "need": "Record source/binary/config provenance and exercise one complete catalog-to-MCP integration boundary",
+      "why_no_candidate": "No source-management tool can establish runtime behavior from branch names or successful textual merges."
+    },
+    {
+      "need": "Implement the bounded UAR/Boss admission adapter and safe renderer decision projection",
+      "why_no_candidate": "Codex patterns and rmcp metadata support the design but neither implements this repository-specific trust boundary."
+    }
+  ]
+}

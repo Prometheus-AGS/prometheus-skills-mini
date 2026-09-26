@@ -27,7 +27,7 @@ claims. Assign disjoint write ownership before parallel edits.
 
 | Skill | Responsibility |
 | --- | --- |
-| `agent-team-creator` | Guided or expert manifest creation, validation, and native export staging |
+| `agent-team-creator` | Guided or expert manifest creation, validation, native export staging and project installation |
 | `agent-team-manage` | Task assignment, dependencies, status, cancellation, and reassignment |
 | `agent-team-models` | Model discovery and explicit tier, capability, and cost policy |
 | `agent-team-handoff` | Fresh-context packets and explicit destination acceptance |
@@ -59,14 +59,85 @@ Save this as `guide.json` in the mini checkout:
 node skills/agent-team-creator/scripts/cli.mjs guide --input guide.json
 ```
 
-Inspect the proposed `team`, reasons, and alternatives. Edit roles and file ownership, confirm
-available skills, then place the team in an `init` request. Expert users may write the manifest
+Inspect `proposedRoles`, reasons and alternatives. Supply an `ownership` map for every
+proposed role and rerun `guide`; only `ready: true` returns `team`. Confirm available skills,
+then place that team in an `init` request. Expert users may write the manifest
 directly. Commands take JSON request files, so no shell-specific pipelines are needed.
 
 The [repository guide](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/docs/agent-teams.md)
 includes complete initialization and export examples. Export creates a staging directory and
 receipts; it does not install agents, register services, or execute a team. Read the diagnostics,
 review native permissions, and validate with the intended installed harness before deployment.
+
+## Install the project team
+
+Normal project-team creation continues after export inspection with `install-project`.
+Save `install-request.json` with the accepted manifest as `team` (the same manifest used
+in `init.json`) and the authorized project path:
+
+```json
+{
+  "project": "../My Project",
+  "team": {
+    "schemaVersion": 1,
+    "id": "docs-team",
+    "outcome": "Clarify the setup guide and verify its examples",
+    "scope": "project",
+    "harness": "codex",
+    "roles": [{
+      "id": "implementer",
+      "description": "Owns the documentation change",
+      "prompt": "Update the assigned guide and report evidence and remaining work.",
+      "skills": [], "owns": ["docs/**"],
+      "inputs": ["Requested setup clarification"],
+      "outputs": ["Updated guide", "Verification notes"],
+      "dependsOn": []
+    }],
+    "modelPolicy": {"tier": "medium"}
+  }
+}
+```
+
+```text
+node skills/agent-team-creator/scripts/cli.mjs install-project --input install-request.json --dry-run
+node skills/agent-team-creator/scripts/cli.mjs install-project --input install-request.json
+node skills/agent-team-creator/scripts/cli.mjs install-project --project "../My Project" --check
+```
+
+The installer writes `.agent-team/docs-team/team.json`, `.agent-team/project-routing.json`,
+managed discovery instructions and missing native project definitions. The earlier
+`.agent-teams/docs-team.json` file is the separate mutable task ledger; installation does
+not turn its filename into a discovery manifest. `export` remains proposal-only.
+
+For an existing team, omit the JSON manifest and use `--project`. An explicit recorded
+selection wins; a sole `.agent-team/<id>/team.json` is adopted automatically. If several
+remain ambiguous, choose with `--team <id>`. A stale selection raises an error. Intentional
+replacement of a differing manifest requires `updateTeam: true` in the request.
+
+For **all code tasks**, read the active record and real manifest, then use relevant existing
+roles. Preserve IDs, ownership, model policy, native permissions and concurrency. Existing
+native files are kept byte-for-byte; differences are reported for a deliberate merge. The
+installer creates definitions and instructions, not running agents or new permission grants.
+Where native delegation is unavailable, use role instructions sequentially and disclose that
+limitation. Independent review requires a separate context after the production phase.
+
+UI roles conditionally bind `prometheus-ui-ux`; UI reviewers bind `prometheus-ui-review`.
+Backend-only work does not load UI guidance. Project `.agents/UI_UX_PROTOCOL.md` wins over
+the bundled protocol; refinement/review exclude taste. User-only `interface-review`,
+`break`, `variant` and `explain-interface` are not automatically preloaded or read to
+bypass their invocation restriction. Explicit conflicting native preload overrides retain
+diagnostics for resolution before invocation.
+
+Zed's first effective existing instruction file also receives the discovery pointer, in
+addition to `AGENTS.md` and `CLAUDE.md`. Inspect `instructionFiles` in the active record.
+External ACP agents retain their native configuration; parallel threads are not a delegation
+API. Local recovery records preserve prior instruction bytes, including CRLF and supported
+in-project links. The installer never creates links. Creator `--check` exits 2 for drift
+and 1 for errors; dry-run/check write nothing.
+
+See [UI/UX routing](/docs/ui-ux/overview) for installation, routing requests, Zed precedence,
+platform limits and troubleshooting, and the [project installation contract](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/skills/agent-team-creator/references/project-installation.md)
+for all request fields and recovery behavior.
 
 ## Native targets differ
 
@@ -137,7 +208,5 @@ service is added beyond mini's existing surreal-memory and liter-llm integration
 team operations work without them; remote publication and live discovery need their endpoints.
 
 Source-linked exports do not certify native CLI acceptance, service authentication, or Windows
-execution. Those require separate live evidence. The feature does not automatically install,
-launch, activate, or authorize native teams.
-
-Guided creation resolves ownership before producing a ready team. For example, after reviewing proposed roles, add `"ownership": {"implementer": ["src/checkout/**"], "reviewer": ["reviews/checkout.md"]}` for a two-role checkout task. Use paths actually appropriate to the project and include every proposed role. Missing ownership returns `ready: false`, `proposedRoles`, and focused questions without a `team` value; it does not grant access to the whole repository.
+execution. Those require separate live evidence. Project installation writes native definitions
+and discovery instructions; it does not launch, activate or authorize native execution.

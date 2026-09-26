@@ -61,17 +61,42 @@ All Cargo commands used the checkout-local target/build directory and `--locked`
 - Compass now serializes legacy-session admission, caps simultaneous sessions
   at 64, and returns a distinct capacity error. The affected HTTP integration
   and focused MCP Clippy target passed after the correction.
-- The second isolated review passed with one warning: the new remote-only CI
-  check had replaced the existing combined SurrealKV/remote compile check.
-  Compass now keeps both checks, preserving the supported source-build
-  combination while directly qualifying the official release profile.
+- The second isolated review passed with one warning about retaining coverage
+  for the combined SurrealKV/remote source-build profile. The Linux SurrealDB
+  boundary keeps that combined compile check. Windows qualifies the official
+  release profile instead: unconditional JSON and SQLite plus `surreal-remote`.
+  Embedded SurrealKV is not shipped in the Windows release and remains covered
+  once on Linux, where its filesystem locking contract is supported.
+- A final isolated review covered the later CI-boundary and dependency-policy
+  delta. After the packet was supplied the unchanged full-suite, Linux-combined,
+  and Windows-NASM context, its one remaining actionable finding was accepted:
+  `deny.toml` now records the same scoped `RUSTSEC-2026-0235` SurrealDB/rkyv
+  exception as `cargo-audit`. The corrective commit received a verified-distinct
+  PASS with 0 critical, 0 warning and 0 suggestion findings; the anti-theater
+  screen passed.
 - A later pass warned that the new network boundaries were absent from
   `SECURITY.md`. The final diff now documents legacy-session admission and the
   release binary's opt-in SurrealDB remote boundary. The final isolated review
   passed with zero findings; its anti-theater screen also passed.
 
 The Windows release build emitted one existing `unused_mut` warning in
-`compass-history`; it is unrelated to this change. The two unrelated golden
-failures identified in the handoff (`code_query_tools` and `discovery_compat`)
-were not treated as evidence for or against this integration and were not
-rewritten.
+`compass-history`; it is unrelated to this change. Once the stale review CLI
+scenarios no longer stopped the full suite, the handoff's `code_query_tools`
+failure resolved to five pre-envelope fixtures still recording
+`maxCandidates: 20` after upstream commit `393183cd` raised the public default
+to 64. Only those fixture values were refreshed; the completed MCP query
+integration then passed 13/13 and its isolated review passed with no findings.
+The next full-suite boundary exposed the same upstream drift in the discovery
+snapshot: six input-schema hashes include that default limit. Only those six
+digests were refreshed; the local and real transport discovery integrations
+then passed 2/2, and the fixture-only correction received a verified-distinct
+review PASS with no findings.
+
+The final full workspace integration boundary (`cargo test --workspace --test
+'*' --locked`) passed with exit code 0. It exposed one last stale
+`compass-query` integration assertion: production already reports `NO EXACT
+MATCH` for a missing affected-query target, while the test still expected the
+older ambiguity text. The focused integration passed 5/5 after aligning that
+assertion. The rustfmt-normalized final commit `776108a9` received a
+verified-distinct review PASS with no findings, and the anti-theater screen
+passed.

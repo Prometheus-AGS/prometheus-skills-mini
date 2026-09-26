@@ -1,0 +1,11 @@
+{
+  "left": "928c41a6e882bff13f372fac1fb4f237efbe4874",
+  "right": "e627af981bcb06c7fc5da027731c182b044e25d1",
+  "ancestry": "172\t1",
+  "commit": "e627af981 feat(http): isolate host-supplied credentials\n crates/liter-llm/src/client/builder.rs   |  1 +\n crates/liter-llm/src/client/config.rs    | 13 +++++++++++-\n crates/liter-llm/src/http/eventstream.rs |  1 -\n crates/liter-llm/src/http/request.rs     | 13 +-----------\n crates/liter-llm/src/http/retry.rs       |  1 -\n crates/liter-llm/src/http/streaming.rs   |  3 ---\n crates/liter-llm/src/http/transport.rs   | 35 +++++++++++++++++++++++++++++++-\n 7 files changed, 48 insertions(+), 19 deletions(-)\n",
+  "merge": {
+    "exit": 1,
+    "output": "6b4c52d54dd3ac79be1b52d76470619e8ea560cf\ncrates/liter-llm/src/http/eventstream.rs\ncrates/liter-llm/src/http/request.rs\ncrates/liter-llm/src/http/streaming.rs\n\nAuto-merging crates/liter-llm/src/client/builder.rs\nAuto-merging crates/liter-llm/src/client/config.rs\nAuto-merging crates/liter-llm/src/http/eventstream.rs\nCONFLICT (content): Merge conflict in crates/liter-llm/src/http/eventstream.rs\nAuto-merging crates/liter-llm/src/http/request.rs\nCONFLICT (content): Merge conflict in crates/liter-llm/src/http/request.rs\nAuto-merging crates/liter-llm/src/http/streaming.rs\nCONFLICT (content): Merge conflict in crates/liter-llm/src/http/streaming.rs\nAuto-merging crates/liter-llm/src/http/transport.rs\n"
+  },
+  "dirtyStreamingFix": "Primary checkout crates/liter-llm/src/tower/service.rs differs from both local HEAD and host-transport; not included in this merge simulation"
+}

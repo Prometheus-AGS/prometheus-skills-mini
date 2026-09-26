@@ -50,3 +50,10 @@ Nested `CLAUDE.md` / `AGENTS.md` and task instructions may add stricter rules. N
 - **Layer 2 — skills:** `.claude/skills/`, `.agents/skills/`; routing and install commands in `docs/skill-routing.md`.
 - **Layer 3 — reference:** `README.md`, `docs/`, `openspec/`, `.prometheus/`, `versions.toml`, `tasks/todo.md`, the active phase under `.kbd-orchestrator/phases/`.
 - **Layer 4 — hooks:** `hooks/` and `.githooks/commit-msg`. **None are built yet** (OpenSpec change `rules-layer4-hooks`); until they are, A-10 and A-15 are enforced by you, not by a machine.
+
+<!-- uiux-routing:start v1 -->
+## UI/UX routing
+UI, styles, tokens, motion or copy → `prometheus-ui-ux`. Read `.agents/UI_UX_PROTOCOL.md` or its bundled default; preserve design authority.
+All code: detect `.agent-team/project-routing.json` and real team manifests. Preserve selection; adopt a sole team; ask if ambiguous. Use relevant roles, disclosing sequential fallback.
+Backend work loads no UI guidance. Review respects user-only skills and the completed-phase boundary.
+<!-- uiux-routing:end -->

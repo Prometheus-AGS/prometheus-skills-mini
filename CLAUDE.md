@@ -45,6 +45,7 @@ If context was compacted, re-read §0 and §A before acting. Standing policy is 
 - **Specs:** any new change, and any plan under A-17 → `openspec-propose` · implement an OpenSpec change outside KBD → `openspec-apply-change` · check an OpenSpec change outside KBD before archiving → `openspec-verify-change`
 - **Rust:** any crate work → `prometheus-rust-workspace` · general Rust implementation and review → `rust-best-practices` · Tokio, async I/O, concurrency, cancellation → `rust-async-patterns` · Rust MCP servers and transports → `rust-mcp-server-generator` · post-implementation review of Rust → `prometheus-rust-auditor`
 - **Building tools:** writing or fixing a skill → `skill-creator` · installing layered project context → `prometheus-context-bootstrap` · building an MCP server → `mcp-builder` · library documentation → `context7-mcp` · no row matches → `find-skills`
+- **UI and project teams:** rendered UI, interaction, styles, tokens, motion or on-screen copy → `prometheus-ui-ux` · completed UI phase review → `prometheus-ui-review` · any code work when a project team exists → `agent-team-creator`
 - **No row matches:** `find-skills` → report the top result and its audit status → propose the install; never install unasked. Install commands and notes: `docs/skill-routing.md`.
 
 ## §G Precedence
@@ -55,3 +56,10 @@ Nested `CLAUDE.md` / `AGENTS.md` and task instructions may add stricter rules. N
 - **Layer 2 — skills:** `.claude/skills/`, `.agents/skills/`; routing and install commands in `docs/skill-routing.md`.
 - **Layer 3 — reference:** `README.md`, `docs/`, `openspec/`, `.prometheus/`, `versions.toml`, `tasks/todo.md`, the active phase under `.kbd-orchestrator/phases/`.
 - **Layer 4 — hooks:** `hooks/` and `.githooks/commit-msg`. **None are built yet** (OpenSpec change `rules-layer4-hooks`); until they are, A-10 and A-15 are enforced by you, not by a machine.
+
+<!-- uiux-routing:start v1 -->
+## UI/UX routing
+UI, styles, tokens, motion or copy → `prometheus-ui-ux`. Read `.agents/UI_UX_PROTOCOL.md` or its bundled default; preserve design authority.
+All code: detect `.agent-team/project-routing.json` and real team manifests. Preserve selection; adopt a sole team; ask if ambiguous. Use relevant roles, disclosing sequential fallback.
+Backend work loads no UI guidance. Review respects user-only skills and the completed-phase boundary.
+<!-- uiux-routing:end -->

@@ -13,9 +13,7 @@ from this file, and fall back to the Layer 1 rules. Never narrate what it "would
 
 "Status" is `present`, `**absent**` or `check` for the machine this was last built on (2026-09-22); rows
 marked absent are flagged in `CLAUDE.md`. Re-check with a directory listing of `.agents/skills` and
-`~/.agents/skills` before trusting it elsewhere. Rows for stacks this repo does not contain — design/UI,
-React, Flutter, Tauri — are deliberately omitted; restore them from the Prometheus pack's v4 routing source
-if such code ever lands here.
+`~/.agents/skills` before trusting it elsewhere. UI routes below are conditional; backend work does not load them.
 
 ## Process
 | When | Invoke | Status | Install / notes |
@@ -66,3 +64,10 @@ if such code ever lands here.
 
 Search order: skills.sh (install telemetry is a real usage signal) → agentskills.io (the standard;
 vendor-official repos link from here) → agenticskills.io (curated, audit notes) → GitHub.
+
+## UI and project teams
+| When | Invoke | Status | Install / notes |
+|---|---|---|---|
+| rendered UI, interaction, styles, tokens, motion or on-screen copy | `prometheus-ui-ux` | present | project .agents/UI_UX_PROTOCOL.md overrides bundled protocol; selective context/craft/platform routing |
+| completed UI phase review | `prometheus-ui-review` | present | independent read-only context; no taste or bypass of user-only skills |
+| any code work when a project team exists | `agent-team-creator` | present | read .agent-team/project-routing.json and real manifests; select relevant existing roles, preserve explicit team; sole team auto-adopt, ambiguous teams ask; sequential fallback when delegation unavailable |

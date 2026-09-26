@@ -34,6 +34,10 @@ The integration target drives a real sidecar process, its launch-token boundary,
 
 The target contains the six existing tests compiled with its shared deterministic LLM stub plus the cohesive Gate R scenario; all seven passed in the single integration command above.
 
+## Issue closure
+
+UAR issue [#296](https://github.com/Prometheus-AGS/universal-agent-runtime/issues/296) was closed as completed on 2026-09-26 after the production commits `d1ac2678`, `c285d5ba`, `60574a60` and released sidecar source `fd7567a9` were verified as ancestors of UAR main merge `12876b30`. The issue closure relies on this Gate R evidence; it does not rely only on the existence of the merged code.
+
 ## Observed failures fixed during the gate
 
 1. Sidecar startup discarded `mcp.json`, so no remote destination could be administrator-registered. Sidecars now load validated definitions as a catalog without opening shared transports.

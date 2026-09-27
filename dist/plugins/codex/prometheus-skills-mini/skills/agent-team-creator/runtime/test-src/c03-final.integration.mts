@@ -131,7 +131,7 @@ function offlineCase(root: string, pack: string, scratch: string): RecordValue {
   const project = path.join(scratch, pack); fs.mkdirSync(project, { recursive: true });
   copyDirectory(payload.assets, path.join(project, 'team-v1'));
   const status = cli(payload.cli, 'uar-workspace-status', { project, workspace: 'team-v1', pageSize: 2 }, scratch);
-  assert.deepEqual(status.counts, { agents: 3, teams: 2, workflows: 1, diagnostics: 0 });
+  assert.deepEqual(status.counts, { agents: 3, teams: 2, workflows: 2, diagnostics: 0 });
   const built = cli(payload.cli, 'uar-package-build', { project, workspace: 'team-v1', out: 'built-v1' }, scratch);
   cli(payload.cli, 'uar-workspace-revise', { project, workspace: 'team-v1', nextVersion: '1.1.0', out: 'team-v2' }, scratch);
   const beforeHash = sha(fs.readFileSync(path.join(project, 'team-v1', 'teams', 'root.json')));

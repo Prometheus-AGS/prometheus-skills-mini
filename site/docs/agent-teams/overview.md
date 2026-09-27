@@ -143,7 +143,7 @@ for all request fields and recovery behavior.
 
 | Identifier | Native form or limit |
 | --- | --- |
-| `uar` | AgentArtifact registration payloads; execution is separate and no persistent native team API is asserted |
+| `uar` | Legacy AgentArtifact staging plus draft.2 canonical package and private-binding administration; durable team activation remains unsupported |
 | `codex` | Native subagent TOML and optional project config |
 | `claude` | Claude Code subagents or alternative plugin artifacts; not automatic experimental team creation |
 | `copilot` | GitHub Copilot CLI custom agents; Fleet remains a separate native workflow |
@@ -161,6 +161,32 @@ discovery does not authorize mutation or activation.
 
 See the [native contract reference](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/skills/agent-team-creator/references/native-harnesses.md)
 for exact formats, primary sources, and supported plugin alternatives.
+
+## UAR draft.2 file-backed teams
+
+Legacy `export --target uar` still creates per-agent AgentArtifact staging files.
+Canonical teams use the provider-owned draft.2 profile with `workspace.json`,
+`manifest.source.json`, and separate source documents such as
+`agents/coordinator.json`, `agents/child.json`, `teams/root.json`,
+`teams/subteam.json`, and `workflows/review.json`.
+
+```text
+node skills/agent-team-creator/scripts/cli.mjs uar-workspace-init --input skills/agent-team-creator/assets/uar-intake.json
+node skills/agent-team-creator/scripts/cli.mjs uar-workspace-status --input workspace-status.json
+node skills/agent-team-creator/scripts/cli.mjs uar-workspace-update --input update-one-document.json
+node skills/agent-team-creator/scripts/cli.mjs uar-package-build --input workspace-build.json
+```
+
+Workspace status stays bounded: fixed counts, one next question, and paged field
+diagnostics. Validation requires one root TeamDefinition, kind-correct references,
+valid workflow roles, acyclic dependencies, and exact versions and digests.
+Draft.1 and inline callers migrate explicitly and retain field-level loss reports.
+
+The compiled package is portable immutable catalog data. DeploymentBinding is
+private installed state and carries opaque host references; package installation
+does not confer credentials, RepresentationGrants, consent, authority, or
+activation. The draft.2 checkpoint does not claim durable team execution, and
+`uar-activate` refuses rather than reporting an unobserved runtime result.
 
 ## Budget and model choice
 

@@ -201,7 +201,7 @@ for all request fields and recovery behavior.
 
 | Target identifier | Native output and important limit |
 | --- | --- |
-| `uar` | AgentArtifact registration payloads; no persistent native team API is asserted and execution is separate |
+| `uar` | Legacy AgentArtifact staging plus draft.2 canonical package and private-binding administration; durable team activation remains unsupported |
 | `codex` | Native subagent TOML files and optional project config |
 | `claude` | Claude Code project subagents or an alternative plugin; this does not automatically create an experimental agent team |
 | `copilot` | GitHub Copilot CLI custom-agent Markdown; agent selection and Fleet execution remain native steps |
@@ -221,6 +221,37 @@ diagnostics, not silently treated as validated support. File paths must be porta
 collide with generated artifacts. Preserve credentials through native environment references,
 not embedded secrets. See the [native contract reference](../skills/agent-team-creator/references/native-harnesses.md)
 for exact paths, primary sources, plugin alternatives, and limitations.
+
+### UAR draft.2 workspace and package boundary
+
+`export --target uar` still stages legacy per-agent AgentArtifact payloads for
+existing consumers. It does not create a canonical team. New collaboration
+definitions use the provider-owned draft.2 profile and a file-backed workspace:
+`workspace.json`, `manifest.source.json`, separate `agents/*.json`, `teams/*.json`,
+and `workflows/*.json`. The bundled example names
+`agents/coordinator.json`, `agents/child.json`, `teams/root.json`,
+`teams/subteam.json`, and `workflows/review.json` explicitly.
+
+```text
+node skills/agent-team-creator/scripts/cli.mjs uar-workspace-init --input skills/agent-team-creator/assets/uar-intake.json
+node skills/agent-team-creator/scripts/cli.mjs uar-workspace-status --input workspace-status.json
+node skills/agent-team-creator/scripts/cli.mjs uar-workspace-update --input update-one-document.json
+node skills/agent-team-creator/scripts/cli.mjs uar-package-build --input workspace-build.json
+```
+
+Status returns counts, one next question, and a bounded diagnostic page. Build
+requires one top-level TeamDefinition and kind-correct, acyclic, exact-version and
+exact-digest references. Existing inline and draft.1 packages remain readable
+through explicit migration with field dispositions; required unsupported semantics
+refuse build or preflight.
+
+Compiled packages are portable immutable catalog data. DeploymentBinding is
+separate private installed state and may contain only opaque credential, storage,
+and RepresentationGrant references. Package installation confers no credential,
+consent, grant, installed authority, or activation. UAR validates current private
+state during binding or execution. The accepted draft.2 checkpoint publishes a
+document contract; it does not claim a durable team runtime, so `uar-activate`
+continues to refuse.
 
 ## Model policy and cost
 

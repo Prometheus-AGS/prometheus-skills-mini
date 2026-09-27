@@ -12,7 +12,7 @@ type RecordValue = { [key: string]: Json };
 const PROFILE = 'urn:prometheus:uar:collaboration:0.1.0-draft.2';
 const SCHEMA_SOURCE = '41375cf6cd137a8a825be102c49516211c3fa2e5';
 const FIRST_RUNTIME = 'a64bafbb3d4cc54a22a5eecef2362300a959de62';
-const FINAL_RUNTIME = '48266f6ca704a04aa99aa4e92444a0ae0b62ad1d';
+const FINAL_RUNTIME = '6f59672f31e9ad971d198a2d7fb5fe6875b8dfb6';
 const JWT_SECRET = 'c03-final-gate-secret-not-production';
 
 function ownerToken(): string {

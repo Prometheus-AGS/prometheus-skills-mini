@@ -187,10 +187,20 @@ async function listen(server: http.Server): Promise<number> {
 
 async function mockLlm(): Promise<{ server: http.Server; baseUrl: string }> {
   const server = http.createServer((request, response) => {
-    response.setHeader('content-type', 'application/json');
-    if (request.url === '/v1/models') response.end(JSON.stringify({ object: 'list', data: [{ id: 'c03-model', object: 'model' }] }));
-    else if (request.url === '/v1/chat/completions') response.end(JSON.stringify({ id: 'c03-completion', object: 'chat.completion', created: 0, model: 'c03-model', choices: [{ index: 0, finish_reason: 'stop', message: { role: 'assistant', content: 'C03 live run complete.' } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } }));
-    else { response.statusCode = 404; response.end('{}'); }
+    if (request.url === '/v1/models') {
+      response.setHeader('content-type', 'application/json');
+      response.end(JSON.stringify({ object: 'list', data: [{ id: 'c03-model', object: 'model' }] }));
+    } else if (request.url === '/v1/chat/completions') {
+      request.resume();
+      response.setHeader('content-type', 'text/event-stream');
+      const first = { id: 'c03-completion', object: 'chat.completion.chunk', created: 0, model: 'c03-model', choices: [{ index: 0, finish_reason: null, delta: { role: 'assistant', content: 'C03 live run complete.' } }] };
+      const last = { id: 'c03-completion', object: 'chat.completion.chunk', created: 0, model: 'c03-model', choices: [{ index: 0, finish_reason: 'stop', delta: {} }] };
+      response.end(`data: ${JSON.stringify(first)}\n\ndata: ${JSON.stringify(last)}\n\ndata: [DONE]\n\n`);
+    } else {
+      response.statusCode = 404;
+      response.setHeader('content-type', 'application/json');
+      response.end('{}');
+    }
   });
   const port = await listen(server); return { server, baseUrl: `http://127.0.0.1:${port}/v1` };
 }
@@ -203,19 +213,22 @@ async function freePort(): Promise<number> {
   const server = http.createServer(); const port = await listen(server); await new Promise<void>(resolve => server.close(() => resolve())); return port;
 }
 
-async function startUar(executable: string, configFile: string, cwd: string, port: number): Promise<ChildProcess> {
+type UarProcess = { child: ChildProcess; diagnostics: () => string };
+
+async function startUar(executable: string, configFile: string, cwd: string, port: number): Promise<UarProcess> {
   const child = spawn(executable, ['--config', configFile], { cwd, shell: false, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, CREDENTIAL_ENCRYPTION_KEY: 'c03-gate-credential-key-32-bytes', UAR_BUILTIN_SKILLS_DIR: path.join(cwd, 'no-skills') } });
   let diagnostic = ''; child.stderr?.on('data', chunk => { diagnostic += String(chunk); });
   const deadline = Date.now() + 120_000;
   while (Date.now() < deadline) {
     if (child.exitCode !== null) throw new Error(`UAR exited before readiness: ${diagnostic}`);
-    try { const response = await fetch(`http://127.0.0.1:${port}/readyz`); if (response.ok) return child; } catch { /* startup */ }
+    try { const response = await fetch(`http://127.0.0.1:${port}/readyz`); if (response.ok) return { child, diagnostics: () => diagnostic }; } catch { /* startup */ }
     await new Promise(resolve => setTimeout(resolve, 100));
   }
   child.kill(); throw new Error(`UAR readiness timed out: ${diagnostic}`);
 }
 
-async function stop(child: ChildProcess): Promise<void> {
+async function stop(process: UarProcess): Promise<void> {
+  const { child } = process;
   child.kill('SIGTERM'); await new Promise<void>(resolve => { child.once('exit', () => resolve()); setTimeout(() => { child.kill('SIGKILL'); resolve(); }, 10_000); });
 }
 
@@ -224,6 +237,15 @@ async function api(base: string, method: string, route: string, workspace: strin
   const value = await response.json() as RecordValue;
   if (!response.ok) throw new Error(`${method} ${route} failed (${response.status}): ${JSON.stringify(value)}`);
   return value;
+}
+
+async function runReplay(base: string, runId: string, workspace: string): Promise<string> {
+  const response = await fetch(`${base}/api/uar/runs/${encodeURIComponent(runId)}/stream?last_event_id=0&stream_mode=agui_spec`, {
+    headers: { authorization: `Bearer ${ownerToken()}`, 'last-event-id': '0', 'x-uar-workspace-id': workspace },
+  });
+  const body = await response.text();
+  if (!response.ok) throw new Error(`GET run replay failed (${response.status}): ${body}`);
+  return body;
 }
 
 function agentPackage(uarRoot: string, checkpoint: string): { manifest: RecordValue; manifestUtf8: string; files: Record<string, string> } {
@@ -244,7 +266,7 @@ async function liveCase(uarRoot: string, executable: string, checkpointRef: stri
   fs.mkdirSync(work, { recursive: true }); const configFile = path.join(work, 'uar.yaml'); config(configFile, path.join(work, 'catalog.db'), llm.baseUrl, port, grpc);
   const base = `http://127.0.0.1:${port}`, workspace = 'c03-final-gate', teamManifest = fs.readFileSync(path.join(teamDirectory, 'manifest.json'), 'utf8');
   const teamFiles: Record<string, string> = {}; for (const item of (JSON.parse(teamManifest) as RecordValue).files as RecordValue[]) teamFiles[String(item.path)] = fs.readFileSync(path.join(teamDirectory, String(item.path)), 'utf8');
-  const agent = agentPackage(uarRoot, checkpoint); let child = await startUar(executable, configFile, work, port);
+  const agent = agentPackage(uarRoot, checkpoint); let uar = await startUar(executable, configFile, work, port);
   try {
     const capabilities = await api(base, 'GET', '/api/v1/collaboration/capabilities', workspace);
     await api(base, 'POST', '/api/v1/collaboration/packages:preflight', workspace, { commandId: 'c03-team-preflight', manifest: teamManifest, files: teamFiles });
@@ -261,16 +283,17 @@ async function liveCase(uarRoot: string, executable: string, checkpointRef: stri
     await api(base, 'POST', '/api/v1/collaboration/deployment-bindings:preflight', workspace, { commandId: 'c03-binding-preflight', binding });
     const bindingInstall = await api(base, 'POST', '/api/v1/collaboration/deployment-bindings', workspace, { commandId: 'c03-binding-install', binding });
     const runReceipt = await api(base, 'POST', '/api/uar/runs', workspace, { deployment_binding_id: binding.id, input: 'Return the deterministic C03 gate sentence.' });
-    let runState: RecordValue = runReceipt; for (let attempt = 0; attempt < 300; attempt++) { runState = await api(base, 'GET', `/api/uar/runs/${runReceipt.run_id}`, workspace); if (['completed','failed','cancelled'].includes(String(runState.status))) break; await new Promise(resolve => setTimeout(resolve, 100)); }
-    assert.equal(runState.status, 'completed');
+    let runState: RecordValue = runReceipt; for (let attempt = 0; attempt < 300; attempt++) { runState = await api(base, 'GET', `/api/uar/runs/${runReceipt.run_id}`, workspace); if (['done','error','cancelled'].includes(String(runState.status))) break; await new Promise(resolve => setTimeout(resolve, 100)); }
+    const replay = await runReplay(base, String(runReceipt.run_id), workspace);
+    assert.equal(runState.status, 'done', `Bound run failed: state=${JSON.stringify(runState)} replay=${JSON.stringify(replay)} stderr=${JSON.stringify(uar.diagnostics())}`);
     const effective = await api(base, 'GET', `/api/v1/collaboration/deployment-bindings/${encodeURIComponent(String(binding.id))}/effective-receipt`, workspace);
     const template = await api(base, 'POST', `/api/v1/collaboration/deployment-bindings/${encodeURIComponent(String(binding.id))}/template:export`, workspace);
-    await stop(child); child = await startUar(executable, configFile, work, port);
+    await stop(uar); uar = await startUar(executable, configFile, work, port);
     const coldPackage = await api(base, 'GET', `/api/v1/collaboration/packages/${encodeURIComponent(String(agent.manifest.id))}/versions/1.0.0`, workspace);
     const coldGrant = await api(base, 'GET', `/api/v1/collaboration/representation-grants/${encodeURIComponent(grantId)}`, workspace);
     const coldBinding = await api(base, 'GET', `/api/v1/collaboration/deployment-bindings/${encodeURIComponent(String(binding.id))}`, workspace);
     return { checkpoint, executableDigest: sha(fs.readFileSync(executable)), capabilities, teamInstall, teamExport, agentInstall, bindingInstall, run: { id: runReceipt.run_id, status: runState.status }, effective, template, cold: { packageDigest: (coldPackage.manifest as RecordValue)?.contentDigest ?? agent.manifest.contentDigest, grantRevision: (coldGrant.grant as RecordValue)?.revision ?? coldGrant.revision, bindingRevision: (coldBinding.binding as RecordValue)?.revision ?? coldBinding.revision } };
-  } finally { await stop(child); await new Promise<void>(resolve => llm.server.close(() => resolve())); }
+  } finally { await stop(uar); await new Promise<void>(resolve => llm.server.close(() => resolve())); }
 }
 
 export async function runC03FinalGate(argv = process.argv.slice(2)): Promise<void> {

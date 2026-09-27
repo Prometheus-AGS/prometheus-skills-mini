@@ -12,7 +12,7 @@ type RecordValue = { [key: string]: Json };
 const PROFILE = 'urn:prometheus:uar:collaboration:0.1.0-draft.2';
 const SCHEMA_SOURCE = '41375cf6cd137a8a825be102c49516211c3fa2e5';
 const FIRST_RUNTIME = 'a64bafbb3d4cc54a22a5eecef2362300a959de62';
-const FINAL_RUNTIME = '7a02a249396fd77f297cdb3f9672c4ca35341a63';
+const FINAL_RUNTIME = '7107e58938e0f074dd5aaccbd413fc455fb380ad';
 const JWT_SECRET = 'c03-final-gate-secret-not-production';
 
 function ownerToken(): string {
@@ -105,7 +105,35 @@ function fileMap(root: string): Record<string, string> {
   visit(root); return result;
 }
 
-function parity(miniRoot: string, fullRoot: string): RecordValue {
+function committedFileMap(repository: string, commit: string, relativeRoot: string): Record<string, string> {
+  const files = run('git', ['ls-tree', '-r', '--name-only', commit, '--', relativeRoot], repository).split('\n').filter(Boolean);
+  const result: Record<string, string> = {};
+  for (const file of files) {
+    const bytes = spawnSync('git', ['show', `${commit}:${file}`], { cwd: repository, encoding: null, shell: false });
+    if (bytes.status !== 0) throw new Error(`Cannot read ${file} from ${commit}`);
+    result[path.relative(relativeRoot, file).split(path.sep).join('/')] = sha(bytes.stdout as Buffer);
+  }
+  return result;
+}
+
+function repositoryProvenance(repository: string, commit: string, trees: string[], allowedDirty: string[]): RecordValue {
+  const resolved = run('git', ['rev-parse', commit], repository), head = run('git', ['rev-parse', 'HEAD'], repository);
+  assert.equal(resolved, head, `Requested product commit must be current HEAD for ${repository}`);
+  const status = spawnSync('git', ['status', '--porcelain=v1', '-z', '--untracked-files=all'], { cwd: repository, encoding: 'utf8', shell: false });
+  if (status.status !== 0) throw new Error(`Cannot inspect repository status for ${repository}: ${status.stderr}`);
+  const dirty = status.stdout.split('\0').filter(Boolean).map(line => line.slice(3));
+  const unexpected = dirty.filter(file => !allowedDirty.some(allowed => file === allowed || file.startsWith(`${allowed}/`)));
+  assert.deepEqual(unexpected, [], `Unexpected dirty paths prevent commit-to-payload proof for ${repository}`);
+  const payloadTrees: Record<string, Json> = {};
+  for (const relativeRoot of trees) {
+    const working = fileMap(path.join(repository, relativeRoot)), committed = committedFileMap(repository, resolved, relativeRoot);
+    assert.deepEqual(working, committed, `${relativeRoot} differs from commit ${resolved}`);
+    payloadTrees[relativeRoot] = { digest: sha(canonical(working as unknown as Json)), files: Object.keys(working).length };
+  }
+  return { commit: resolved, head, payloadTrees, allowedDirty, observedDirty: dirty };
+}
+
+function parity(miniRoot: string, fullRoot: string, miniCommit: string, fullCommit: string): RecordValue {
   const miniSource = path.join(miniRoot, 'skills', 'agent-team-creator');
   const fullSource = path.join(fullRoot, 'skills', 'process', 'agent-team-creator');
   const miniDist = path.join(miniRoot, 'dist', 'plugins', 'codex', 'prometheus-skills-mini', 'skills', 'agent-team-creator');
@@ -118,7 +146,13 @@ function parity(miniRoot: string, fullRoot: string): RecordValue {
   delete miniDistFiles['runtime/test-src/c03-final.integration.mts']; delete miniDistFiles['tests/c03-final.integration.mjs'];
   assert.deepEqual(miniSourceFiles, fullSourceFiles, 'shared full/mini creator source bytes diverged');
   assert.deepEqual(miniDistFiles, fullDistFiles, 'shared full/mini packaged creator bytes diverged');
-  return { miniSourceTree: sha(canonical(fileMap(miniSource) as unknown as Json)), fullSourceTree: sha(canonical(fileMap(fullSource) as unknown as Json)), miniCodexTree: sha(canonical(fileMap(miniDist) as unknown as Json)), fullCodexTree: sha(canonical(fileMap(fullDist) as unknown as Json)) };
+  return {
+    miniSourceTree: sha(canonical(fileMap(miniSource) as unknown as Json)), fullSourceTree: sha(canonical(fileMap(fullSource) as unknown as Json)), miniCodexTree: sha(canonical(fileMap(miniDist) as unknown as Json)), fullCodexTree: sha(canonical(fileMap(fullDist) as unknown as Json)),
+    repositories: {
+      mini: repositoryProvenance(miniRoot, miniCommit, ['skills/agent-team-creator', 'dist/plugins/codex/prometheus-skills-mini/skills/agent-team-creator'], []),
+      full: repositoryProvenance(fullRoot, fullCommit, ['skills/process/agent-team-creator', 'dist/plugins/codex/prometheus-skill-pack/skills/agent-team-creator'], ['tools/openai-proxy']),
+    },
+  };
 }
 
 function repositoryChecks(miniRoot: string, fullRoot: string): RecordValue {
@@ -144,40 +178,59 @@ function packaged(root: string, pack: string): { cli: string; assets: string } {
 function offlineCase(root: string, pack: string, scratch: string): RecordValue {
   const payload = packaged(root, pack);
   const project = path.join(scratch, pack); fs.mkdirSync(project, { recursive: true });
-  copyDirectory(payload.assets, path.join(project, 'team-v1'));
-  const status = cli(payload.cli, 'uar-workspace-status', { project, workspace: 'team-v1', pageSize: 2 }, scratch);
+  const teamV1 = path.join(project, '.agent-team', 'example-team', 'authoring');
+  copyDirectory(payload.assets, teamV1);
+  const status = cli(payload.cli, 'uar-workspace-status', { project, workspace: 'example-team', pageSize: 2 }, scratch);
   assert.deepEqual(status.counts, { agents: 3, teams: 2, workflows: 2, diagnostics: 0 });
-  const built = cli(payload.cli, 'uar-package-build', { project, workspace: 'team-v1', out: 'built-v1' }, scratch);
-  cli(payload.cli, 'uar-workspace-revise', { project, workspace: 'team-v1', nextVersion: '1.1.0', out: 'team-v2' }, scratch);
-  const beforeHash = sha(fs.readFileSync(path.join(project, 'team-v1', 'teams', 'root.json')));
-  const nextRoot = read(path.join(project, 'team-v2', 'teams', 'root.json'));
-  nextRoot.purpose = 'C03 immutable revision proof';
-  cli(payload.cli, 'uar-workspace-update', { project, workspace: 'team-v2', path: 'teams/root.json', document: nextRoot }, scratch);
-  cli(payload.cli, 'uar-package-build', { project, workspace: 'team-v2', out: 'built-v2' }, scratch);
-  const diff = cli(payload.cli, 'uar-package-diff', { beforeDirectory: path.join(project, 'built-v1'), afterDirectory: path.join(project, 'built-v2') }, scratch);
-  assert.equal(sha(fs.readFileSync(path.join(project, 'team-v1', 'teams', 'root.json'))), beforeHash);
-  cli(payload.cli, 'uar-workspace-revise', { project, workspace: 'team-v1', nextVersion: '1.0.0', out: 'refused-same' }, scratch, true);
+  const built = cli(payload.cli, 'uar-package-build', { project, workspace: 'example-team', out: 'built-v1' }, scratch);
 
-  const badGraph = path.join(project, 'bad-graph'); copyDirectory(path.join(project, 'team-v1'), badGraph);
+  const resumeInit = cli(payload.cli, 'uar-workspace-init', { project, workspace: 'resume-team', expectedRevision: 0, packageId: 'urn:c03:resume', packageVersion: '1.0.0', definitionPaths: ['teams/root.json'] }, scratch);
+  const resumeBefore = cli(payload.cli, 'uar-workspace-status', { project, workspace: 'resume-team' }, scratch);
+  assert.equal((resumeBefore.nextQuestion as RecordValue).id, 'manifest.provenance');
+  const resumeAnswer = cli(payload.cli, 'uar-workspace-answer', { project, workspace: 'resume-team', expectedRevision: resumeInit.revision, questionId: 'manifest.provenance', answer: { source: 'C03 persisted intake', authors: ['Prometheus-AGS'] } }, scratch);
+  const resumeAfter = cli(payload.cli, 'uar-workspace-status', { project, workspace: 'resume-team' }, scratch);
+  assert.equal(resumeAfter.revision, resumeAnswer.revision); assert.equal((resumeAfter.nextQuestion as RecordValue).id, 'manifest.entrypoint');
+  const resumeIndex = fs.readFileSync(path.join(project, '.agent-team', 'resume-team', 'authoring', 'workspace.json'));
+  const stale = cli(payload.cli, 'uar-workspace-answer', { project, workspace: 'resume-team', expectedRevision: 1, questionId: 'manifest.entrypoint', answer: [] }, scratch, true);
+  assert.match(String(stale.error), /Stale workspace revision/);
+  assert.equal(fs.readFileSync(path.join(project, '.agent-team', 'resume-team', 'authoring', 'workspace.json')).equals(resumeIndex), true);
+
+  const beforeHashes = Object.fromEntries(Object.entries(fileMap(teamV1)).filter(([file]) => file.startsWith('agents/') || file.startsWith('teams/') || file.startsWith('workflows/')));
+  const nextRoot = read(path.join(teamV1, 'teams', 'root.json')); nextRoot.version = '1.1.0'; nextRoot.purpose = 'C03 immutable revision proof';
+  const revision = cli(payload.cli, 'uar-workspace-revise', { project, workspace: 'example-team', expectedRevision: status.revision, nextVersion: '1.1.0', out: 'example-team-v2', edits: [{ path: 'teams/root.json', document: nextRoot }] }, scratch);
+  const teamV2 = path.join(project, '.agent-team', 'example-team-v2', 'authoring');
+  const afterHashes = fileMap(teamV2);
+  for (const [file, digest] of Object.entries(beforeHashes)) if (file !== 'teams/root.json') assert.equal(afterHashes[file], digest, `Unchanged definition bytes changed: ${file}`);
+  assert.deepEqual(revision.changedDefinitions, ['teams/root.json']);
+  cli(payload.cli, 'uar-package-build', { project, workspace: 'example-team-v2', out: 'built-v2' }, scratch);
+  const diff = cli(payload.cli, 'uar-package-diff', { beforeDirectory: path.join(project, 'built-v1'), afterDirectory: path.join(project, 'built-v2') }, scratch);
+  assert.deepEqual((diff.changed as RecordValue[]).map(item => item.identity), ['TeamDefinition:urn:prometheus:mini:example:team:root']);
+  const downgrade = cli(payload.cli, 'uar-workspace-revise', { project, workspace: 'example-team', expectedRevision: status.revision, nextVersion: '0.9.0', out: 'refused-downgrade', edits: [] }, scratch, true);
+  assert.match(String(downgrade.error), /must be greater than current package version/);
+  assert.equal(fs.existsSync(path.join(project, '.agent-team', 'refused-downgrade')), false);
+
+  const badGraph = path.join(project, '.agent-team', 'bad-graph', 'authoring'); copyDirectory(teamV1, badGraph);
+  const badIndex = read(path.join(badGraph, 'workspace.json')); badIndex.teamId = 'bad-graph'; write(path.join(badGraph, 'workspace.json'), badIndex);
   const badTeam = read(path.join(badGraph, 'teams', 'root.json'));
   const member = (badTeam.members as RecordValue[])[0]!;
   (member.definition as RecordValue).id = 'urn:prometheus:mini:missing-agent';
   write(path.join(badGraph, 'teams', 'root.json'), badTeam);
   cli(payload.cli, 'uar-package-validate', { project, workspace: 'bad-graph' }, scratch, true);
 
-  const privateCopy = path.join(project, 'private-authority'); copyDirectory(path.join(project, 'team-v1'), privateCopy);
+  const privateCopy = path.join(project, '.agent-team', 'private-authority', 'authoring'); copyDirectory(teamV1, privateCopy);
+  const privateIndex = read(path.join(privateCopy, 'workspace.json')); privateIndex.teamId = 'private-authority'; write(path.join(privateCopy, 'workspace.json'), privateIndex);
   const privateTeam = read(path.join(privateCopy, 'teams', 'root.json'));
   privateTeam.representationGrantRefs = [{ grantId: 'forbidden' }]; write(path.join(privateCopy, 'teams', 'root.json'), privateTeam);
   cli(payload.cli, 'uar-package-validate', { project, workspace: 'private-authority' }, scratch, true);
 
   const migration = cli(payload.cli, 'uar-workspace-migrate', {
-    project, workspace: 'required-loss', source: { package: {
+    project, workspace: 'required-loss', expectedRevision: 0, source: { package: {
       manifest: { profile: PROFILE, kind: 'PackageManifest', id: 'urn:c03:loss', version: '1.0.0', provenance: { source: 'c03', authors: ['gate'] }, requiredCapabilities: [], extensions: { 'c03.unsupported': { required: true, value: {} } }, entrypoints: [{ id: 'urn:c03:loss-team', version: '1.0.0' }], capabilityDeclarations: [], resolution: 'exact-version-and-digest' },
-      definitions: [{ path: 'teams/root.json', document: read(path.join(project, 'team-v1', 'teams', 'root.json')) }],
+      definitions: [{ path: 'teams/root.json', document: read(path.join(teamV1, 'teams', 'root.json')) }],
     } },
   }, scratch);
   cli(payload.cli, 'uar-package-build', { project, workspace: 'required-loss', out: 'refused-loss' }, scratch, true);
-  return { package: pack, manifestDigest: (built.manifest as RecordValue).contentDigest as string, status, diff, migration };
+  return { package: pack, manifestDigest: (built.manifest as RecordValue).contentDigest as string, status, revision, diff, migration, refusals: { stale, downgrade }, resumedGuidance: { before: resumeBefore, answer: resumeAnswer, after: resumeAfter } };
 }
 
 async function listen(server: http.Server): Promise<number> {
@@ -298,10 +351,11 @@ async function liveCase(uarRoot: string, executable: string, checkpointRef: stri
 
 export async function runC03FinalGate(argv = process.argv.slice(2)): Promise<void> {
   const args = parseArgs(argv), miniRoot = one(args, 'mini-root'), fullRoot = one(args, 'full-root'), uarRoot = one(args, 'uar-root'), executable = one(args, 'uar-executable'), checkpointRef = value(args, 'uar-checkpoint');
+  const miniCommit = value(args, 'mini-commit'), fullCommit = value(args, 'full-commit');
   const receipts = args.receipt?.map(item => path.resolve(item)) ?? []; if (receipts.length < 3) throw new Error('Pass the mini, full, and UAR --receipt destinations');
   const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'c03-final-'));
   try {
-    const payloadParity = parity(miniRoot, fullRoot);
+    const payloadParity = parity(miniRoot, fullRoot, miniCommit, fullCommit);
     const mini = offlineCase(miniRoot, 'prometheus-skills-mini', scratch), full = offlineCase(fullRoot, 'prometheus-skill-pack', scratch);
     assert.equal(mini.manifestDigest, full.manifestDigest, 'packaged full and mini creator outputs diverged');
     const compatibility = repositoryChecks(miniRoot, fullRoot);

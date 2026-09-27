@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
+import { createHash, createHmac } from 'node:crypto';
 import fs from 'node:fs';
 import http from 'node:http';
 import os from 'node:os';
@@ -14,6 +14,21 @@ const SCHEMA_SOURCE = '41375cf6cd137a8a825be102c49516211c3fa2e5';
 const FIRST_RUNTIME = 'a64bafbb3d4cc54a22a5eecef2362300a959de62';
 const FINAL_RUNTIME = '7a02a249396fd77f297cdb3f9672c4ca35341a63';
 const JWT_SECRET = 'c03-final-gate-secret-not-production';
+
+function ownerToken(): string {
+  const encode = (value: RecordValue): string => Buffer.from(JSON.stringify(value)).toString('base64url');
+  const header = encode({ alg: 'HS256', typ: 'JWT' });
+  const claims = encode({
+    sub: 'c03-final-gate-owner',
+    name: 'C03 Final Gate Owner',
+    roles: ['service'],
+    tenant_id: null,
+    uar_instance_id: 'c03-final-gate-uar',
+    exp: Math.floor(Date.now() / 1000) + 3_600,
+  });
+  const unsigned = `${header}.${claims}`;
+  return `${unsigned}.${createHmac('sha256', JWT_SECRET).update(unsigned).digest('base64url')}`;
+}
 
 function parseArgs(values: string[]): Record<string, string[]> {
   const result: Record<string, string[]> = {};
@@ -205,7 +220,7 @@ async function stop(child: ChildProcess): Promise<void> {
 }
 
 async function api(base: string, method: string, route: string, workspace: string, body?: Json): Promise<RecordValue> {
-  const response = await fetch(`${base}${route}`, { method, headers: { authorization: `Bearer ${JWT_SECRET}`, 'content-type': 'application/json', 'x-uar-workspace-id': workspace }, ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
+  const response = await fetch(`${base}${route}`, { method, headers: { authorization: `Bearer ${ownerToken()}`, 'content-type': 'application/json', 'x-uar-workspace-id': workspace }, ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
   const value = await response.json() as RecordValue;
   if (!response.ok) throw new Error(`${method} ${route} failed (${response.status}): ${JSON.stringify(value)}`);
   return value;

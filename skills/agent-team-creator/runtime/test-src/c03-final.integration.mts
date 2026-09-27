@@ -206,7 +206,7 @@ async function mockLlm(): Promise<{ server: http.Server; baseUrl: string }> {
 }
 
 function config(file: string, data: string, llm: string, port: number, grpc: number): void {
-  fs.writeFileSync(file, `security:\n  jwt_required: false\n  jwt_secret: "${JWT_SECRET}"\n  settings_mutation_auth_required: false\nresilience:\n  rate_limit_enabled: false\npersistence:\n  provider: "surreal"\n  database_url: "surrealkv://${data.replaceAll('\\', '/')}"\nllm:\n  model: "c03-model"\n  base_url: "${llm}"\nserver:\n  host: "127.0.0.1"\n  port: ${port}\n  grpc_port: ${grpc}\n  shutdown_timeout_secs: 5\n`);
+  fs.writeFileSync(file, `security:\n  jwt_required: false\n  jwt_secret: "${JWT_SECRET}"\n  settings_mutation_auth_required: false\nresilience:\n  rate_limit_enabled: false\npersistence:\n  provider: "surreal"\n  database_url: "surrealkv://${data.replaceAll('\\', '/')}"\nllm:\n  model: "c03-model"\n  base_url: "${llm}"\nproviders:\n  - id: "openai"\n    display_name: "C03 mock provider"\n    base_url: "${llm}"\n    protocol: "chat"\n    default_model: "c03-model"\n    enabled: true\n    models:\n      - id: "c03-model"\n        display_name: "C03 mock model"\n        context_window: 32768\n        max_output_tokens: 1024\n        supports_tools: true\n        supports_streaming: true\n        enabled: true\nserver:\n  host: "127.0.0.1"\n  port: ${port}\n  grpc_port: ${grpc}\n  shutdown_timeout_secs: 5\n`);
 }
 
 async function freePort(): Promise<number> {

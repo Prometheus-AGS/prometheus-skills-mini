@@ -106,7 +106,7 @@ function repositoryChecks(miniRoot, fullRoot) {
     run('npm', ['run', 'check'], miniRoot);
     run('npm', ['run', 'check:distribution'], miniRoot);
     run('npm', ['run', 'spec:validate'], miniRoot);
-    run('npm', ['--prefix', 'site', 'run', 'build'], miniRoot);
+    run('npm', ['--prefix', 'site', 'run', 'build:deploy'], miniRoot);
     run('openspec', ['validate', 'afc-c03-team-authoring-workspace', '--strict'], miniRoot);
     run('npm', ['run', 'check:distribution'], fullRoot);
     run('npm', ['run', 'docs:sync:check'], fullRoot);

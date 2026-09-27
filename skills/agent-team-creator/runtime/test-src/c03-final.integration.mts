@@ -71,6 +71,33 @@ function copyDirectory(source: string, target: string): void {
   fs.cpSync(source, target, { recursive: true, errorOnExist: true, force: false });
 }
 
+function fileMap(root: string): Record<string, string> {
+  const result: Record<string, string> = {};
+  const visit = (directory: string): void => {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true }).sort((left, right) => left.name.localeCompare(right.name))) {
+      const absolute = path.join(directory, entry.name), relative = path.relative(root, absolute).split(path.sep).join('/');
+      if (entry.isDirectory()) visit(absolute);
+      else if (entry.isFile()) result[relative] = sha(fs.readFileSync(absolute));
+    }
+  };
+  visit(root); return result;
+}
+
+function parity(miniRoot: string, fullRoot: string): RecordValue {
+  const miniSource = path.join(miniRoot, 'skills', 'agent-team-creator');
+  const fullSource = path.join(fullRoot, 'skills', 'process', 'agent-team-creator');
+  const miniDist = path.join(miniRoot, 'dist', 'plugins', 'codex', 'prometheus-skills-mini', 'skills', 'agent-team-creator');
+  const fullDist = path.join(fullRoot, 'dist', 'plugins', 'codex', 'prometheus-skill-pack', 'skills', 'agent-team-creator');
+  const miniSourceFiles = fileMap(miniSource), fullSourceFiles = fileMap(fullSource), miniDistFiles = fileMap(miniDist), fullDistFiles = fileMap(fullDist);
+  assert.deepEqual(miniDistFiles, miniSourceFiles, 'mini Codex distribution differs from its canonical creator source');
+  assert.deepEqual(fullDistFiles, fullSourceFiles, 'full Codex distribution differs from its canonical creator source');
+  delete miniSourceFiles['runtime/test-src/c03-final.integration.mts'];
+  delete miniDistFiles['runtime/test-src/c03-final.integration.mts']; delete miniDistFiles['tests/c03-final.integration.mjs'];
+  assert.deepEqual(miniSourceFiles, fullSourceFiles, 'shared full/mini creator source bytes diverged');
+  assert.deepEqual(miniDistFiles, fullDistFiles, 'shared full/mini packaged creator bytes diverged');
+  return { miniSourceTree: sha(canonical(fileMap(miniSource) as unknown as Json)), fullSourceTree: sha(canonical(fileMap(fullSource) as unknown as Json)), miniCodexTree: sha(canonical(fileMap(miniDist) as unknown as Json)), fullCodexTree: sha(canonical(fileMap(fullDist) as unknown as Json)) };
+}
+
 function packaged(root: string, pack: string): { cli: string; assets: string } {
   const skill = path.join(root, 'dist', 'plugins', 'codex', pack, 'skills', 'agent-team-creator');
   const cliFile = path.join(skill, 'scripts', 'cli.mjs');
@@ -215,11 +242,12 @@ export async function runC03FinalGate(argv = process.argv.slice(2)): Promise<voi
   const receipts = args.receipt?.map(item => path.resolve(item)) ?? []; if (receipts.length < 3) throw new Error('Pass the mini, full, and UAR --receipt destinations');
   const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'c03-final-'));
   try {
+    const payloadParity = parity(miniRoot, fullRoot);
     const mini = offlineCase(miniRoot, 'prometheus-skills-mini', scratch), full = offlineCase(fullRoot, 'prometheus-skill-pack', scratch);
     assert.equal(mini.manifestDigest, full.manifestDigest, 'packaged full and mini creator outputs diverged');
     const teamDirectory = path.join(scratch, 'prometheus-skills-mini', 'built-v1');
     const live = await liveCase(uarRoot, executable, teamDirectory, scratch);
-    const receipt: RecordValue = { schemaVersion: 1, gate: 'afc-c03-team-authoring-workspace', result: 'passed', checkpoints: { schemaSource: SCHEMA_SOURCE, firstDraft2RuntimeAncestor: FIRST_RUNTIME, finalExecutableCheckpoint: live.checkpoint }, packagedOutputs: { mini, full, sharedManifestDigest: mini.manifestDigest }, live, boundaries: { creatorTeamPackageExecuted: false, reason: 'UAR ordinary binding execution requires one AgentDefinition entrypoint; the creator package retains one TeamDefinition entrypoint.', liveRunFixture: 'separate provider-schema single-Agent package', durableTeamInstance: 'unsupported' }, platform: { node: process.version, os: process.platform, arch: process.arch, windowsExecutionClaimed: process.platform === 'win32' } };
+    const receipt: RecordValue = { schemaVersion: 1, gate: 'afc-c03-team-authoring-workspace', result: 'passed', checkpoints: { schemaSource: SCHEMA_SOURCE, firstDraft2RuntimeAncestor: FIRST_RUNTIME, finalExecutableCheckpoint: live.checkpoint }, payloadParity, packagedOutputs: { mini, full, sharedManifestDigest: mini.manifestDigest }, live, boundaries: { creatorTeamPackageExecuted: false, reason: 'UAR ordinary binding execution requires one AgentDefinition entrypoint; the creator package retains one TeamDefinition entrypoint.', liveRunFixture: 'separate provider-schema single-Agent package', durableTeamInstance: 'unsupported' }, platform: { node: process.version, os: process.platform, arch: process.arch, windowsExecutionClaimed: process.platform === 'win32' } };
     const bytes = json(receipt); for (const file of receipts) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, bytes); }
   } finally { fs.rmSync(scratch, { recursive: true, force: true }); }
 }

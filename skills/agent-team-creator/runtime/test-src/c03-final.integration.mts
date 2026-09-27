@@ -12,6 +12,7 @@ type RecordValue = { [key: string]: Json };
 const PROFILE = 'urn:prometheus:uar:collaboration:0.1.0-draft.2';
 const SCHEMA_SOURCE = '41375cf6cd137a8a825be102c49516211c3fa2e5';
 const FIRST_RUNTIME = 'a64bafbb3d4cc54a22a5eecef2362300a959de62';
+const FINAL_RUNTIME = 'fba2b34a6449c501b0ad9de29936eb63f5726843';
 const JWT_SECRET = 'c03-final-gate-secret-not-production';
 
 function parseArgs(values: string[]): Record<string, string[]> {
@@ -28,6 +29,12 @@ function one(args: Record<string, string[]>, name: string): string {
   const values = args[name];
   if (!values || values.length !== 1) throw new Error(`Expected exactly one --${name}`);
   return path.resolve(values[0]!);
+}
+
+function value(args: Record<string, string[]>, name: string): string {
+  const values = args[name];
+  if (!values || values.length !== 1) throw new Error(`Expected exactly one --${name}`);
+  return values[0]!;
 }
 
 function canonical(value: Json): string {
@@ -190,8 +197,8 @@ async function api(base: string, method: string, route: string, workspace: strin
   return value;
 }
 
-function agentPackage(uarRoot: string): { manifest: RecordValue; manifestUtf8: string; files: Record<string, string> } {
-  const source = read(path.join(uarRoot, 'docs', 'agents', 'collaboration', 'v0.1.0-draft.2', 'examples', 'agent-definition.json'));
+function agentPackage(uarRoot: string, checkpoint: string): { manifest: RecordValue; manifestUtf8: string; files: Record<string, string> } {
+  const source = JSON.parse(run('git', ['show', `${checkpoint}:docs/agents/collaboration/v0.1.0-draft.2/examples/agent-definition.json`], uarRoot)) as RecordValue;
   source.id = 'urn:prometheus:c03:gate-agent'; source.version = '1.0.0'; source.skills = [];
   source.models = [{ role: 'primary', capabilities: ['text'], preferredAliases: ['c03-model'] }];
   source.requiredCapabilities = ['collaboration_definition_packages_v2']; source.extensions = {}; source.contentDigest = selfDigest(source);
@@ -200,15 +207,15 @@ function agentPackage(uarRoot: string): { manifest: RecordValue; manifestUtf8: s
   manifest.contentDigest = selfDigest(manifest); return { manifest, manifestUtf8: json(manifest), files: { 'agent.json': content } };
 }
 
-async function liveCase(uarRoot: string, executable: string, teamDirectory: string, scratch: string): Promise<RecordValue> {
-  const checkpoint = run('git', ['rev-parse', 'HEAD'], uarRoot);
-  assert.equal(checkpoint, run('git', ['rev-parse', 'fba2b34a'], uarRoot), 'UAR checkout must remain at the frozen final executable checkpoint');
+async function liveCase(uarRoot: string, executable: string, checkpointRef: string, teamDirectory: string, scratch: string): Promise<RecordValue> {
+  const checkpoint = run('git', ['rev-parse', checkpointRef], uarRoot);
+  assert.equal(checkpoint, FINAL_RUNTIME, 'UAR executable checkpoint must be the frozen final C03 production head');
   for (const ancestor of [SCHEMA_SOURCE, FIRST_RUNTIME]) run('git', ['merge-base', '--is-ancestor', ancestor, checkpoint], uarRoot);
   const llm = await mockLlm(), port = await freePort(), grpc = await freePort(), work = path.join(scratch, 'uar-live');
   fs.mkdirSync(work, { recursive: true }); const configFile = path.join(work, 'uar.yaml'); config(configFile, path.join(work, 'catalog.db'), llm.baseUrl, port, grpc);
   const base = `http://127.0.0.1:${port}`, workspace = 'c03-final-gate', teamManifest = fs.readFileSync(path.join(teamDirectory, 'manifest.json'), 'utf8');
   const teamFiles: Record<string, string> = {}; for (const item of (JSON.parse(teamManifest) as RecordValue).files as RecordValue[]) teamFiles[String(item.path)] = fs.readFileSync(path.join(teamDirectory, String(item.path)), 'utf8');
-  const agent = agentPackage(uarRoot); let child = await startUar(executable, configFile, work, port);
+  const agent = agentPackage(uarRoot, checkpoint); let child = await startUar(executable, configFile, work, port);
   try {
     const capabilities = await api(base, 'GET', '/api/v1/collaboration/capabilities', workspace);
     await api(base, 'POST', '/api/v1/collaboration/packages:preflight', workspace, { commandId: 'c03-team-preflight', manifest: teamManifest, files: teamFiles });
@@ -233,12 +240,12 @@ async function liveCase(uarRoot: string, executable: string, teamDirectory: stri
     const coldPackage = await api(base, 'GET', `/api/v1/collaboration/packages/${encodeURIComponent(String(agent.manifest.id))}/versions/1.0.0`, workspace);
     const coldGrant = await api(base, 'GET', `/api/v1/collaboration/representation-grants/${encodeURIComponent(grantId)}`, workspace);
     const coldBinding = await api(base, 'GET', `/api/v1/collaboration/deployment-bindings/${encodeURIComponent(String(binding.id))}`, workspace);
-    return { checkpoint, capabilities, teamInstall, teamExport, agentInstall, bindingInstall, run: { id: runReceipt.run_id, status: runState.status }, effective, template, cold: { packageDigest: (coldPackage.manifest as RecordValue)?.contentDigest ?? agent.manifest.contentDigest, grantRevision: (coldGrant.grant as RecordValue)?.revision ?? coldGrant.revision, bindingRevision: (coldBinding.binding as RecordValue)?.revision ?? coldBinding.revision } };
+    return { checkpoint, executableDigest: sha(fs.readFileSync(executable)), capabilities, teamInstall, teamExport, agentInstall, bindingInstall, run: { id: runReceipt.run_id, status: runState.status }, effective, template, cold: { packageDigest: (coldPackage.manifest as RecordValue)?.contentDigest ?? agent.manifest.contentDigest, grantRevision: (coldGrant.grant as RecordValue)?.revision ?? coldGrant.revision, bindingRevision: (coldBinding.binding as RecordValue)?.revision ?? coldBinding.revision } };
   } finally { await stop(child); await new Promise<void>(resolve => llm.server.close(() => resolve())); }
 }
 
 export async function runC03FinalGate(argv = process.argv.slice(2)): Promise<void> {
-  const args = parseArgs(argv), miniRoot = one(args, 'mini-root'), fullRoot = one(args, 'full-root'), uarRoot = one(args, 'uar-root'), executable = one(args, 'uar-executable');
+  const args = parseArgs(argv), miniRoot = one(args, 'mini-root'), fullRoot = one(args, 'full-root'), uarRoot = one(args, 'uar-root'), executable = one(args, 'uar-executable'), checkpointRef = value(args, 'uar-checkpoint');
   const receipts = args.receipt?.map(item => path.resolve(item)) ?? []; if (receipts.length < 3) throw new Error('Pass the mini, full, and UAR --receipt destinations');
   const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'c03-final-'));
   try {
@@ -246,7 +253,7 @@ export async function runC03FinalGate(argv = process.argv.slice(2)): Promise<voi
     const mini = offlineCase(miniRoot, 'prometheus-skills-mini', scratch), full = offlineCase(fullRoot, 'prometheus-skill-pack', scratch);
     assert.equal(mini.manifestDigest, full.manifestDigest, 'packaged full and mini creator outputs diverged');
     const teamDirectory = path.join(scratch, 'prometheus-skills-mini', 'built-v1');
-    const live = await liveCase(uarRoot, executable, teamDirectory, scratch);
+    const live = await liveCase(uarRoot, executable, checkpointRef, teamDirectory, scratch);
     const receipt: RecordValue = { schemaVersion: 1, gate: 'afc-c03-team-authoring-workspace', result: 'passed', checkpoints: { schemaSource: SCHEMA_SOURCE, firstDraft2RuntimeAncestor: FIRST_RUNTIME, finalExecutableCheckpoint: live.checkpoint }, payloadParity, packagedOutputs: { mini, full, sharedManifestDigest: mini.manifestDigest }, live, boundaries: { creatorTeamPackageExecuted: false, reason: 'UAR ordinary binding execution requires one AgentDefinition entrypoint; the creator package retains one TeamDefinition entrypoint.', liveRunFixture: 'separate provider-schema single-Agent package', durableTeamInstance: 'unsupported' }, platform: { node: process.version, os: process.platform, arch: process.arch, windowsExecutionClaimed: process.platform === 'win32' } };
     const bytes = json(receipt); for (const file of receipts) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, bytes); }
   } finally { fs.rmSync(scratch, { recursive: true, force: true }); }

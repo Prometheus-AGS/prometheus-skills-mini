@@ -16,16 +16,36 @@
   "phases": [
     {
       "id": "P1",
-      "status": "not_started",
-      "startedAt": null,
-      "frozenAt": null,
-      "artifactAt": null,
-      "firstInstalledSuccessAt": null,
-      "commits": [],
+      "status": "accepted-customer-platforms",
+      "startedAt": "2026-09-23T22:49:00Z",
+      "frozenAt": "2026-09-26T12:00:00Z",
+      "artifactAt": "2026-09-26T12:00:00Z",
+      "firstInstalledSuccessAt": "2026-09-26T12:00:00Z",
+      "commits": [
+        {
+          "repository": "the-boss",
+          "commit": "1cda4e55535b42dfab8f064d7bbc16d82e0807fa"
+        },
+        {
+          "repository": "universal-agent-runtime",
+          "commit": "92620d40419d5b55af94e2aef0a0db886aa9aadc"
+        },
+        {
+          "repository": "prometheus-skills-mini",
+          "commit": "2650b3d470373d822f9cfd2349229942c05c1566"
+        }
+      ],
       "buildTimeSeconds": null,
       "integrationTimeSeconds": null,
       "escapedDefects": [],
-      "humanInterventions": []
+      "humanInterventions": [
+        {
+          "date": "2026-09-26",
+          "platform": "win32-x64",
+          "outcome": "accepted",
+          "detail": "Operator confirmed successful installation and packaged UAR active on port 1906."
+        }
+      ]
     },
     {
       "id": "P2",
@@ -80,5 +100,5 @@
       "humanInterventions": []
     }
   ],
-  "claim": "No controlled model comparison has been performed."
+  "claim": "P1 is accepted for Windows x64 and Apple Silicon from release 2.2.3 evidence. P2-P5 remain not started. No controlled model comparison has been performed."
 }

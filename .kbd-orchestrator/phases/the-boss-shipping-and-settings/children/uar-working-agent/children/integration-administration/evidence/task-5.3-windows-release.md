@@ -1,4 +1,4 @@
-# Task 5.3 Windows x64 release — acceptance pending
+# Task 5.3 Windows x64 release — accepted
 
 The Windows x64 UAR-enabled installer was rebuilt from The Boss `1cda4e55535b42dfab8f064d7bbc16d82e0807fa` after the UAR sidecar port and administration changes. It was uploaded directly to GitHub Releases, merged into release metadata and deployed to the public landing site.
 
@@ -16,4 +16,4 @@ The Windows x64 UAR-enabled installer was rebuilt from The Boss `1cda4e55535b42d
 
 The public asset followed GitHub redirects to HTTP 200 with the recorded content length. The deployed site bundle contains the exact Windows URL and checksum. The build packages UAR source `92620d40419d5b55af94e2aef0a0db886aa9aadc`, whose preferred-port contract starts at 1906 and advances one port at a time until it binds.
 
-This task remains open because the plan requires operator-confirmed installed Windows acceptance. Publication and a successful installer build do not establish that the packaged sidecar launches on the operator's Windows machine.
+On 2026-09-26 the operator confirmed that the Windows installation worked and that the packaged UAR was active on port `1906`. This supplies the missing installed launch and effective-port evidence required by task 5.3. The operator did not report an occupied-port scenario on Windows, so Windows conflict fallback remains unobserved; the existing Apple Silicon installed acceptance separately demonstrates `1906` to `1907` fallback.

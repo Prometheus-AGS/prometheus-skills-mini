@@ -2,10 +2,10 @@
   "schemaVersion": "5",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 931,
-  "derivedRevision": 931,
+  "sourceRevision": 962,
+  "derivedRevision": 962,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 867,
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 898,
     "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
@@ -13,32 +13,27 @@
   "runId": "platform-foundation-20260921T101006Z",
   "path": [
     "the-boss-shipping-and-settings",
-    "uar-working-agent",
-    "integration-administration"
+    "uar-working-agent"
   ],
   "phaseIds": [
     "the-boss-shipping-and-settings",
-    "the-boss-shipping-and-settings::uar-working-agent",
-    "the-boss-shipping-and-settings::uar-working-agent::integration-administration"
+    "the-boss-shipping-and-settings::uar-working-agent"
   ],
-  "activePhaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
-  "activePhase": "integration-administration",
+  "activePhaseId": "the-boss-shipping-and-settings::uar-working-agent",
+  "activePhase": "uar-working-agent",
   "phase": "the-boss-shipping-and-settings",
-  "parentPhase": "uar-working-agent",
-  "childPointer": "integration-administration",
-  "change": "integration-administration",
-  "currentTask": "5.3",
+  "parentPhase": "the-boss-shipping-and-settings",
+  "childPointer": "uar-working-agent",
+  "change": null,
+  "currentTask": null,
   "status": "ready",
-  "lifecycle": "ready",
-  "stageId": null,
-  "stageStatus": null,
   "completionMetric": "implementation",
-  "implementationCompleted": 22,
-  "implementationTotal": 41,
-  "planRevision": 3,
-  "revision": 931,
-  "exactNextCommand": "integration-administration task 5.2: reconcile evidence, bounded Impeccable visual pass, freeze shared inputs, and prepare native preflights/publication coordinator without building installers",
-  "nextChange": "integration-administration",
-  "nextTask": "5.3",
-  "updatedAt": "2026-09-26T09:15:27.298708Z"
+  "implementationCompleted": 24,
+  "implementationTotal": 42,
+  "planRevision": 4,
+  "revision": 962,
+  "exactNextCommand": "/kbd-status",
+  "nextChange": null,
+  "nextTask": null,
+  "updatedAt": "2026-09-27T03:10:28.835257Z"
 }

@@ -21,6 +21,14 @@ import { isBottleneckActive, evaluateBottleneck, bottleneckSignalText } from '..
 import { hooksFire } from '../lib/kbd/hooks.mjs';
 import { runHookCommand } from '../lib/kbd/hook-command.mjs';
 
+const USAGE = `Usage: node scripts/kbd-next-phase.mjs [phase-name]
+
+Seed and activate the next KBD phase from the current phase reflection.
+
+Options:
+  -h, --help  Show this help.
+`;
+
 function die(message) {
   process.stderr.write(`[kbd-next-phase] ERROR: ${message}\n`);
   process.exit(1);
@@ -87,6 +95,11 @@ function normalizePhaseName(name) {
 }
 
 async function main(argv) {
+  if (argv.includes('-h') || argv.includes('--help')) {
+    process.stdout.write(USAGE);
+    return;
+  }
+
   const proposedName = argv[0] ?? '';
   const timestamp = new Date().toISOString();
   const dateSlug = timestamp.slice(0, 10);

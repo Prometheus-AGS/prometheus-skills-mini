@@ -101,6 +101,8 @@ After all production code, generated artifacts, fixtures, distributions, and doc
 
 The gate records the host/platform and exact revisions. A Windows claim requires the packaged path to run on Windows; a passing non-Windows live gate cannot certify Windows by inference. Unit tests and documentation builds remain compatibility checks inside the final boundary, not separate completion claims.
 
+The immutable schema input is UAR commit `41375cf6cd137a8a825be102c49516211c3fa2e5`; it is not the runtime under test. Commit `a64bafbb3d4cc54a22a5eecef2362300a959de62` is the first draft.2 runtime ancestor and is likewise not final execution evidence. The runner resolves the supplied UAR checkout at execution time, requires it to equal the frozen final C03 production head, and records all three identities. It installs and exports the creator-authored top-level team package, then uses a separate single-Agent provider-schema fixture for the ordinary binding/run path because the current UAR binding executor requires exactly one `AgentDefinition` entrypoint. One canonical receipt is serialized byte-identically to the mini, full-pack, and UAR evidence destinations.
+
 ## Risks / Trade-offs
 
 - **Draft.2 is not yet present in the inspected repositories** → keep schema-import and implementation tasks blocked on an immutable reviewed UAR checkpoint; never synthesize the profile locally.

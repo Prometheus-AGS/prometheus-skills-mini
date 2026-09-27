@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-26",
+  "release": "2.2.3",
+  "result": "accepted-customer-platforms",
+  "repairs": {
+    "windowsMissingSidecar": "repaired-in-2.2.3",
+    "appleSiliconCorruptDmg": "repaired-in-2.2.3",
+    "newInstalledFailuresReported": false
+  },
+  "platforms": {
+    "win32-x64": {
+      "installedAcceptance": "operator-confirmed",
+      "installationWorked": true,
+      "uarActive": true,
+      "effectivePort": 1906,
+      "receipt": "windows-x64-installed-acceptance-2026-09-26.json"
+    },
+    "darwin-arm64": {
+      "installedAcceptance": "accepted-local",
+      "preferredPort": 1906,
+      "occupiedPort": 1906,
+      "effectivePort": 1907,
+      "receipt": "../../integration-administration/evidence/release-2.2.3-uar-receipt.json"
+    }
+  },
+  "publication": {
+    "release": "https://github.com/Prometheus-AGS/the-boss/releases/tag/v2.2.3",
+    "site": "https://the-boss.know-me.tools",
+    "status": "previously-verified"
+  },
+  "limitations": [
+    "Windows occupied-port fallback was not observed; Windows used preferred port 1906.",
+    "This receipt does not complete unrelated UAR P2-P5 work or lower-priority platform lanes."
+  ]
+}

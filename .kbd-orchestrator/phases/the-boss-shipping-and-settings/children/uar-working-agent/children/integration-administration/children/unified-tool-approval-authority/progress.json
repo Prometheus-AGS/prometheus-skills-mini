@@ -2,17 +2,17 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 921,
-  "derivedRevision": 921,
+  "sourceRevision": 956,
+  "derivedRevision": 956,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 857,
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 892,
     "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
   "phase": "unified-tool-approval-authority",
   "phaseId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration::unified-tool-approval-authority",
   "parentPhase": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
-  "last_updated": "2026-09-26T04:51:52.592720Z",
+  "last_updated": "2026-09-27T03:09:41.883938Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 4,
   "changes_completed": 4,
@@ -26,47 +26,18 @@
       "status": "COMPLETE"
     },
     "evidence": {
-      "status": "NOT_TRACKED",
-      "summary": null,
+      "status": "COMPLETE",
+      "summary": "Windows x64 and Apple Silicon installed acceptance, gate receipts, immutable release records, and OpenSpec archive recorded.",
       "blockers": []
     },
     "certification": {
-      "status": "NOT_TRACKED",
-      "summary": null,
+      "status": "COMPLETE",
+      "summary": "Cumulative certification passed with zero critical findings and explicit artifact-refiner, Gate V transcript, and Windows fallback limitations.",
       "blockers": []
     },
     "publication": {
-      "status": "NOT_TRACKED",
-      "summary": null,
-      "blockers": []
-    }
-  },
-  "completionScopes": {
-    "completion": "phase",
-    "runCompletion": "run"
-  },
-  "runCompletion": {
-    "scope": "run",
-    "runId": "platform-foundation-20260921T101006Z",
-    "primaryCounter": "implementation",
-    "implementation": {
-      "completed": 22,
-      "total": 41,
-      "status": "IN_PROGRESS"
-    },
-    "evidence": {
-      "status": "PENDING",
-      "summary": null,
-      "blockers": []
-    },
-    "certification": {
-      "status": "PENDING",
-      "summary": null,
-      "blockers": []
-    },
-    "publication": {
-      "status": "PENDING",
-      "summary": null,
+      "status": "COMPLETE",
+      "summary": "Windows x64 and Apple Silicon 2.2.3 artifacts published to GitHub Releases and reflected on the live landing site.",
       "blockers": []
     }
   },

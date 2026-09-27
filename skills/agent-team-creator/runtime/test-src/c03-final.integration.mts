@@ -105,6 +105,19 @@ function parity(miniRoot: string, fullRoot: string): RecordValue {
   return { miniSourceTree: sha(canonical(fileMap(miniSource) as unknown as Json)), fullSourceTree: sha(canonical(fileMap(fullSource) as unknown as Json)), miniCodexTree: sha(canonical(fileMap(miniDist) as unknown as Json)), fullCodexTree: sha(canonical(fileMap(fullDist) as unknown as Json)) };
 }
 
+function repositoryChecks(miniRoot: string, fullRoot: string): RecordValue {
+  run('npm', ['run', 'check'], miniRoot);
+  run('npm', ['run', 'check:distribution'], miniRoot);
+  run('npm', ['run', 'spec:validate'], miniRoot);
+  run('npm', ['--prefix', 'site', 'run', 'build'], miniRoot);
+  run('openspec', ['validate', 'afc-c03-team-authoring-workspace', '--strict'], miniRoot);
+  run('npm', ['run', 'check:distribution'], fullRoot);
+  run('npm', ['run', 'docs:sync:check'], fullRoot);
+  run('npm', ['run', 'docs:check'], fullRoot);
+  run('openspec', ['validate', 'afc-c03-team-authoring-workspace', '--strict'], fullRoot);
+  return { miniRules: 'passed', miniDistribution: 'passed', miniSpecs: 'passed', miniDocs: 'passed', fullDistribution: 'passed', fullDocs: 'passed', fullSpecs: 'passed' };
+}
+
 function packaged(root: string, pack: string): { cli: string; assets: string } {
   const skill = path.join(root, 'dist', 'plugins', 'codex', pack, 'skills', 'agent-team-creator');
   const cliFile = path.join(skill, 'scripts', 'cli.mjs');
@@ -252,9 +265,10 @@ export async function runC03FinalGate(argv = process.argv.slice(2)): Promise<voi
     const payloadParity = parity(miniRoot, fullRoot);
     const mini = offlineCase(miniRoot, 'prometheus-skills-mini', scratch), full = offlineCase(fullRoot, 'prometheus-skill-pack', scratch);
     assert.equal(mini.manifestDigest, full.manifestDigest, 'packaged full and mini creator outputs diverged');
+    const compatibility = repositoryChecks(miniRoot, fullRoot);
     const teamDirectory = path.join(scratch, 'prometheus-skills-mini', 'built-v1');
     const live = await liveCase(uarRoot, executable, checkpointRef, teamDirectory, scratch);
-    const receipt: RecordValue = { schemaVersion: 1, gate: 'afc-c03-team-authoring-workspace', result: 'passed', checkpoints: { schemaSource: SCHEMA_SOURCE, firstDraft2RuntimeAncestor: FIRST_RUNTIME, finalExecutableCheckpoint: live.checkpoint }, payloadParity, packagedOutputs: { mini, full, sharedManifestDigest: mini.manifestDigest }, live, boundaries: { creatorTeamPackageExecuted: false, reason: 'UAR ordinary binding execution requires one AgentDefinition entrypoint; the creator package retains one TeamDefinition entrypoint.', liveRunFixture: 'separate provider-schema single-Agent package', durableTeamInstance: 'unsupported' }, platform: { node: process.version, os: process.platform, arch: process.arch, windowsExecutionClaimed: process.platform === 'win32' } };
+    const receipt: RecordValue = { schemaVersion: 1, gate: 'afc-c03-team-authoring-workspace', result: 'passed', checkpoints: { schemaSource: SCHEMA_SOURCE, firstDraft2RuntimeAncestor: FIRST_RUNTIME, finalExecutableCheckpoint: live.checkpoint }, payloadParity, compatibility, packagedOutputs: { mini, full, sharedManifestDigest: mini.manifestDigest }, live, boundaries: { creatorTeamPackageExecuted: false, reason: 'UAR ordinary binding execution requires one AgentDefinition entrypoint; the creator package retains one TeamDefinition entrypoint.', liveRunFixture: 'separate provider-schema single-Agent package', durableTeamInstance: 'unsupported' }, platform: { node: process.version, os: process.platform, arch: process.arch, windowsExecutionClaimed: process.platform === 'win32' } };
     const bytes = json(receipt); for (const file of receipts) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, bytes); }
   } finally { fs.rmSync(scratch, { recursive: true, force: true }); }
 }

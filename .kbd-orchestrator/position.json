@@ -2,17 +2,21 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 962,
-  "derivedRevision": 962,
+  "sourceRevision": 978,
+  "derivedRevision": 978,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 898,
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 914,
     "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-27T03:10:28.835257Z",
+  "updatedAt": "2026-09-28T22:50:03.650543Z",
   "cursor": [
     "the-boss-shipping-and-settings",
-    "uar-working-agent"
+    "uar-working-agent",
+    "uar-liter-inference-routing",
+    "execute",
+    "uar-executable-model-assignment",
+    "1.1"
   ],
   "root": {
     "type": "phase",
@@ -20,7 +24,7 @@
     "status": "ready",
     "progress": {
       "done": 24,
-      "total": 42
+      "total": 43
     },
     "children": [
       {
@@ -462,6 +466,28 @@
                     "progress": {
                       "done": 8,
                       "total": 8
+                    }
+                  }
+                ],
+                "annotations": []
+              },
+              {
+                "type": "phase",
+                "id": "uar-liter-inference-routing",
+                "canonicalId": "the-boss-shipping-and-settings::uar-working-agent::uar-liter-inference-routing",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 1
+                },
+                "children": [
+                  {
+                    "type": "change",
+                    "id": "uar-executable-model-assignment",
+                    "status": "PENDING",
+                    "progress": {
+                      "done": 0,
+                      "total": 6
                     }
                   }
                 ],

@@ -2,10 +2,10 @@
   "schemaVersion": "5",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 962,
-  "derivedRevision": 962,
+  "sourceRevision": 978,
+  "derivedRevision": 978,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 898,
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 914,
     "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
@@ -13,27 +13,32 @@
   "runId": "platform-foundation-20260921T101006Z",
   "path": [
     "the-boss-shipping-and-settings",
-    "uar-working-agent"
+    "uar-working-agent",
+    "uar-liter-inference-routing"
   ],
   "phaseIds": [
     "the-boss-shipping-and-settings",
-    "the-boss-shipping-and-settings::uar-working-agent"
+    "the-boss-shipping-and-settings::uar-working-agent",
+    "the-boss-shipping-and-settings::uar-working-agent::uar-liter-inference-routing"
   ],
-  "activePhaseId": "the-boss-shipping-and-settings::uar-working-agent",
-  "activePhase": "uar-working-agent",
+  "activePhaseId": "the-boss-shipping-and-settings::uar-working-agent::uar-liter-inference-routing",
+  "activePhase": "uar-liter-inference-routing",
   "phase": "the-boss-shipping-and-settings",
-  "parentPhase": "the-boss-shipping-and-settings",
-  "childPointer": "uar-working-agent",
-  "change": null,
-  "currentTask": null,
+  "parentPhase": "uar-working-agent",
+  "childPointer": "uar-liter-inference-routing",
+  "change": "uar-executable-model-assignment",
+  "currentTask": "1.1",
   "status": "ready",
+  "lifecycle": "ready",
+  "stageId": "execute",
+  "stageStatus": "IN_PROGRESS",
   "completionMetric": "implementation",
   "implementationCompleted": 24,
-  "implementationTotal": 42,
+  "implementationTotal": 43,
   "planRevision": 4,
-  "revision": 962,
-  "exactNextCommand": "/kbd-status",
-  "nextChange": null,
-  "nextTask": null,
-  "updatedAt": "2026-09-27T03:10:28.835257Z"
+  "revision": 978,
+  "exactNextCommand": "/kbd-assess uar-liter-inference-routing",
+  "nextChange": "uar-executable-model-assignment",
+  "nextTask": "1.1",
+  "updatedAt": "2026-09-28T22:50:03.650543Z"
 }

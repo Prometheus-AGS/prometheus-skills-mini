@@ -9,21 +9,21 @@
     "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
-  "phase": "uar-working-agent",
-  "phaseId": "the-boss-shipping-and-settings::uar-working-agent",
-  "parentPhase": "the-boss-shipping-and-settings",
+  "phase": "uar-liter-inference-routing",
+  "phaseId": "the-boss-shipping-and-settings::uar-working-agent::uar-liter-inference-routing",
+  "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
   "last_updated": "2026-09-28T22:50:03.650543Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 1,
-  "changes_completed": 1,
+  "changes_completed": 0,
   "implementation_total": 1,
-  "implementation_completed": 1,
+  "implementation_completed": 0,
   "completion": {
     "primaryCounter": "implementation",
     "implementation": {
-      "completed": 1,
+      "completed": 0,
       "total": 1,
-      "status": "COMPLETE"
+      "status": "PENDING"
     },
     "evidence": {
       "status": "NOT_TRACKED",
@@ -72,58 +72,17 @@
   },
   "changes": [
     {
-      "id": "uar-delivery-replan",
-      "title": "P1 working installed UAR agent (OpenSpec tasks 1.1–1.10)",
-      "status": "DONE",
-      "implementation_status": "COMPLETE",
-      "tasks_total": 10,
-      "tasks_done": 10,
-      "last_task_completed": "Fix observed failures and publish accepted platforms",
-      "next_task_pending": null,
+      "id": "uar-executable-model-assignment",
+      "title": "Executable UAR model assignment",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 6,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "Project executable model sources and instance-bound availability",
       "blockers": []
     }
   ],
-  "children": {
-    "integration-administration": {
-      "status": "DONE",
-      "changes_completed": 0,
-      "changes_total": 1,
-      "implementation_completed": 0,
-      "implementation_total": 1,
-      "certification_status": "NOT_TRACKED",
-      "handoff": null,
-      "completed_at": null
-    },
-    "integration-administration-closeout": {
-      "status": "DONE",
-      "changes_completed": 1,
-      "changes_total": 1,
-      "implementation_completed": 1,
-      "implementation_total": 1,
-      "certification_status": "NOT_TRACKED",
-      "handoff": null,
-      "completed_at": null
-    },
-    "non-uar-customer-release": {
-      "status": "DONE",
-      "changes_completed": 1,
-      "changes_total": 1,
-      "implementation_completed": 1,
-      "implementation_total": 1,
-      "certification_status": "NOT_TRACKED",
-      "handoff": null,
-      "completed_at": null
-    },
-    "uar-liter-inference-routing": {
-      "status": "PENDING",
-      "changes_completed": 0,
-      "changes_total": 1,
-      "implementation_completed": 0,
-      "implementation_total": 1,
-      "certification_status": "NOT_TRACKED",
-      "handoff": null,
-      "completed_at": null
-    }
-  },
+  "children": {},
   "migrationStatus": null
 }

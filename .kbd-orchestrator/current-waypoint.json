@@ -2,10 +2,10 @@
   "schemaVersion": "5",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 978,
-  "derivedRevision": 978,
+  "sourceRevision": 999,
+  "derivedRevision": 999,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 914,
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 935,
     "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
@@ -13,32 +13,30 @@
   "runId": "platform-foundation-20260921T101006Z",
   "path": [
     "the-boss-shipping-and-settings",
-    "uar-working-agent",
-    "uar-liter-inference-routing"
+    "uar-working-agent"
   ],
   "phaseIds": [
     "the-boss-shipping-and-settings",
-    "the-boss-shipping-and-settings::uar-working-agent",
-    "the-boss-shipping-and-settings::uar-working-agent::uar-liter-inference-routing"
+    "the-boss-shipping-and-settings::uar-working-agent"
   ],
-  "activePhaseId": "the-boss-shipping-and-settings::uar-working-agent::uar-liter-inference-routing",
-  "activePhase": "uar-liter-inference-routing",
+  "activePhaseId": "the-boss-shipping-and-settings::uar-working-agent",
+  "activePhase": "uar-working-agent",
   "phase": "the-boss-shipping-and-settings",
-  "parentPhase": "uar-working-agent",
-  "childPointer": "uar-liter-inference-routing",
-  "change": "uar-executable-model-assignment",
-  "currentTask": "1.1",
+  "parentPhase": "the-boss-shipping-and-settings",
+  "childPointer": "uar-working-agent",
+  "change": null,
+  "currentTask": null,
   "status": "ready",
   "lifecycle": "ready",
-  "stageId": "execute",
-  "stageStatus": "IN_PROGRESS",
+  "stageId": null,
+  "stageStatus": null,
   "completionMetric": "implementation",
-  "implementationCompleted": 24,
+  "implementationCompleted": 26,
   "implementationTotal": 43,
-  "planRevision": 4,
-  "revision": 978,
-  "exactNextCommand": "/kbd-assess uar-liter-inference-routing",
-  "nextChange": "uar-executable-model-assignment",
-  "nextTask": "1.1",
-  "updatedAt": "2026-09-28T22:50:03.650543Z"
+  "planRevision": 5,
+  "revision": 999,
+  "exactNextCommand": null,
+  "nextChange": null,
+  "nextTask": null,
+  "updatedAt": "2026-09-29T22:45:49.892498Z"
 }

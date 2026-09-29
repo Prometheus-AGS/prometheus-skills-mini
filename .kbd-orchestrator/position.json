@@ -2,28 +2,24 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 978,
-  "derivedRevision": 978,
+  "sourceRevision": 999,
+  "derivedRevision": 999,
   "frontier": {
-    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 914,
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 935,
     "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-28T22:50:03.650543Z",
+  "updatedAt": "2026-09-29T22:45:49.892498Z",
   "cursor": [
     "the-boss-shipping-and-settings",
-    "uar-working-agent",
-    "uar-liter-inference-routing",
-    "execute",
-    "uar-executable-model-assignment",
-    "1.1"
+    "uar-working-agent"
   ],
   "root": {
     "type": "phase",
     "id": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
     "status": "ready",
     "progress": {
-      "done": 24,
+      "done": 26,
       "total": 43
     },
     "children": [
@@ -350,7 +346,7 @@
                 "canonicalId": "the-boss-shipping-and-settings::uar-working-agent::integration-administration",
                 "status": "COMPLETE",
                 "progress": {
-                  "done": 0,
+                  "done": 1,
                   "total": 1
                 },
                 "children": [
@@ -418,9 +414,9 @@
                   {
                     "type": "change",
                     "id": "integration-administration",
-                    "status": "IN_PROGRESS",
+                    "status": "COMPLETE",
                     "progress": {
-                      "done": 35,
+                      "done": 37,
                       "total": 37
                     }
                   }
@@ -475,18 +471,18 @@
                 "type": "phase",
                 "id": "uar-liter-inference-routing",
                 "canonicalId": "the-boss-shipping-and-settings::uar-working-agent::uar-liter-inference-routing",
-                "status": "PENDING",
+                "status": "COMPLETE",
                 "progress": {
-                  "done": 0,
+                  "done": 1,
                   "total": 1
                 },
                 "children": [
                   {
                     "type": "change",
                     "id": "uar-executable-model-assignment",
-                    "status": "PENDING",
+                    "status": "COMPLETE",
                     "progress": {
-                      "done": 0,
+                      "done": 6,
                       "total": 6
                     }
                   }

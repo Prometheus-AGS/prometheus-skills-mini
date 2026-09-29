@@ -33,10 +33,7 @@
       "completion": "All four platform bytes published on GitHub Releases; metadata committed/pushed; landing deployed; publication-receipt.mjs confirms exact live URLs and bytes. Never record dispatch as complete."
     },
     "requireMetadata": true,
-    "acceptancePlatforms": [
-      "darwin-arm64",
-      "win32-x64"
-    ]
+    "acceptancePlatforms": []
   },
   "budgets": {
     "maxIterations": null,
@@ -118,7 +115,8 @@
     "baselineFunction": "Fresh onboarding opens provider administration; this does not prove inference.",
     "perIncrementFunction": "The executing owner must also operate the newly completed feature and record its behavior in the delivery receipt before finish.",
     "compassMinutes": 60,
-    "publicationPublisherLimit": 1
+    "publicationPublisherLimit": 1,
+    "installedAcceptance": "Tracked separately from publication scheduling by operator approval 2026-09-29; Windows acceptance remains pending."
   },
   "learning": {
     "command": "node",

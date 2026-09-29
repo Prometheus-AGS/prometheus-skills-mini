@@ -1,0 +1,471 @@
+{
+  "schemaVersion": 2,
+  "runId": "adcf4ebd-9fa7-4880-99ae-7545b6bd6bdf",
+  "profile": "agent-fabric-convergence-two-hour-delivery",
+  "iterationMinutes": 120,
+  "iterations": [
+    {
+      "schemaVersion": 2,
+      "id": "8d655a16-c393-44c7-9060-bbe69af76d06",
+      "index": 1,
+      "status": "finished",
+      "workOutcome": "success",
+      "selected": {
+        "tasks": [
+          "C09.1"
+        ],
+        "changes": [
+          "afc-c09-bounded-teams-and-shared-task-board"
+        ],
+        "phases": []
+      },
+      "completed": {
+        "tasks": [
+          "C09.1"
+        ],
+        "changes": [],
+        "phases": []
+      },
+      "carryover": {
+        "tasks": [],
+        "changes": [
+          "afc-c09-bounded-teams-and-shared-task-board"
+        ],
+        "phases": []
+      },
+      "counts": {
+        "tasks": 1,
+        "changes": 0,
+        "phases": 0
+      },
+      "grossCompleted": {
+        "tasks": [
+          "C09.1"
+        ],
+        "changes": [],
+        "phases": []
+      },
+      "grossCounts": {
+        "tasks": 1,
+        "changes": 0,
+        "phases": 0
+      },
+      "reopenedCounts": {
+        "tasks": 0,
+        "changes": 0,
+        "phases": 0
+      },
+      "netCounts": {
+        "tasks": 1,
+        "changes": 0,
+        "phases": 0
+      },
+      "unresolvedReopened": {
+        "tasks": [],
+        "changes": [],
+        "phases": []
+      },
+      "uncertainCompletionOrder": [],
+      "completionTimeline": [
+        {
+          "kind": "tasks",
+          "id": "C09.1",
+          "action": "complete",
+          "occurredAt": "2026-09-28T19:47:16.052Z",
+          "childId": null,
+          "iterationId": "8d655a16-c393-44c7-9060-bbe69af76d06",
+          "legacySnapshot": true
+        }
+      ],
+      "evidenceSource": "referenced-canonical-receipts",
+      "canonicalReceipts": [
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-c06/librefang/docs/plans/agent-fabric-convergence/.prometheus/cadence/artifacts/c09-1-canonical-completion.json",
+          "sha256": "47dd4097b92574b16c4e4337a699998006c7b331bcd0dc4385fd60873efdcbed",
+          "source": "prometheus kbd status --json"
+        }
+      ],
+      "outcomes": [
+        "Create and inspect a durable UAR team planning board from The Boss; member revisions and task dependencies survive restart in a local workspace"
+      ],
+      "deliveryClass": null,
+      "owners": null,
+      "sourceRefs": [
+        {
+          "repository": "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-c09-uar",
+          "revision": "ae4db11869efd125dce7f9a2a488d876af0b7b98",
+          "fingerprint": "7ed965bca6822876b90e473f794cc031c4ae3c37cb3fc6afba2b1e8e6fe7c021"
+        },
+        {
+          "repository": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-d01-build",
+          "revision": "c51c039cdec0b610d2298071003b3ad52af79b13",
+          "fingerprint": "4b18b51b4667986e34bc464d266666271d6289464fd0b85a0c3dba02aab9d759"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-d01-build/dist/The-Boss-2.2.6-mac-arm64.dmg",
+          "sha256": "10c2c652fa15fe16d56bfe3cc6b3a494b7aa645f9c3bb4a4033d75e23b7f434e",
+          "size": 611265302,
+          "platform": "darwin-arm64",
+          "signingStatus": "developer-id-signed-not-notarized"
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-c06/librefang/docs/plans/agent-fabric-convergence/.prometheus/cadence/artifacts/c09-team-planning-run.json",
+          "sha256": "21744b223f4ca094b1b1cbf6991e10b7f478ffcd4fa47dc62ee7ddbb5c86a03e",
+          "size": 1744
+        }
+      ],
+      "hookResults": [],
+      "minutes": {
+        "elapsed": 67.37881666666667,
+        "active": null,
+        "observed": 21.278333333333332,
+        "observedWork": 21.278333333333332,
+        "observedWaiting": null,
+        "unattributed": 46.10048333333333,
+        "planning": null,
+        "implementation": null,
+        "build": 20.998066666666666,
+        "run": 0.28026666666666666,
+        "feature-operation": null,
+        "rework": null,
+        "coordination": null,
+        "resource-wait": null,
+        "publication": null,
+        "human-wait": null,
+        "hook": 0,
+        "publicationWithinIteration": null,
+        "childInterruptions": null
+      },
+      "timing": {
+        "coverage": 0.31580152911560483,
+        "requiredCoverage": 0.99,
+        "optimizationEligible": false,
+        "invalidSpans": 0,
+        "openActivities": []
+      },
+      "buildRunShare": null,
+      "resourceWaitShare": null,
+      "publicationShare": null,
+      "childState": {
+        "activeChildIds": [],
+        "unresolved": false,
+        "reconciliation": null
+      },
+      "children": [],
+      "learning": {
+        "delivered": [
+          "Create and inspect a durable UAR team planning board from The Boss; member revisions and task dependencies survive restart in a local workspace"
+        ],
+        "carryover": {
+          "tasks": [],
+          "changes": [
+            "afc-c09-bounded-teams-and-shared-task-board"
+          ],
+          "phases": []
+        },
+        "repeatedBuilds": [
+          {
+            "id": "mac-arm64-build",
+            "attemptId": "91804eb8-8ae5-40ac-8360-482371f5f4e5",
+            "status": "success",
+            "reason": null
+          },
+          {
+            "id": "mac-arm64-build",
+            "attemptId": "5619f405-5a41-4e4f-a573-688078dbf9ac",
+            "status": "success",
+            "reason": null
+          },
+          {
+            "id": "mac-arm64-build",
+            "attemptId": "9770806b-2952-48ab-adf0-be95ea54aa68",
+            "status": "success",
+            "reason": null
+          }
+        ],
+        "concurrencyEnforcement": "Harness instruction; no machine-wide resource scheduler",
+        "recommendation": null,
+        "evidenceStatement": "Insufficient comparable evidence or no supported change within approved bounds."
+      },
+      "costs": null,
+      "reopened": []
+    },
+    {
+      "schemaVersion": 2,
+      "id": "43cf2216-8e5f-4520-8bb1-0480adebf74b",
+      "index": 2,
+      "status": "finished",
+      "workOutcome": "success",
+      "selected": {
+        "tasks": [
+          "C09.2"
+        ],
+        "changes": [
+          "afc-c09-bounded-teams-and-shared-task-board"
+        ],
+        "phases": []
+      },
+      "completed": {
+        "tasks": [
+          "C09.2"
+        ],
+        "changes": [],
+        "phases": []
+      },
+      "carryover": {
+        "tasks": [],
+        "changes": [
+          "afc-c09-bounded-teams-and-shared-task-board"
+        ],
+        "phases": []
+      },
+      "counts": {
+        "tasks": 1,
+        "changes": 0,
+        "phases": 0
+      },
+      "grossCompleted": {
+        "tasks": [
+          "C09.2"
+        ],
+        "changes": [],
+        "phases": []
+      },
+      "grossCounts": {
+        "tasks": 1,
+        "changes": 0,
+        "phases": 0
+      },
+      "reopenedCounts": {
+        "tasks": 0,
+        "changes": 0,
+        "phases": 0
+      },
+      "netCounts": {
+        "tasks": 1,
+        "changes": 0,
+        "phases": 0
+      },
+      "unresolvedReopened": {
+        "tasks": [],
+        "changes": [],
+        "phases": []
+      },
+      "uncertainCompletionOrder": [],
+      "completionTimeline": [
+        {
+          "kind": "tasks",
+          "id": "C09.2",
+          "action": "complete",
+          "occurredAt": "2026-09-28T20:53:05.429Z",
+          "childId": null,
+          "iterationId": "43cf2216-8e5f-4520-8bb1-0480adebf74b",
+          "legacySnapshot": true
+        }
+      ],
+      "evidenceSource": "referenced-canonical-receipts",
+      "canonicalReceipts": [
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-c06/librefang/docs/plans/agent-fabric-convergence/.prometheus/cadence/artifacts/c09-2-canonical-completion.json",
+          "sha256": "7171daf4018c492ab660226f9258f6a1340fd6d03a5ad695f64354d00fc1a492",
+          "source": "prometheus kbd task transition"
+        }
+      ],
+      "outcomes": [
+        "From The Boss, claim and reassign a durable UAR team task with fenced ownership, inspect assignment and message receipts, and recover the board after a sidecar restart without granting team execution before aggregate-budget admission is complete"
+      ],
+      "deliveryClass": null,
+      "owners": null,
+      "sourceRefs": [
+        {
+          "repository": "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-c09-uar",
+          "revision": "d3d768636b46bd7b7cea29fba4987aa1754f8352",
+          "fingerprint": "414e7e6d2d06e243c5ed91ed8855808f9d211fc83d1cf9eee815469f6b7b7697"
+        },
+        {
+          "repository": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-d01-build",
+          "revision": "93207a98a8e652f259f6fb4264cbb11f2c85538f",
+          "fingerprint": "b291b8d3df7d773c5628f9871466cf548cec49f82f92b41b94b0c13f575f6a3d"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-d01-build/dist/The-Boss-2.2.6-mac-arm64.dmg",
+          "sha256": "1d79b566be07230f88b6add30d3aefba24277cca82230acf62effc7f8efd34a8",
+          "size": 611381397,
+          "platform": "darwin-arm64",
+          "signingStatus": "developer-id-signed-not-notarized"
+        },
+        {
+          "path": "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-c06/librefang/docs/plans/agent-fabric-convergence/.prometheus/cadence/artifacts/c09-team-ownership-final.json",
+          "sha256": "d88c0b356015458a5723fe9c9430dcc18219fc07e75c5f58b6bf9b509c88dc89",
+          "size": 1897
+        }
+      ],
+      "hookResults": [],
+      "minutes": {
+        "elapsed": 54.84408333333333,
+        "active": null,
+        "observed": 5.7012,
+        "observedWork": 5.7012,
+        "observedWaiting": null,
+        "unattributed": 49.14288333333333,
+        "planning": null,
+        "implementation": null,
+        "build": 5.657,
+        "run": 0.0442,
+        "feature-operation": null,
+        "rework": null,
+        "coordination": null,
+        "resource-wait": null,
+        "publication": null,
+        "human-wait": null,
+        "hook": 0,
+        "publicationWithinIteration": null,
+        "childInterruptions": null
+      },
+      "timing": {
+        "coverage": 0.10395287246117403,
+        "requiredCoverage": 0.99,
+        "optimizationEligible": false,
+        "invalidSpans": 0,
+        "openActivities": []
+      },
+      "buildRunShare": null,
+      "resourceWaitShare": null,
+      "publicationShare": null,
+      "childState": {
+        "activeChildIds": [],
+        "unresolved": false,
+        "reconciliation": null
+      },
+      "children": [],
+      "learning": {
+        "delivered": [
+          "From The Boss, claim and reassign a durable UAR team task with fenced ownership, inspect assignment and message receipts, and recover the board after a sidecar restart without granting team execution before aggregate-budget admission is complete"
+        ],
+        "carryover": {
+          "tasks": [],
+          "changes": [
+            "afc-c09-bounded-teams-and-shared-task-board"
+          ],
+          "phases": []
+        },
+        "repeatedBuilds": [
+          {
+            "id": "mac-arm64-build",
+            "attemptId": "fbfdc5f1-d757-4294-85c3-db9a2ba7bee7",
+            "status": "success",
+            "reason": null
+          }
+        ],
+        "concurrencyEnforcement": "Harness instruction; no machine-wide resource scheduler",
+        "recommendation": null,
+        "evidenceStatement": "Insufficient comparable evidence or no supported change within approved bounds."
+      },
+      "costs": null,
+      "reopened": []
+    }
+  ],
+  "uniqueCompleted": {
+    "tasks": 2,
+    "changes": 0,
+    "phases": 0
+  },
+  "grossCompleted": {
+    "tasks": 2,
+    "changes": 0,
+    "phases": 0
+  },
+  "reopened": {
+    "tasks": 0,
+    "changes": 0,
+    "phases": 0
+  },
+  "netCompleted": {
+    "tasks": 2,
+    "changes": 0,
+    "phases": 0
+  },
+  "canonicalIds": {
+    "gross": {
+      "tasks": [
+        "C09.1",
+        "C09.2"
+      ],
+      "changes": [],
+      "phases": []
+    },
+    "reopened": {
+      "tasks": [],
+      "changes": [],
+      "phases": []
+    },
+    "net": {
+      "tasks": [
+        "C09.1",
+        "C09.2"
+      ],
+      "changes": [],
+      "phases": []
+    }
+  },
+  "uncertainCompletionOrder": [],
+  "historicalChildren": [
+    {
+      "id": "8c01039e-7075-4a2b-8b54-cddb16870fba",
+      "phaseId": "the-boss-shipping-and-settings::uar-working-agent::uar-liter-inference-routing",
+      "reason": "Completed outside the cadence ledger; retain original evidence without inventing an iteration, timestamps, or completion credit.",
+      "evidence": {
+        "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/.kbd-orchestrator/phases/the-boss-shipping-and-settings/children/uar-working-agent/children/uar-liter-inference-routing/reflection.md",
+        "sha256": "eb3c28539c8679656dcd1700492a22ffb2a67e41113e69f91e9066e1816f69c9"
+      },
+      "recordedAt": "2026-09-29T08:55:19.350Z",
+      "timing": "unknown",
+      "countedAsDelivery": false,
+      "countedCompletions": false,
+      "sourceRefs": [
+        {
+          "repository": "/Users/gqadonis/Projects/prometheus/the-boss",
+          "revision": "749a4cf4c4"
+        },
+        {
+          "repository": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime",
+          "revision": "f7e0441e"
+        }
+      ]
+    }
+  ],
+  "publications": [],
+  "publicationDue": true,
+  "publicationStatus": {
+    "due": true,
+    "latestIterationId": "43cf2216-8e5f-4520-8bb1-0480adebf74b",
+    "reason": "The scheduled publication requires evidence for the latest successful delivery.",
+    "missing": [
+      "version-and-frozen-sources",
+      "artifact:darwin-arm64",
+      "artifact:darwin-x64",
+      "artifact:win32-x64",
+      "artifact:win32-arm64",
+      "website"
+    ],
+    "publicationId": null,
+    "metadata": "unproven",
+    "installedAcceptance": [],
+    "acceptanceRequired": []
+  },
+  "recommendation": null,
+  "optimizationAssessment": "Insufficient comparable evidence or no supported change within approved bounds.",
+  "recommendationEvaluations": [],
+  "limitations": [
+    "Counts are distinct within each dimension; never add tasks, changes and phases.",
+    "Canonical receipt references are provenance, not independent validation of the KBD backend.",
+    "Unknown timing remains unattributed; observed work is not inferred from elapsed time.",
+    "Timing shares use iteration wall time and require at least 99% observed coverage; parallel effort is not wall-clock duration.",
+    "Publication time includes trustworthy attached intervals outside iteration bounds; publicationWithinIteration alone contributes to wall-time shares.",
+    "Historical child links are provenance only and contribute no duplicate completion credit."
+  ]
+}

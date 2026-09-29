@@ -1,0 +1,86 @@
+{
+  "platform": "darwin",
+  "root": "/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/cadence-delivery-v2-2TpD7B",
+  "cli": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/dist/plugins/codex/prometheus-skills-mini/skills/delivery-cadence/scripts/cadence.mjs",
+  "startedAt": "2026-09-29T08:42:25.925Z",
+  "scenarios": [
+    {
+      "name": "nested children retain parent clock; failure blocks; return adds no delivery",
+      "status": "passed"
+    },
+    {
+      "name": "real build, launch, feature operation; baseline refused; net counts and unknown time",
+      "status": "passed"
+    },
+    {
+      "name": "changed sources invalidate prior build; retry reason required; publication debt blocks new work",
+      "status": "passed"
+    },
+    {
+      "name": "publication receipt matches downloaded local HTTP bytes and configured fixture links",
+      "status": "passed"
+    },
+    {
+      "name": "explicit v1 migration preserves historical event bytes and creates backup",
+      "status": "passed"
+    },
+    {
+      "name": "real canonical KBD missed-entry recovery and explicit parent return",
+      "status": "passed"
+    },
+    {
+      "name": "concurrent resume refuses live ownership",
+      "status": "passed"
+    },
+    {
+      "name": "interrupted tail preserved and resume restores committed state",
+      "status": "passed"
+    },
+    {
+      "name": "architecture approval cannot be inferred; cancellation keeps parent blocked",
+      "status": "passed"
+    },
+    {
+      "name": "required unknown hook blocks continuation and is not replayed on resume",
+      "status": "passed"
+    },
+    {
+      "name": "copied mini and full Codex adapters resolve real canonical KBD state",
+      "status": "passed"
+    },
+    {
+      "name": "four real deliveries honor minimumSamples4, stable retry comparison and observed resource wait",
+      "status": "passed"
+    },
+    {
+      "name": "packaged learning adapter persists report and degrades with optional pk unavailable",
+      "status": "passed",
+      "result": {
+        "status": "degraded",
+        "report": "/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/cadence-delivery-v2-2TpD7B/workspace/.prometheus/cadence-learning-reports/433d4a3a934e7c8d361021b530251c89b3ed3122b36d7ab1430e1b9fcbfec2d5.json",
+        "reportSha256": "433d4a3a934e7c8d361021b530251c89b3ed3122b36d7ab1430e1b9fcbfec2d5",
+        "recorder": {
+          "status": "degraded",
+          "eventId": "cadence-433d4a3a934e7c8d361021b530251c89b3ed3122b36d7ab1430e1b9fcbfec2d5",
+          "recoveredPendingDelivery": true,
+          "memory": {
+            "transport": "pk",
+            "status": "degraded",
+            "reason": "pk executable unavailable"
+          },
+          "receipt": "/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/cadence-delivery-v2-2TpD7B/workspace/.prometheus/progress-memory-receipts/a59aa50939518dc260def6da602ff0e3de4f53edfeef3f7b7ec757f120ae967e.json"
+        }
+      }
+    },
+    {
+      "name": "actual post-iteration HTTP publication time retained outside immutable iteration clock",
+      "status": "passed",
+      "publicationMinutes": 0.0002666666666666667
+    }
+  ],
+  "status": "passed",
+  "finishedAt": "2026-09-29T08:43:16.862Z",
+  "fixtureCorrection": "Error: local runtime rejected the command\n\nCaused by:\n    work item parent::child cannot transition from Pending to Complete\n",
+  "recoveryStatus": "passed",
+  "measurementStatus": "passed"
+}

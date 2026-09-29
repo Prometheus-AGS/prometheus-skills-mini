@@ -1,0 +1,39 @@
+{
+  "phase": "uar-liter-inference-routing",
+  "generated_at": "2026-09-28T22:45:00Z",
+  "research_budget": {
+    "max_queries_per_tier": 8,
+    "max_minutes": 20,
+    "queries_used": { "source_inspection": 1, "external": 0 }
+  },
+  "gaps_addressed": ["creation assignment", "editing assignment", "effective model identity", "credential availability"],
+  "candidates": [
+    {
+      "id": "cand-001",
+      "name": "Existing The Boss UAR gateway model-source adapter",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "A live liter-llm served-alias list and protected gateway credential already exist in the trusted main process.",
+      "verdict": "adapt",
+      "coverage_estimate": 0.75,
+      "evidence": [{ "tier": 1, "claim": "The Boss UarModelSourceAdapter.ts reads /v1/models; uarModelAssignments.ts resolves gateway run credentials." }],
+      "risks": ["A listed alias can still fail during a real request."],
+      "decision_rationale": "Expose and persist this existing model route through create and edit instead of implementing another gateway."
+    },
+    {
+      "id": "cand-002",
+      "name": "Existing UAR configured-provider model source",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "UAR has a direct model-provider catalog and a matching persisted assignment variant.",
+      "verdict": "adopt",
+      "coverage_estimate": 0.5,
+      "evidence": [{ "tier": 1, "claim": "The Boss UarModelSourceAdapter.ts reads UAR /api/uar/providers; UAR runtime credentials.rs binds an exact host credential/model." }],
+      "risks": ["Direct UAR provider credentials are managed separately from the liter gateway."],
+      "decision_rationale": "Retain as an explicit source instead of forcing all UAR inference through liter."
+    }
+  ],
+  "build_required": [
+    { "need": "Create/edit assignment controls and truthful effective-model presentation", "why_no_candidate": "The existing shared agent wizard and edit dialog do not expose or persist the UAR assignment.", "capability_gap_id": "uar-assignment-ui" }
+  ]
+}

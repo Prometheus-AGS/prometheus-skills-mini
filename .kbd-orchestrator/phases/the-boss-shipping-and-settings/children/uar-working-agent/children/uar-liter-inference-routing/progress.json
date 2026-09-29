@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "2",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 996,
+  "derivedRevision": 996,
+  "frontier": {
+    "52a10e5c-8698-43ec-82a0-53c60bfd5a98": 932,
+    "e6fe3964-6d4a-49a3-a4bf-5fff66017ddd": 64
+  },
+  "conflictCount": 0,
+  "phase": "uar-liter-inference-routing",
+  "phaseId": "the-boss-shipping-and-settings::uar-working-agent::uar-liter-inference-routing",
+  "parentPhase": "the-boss-shipping-and-settings::uar-working-agent",
+  "last_updated": "2026-09-29T01:37:48.886507Z",
+  "last_updated_by": "kbd-runtime",
+  "changes_total": 1,
+  "changes_completed": 1,
+  "implementation_total": 1,
+  "implementation_completed": 1,
+  "completion": {
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 1,
+      "total": 1,
+      "status": "COMPLETE"
+    },
+    "evidence": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "certification": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "publication": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    }
+  },
+  "completionScopes": {
+    "completion": "phase",
+    "runCompletion": "run"
+  },
+  "runCompletion": {
+    "scope": "run",
+    "runId": "platform-foundation-20260921T101006Z",
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 25,
+      "total": 43,
+      "status": "IN_PROGRESS"
+    },
+    "evidence": {
+      "status": "COMPLETE",
+      "summary": "Windows x64 and Apple Silicon installed acceptance, gate receipts, immutable release records, and OpenSpec archive recorded.",
+      "blockers": []
+    },
+    "certification": {
+      "status": "COMPLETE",
+      "summary": "Cumulative certification passed with zero critical findings and explicit artifact-refiner, Gate V transcript, and Windows fallback limitations.",
+      "blockers": []
+    },
+    "publication": {
+      "status": "COMPLETE",
+      "summary": "Windows x64 and Apple Silicon 2.2.3 artifacts published to GitHub Releases and reflected on the live landing site.",
+      "blockers": []
+    }
+  },
+  "changes": [
+    {
+      "id": "uar-executable-model-assignment",
+      "title": "Executable UAR model assignment",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 6,
+      "tasks_done": 6,
+      "last_task_completed": "Final review archive commit and handoff",
+      "next_task_pending": null,
+      "blockers": []
+    }
+  ],
+  "children": {},
+  "migrationStatus": null
+}

@@ -1,0 +1,65 @@
+{
+  "recordedAt": "2026-09-29T08:55:56.429Z",
+  "schemaVersion": 2,
+  "profileRevision": 2,
+  "iterationMinutes": 120,
+  "publicationEvery": 2,
+  "platforms": [
+    "darwin-arm64",
+    "darwin-x64",
+    "win32-x64",
+    "win32-arm64"
+  ],
+  "successfulDeliveries": 2,
+  "publicationDue": true,
+  "publicationStatus": {
+    "due": true,
+    "latestIterationId": "43cf2216-8e5f-4520-8bb1-0480adebf74b",
+    "reason": "The scheduled publication requires evidence for the latest successful delivery.",
+    "missing": [
+      "version-and-frozen-sources",
+      "artifact:darwin-arm64",
+      "artifact:darwin-x64",
+      "artifact:win32-x64",
+      "artifact:win32-arm64",
+      "website"
+    ],
+    "publicationId": null,
+    "metadata": "unproven",
+    "installedAcceptance": [],
+    "acceptanceRequired": []
+  },
+  "historicalChildren": [
+    {
+      "id": "8c01039e-7075-4a2b-8b54-cddb16870fba",
+      "phaseId": "the-boss-shipping-and-settings::uar-working-agent::uar-liter-inference-routing",
+      "reason": "Completed outside the cadence ledger; retain original evidence without inventing an iteration, timestamps, or completion credit.",
+      "evidence": {
+        "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/.kbd-orchestrator/phases/the-boss-shipping-and-settings/children/uar-working-agent/children/uar-liter-inference-routing/reflection.md",
+        "sha256": "eb3c28539c8679656dcd1700492a22ffb2a67e41113e69f91e9066e1816f69c9"
+      },
+      "recordedAt": "2026-09-29T08:55:19.350Z",
+      "timing": "unknown",
+      "countedAsDelivery": false,
+      "countedCompletions": false,
+      "sourceRefs": [
+        {
+          "repository": "/Users/gqadonis/Projects/prometheus/the-boss",
+          "revision": "749a4cf4c4"
+        },
+        {
+          "repository": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime",
+          "revision": "f7e0441e"
+        }
+      ]
+    }
+  ],
+  "historyPrefixUnchanged": true,
+  "migration": {
+    "from": 1,
+    "to": 2,
+    "backup": "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-c06/librefang/docs/plans/agent-fabric-convergence/.prometheus/cadence/backups/v1-81-c1401189-66c1-4288-a6a6-d689379daee8",
+    "previousSeq": 81,
+    "at": "2026-09-29T08:54:44.272Z"
+  }
+}

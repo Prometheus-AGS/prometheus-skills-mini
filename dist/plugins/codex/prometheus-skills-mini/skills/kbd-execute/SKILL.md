@@ -16,15 +16,18 @@ phase while keeping KBD as the source of truth.
 Also refreshes `.kbd-orchestrator/current-waypoint.json` so any AI tool can
 resume cleanly.
 
-## Per-Change QA Gate
+## Final phase QA gate
 
-After each change reaches `implementation_status: COMPLETE` in `progress.json`,
-invoke a quality gate before archiving, if `artifact-refiner` and
-`adversarial-review` are installed in this project. The QA result is
-evidence/certification state; it must not reopen the implementation counter:
+Do not run tests, verification builds, artifact refinement, or adversarial review
+after individual tasks or changes. Complete every planned production change first.
+When the active harness provides an agent team, assign implementation to executor
+roles and keep reviewer, auditor, verifier, and integration-checker roles dormant
+until every production change is complete. Then run one production-path integration
+gate and one cumulative artifact/adversarial review. The result is evidence and
+certification state; it must not reopen the implementation counter:
 
 ```
-implementation_status → COMPLETE in progress.json
+all implementation_status values → COMPLETE in progress.json
   │
   ├─ artifact validation for "<change-id>" (artifact-refiner, if installed)
   │
@@ -37,18 +40,17 @@ implementation_status → COMPLETE in progress.json
   │   │    SUGGESTION: informational)
   │   │
   │   └─ verdict BLOCK (any CRITICAL) → mark certification BLOCKED in progress.json
-  │       └─ fix, then re-run both gates
+  │       └─ fix, then re-run only the failed final gate
   │
-  └─ ANY FAIL → mark certification BLOCKED in progress.json, fix, retry
+  └─ ANY FAIL → mark certification BLOCKED, fix, then re-run only the failed final gate
 ```
 
 ### Local review coverage
 
 File-count and documentation-only skips do not exist. QA and adversarial review
-cover the cumulative Git diff since the last accepted local review receipt.
-Skipping either gate may let development continue, but records `pending_review`;
-final local certification still requires a completed receipt or an explicit,
-signed waiver.
+cover the cumulative phase diff. They never interrupt production implementation.
+Skipping either final gate records `pending_review`; final local certification
+still requires a completed receipt or an explicit, signed waiver.
 
 ## Progress Signals (MANDATORY)
 
@@ -123,9 +125,9 @@ Use the canonical phase name from the argument or `current-waypoint.json`. Phase
 6. **Record the active path** — via the phase's canonical progress/waypoint files
 7. **Register planned changes and tasks**
 8. **Dispatch** to selected backend or mark phase execution-ready
-9. **Per completed change**: run the QA gate (see above)
-10. **Per completed change**: run the adversarial review gate after QA passes
-11. **Archive** changes that pass both gates
+9. Complete every planned production change without intermediate verification
+10. Run one production-path integration gate and one cumulative final review
+11. Archive changes after the final phase gates pass
 
 ## Backend Types
 
@@ -193,3 +195,9 @@ stageHandoffWrite(
 Phases without a `handoffs/` directory are legacy: `stageGate` warns and still
 passes. A deliberate stage skip is recorded with
 `stageHandoffSkip('execute', '<reason>', { cwd })`.
+
+## Delivery cadence profiles
+
+When a delivery-cadence profile is selected, include its path, state root, iteration scope, required build/run actions and publication interval in the authored execution dispatch contract. The harness remains continuation owner; kbd-apply remains canonical task owner. Do not edit generated waypoints.
+
+Finish the complete independently usable increment, then BUILD and RUN its actual function. Do not run test suites, per-task verification or reviewer loops at iteration boundaries. Fix build, launch or functional failures before beginning another increment. A timer never certifies partial work. Apply the profile's human review and publication policy; keep architecture approvals separate. See the delivery-cadence skill only for cadence-enabled work.

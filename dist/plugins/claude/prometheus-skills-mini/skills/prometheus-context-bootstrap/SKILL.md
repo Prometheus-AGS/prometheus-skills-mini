@@ -53,3 +53,7 @@ The Rust path rule loads `prometheus-rust-workspace`, which routes
 `rust-best-practices`, `rust-async-patterns`, `rust-mcp-server-generator`, and
 the specialized catalog only when relevant. Dependency and protocol pins in the
 target project remain authoritative.
+
+## Delivery cadence context
+
+When `.prometheus/cadence-binding.json` exists, read that small binding and carry its profile/root into the execution dispatch. Load delivery-cadence only for cadence-enabled work. Its configured build-and-run boundary, publication frequency and pending failure obligations survive compaction; do not substitute test suites or silently reset the run. No profile means no additional cadence context.

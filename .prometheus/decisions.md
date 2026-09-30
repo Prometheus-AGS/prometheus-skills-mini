@@ -313,3 +313,20 @@ and updates `schemas/catalog.json`. The Boss must pin the new catalog checksum a
 the same fork revision used by its UAR payload. Source selection and copied skills
 are not compilation, inference or installer acceptance evidence; those belong to
 the completed application build and actual operation boundary.
+
+### Same release — preserve UAR's explicit host transport boundary
+
+The actual UAR release compilation against `12a2fae...` exposed removed
+`redact_base_url` and proxy/redirect policy APIs used by its credential boundary.
+The fork repair `GQAdonis/liter-llm@1bacb4adc47ba9fa262e1edec6c2f32c4f4649ba`
+on `codex/uar-host-transport-boundary` restores that explicit compatibility;
+PR: https://github.com/GQAdonis/liter-llm/pull/2. This exact source supersedes the
+`12a2fae...` selection above for both the UAR and mini consumers in this release.
+Its catalog bytes are unchanged from `12a2fae...`. Operator-owned `versions.toml`
+remains untouched and this accepted source override remains explicit.
+
+Previously published native CLI artifacts retain their actual source revision
+until replacement artifacts are built and published. Advancing this source
+gitlink must not relabel those existing artifacts as compiled from the repair.
+The observed compilation failure is the reason for the compatibility update;
+this mini change does not claim a successful rebuilt application or operation.

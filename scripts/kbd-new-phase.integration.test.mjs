@@ -10,7 +10,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash, generateKeyPairSync } from 'node:crypto';
-import { spawnExecutable } from '../lib/platform/spawn.mjs';
+import { resolveNodeCli, spawnExecutable } from '../lib/platform/spawn.mjs';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const scratch = path.join(repo, '.scratch', 'kbd-phase-integration');
@@ -94,11 +94,16 @@ function fixture(t, mode) {
     PROMETHEUS_CONTROL_ENDPOINT: 'http://127.0.0.1:1',
     PROMETHEUS_HARNESS: 'kbd-helper-integration',
     KBD_ORCHESTRATOR_ROOT: orchestrator,
+    // App-owned scripts resolve their bundled dependencies (the pinned OpenSpec) from here.
+    PROMETHEUS_PACK_ROOT: repo,
     OPENSPEC_TELEMETRY: '0', DO_NOT_TRACK: '1',
   };
   const run = (program, args) => spawnExecutable(program, args, { cwd: root, env, timeout: 60000, maxBuffer: 8 * 1024 * 1024 });
   const cli = (...args) => run(prometheus, ['kbd', '--path', root, ...args]);
   const helper = (name, ...args) => run(process.execPath, [path.join(repo, 'scripts', `${name}.mjs`), ...args]);
+  // The pinned OpenSpec's JavaScript entry, run by this Node: an npm `.cmd` shim cannot be spawned
+  // without a shell on Windows, so a bare `openspec` never works there.
+  const openspec = (...args) => run(process.execPath, [resolveNodeCli('@fission-ai/openspec', 'openspec'), ...args]);
   const pj = path.join(root, '.kbd-orchestrator', 'project.json');
   const wp = path.join(root, '.kbd-orchestrator', 'current-waypoint.json');
   if (mode === 'runtime') {
@@ -120,7 +125,7 @@ function fixture(t, mode) {
     write(path.join(root, '.kbd-orchestrator', 'phases', 'old-phase', 'progress.json'), { phase: 'old-phase', changes: [] });
   }
   write(pj, metadata);
-  return { base, root, data, env, run, cli, helper, pj, wp, mode };
+  return { base, root, data, env, run, cli, helper, openspec, pj, wp, mode };
 }
 
 function configureHook(f, { exitCode = 0, event = 'phase:before' } = {}) {
@@ -239,7 +244,7 @@ for (const mode of ['legacy', 'runtime']) {
       const changeDir = path.join(f.root, 'openspec', 'changes', 'unavailable-backend');
       write(path.join(changeDir, '.openspec.yaml'), 'schema: nonexistent-kbd-integration-schema\n');
       write(path.join(changeDir, 'tasks.md'), '## 1. Pending\n\n- [ ] 1.1 Preserve pending work\n');
-      success(f.run('openspec', ['--version']), 'failure case must use the real available OpenSpec CLI');
+      success(f.openspec('--version'), 'failure case must use the real available OpenSpec CLI');
       const before = snapshot(f.base);
       const result = f.helper('kbd-apply', boundary, 'unavailable-backend', '1', '1', '1', 'Pending work');
       assert.notEqual(result.status, 0);
@@ -274,7 +279,7 @@ test('actual OpenSpec apply retains remaining work and reports completion only a
     phase: 'old-phase', changes: [{ id: change, title: 'Real apply', status: 'PENDING', tasks_done: 0, tasks_total: 2 }],
   });
   configureHook(f, { event: '*:*' });
-  const openSpec = (...args) => f.run('openspec', args);
+  const openSpec = (...args) => f.openspec(...args);
   success(openSpec('--version'), 'real local OpenSpec must be available');
   const progress = () => JSON.parse(success(openSpec('instructions', 'apply', '--change', change, '--json'), 'read actual OpenSpec progress').stdout).progress;
   assert.equal(progress().remaining, 2);

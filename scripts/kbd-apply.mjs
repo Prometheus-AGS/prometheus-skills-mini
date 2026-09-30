@@ -24,6 +24,7 @@ import path from 'node:path';
 import { spawnExecutable } from '../lib/platform/spawn.mjs';
 import { atomicWrite } from '../lib/platform/atomic-write.mjs';
 import { isRuntimeAuthoritative } from '../lib/kbd/runtime-authority.mjs';
+import { resolveRuntimeTaskId } from '../lib/kbd/task-identity.mjs';
 import { isBottleneckActive, evaluateBottleneck, bottleneckSignalText } from '../lib/kbd/bottleneck-guard.mjs';
 import { hooksFire } from '../lib/kbd/hooks.mjs';
 import { kbdCurrentNodeDir } from '../lib/kbd/waypoint.mjs';
@@ -164,6 +165,17 @@ function runtimeTaskTransition(change, taskId, title, sequence, status) {
     const refreshed = spawnExecutable('prometheus', ['kbd', '--path', '.', 'status', '--json']);
     if (refreshed?.status !== 0) return false;
     state = JSON.parse(refreshed.stdout);
+  }
+
+  // Reuse a task /kbd-plan already registered for this change instead of registering a duplicate
+  // under the backend ordinal.
+  try {
+    const resolved = resolveRuntimeTaskId(state?.phases?.[phase]?.changes?.[change]?.tasks, taskId, sequence, title);
+    if (resolved.mapped) warn(`backend task ${taskId} maps to registered runtime task ${resolved.id}`);
+    taskId = resolved.id;
+  } catch (error) {
+    warn(error.message);
+    return false;
   }
 
   if (!state?.phases?.[phase]?.changes?.[change]?.tasks?.[taskId]) {

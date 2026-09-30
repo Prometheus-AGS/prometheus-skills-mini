@@ -91,7 +91,10 @@ jobs:
           repository: Prometheus-AGS/prometheus-skill-system
           ref: ${{ env.PROMETHEUS_CLI_REF }}
           path: .ci/prometheus-skill-system
-          sparse-checkout: tools/prometheus-cli
+          # Every local path crate the CLI builds from (cargo metadata, source == null).
+          sparse-checkout: |
+            tools/prometheus-cli
+            substrate/kbd-runtime
 
       - uses: actions/setup-node@v4
         with:

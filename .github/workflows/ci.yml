@@ -71,3 +71,48 @@ jobs:
       - name: Measure hook cold start against the 1 s budget
         if: runner.os == 'Windows'
         run: node scripts/hook-cold-start.mjs
+
+  # The kbd-new-phase integration tests drive the canonical KBD runtime through
+  # the real `prometheus` executable ("no CLI substitutes"). The matrix above has
+  # no such binary, so those tests skip there with a visible reason. This job
+  # builds the real CLI from the public full pack at a pinned commit and runs
+  # them with PROMETHEUS_CLI_REQUIRED=1, where a missing binary is a failure,
+  # never a skip. Bump PROMETHEUS_CLI_REF deliberately, alongside the full pack.
+  kbd-runtime:
+    name: kbd runtime integration (real prometheus CLI)
+    runs-on: ubuntu-latest
+    env:
+      PROMETHEUS_CLI_REF: 540af0299d9360761d2dcea7a484f010c568c0f3
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/checkout@v4
+        with:
+          repository: Prometheus-AGS/prometheus-skill-system
+          ref: ${{ env.PROMETHEUS_CLI_REF }}
+          path: .ci/prometheus-skill-system
+          sparse-checkout: tools/prometheus-cli
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            .ci/prometheus-skill-system/tools/prometheus-cli/target
+          key: prometheus-cli-${{ runner.os }}-${{ env.PROMETHEUS_CLI_REF }}
+
+      - name: Build the real prometheus CLI
+        run: cargo build --locked --release --bin prometheus --manifest-path .ci/prometheus-skill-system/tools/prometheus-cli/Cargo.toml
+
+      - run: npm ci
+
+      - name: kbd-new-phase integration against the real CLI
+        env:
+          PROMETHEUS_CLI_REQUIRED: '1'
+          PROMETHEUS_CLI_TEST_BINARY: ${{ github.workspace }}/.ci/prometheus-skill-system/tools/prometheus-cli/target/release/prometheus
+        run: node --test scripts/kbd-new-phase.integration.test.mjs

@@ -1,18 +1,33 @@
 // Real process integration: catches skipped runtime postconditions and fabricated apply counts.
-// Requires the actual prometheus executable on PATH (or PROMETHEUS_CLI_TEST_BINARY)
-// and a local OpenSpec installation (or OPENSPEC_TEST_BIN_DIR). No CLI substitutes.
+// Uses the actual prometheus executable on PATH (or PROMETHEUS_CLI_TEST_BINARY) and the pinned
+// OpenSpec from this repo's node_modules (or OPENSPEC_TEST_BIN_DIR). No CLI substitutes: when the
+// prometheus executable is absent, runtime-mode tests are SKIPPED with a visible reason rather than
+// faked. Set PROMETHEUS_CLI_REQUIRED=1 (the CI kbd-runtime job builds the real CLI and does) to turn
+// a missing executable into a failure instead.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash, generateKeyPairSync } from 'node:crypto';
-import { spawnExecutable } from '../lib/platform/spawn.mjs';
+import { resolveNodeCli, spawnExecutable } from '../lib/platform/spawn.mjs';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const scratch = path.join(repo, '.scratch', 'kbd-phase-integration');
 const prometheus = process.env.PROMETHEUS_CLI_TEST_BINARY || 'prometheus';
-const openspecBins = process.env.OPENSPEC_TEST_BIN_DIR || path.resolve(repo, '..', '..', 'node_modules', '.bin');
+// npm ci installs the pinned @fission-ai/openspec here. (The old default pointed two levels above the
+// repo, which only worked on machines with a global openspec on PATH.)
+const openspecBins = process.env.OPENSPEC_TEST_BIN_DIR || path.join(repo, 'node_modules', '.bin');
+const prometheusProbe = spawnExecutable(prometheus, ['--version'], { timeout: 30000 });
+const prometheusAvailable = !prometheusProbe.error && prometheusProbe.status === 0;
+const prometheusRequired = process.env.PROMETHEUS_CLI_REQUIRED === '1';
+if (prometheusRequired && !prometheusAvailable) {
+  throw new Error(`PROMETHEUS_CLI_REQUIRED=1 but ${prometheus} is not runnable: ${prometheusProbe.error?.message ?? prometheusProbe.stderr}`);
+}
+// Options for tests that drive the canonical runtime through the real prometheus executable.
+const runtimeOnly = prometheusAvailable
+  ? {}
+  : { skip: `real prometheus executable not found (${prometheus}); set PROMETHEUS_CLI_TEST_BINARY, or PROMETHEUS_CLI_REQUIRED=1 to fail instead` };
 const metadata = { name: 'fixture', activePhase: 'old-phase', active_phase: 'old-alias', specBackend: 'openspec', custom: { retained: [1, 'two'] } };
 
 function write(file, content) {
@@ -65,8 +80,13 @@ function fixture(t, mode) {
     privateKey: Buffer.from(privateJwk.d, 'base64url').toString('base64'),
   }), { mode: 0o600 });
   const executableDir = path.isAbsolute(prometheus) ? [path.dirname(prometheus)] : [];
+  // The runtime classifies any replica as observation-only (read-only) when a CI marker is set
+  // (kbd-runtime registry.rs: CI, GITHUB_ACTIONS, BUILDKITE, GITLAB_CI). This fixture is a private,
+  // disposable runtime with its own data dir and signer, standing in for a developer checkout, so
+  // the markers are withheld from its child processes; the runner's own state is never touched.
+  const { CI, GITHUB_ACTIONS, BUILDKITE, GITLAB_CI, ...hostEnv } = process.env;
   const env = {
-    ...process.env,
+    ...hostEnv,
     PATH: [...executableDir, openspecBins, process.env.PATH || ''].join(path.delimiter),
     PROMETHEUS_DATA_DIR: data,
     PROMETHEUS_DEVICE_KEY_FILE: keyFile,
@@ -74,11 +94,16 @@ function fixture(t, mode) {
     PROMETHEUS_CONTROL_ENDPOINT: 'http://127.0.0.1:1',
     PROMETHEUS_HARNESS: 'kbd-helper-integration',
     KBD_ORCHESTRATOR_ROOT: orchestrator,
+    // App-owned scripts resolve their bundled dependencies (the pinned OpenSpec) from here.
+    PROMETHEUS_PACK_ROOT: repo,
     OPENSPEC_TELEMETRY: '0', DO_NOT_TRACK: '1',
   };
   const run = (program, args) => spawnExecutable(program, args, { cwd: root, env, timeout: 60000, maxBuffer: 8 * 1024 * 1024 });
   const cli = (...args) => run(prometheus, ['kbd', '--path', root, ...args]);
   const helper = (name, ...args) => run(process.execPath, [path.join(repo, 'scripts', `${name}.mjs`), ...args]);
+  // The pinned OpenSpec's JavaScript entry, run by this Node: an npm `.cmd` shim cannot be spawned
+  // without a shell on Windows, so a bare `openspec` never works there.
+  const openspec = (...args) => run(process.execPath, [resolveNodeCli('@fission-ai/openspec', 'openspec'), ...args]);
   const pj = path.join(root, '.kbd-orchestrator', 'project.json');
   const wp = path.join(root, '.kbd-orchestrator', 'current-waypoint.json');
   if (mode === 'runtime') {
@@ -100,7 +125,7 @@ function fixture(t, mode) {
     write(path.join(root, '.kbd-orchestrator', 'phases', 'old-phase', 'progress.json'), { phase: 'old-phase', changes: [] });
   }
   write(pj, metadata);
-  return { base, root, data, env, run, cli, helper, pj, wp, mode };
+  return { base, root, data, env, run, cli, helper, openspec, pj, wp, mode };
 }
 
 function configureHook(f, { exitCode = 0, event = 'phase:before' } = {}) {
@@ -143,7 +168,7 @@ function assertCreated(f) {
   assert.equal(seen[0].name, 'new-phase');
 }
 
-test('runtime: rejected duplicate canonical phase creates no local goals or postconditions', t => {
+test('runtime: rejected duplicate canonical phase creates no local goals or postconditions', runtimeOnly, t => {
   const f = fixture(t, 'runtime');
   configureHook(f);
   success(f.cli('phase', 'create', '--command-id', 'preexisting-new-phase', '--id', 'new-phase', '--title', 'Existing canonical phase'), 'register duplicate fixture phase');
@@ -160,7 +185,7 @@ test('runtime: rejected duplicate canonical phase creates no local goals or post
 });
 
 for (const mode of ['legacy', 'runtime']) {
-  test(`${mode}: phase postconditions preserve metadata and invoke real hook exactly once`, t => {
+  test(`${mode}: phase postconditions preserve metadata and invoke real hook exactly once`, mode === 'runtime' ? runtimeOnly : {}, t => {
     const f = fixture(t, mode);
     configureHook(f);
     const result = success(f.helper('kbd-new-phase', 'new-phase', 'Verify integration boundary'), 'create phase');
@@ -176,7 +201,7 @@ for (const mode of ['legacy', 'runtime']) {
   });
 
   for (const invalid of ['{broken', '[]', 'null', '42', '"scalar"']) {
-    test(`${mode}: invalid project ${invalid} refuses all phase and canonical writes`, t => {
+    test(`${mode}: invalid project ${invalid} refuses all phase and canonical writes`, mode === 'runtime' ? runtimeOnly : {}, t => {
       const f = fixture(t, mode);
       configureHook(f);
       write(f.pj, invalid);
@@ -189,7 +214,7 @@ for (const mode of ['legacy', 'runtime']) {
     });
   }
 
-  test(`${mode}: missing metadata bootstraps only the documented minimal fields`, t => {
+  test(`${mode}: missing metadata bootstraps only the documented minimal fields`, mode === 'runtime' ? runtimeOnly : {}, t => {
     const f = fixture(t, mode);
     fs.rmSync(f.pj);
     configureHook(f);
@@ -203,7 +228,7 @@ for (const mode of ['legacy', 'runtime']) {
     assert.ok(Number.isFinite(Date.parse(project.updatedAt)));
   });
 
-  test(`${mode}: real failing hook is reported and keeps the activated phase`, t => {
+  test(`${mode}: real failing hook is reported and keeps the activated phase`, mode === 'runtime' ? runtimeOnly : {}, t => {
     const f = fixture(t, mode);
     configureHook(f, { exitCode: 7 });
     const result = success(f.helper('kbd-new-phase', 'new-phase', 'Verify integration boundary'), 'create phase despite hook failure');
@@ -213,13 +238,13 @@ for (const mode of ['legacy', 'runtime']) {
   });
 
   for (const boundary of ['begin-task', 'end-task']) {
-    test(`${mode}: ${boundary} preserves pending tasks when real OpenSpec cannot load its schema`, t => {
+    test(`${mode}: ${boundary} preserves pending tasks when real OpenSpec cannot load its schema`, mode === 'runtime' ? runtimeOnly : {}, t => {
       const f = fixture(t, mode);
       configureHook(f, { event: '*:*' });
       const changeDir = path.join(f.root, 'openspec', 'changes', 'unavailable-backend');
       write(path.join(changeDir, '.openspec.yaml'), 'schema: nonexistent-kbd-integration-schema\n');
       write(path.join(changeDir, 'tasks.md'), '## 1. Pending\n\n- [ ] 1.1 Preserve pending work\n');
-      success(f.run('openspec', ['--version']), 'failure case must use the real available OpenSpec CLI');
+      success(f.openspec('--version'), 'failure case must use the real available OpenSpec CLI');
       const before = snapshot(f.base);
       const result = f.helper('kbd-apply', boundary, 'unavailable-backend', '1', '1', '1', 'Pending work');
       assert.notEqual(result.status, 0);
@@ -227,7 +252,7 @@ for (const mode of ['legacy', 'runtime']) {
       assert.deepEqual(snapshot(f.base), before, 'progress read failure must precede checkbox, canonical state, and hooks');
     });
 
-    test(`${mode}: ${boundary} refuses missing backend data before mutation or completion`, t => {
+    test(`${mode}: ${boundary} refuses missing backend data before mutation or completion`, mode === 'runtime' ? runtimeOnly : {}, t => {
       const f = fixture(t, mode);
       configureHook(f, { event: '*:*' });
       const before = snapshot(f.base);
@@ -254,7 +279,7 @@ test('actual OpenSpec apply retains remaining work and reports completion only a
     phase: 'old-phase', changes: [{ id: change, title: 'Real apply', status: 'PENDING', tasks_done: 0, tasks_total: 2 }],
   });
   configureHook(f, { event: '*:*' });
-  const openSpec = (...args) => f.run('openspec', args);
+  const openSpec = (...args) => f.openspec(...args);
   success(openSpec('--version'), 'real local OpenSpec must be available');
   const progress = () => JSON.parse(success(openSpec('instructions', 'apply', '--change', change, '--json'), 'read actual OpenSpec progress').stdout).progress;
   assert.equal(progress().remaining, 2);

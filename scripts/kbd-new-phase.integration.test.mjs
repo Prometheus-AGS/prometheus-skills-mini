@@ -80,8 +80,13 @@ function fixture(t, mode) {
     privateKey: Buffer.from(privateJwk.d, 'base64url').toString('base64'),
   }), { mode: 0o600 });
   const executableDir = path.isAbsolute(prometheus) ? [path.dirname(prometheus)] : [];
+  // The runtime classifies any replica as observation-only (read-only) when a CI marker is set
+  // (kbd-runtime registry.rs: CI, GITHUB_ACTIONS, BUILDKITE, GITLAB_CI). This fixture is a private,
+  // disposable runtime with its own data dir and signer, standing in for a developer checkout, so
+  // the markers are withheld from its child processes; the runner's own state is never touched.
+  const { CI, GITHUB_ACTIONS, BUILDKITE, GITLAB_CI, ...hostEnv } = process.env;
   const env = {
-    ...process.env,
+    ...hostEnv,
     PATH: [...executableDir, openspecBins, process.env.PATH || ''].join(path.delimiter),
     PROMETHEUS_DATA_DIR: data,
     PROMETHEUS_DEVICE_KEY_FILE: keyFile,

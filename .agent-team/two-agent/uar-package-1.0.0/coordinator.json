@@ -1,0 +1,77 @@
+{
+  "profile": "urn:prometheus:uar:collaboration:0.1.0-draft.1",
+  "kind": "AgentDefinition",
+  "id": "urn:example:two-agent/coordinator",
+  "version": "1.0.0",
+  "provenance": {
+    "source": "agent-team-creator bundled two-agent authoring example",
+    "authors": [
+      "Prometheus-AGS"
+    ]
+  },
+  "requiredCapabilities": [],
+  "extensions": {},
+  "title": "Coordinator",
+  "role": "coordinator",
+  "whenToUse": "When the bound team assigns coordination.",
+  "instructions": "Assign bounded work to the worker and report after its artifact is available.",
+  "input": {
+    "type": "object",
+    "properties": {
+      "brief": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "brief"
+    ],
+    "additionalProperties": false
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "brief": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "brief"
+    ],
+    "additionalProperties": false
+  },
+  "skills": [],
+  "models": [
+    {
+      "role": "primary",
+      "capabilities": [
+        "text",
+        "tool-calling"
+      ],
+      "preferredAliases": [
+        "team-default"
+      ]
+    }
+  ],
+  "permittedChildren": [
+    {
+      "id": "urn:example:two-agent/worker",
+      "version": "1.0.0",
+      "digest": "sha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717"
+    }
+  ],
+  "context": {
+    "mode": "selected",
+    "artifacts": [
+      "task-input"
+    ],
+    "history": "authorized-summary",
+    "memoryScopes": []
+  },
+  "requestedLimits": {
+    "concurrentTurns": 2,
+    "maxMembers": 2,
+    "maxDepth": 1,
+    "maxPendingTasks": 100
+  },
+  "contentDigest": "sha256:2255173bc10d57d6e72847949949656dcb33abfbf4accf779a44765ba7f6dd65"
+}

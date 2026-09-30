@@ -1,0 +1,23 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "scripts/kbd-new-phase.mjs",
+      "line": 226,
+      "claim": "Runtime-authoritative phase creation can leave filesystem phase artifacts behind when canonical runtime creation fails, violating the malformed/failure no-mutation postcondition pattern required for phase creation.",
+      "evidence": "The helper creates the phase directory and writes goals before entering the runtime path: `mkdirSync(phaseDir, { recursive: true }); writeGoals(phaseDir, goals); if (runtimeAuthoritative) { await runtimeAuthorityPath(name); ... }`. Acceptance requires phase creation postconditions to be completed through canonical runtime authority and invalid/failing setup to refuse before creating a phase or mutating state (`Invalid project configuration` scenario; design says validate before mutation and complete shared postconditions after canonical activation).",
+      "suggested_fix": "In runtime-authoritative mode, perform canonical runtime create/activate/transition before creating local phase files, or roll back `phaseDir`/goals if any canonical runtime step fails."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

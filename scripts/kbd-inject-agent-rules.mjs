@@ -23,6 +23,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { atomicWrite } from '../lib/platform/atomic-write.mjs';
+import { install } from '../skills/prometheus-ui-ux/scripts/install.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const SKILL_REFERENCES = path.join(HERE, '..', 'skills', 'kbd-inject-agent-rules', 'references');
@@ -133,6 +134,11 @@ async function main(argv) {
   }
   if (!existsSync(args.path)) die(`--path is not a directory: ${args.path}`);
 
+  if (args.pack === 'uiux-routing') {
+    const result = install({ project: args.path, skillRoot: path.join(HERE, '../skills/prometheus-ui-ux'), target: args.target, dryRun: args.dryRun });
+    process.stdout.write(JSON.stringify(result, null, 2) + '\n');
+    return;
+  }
   const { markerPrefix, templateFile, cacheFile } = resolvePack(args.pack, args.path);
   if (!existsSync(templateFile)) die(`template missing: ${templateFile}`);
   if (!existsSync(cacheFile)) die(`cache missing: ${cacheFile}`);

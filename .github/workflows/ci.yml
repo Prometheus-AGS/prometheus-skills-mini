@@ -27,11 +27,13 @@ jobs:
         node: [22, 24]
 
     steps:
-      # Before checkout, so the checkout itself is performed under the hostile
-      # default and .gitattributes has to do its job.
-      - name: Check out under the hostile line-ending default
+      # Before checkout, so .gitattributes is tested under the hostile line-ending
+      # default and tracked evidence paths can exceed Windows' legacy path limit.
+      - name: Configure Windows checkout
         if: runner.os == 'Windows'
-        run: git config --global core.autocrlf true
+        run: |
+          git config --global core.autocrlf true
+          git config --global core.longpaths true
 
       - uses: actions/checkout@v4
 

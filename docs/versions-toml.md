@@ -29,7 +29,7 @@ minimum = ">=22"          # must equal package.json engines.node, exactly
 [images]
 # "<service name as it appears in docker/compose.yaml>" = { ... }
 # Either digest (preferred — a tag is mutable) or built_from_submodule = true.
-"surrealdb"      = { image = "surrealdb/surrealdb:v3.2.4", digest = "sha256:…" }
+"surrealdb"      = { image = "surrealdb/surrealdb:v3.3.0", digest = "sha256:681c6c22c287421b5c7d99e0fde79b6e0d32c36c1ddeaab2762a1661cb04cd20" }
 "liter-llm"      = { built_from_submodule = true, submodule = "tools/liter-llm" }
 "surreal-memory" = { built_from_submodule = true, submodule = "tools/surreal-memory-server" }
 
@@ -79,7 +79,7 @@ rejects each one; the file as written is the authority regardless of what was pr
 | `tools/liter-llm` | `c5c6caac` | the skill pack's own pin; build context only |
 | `tools/surreal-memory-server` | `452dab1` | the skill pack's own pin; build context only |
 | `tools/rust-mcp-filesystem` | `d977fbd` — **only if the-boss does not take it** | analysis Q3 assigns it to the-boss; then it does not belong here at all |
-| `surrealdb` image | `surrealdb/surrealdb:v3.0.5`, digest resolved when `docker/` lands | both upstream compose files pin this tag |
+| `surrealdb` image | `surrealdb/surrealdb:v3.3.0@sha256:681c6c22c287421b5c7d99e0fde79b6e0d32c36c1ddeaab2762a1661cb04cd20` | operator-selected 3.3.0 release baseline; supersedes the earlier 3.2.4 pin |
 | `@docusaurus/core`, `@docusaurus/preset-classic` | `3.10.2` | current on npm (2026-09-18), and the version the full pack's site pins |
 
 ## Why this file gates five changes

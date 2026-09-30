@@ -1,7 +1,8 @@
 # versions.toml — authored by the operator. Agents read this file; they never write it.
 #
 # First written 2026-09-22 at the operator's explicit instruction ("bump the surrealdb image to
-# 3.2.4 in versions.toml"). The file did not exist yet, and docs/versions-toml.md requires [node]
+# 3.2.4 in versions.toml"). The operator's 2026-09-26 instruction supersedes that image pin with
+# 3.3.0. The file did not exist yet, and docs/versions-toml.md requires [node]
 # and every tools/ gitlink to be present once it does, so those were written alongside the image —
 # each from a value the tree already enforces, not a new decision. See docs/versions-toml.md.
 
@@ -12,15 +13,13 @@ minimum = ">=22"          # must equal package.json engines.node, exactly
 # "<path under the repository root>" = "<full or short commit sha>"
 # Each path must be a gitlink in HEAD at exactly this commit.
 "tools/prometheus-knowledge"    = "abb6745"
-"tools/liter-llm"               = "6e962c7835ada20fcf5f5eac608623bbacaa650a"   # native config-check source
+"tools/liter-llm"               = "4f25d39f0075656b70bf945880d6033beda6d663"   # liter-llm 2.1.1 + config validation and nested gateway routing
 "tools/surreal-memory-server"   = "6acb60565949334beda22f52bcd36b33895b1db6"    # Scoped authentication for the approved The Boss release
 
 [images]
-# Kept in lockstep with the SurrealDB client every consumer links: compass and the Universal Agent
-# Runtime both pin the surrealdb crate at =3.2.4, and UAR's own versions.toml pins this exact
-# digest. The one SurrealDB container is shared by surreal-memory, compass and UAR.
-# surreal-memory also links surrealdb =3.2.4, so all three clients match this server.
-"surrealdb"      = { image = "surrealdb/surrealdb:v3.2.4", digest = "sha256:51baed8709f57f67dcf04b30e3177db846803fa9342dae2be58c6fa5f8d59843" }
+# The one SurrealDB container is shared by surreal-memory, compass and UAR. The release must keep
+# those clients compatible with this operator-selected 3.3.0 server baseline.
+"surrealdb"      = { image = "surrealdb/surrealdb:v3.3.0", digest = "sha256:681c6c22c287421b5c7d99e0fde79b6e0d32c36c1ddeaab2762a1661cb04cd20" }
 # Built from their submodules; used only as `build:` contexts, so nothing under them runs on the host.
 "liter-llm"      = { built_from_submodule = true, submodule = "tools/liter-llm" }
 "surreal-memory" = { built_from_submodule = true, submodule = "tools/surreal-memory-server" }

@@ -1,0 +1,21 @@
+✔ runtime: rejected duplicate canonical phase creates no local goals or postconditions (3554.427833ms)
+✔ runtime: phase postconditions preserve metadata and invoke real hook exactly once (3709.955875ms)
+✔ runtime: invalid project {broken refuses all phase and canonical writes (1387.201334ms)
+✔ runtime: invalid project [] refuses all phase and canonical writes (1378.897958ms)
+✔ runtime: invalid project null refuses all phase and canonical writes (1748.219417ms)
+✔ runtime: invalid project 42 refuses all phase and canonical writes (1329.095834ms)
+✔ runtime: invalid project "scalar" refuses all phase and canonical writes (1362.143334ms)
+✔ runtime: missing metadata bootstraps only the documented minimal fields (4025.945959ms)
+✔ runtime: real failing hook is reported and keeps the activated phase (3847.826875ms)
+✔ runtime: begin-task preserves pending tasks when real OpenSpec cannot load its schema (1885.199375ms)
+✔ runtime: begin-task refuses missing backend data before mutation or completion (1684.664667ms)
+✔ runtime: end-task preserves pending tasks when real OpenSpec cannot load its schema (1744.25325ms)
+✔ runtime: end-task refuses missing backend data before mutation or completion (1544.10575ms)
+ℹ tests 1031
+ℹ suites 0
+ℹ pass 1029
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 2
+ℹ todo 0
+ℹ duration_ms 37876.67025

@@ -74,12 +74,6 @@ async function runtimeAuthorityPath(name) {
     if (post.status !== 0) die('phase start postcommit evaluation blocked');
     process.stdout.write(`${bottleneckSignalText(post.stdout)}\n`);
   }
-
-  const phaseDir = path.join('.kbd-orchestrator', 'phases', name);
-  process.stdout.write(`\nCompleted kbd-new-phase — ${name} ready for /kbd-assess\n`);
-  process.stdout.write(`  phase:  ${name}\n`);
-  process.stdout.write(`  goals:  ${path.join(phaseDir, 'goals.md')}\n`);
-  process.stdout.write(`  Next:   /kbd-assess ${name}\n`);
 }
 
 function writeGoals(phaseDir, goals) {
@@ -165,10 +159,9 @@ function flipWaypoint(name, now) {
   return next.sourceTool;
 }
 
-function flipProjectActivePhase(name, now) {
-  if (existsSync(PJ)) {
-    const parsed = readJsonSafe(PJ) ?? {};
-    const { active_phase, ...rest } = parsed;
+function flipProjectActivePhase(name, now, project) {
+  if (project !== null) {
+    const { active_phase, ...rest } = project;
     atomicWrite(PJ, JSON.stringify({ ...rest, activePhase: name, updatedAt: now }, null, 2));
     return;
   }
@@ -199,12 +192,19 @@ async function main(argv) {
     if (parsed === null) die(`malformed waypoint at ${WP} — fix by hand before retrying (no files were modified)`);
   }
 
+  // Validate before runtime status/start as well as filesystem phase creation.
+  const project = existsSync(PJ) ? readJsonSafe(PJ) : null;
+  if (existsSync(PJ) && (project === null || typeof project !== 'object' || Array.isArray(project))) {
+    die(`malformed project at ${PJ} — expected a JSON object; fix by hand before retrying (no files were modified)`);
+  }
+
   const phaseDir = path.join('.kbd-orchestrator', 'phases', name);
   if (existsSync(phaseDir)) die(`phase already exists: ${phaseDir} (try /kbd-next-phase or pick another name)`);
 
   const now = new Date().toISOString();
 
-  if (isRuntimeAuthoritative('.')) {
+  const runtimeAuthoritative = isRuntimeAuthoritative('.');
+  if (runtimeAuthoritative) {
     const statusResult = spawnExecutable('prometheus', ['kbd', '--path', '.', 'status', '--json']);
     if (statusResult?.status !== 0) die('could not read canonical runtime status');
     const state = JSON.parse(statusResult.stdout);
@@ -223,25 +223,34 @@ async function main(argv) {
     }
   }
 
+  if (runtimeAuthoritative) {
+    await runtimeAuthorityPath(name);
+  }
+  // Author local goals only after canonical creation and activation succeed.
   mkdirSync(phaseDir, { recursive: true });
   writeGoals(phaseDir, goals);
 
-  if (isRuntimeAuthoritative('.')) {
-    await runtimeAuthorityPath(name);
-    return;
+  if (!runtimeAuthoritative) {
+    const sourceTool = existsSync(WP) ? readJsonSafe(WP)?.sourceTool ?? 'unknown' : 'unknown';
+    writeProgress(phaseDir, name, sourceTool || 'unknown', now);
+    flipWaypoint(name, now);
   }
-
-  const sourceTool = existsSync(WP) ? readJsonSafe(WP)?.sourceTool ?? 'unknown' : 'unknown';
-  writeProgress(phaseDir, name, sourceTool || 'unknown', now);
-  flipWaypoint(name, now);
-  flipProjectActivePhase(name, now);
+  flipProjectActivePhase(name, now, project);
 
   const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? '.';
   try {
     await hooksFire('phase', 'before', name, 1, 1, {
       orchestratorRoot,
       cwd: '.',
-      runCommand: runHookCommand,
+      runCommand: async (...args) => {
+        const result = await runHookCommand(...args);
+        if (result.status !== 0) {
+          warn(`phase:before hook command failed (exit ${result.status}; phase still created)`);
+        } else if (result.stderr.startsWith('hook command requires shell semantics and was not run:')) {
+          warn('phase:before hook command was not run (unsupported shell command format; phase still created)');
+        }
+        return result;
+      },
       phasePath: name,
       sourceTool: 'kbd-new-phase',
     });

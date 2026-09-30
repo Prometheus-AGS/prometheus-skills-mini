@@ -1,0 +1,111 @@
+{
+  "profile": "urn:prometheus:uar:collaboration:0.1.0-draft.1",
+  "kind": "PackageManifest",
+  "id": "urn:example:two-agent/package",
+  "version": "1.0.0",
+  "provenance": {
+    "source": "agent-team-creator bundled two-agent authoring example",
+    "authors": [
+      "Prometheus-AGS"
+    ]
+  },
+  "requiredCapabilities": [
+    "collaboration_definition_packages_v1"
+  ],
+  "extensions": {},
+  "entrypoints": [
+    {
+      "id": "urn:example:two-agent/team",
+      "version": "1.0.0",
+      "digest": "sha256:bc2c2df2abf973769e3d714704283092d0267fe6b4615799e15303c7a4e85b15"
+    }
+  ],
+  "capabilityDeclarations": [
+    {
+      "capability": "collaboration_definition_packages_v1",
+      "required": true
+    }
+  ],
+  "resolution": "exact-version-and-digest",
+  "files": [
+    {
+      "path": "coordinator.json",
+      "kind": "AgentDefinition",
+      "definition": {
+        "id": "urn:example:two-agent/coordinator",
+        "version": "1.0.0",
+        "digest": "sha256:2255173bc10d57d6e72847949949656dcb33abfbf4accf779a44765ba7f6dd65"
+      },
+      "byteDigest": "sha256:c11789c326edba7b64651d4e17f75660645b4b9cea73ac3ea4e83ea277bb43f5"
+    },
+    {
+      "path": "team.json",
+      "kind": "TeamDefinition",
+      "definition": {
+        "id": "urn:example:two-agent/team",
+        "version": "1.0.0",
+        "digest": "sha256:bc2c2df2abf973769e3d714704283092d0267fe6b4615799e15303c7a4e85b15"
+      },
+      "byteDigest": "sha256:af06e624e812f35adadaea0b3ef577b001d4f05335d171876d8fcc2bb7a78eec"
+    },
+    {
+      "path": "worker.json",
+      "kind": "AgentDefinition",
+      "definition": {
+        "id": "urn:example:two-agent/worker",
+        "version": "1.0.0",
+        "digest": "sha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717"
+      },
+      "byteDigest": "sha256:c54fd975ba08e31890f09250640df000db6282b55b7a442a2d4f57c4573bda52"
+    },
+    {
+      "path": "workflow.json",
+      "kind": "WorkflowDefinition",
+      "definition": {
+        "id": "urn:example:two-agent/workflow",
+        "version": "1.0.0",
+        "digest": "sha256:e4e5e1168512821fd684ca57306996ba8dccec4fea937e970b5903ffc51960fb"
+      },
+      "byteDigest": "sha256:390edc970fb75d827a2686286dbcf142067163c29d89aaf791911b8a0d789880"
+    }
+  ],
+  "lock": [
+    {
+      "requestedBy": "urn:example:two-agent/coordinator",
+      "reference": {
+        "id": "urn:example:two-agent/worker",
+        "version": "1.0.0",
+        "digest": "sha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717"
+      },
+      "resolvedPath": "worker.json"
+    },
+    {
+      "requestedBy": "urn:example:two-agent/team",
+      "reference": {
+        "id": "urn:example:two-agent/coordinator",
+        "version": "1.0.0",
+        "digest": "sha256:2255173bc10d57d6e72847949949656dcb33abfbf4accf779a44765ba7f6dd65"
+      },
+      "resolvedPath": "coordinator.json"
+    },
+    {
+      "requestedBy": "urn:example:two-agent/team",
+      "reference": {
+        "id": "urn:example:two-agent/worker",
+        "version": "1.0.0",
+        "digest": "sha256:efe0390af283e2b27487772a4bf234df37594ccd550fcc45c74ef6fb4c24f717"
+      },
+      "resolvedPath": "worker.json"
+    },
+    {
+      "requestedBy": "urn:example:two-agent/team",
+      "reference": {
+        "id": "urn:example:two-agent/workflow",
+        "version": "1.0.0",
+        "digest": "sha256:e4e5e1168512821fd684ca57306996ba8dccec4fea937e970b5903ffc51960fb"
+      },
+      "resolvedPath": "workflow.json"
+    }
+  ],
+  "contentDigest": "sha256:b18c0c1e75b3281a42a8f4e2f7005f6547f228aa95a03949c16d86f30ce60b30"
+}

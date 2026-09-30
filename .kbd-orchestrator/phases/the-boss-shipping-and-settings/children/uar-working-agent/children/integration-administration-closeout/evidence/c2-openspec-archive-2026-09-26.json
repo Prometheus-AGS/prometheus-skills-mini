@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-26",
+  "change": "integration-administration",
+  "result": "pass-with-limitations",
+  "taskCompletion": {
+    "completed": 37,
+    "total": 37
+  },
+  "mainSpec": {
+    "path": "openspec/specs/integration-administration/spec.md",
+    "sha256": "dd7f92badabe9da29c17555c320b0065b130760bf7131b9c3002f750fb7a1adf",
+    "validation": "18 passed, 0 failed"
+  },
+  "verification": {
+    "report": ".kbd-orchestrator/phases/the-boss-shipping-and-settings/children/uar-working-agent/children/integration-administration-closeout/evidence/c2-openspec-verification-2026-09-26.md",
+    "sha256": "9337569e59a6f1f6f0b2e08b61267c5256580a9d23f84c42724037a425d9ff19",
+    "kbdApply": "PASS"
+  },
+  "archive": "openspec/changes/archive/2026-09-26-integration-administration",
+  "limitations": [
+    "Windows occupied-port fallback was not observed; Windows acceptance establishes successful installation, UAR launch and effective port 1906.",
+    "The artifact-refinement command skipped because no artifact manifest or constraints file existed.",
+    "Gate V retains terminal Playwright state and signed KBD receipts but not a complete reporter transcript."
+  ]
+}

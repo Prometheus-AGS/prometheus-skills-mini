@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-26",
+  "canonicalRevision": 951,
+  "result": "pass-with-limitations",
+  "artifactRefiner": {
+    "command": "node scripts/refine-validate.mjs --help",
+    "runs": 1,
+    "output": [
+      "SKIP: manifest — artifact_manifest.json not present",
+      "SKIP: constraints — constraints.json not present"
+    ],
+    "validatedAssertions": [],
+    "disposition": "No refinement state existed, so no manifest or constraint assertion was represented as validated."
+  },
+  "adversarialCertification": {
+    "isolationMode": "harness-native",
+    "reviewScope": "completed integration-administration plan, OpenSpec tasks, release and installed-acceptance evidence, and cumulative closeout diff",
+    "criticalFindings": 0,
+    "verdict": "PASS WITH LIMITATIONS"
+  },
+  "limitations": [
+    "Windows evidence is operator-confirmed successful 2.2.3 installation and packaged UAR active on effective port 1906.",
+    "Windows occupied-port fallback was not observed and is not claimed.",
+    "Apple Silicon separately observed 1906 to 1907 fallback.",
+    "Release evidence is anchored to immutable source commits, artifact checksums, and publication records rather than the ambient dirty mini worktree."
+  ]
+}

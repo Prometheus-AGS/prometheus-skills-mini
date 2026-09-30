@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-26",
+  "source": "operator report in the active KBD execution session",
+  "release": "2.2.3",
+  "platform": "win32-x64",
+  "artifact": {
+    "url": "https://github.com/Prometheus-AGS/the-boss/releases/download/v2.2.3/The-Boss-2.2.3-win-x64-setup.exe",
+    "sha256": "6688b21b33e51a1250c50b2ceb43b898f3375d8aed66b7fe8b12b8dc5056d5f1"
+  },
+  "observations": {
+    "installationWorked": true,
+    "uarActive": true,
+    "preferredPort": 1906,
+    "effectivePort": 1906,
+    "occupiedPortFallback": "not-observed-on-windows"
+  },
+  "acceptance": {
+    "installedLaunch": "accepted",
+    "effectivePortReporting": "accepted",
+    "scope": "operator-confirmed facts only"
+  }
+}

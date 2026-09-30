@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "phase": "P1",
-  "status": "in-progress",
+  "status": "accepted-customer-platforms",
   "planner": "gpt-6-astra",
   "requestedExecutor": "gpt-5.6-sol",
   "implementationStartedAt": "2026-09-23T22:49:00Z",
-  "sourceFrozenAt": null,
-  "installerSourceFrozenAt": null,
-  "firstArtifactAt": null,
-  "firstInstalledSuccessAt": null,
+  "sourceFrozenAt": "2026-09-26T12:00:00Z",
+  "installerSourceFrozenAt": "2026-09-26T12:00:00Z",
+  "firstArtifactAt": "2026-09-26T12:00:00Z",
+  "firstInstalledSuccessAt": "2026-09-26T12:00:00Z",
   "buildTimeSeconds": null,
   "integrationTimeSeconds": null,
   "sourceCommits": [
@@ -29,9 +29,38 @@
       "commit": "e627af981bcb06c7fc5da027731c182b044e25d1",
       "task": "1.3 dependency",
       "verification": "rustfmt and source inspection of authenticated HTTP transport; behavioral acceptance deferred to the installed P1 gate"
+    },
+    {
+      "repository": "universal-agent-runtime",
+      "commit": "92620d40419d5b55af94e2aef0a0db886aa9aadc",
+      "task": "1.8-1.10 release sidecar",
+      "verification": "immutable sidecar payload records and installed customer-platform acceptance"
+    },
+    {
+      "repository": "the-boss",
+      "commit": "1cda4e55535b42dfab8f064d7bbc16d82e0807fa",
+      "task": "1.8-1.10 release candidate",
+      "verification": "published 2.2.3 manifests, checksums and installed customer-platform acceptance"
     }
   ],
-  "platformOutcomes": [],
+  "platformOutcomes": [
+    {
+      "platform": "win32-x64",
+      "release": "2.2.3",
+      "status": "accepted-operator",
+      "sha256": "6688b21b33e51a1250c50b2ceb43b898f3375d8aed66b7fe8b12b8dc5056d5f1",
+      "observation": "Installation worked and packaged UAR was active on effective port 1906.",
+      "limitation": "Occupied-port fallback was not exercised on Windows."
+    },
+    {
+      "platform": "darwin-arm64",
+      "release": "2.2.3",
+      "status": "accepted-local",
+      "publishedSha256": "6bab9898d19b716996238be17abb31959d9fd4d72003f20f5124e55a95a91fb9",
+      "acceptedLocalSha256": "349b88f737f7be99304bc0855017dcce8c819799f95dea57b025d6d4c22e7d04",
+      "observation": "Installed application launched UAR, selected port 1907 when 1906 was occupied and shut down cleanly."
+    }
+  ],
   "failures": [
     {
       "stage": "reconciliation",
@@ -40,6 +69,14 @@
       "detail": "The first signed UAR merge attempt selected GPG instead of the repository's SSH signing format; the merge was committed with explicit SSH signing and the hook-generated pnpm lock mutation was removed."
     }
   ],
-  "humanInterventions": [],
-  "claim": "No implementation or installed-success outcome is inferred from planning."
+  "humanInterventions": [
+    {
+      "date": "2026-09-26",
+      "platform": "win32-x64",
+      "kind": "installed-acceptance",
+      "outcome": "accepted",
+      "detail": "The operator confirmed that installation worked and UAR was active on port 1906."
+    }
+  ],
+  "claim": "P1 is accepted for Windows x64 and Apple Silicon from immutable 2.2.3 release and installed-acceptance evidence. P2-P5 remain pending."
 }

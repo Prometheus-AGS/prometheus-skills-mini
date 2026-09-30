@@ -109,6 +109,10 @@ jobs:
             .ci/prometheus-skill-system/tools/prometheus-cli/target
           key: prometheus-cli-${{ runner.os }}-${{ env.PROMETHEUS_CLI_REF }}
 
+      # libdbus-sys (the CLI's OS keyring dependency) links the system D-Bus library on Linux.
+      - name: Install system libraries for the CLI build
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq libdbus-1-dev pkg-config
+
       - name: Build the real prometheus CLI
         run: cargo build --locked --release --bin prometheus --manifest-path .ci/prometheus-skill-system/tools/prometheus-cli/Cargo.toml
 

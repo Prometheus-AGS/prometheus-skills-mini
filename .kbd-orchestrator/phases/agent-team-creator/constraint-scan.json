@@ -1,0 +1,106 @@
+[
+  {
+    "command": "git grep --no-index --exclude-standard -l -e \"\" -- \"*.sh\" \"*.bash\" \"*.py\" \"*.ps1\" \":!tools/prometheus-knowledge\"",
+    "exitCode": 1,
+    "matches": 0,
+    "baselineMatches": 0,
+    "nonBaselinePaths": [],
+    "paths": []
+  },
+  {
+    "command": "git grep --no-index --exclude-standard -n -E -e \"shell: *true\" -- \"lib/*.mjs\" \"scripts/*.mjs\" \"hooks/*.mjs\" \"rules/*.mjs\"",
+    "exitCode": 1,
+    "matches": 0,
+    "baselineMatches": 0,
+    "nonBaselinePaths": [],
+    "paths": []
+  },
+  {
+    "command": "git grep --no-index --exclude-standard -n -E -e \"[$]HOME|process\\.env\\.HOME|/tmp/\" -- \"lib/*.mjs\" \"scripts/*.mjs\" \"hooks/*.mjs\" \"rules/*.mjs\"",
+    "exitCode": 0,
+    "matches": 3,
+    "baselineMatches": 3,
+    "nonBaselinePaths": [],
+    "paths": [
+      "lib/kbd/waypoint.mjs",
+      "lib/kbd/waypoint.test.mjs"
+    ]
+  },
+  {
+    "command": "git grep --no-index --exclude-standard -n -E -e \"os\\.(tmpdir|homedir)\\(\\)\" -- \"lib/*.mjs\" \"scripts/*.mjs\" \"hooks/*.mjs\" \"rules/*.mjs\" \":!lib/platform/paths.mjs\" \":!lib/platform/paths.test.mjs\"",
+    "exitCode": 0,
+    "matches": 7,
+    "baselineMatches": 7,
+    "nonBaselinePaths": [],
+    "paths": [
+      "lib/context-bootstrap/bootstrap.integration.test.mjs",
+      "lib/ideation/dispatch.test.mjs",
+      "lib/ideation/independence.test.mjs",
+      "scripts/assert-independent-dispatch.test.mjs",
+      "scripts/record-dispatch.test.mjs"
+    ]
+  },
+  {
+    "command": "git grep --no-index --exclude-standard -n -i -e \"zeespec\" -- \"skills/*\" \"lib/*\" \"hooks/*\" \"scripts/*\" \"templates/*\"",
+    "exitCode": 0,
+    "matches": 5,
+    "baselineMatches": 5,
+    "nonBaselinePaths": [],
+    "paths": [
+      "lib/kbd/bottleneck-guard.mjs",
+      "scripts/kbd-bottleneck-detector.mjs",
+      "skills/kbd-bottleneck-detector/SKILL.md"
+    ]
+  },
+  {
+    "command": "git grep --no-index --exclude-standard -n -E -e \"--(user|pass)=\" -e \"sk-[A-Za-z0-9_-]{20,}\" -- \"docker/*\" \"*.mjs\" \"*.json\" \"*.toml\" \"*.yaml\" \"*.yml\"",
+    "exitCode": 0,
+    "matches": 6,
+    "baselineMatches": 6,
+    "nonBaselinePaths": [],
+    "paths": [
+      ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/analyze/packet-r1.json",
+      ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/analyze/packet.json",
+      ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/assess/packet.json",
+      ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/spec/packet-r1.json",
+      ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/spec/packet.json",
+      "docker/AGENTS.md"
+    ]
+  },
+  {
+    "command": "git grep --no-index --exclude-standard -n -E -e \"- +.?[0-9]+:[0-9]+.? *$\" -- \"docker/*.yaml\" \"docker/*.yml\"",
+    "exitCode": 1,
+    "matches": 0,
+    "baselineMatches": 0,
+    "nonBaselinePaths": [],
+    "paths": []
+  },
+  {
+    "command": "git grep --no-index --exclude-standard -n -E -e \"console\\.(log|debug)\" -- \"lib/*.mjs\" \"rules/lib/*.mjs\"",
+    "exitCode": 0,
+    "matches": 1,
+    "baselineMatches": 1,
+    "nonBaselinePaths": [],
+    "paths": [
+      "lib/distribution/package-builder.test.mjs"
+    ]
+  },
+  {
+    "command": "git grep --no-index --exclude-standard -n -E -e \"(^|[^A-Za-z])(jq|sed|awk|curl|mktemp|chmod) \" -- \"skills/*.md\" \"hooks/*\" \"templates/*\"",
+    "exitCode": 0,
+    "matches": 1,
+    "baselineMatches": 1,
+    "nonBaselinePaths": [],
+    "paths": [
+      "skills/adversarial-review/references/model-configuration.md"
+    ]
+  },
+  {
+    "command": "git grep --no-index --exclude-standard -n -E -e \"TODO|FIXME|STUB|HACK\" -- \"lib/*.mjs\" \"scripts/*.mjs\" \"hooks/*.mjs\" \"rules/*.mjs\" \":!scripts/convert-htmx-react.mjs\"",
+    "exitCode": 1,
+    "matches": 0,
+    "baselineMatches": 0,
+    "nonBaselinePaths": [],
+    "paths": []
+  }
+]

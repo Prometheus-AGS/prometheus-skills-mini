@@ -23,8 +23,10 @@ openspec init --tools claude,codex,cursor,opencode --no-animation .
 | `.agents/skills/openspec-*` | 12 skills (Codex — skills only, no commands) |
 | `.cursor/`, `.opencode/` | 12 skills + 12 commands each |
 
-The OpenSpec CLI (`@fission-ai/openspec`, pinned `1.10.0` in `package.json`) is itself a Node
+The OpenSpec CLI (`@fission-ai/openspec`, pinned `1.14.0` in `package.json`) is itself a Node
 package, satisfying the Node-only constraint with no extra runtime.
+
+See [OpenSpec lifecycle updates](/docs/kbd/openspec-lifecycle) for automatic refresh, explicit overrides, offline behavior and backups. Generated tool counts depend on the selected OpenSpec version and profile.
 
 ## The SpecBackend contract
 
@@ -33,14 +35,14 @@ satisfy, ported from the SpecBackend contract embedded in the full pack's `kbd-a
 
 | Op | OpenSpec implementation |
 |---|---|
-| `detect` | `openspec/` exists **and** `openspec` resolves on `PATH` |
+| `detect` | `openspec/` exists; commands use the managed CLI |
 | `list_tasks` / `progress` | `openspec instructions apply --change <c> --json` |
 | `mark_done` | flip `- [ ]` → `- [x]` in `openspec/changes/<c>/tasks.md` |
 | `verify` | `openspec validate <c>` |
 | `archive` | `openspec archive <c> --yes` — `--yes` is mandatory or the CLI blocks on an interactive prompt |
 
-**native-kbd** (a `tasks.json` file) is the always-available fallback when the OpenSpec CLI is
-missing. **Spec Kit (`speckit`)** is detected (`detectBackend` still returns `'speckit'` when
+**native-kbd** (a `tasks.json` file) remains available for native changes. An unavailable managed
+OpenSpec route is reported explicitly; it does not silently convert existing OpenSpec tasks. **Spec Kit (`speckit`)** is detected (`detectBackend` still returns `'speckit'` when
 on-disk evidence — an explicit pin, or `specs/*/tasks.md` — says so) but has no implemented
 operations in this pack; `kbd-apply`'s own upstream behavior already treats `speckit` as a no-op for
 `verify`/`archive`, and porting its markdown-checklist parsing was judged out of scope for the batch

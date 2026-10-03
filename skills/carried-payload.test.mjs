@@ -13,7 +13,7 @@ const markdownUnder = (dir) => {
   const walk = (current) => {
     for (const entry of readdirSync(current, { withFileTypes: true })) {
       const full = path.join(current, entry.name);
-      if (entry.isDirectory()) walk(full);
+      if (entry.isDirectory() && entry.name !== 'node_modules') walk(full);
       else if (full.endsWith('.md')) out.push(full);
     }
   };
@@ -33,6 +33,20 @@ const scriptRefs = (text) =>
     ),
   ].map((m) => m[1]);
 
+const referenceExists = (file, ref) => {
+  // AgentSkills resources are relative to their skill; older carried payloads use
+  // repository-root resources. A nested reference page belongs to its nearest skill.
+  let dir = path.dirname(file);
+  while (dir.startsWith(repoRoot) && dir !== repoRoot) {
+    if (existsSync(path.join(dir, 'SKILL.md'))) {
+      if (existsSync(path.join(dir, ref))) return true;
+      break;
+    }
+    dir = path.dirname(dir);
+  }
+  return existsSync(path.join(path.dirname(file), ref)) || existsSync(path.join(repoRoot, ref));
+};
+
 const declaresUnavailable = (text) => text.includes('UNAVAILABLE IN THIS PROJECT');
 
 // A skill that is otherwise usable may instead document one absent asset. It still
@@ -50,7 +64,7 @@ test('every script a carried file names resolves, unless that file declares itse
     const text = readFileSync(file, 'utf8');
     if (declaresUnavailable(text) || documentsAbsentAsset(text)) continue;
     for (const ref of new Set(scriptRefs(text))) {
-      if (!existsSync(path.join(repoRoot, ref))) {
+      if (!referenceExists(file, ref)) {
         offenders.push(`${path.relative(repoRoot, file)} names ${ref}, which does not exist here`);
       }
     }

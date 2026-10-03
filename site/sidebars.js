@@ -12,12 +12,22 @@ const sidebars = {
     {
       type: 'category',
       label: 'KBD Process',
-      items: ['kbd/overview', 'kbd/skills'],
+      items: ['kbd/overview', 'kbd/skills', 'kbd/task-model-assignments', 'kbd/openspec-lifecycle'],
     },
     {
       type: 'category',
       label: 'Review & Ideation',
       items: ['review/adversarial-review', 'ideation/ideation-mindmap'],
+    },
+    {
+      type: 'category',
+      label: 'UI/UX',
+      items: ['ui-ux/overview'],
+    },
+    {
+      type: 'category',
+      label: 'Agent Teams',
+      items: ['agent-teams/overview'],
     },
     {
       type: 'category',

@@ -1,0 +1,17 @@
+{
+  "project": ".",
+  "workspace": "checkout-team",
+  "expectedRevision": 0,
+  "packageId": "urn:example:checkout-team",
+  "packageVersion": "1.0.0",
+  "manifestPath": "manifest.source.json",
+  "definitionPaths": [
+    "agents/coordinator.json",
+    "agents/implementer.json",
+    "agents/reviewer.json",
+    "teams/root.json",
+    "teams/review-subteam.json",
+    "workflows/checkout.json"
+  ],
+  "bindingIntent": "package-and-binding"
+}

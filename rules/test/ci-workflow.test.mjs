@@ -7,6 +7,22 @@ import { readFileSync } from 'node:fs';
 const workflow = () => readFileSync('.github/workflows/ci.yml', 'utf8');
 const runSteps = (text) =>
   text.split('\n').filter((line) => /^\s*- run:\s/.test(line)).map((line) => line.replace(/^\s*- run:\s*/, '').trim());
+// Split the `jobs:` section into { id: text } by its two-space-indented job keys.
+const jobs = (text) => {
+  const body = text.slice(text.indexOf('\njobs:') + 1).split('\n').slice(1);
+  const out = {};
+  let current = null;
+  for (const line of body) {
+    const key = line.match(/^ {2}([a-z][a-z0-9-]*):\s*$/);
+    if (key) {
+      current = key[1];
+      out[current] = '';
+    } else if (current) {
+      out[current] += `${line}\n`;
+    }
+  }
+  return out;
+};
 
 test('the matrix covers three operating systems and both supported LTS runtimes', () => {
   const text = workflow();
@@ -21,8 +37,8 @@ test('one failing leg does not cancel the others', () => {
   assert.match(workflow(), /fail-fast:\s*false/);
 });
 
-test('every job runs the four verification commands in order', () => {
-  const steps = runSteps(workflow());
+test('the matrix job runs the four verification commands in order', () => {
+  const steps = runSteps(jobs(workflow()).verify);
 
   const expected = [
     'npm ci',
@@ -32,6 +48,16 @@ test('every job runs the four verification commands in order', () => {
   ];
 
   assert.deepEqual(steps.filter((step) => expected.includes(step)), expected);
+});
+
+test('the kbd-runtime job builds the real prometheus CLI and requires it (never a skip)', () => {
+  const job = jobs(workflow())['kbd-runtime'];
+  assert.ok(job, 'kbd-runtime job missing');
+  assert.match(job, /repository:\s*Prometheus-AGS\/prometheus-skill-system/);
+  assert.match(job, /PROMETHEUS_CLI_REF:\s*[0-9a-f]{40}\b/, 'the full-pack source must be pinned to a commit');
+  assert.match(job, /cargo build --locked [^\n]*--bin prometheus/);
+  assert.match(job, /PROMETHEUS_CLI_REQUIRED:\s*'1'/, 'a missing CLI must fail this job, not skip');
+  assert.match(job, /run: node --test scripts\/kbd-new-phase\.integration\.test\.mjs/);
 });
 
 test('validation uses the pinned CLI, never a shim or a global install', () => {

@@ -1,0 +1,23 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/config.yaml",
+      "line": 112,
+      "claim": "The updated OpenSpec context still cites hosted CI runner coverage as a project convention, violating the local-only validation constraint.",
+      "evidence": "The hunk changes the convention text to: \"Existing CI covers windows-latest + ubuntu-latest + macos-latest; phase agent-team-creator uses local validation.\" The packet constraint says: \"Never use GitHub Actions or any hosted CI/CD runner for testing or validation\" and \"Do not ... cite a GitHub Actions test workflow.\"",
+      "suggested_fix": "Remove the CI coverage sentence from openspec/config.yaml and state that platform claims require actual local execution on that platform or must be reported as unverified."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

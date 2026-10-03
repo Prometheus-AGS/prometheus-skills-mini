@@ -8,8 +8,9 @@ context: |
 
   Hard constraints (every change must satisfy all of them):
   - Runs on Windows from cmd.exe / PowerShell with no WSL and no Git Bash.
-  - Node.js LTS (>= 22) is the only script runtime. All hooks and scripts are
-    ESM .mjs files invoked as `node <file>`; hooks use exec form
+  - Node.js LTS (>= 22) is the only script runtime. Runtime hooks and scripts are
+    ESM .mjs files invoked as `node <file>`; new team tooling is authored
+    in TypeScript 7 and ships its compiled .mjs artifacts. Hooks use exec form
     ("command": "node", "args": [...]), never a shell string.
   - No .sh files. No .ps1 unless a cross-platform equivalent ships with it.
   - No Python anywhere, including in rendered templates.
@@ -106,9 +107,13 @@ context: |
 
   Conventions: small focused modules (200-400 lines, 500 max — the v4 rule;
   partition by responsibility, never by line count), immutable data
-  patterns, explicit error handling, node:test with AAA structure, tests
-  written first, CI on windows-latest + ubuntu-latest + macos-latest,
-  conventional commits.
+  patterns, explicit error handling, node:test with AAA structure. Implement
+  coherent production behavior before authoring or running integration acceptance
+  tests (AGENTS.md A-9). The existing npm test suite remains a final compatibility
+  gate; its unit tests are not acceptance evidence. Phase agent-team-creator uses
+  local validation. Platform claims require actual execution on that platform;
+  otherwise report them as unverified.
+  Use conventional commits.
 
 # Project context (optional)
 # This is shown to AI when creating artifacts.

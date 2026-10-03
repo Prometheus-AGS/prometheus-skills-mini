@@ -2,7 +2,11 @@
 
 `compose.yaml` runs the three containers used by the two Prometheus services:
 SurrealDB plus surreal-memory, and the liter-llm gateway. Only loopback ports
-28000, 23001, and 4000 are published by default. SurrealDB is pinned to 3.2.4.
+28000, 23001, and 4000 are published by default. SurrealDB is pinned to 3.3.0.
+Before starting this image against a datastore last opened by 3.2, retain a
+restorable export. The first 3.3 start migrates the datastore and can return
+`503` while doing so; a later rollback to 3.2 requires restoring that export.
+See the official [3.2-to-3.3 migration guide](https://surrealdb.com/docs/build/migrating/from-old-surrealdb-versions/32-to-33).
 
 The Boss Settings → Prometheus creates the private `.env` and
 `liter-llm-proxy.toml`, supplies exact release image references, provisions

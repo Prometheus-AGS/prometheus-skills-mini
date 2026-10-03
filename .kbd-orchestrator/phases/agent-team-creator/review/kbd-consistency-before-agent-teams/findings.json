@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "Spec violations — checked acceptance requirements for phase creation postconditions, scoped phase/run completion, stage/lifecycle separation, generated-state mutation guidance, implementation-first testing language, explicit authorization, and backend-progress refusal; the diff or paired diff contains corresponding source changes and recorded verification evidence, with remaining team implementation explicitly out of scope.",
+    "Correctness — checked modified production paths in scripts/kbd-new-phase.mjs, scripts/kbd-apply.mjs, lib/kbd/spec-backend.mjs, lib/kbd/stage-gate.mjs, and paired full runtime/helper changes for inverted conditions, missing failure propagation, and synthetic progress fallbacks; no blocking defect found in the shown hunks.",
+    "Regressions — checked restored/active KBD state artifacts, Execute dispatch versus completion semantics, and the changed doctor compatibility assertion against the stated preservation behavior; no regression proven from the packet.",
+    "Security — checked for committed secrets, private key material, unsafe shell enabling, and service/port additions; private signer data is generated only under ignored .scratch and no tracked secret or new daemon is shown.",
+    "Constraint breaches — checked generated-surface handling, local-only validation wording, Node-only mini constraints, no forbidden new shell/python files, generated AGENTS/CLAUDE/routing synchronization, and distribution provenance; no new blocking constraint breach proven from the packet.",
+    "Silent failure — checked removal of swallowed OpenSpec progress errors and hook-failure reporting paths; remaining best-effort hook behavior is explicitly specified by acceptance criteria and not silent in the shown code."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

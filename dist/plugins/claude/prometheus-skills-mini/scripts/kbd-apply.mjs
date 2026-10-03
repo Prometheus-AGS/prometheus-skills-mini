@@ -24,6 +24,7 @@ import path from 'node:path';
 import { spawnExecutable } from '../lib/platform/spawn.mjs';
 import { atomicWrite } from '../lib/platform/atomic-write.mjs';
 import { isRuntimeAuthoritative } from '../lib/kbd/runtime-authority.mjs';
+import { resolveRuntimeTaskId } from '../lib/kbd/task-identity.mjs';
 import { isBottleneckActive, evaluateBottleneck, bottleneckSignalText } from '../lib/kbd/bottleneck-guard.mjs';
 import { hooksFire } from '../lib/kbd/hooks.mjs';
 import { kbdCurrentNodeDir } from '../lib/kbd/waypoint.mjs';
@@ -166,6 +167,17 @@ function runtimeTaskTransition(change, taskId, title, sequence, status) {
     state = JSON.parse(refreshed.stdout);
   }
 
+  // Reuse a task /kbd-plan already registered for this change instead of registering a duplicate
+  // under the backend ordinal.
+  try {
+    const resolved = resolveRuntimeTaskId(state?.phases?.[phase]?.changes?.[change]?.tasks, taskId, sequence, title);
+    if (resolved.mapped) warn(`backend task ${taskId} maps to registered runtime task ${resolved.id}`);
+    taskId = resolved.id;
+  } catch (error) {
+    warn(error.message);
+    return false;
+  }
+
   if (!state?.phases?.[phase]?.changes?.[change]?.tasks?.[taskId]) {
     const registerTaskResult = spawnExecutable('prometheus', [
       'kbd', '--path', '.', 'task', 'register',
@@ -227,15 +239,9 @@ async function cmdBeginTask(args) {
   const title = titleParts.join(' ');
   if (!change || !id) die('usage: begin-task <change> <id> <i> <n> <title>');
 
+  const before = bProgress('.', change);
   if (!runtimeTaskTransition(change, id, title, i, 'register-only')) {
     die('failed to register canonical task boundary');
-  }
-
-  let before = { total: n, complete: 0, remaining: n };
-  try {
-    before = bProgress('.', change);
-  } catch {
-    // Keep the fallback.
   }
   let changeStart = before.complete === 0;
 
@@ -290,12 +296,7 @@ async function cmdEndTask(args) {
   const title = titleParts.join(' ');
   if (!change || !id) die('usage: end-task <change> <id> <i> <n> <title>');
 
-  let before = { total: n, complete: i - 1, remaining: 1 };
-  try {
-    before = bProgress('.', change);
-  } catch {
-    // Keep the fallback.
-  }
+  const before = bProgress('.', change);
   const finalTask = before.remaining === 1;
 
   const guardEnabled = isBottleneckActive('.');
@@ -313,12 +314,7 @@ async function cmdEndTask(args) {
     die('failed to commit canonical task completion');
   }
 
-  let after = { total: n, complete: i, remaining: 0 };
-  try {
-    after = bProgress('.', change);
-  } catch {
-    // Keep the fallback.
-  }
+  const after = bProgress('.', change);
   syncProgress(change, after.complete ?? i, after.total ?? n);
   // Position sync (kbd_position_sync in the source): no mini-native writer exists yet for the
   // unified position model, so this step is intentionally a no-op here — best-effort, matching

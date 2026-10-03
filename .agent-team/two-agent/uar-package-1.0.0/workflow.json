@@ -1,0 +1,102 @@
+{
+  "profile": "urn:prometheus:uar:collaboration:0.1.0-draft.1",
+  "kind": "WorkflowDefinition",
+  "id": "urn:example:two-agent/workflow",
+  "version": "1.0.0",
+  "provenance": {
+    "source": "agent-team-creator bundled two-agent authoring example",
+    "authors": [
+      "Prometheus-AGS"
+    ]
+  },
+  "requiredCapabilities": [],
+  "extensions": {},
+  "title": "Worker then coordinator report",
+  "input": {
+    "type": "object",
+    "properties": {
+      "brief": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "brief"
+    ],
+    "additionalProperties": false
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "brief": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "brief"
+    ],
+    "additionalProperties": false
+  },
+  "steps": [
+    {
+      "id": "work",
+      "role": "worker",
+      "dependsOn": [],
+      "inputMapping": {
+        "brief": "workflow-input:brief"
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "brief": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "brief"
+        ],
+        "additionalProperties": false
+      },
+      "effect": "idempotent-write",
+      "approval": "current-authority",
+      "retry": {
+        "maxAttempts": 1,
+        "onUnknownEffect": "reconcile-before-retry"
+      },
+      "completion": "artifact",
+      "instructions": "Complete the assigned work."
+    },
+    {
+      "id": "report",
+      "role": "coordinator",
+      "dependsOn": [
+        "work"
+      ],
+      "inputMapping": {
+        "brief": "artifact:work:brief"
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "brief": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "brief"
+        ],
+        "additionalProperties": false
+      },
+      "effect": "none",
+      "approval": "none",
+      "retry": {
+        "maxAttempts": 1,
+        "onUnknownEffect": "reconcile-before-retry"
+      },
+      "completion": "all-dependencies-and-artifact",
+      "instructions": "Report the completed artifact and observed evidence."
+    }
+  ],
+  "failurePolicy": "stop-dependent",
+  "maxActivations": 100,
+  "contentDigest": "sha256:e4e5e1168512821fd684ca57306996ba8dccec4fea937e970b5903ffc51960fb"
+}

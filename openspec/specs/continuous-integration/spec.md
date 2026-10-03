@@ -50,6 +50,13 @@ The Windows jobs SHALL set `core.autocrlf` to `true` before checkout, so the rep
 - **WHEN** the Windows job checks out the repository with `core.autocrlf=true`
 - **THEN** `node rules/build.mjs --check` still exits 0
 
+### Requirement: Windows checkout supports tracked long paths
+The Windows jobs SHALL enable Git long-path support before repository checkout while preserving `core.autocrlf=true` for the same checkout.
+
+#### Scenario: Checkout includes long evidence paths
+- **WHEN** a Windows job checks out tracked evidence paths that exceed the platform's legacy path limit
+- **THEN** checkout completes with `core.longpaths=true` and `core.autocrlf=true` already configured
+
 ### Requirement: Least privilege
 The workflow SHALL request read-only repository permissions and SHALL use no secrets.
 

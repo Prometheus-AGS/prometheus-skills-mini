@@ -10,6 +10,10 @@ Initialize the KBD orchestrator for the **current project**.
 > This is the ONLY KBD command that creates project-specific configuration.
 > All other skills read from `project.json` — they never write it.
 
+## OpenSpec lifecycle preflight
+
+Before this stage, follow the [orchestrator preflight](../kbd-process-orchestrator/SKILL.md#openspec-lifecycle-preflight): refresh existing KBD/OpenSpec projects with the managed latest-stable CLI, then use that same runner for OpenSpec commands. Retry a pending startup refresh before OpenSpec work; preserve authored specs and task state. Phase scripts run this automatically, including canonical-runtime paths.
+
 ## What this does
 
 Scans the current repository to auto-discover project identity and configuration,

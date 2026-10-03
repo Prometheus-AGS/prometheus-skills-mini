@@ -97,7 +97,7 @@ same backend requirement, so they do not change this.
 
 ## 2. What `openspec init` created
 
-Run with OpenSpec CLI **1.10.0**:
+OpenSpec **1.14.0** is the release baseline (latest stable checked 2026-10-03). KBD startup and phase entry use the managed runner to discover the latest stable version and refresh generated project integrations. See [the lifecycle contract](lib/platform/openspec/README.md). For standalone source commands after installing dependencies:
 
 ```bash
 openspec init --tools claude,codex,cursor,opencode --no-animation .

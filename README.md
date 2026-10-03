@@ -31,7 +31,7 @@ is gone.
 > live invocation of every harness and full Electron installed-app acceptance remain unverified.
 > This documentation does not claim release certification.
 
-## Mini 0.2.0: task models and OpenSpec updates
+## Mini 1.11.1: task models and OpenSpec updates
 
 Every KBD task now gets an evidenced model recommendation and an explicit native or liter-llm plus worker route. Existing KBD/OpenSpec projects refresh generated integrations using a managed latest-stable CLI, with OpenSpec 1.14.0 as the release baseline. See [task model assignments](site/docs/kbd/task-model-assignments.md) and [OpenSpec lifecycle updates](site/docs/kbd/openspec-lifecycle.md) for planning, handoff, offline behavior and recovery.
 

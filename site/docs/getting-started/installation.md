@@ -12,7 +12,7 @@ inventory root and nine possible harness targets:
 {
   "schemaVersion": "prometheus-mini-skill-system-v1",
   "name": "prometheus-skills-mini",
-  "releaseVersion": "0.1.0",
+  "releaseVersion": "0.2.0",
   "platforms": { "skills": ["darwin", "linux", "win32"] },
   "inventory": {
     "roots": [{ "id": "core", "path": "skills", "scan": "children" }]

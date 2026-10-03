@@ -31,6 +31,10 @@ is gone.
 > live invocation of every harness and full Electron installed-app acceptance remain unverified.
 > This documentation does not claim release certification.
 
+## Mini 0.2.0: task models and OpenSpec updates
+
+Every KBD task now gets an evidenced model recommendation and an explicit native or liter-llm plus worker route. Existing KBD/OpenSpec projects refresh generated integrations using a managed latest-stable CLI, with OpenSpec 1.14.0 as the release baseline. See [task model assignments](site/docs/kbd/task-model-assignments.md) and [OpenSpec lifecycle updates](site/docs/kbd/openspec-lifecycle.md) for planning, handoff, offline behavior and recovery.
+
 ## UI/UX routing
 
 Use `prometheus-ui-ux` for rendered UI, styles, tokens, interaction, motion or on-screen copy.
@@ -125,7 +129,7 @@ same backend requirement, so they do not change this.
 
 ## 2. What `openspec init` created (historical setup)
 
-Run with OpenSpec CLI **1.10.0**:
+OpenSpec **1.14.0** is the release baseline (latest stable checked 2026-10-03). KBD startup and phase entry use the managed runner to discover the latest stable version and refresh generated project integrations. See [the lifecycle contract](lib/platform/openspec/README.md). For standalone source commands after installing dependencies:
 
 ```bash
 openspec init --tools claude,codex,cursor,opencode --no-animation .

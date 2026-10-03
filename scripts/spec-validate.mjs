@@ -4,9 +4,9 @@
 // lib/platform/spawn.mjs, which is what makes the same command work on Windows — where
 // `openspec` is a .cmd that Node cannot run without a shell.
 
-import { spawnNodeCli } from '../lib/platform/spawn.mjs';
+import { spawnOpenSpec } from '../lib/platform/openspec.mjs';
 
-const result = spawnNodeCli('@fission-ai/openspec', 'openspec', ['validate', '--all', '--no-interactive'], {
+const result = spawnOpenSpec('openspec', ['validate', '--all', '--no-interactive'], {
   stdio: 'inherit',
 });
 

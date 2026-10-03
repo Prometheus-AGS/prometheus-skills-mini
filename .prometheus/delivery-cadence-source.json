@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "source": "prometheus-skill-pack/skills/process/delivery-cadence",
-  "sourceRevision": "9027c84dd7e583edcfe055020a48a95ef1ac8ea3",
-  "payloadDigest": "8fda63d5726490aa828a7d1317682343d7b474ad77f07489563c96870f211e91",
+  "sourceRevision": "51cf5a5",
+  "payloadDigest": "1517a07c46134ee8c506cae245709810b87ad88a8b6930123be752cb02c108f1",
   "files": {
-    "SKILL.md": "fc363c7d51c9d619aa158bc8b31b41e9fbceba1aaacce47a8fa5bad06b7a0720",
+    "SKILL.md": "ea5f18060cfc69d7e7494ecdc0cc9dc0be3c18a624a3f7c8c560e7a49de2b9b9",
     "assets/boss-provider-setup.mjs": "fb9d16c97ac9ea2798a110ac1d0fd7f10ee444ed6bdd5a5c5f97755d676ac9e8",
     "assets/hooks/email-api.mjs": "c4041e45942e11b8c620477671336a134b6d692f34eca5a8e6b8fe3f3c026733",
     "assets/hooks/local-summary.mjs": "982979f0f577e73dcc795ec422d76a09283489e5685c7ef854265919a6b05ff7",
@@ -39,7 +39,7 @@
     "scripts/lib/hook-runner.mjs": "4c33b5495bd13f91afba7beb2344194afd69bf41b0c0fab515d694ef07975cb7",
     "scripts/lib/hooks.mjs": "9eb1b12a4ad7ab72517e9bdd5ccf9c86ed82f966333ef1328020755d56e0df75",
     "scripts/lib/jobs.mjs": "e750c90df28b2ca02bf5d96aa2df90276007323f2d26e62378daef108e9e2ed2",
-    "scripts/lib/lifecycle.mjs": "57f257dae774a351a68ce513467a3a9fb265997c8af89f90abcbab9656a1ccde",
+    "scripts/lib/lifecycle.mjs": "816b572f1840a199085c14e1218a82d2fd95629b2c601dceab5968d34eed57c0",
     "scripts/lib/operation-readiness.mjs": "9262ef37fa1df6e1c10a2dace7f05670bdc408456ab52a3cd7ed6719fca1f186",
     "scripts/lib/opportunities.mjs": "99995830d3e9a22d03469087da4eb9e446a2f8ebc9371038e708a06515e9d8ab",
     "scripts/lib/pipeline-data.mjs": "b1e108ddb39c676b5bcc1721ecda12120103d7eed43e4940fdd40348c229469f",
@@ -51,11 +51,11 @@
     "scripts/lib/publication.mjs": "780a75109547bd0b037a8206536b8b3c69267452c37bb2050ff6c78156c03a7e",
     "scripts/lib/report.mjs": "0b6cd41c1f872c36ae187f283b24625105e0db5c87357e1b5c341fae5fd9de94",
     "scripts/lib/resources.mjs": "c249c2480256dee6095ed79daab41c3defe0f1d93bf84ac1af8d10fdfdbfc542",
-    "scripts/lib/storage.mjs": "16c7b8f0a7977d317bbfb0969903af884494ebdbec11346834b8dc7e3b8a8153",
+    "scripts/lib/storage.mjs": "fbc18d4a5c6fd9b8fcd1264ac0c0719b97d5e47318e902f2d70d79f404c9bbf8",
     "scripts/lib/work-ahead-repair.mjs": "221f6ef699d143e74400321cde92969de359c6fef9c321404801a89bb7d4b724",
     "scripts/lib/work-ahead.mjs": "274e6be3416c67c25d7fb4d459970f5e02e2f04e39d19d7426fb93053cba7ede",
     "scripts/publication-receipt.mjs": "e7bb2fac01e9fde7b9067267e185d405dbfbdb3722b0f7ff8713ede564d86ed8",
     "scripts/sync-mini.mjs": "91d1613eaf3ba4a9756a9bb65be1ca92b3e8efa49d1a6a38c18c564c97c5732e"
   },
-  "note": "Payload digest identifies working source bytes independently of source HEAD."
+  "note": "Payload digest identifies installed mini bytes independently of source HEAD."
 }

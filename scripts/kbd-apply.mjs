@@ -199,6 +199,20 @@ function runtimeTaskTransition(change, taskId, title, sequence, status) {
   return transitionResult?.status === 0;
 }
 
+function canonicalGuardTaskId(change, backendId, sequence, title) {
+  if (!isRuntimeAuthoritative('.')) return backendId;
+  const result = spawnExecutable('prometheus', ['kbd', '--path', '.', 'status', '--json']);
+  if (result?.status !== 0) die('failed to read canonical task identity for boundary guard');
+  const state = JSON.parse(result.stdout);
+  const phase = state?.activePath?.phaseId;
+  if (!phase) die('canonical runtime has no active phase for boundary guard');
+  try {
+    return resolveRuntimeTaskId(state?.phases?.[phase]?.changes?.[change]?.tasks, backendId, sequence, title).id;
+  } catch (error) {
+    die(error.message);
+  }
+}
+
 async function fire(kind, edge, name, index, total) {
   try {
     await hooksFire(kind, edge, name, index, total, {
@@ -260,7 +274,8 @@ async function cmdBeginTask(args) {
       const pre = evaluateBottleneck('change', 'before', change, true, { root: '.' });
       if (pre.status !== 0) die('canonical change start precommit evaluation blocked');
     }
-    const taskPre = evaluateBottleneck('task', 'before', `${change}/${id}`, true, { root: '.' });
+    const guardId = canonicalGuardTaskId(change, id, i, title);
+    const taskPre = evaluateBottleneck('task', 'before', `${change}/${guardId}`, true, { root: '.' });
     if (taskPre.status !== 0) die('canonical task start precommit evaluation blocked');
   }
 
@@ -274,7 +289,8 @@ async function cmdBeginTask(args) {
       if (post.status !== 0) die('canonical change start postcommit evaluation blocked');
       changeGuardOutput = post.stdout;
     }
-    const taskPost = evaluateBottleneck('task', 'before', `${change}/${id}`, false, { root: '.' });
+    const guardId = canonicalGuardTaskId(change, id, i, title);
+    const taskPost = evaluateBottleneck('task', 'before', `${change}/${guardId}`, false, { root: '.' });
     if (taskPost.status !== 0) die('canonical task start postcommit evaluation blocked');
     taskGuardOutput = taskPost.stdout;
   }
@@ -301,7 +317,8 @@ async function cmdEndTask(args) {
 
   const guardEnabled = isBottleneckActive('.');
   if (guardEnabled) {
-    const taskPre = evaluateBottleneck('task', 'after', `${change}/${id}`, true, { root: '.' });
+    const guardId = canonicalGuardTaskId(change, id, i, title);
+    const taskPre = evaluateBottleneck('task', 'after', `${change}/${guardId}`, true, { root: '.' });
     if (taskPre.status !== 0) die('canonical task completion precommit evaluation blocked');
     if (finalTask) {
       const changePre = evaluateBottleneck('change', 'after', change, true, { root: '.' });
@@ -323,7 +340,8 @@ async function cmdEndTask(args) {
   let taskGuardOutput;
   let changeGuardOutput;
   if (guardEnabled) {
-    const taskPost = evaluateBottleneck('task', 'after', `${change}/${id}`, false, { root: '.' });
+    const guardId = canonicalGuardTaskId(change, id, i, title);
+    const taskPost = evaluateBottleneck('task', 'after', `${change}/${guardId}`, false, { root: '.' });
     if (taskPost.status !== 0) die('canonical task completion postcommit evaluation blocked');
     taskGuardOutput = taskPost.stdout;
     if (finalTask) {

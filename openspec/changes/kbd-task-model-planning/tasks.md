@@ -6,11 +6,11 @@
 ## 2. Release
 
 - [x] 2.1 Advance mini to 0.2.0 and regenerate both plugin packages; verify version and source/package parity.
-- [ ] 2.2 Exercise completed instructions in disposable projects and run final adversarial/sycophancy review; record results and limitations.
-- [ ] 2.3 Verify full-pack-only local redistribution with the paired full change; record installed versions, provenance and reload requirements.
+- [x] 2.2 Exercise completed instructions in disposable projects and run final adversarial/sycophancy review; record results and limitations.
+- [x] 2.3 Verify full-pack-only local redistribution with the paired full change; record installed versions, provenance and reload requirements.
 
 ## 3. Latest OpenSpec lifecycle
 
 - [x] 3.1 Standardize source dependencies and managed runner on latest stable OpenSpec with explicit overrides and offline evidence
 - [x] 3.2 Integrate bounded startup and pre-mutation phase/child refresh, preserve authored artifacts and use the same CLI in task drivers
-- [ ] 3.3 Package complete runtime closures and verify actual existing-project refresh, task parsing and local full-pack distribution
+- [x] 3.3 Package complete runtime closures and verify actual existing-project refresh, task parsing and local full-pack distribution

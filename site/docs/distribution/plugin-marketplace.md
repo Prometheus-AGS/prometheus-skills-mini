@@ -60,6 +60,7 @@ full pack in its commit `abf0ade`):
 | `posttool-write-position-reminder` (PostToolUse, `Write\|Edit`) | shipped |
 | `subagent-fallback-checkpoint` (SubagentStop) | shipped |
 | `precompact-kbd-control` (PreCompact) | shipped |
+| `subagentstart-learning` (SubagentStart) | **omitted** — serves Claude's auto-memory file tier only, no-ops for any other harness, and prints `{"hookSpecificOutput":...}` on stdout, which Codex parses as a structured response. Filtered by id in `CLAUDE_ONLY_HOOKS` (`codex-hooks.mjs`) |
 | `taskcompleted-kbd-receipt` (TaskCompleted) | **omitted** — TaskCompleted is a Claude Code event with no Codex equivalent, so the entry could never fire (the full pack filters the same hook out) |
 
 The same `${CLAUDE_PLUGIN_ROOT}` targets ship in both packages; `skill-system-distribution.test.mjs`

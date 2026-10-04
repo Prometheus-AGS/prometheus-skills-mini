@@ -90,6 +90,9 @@ test('every file the packaged Claude hooks.json tells the harness to run ships w
   }
 });
 
+const packagedClaudeHasHook = (doc, id) =>
+  Object.values(doc.hooks).some((groups) => groups.some((group) => group.hooks.some((h) => h.args?.includes(id))));
+
 test('the Codex package ships hooks/hooks.json: one command string per hook, no args, every target shipped', () => {
   const codexPackageRoot = path.join(root, contract.outputs.codexPackage);
   const claudeHooks = JSON.parse(fs.readFileSync(path.join(root, 'hooks/hooks.json'), 'utf8'));
@@ -107,9 +110,14 @@ test('the Codex package ships hooks/hooks.json: one command string per hook, no 
   // A Claude-only event has no Codex equivalent and must not be emitted.
   assert.ok(Object.keys(claudeHooks.hooks).includes('TaskCompleted'));
   assert.equal(codexHooks.hooks.TaskCompleted, undefined);
+  // subagentstart-learning serves Claude's file tier only and prints JSON on stdout: Claude has it, Codex must not.
+  assert.ok(packagedClaudeHasHook(claudeHooks, 'subagentstart-learning'));
+  assert.ok(!packaged.includes('subagentstart-learning'));
+  assert.equal(codexHooks.hooks.SubagentStart, undefined);
   // Every other Claude hook id is carried over.
   const ids = (doc) => Object.entries(doc.hooks).filter(([event]) => event !== 'TaskCompleted')
-    .flatMap(([, groups]) => groups.flatMap((group) => group.hooks.map((h) => (h.args ?? h.command.split(' ')).join(' ').match(/--hook (\S+)/)[1])));
+    .flatMap(([, groups]) => groups.flatMap((group) => group.hooks.map((h) => (h.args ?? h.command.split(' ')).join(' ').match(/--hook (\S+)/)[1])))
+    .filter((id) => id !== 'subagentstart-learning');
   assert.deepEqual(ids(codexHooks).sort(), ids(claudeHooks).sort());
   const targets = [...new Set([...packaged.matchAll(/\$\{CLAUDE_PLUGIN_ROOT\}\/(\S+?)(?= |")/g)].map((m) => m[1]))];
   assert.ok(targets.length > 0);

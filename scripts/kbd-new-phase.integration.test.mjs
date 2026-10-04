@@ -11,6 +11,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash, generateKeyPairSync } from 'node:crypto';
 import { resolveNodeCli, spawnExecutable } from '../lib/platform/spawn.mjs';
+import { isolatedOpenSpecHome } from '../lib/platform/openspec-test-home.mjs';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const scratch = path.join(repo, '.scratch', 'kbd-phase-integration');
@@ -18,6 +19,10 @@ const prometheus = process.env.PROMETHEUS_CLI_TEST_BINARY || 'prometheus';
 // npm ci installs the pinned @fission-ai/openspec here. (The old default pointed two levels above the
 // repo, which only worked on machines with a global openspec on PATH.)
 const openspecBins = process.env.OPENSPEC_TEST_BIN_DIR || path.join(repo, 'node_modules', '.bin');
+// kbd-apply drives the managed OpenSpec runner, whose machine-wide lock other test files (and
+// session hooks) contend for; this file's tests run sequentially and share one private home.
+const openspecHome = isolatedOpenSpecHome();
+test.after(() => openspecHome.dispose());
 const prometheusProbe = spawnExecutable(prometheus, ['--version'], { timeout: 30000 });
 const prometheusAvailable = !prometheusProbe.error && prometheusProbe.status === 0;
 const prometheusRequired = process.env.PROMETHEUS_CLI_REQUIRED === '1';
@@ -97,6 +102,7 @@ function fixture(t, mode) {
     // App-owned scripts resolve their bundled dependencies (the pinned OpenSpec) from here.
     PROMETHEUS_PACK_ROOT: repo,
     OPENSPEC_TELEMETRY: '0', DO_NOT_TRACK: '1',
+    ...openspecHome.env,
   };
   const run = (program, args) => spawnExecutable(program, args, { cwd: root, env, timeout: 60000, maxBuffer: 8 * 1024 * 1024 });
   const cli = (...args) => run(prometheus, ['kbd', '--path', root, ...args]);

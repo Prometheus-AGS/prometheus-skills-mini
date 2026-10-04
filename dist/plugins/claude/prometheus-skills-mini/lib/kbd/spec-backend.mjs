@@ -17,7 +17,7 @@
 // `skList`/`skProgress`/`skMarkDone` are a same-shaped follow-up.
 //
 // Judgment call: every function takes `root` as its first argument and an optional trailing
-// `ctx` for injected `spawn` (defaulting to `spawnExecutable`) and other test seams (`now`,
+// `ctx` for injected `spawn` (defaulting to `spawnOpenSpec`) and other test seams (`now`,
 // `tool`, `dateStamp`), matching this repo's injected-ctx convention (memory.mjs,
 // bottleneck-guard.mjs) instead of reading `process.cwd()`/`process.env`/`Date.now()` directly.
 //
@@ -50,13 +50,27 @@ function readJsonSafe(file) {
 // ---------------------------------------------------------------------------
 
 /**
+ * Whether the managed OpenSpec CLI can actually run (source: `command -v openspec`). The probe
+ * goes through the same runner every OpenSpec call uses, so a disabled, contended or uninstallable
+ * runner is reported here instead of after a backend has been chosen.
+ */
+function openspecAvailable(root, spawn) {
+  try {
+    const result = spawn('openspec', ['--version'], { cwd: root });
+    return !result?.error && result?.status === 0;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Resolve the active spec backend. Mirrors `backend_detect()` exactly: an explicit
  * `project.json.specBackend` pin wins outright; otherwise, when `change` is given, resolution is
  * scoped to that change's own on-disk shape (native-kbd checked first so an unrelated openspec/
  * directory elsewhere in the repo cannot shadow a change that lives under a different backend);
  * otherwise a repo-wide heuristic. Returns `''` when nothing matches, never throws.
  */
-export function detectBackend({ root = '.', change = '', } = {}) {
+export function detectBackend({ root = '.', change = '', spawn = spawnOpenSpec } = {}) {
   const pinnedFile = path.join(root, '.kbd-orchestrator', 'project.json');
   if (existsSync(pinnedFile)) {
     const pinned = readJsonSafe(pinnedFile)?.specBackend;
@@ -70,7 +84,8 @@ export function detectBackend({ root = '.', change = '', } = {}) {
     }
     const osDir = path.join(root, 'openspec', 'changes', change);
     if (
-      (existsSync(path.join(osDir, 'proposal.md')) || existsSync(path.join(osDir, 'tasks.md')))
+      (existsSync(path.join(osDir, 'proposal.md')) || existsSync(path.join(osDir, 'tasks.md'))) &&
+      openspecAvailable(root, spawn)
     ) {
       return 'openspec';
     }
@@ -78,7 +93,7 @@ export function detectBackend({ root = '.', change = '', } = {}) {
     // Falls through to the repo-wide heuristic, matching the source.
   }
 
-  if (existsSync(path.join(root, 'openspec'))) return 'openspec';
+  if (existsSync(path.join(root, 'openspec')) && openspecAvailable(root, spawn)) return 'openspec';
   if (existsSync(path.join(root, '.specify'))) return 'speckit';
   if (hasAnySpecsTasksMd(root)) return 'speckit';
   if (hasAnyNativeChange(root)) return 'native-kbd';

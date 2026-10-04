@@ -131,3 +131,14 @@ test('every hook is registered in exec form, never a shell string', () => {
     assert.doesNotMatch(hook.command, /[\s&|;><]/, `${event}: command contains shell metacharacters`);
   }
 });
+
+test('every hook timeout is in seconds: 1 to 600 (Claude Code and Codex read seconds)', () => {
+  const timeouts = Object.values(manifest().hooks)
+    .flat()
+    .flatMap((group) => group.hooks)
+    .map((hook) => hook.timeout);
+  assert.ok(timeouts.length > 0);
+  for (const timeout of timeouts) {
+    assert.ok(Number.isInteger(timeout) && timeout >= 1 && timeout <= 600, `timeout ${timeout} is not 1-600 seconds`);
+  }
+});

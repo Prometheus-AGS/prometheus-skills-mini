@@ -1,11 +1,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { mkdtempSync, mkdirSync, writeFileSync, cpSync, rmSync } from 'node:fs';
 import { tempDir } from '../lib/platform/paths.mjs';
-import { HOOK_MODULES, dispatch } from './hook-entry.mjs';
+import { HOOK_MODULES, SOCKET_IDLE_MS, dispatch } from './hook-entry.mjs';
 
 const entry = fileURLToPath(new URL('./hook-entry.mjs', import.meta.url));
 const repoDir = fileURLToPath(new URL('..', import.meta.url));
@@ -149,4 +149,121 @@ test('the entry point runs end to end with shell: false and no stdin', () => {
   const result = runEntry(['--hook', 'sessionstart-kbd-control', '--harness', 'claude-code']);
 
   assert.equal(result.status, 0);
+});
+
+// Claude Code hands command hooks a SOCKET on fd 0, not a pipe (probed on
+// Claude Code 2.1.289, macOS: mode 0140444, exec form and shell form alike). A
+// guard that read only FIFOs and files therefore gave every hook `{}` under
+// Claude Code while still exiting 0. These tests spawn the real entry with a
+// socket stdin and prove the payload arrives by its EFFECT: the harness payload
+// names a paused project as `cwd`, the process itself runs somewhere else, and
+// only a hook that actually received the payload prints the pause advisory.
+const withPausedProject = async (fn) => {
+  const dir = mkdtempSync(path.join(tempDir(), 'socket-stdin-'));
+  try {
+    const project = path.join(dir, 'proj');
+    const elsewhere = path.join(dir, 'elsewhere');
+    mkdirSync(path.join(project, '.prometheus'), { recursive: true });
+    writeFileSync(path.join(project, '.prometheus', 'project.json'), JSON.stringify({ projectId: 'p' }));
+    mkdirSync(path.join(project, '.kbd-orchestrator'), { recursive: true });
+    writeFileSync(path.join(project, '.kbd-orchestrator', 'PAUSE'), 'paused\n');
+    mkdirSync(elsewhere);
+    return await fn({ project, elsewhere });
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+};
+
+const hookArgs = ['--hook', 'sessionstart-kbd-control', '--harness', 'claude-code'];
+
+// Spawns the entry with fd 0 as a socket the test controls, and resolves when
+// the process exits. `stdio: 'pipe'` is a socket on every platform this runs on;
+// the precondition test below checks that rather than assuming it.
+const runWithOpenSocket = ({ cwd, write, close }) =>
+  new Promise((resolve, reject) => {
+    const started = Date.now();
+    const child = spawn(process.execPath, [entry, ...hookArgs], {
+      shell: false,
+      cwd,
+      stdio: ['pipe', 'pipe', 'pipe'],
+    });
+    let stderr = '';
+    child.stderr.setEncoding('utf8');
+    child.stderr.on('data', (chunk) => (stderr += chunk));
+    child.stdout.resume();
+    const guard = setTimeout(() => {
+      child.kill('SIGKILL');
+      reject(new Error('hook-entry hung on an open socket stdin'));
+    }, 15000);
+    child.on('error', reject);
+    child.on('exit', (status) => {
+      clearTimeout(guard);
+      child.stdin.destroy();
+      resolve({ status, stderr, elapsed: Date.now() - started });
+    });
+    if (write !== undefined) child.stdin.write(write);
+    if (close) child.stdin.end();
+  });
+
+test('precondition: spawnSync input reaches the child as a socket, as Claude Code delivers it', () => {
+  const result = spawnSync(
+    process.execPath,
+    ['-e', "process.stdout.write(String(require('node:fs').fstatSync(0).isSocket()))"],
+    { shell: false, encoding: 'utf8', input: '{}' },
+  );
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, 'true', 'the socket tests below would prove nothing without a socket');
+});
+
+test('a payload on a socket stdin that the harness closes reaches the hook', async () => {
+  await withPausedProject(({ project, elsewhere }) => {
+    const result = spawnSync(process.execPath, [entry, ...hookArgs], {
+      shell: false,
+      encoding: 'utf8',
+      cwd: elsewhere,
+      input: JSON.stringify({ session_id: 's', cwd: project }),
+    });
+
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stderr, /KBD REANCHOR/, 'the hook ran without the harness payload');
+  });
+});
+
+test('a payload on a socket stdin that is never closed still reaches the hook, without hanging', async () => {
+  await withPausedProject(async ({ project, elsewhere }) => {
+    const result = await runWithOpenSocket({
+      cwd: elsewhere,
+      write: JSON.stringify({ session_id: 's', cwd: project }),
+      close: false,
+    });
+
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stderr, /KBD REANCHOR/);
+  });
+});
+
+// The case the original guard existed for: `node --test` gives a socket that
+// is never written and never closed. It must cost one idle gap, not a hang.
+test('a socket stdin that is never written or closed yields empty input and exits promptly', async () => {
+  await withPausedProject(async ({ elsewhere }) => {
+    const result = await runWithOpenSocket({ cwd: elsewhere, close: false });
+
+    assert.equal(result.status, 0, result.stderr);
+    assert.doesNotMatch(result.stderr, /KBD REANCHOR/);
+    assert.ok(
+      result.elapsed < SOCKET_IDLE_MS + 5000,
+      `exited after ${result.elapsed} ms; the idle bound is ${SOCKET_IDLE_MS} ms`,
+    );
+  });
+});
+
+test('an in-process dispatch with no stdin option does not hang on the test runner socket', async () => {
+  const seen = [];
+  const modules = { 'probe-hook': async () => ({ run: async (payload) => seen.push(payload) }) };
+
+  const code = await dispatch(['--hook', 'probe-hook'], { modules });
+
+  assert.equal(code, 0);
+  assert.equal(seen.length, 1);
 });

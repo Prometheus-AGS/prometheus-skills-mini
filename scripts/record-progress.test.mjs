@@ -68,10 +68,11 @@ const runCli = (root, args, { input, env = {} } = {}) =>
   });
 
 // `spawnSync({ input })` connects the child's fd 0 to an internal socket, not
-// a FIFO or a regular file — `fstatSync(0).isSocket()` is true. That is a real
-// difference from how the harness actually invokes this CLI (a real pipe), and
-// this project's own scripts/hook-entry.mjs guards fd 0 the same strict way
-// (isFIFO || isFile only). So these end-to-end tests use `--input <file>`,
+// a FIFO or a regular file — `fstatSync(0).isSocket()` is true. That differs
+// from how a skill invokes this CLI (a shell pipe, which is a FIFO), and this
+// CLI reads fd 0 only when it is a FIFO or a file. (scripts/hook-entry.mjs no
+// longer does: Claude Code hands hooks a socket, so it reads sockets with a
+// bounded read.) So these end-to-end tests use `--input <file>`,
 // the equally-documented, equally-real alternative to `-`, which sidesteps
 // the fd-0-plumbing difference entirely rather than papering over it.
 const withInputFile = (root, event, run) => {

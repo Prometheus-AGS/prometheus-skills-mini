@@ -38,17 +38,67 @@ const valueAfter = (args, flag) => {
 // The harness delivers JSON on stdin; the orchestrator path delivers nothing.
 // Both are normal, so neither may throw and neither may hang.
 //
-// `readFileSync(0)` blocks until EOF, so it is safe only when fd 0 is a pipe or a
-// regular file that the caller will close. On a terminal — or on any fd that
-// stays open — it waits forever. That is not hypothetical: it hung this
-// project's own in-process dispatch test, which spawns nothing and so inherits
-// the test runner's stdin. Only a pipe or a file is read; anything else yields
-// no input, which parseInput already treats as the ordinary empty case.
-const readStdin = () => {
+// What fd 0 is depends on who started the hook, and it was probed rather than
+// assumed (macOS, 2026-10-04, a hook recording `fstatSync(0)`):
+//
+//  - Claude Code 2.1.289 hands every command hook a SOCKET (mode 0140444), in
+//    exec form and shell form alike, writes the payload and closes it.
+//  - codex-cli 0.158.0 hands its hooks a FIFO.
+//  - `spawnSync(..., { input })` from Node is a socket too.
+//  - `node --test` gives each test file a socket that is never closed.
+//
+// An earlier guard read only FIFOs and regular files, which kept the last case
+// from hanging and silently dropped the first: every hook ran under Claude Code
+// with `{}` as its input. So a FIFO or a file is still read to EOF, and a socket
+// is read until EOF, an idle gap, or a byte cap, whichever comes first — the
+// harness closes it at once, and one that never closes costs one idle gap, not
+// the hook's timeout. A terminal, or anything else, yields no input, which
+// parseInput already treats as the ordinary empty case.
+export const SOCKET_IDLE_MS = 500;
+export const SOCKET_MAX_BYTES = 16 * 1024 * 1024;
+
+const readSocket = (stream, { idleMs, maxBytes }) =>
+  new Promise((resolve) => {
+    const chunks = [];
+    let size = 0;
+    let timer;
+    const finish = () => {
+      clearTimeout(timer);
+      stream.off('data', onData);
+      stream.off('end', finish);
+      stream.off('error', finish);
+      // Stop reading and drop the handle's hold on the event loop, so a socket
+      // that is never closed cannot keep the process alive. Not destroy(): that
+      // closes fd 0, and a later open() in the same process could reuse it.
+      stream.pause();
+      stream.unref?.();
+      resolve(Buffer.concat(chunks, size).toString('utf8'));
+    };
+    const arm = () => {
+      clearTimeout(timer);
+      timer = setTimeout(finish, idleMs);
+    };
+    function onData(chunk) {
+      chunks.push(chunk);
+      size += chunk.length;
+      if (size >= maxBytes) finish();
+      else arm();
+    }
+    stream.on('data', onData);
+    stream.once('end', finish);
+    stream.once('error', finish);
+    arm();
+  });
+
+const readStdin = async ({
+  idleMs = SOCKET_IDLE_MS,
+  maxBytes = SOCKET_MAX_BYTES,
+} = {}) => {
   try {
     const stat = fstatSync(0);
-    if (!stat.isFIFO() && !stat.isFile()) return '';
-    return readFileSync(0, 'utf8');
+    if (stat.isFIFO() || stat.isFile()) return readFileSync(0, 'utf8');
+    if (stat.isSocket()) return await readSocket(process.stdin, { idleMs, maxBytes });
+    return '';
   } catch {
     return '';
   }
@@ -85,7 +135,7 @@ export async function dispatch(args, options = {}) {
   const payload = {
     hookId,
     harness: valueAfter(args, '--harness') ?? 'unknown',
-    input: parseInput(options.stdin ?? readStdin()),
+    input: parseInput(options.stdin ?? (await readStdin())),
   };
 
   try {

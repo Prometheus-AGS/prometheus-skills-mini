@@ -15,7 +15,7 @@ import { eventIdentitySha256, eventSha256 } from './hash.mjs';
 import { appendSessionLog, markdownRecord } from './session-log.mjs';
 import { readReceipt, receiptPath, writeReceipt } from './receipt.mjs';
 import { resolveIdentity, resolveProject } from '../learning/identity.mjs';
-import { buildEnvelope } from '../learning/envelope.mjs';
+import { buildEnvelope, storedContent } from '../learning/envelope.mjs';
 
 /** The only statuses `recordBoundary` can return. `queued` is read from a receipt, never emitted here. */
 export const REACHABLE_STATUSES = Object.freeze(new Set(['recorded', 'duplicate', 'degraded']));
@@ -38,8 +38,6 @@ const receiptLockPath = (root, eventId) => {
 
 const statusFor = (memory) => (memory.status === 'accepted' ? 'recorded' : memory.status);
 
-export const ENVELOPE_MARKER = 'prometheus-learning-envelope';
-
 /**
  * The learning envelope (design §2) for one progress record. The author is
  * resolved from the project root and the record's touched files, so a record
@@ -54,12 +52,10 @@ export function progressEnvelope({ root, event, record, env = process.env, runti
 }
 
 /**
- * The record as delivered: the session-log markdown plus the envelope as a
- * trailing HTML comment. `>` is written as its JSON escape, so no field value
- * (a file name, an agent type) can close the comment early.
+ * The record as delivered: the canonical stored form (text, blank line,
+ * `<!-- prometheus-envelope {json} -->`) that every writer shares.
  */
-export const withEnvelope = (record, envelope) =>
-  `${record}<!-- ${ENVELOPE_MARKER} ${JSON.stringify(envelope).replaceAll('>', '\\u003e')} -->\n`;
+export const withEnvelope = (record, envelope) => storedContent(record, envelope);
 
 function deliverAndWriteReceipt({ root, event, elapsedHoursToken, sessionLogAppended, canonicalState, deliver, env, runtimeProjectId }) {
   const record = markdownRecord(event, { elapsedHoursToken });

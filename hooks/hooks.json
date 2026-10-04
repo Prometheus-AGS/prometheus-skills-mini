@@ -58,6 +58,26 @@
         ]
       }
     ],
+    "SubagentStart": [
+      {
+        "matcher": "*",
+        "description": "Deliver the subagent's team-role file-tier lessons",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs",
+              "--hook",
+              "subagentstart-learning",
+              "--harness",
+              "claude-code"
+            ],
+            "timeout": 5
+          }
+        ]
+      }
+    ],
     "SubagentStop": [
       {
         "matcher": "*",

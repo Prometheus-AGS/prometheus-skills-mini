@@ -9,6 +9,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { tempDir } from '../lib/platform/paths.mjs';
+import { cadenceRuntimeFiles, LIFECYCLE_ENTRIES } from '../lib/distribution/package-builder.mjs';
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SCRIPT_RELATIVE = path.join('scripts', 'generate-skill-system-distribution.mjs');
@@ -16,6 +17,10 @@ const SCRIPT_RELATIVE = path.join('scripts', 'generate-skill-system-distribution
 function buildFixtureRepo(dir) {
   cpSync(path.join(REPO_ROOT, 'lib'), path.join(dir, 'lib'), { recursive: true });
   cpSync(path.join(REPO_ROOT, 'scripts', 'generate-skill-system-distribution.mjs'), path.join(dir, SCRIPT_RELATIVE));
+  // The real lifecycle entry points and their module closure, which every package must ship.
+  for (const relative of cadenceRuntimeFiles(REPO_ROOT, LIFECYCLE_ENTRIES)) {
+    cpSync(path.join(REPO_ROOT, ...relative.split('/')), path.join(dir, ...relative.split('/')));
+  }
   mkdirSync(path.join(dir, 'skills', 'sample-skill'), { recursive: true });
   writeFileSync(
     path.join(dir, 'skills', 'sample-skill', 'SKILL.md'),

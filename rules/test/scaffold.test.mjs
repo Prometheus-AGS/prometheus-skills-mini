@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
+import { MINIMUM_VERSION } from '../../lib/platform/openspec/state.mjs';
 
 const readJson = (path) => JSON.parse(readFileSync(path, 'utf8'));
 
@@ -36,7 +37,9 @@ test('the OpenSpec CLI is pinned to an exact version and is the only dependency'
 
   const devDeps = manifest.devDependencies;
 
-  assert.equal(devDeps['@fission-ai/openspec'], '1.10.0');
+  assert.equal(devDeps['@fission-ai/openspec'], '1.14.0');
+  // The project pin is the managed runner's audited baseline (lib/platform/openspec/README.md).
+  assert.equal(devDeps['@fission-ai/openspec'], MINIMUM_VERSION);
   assert.deepEqual(Object.keys(devDeps), ['@fission-ai/openspec']);
   assert.deepEqual(manifest.dependencies ?? {}, {});
 });
@@ -47,7 +50,7 @@ test('the pinned OpenSpec CLI runs from its JavaScript entry without a global in
 
   const version = execFileSync(process.execPath, [entry, '--version'], { encoding: 'utf8' });
 
-  assert.equal(version.trim(), '1.10.0');
+  assert.equal(version.trim(), '1.14.0');
 });
 
 test('package.json lists no test runner or assertion library', () => {

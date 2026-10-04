@@ -4,15 +4,26 @@ import { cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { tempDir } from '../../lib/platform/paths.mjs';
+import { isolatedOpenSpecHome } from '../../lib/platform/openspec-test-home.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
-const run = (cwd) =>
-  spawnSync(process.execPath, ['scripts/spec-validate.mjs'], { cwd, encoding: 'utf8', shell: false });
+// Each run gets its own managed OpenSpec home: the shared one is locked machine-wide, and the
+// other test files that drive OpenSpec run in parallel with this one.
+const run = (cwd) => {
+  const openspecHome = isolatedOpenSpecHome();
+  try {
+    return spawnSync(process.execPath, ['scripts/spec-validate.mjs'], {
+      cwd, encoding: 'utf8', shell: false, env: { ...process.env, ...openspecHome.env },
+    });
+  } finally {
+    openspecHome.dispose();
+  }
+};
 
 test('validation passes on this repository and reports the totals', () => {
   const result = run(ROOT);
 
-  assert.equal(result.status, 0);
+  assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /Totals: \d+ passed, 0 failed/);
 });
 

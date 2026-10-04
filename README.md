@@ -728,5 +728,5 @@ Use `openspec list` and phase evidence for current status. Each line was one `/o
 Node's atomic-write, locking, CRLF handling and shell-free CLI spawning work on Windows; that the
 repository survives a `core.autocrlf=true` checkout; and that Node 22 and 24 both work. Node 26 —
 what this machine runs — is still untested and unclaimed.
-- **Harness hook support on Windows.** Exec-form hooks with `${CLAUDE_PLUGIN_ROOT}` are taken from the source pack's Claude Code configuration; equivalent behaviour in Codex, Cursor, and OpenCode on Windows needs checking per harness.
+- **Harness hook support on Windows.** Exec-form hooks with `${CLAUDE_PLUGIN_ROOT}` are taken from the source pack's Claude Code configuration; equivalent behaviour in Codex, Cursor, and OpenCode on Windows needs checking per harness. Codex ignores `args`, so its package ships the same hooks as single command strings (`hooks/hooks.json`, generated; see `site/docs/distribution/plugin-marketplace.md`); firing is verified on macOS only, not on Windows.
 - **`ideation-mindmap`** was deferred in the original analysis and has since been ported; see the current documentation site.

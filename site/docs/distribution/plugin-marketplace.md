@@ -17,6 +17,7 @@ tree (97 distributed skill directories) — copy-mode throughout, never symlink.
 | `frontmatter.mjs` | Reads the `name` and `description` scalars out of a `SKILL.md`'s YAML frontmatter without a YAML dependency — the mini has none, and adding one for two scalar fields would be more surface than the problem needs. Handles a plain inline scalar and a folded block scalar (`>`), which is the only block style actually used across this repo's `SKILL.md` files (confirmed by sampling every frontmatter block before writing the module). Literal style (`\|`) is not implemented and fails loudly rather than silently mis-joining. |
 | `canonical-bytes.mjs` | The bytes git stores for a file, independent of how the host checked it out — see [Installation](/docs/getting-started/installation) for why this matters on a Windows `core.autocrlf=true` checkout. |
 | `manifest.mjs` | Builds the Claude and Codex `plugin.json` content, matching the exact schemas captured from the full pack's own generated plugin packages. Claude's manifest carries no `hooks` field (Claude Code auto-discovers a sibling `hooks/hooks.json`) and no `agents` field. Codex's manifest adds an `interface` block (capabilities, category, `defaultPrompt`, `developerName`, `displayName`, `longDescription`, `shortDescription`, `websiteURL`) and explicitly omits `hooks` — Codex rejects a manifest that has one. |
+| `codex-hooks.mjs` | Renders the Codex `hooks/hooks.json` from the same source as Claude's (`hooks/hooks.json`) — see [Codex hooks](#codex-hooks). |
 | `marketplace.mjs` | Builds `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json`. This pack lists exactly one plugin — itself — unlike the full pack's ten sibling plugin trees. Codex's copy additionally carries a `policy: {installation, authentication}` block, matching the full pack's own Codex marketplace. |
 | `package-builder.mjs` | Materializes the Claude and Codex plugin packages plus both marketplace files from `skill-system.json`, building into a temp directory first and atomically swapping it into the real output path — see [Installation](/docs/getting-started/installation). |
 
@@ -33,6 +34,47 @@ node scripts/generate-commands.mjs                             # writes Claude C
 typeable as a Claude Code slash command — independent of, and in addition to, the plugin/
 marketplace listing. It writes one command file per skill under `~/.claude/commands/` (overridable
 via `--output`), each pointing at an absolute path to that skill's `SKILL.md`.
+
+## Codex hooks
+
+The Codex package ships `hooks/hooks.json`, generated from the Claude hook source by
+`codex-hooks.mjs`. Codex discovers a plugin's `hooks/hooks.json` by convention, so the Codex
+`plugin.json` still carries **no `hooks` key** (Codex rejects a manifest that has one). Until this
+was added the Codex package shipped no hooks and none of them ever fired for Codex users.
+
+Three Codex behaviours shape the generated file (verified on codex-cli 0.158.0, and recorded by the
+full pack in its commit `abf0ade`):
+
+- **Codex ignores `args`.** Each hook is a single `command` string:
+  `node ${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs --hook <id> --harness codex`. The generator
+  refuses any token that is not fixed and whitespace-free, so no user input, quoting or shell
+  metacharacter can reach it. Claude keeps exec form (`command` + `args`).
+- **`timeout` is milliseconds in Codex, seconds in Claude Code.** The Claude value is multiplied by
+  1000 with a 5000 ms floor (starting `hook-entry.mjs` alone takes about a second).
+- **Hook stdout opening with `{` is parsed as a structured response.** Mini's hooks report on stderr
+  only, so none is affected.
+
+| Hook | Codex |
+|---|---|
+| `sessionstart-kbd-control`, `sessionstart-detect-project-context` (SessionStart) | shipped |
+| `posttool-write-position-reminder` (PostToolUse, `Write\|Edit`) | shipped |
+| `subagent-fallback-checkpoint` (SubagentStop) | shipped |
+| `precompact-kbd-control` (PreCompact) | shipped |
+| `taskcompleted-kbd-receipt` (TaskCompleted) | **omitted** — TaskCompleted is a Claude Code event with no Codex equivalent, so the entry could never fire (the full pack filters the same hook out) |
+
+The same `${CLAUDE_PLUGIN_ROOT}` targets ship in both packages; `skill-system-distribution.test.mjs`
+checks that every file the Codex `hooks.json` references is present with matching bytes.
+
+Codex runs plugin hooks only in a trusted project with `[features] hooks = true`, after a one-time
+trust prompt. To check firing without touching your real Codex home, use a scratch `CODEX_HOME`
+and `HOME`, then:
+
+```bash
+codex plugin marketplace add <repo>
+codex plugin add prometheus-skills-mini@prometheus-skills-mini
+codex exec --skip-git-repo-check --dangerously-bypass-hook-trust "echo hi" </dev/null
+# stderr shows two `hook: SessionStart Completed` lines
+```
 
 ## Copy-mode vs symlink-mode
 

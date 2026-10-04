@@ -1,0 +1,67 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "description": "Refresh the position reminder after a write",
+        "hooks": [
+          {
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs --hook posttool-write-position-reminder --harness codex",
+            "timeout": 10000,
+            "type": "command"
+          }
+        ],
+        "matcher": "Write|Edit"
+      }
+    ],
+    "PreCompact": [
+      {
+        "description": "Preserve KBD position across a compaction",
+        "hooks": [
+          {
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs --hook precompact-kbd-control --harness codex",
+            "timeout": 5000,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "SessionStart": [
+      {
+        "description": "Bounded canonical KBD session adapter",
+        "hooks": [
+          {
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs --hook sessionstart-kbd-control --harness codex",
+            "timeout": 5000,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      },
+      {
+        "description": "Detect project context at session start",
+        "hooks": [
+          {
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs --hook sessionstart-detect-project-context --harness codex",
+            "timeout": 15000,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "SubagentStop": [
+      {
+        "description": "Backstop checkpoint when no specific subagent checkpoint matched",
+        "hooks": [
+          {
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs --hook subagent-fallback-checkpoint --harness codex",
+            "timeout": 10000,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ]
+  }
+}

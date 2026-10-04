@@ -12,9 +12,9 @@ minimum = ">=22"          # must equal package.json engines.node, exactly
 [submodules]
 # "<path under the repository root>" = "<full or short commit sha>"
 # Each path must be a gitlink in HEAD at exactly this commit.
-"tools/prometheus-knowledge"    = "1bbaecc61391257e4bb69d67d5c3716aa8dece4d"   # prometheus-knowledge v1.9.0
+"tools/prometheus-knowledge"    = "4b3a6744a4211512ff88a1cb96cf1e2a7db4c3ef"   # prometheus-knowledge v1.11.0
 "tools/liter-llm"               = "12a2fae9675e34b88e9373caa2bca9959f416493"   # matches the gitlink (realtime pump call-site types)
-"tools/surreal-memory-server"   = "777cf7249d46ecfb9da2d38aefb1508d3b0311e7"    # surreal-memory-server v1.9.0 (surrealdb =3.3.0, matching the image below)
+"tools/surreal-memory-server"   = "0af8ae1f3c7486bf7128beff8ef83aaf1a832ea6"    # surreal-memory-server v1.10.0 (surrealdb =3.3.0, matching the image below)
 
 [images]
 # The one SurrealDB container is shared by surreal-memory, compass and UAR. The release must keep

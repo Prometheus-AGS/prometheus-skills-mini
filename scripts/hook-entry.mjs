@@ -27,6 +27,7 @@ export const HOOK_MODULES = {
   'subagent-fallback-checkpoint': () => import('../lib/hooks/subagent-fallback-checkpoint.mjs'),
   'taskcompleted-kbd-receipt': () => import('../lib/hooks/taskcompleted-kbd-receipt.mjs'),
   'precompact-kbd-control': () => import('../lib/hooks/precompact-kbd-control.mjs'),
+  'subagentstart-learning': () => import('../lib/hooks/subagentstart-learning.mjs'),
 };
 
 const valueAfter = (args, flag) => {

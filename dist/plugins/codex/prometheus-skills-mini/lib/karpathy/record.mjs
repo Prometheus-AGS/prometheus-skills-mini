@@ -14,6 +14,8 @@ import { acquireLock } from '../platform/lock.mjs';
 import { eventIdentitySha256, eventSha256 } from './hash.mjs';
 import { appendSessionLog, markdownRecord } from './session-log.mjs';
 import { readReceipt, receiptPath, writeReceipt } from './receipt.mjs';
+import { resolveIdentity, resolveProject } from '../learning/identity.mjs';
+import { buildEnvelope, storedContent } from '../learning/envelope.mjs';
 
 /** The only statuses `recordBoundary` can return. `queued` is read from a receipt, never emitted here. */
 export const REACHABLE_STATUSES = Object.freeze(new Set(['recorded', 'duplicate', 'degraded']));
@@ -36,8 +38,29 @@ const receiptLockPath = (root, eventId) => {
 
 const statusFor = (memory) => (memory.status === 'accepted' ? 'recorded' : memory.status);
 
-function deliverAndWriteReceipt({ root, event, elapsedHoursToken, sessionLogAppended, canonicalState, deliver, env }) {
-  const memory = deliver({ eventId: event.eventId, record: markdownRecord(event, { elapsedHoursToken }) });
+/**
+ * The learning envelope (design §2) for one progress record. The author is
+ * resolved from the project root and the record's touched files, so a record
+ * whose files a team role owns is attributed to that role (visibility `agent`);
+ * otherwise it is project-scoped. `ts` is the event's own observedAt, so a
+ * retried delivery carries the same envelope as the first attempt.
+ */
+export function progressEnvelope({ root, event, record, env = process.env, runtimeProjectId }) {
+  const paths = Array.isArray(event.touchedFiles) ? event.touchedFiles : [];
+  const identity = resolveIdentity({}, root, paths, { env, runtimeProjectId });
+  return buildEnvelope({ identity, kind: 'progress', text: record, paths, ts: event.observedAt });
+}
+
+/**
+ * The record as delivered: the canonical stored form (text, blank line,
+ * `<!-- prometheus-envelope {json} -->`) that every writer shares.
+ */
+export const withEnvelope = (record, envelope) => storedContent(record, envelope);
+
+function deliverAndWriteReceipt({ root, event, elapsedHoursToken, sessionLogAppended, canonicalState, deliver, env, runtimeProjectId }) {
+  const record = markdownRecord(event, { elapsedHoursToken });
+  const envelope = progressEnvelope({ root, event, record, env, runtimeProjectId });
+  const memory = deliver({ eventId: event.eventId, record: withEnvelope(record, envelope), envelope });
   if (env.KPM_TEST_CRASH_AFTER_PK === '1') {
     // The receipt reflecting this delivery is written BEFORE the seam fires, exactly as
     // it would be in the moment right before a real crash — that is the state the
@@ -82,6 +105,7 @@ export function recordBoundary({ root, event, elapsedHoursToken, state, fromHook
           canonicalState: prior.canonicalState,
           deliver,
           env,
+          runtimeProjectId: state?.projectId,
         });
         return {
           status: statusFor(memory),
@@ -120,6 +144,7 @@ export function recordBoundary({ root, event, elapsedHoursToken, state, fromHook
       canonicalState: state.source,
       deliver,
       env,
+      runtimeProjectId: state.projectId,
     });
     return { status: statusFor(memory), eventId: event.eventId, sessionLogAppended: appended, memory, receipt };
   } finally {
@@ -147,6 +172,9 @@ export function flushDegraded({ root, deliver, limit = 25 }) {
     : [];
 
   const visited = ids.slice(0, limit);
+  // Resolved once per flush, not once per receipt: level 3 may spawn the
+  // runtime CLI (up to 2 s), and every receipt here belongs to this one root.
+  const runtimeProjectId = visited.length ? resolveProject(root).projectId : undefined;
   let delivered = 0;
   let stillDegraded = 0;
   for (const { eventId, receipt } of visited) {
@@ -161,6 +189,7 @@ export function flushDegraded({ root, deliver, limit = 25 }) {
         canonicalState: receipt.canonicalState,
         deliver,
         env: process.env,
+        runtimeProjectId,
       });
       if (complete) delivered += 1;
       else stillDegraded += 1;

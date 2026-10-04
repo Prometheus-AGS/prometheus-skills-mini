@@ -90,6 +90,40 @@ test('every file the packaged Claude hooks.json tells the harness to run ships w
   }
 });
 
+test('the Codex package ships hooks/hooks.json: one command string per hook, no args, every target shipped', () => {
+  const codexPackageRoot = path.join(root, contract.outputs.codexPackage);
+  const claudeHooks = JSON.parse(fs.readFileSync(path.join(root, 'hooks/hooks.json'), 'utf8'));
+  const packaged = fs.readFileSync(path.join(codexPackageRoot, 'hooks/hooks.json'), 'utf8');
+  const codexHooks = JSON.parse(packaged);
+  const commands = Object.values(codexHooks.hooks).flatMap((groups) => groups.flatMap((group) => group.hooks));
+  assert.ok(commands.length > 0, 'codex hooks.json declares no hooks');
+  for (const hook of commands) {
+    assert.equal(hook.type, 'command');
+    assert.equal(hook.args, undefined, 'Codex ignores args; the whole invocation must be in command');
+    assert.match(hook.command, /^node \$\{CLAUDE_PLUGIN_ROOT\}\/scripts\/hook-entry\.mjs --hook [a-z-]+ --harness codex$/);
+    assert.ok(hook.timeout >= 5000, `timeout ${hook.timeout} is read as milliseconds by Codex`);
+  }
+  assert.ok(!packaged.includes('claude-code'), 'a Codex hook must not name the claude-code harness');
+  // A Claude-only event has no Codex equivalent and must not be emitted.
+  assert.ok(Object.keys(claudeHooks.hooks).includes('TaskCompleted'));
+  assert.equal(codexHooks.hooks.TaskCompleted, undefined);
+  // Every other Claude hook id is carried over.
+  const ids = (doc) => Object.entries(doc.hooks).filter(([event]) => event !== 'TaskCompleted')
+    .flatMap(([, groups]) => groups.flatMap((group) => group.hooks.map((h) => (h.args ?? h.command.split(' ')).join(' ').match(/--hook (\S+)/)[1])));
+  assert.deepEqual(ids(codexHooks).sort(), ids(claudeHooks).sort());
+  const targets = [...new Set([...packaged.matchAll(/\$\{CLAUDE_PLUGIN_ROOT\}\/(\S+?)(?= |")/g)].map((m) => m[1]))];
+  assert.ok(targets.length > 0);
+  for (const target of targets) {
+    const shipped = path.join(codexPackageRoot, ...target.split('/'));
+    assert.ok(fs.existsSync(shipped), `codex hooks.json references ${target}, which is missing from the codex payload`);
+    assert.deepEqual(fs.readFileSync(shipped), canonicalBytes(path.join(root, ...target.split('/'))), `${target} differs from source`);
+  }
+  // hook-entry dispatches to lib/hooks/*.mjs through a static map; those must ship too.
+  for (const hook of ['sessionstart-kbd-control', 'posttool-write-position-reminder', 'precompact-kbd-control']) {
+    assert.ok(fs.existsSync(path.join(codexPackageRoot, 'lib/hooks', `${hook}.mjs`)), `${hook} payload missing`);
+  }
+});
+
 test('the Codex plugin.json matches the required field contract', () => {
   const codexManifestPath = path.join(root, contract.outputs.codexPackage, '.codex-plugin/plugin.json');
   const codexManifest = JSON.parse(fs.readFileSync(codexManifestPath, 'utf8'));

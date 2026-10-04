@@ -21,6 +21,12 @@ only at the final phase boundary where they prove the completed set.
 
 - **Hooks use exec form**: `"command": "node", "args": [...]`. Never a shell string — it goes to `sh -c` on
   POSIX and to PowerShell on Windows, and means something different in each.
+  **Codex is the one exception.** codex-cli ignores `args`, so an exec-form entry never runs. The
+  generator (`lib/distribution/codex-hooks.mjs`) therefore renders the Codex `hooks/hooks.json` from
+  the same source as one `command` string (`node ${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs --hook <id>
+  --harness codex`). Such a string holds only fixed, whitespace-free tokens: no user input, no quoting, no
+  shell metacharacters, so the shell difference above cannot matter. Codex also reads `timeout` as
+  milliseconds (Claude: seconds). Never hand-write a Codex hook; edit `hooks/hooks.json` and regenerate.
 - **Processes**: `spawn` / `spawnSync` with `shell: false` and an args array. Never build a command
   string. npm installs CLIs as `<name>.cmd` on Windows, and Node **cannot run a `.cmd` or `.bat` without a
   shell at all** (documented; `EINVAL` since the 2024 security releases) — resolving the shim's path does

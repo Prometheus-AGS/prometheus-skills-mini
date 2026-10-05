@@ -77,6 +77,24 @@ codex exec --skip-git-repo-check --dangerously-bypass-hook-trust "echo hi" </dev
 # stderr shows two `hook: SessionStart Completed` lines
 ```
 
+## Hook activation and plugin source failures
+
+Two different failures end with every hook of the plugin broken, and neither is visible from inside a hook.
+
+- **A payload that does not activate.** A hook module that imports a file the payload does not ship fails in
+  Node's loader. `scripts/payload-activation.test.mjs` copies each built payload (Claude and Codex) to a temp
+  directory with an empty `HOME` and runs every hook its `hooks.json` declares. It reads stderr, not the exit
+  status, because `hook-entry.mjs` exits 0 on a degraded hook by design. Since 1.11.2 a missing file *inside the
+  plugin root* is the one load failure that is loud: one `HOOK_RUNTIME_ERROR` line with code
+  `PAYLOAD_INCOMPLETE`, the missing path and the remedy, and exit 1. A missing optional package or a throwing
+  hook stays a quiet degradation (exit 0).
+- **A removed plugin directory.** A marketplace registered as a `directory` is read in place. If it is a worktree
+  on a feature branch, merging and removing the branch deletes the plugin directory, and the harness refuses every
+  hook before any of them runs. `node scripts/doctor.mjs` reports it as `mini-plugin-source`: **fail** when the
+  registered source is missing, **warn** on a topic branch, not a git checkout, an unreadable registry or an
+  unexaminable path. After fixing the registration, reload plugins or restart the session: a running session keeps
+  the path it loaded. Only the Claude Code registration is inspected; Codex registrations are not.
+
 ## Copy-mode vs symlink-mode
 
 The full pack symlinks 11 of its 13 install targets. This pack's own constitution forbids symlinks

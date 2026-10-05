@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "source": "prometheus-skill-pack/skills/process/delivery-cadence",
-  "sourceRevision": "5b81623efb772493d9654d6a480c05abdc0eda68",
-  "payloadDigest": "55d8901ff1a611d51725e7d73d00b6aa031ae022b238df0376349eccfb93ed51",
+  "sourceRevision": "ce0984f0db9329a57bda73035e4a00565cce544e",
+  "payloadDigest": "363a6e90f3215ac98877aa641844009af16cafec34161d500b166e104528f1f4",
   "files": {
-    "SKILL.md": "f3da2635b05982a0186d954c8ad25ef0738d94e6752ca705b77abb3105849e88",
+    "SKILL.md": "df0d870490c9957ead9b1a39685caaae742f80f5e6ba798cac77086a45af93b4",
     "assets/boss-provider-setup.mjs": "fb9d16c97ac9ea2798a110ac1d0fd7f10ee444ed6bdd5a5c5f97755d676ac9e8",
     "assets/hooks/email-api.mjs": "c4041e45942e11b8c620477671336a134b6d692f34eca5a8e6b8fe3f3c026733",
     "assets/hooks/local-summary.mjs": "982979f0f577e73dcc795ec422d76a09283489e5685c7ef854265919a6b05ff7",
@@ -12,13 +12,14 @@
     "examples/README.md": "97b553749e2a5bcea97360054489abb47a9ebe890bf2638ad2997e3cbdbce20b",
     "examples/boss-consumer-capabilities.json": "014bcc583fbd96dbbb0e2f62faccc2501d2d1b95f3bcfe4116f83b2767bf276f",
     "examples/operation-admission.json": "45713d6f2534bc2c831234a754958bf7c27436672c2cc6f209a757ae63c0ef8c",
+    "examples/refresh-skill-pack-shim.sh": "3ee5446238777d04f8b9ece7c48d53d75c111a272cdafb9da2626ca23cfbde36",
     "references/adapters.md": "0407a04cc2b73004c5f4082aaea24b106b59ba1f32ad8180f39e3d3c6c561a88",
     "references/boss-profile.md": "053490d87bb2777ca52fbdb16e797d3dc4acef0d32fe967bd0681ae07d9377f1",
     "references/child-recovery.md": "07df9c6b24c63c8d92c0e33cd7aaf6b71f69f9b0ed84f29c25003da7a831e737",
     "references/hooks.md": "cba791dd450af9c4548d925d289e5237a577b74b40a46a146199ac4dba38f9d9",
     "references/measurement.md": "5f9423d0dde7684f922262d9e1c61a6b69b6397e073bca1f1b5ee045fc5772e2",
     "references/pipeline-contract.md": "0fb64a7049ec74d93e58a62535decc83cfddf7f1e10d40e0264c0d8df5eefae1",
-    "references/profile.md": "f1d716059ffa2590d140800e9acdc832ab9c44426be2fe21737ea2a53f2541f9",
+    "references/profile.md": "0b1087c841ee356cae7787d1df5fbc052d73336c5a783e34a21fd6c819c8dc4f",
     "references/source-reconciliation.md": "844d82fb32288c025285411cf6fb41ca83c7a5dddd9791003ca67518375e83ed",
     "schemas/event.schema.json": "88330f7e1454c96a3f42b420aa0ee83badd5ca120d09327de67d73fb3cc2fb76",
     "schemas/pipeline-v3.schema.json": "17b04b234541a20842813425be110f0ef0452b7642a9235b8b11bd87e241e49c",
@@ -55,6 +56,7 @@
     "scripts/lib/work-ahead-repair.mjs": "221f6ef699d143e74400321cde92969de359c6fef9c321404801a89bb7d4b724",
     "scripts/lib/work-ahead.mjs": "274e6be3416c67c25d7fb4d459970f5e02e2f04e39d19d7426fb93053cba7ede",
     "scripts/publication-receipt.mjs": "e7bb2fac01e9fde7b9067267e185d405dbfbdb3722b0f7ff8713ede564d86ed8",
+    "scripts/refresh-skill-pack.sh": "ab9ef1292e78882693b94929ffc1874f93f2b58605ff260a84b5ba256208f755",
     "scripts/sync-mini.mjs": "91d1613eaf3ba4a9756a9bb65be1ca92b3e8efa49d1a6a38c18c564c97c5732e"
   },
   "note": "Payload digest identifies working source bytes independently of source HEAD."

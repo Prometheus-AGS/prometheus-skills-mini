@@ -12,6 +12,7 @@
 // manifest catches that, and only a static map lets the check see the ids.
 import { readFileSync, fstatSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 
 // Keys are the `--hook` argument, NEVER the matcher-level `id`. `id` is a
 // property of the matcher, and a matcher holds 1-6 hooks, so it cannot address
@@ -115,6 +116,23 @@ const parseInput = (raw) => {
   }
 };
 
+// A hook module that cannot be LOADED is not a degraded service: it is a plugin install that is
+// missing a file it ships, and every hook that routes through the missing module is a silent
+// no-op until someone reinstalls. Only a missing file INSIDE the plugin root counts: a missing
+// optional package or binary is the ordinary degradation the catch below already handles.
+// `pluginRoot` is injectable so a test can point it at a fixture.
+const PLUGIN_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+export function classifyLoadFailure(error, pluginRoot = PLUGIN_ROOT) {
+  if (error?.code !== 'ERR_MODULE_NOT_FOUND') return null;
+  const named = /Cannot find module '([^']+)'/.exec(String(error.message ?? ''));
+  const missing = named?.[1];
+  if (!missing || !path.isAbsolute(missing)) return null;
+  const inside = path.relative(pluginRoot, missing);
+  if (inside.startsWith('..') || path.isAbsolute(inside)) return null;
+  return { code: 'PAYLOAD_INCOMPLETE', missing: inside.split(path.sep).join('/'), pluginRoot };
+}
+
 export async function dispatch(args, options = {}) {
   const modules = options.modules ?? HOOK_MODULES;
   const hookId = valueAfter(args, '--hook');
@@ -150,6 +168,23 @@ export async function dispatch(args, options = {}) {
     await loaded.run(payload);
     return 0;
   } catch (error) {
+    const incomplete = classifyLoadFailure(error, options.pluginRoot);
+    if (incomplete) {
+      // One actionable line instead of a bare "degraded: Cannot find module <absolute path>".
+      // Exit 1 (a non-blocking error the harness surfaces), not 0: unlike a missing service this
+      // never heals itself, and exit 0 is exactly what let an incomplete payload go unnoticed.
+      process.stderr.write(
+        `${JSON.stringify({
+          status: 'HOOK_RUNTIME_ERROR',
+          code: incomplete.code,
+          hook: hookId,
+          message:
+            `the plugin payload at ${incomplete.pluginRoot} is incomplete: ${incomplete.missing} is missing, ` +
+            'so this hook cannot run. Update or reinstall the plugin (/plugin), then restart this session.',
+        })}\n`,
+      );
+      return 1;
+    }
     // A hook signals; it does not gate. A missing service, an absent optional
     // binary or a throwing payload is a degradation to report, never a failed
     // hook — otherwise an optional service would become mandatory.

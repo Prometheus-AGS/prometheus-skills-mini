@@ -31,6 +31,10 @@ is gone.
 > live invocation of every harness and full Electron installed-app acceptance remain unverified.
 > This documentation does not claim release certification.
 
+## Mini 1.11.2: hook activation checks
+
+A built payload that cannot activate, or a registered plugin source that has been removed, breaks every hook and used to do so silently. Mini now tests that both shipped payloads run every hook from a clean home, reports an incomplete payload as one actionable error, and `node scripts/doctor.mjs` checks the registered marketplace source (`mini-plugin-source`). See [hook activation and plugin source failures](site/docs/distribution/plugin-marketplace.md#hook-activation-and-plugin-source-failures).
+
 ## Mini 1.11.1: task models and OpenSpec updates
 
 Every KBD task now gets an evidenced model recommendation and an explicit native or liter-llm plus worker route. Existing KBD/OpenSpec projects refresh generated integrations using a managed latest-stable CLI, with OpenSpec 1.14.0 as the release baseline. See [task model assignments](site/docs/kbd/task-model-assignments.md) and [OpenSpec lifecycle updates](site/docs/kbd/openspec-lifecycle.md) for planning, handoff, offline behavior and recovery.

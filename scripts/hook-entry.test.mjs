@@ -5,7 +5,7 @@ import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { mkdtempSync, mkdirSync, writeFileSync, cpSync, rmSync } from 'node:fs';
 import { tempDir } from '../lib/platform/paths.mjs';
-import { HOOK_MODULES, SOCKET_IDLE_MS, dispatch } from './hook-entry.mjs';
+import { HOOK_MODULES, SOCKET_IDLE_MS, classifyLoadFailure, dispatch } from './hook-entry.mjs';
 
 const entry = fileURLToPath(new URL('./hook-entry.mjs', import.meta.url));
 const repoDir = fileURLToPath(new URL('..', import.meta.url));
@@ -266,4 +266,63 @@ test('an in-process dispatch with no stdin option does not hang on the test runn
 
   assert.equal(code, 0);
   assert.equal(seen.length, 1);
+});
+
+// A hook module that cannot be loaded because the plugin payload lacks a file it ships is an
+// install defect, not a degraded service: it must be visible (exit 1, one actionable line)
+// rather than the silent exit 0 that let incomplete payloads go unnoticed.
+const moduleNotFound = (file) => {
+  const error = new Error(`Cannot find module '${file}' imported from /x/y.mjs`);
+  error.code = 'ERR_MODULE_NOT_FOUND';
+  return error;
+};
+
+test('classifyLoadFailure names a missing file inside the plugin root, and nothing else', () => {
+  const root = path.join(path.sep, 'cache', 'plugin');
+  const inside = classifyLoadFailure(moduleNotFound(path.join(root, 'lib', 'hooks', 'a.mjs')), root);
+  assert.deepEqual(inside, { code: 'PAYLOAD_INCOMPLETE', missing: 'lib/hooks/a.mjs', pluginRoot: root });
+  assert.equal(classifyLoadFailure(moduleNotFound(path.join(path.sep, 'elsewhere', 'a.mjs')), root), null, 'outside the root');
+  assert.equal(classifyLoadFailure(moduleNotFound('left-pad'), root), null, 'a bare package is an ordinary degradation');
+  assert.equal(classifyLoadFailure(new Error('boom'), root), null);
+  const other = moduleNotFound(path.join(root, 'a.mjs'));
+  other.code = 'ERR_OTHER';
+  assert.equal(classifyLoadFailure(other, root), null, 'only ERR_MODULE_NOT_FOUND');
+});
+
+test('dispatch reports an incomplete payload as one actionable line and exits 1', async () => {
+  const root = path.join(path.sep, 'cache', 'plugin');
+  const modules = {
+    'probe-hook': async () => {
+      throw moduleNotFound(path.join(root, 'lib', 'hooks', 'a.mjs'));
+    },
+  };
+  const written = [];
+  const original = process.stderr.write;
+  process.stderr.write = (chunk) => {
+    written.push(String(chunk));
+    return true;
+  };
+  let code;
+  try {
+    code = await dispatch(['--hook', 'probe-hook'], { modules, pluginRoot: root });
+  } finally {
+    process.stderr.write = original;
+  }
+  assert.equal(code, 1);
+  const report = JSON.parse(written.join('').trim());
+  assert.equal(report.code, 'PAYLOAD_INCOMPLETE');
+  assert.equal(report.hook, 'probe-hook');
+  assert.match(report.message, /lib\/hooks\/a\.mjs is missing/);
+  assert.match(report.message, /reinstall the plugin/);
+  assert.doesNotMatch(written.join(''), /\n\s+at /, 'no stack trace');
+});
+
+test('dispatch still treats a missing optional package as a degradation and exits 0', async () => {
+  const modules = {
+    'probe-hook': async () => {
+      throw moduleNotFound('some-optional-package');
+    },
+  };
+  const pluginRoot = path.join(path.sep, 'cache', 'plugin');
+  assert.equal(await dispatch(['--hook', 'probe-hook'], { modules, pluginRoot }), 0);
 });

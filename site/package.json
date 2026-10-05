@@ -3,7 +3,9 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
+    "prestart": "npm run generate:catalog",
     "start": "docusaurus start",
+    "prebuild": "npm run generate:catalog",
     "build": "docusaurus build",
     "build:deploy": "npm run generate:catalog && docusaurus build",
     "generate:catalog": "node scripts/generate-skills-catalog.mjs",

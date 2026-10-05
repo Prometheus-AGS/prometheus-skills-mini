@@ -16,10 +16,8 @@ concept clusters before deeper specification.
 ## Why independence is verified, not just instructed
 
 A skill can say "generate each branch independently" in its prose, and a model can share context
-across branches anyway — with nothing downstream the wiser. Chen et al. (2026) found multi-agent
-LLM ideation collapses toward agreement despite architectural attempts to diversify, so this pack's
-defence is **structural**, not another sentence of instruction: `lib/ideation/dispatch.mjs` and
-`lib/ideation/independence.mjs` record and check the property directly.
+across branches anyway — with nothing downstream the wiser. The helper records a bounded structural check against verbatim contamination: `lib/ideation/dispatch.mjs` and
+`lib/ideation/independence.mjs` record and check recorded inputs. This is not proof of every hidden model context or semantic independence.
 
 ## `lib/ideation/` modules
 
@@ -33,7 +31,7 @@ defence is **structural**, not another sentence of instruction: `lib/ideation/di
 
 Ideation-mindmap's hard dependency, surreal-memory, is one of the two services this pack keeps —
 see [Docker Services](/docs/services/docker-services). Unlike the full pack (where surreal-memory
-had no defined Windows path), it is now available on every platform this pack targets.
+had no defined Windows path), the optional Compose path is intended for the supported host platforms; actual image and native platform acceptance must be recorded separately.
 
 ## See also
 

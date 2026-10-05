@@ -19,6 +19,8 @@ Windows host — the two Rust services (`liter-llm`, `surreal-memory`) arrive as
 never as something compiled on the host. Any MCP server this pack's skills scaffold is **stdio
 only**, logs to stderr, and avoids unix-only APIs (`nix`, `libc`, unix sockets, `sh -c`).
 
+Optional service containers are distinct from scaffolded applications. No Rust/Cargo command is needed for the mini Node runtime. When a project does require Rust work, complete all planned phase production first, serialize Cargo on the machine, then use real local integration targets. No unit, hosted or per-edit result certifies delivery.
+
 ## What this skill routes to
 
 This house router is the mini's substitute for the full pack's much larger Rust skill family
@@ -31,8 +33,7 @@ than re-vendoring a duplicate set inside this pack.
 ## Vendored Rust tools
 
 Three Rust tools are vendored as git submodules under `tools/` and used strictly as build contexts
-or optional CLIs — never as something a contributor compiles by hand as part of the normal
-workflow:
+or optional CLIs — with their own dependency and platform prerequisites:
 
 - `tools/prometheus-knowledge` (`pk`) — see [Karpathy Progress Memory](/docs/karpathy/progress-memory).
 - `tools/liter-llm` — see [Docker Services](/docs/services/docker-services).

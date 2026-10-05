@@ -79,6 +79,11 @@ const config = {
             label: 'Docs',
           },
           {
+            to: '/docs/agent-teams/overview',
+            position: 'left',
+            label: 'Agent Teams',
+          },
+          {
             to: '/docs/catalog',
             position: 'left',
             label: 'Skills Catalog',
@@ -97,6 +102,9 @@ const config = {
             title: 'Docs',
             items: [
               { label: 'Introduction', to: '/docs/intro' },
+              { label: 'Installation', to: '/docs/getting-started/installation' },
+              { label: 'Agent Teams', to: '/docs/agent-teams/overview' },
+              { label: 'Service Operations', to: '/docs/services/docker-services' },
               { label: 'Skills Catalog', to: '/docs/catalog' },
             ],
           },

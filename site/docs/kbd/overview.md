@@ -21,7 +21,7 @@ back to the nearest earlier stage instead of failing.
 
 ## The state machine: `lib/kbd/`
 
-Ten focused modules, each a Node port of a `shared/lib/*.sh` file from the full pack:
+Focused modules, each a Node port of a `shared/lib/*.sh` file from the full pack:
 
 | Module | Ported from | What it does |
 |---|---|---|
@@ -54,6 +54,8 @@ mark-done <change> <id> | verify <change> | archive <change>`.
 
 ## Position, waypoints, and recovery
 
+Complete all phase production before tests, checks, generation or independent review. Task transitions record implementation progress; they do not confer acceptance.
+
 The canonical runtime is `prometheus kbd status`; `.kbd-orchestrator/current-waypoint.json` is a
 projection of it, never a source of truth on its own — `runtime-authority.mjs` is how code checks
 which one it is looking at. `kbd-audit` provides a read-only causal view (exact position, lifecycle
@@ -64,5 +66,5 @@ history, plan revision, ownership, blockers, uncommitted work) without mutating 
 ## See also
 
 - [KBD skills](/docs/kbd/skills) — every `kbd-*` skill with its real description.
-- [Adversarial Review](/docs/review/adversarial-review) — the QA gate that runs inside `kbd-assess`/`analyze`/`plan` (artifact mode) and `kbd-execute`'s per-change diff mode.
+- [Adversarial Review](/docs/review/adversarial-review) — the QA gate that runs inside `kbd-assess`/`analyze`/`plan` (artifact mode) and the completed-phase diff review boundary.
 - [Karpathy Progress Memory](/docs/karpathy/progress-memory) — how boundary transitions are durably recorded.

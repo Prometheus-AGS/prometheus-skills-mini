@@ -8,8 +8,9 @@
 // as organized reference material instead of one flat 50-row list.
 //
 // Walks ../skills/*/SKILL.md, parses YAML frontmatter, and emits one Markdown page per category
-// plus an index into site/docs-catalog/ (generated, gitignored). Wired via `build:deploy` and
-// `generate:catalog`. Output derives from SKILL.md inputs and the shared UI catalog lock.
+// plus an index into site/docs-catalog/ (generated, gitignored). Wired via `prebuild`,
+// `prestart`, `build:deploy` and `generate:catalog`. Output derives from SKILL.md inputs
+// and the shared UI catalog lock.
 
 import { readdirSync, readFileSync, lstatSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join, dirname, relative } from 'node:path';

@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "task": "bossfang-bauar-harness-delegation/5",
+  "status": "source-authored-runtime-unverified",
+  "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/",
+  "base": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+  "parentRevisionBegun": 147,
+  "childRevisionBegun": 40,
+  "owner": "bossfang-feature-steward",
+  "roleHandoff": "storage/schema engineer serial group-transaction extension consumed by feature steward",
+  "testsRun": [],
+  "sourceFiles": [
+    {
+      "path": "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+      "sha256": "59a8edbecc7fd0782e388d64024705a82dd905f6809e5f133b4c1ef0f26fc0ed",
+      "lines": 110,
+      "snapshot": "01-crates_librefang-kernel_src_kernel_uar_harness_mod.rs.txt"
+    },
+    {
+      "path": "crates/librefang-kernel/src/kernel/uar_harness/observation.rs",
+      "sha256": "4c2cf72eae1c7ce14bca5c689618aaec98fe4e226208cd9642b33bdb9cc235ba",
+      "lines": 78,
+      "snapshot": "02-crates_librefang-kernel_src_kernel_uar_harness_observation.rs.txt"
+    },
+    {
+      "path": "crates/librefang-types/src/uar_run.rs",
+      "sha256": "d92c58dbd3808c1b0639ca63807716965102f1c2effaefac2dc0ab6e5ad96e1a",
+      "lines": 348,
+      "snapshot": "03-crates_librefang-types_src_uar_run.rs.txt"
+    },
+    {
+      "path": "crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+      "sha256": "ac57089b0935e909f8fa345b3be551a70b1bf11df9ef402b91efcd9298bbc696",
+      "lines": 411,
+      "snapshot": "04-crates_librefang-llm-drivers_src_drivers_uar_run_mod.rs.txt"
+    },
+    {
+      "path": "crates/librefang-llm-drivers/src/drivers/uar_run/approval.rs",
+      "sha256": "d9970cf53ff44e97e8c81d2bd8e5f55ea9b517d74afd5eb236e217994afb494b",
+      "lines": 29,
+      "snapshot": "05-crates_librefang-llm-drivers_src_drivers_uar_run_approval.rs.txt"
+    },
+    {
+      "path": "crates/librefang-llm-drivers/src/drivers/uar_run/observation.rs",
+      "sha256": "d83f62fcf1c27048341a934754d3436039b1014bd3e46a09713ba35bcc915c8f",
+      "lines": 111,
+      "snapshot": "06-crates_librefang-llm-drivers_src_drivers_uar_run_observation.rs.txt"
+    },
+    {
+      "path": "crates/librefang-api/src/routes/uar_delegation.rs",
+      "sha256": "f2ed69d4f336214f58efbd98bcd8ac6db883caca43eb3835b91e2dbe6dd9c159",
+      "lines": 474,
+      "snapshot": "07-crates_librefang-api_src_routes_uar_delegation.rs.txt"
+    },
+    {
+      "path": "crates/librefang-api/src/routes/uar_delegation/observation.rs",
+      "sha256": "c6822f7a585a7983fb7559e706f444fa641dcfd044812a25354069c4013d0956",
+      "lines": 112,
+      "snapshot": "08-crates_librefang-api_src_routes_uar_delegation_observation.rs.txt"
+    },
+    {
+      "path": "crates/librefang-llm-drivers/src/drivers/uar_run/selection.rs",
+      "sha256": "30c950a9594c16362c45e242ba3584a3e2aef58f919b0839ca4e06ba2aa9eb34",
+      "lines": 127,
+      "snapshot": "09-crates_librefang-llm-drivers_src_drivers_uar_run_selection.rs.txt"
+    },
+    {
+      "path": "crates/librefang-llm-drivers/src/drivers/uar_run/retained.rs",
+      "sha256": "69456722d5a3577d49ad4c7f8974adc1a237eb5e001c8de4c829f2e8d266d21d",
+      "lines": 181,
+      "snapshot": "10-crates_librefang-llm-drivers_src_drivers_uar_run_retained.rs.txt"
+    },
+    {
+      "path": "crates/librefang-llm-drivers/src/drivers/uar_run/canonical.rs",
+      "sha256": "d5a56d76cf4d7a23ba18425cfa8f743db4309ef279f919b42b533265dc0ff17e",
+      "lines": 118,
+      "snapshot": "11-crates_librefang-llm-drivers_src_drivers_uar_run_canonical.rs.txt"
+    },
+    {
+      "path": "crates/librefang-llm-drivers/src/drivers/uar_run/presentation.rs",
+      "sha256": "a01decfbcc1534c927119fa549e6048c7f24c1837a245237e1ac530322153cc5",
+      "lines": 241,
+      "snapshot": "12-crates_librefang-llm-drivers_src_drivers_uar_run_presentation.rs.txt"
+    },
+    {
+      "path": "crates/librefang-llm-drivers/src/drivers/uar_run/presentation_tests.rs",
+      "sha256": "dbd95424c2ae5d9193e6821e36fc936ef08275fe4b8cf575023177c6705a153e",
+      "lines": 86,
+      "snapshot": "13-crates_librefang-llm-drivers_src_drivers_uar_run_presentation_tests.rs.txt"
+    },
+    {
+      "path": "crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
+      "sha256": "9c9fd34e90f146fc1228858dea31cfc39ff4f5971f53fd8f7aeee97f094fc372",
+      "lines": 384,
+      "snapshot": "14-crates_librefang-runtime_src_a2a_uar_delegation_store.rs.txt"
+    },
+    {
+      "path": "crates/librefang-llm-drivers/src/drivers/uar_run/wire.rs",
+      "sha256": "32caef2cf299f2f086dd46bf122c8ddb49c6eef9c72c21bb358eef24db95a568",
+      "lines": 365,
+      "snapshot": "15-crates_librefang-llm-drivers_src_drivers_uar_run_wire.rs.txt"
+    },
+    {
+      "path": "crates/librefang-api/src/routes/uar_delegation/connections.rs",
+      "sha256": "47d62d54ce4d891ab6c5c9f108ff44745eea18f4fd7ea6974f762d8010711961",
+      "lines": 165,
+      "snapshot": "16-crates_librefang-api_src_routes_uar_delegation_connections.rs.txt"
+    },
+    {
+      "path": "scripts/integration/afc-c05-gate.mjs",
+      "sha256": "5a4133e5e3094fad85813705d08b5dc0695fa777d02ce322438993fe77b9708e",
+      "lines": 417,
+      "snapshot": "17-scripts_integration_afc-c05-gate.mjs.txt"
+    }
+  ],
+  "dependencies": [
+    "Task4 accepted mapping-handoff/receipt.json",
+    "provider event_cursor_profile contiguous_cursor_frames_v1 checkpoint pending",
+    "provider R3 finite-corpus capture/projector acceptance pending"
+  ],
+  "limits": {
+    "rawFrameBytes": 1048576,
+    "decodedEventBytes": 1048576,
+    "decodedGroupBytes": 4194304,
+    "presentationPartsPerEvent": 1000,
+    "presentationUtf8BytesPerEvent": 4194304
+  },
+  "claimsReleased": true,
+  "frozenAt": "2026-10-06T16:06:06.931Z",
+  "verification": "Source handover only; runtime and full delivery acceptance pending"
+}

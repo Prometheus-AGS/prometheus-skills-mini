@@ -152,6 +152,43 @@
               "tests/bauar_inline_revision.rs"
             ],
             "scope": "Normalize already validated inline artifact with existing provider catalog metadata before revision/tool admission consumers. No global ToolAdmissionContext API change; provider-derived revision authoritative."
+          },
+          "R3Projection": {
+            "owner": "/root/uar_resource",
+            "paths": [
+              "src/uar/persistence/agent_threads.rs",
+              "src/uar/runtime/turn/host/secret_projection.rs",
+              "src/uar/runtime/turn/host/secret_stream.rs",
+              "src/uar/runtime/turn/host/receipt_projection.rs",
+              "src/uar/runtime/turn/host/event_projection.rs",
+              "src/uar/runtime/turn/host/mod.rs",
+              "src/uar/runtime/turn/host/mcp.rs",
+              "src/mcp/runtime.rs",
+              "src/llm/orchestrator.rs",
+              "src/uar/runtime/manager.rs",
+              "src/llm/anthropic_driver.rs",
+              "tests/bauar_secret_projection.rs",
+              "tests/support/bauar_secret_provider.rs",
+              "src/uar/runtime/world_state/runtime.rs"
+            ],
+            "contract": "evidence/execute/uar-resource-authoring.md proposal accepted",
+            "scope": "Finite longest-match copy projection of raw/JSON/percent/base64 variants; independent bounded stream tails and terminal flush; actual destination secret-ref header values before transport connect; typed event/model/persistence consumers. Shared manager/orchestrator ONLY after capture-owner release.",
+            "canonicalReceipt": "Optional serde-default secret_projection(version1,redacted,omitted_raw_segments) absent for legacy; participates in replay equality/version validation. Project before no-store return/acquire/save; UTF8 raw verified then reconstructed exact new hash/length; opaque/unavailable raw omitted explicitly, preserve source acquisition incompleteness. Complete means represented projected view, never lossless original.",
+            "scheduling": "May begin independent new projector modules, host/mod delegation preserving APIs, receipt metadata, destination capture and static native warning now; manager/orchestrator blocked until capture handover.",
+            "retentionOrdering": "Private run-local staging until same once-resolved provider corpus, original shared session authority unchanged; content-free active shell; bounded publication max4MiB/1000events, static staging failures. Publish projected content via existing semantics, no stale whole-state overwrite. Known captured variants in executable retained snapshot -> static SECRET_IN_EXECUTABLE_ARTIFACT, never mutate artifact authority/revision. Inspect actual early awaited approvals before withholding control events.",
+            "worldState": "Project copied update messages before record_world_state, preserve baseline/control state and original shared session authority; detached staging baseline restored through existing API, no stale overwrite or session-manager correction.",
+            "preRoutingLimit": "Project existing captured auth/host/MCP input copies at manager RAG/classifier seams. Generation credentials resolved later cannot cover earlier external routing calls; constructor-owned or opaque routing credentials remain unknown. Do not repeat or resolve all providers, disable routing, or claim universal containment."
+          },
+          "Cursor": {
+            "owner": "/root/uar_execution",
+            "paths": [
+              "src/uar/api/sse.rs",
+              "src/uar/api/full_harness.rs",
+              "src/uar/api/full_harness/types.rs",
+              "src/uar/api/full_harness/handlers.rs",
+              "tests/bauar_full_harness_cursor.rs"
+            ],
+            "scope": "Existing full_harness stream only emits nonexecutable uar.cursor(id/request_id) when AGUI projection suppresses an internal source event; global default SSE behavior unchanged. Add descriptor event_cursor_profile=contiguous_cursor_frames_v1. Selected consumer requires this observed profile before reservation; old manual descriptor validation remains compatible."
           }
         },
         "owner": "/root/uar_resource"
@@ -179,6 +216,13 @@
         "receipt": "evidence/execute/uar-provider-handoff.json",
         "manifestSha256": "880a1ff8f5765375fd87b75cd09d7f82255e040af9429a06b0a7cc6f45703a1d",
         "status": "Source contract only; six full-harness files match C05; source mutable and acceptance pending"
+      },
+      "identityFixture": {
+        "paths": [
+          "tests/bauar_identity_boundary.rs",
+          "tests/support/bauar_identity_peer.rs"
+        ],
+        "scope": "Real standalone startup/router/JWKS/key scenarios, source authoring only; reuse existing launch helper. No D0 or production hook. Legacy records secondary storage evidence only."
       }
     },
     "boss": {
@@ -300,7 +344,40 @@
       "selectionContract": "Existing AppState Arc<UarRunControl> is explicitly passed into typed kernel selected seams; Native and Delegated results stay distinct. New admission source scenarios authorized, unexecuted.",
       "reservationContract": "Opaque private PendingUarAdmission separates read-only descriptor preflight from credential retention. Only durable Created winner installs exact prepared transport if vacant and admits; Existing never prepares/installs; installation conflict is unknown requiring reconciliation.",
       "selectionHandoff": "evidence/execute/selection-handoff/receipt.json",
-      "mappingContract": "Authenticated non-synthetic registered initiating Owner and authorized real stored task/assignedagent; remote app service authority separate. Delegated-user/tenant mapping unsupported. Stable selected namespace from storedjob+attempt1, tagged retained slots reject legacy replacement; explicit refresh preserves tag; no retry_count replacement."
+      "mappingContract": "Authenticated non-synthetic registered initiating Owner and authorized real stored task/assignedagent; remote app service authority separate. Delegated-user/tenant mapping unsupported. Stable selected namespace from storedjob+attempt1, tagged retained slots reject legacy replacement; explicit refresh preserves tag; no retry_count replacement.",
+      "controlClaims": [
+        "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/observation.rs",
+        "crates/librefang-types/src/uar_run.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/approval.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/observation.rs",
+        "crates/librefang-api/src/routes/uar_delegation.rs",
+        "crates/librefang-api/src/routes/uar_delegation/observation.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/selection.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/retained.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/canonical.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/presentation.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/presentation_tests.rs",
+        "crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/wire.rs",
+        "scripts/integration/afc-c05-gate.mjs",
+        "crates/librefang-api/src/routes/uar_delegation/connections.rs"
+      ],
+      "mappingHandoff": "evidence/execute/mapping-handoff/receipt.json",
+      "controlContract": "Capture original local service bearer and supplied resource values privately without re-resolution; finite content projection before persistence. Raw complete frame and decoded event max1MiB; selected per-event presentation max1000parts and4MiB aggregate UTF8, explicit newly selected policy. Oversize/malformed/gap unknown with no cursor advance or execution replay. Provider-owned secret projection prerequisite remains separate. Strict original approval identity/revision, owner/attempt controls; no synthetic root override of selected owner.",
+      "groupContract": "Private bounded stream carry; safe frontier groups <=4MiB decoded, individual frame/event<=1MiB; typed projected events/cursor/final outcome one SQLite transaction; no advance on incomplete or invalid group. Original single-event API remains wrapper.",
+      "task6Schema": {
+        "owner": "surrealdb-schema-engineer",
+        "paths": [
+          "crates/librefang-memory/src/substrate.rs",
+          "crates/librefang-memory/src/substrate/task_dispatch.rs",
+          "crates/librefang-memory/src/substrate/task_dispatch_tests.rs"
+        ],
+        "contract": "evidence/execute/task6-dispatch-intent-contract.md",
+        "handoff": "Immutable schema API source required before feature wiring",
+        "status": "accepted source allocation; gates pending"
+      }
     }
   },
   "scope": "Nested OpenSpec scopes planning artifacts; exact product claims above explicitly bound to task driver under authorized cross-repository scope. No broad source-root write grant. No production work until its dependency/task begins.",

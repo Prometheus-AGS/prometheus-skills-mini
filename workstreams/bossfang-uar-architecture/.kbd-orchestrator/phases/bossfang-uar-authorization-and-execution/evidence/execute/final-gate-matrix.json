@@ -39,7 +39,9 @@
       },
       {
         "name": "bauar_stdio_boundary",
-        "minimumCases": 2
+        "minimumCases": 2,
+        "primaryCaseCount": 1,
+        "caseAccounting": "Two physical tests; root helper returns without fixture env. Outer primary spawns helper with actual env and runs snapshot/approval/cancel/kill-reap/configured-connector/sandbox lifecycle. Count primary execution separately."
       },
       {
         "name": "bauar_receipt_projection",
@@ -59,7 +61,9 @@
       "Actual external receiver/IdP not selected",
       "Synthetic model responses make actual production execution deterministic; no external model certification"
     ],
-    "targetDir": "/Users/gqadonis/.claude/worktrees/bauar-uar/target"
+    "targetDir": "/Users/gqadonis/.claude/worktrees/bauar-uar/target",
+    "compileSelection": "Only named integration targets; no libtests, --all-targets, D0 fixture or session-owner diagnostic",
+    "observedBlocker": "Six remaining identity cases: child stack overflow confirmed; exact failing endpoint under investigation, auth policy assertions remain unverified."
   },
   "boss": {
     "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
@@ -69,7 +73,7 @@
       "scripts/gates/bauar-secret-projection.ts"
     ],
     "packaging": "Applicable actual Electron/current-source package required; old cached app not acceptance",
-    "prerequisiteStatus": "Electron44.2.0 package resolves but actual Electron.app executable absent. Root resolution alone cannot prove transitive rolldown absence; no import/install/build run.",
+    "prerequisiteStatus": "Electron44.2.0 actual executable and pinned rolldown1.2.6 native binding absent; actual tsdown transitive resolution inspected. Restoration permission remains pending; workspace declaration outputs also absent.",
     "prerequisiteReceipt": "evidence/execute/boss-package-resolution-prerequisite.json"
   },
   "bossfang": {
@@ -93,7 +97,8 @@
       "No cargo build/run live-daemon workflow",
       "Python branding checker unavailable under Node-only rule; no port/install"
     ],
-    "targetDir": "/tmp/librefang-target-bauar-delivery-001"
+    "targetDir": "/tmp/librefang-target-bauar-delivery-001",
+    "observedBlocker": "Kernel integration compile API feature mismatch; correcting existing uar-driver forwarding without dependencies or warning suppression."
   },
   "certification": {
     "D0": "blocked automatic approval review; no eligible receipt or permitted signed waiver supplied",
@@ -105,5 +110,12 @@
   "commands": [
     "final-gates/uar-compile-01.json",
     "final-gates/bossfang-api-compile-01.json"
-  ]
+  ],
+  "observedIntermediateBuildDirs": {
+    "uar": "/Users/gqadonis/.cargo-build/66/54349220c24881",
+    "bossfang": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42",
+    "evidence": "Actual cargo compiler-artifact filenames, observed 2026-10-06; directories distinct, existing machine build/cache configuration inherited"
+  },
+  "updatedAt": "2026-10-06T18:27:35.611Z",
+  "observedRuntimeResults": "partial-runtime-results.json"
 }

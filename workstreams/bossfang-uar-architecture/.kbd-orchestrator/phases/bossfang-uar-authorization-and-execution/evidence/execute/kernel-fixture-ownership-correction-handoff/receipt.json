@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T18:30:55.287Z",
+  "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-kernel/tests/bauar_harness_delegation.rs",
+  "sha256": "81ec0c3500082ceb02316b3b591e4829be22b58f1f6d92eb1d6ec24c225685c3",
+  "lines": 112,
+  "observedFailure": "bossfang-kernel-compile-02 E0382: consuming Arc receivers at42/62 reused later",
+  "correction": "Clone Arc at existing set_self_handle and streaming receivers; preserve all assertions",
+  "status": "source-only-pending-compile",
+  "productionChanges": false
+}

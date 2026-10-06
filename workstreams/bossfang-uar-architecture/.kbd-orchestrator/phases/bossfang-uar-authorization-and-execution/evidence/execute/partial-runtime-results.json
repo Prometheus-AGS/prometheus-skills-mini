@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T18:27:35.614Z",
+  "phaseCertification": "incomplete",
+  "passed": [
+    {
+      "label": "uar-cursor-runtime-02",
+      "primaryCases": 2,
+      "physicalCases": 2,
+      "environment": {
+        "RUST_MIN_STACK": "33554432"
+      },
+      "priorFailure": "uar-cursor-runtime-01 SIGABRT stack overflow",
+      "scope": "contiguous cursor/reconnect and explicit retained-history gap",
+      "status": "observed-pass",
+      "receipt": "final-gates/uar-cursor-runtime-02.json",
+      "sourceBinding": "source-inventory-before-compile-corrections.json",
+      "compilerManifest": "uar-compile-01-manifest.json"
+    },
+    {
+      "label": "uar-stdio-runtime-01",
+      "primaryCases": 1,
+      "physicalCases": 2,
+      "environment": {
+        "RUST_MIN_STACK": "33554432"
+      },
+      "scope": "outer scenario executes child helper with genuine environment snapshot/approval/cancel/kill-reap/configured connector/sandbox boundary; root helper no-op excluded",
+      "status": "observed-pass",
+      "receipt": "final-gates/uar-stdio-runtime-01.json",
+      "sourceBinding": "source-inventory-before-compile-corrections.json",
+      "compilerManifest": "uar-compile-01-manifest.json"
+    },
+    {
+      "label": "uar-inline-runtime-02",
+      "status": "observed-pass",
+      "primaryCases": 1,
+      "physicalCases": 1,
+      "scope": "provider-normalized executing catalog revision",
+      "receipt": "final-gates/uar-inline-runtime-02.json",
+      "compilerManifest": "uar-compile-03-manifest.json",
+      "sourceCorrections": [
+        "governed-workspace-correction-handoff/receipt.json",
+        "receipt-status-correction-handoff/receipt.json"
+      ]
+    },
+    {
+      "label": "uar-receipt-runtime-02",
+      "status": "observed-pass",
+      "primaryCases": 3,
+      "physicalCases": 3,
+      "scope": "real native canonical receipt acquisition/embedded storage/no-store/incomplete/replay",
+      "receipt": "final-gates/uar-receipt-runtime-02.json",
+      "compilerManifest": "uar-compile-03-manifest.json",
+      "sourceCorrections": [
+        "governed-workspace-correction-handoff/receipt.json",
+        "receipt-status-correction-handoff/receipt.json"
+      ]
+    },
+    {
+      "label": "uar-grants-runtime-01",
+      "status": "observed-pass",
+      "primaryCases": 1,
+      "physicalCases": 1,
+      "scope": "owner/run/destination/revision/lease/action binding",
+      "receipt": "final-gates/uar-grants-runtime-01.json",
+      "compilerManifest": "uar-compile-03-manifest.json",
+      "sourceCorrections": [
+        "governed-workspace-correction-handoff/receipt.json",
+        "receipt-status-correction-handoff/receipt.json"
+      ]
+    },
+    {
+      "label": "uar-identity-runtime-02",
+      "caseName": "real_jwks_rotation_cooldown_failed_refresh_hard_age_and_recovery",
+      "status": "observed-case-pass-inside-failed-target",
+      "primaryCases": 1,
+      "physicalCases": 1,
+      "scope": "real signed JWKS rotation, cooldown, failed refresh, hard maximum age, recovery",
+      "receipt": "final-gates/uar-identity-runtime-02.json",
+      "compilerManifest": "uar-compile-03-manifest.json",
+      "sourceCorrections": [
+        "governed-workspace-correction-handoff/receipt.json"
+      ],
+      "remainingTargetCases": "six failed cases; incomplete-remote startup passed original attempt; no rerun of successful rotation"
+    },
+    {
+      "label": "uar-secret-runtime-05",
+      "status": "observed-pass",
+      "primaryCases": 1,
+      "physicalCases": 1,
+      "scope": "actual provider/MCP/embedding/stream/liveargs/retained same-owner session/world-state/executable-secret rejection",
+      "receipt": "final-gates/uar-secret-runtime-05.json",
+      "sourceCorrections": [
+        "governed-workspace-correction-handoff/receipt.json",
+        "secret-terminal-correction-handoff/receipt.json"
+      ],
+      "limitation": "Earlier knowledge-response decode and second-turn terminal failures lacked reason codes; their intermittent causes are unresolved, not claimed fixed by diagnostics. No stress/reliability certification."
+    },
+    {
+      "label": "uar-identity-runtime-01",
+      "caseName": "incomplete_remote_policy_is_rejected_at_actual_startup",
+      "primaryCases": 1,
+      "physicalCases": 1,
+      "status": "observed-case-pass-inside-failed-target",
+      "scope": "Actual standalone startup rejects incomplete remote policy",
+      "receipt": "final-gates/uar-identity-runtime-01.json",
+      "limitation": "Other target cases failed; imported support unit cases excluded from primary evidence"
+    }
+  ],
+  "failed": [
+    "uar-identity-runtime-01",
+    "uar-inline-runtime-01",
+    "uar-receipt-runtime-01",
+    "uar-secret-runtime-01",
+    "bossfang-api-compile-01",
+    "uar-secret-runtime-02",
+    "bossfang-api-compile-02",
+    "bossfang-mcp-runtime-01",
+    "uar-identity-runtime-02",
+    "uar-secret-runtime-03",
+    "uar-identity-runtime-03",
+    "uar-secret-runtime-04",
+    "bossfang-kernel-compile-01",
+    "uar-identity-runtime-04"
+  ],
+  "incidentalSupportTests": "Identity and inline first attempts included imported support unit tests; these are excluded from primary evidence and subsequent scoped retries. This initial overscope is an A-9 deviation."
+}

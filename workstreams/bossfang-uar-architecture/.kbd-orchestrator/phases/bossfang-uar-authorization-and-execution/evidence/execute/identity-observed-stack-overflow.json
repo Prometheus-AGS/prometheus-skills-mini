@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-06T18:25:15Z",
+  "receipt": "final-gates/uar-identity-runtime-04.json",
+  "compilerManifest": "uar-identity-compile-07-manifest.json",
+  "primaryCasesFailed": 6,
+  "observed": "All six request-delivery failures captured fixed child fatal markers: stack_overflow, fatal_runtime_error and abort true; panic, startup_error, server_error and allocation_failure false.",
+  "exitStatus": "unavailable; no fabricated exit code",
+  "conclusion": "Standalone process crash confirmed. Authorization assertion behavior in these cases remains unverified until the process failure is corrected.",
+  "localizedReceipt": "final-gates/uar-identity-runtime-05.json",
+  "localizedFailure": "run_admission POST response_ordinal9: first valid JWT run after seven invalid credentials and one anonymous request returned401",
+  "rootCause": "Accepted execution future source correction prepared; runtime confirmation pending. No claim that concrete handler future executes before authentication.",
+  "sourceCorrection": "accepted-run-future-correction-handoff/receipt.json",
+  "D0": "Excluded; no session-owner diagnostic or conditional correction performed",
+  "rawLogDisclosure": false
+}

@@ -1,0 +1,132 @@
+[package]
+name = "librefang-kernel"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+description = "Core kernel for the LibreFang Agent OS"
+readme = "README.md"
+
+[dependencies]
+librefang-types = { path = "../librefang-types" }
+librefang-uar-spec = { path = "../librefang-uar-spec" }
+librefang-memory = { path = "../librefang-memory" }
+librefang-memory-wiki = { path = "../librefang-memory-wiki" }
+librefang-kernel-router = { path = "../librefang-kernel-router" }
+librefang-kernel-metering = { path = "../librefang-kernel-metering" }
+librefang-runtime = { path = "../librefang-runtime" }
+librefang-skills = { path = "../librefang-skills" }
+librefang-hands = { path = "../librefang-hands" }
+librefang-extensions = { path = "../librefang-extensions" }
+librefang-llm-driver = { path = "../librefang-llm-driver" }
+librefang-llm-drivers = { path = "../librefang-llm-drivers" }
+librefang-rl-export = { path = "../librefang-rl-export" }
+librefang-wire = { path = "../librefang-wire" }
+librefang-channels = { path = "../librefang-channels", default-features = false }
+librefang-storage = { path = "../librefang-storage", default-features = false }
+tokio = { workspace = true }
+bytes = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+toml = { workspace = true }
+serde_yaml = { workspace = true }
+dashmap = { workspace = true }
+rusqlite = { workspace = true }
+r2d2 = { workspace = true }
+r2d2_sqlite = { workspace = true }
+arc-swap = { workspace = true }
+tracing = { workspace = true }
+metrics = { workspace = true }
+chrono = { workspace = true }
+chrono-tz = { workspace = true }
+uuid = { workspace = true }
+thiserror = { workspace = true }
+async-trait = { workspace = true }
+dirs = { workspace = true }
+futures = { workspace = true }
+subtle = { workspace = true }
+rand = { workspace = true }
+hex = { workspace = true }
+reqwest = { workspace = true }
+# Already in this crate's build graph through librefang-runtime and
+# librefang-runtime-mcp; named here so `connect_target` can strip a URL down
+# to scheme/host without hand-rolling a parser.
+url = { workspace = true }
+regex-lite = { workspace = true }
+regex = { workspace = true }
+cron = "0.17"
+parking_lot = "0.12"
+# Tera — workflow `Transform` operator (#4980 step 3). Sandboxed
+# Jinja2-style templating; no I/O, no shell escape. Used to render
+# previous-step output into a formatted string without an LLM call.
+tera = { workspace = true }
+totp-rs = { workspace = true }
+zeroize = { workspace = true }
+surrealdb = { workspace = true, optional = true }
+sha2 = { workspace = true }
+# Used by the boot-time LIBREFANG_STATE_SECRET shape validator
+# (audit: state-secret-default-random) — mirrors the 32-byte base64
+# contract enforced by librefang_extensions::vault::decode_master_key
+# without taking a fresh dep on the extensions crate.
+base64 = { workspace = true }
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[features]
+default = ["surreal-backend"]
+## BossFang: opt-in Universal Agent Runtime LLM driver.
+##
+## This forwards down the chain
+## `librefang-kernel` -> `librefang-runtime` -> `librefang-llm-drivers` ->
+## `dep:universal-agent-runtime`, and is deliberately NOT in `default`.
+##
+## Until 2026-07-11 the `librefang-runtime` dependency below carried a hardcoded
+## `features = ["uar-driver"]`. Cargo unions features across the graph and
+## `librefang-cli` -> `librefang-kernel` is not feature-gated, so that one line
+## force-compiled UAR into EVERY build with no way to turn it off — pulling in
+## UAR's whole transitive tree (liter-llm, burn, tonic) plus a `build.rs` that
+## fetches models.dev over the network, and imposing UAR's exact
+## `surrealdb = "=3.2.1"` pin on the entire workspace (cargo cannot unify two
+## exact `=` pins, so a UAR-side surrealdb bump broke every build, not just an
+## opt-in one).
+uar-driver = ["librefang-runtime/uar-driver", "librefang-testing/uar-driver"]
+## Storage backend selection (Phase 4 of `surrealdb-storage-swap`).
+## The Surreal-backed implementations of `MemoryBackend`, `AuditStore`,
+## `TraceBackend` and the TOTP lockout store land in Phases 5–6; until
+## then both features simply forward to the lower-level crates so the
+## workspace compiles cleanly under `--no-default-features --features
+## sqlite-backend`, `--features surreal-backend`, and the default set.
+surreal-backend = [
+    "librefang-storage/surreal-backend",
+    "librefang-runtime/surreal-backend",
+    "librefang-memory/surreal-backend",
+    "dep:surrealdb",
+]
+sqlite-backend = [
+    "librefang-storage/sqlite-backend",
+    "librefang-runtime/sqlite-backend",
+    "librefang-memory/sqlite-backend",
+]
+
+[[bin]]
+name = "purge_sentinels"
+path = "bin/purge_sentinels.rs"
+
+[dev-dependencies]
+# `test-util` enables `tokio::time::{pause,advance,resume}` and
+# `#[tokio::test(start_paused = true)]`, used by the workflow / cron
+# timing tests. (Not in the `full` feature set; previously pulled in
+# transitively by the now-removed `tokio-test` dev-dep.)
+tokio = { workspace = true, features = ["test-util"] }
+tempfile = { workspace = true }
+serial_test = "4"
+proptest = "1"
+tracing-subscriber = { workspace = true }
+librefang-testing = { path = "../librefang-testing" }
+librefang-kernel-handle = { path = "../librefang-kernel-handle" }
+wiremock = "0.6"
+
+[lints]
+workspace = true

@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "task": "bossfang-bauar-harness-delegation/6/feature",
+  "role": "bossfang-feature-steward",
+  "status": "source-authored-unverified",
+  "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/",
+  "baseline": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+  "schemaCheckpoint": "a31f63d",
+  "sourceFiles": [
+    {
+      "path": "crates/librefang-kernel/src/kernel/uar_harness/lifecycle.rs",
+      "sha256": "23fc0312d05e44e1d3e643e47436dc33d48cfdda1ba496061b6cdbddf7685f64",
+      "lines": 71
+    },
+    {
+      "path": "crates/librefang-kernel/src/kernel/uar_harness/lifecycle_tests.rs",
+      "sha256": "a584765c209b26a8c049369185f1b4bef852c7723418083df79600c83248e95d",
+      "lines": 83
+    },
+    {
+      "path": "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+      "sha256": "bb563b2a359bdc0bc90efc932d973578da5b838a8534d441ee5de0f30d4936fe",
+      "lines": 113
+    },
+    {
+      "path": "crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
+      "sha256": "0bb62e66b555dd934fcaa20004a6a5100e715ac59cfa6e18cad9e069cd581922",
+      "lines": 246
+    },
+    {
+      "path": "crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs",
+      "sha256": "747e2424d2c6247b67aee42f176508983adca0fcc608bbe9262fca44212a5db8",
+      "lines": 106
+    },
+    {
+      "path": "crates/librefang-kernel/src/kernel/handles/task_queue.rs",
+      "sha256": "c8b7d96a5478a54ffa3e4b8715c67ed42e9daa835d4c0a892b4444ae28bd3845",
+      "lines": 252
+    },
+    {
+      "path": "crates/librefang-kernel/src/kernel/triggers_and_workflow.rs",
+      "sha256": "ccfe4d2a8778ebdb813e44e46e920c272327632309123d286a85fd0331dd5053",
+      "lines": 2329
+    },
+    {
+      "path": "crates/librefang-kernel/src/kernel_api.rs",
+      "sha256": "4848f9eb7ee28a4756a5da4d5d825e1a671ea95a95c5aaf95eac0ee76cdf7783",
+      "lines": 2031
+    },
+    {
+      "path": "crates/librefang-api/src/routes/uar_delegation/job_mapping.rs",
+      "sha256": "4a817a8874a2f2241f169fe15a74e197f402f327738aea89bc82d1ecda85a087",
+      "lines": 127
+    },
+    {
+      "path": "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
+      "sha256": "9dd6868d2c68acaffc07dbdbb39060fff8358549f419a1ed19c40f2b96ed30e8",
+      "lines": 207
+    },
+    {
+      "path": "crates/librefang-api/src/routes/uar.rs",
+      "sha256": "b5db09112547de6cfc933f63ddb67c76fea8333a6f3f5962d7ef9e844e0f341f",
+      "lines": 499
+    },
+    {
+      "path": "crates/librefang-api/src/routes/task_queue.rs",
+      "sha256": "a301ab34939d99e98198e5c43c08ff2499d61e729021a3f8d4dde773d1107e7f",
+      "lines": 446
+    }
+  ],
+  "testsRun": [],
+  "schemaWrites": false,
+  "sourceClaimsReleased": true,
+  "networkLeaseReleased": false,
+  "unmodifiedClaimDisposition": {
+    "crates/librefang-kernel/src/kernel/mod.rs": "Deferred native approval has no JobAttemptRef; unchanged under accepted native policy. Selected approval remains original UAR control only.",
+    "crates/librefang-kernel/src/kernel/cron_tick.rs": "CronAction AgentTurn has no task-board identity; unchanged, no prompt parsing.",
+    "crates/librefang-kernel/src/kernel/accessors.rs": "Existing sweep invokes modified reconcile_pending_task_wakes, now reconciles selected originals even when grace=0; schema owns reset exclusions.",
+    "crates/librefang-api/src/routes/network.rs": "Existing REST send creates fresh A2A UUID, no supplied selected ID. Get/cancel delegate to changed exact-owner safe handlers; lease retained for Task7."
+  },
+  "limitations": [
+    "Source authoring only; no compiler, tests, build, lint, formatter, service or gate executed.",
+    "Targeted TaskPosted workflow requires actual registered assigned agent; unassigned targeted workflow is explicitly unsupported.",
+    "Native ordinary reset/retry policy remains; no native effect-free replay guarantee.",
+    "Automated reconciliation reads committed original private outcome only; it does not invent scheduler credentials or remote transport. Missing A2A/transport remains unknown.",
+    "No cross-database atomicity. Final full-stack provider/router/effect verification remains required."
+  ],
+  "createdAt": "2026-10-06T16:37:23.235Z"
+}

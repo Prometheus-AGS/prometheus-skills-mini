@@ -19,3 +19,9 @@ After an immutable source/schema handoff, root allocates feature wiring: origina
 ## Acceptance source and pending gates
 
 Author paused-preflight/native-wake and reverse-winner races, restart intent-before-A2A/admission, outcome-before-taskboard crash reconciliation, stale/reset/retry/PATCH/retention races and native legacy control. No runtime gate before the complete phase production/scenario delivery. Do not touch D0 diagnostics/session manager, original main checkouts, dependencies or shared services. Source handoff does not close release/shipping/C05 gates.
+
+## Native claim refinement accepted at source interface handoff
+
+Use existing pending→in_progress CAS inside the exact-list IMMEDIATE wake transaction; returned rows are already claimed and only new winners reach the targeted model prompt. Persist a tagged native harness classification too: leaving payload empty would let stale reset/retry erase prior native execution provenance and permit later UAR selection on an unknown native effect. Native retry retains existing policy and status CAS; no new settlement token/recovery design. Selected intent always conflicts with original native classification even if status later becomes pending. Supported native payload remains eligible for existing native mutations; selected and unknown payload excluded by typed transactional classification and compare of original bytes, not unsafe JSON SQL assumptions. Private A2A and existing native status keep separate authorities.
+
+Exact schema export addition accepted: crates/librefang-memory/src/lib.rs reexports substrate::task_dispatch so feature callers can name the typed API. No other lib.rs or backend edits.

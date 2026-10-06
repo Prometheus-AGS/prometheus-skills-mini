@@ -291,6 +291,18 @@
       "projectionSourceComplete": {
         "childRevision": 42,
         "scope": "All three source tasks complete, acceptance remains pending"
+      },
+      "revisionSourceFollowup": {
+        "paths": [
+          "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
+          "scripts/gates/bauar-secret-projection.ts",
+          "scripts/gates/bauar-secret-projection-revision.ts"
+        ],
+        "scope": "Stop treating client per-run artifactDigest as provider-authoritative revision. Provider R4 normalizes inline artifact. Consume actual run inspection agent_revision for comparison/paired admission source scenarios; source-link/source conflict hashes remain client-local. Add cohesive new gate support only by exact requested claim.",
+        "status": "allocated source followup before final gate; child source3 historical handoff remains superseded for this slice",
+        "providerReceipt": "evidence/execute/uar-capture-authoring.md R4",
+        "fixture": "Cohesive catalog/run race and passive actual IncomingMessage /prepare observer; delegate original emit unchanged, scope exact bridge URL from actual captured run, no request/auth/effect mutation or fabricated body. Compare actual prepare catalogRevision and executingRunId against actual run inspection; restore observer in finally. Do not retain raw credential or prepare argument bodies in evidence.",
+        "childTask": "boss-bauar-secret-projection/6"
       }
     },
     "bossfang": {
@@ -372,11 +384,13 @@
         "paths": [
           "crates/librefang-memory/src/substrate.rs",
           "crates/librefang-memory/src/substrate/task_dispatch.rs",
-          "crates/librefang-memory/src/substrate/task_dispatch_tests.rs"
+          "crates/librefang-memory/src/substrate/task_dispatch_tests.rs",
+          "crates/librefang-memory/src/lib.rs"
         ],
         "contract": "evidence/execute/task6-dispatch-intent-contract.md",
         "handoff": "Immutable schema API source required before feature wiring",
-        "status": "accepted source allocation; gates pending"
+        "status": "accepted source allocation; gates pending",
+        "export": "Surgical pub reexport substrate::task_dispatch typed APIs only; no unrelated wiring"
       }
     }
   },

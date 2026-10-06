@@ -47,6 +47,11 @@
         "name": "bauar_receipt_projection",
         "minimumCases": 3,
         "status": "source-handoff"
+      },
+      {
+        "name": "bauar_skill_selection",
+        "minimumCases": 1,
+        "status": "observed-pass"
       }
     ],
     "requiredEvidence": [
@@ -79,7 +84,7 @@
       "scope": "cargo check no-default-features server-full main binary; no runtime or package certification"
     },
     "metadataSelection": {
-      "status": "coherent source correction02 released; failed-only sidecar03 build active",
+      "status": "sidecar03, named compile12 and actual private KV scenario PASS; desktop08 returned exact selected skill before approval failure",
       "scopeAcceptance": "skill-metadata-correction-scope-acceptance.json",
       "design": "skill-selection-metadata-correction-design.md",
       "observedPutFailure": "final-gates/boss-approval-client-runtime-06.json",
@@ -89,7 +94,12 @@
       "newFileFormatting": "final-gates/uar-selection-format-check-01.json",
       "compilerBlocker": "skill-selection-observed-compiler-blocker.json",
       "managerCorrection": "skill-selection-manager-correction.json",
-      "activeBuild": "final-gates/boss-uar-sidecar-profile-build-03.json"
+      "activeBuild": "final-gates/boss-uar-sidecar-profile-build-03.json",
+      "compilerManifest": "boss-uar-sidecar-profile-build-03-manifest.json",
+      "namedCompile": "final-gates/uar-selection-compile-12.json",
+      "namedCompileManifest": "uar-selection-compile-12-manifest.json",
+      "runtimeAcceptance": "skill-selection-runtime-acceptance.json",
+      "runtimeReceipt": "final-gates/uar-selection-runtime-01.json"
     }
   },
   "boss": {
@@ -115,7 +125,8 @@
       "final-gates/boss-electron-utility-build-01.json",
       "final-gates/boss-electron-current-build-02.json",
       "final-gates/boss-electron-current-build-03.json",
-      "final-gates/boss-electron-current-build-04.json"
+      "final-gates/boss-electron-current-build-04.json",
+      "final-gates/boss-electron-current-build-05.json"
     ],
     "typecheckReceipts": [
       "final-gates/boss-typecheck-node-02.json",
@@ -124,9 +135,10 @@
       "final-gates/boss-typecheck-aicore-01.json",
       "final-gates/boss-typecheck-node-03.json",
       "final-gates/boss-typecheck-node-04.json",
-      "final-gates/boss-typecheck-e2e-02.json"
+      "final-gates/boss-typecheck-e2e-02.json",
+      "final-gates/boss-typecheck-node-05.json"
     ],
-    "runtimeStatus": "runtime06 actual UAR HTTP408 skill_binding_update PUT agent_skills; subsequent catalog GET not reached. Metadata-only producer correction active; no approval PASS",
+    "runtimeStatus": "Desktop08 passed startup and exact post-selection assertion; failed before malformed-approval capture assertions with fixed provider no-effect refusal. Cause unestablished; bounded fixture counters active, no approval PASS.",
     "nativeSqlite": {
       "status": "observed-isolated-abi149-build-and-publication",
       "buildReceipt": "final-gates/boss-sqlite-electron-abi-build-01.json",
@@ -140,17 +152,18 @@
       "bundledCurrentUar": "No supported dirty-current-source staging; existing local preparer and independent after-pack check bind the clean local pin; canonical packaging binds existing release source. Requires legitimate packaging contract/pin handover, not weakening validation."
     },
     "sidecarProfile": {
-      "status": "observed-build-pass-development-only",
-      "receipt": "final-gates/boss-uar-sidecar-profile-build-01.json",
-      "compilerManifest": "boss-uar-sidecar-profile-build-01-manifest.json",
-      "features": "server-full; no test-probes; no defaults",
-      "payloadManifestSha256": "b989a38f0c162ced4820135af56434ebb2c41bcf028c1be275ca2e8325433663",
-      "executableSha256": "cfb1734885daf33f0a1cad139538ad087868094625445455cb755d2c57778e18",
+      "status": "observed-build-pass-development-only-metadata-correction",
+      "receipt": "final-gates/boss-uar-sidecar-profile-build-03.json",
+      "compilerManifest": "boss-uar-sidecar-profile-build-03-manifest.json",
+      "features": "server-full; no test-probes/defaults",
+      "payloadManifestSha256": "979288782ad68fcbd20e91c64689c7989300b1588c8c89c980c93548886c3e47",
+      "executableSha256": "4e7c440d5baa0140d909becdb1440c73611e013b48f963507f65374170abf736",
       "resourceFileCount": 11,
       "releaseCertified": false
     },
     "startupDiagnostic": "desktop-startup-milestone-diagnostic/receipt.json",
-    "skillStageDiagnostic": "desktop-skill-update-stage-diagnostic/receipt.json"
+    "skillStageDiagnostic": "desktop-skill-update-stage-diagnostic/receipt.json",
+    "startupClassificationDiagnostic": "desktop-startup-json-classification/receipt.json"
   },
   "bossfang": {
     "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
@@ -176,7 +189,7 @@
       "Python branding checker unavailable under Node-only rule; no port/install"
     ],
     "targetDir": "/tmp/librefang-target-bauar-delivery-001",
-    "observedBlocker": "HARNESS23 reached12 Node cases then kernel contract SIGABRT, cause not established. Four rejected continuations positively correlated to exact ActionIntent nudge/original native prefix/emitted assistant. Bounded fixture correction active, no full PASS",
+    "observedBlocker": "HARNESS24 failed-only retry active, exact continuation correlation and documented fixture stack floors preserved; no full harness PASS",
     "terminalObservationCorrection": "harness-terminal-proof-correction-handoff/receipt.json",
     "timeoutDiagnostic": "harness-rpc-operation-diagnostic/receipt.json",
     "a2aSnapshotCorrection": "harness-a2a-available-observation-correction/receipt.json",
@@ -189,12 +202,18 @@
     "fixtureStackCorrection": "desktop-schema-and-host-stack-correction/receipt.json",
     "nativePeerCorrection": "harness-native-clock-envelope-correction/receipt.json",
     "selectedCliBuild": "final-gates/bossfang-selected-cli-build-01.json",
-    "nativeContinuationDiagnostic": "harness-native-continuation-diagnostic/receipt.json"
+    "nativeContinuationDiagnostic": "harness-native-continuation-diagnostic/receipt.json",
+    "selectedCliStatus": "Selected CLI build command PASS; owned-library clippy failed on unchanged storage dependency baseline, no waiver",
+    "selectedCliManifest": "bossfang-selected-cli-build-01-manifest.json",
+    "activeClippy": "final-gates/bossfang-owned-libraries-clippy-01.json",
+    "clippyBaselineAttribution": "bossfang-clippy-baseline-attribution-01.json"
   },
   "certification": {
     "D0": "blocked automatic approval review; no eligible receipt or permitted signed waiver supplied",
     "finalExecute": "Open until every required task/gate resolved; source handoff is not PASS",
-    "reflect": "Requires later human handover after Execute completion"
+    "reflect": "Requires later human handover after Execute completion",
+    "requiredLint": "Failed/unwaived; canonical blocker and blocked certification rev181; no unrelated storage cleanup",
+    "canonicalReceipt": "canonical-certification-blocked-lint.json"
   },
   "deliveryCheckpoint": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/execute-source-readiness.json",
   "startedAt": "2026-10-06T17:07:49.498Z",
@@ -207,7 +226,7 @@
     "bossfang": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42",
     "evidence": "Actual cargo compiler-artifact filenames, observed 2026-10-06; directories distinct, existing machine build/cache configuration inherited"
   },
-  "updatedAt": "2026-10-06T21:31:26.835Z",
+  "updatedAt": "2026-10-06T21:58:02.190Z",
   "observedRuntimeResults": "partial-runtime-results.json",
   "formatting": {
     "receipt": "final-gates/uar-format-check-01.json",
@@ -225,8 +244,8 @@
     "Shared OpenSpec stale owner ESRCH; lock retained by rename, no product/config/service/KBD mutation"
   ],
   "canonicalCheckpoint": {
-    "parentRevision": 179,
+    "parentRevision": 181,
     "bossfangRevision": 71,
-    "status": "execute-in-progress; task9active not complete"
+    "status": "Execute in progress; certification blocked at rev181; independent correction work continues"
   }
 }

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:07:41.125Z",
+  "kind": "source-complete provider-only fixed refusal classifier diagnostic",
+  "observedFailure": "final-gates/boss-approval-client-runtime-09.json",
+  "productionChanged": false,
+  "file": "tests/e2e/gates/support/uarExperienceProvider.ts",
+  "sha256": "148ab03162fda398e4b54b0edd6964219205a71cdf918c5d523720010ed4a6d4",
+  "bytes": 7659,
+  "lines": 167,
+  "sourceEvidence": [
+    "UAR src/llm/orchestrator.rs970-1001 and2598-2657",
+    "UAR src/uar/runtime/tool_admission/mod.rs392-473 and739-764",
+    "UAR src/uar/runtime/tool_admission/http.rs188-196",
+    "Boss UarHostToolAdmission.ts200-234"
+  ],
+  "preserved": "Original provider detector/refusals, exact-ID assertions, stream interception and genuine effect checks unchanged",
+  "execution": "pending failed-only desktop10"
+}

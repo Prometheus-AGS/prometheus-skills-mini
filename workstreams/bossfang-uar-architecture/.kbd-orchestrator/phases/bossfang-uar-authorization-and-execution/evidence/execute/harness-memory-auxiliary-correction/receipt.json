@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:06:51.193Z",
+  "kind": "complete fixture-only observed traffic classification correction",
+  "observedFailure": "final-gates/bossfang-harness-runtime-25.json",
+  "productionChanged": false,
+  "files": [
+    {
+      "file": "scripts/integration/bauar-harness-peer.mjs",
+      "sha256": "3d6c21811fec39ef25e939a9d4b80a1b44eb34775b227b37e3c53ae5d476d201",
+      "bytes": 19846,
+      "lines": 327
+    },
+    {
+      "file": "scripts/integration/bauar-harness-native.mjs",
+      "sha256": "cad2ad9307fb5856907a9fa6faeb5de98e0a317fd4a5b24ffdeb8995bcdcc137",
+      "bytes": 11447,
+      "lines": 164
+    },
+    {
+      "file": "scripts/integration/bauar-harness-gate.mjs",
+      "sha256": "d14014728813e502633afebc46434c5ead860f2bab8724a84ce369ceab6988fc",
+      "bytes": 30748,
+      "lines": 482
+    }
+  ],
+  "actualProductionContract": [
+    "crates/librefang-runtime/src/proactive_memory.rs:248-323 and568-581",
+    "crates/librefang-types/src/memory.rs:400-407"
+  ],
+  "strictEnvelope": "Exact full extraction system, exactly system/user messages, exact outer prefix, nonempty trailing-newline conversation, json_object format only, no tools",
+  "physicalAccounting": "Every accepted request retained with actual marker membership; one native task input required; exhaustive task/auxiliary/continuation totals and unknown zero",
+  "response": "Actual deterministic auxiliary model response {memories:[],relations:[]}; no tool/effect/execution receipt synthesized",
+  "execution": "pending failed-only runtime26"
+}

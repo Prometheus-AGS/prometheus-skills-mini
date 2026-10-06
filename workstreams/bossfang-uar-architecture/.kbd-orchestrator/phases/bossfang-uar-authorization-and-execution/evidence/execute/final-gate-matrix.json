@@ -79,11 +79,17 @@
       "scope": "cargo check no-default-features server-full main binary; no runtime or package certification"
     },
     "metadataSelection": {
-      "status": "source-correction-active-no-new-runtime-result",
+      "status": "coherent source correction02 released; failed-only sidecar03 build active",
       "scopeAcceptance": "skill-metadata-correction-scope-acceptance.json",
       "design": "skill-selection-metadata-correction-design.md",
       "observedPutFailure": "final-gates/boss-approval-client-runtime-06.json",
-      "priorSidecarReflectsCorrection": false
+      "priorSidecarReflectsCorrection": false,
+      "handoff": "skill-selection-source-handoff.json",
+      "freeze": "source-inventory-metadata-delivery-02.json",
+      "newFileFormatting": "final-gates/uar-selection-format-check-01.json",
+      "compilerBlocker": "skill-selection-observed-compiler-blocker.json",
+      "managerCorrection": "skill-selection-manager-correction.json",
+      "activeBuild": "final-gates/boss-uar-sidecar-profile-build-03.json"
     }
   },
   "boss": {
@@ -116,7 +122,9 @@
       "final-gates/boss-typecheck-web-02.json",
       "final-gates/boss-typecheck-e2e-01.json",
       "final-gates/boss-typecheck-aicore-01.json",
-      "final-gates/boss-typecheck-node-03.json"
+      "final-gates/boss-typecheck-node-03.json",
+      "final-gates/boss-typecheck-node-04.json",
+      "final-gates/boss-typecheck-e2e-02.json"
     ],
     "runtimeStatus": "runtime06 actual UAR HTTP408 skill_binding_update PUT agent_skills; subsequent catalog GET not reached. Metadata-only producer correction active; no approval PASS",
     "nativeSqlite": {
@@ -199,7 +207,7 @@
     "bossfang": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42",
     "evidence": "Actual cargo compiler-artifact filenames, observed 2026-10-06; directories distinct, existing machine build/cache configuration inherited"
   },
-  "updatedAt": "2026-10-06T21:14:55.584Z",
+  "updatedAt": "2026-10-06T21:31:26.835Z",
   "observedRuntimeResults": "partial-runtime-results.json",
   "formatting": {
     "receipt": "final-gates/uar-format-check-01.json",

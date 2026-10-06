@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T21:28:48.025Z",
+  "build": "boss-uar-sidecar-profile-build-02",
+  "status": "failed command complete; accepted manager-only failure mapping in source authoring",
+  "error": {
+    "code": "E0277",
+    "file": "src/uar/runtime/manager.rs",
+    "line": 3906,
+    "reason": "RunSkillBindings::capture await? inside existing String-returning run method"
+  },
+  "sourceBinding": "source-inventory-metadata-delivery-01.json",
+  "correction": "Existing terminal-run error/status/RunDone/cancellation cleanup; preserve same run-ID return and inherited capture",
+  "writer": "await actual command exit before source correction",
+  "scope": "Existing observed selection correction, no D0",
+  "commandFinishedAt": "2026-10-06T21:29:07.952Z",
+  "exitCode": 101
+}

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "status": "source-only-correction-released",
+  "at": "2026-10-06T21:30:03.161Z",
+  "observedFailure": "sidecar02 exit101 E0277: execute_request_inner returns String; fallible capture cannot use ?",
+  "writerExitConfirmedByCoordinator": "2026-10-06T21:29:07.952Z",
+  "path": "/Users/gqadonis/.claude/worktrees/bauar-uar/src/uar/runtime/manager.rs",
+  "previousSha256": "55ff4407c9a05e44ec9c15c67b68f5241b0dde43323520faae74aef5f270499f",
+  "sha256": "a786f4830611f92b0c718c474ae392efda8eb89ccf1fb4ca59e0947a1db40d17",
+  "lines": 7543,
+  "scope": "Only fresh RunSkillBindings capture None arm. Inherited arm unchanged. Existing Error/RunDone/cancellation cleanup idiom; fixed diagnostic only.",
+  "tests": false,
+  "builds": false,
+  "formatter": false,
+  "originalManifestPreserved": true
+}

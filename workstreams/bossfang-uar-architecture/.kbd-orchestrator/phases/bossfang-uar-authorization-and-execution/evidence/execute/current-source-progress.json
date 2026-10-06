@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "time": "2026-10-06T21:20:44.743Z",
+  "time": "2026-10-06T21:34:27.718Z",
   "kind": "canonical status and observed command receipts; not certification",
   "canonical": {
     "schemaVersion": "2",
@@ -3699,7 +3699,7 @@
   ],
   "pendingPermission": "None for continuing approved eligible Execute work; later Reflect requires human handover",
   "D0": "Rejected, excluded and not retried",
-  "observedBlocker": "Completed metadata-only source correction; sidecar02 build and affected Boss node04/e2e02 checks active. Harness23 diagnostic reached12cases then unclassified kernel SIGABRT; exact continuation/fixture-stack correction frozen. Complete desktop/harness/package/review acceptance pending; no new primary PASS",
+  "observedBlocker": "Sidecar02 failedE0277, manager-only terminal cleanup correction released/frozen; failed-only sidecar03 active. Affected desktop main/e2e checks PASS. BFCLI progressed to actual project crates. Complete desktop/harness/package/review acceptance pending;18retained primaryPASS",
   "observedCommands": [
     {
       "schemaVersion": 1,
@@ -4044,6 +4044,26 @@
     },
     {
       "schemaVersion": 1,
+      "label": "boss-typecheck-e2e-02",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "--max-old-space-size=8192",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.e2e.json"
+      ],
+      "startedAt": "2026-10-06T21:20:03.595Z",
+      "finishedAt": "2026-10-06T21:21:01.085Z",
+      "exitCode": 0,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-typecheck-e2e-02.log",
+      "result": "command-completed-not-yet-case-certified",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
       "label": "boss-typecheck-node-01",
       "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
       "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
@@ -4102,6 +4122,27 @@
       "exitCode": 0,
       "signal": null,
       "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-typecheck-node-03.log",
+      "result": "command-completed-not-yet-case-certified",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-typecheck-node-04",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.node.json",
+        "--composite",
+        "false"
+      ],
+      "startedAt": "2026-10-06T21:20:03.032Z",
+      "finishedAt": "2026-10-06T21:24:13.005Z",
+      "exitCode": 0,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-typecheck-node-04.log",
       "result": "command-completed-not-yet-case-certified",
       "buildEnvironment": {}
     },
@@ -4172,6 +4213,32 @@
       "signal": null,
       "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-uar-sidecar-profile-build-01.log",
       "result": "command-completed-not-yet-case-certified",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-uar-sidecar-profile-build-02",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "cargo",
+      "args": [
+        "build",
+        "--offline",
+        "--locked",
+        "-p",
+        "universal-agent-runtime",
+        "--no-default-features",
+        "--features",
+        "server-full",
+        "--bin",
+        "uar-sidecar",
+        "--message-format=json"
+      ],
+      "startedAt": "2026-10-06T21:19:48.078Z",
+      "finishedAt": "2026-10-06T21:29:07.952Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-uar-sidecar-profile-build-02.log",
+      "result": "failed",
       "buildEnvironment": {}
     },
     {
@@ -6137,6 +6204,28 @@
       "buildEnvironment": {
         "RUST_MIN_STACK": "33554432"
       }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-selection-format-check-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "rustfmt",
+      "args": [
+        "--check",
+        "--edition",
+        "2024",
+        "--config",
+        "skip_children=true",
+        "src/uar/runtime/skills/service/selection.rs",
+        "tests/bauar_skill_selection.rs"
+      ],
+      "startedAt": "2026-10-06T21:21:23.941Z",
+      "finishedAt": "2026-10-06T21:21:25.547Z",
+      "exitCode": 0,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-selection-format-check-01.log",
+      "result": "command-completed-not-yet-case-certified",
+      "buildEnvironment": {}
     },
     {
       "schemaVersion": 1,

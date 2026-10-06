@@ -4,6 +4,10 @@
 
 Keep resource credentials, delegated identities and effect authorization within their intended HTTP or process trust boundaries without leaking credentials into agent-visible output.
 
+## Applicability
+
+The user selected no external remote MCP receiver, IdP or new custodian on 2026-10-06. Named-receiver and custody requirements below constrain future deployments; they do not require inventing a receiver for this phase. Application-owned configuration and common runtime boundaries remain in scope. No external deployment certification is claimed.
+
 ## ADDED Requirements
 
 ### Requirement: Named receiver authorization contract
@@ -109,4 +113,15 @@ Local desktop and remote multi-user acceptance SHALL be recorded separately with
 
 #### Scenario: Local passes but remote is blocked
 - **WHEN** local effect-boundary scenarios pass while a remote receiver or custody contract is missing
-- **THEN** local evidence is recorded within scope and remote certification remains blocked; the full phase is not declared delivered.
+- **THEN** local evidence is recorded within scope and remote deployment certification remains blocked; when external receivers are explicitly excluded by the user, selected common-boundary phase completion does not certify them.
+
+### Requirement: Application owns MCP configuration
+The runtime SHALL ship no default MCP server instances. Explicit application-supplied catalog and run-grant configuration SHALL remain supported; developer tooling configuration SHALL remain separate.
+
+#### Scenario: Runtime has no presets
+- **WHEN** UAR starts with its shipped mcp.json
+- **THEN** no default Tavily, Surreal Memory or Kreuzberg instance is configured or launched.
+
+#### Scenario: Application supplies an explicit server
+- **WHEN** the application supplies a valid catalog and owner/run-scoped grant
+- **THEN** the runtime uses that explicit configuration subject to its existing authority boundaries rather than restoring a hidden default.

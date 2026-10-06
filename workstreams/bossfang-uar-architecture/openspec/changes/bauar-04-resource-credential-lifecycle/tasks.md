@@ -1,6 +1,6 @@
 # Tasks
 
-Common contracts are specified now. Receiver-specific implementation is blocked on named receiver and custody inputs; these tasks cannot be marked complete by a generic fixture. Plan must bind product child changes and exact file owners before dispatch.
+Execute scope amended by the user on 2026-10-06: no external receiver/IdP/custodian is selected; the application owns configuration. Remove runtime MCP defaults and retain explicit application configuration. Parent numeric task IDs are retained with revised titles below. No external deployment certification is claimed.
 
 ## 1. Common resource and receiver authority
 
@@ -9,17 +9,17 @@ Common contracts are specified now. Receiver-specific implementation is blocked 
 - [ ] 1.3 Preserve stdio captured environment/process supervision and reject required unavailable sandbox capabilities. Include environment-canary and cancellation/shutdown scenarios/docs; verify no unrelated parent secrets reach the child and uncertain cleanup cannot silently rerun work.
 - [ ] 1.4 Apply scoped secret projection policy across UAR/The Boss transport errors, event persistence, model inputs and deliberate known-credential tool echoes. Include synthetic canary tracing/docs; verify ordinary output is redacted without claiming universal DLP.
 
-## 2. Receiver-specific prerequisite and implementation
+## 2. Application-owned configuration and removal of runtime defaults
 
-- [ ] 2.1 Resolve REMOTE-RECEIVER-INVENTORY with non-secret names/URLs, issuer/audience or introspection, scopes/actions, tenant/actor model, flow, revocation, host and owner. Verify each real receiver has a reviewed contract and a repository/endpoint owner; no sample config or token label substitutes.
-- [ ] 2.2 Resolve REMOTE-RESOURCE-SECRET-STORE with approved existing custodian, encrypted owner/tenant schema, key custody/rotation/deletion and failure policy. Verify a selected storage category/adapter and acceptance supplement; add no daemon or plaintext fallback.
-- [ ] 2.3 Only after 2.1–2.2 and approved receiver-specific spec supplement, integrate supported acquisition/refresh/revocation in the selected existing host. Reuse clients where possible; promote cand-004 only with a justified compatibility decision. Include credential lifecycle docs/scenarios; verify UAR consumes immutable run grants and the original login JWT is not blindly forwarded.
-- [ ] 2.4 Only after the same prerequisites, reconcile each receiving server's actual authorization implementation with its contract and implement an owner-approved delta if needed. Include actual-token wrong audience/expiry/scope/cross-tenant scenarios; verify the receiver rejects independently of UAR grant admission and supports the chosen service/delegated mode.
+- [ ] 2.1 Record the explicit empty external receiver and identity-provider scope and reconcile all default runtime MCP presets. Verify application-managed servers and developer tooling configuration are distinguished from shipped runtime defaults.
+- [ ] 2.2 Record application-owned credential custody and preserve its existing storage boundaries. Verify no new resource-token vault, credential acquisition service, plaintext fallback or daemon is introduced.
+- [ ] 2.3 Remove all shipped UAR runtime MCP server presets from mcp.json while preserving explicit catalog/grant configuration. Include empty-default and application-supplied configuration scenarios and migration documentation.
+- [ ] 2.4 Reconcile common resource authorization contracts with the selected application-owned configuration. Verify no original login JWT is implicitly forwarded, explicit configuration remains supported, and no external receiver deployment is represented as certified.
 
 ## 3. Completed boundary acceptance
 
-- [ ] 3.1 After all selected production delivery, run the common and receiver-specific matrices with actual production routers/validators, safe effects and synthetic credentials. Verify separate local desktop and remote multi-user evidence including renewal/revoke, secrets in logs/events/model capture, stdio lifecycle and Bossfang inbound classification.
-- [ ] 3.2 Execute required platform/build checks at the agreed completed boundary and record deployment-specific limitations. Verify the full phase remains incomplete while remote receiver/custody acceptance is blocked; do not substitute static inspection, old binaries or parent task checkmarks.
+- [ ] 3.1 After all selected production delivery, run the selected common-boundary matrices with actual production routers/validators, safe effects and synthetic credentials; verify empty runtime defaults and application-supplied configuration. Verify separate local desktop and remote multi-user evidence including renewal/revoke, secrets in logs/events/model capture, stdio lifecycle and Bossfang inbound classification.
+- [ ] 3.2 Execute required platform/build checks at the agreed completed boundary and record deployment-specific limitations. Verify only the selected phase scope is claimed complete; external receiver deployment certification remains unavailable, and static inspection, old binaries or parent task checkmarks do not substitute for selected acceptance.
 
 ## Workflow follow-up
 

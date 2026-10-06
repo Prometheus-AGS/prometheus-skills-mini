@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "kind": "source-authoring-handoff",
+  "name": "host-binding-field-diagnostic",
+  "createdAt": "2026-10-06T22:54:09.602Z",
+  "source": {
+    "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+    "path": "tests/e2e/gates/bauarHostAdmissionDiagnostic.ts",
+    "snapshot": "bauarHostAdmissionDiagnostic.ts",
+    "beforeSha256": "eda008eb910abdc4b554f3ecf3f687a9aaf568f5bbf24ce906d9a3412d395d6d",
+    "afterSha256": "4821812697701522da0570a97a8873a9edf9035b1063d8f081f2d1ab143018c6",
+    "beforeLines": 145,
+    "afterLines": 195
+  },
+  "observedProblem": {
+    "gate": "boss-approval-client-runtime-13",
+    "category": "binding_mismatch",
+    "hostState": "invalidated",
+    "submittedOutcome": "failed",
+    "actualToolsCalls": 1,
+    "actualRevalidationRequests": 1,
+    "revalidationRejected": 0,
+    "failedComparison": "unestablished; this diagnostic is source only"
+  },
+  "comparisonSources": [
+    {
+      "path": "src/main/ai/runtime/uar/UarHostToolAdmission.ts",
+      "lines": "125-135,486-488",
+      "role": "Host compares exact metadata, stored identity, mounted/native/provider names and canonical argument digest; legacy provider derivation replaces invalid characters only."
+    },
+    {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "path": "src/mcp/registry.rs",
+      "lines": "1488-1518",
+      "role": "UAR iterates Unicode scalar values, replaces non-ASCII-alphanumeric/underscore/hyphen with underscore, prefixes t when first character is not ASCII alphabetic, and for names longer than64 uses first51 sanitized characters plus underscore plus first6 SHA256 bytes of original UTF-8 name as12 lowercase hex characters."
+    }
+  ],
+  "fields": [
+    "correlated",
+    "versionMatches",
+    "runtimeEpochMatches",
+    "hostEpochMatches",
+    "authorityRevisionMatches",
+    "invocationIdMatches",
+    "mountedServerMatches",
+    "nativeToolMatches",
+    "providerNameMatchesBossLegacy",
+    "providerNameMatchesUarCanonical",
+    "argumentDigestMatches"
+  ],
+  "capture": {
+    "authority": "Passive actual current-run advertised private routes, first actual /claim invocation and actual tools/call.",
+    "output": "Boolean-only dispatchBindings entries added to existing fixed diagnostic summary.",
+    "privateOnly": [
+      "mounted route and name",
+      "original invocation",
+      "admission correlation",
+      "arguments and digest intermediates"
+    ],
+    "cleanup": "Private maps cleared on restore; original fetch, IncomingMessage.emit and ServerResponse.end restored by existing fixture finally path.",
+    "delegation": "Original calls, bytes and return values delegated unchanged; no added request, retry, execution or debugger."
+  },
+  "unchanged": {
+    "production": true,
+    "assertions": true,
+    "authorityChecks": true,
+    "refusals": true,
+    "timeouts": true,
+    "otherFiles": true
+  },
+  "validation": {
+    "testsRun": false,
+    "buildsRun": false,
+    "gatesRun": false,
+    "sourceOnly": true,
+    "acceptance": "pending root-controlled failed-case gate; no PASS claim"
+  },
+  "limits": [
+    "UAR canonical comparison is diagnostic only and never changes authenticated provider names.",
+    "No raw IDs, receipt values, tokens, URLs, arguments, message suffixes or hashes of private request values are emitted.",
+    "Uncorrelated observations report correlated=false; observer incompleteness remains explicit."
+  ]
+}

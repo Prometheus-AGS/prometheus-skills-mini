@@ -1,0 +1,19 @@
+{
+  "kind": "immutable artifact classification clarification",
+  "previousName": "proposed-UarRuntimeConnection.ts",
+  "currentName": "proposed-UarRuntimeConnection.ts.txt",
+  "sha256": "5b0e002e326761eb9ea59f71bbc072bb86a57b995f0dd5ff68fc791e0109df3e",
+  "lines": 722,
+  "classification": "Byte-exact proposed incumbent source plaintext; not an executable artifact or new production module.",
+  "scope": "Two surgical sites in existing incumbent UarRuntimeConnection.ts; full plaintext snapshot is review evidence only.",
+  "productApplied": false,
+  "priorArtifacts": "Existing receipt.json and patch.json preserved unchanged.",
+  "sourceCause": {
+    "observedCode": "SECRET_IN_EXECUTABLE_ARTIFACT",
+    "providerReached": false,
+    "cause": "Display connected_instance is copied from the same endpoint as captured credential.base_url.",
+    "rawValuesRetained": false
+  },
+  "newlineCount": 721,
+  "lineCountConvention": "722 split lines including terminal empty line; 721 newline-terminated lines."
+}

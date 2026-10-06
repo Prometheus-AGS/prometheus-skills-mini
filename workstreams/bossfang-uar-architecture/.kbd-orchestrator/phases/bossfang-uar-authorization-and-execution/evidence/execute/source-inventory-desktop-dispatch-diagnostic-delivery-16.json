@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "time": "2026-10-06T23:24:24.344Z",
+  "time": "2026-10-06T22:53:52.699Z",
   "kind": "Current source binding, not test result; immutable gate handoffs preserve executed input",
   "records": [
     {
@@ -591,7 +591,7 @@
       "name": "boss",
       "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
       "head": "e2ae2ce21245030293c0bea96ed02ae853b820a7",
-      "diffSha256": "f398dd498fdd7c0b29bdaeb3f6a662ee6e6246059d98dde34b8f38e8378e3182",
+      "diffSha256": "e702e2ee3fd147565d7d39719e39b7e223ba5892e5b8bb5f749e62534692eec0",
       "files": [
         {
           "file": "scripts/gates/bauar-approval-client.ts",
@@ -610,13 +610,13 @@
         },
         {
           "file": "scripts/gates/bauar-secret-projection-revision.ts",
-          "sha256": "c4ce8de875e949d9351a4e5d7db2e82bc7887869b83b1a0e423ab07ec619f6f0",
-          "bytes": 14775
+          "sha256": "31b13e9f1d0e555a95908a9609c45ffeed5bc84d818ee5aff3b46c0b9376dbc7",
+          "bytes": 11161
         },
         {
           "file": "scripts/gates/bauar-secret-projection.ts",
-          "sha256": "51b994cc92ae3296ee4b97f171acfe8d9cc3388cb9451dafa7e4a0b4d3fa8eda",
-          "bytes": 27470
+          "sha256": "f78ef2b9ee326bdd8d6f4cbf566c431036806f5ace7846800d67d70cb92d42df",
+          "bytes": 26825
         },
         {
           "file": "scripts/gates/uar-exact-tool-admission.ts",
@@ -670,8 +670,8 @@
         },
         {
           "file": "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
-          "sha256": "5b0e002e326761eb9ea59f71bbc072bb86a57b995f0dd5ff68fc791e0109df3e",
-          "bytes": 28202
+          "sha256": "772c22ddb96a8f8ff021aecc1cffa6f52cf7170e616e3f34c46412966eedf006",
+          "bytes": 27869
         },
         {
           "file": "src/main/ai/runtime/uar/uarSecretProjection.ts",
@@ -717,8 +717,8 @@
         },
         {
           "file": "src/main/ai/runtime/uar/UarHostToolAdmission.ts",
-          "sha256": "3df14c27411e3fba114a682a1de7038eb66f8072ff51602af9c54315964e40b9",
-          "bytes": 18900
+          "sha256": "af40c4b1112919b85a44871a2907dc1a8f99c69a6bb23805303072a5f5fb85ed",
+          "bytes": 18931
         },
         {
           "file": "src/main/ai/runtime/uar/uarHostClaimRevalidation.ts",
@@ -729,16 +729,6 @@
           "file": "tests/e2e/gates/bauarHostAdmissionDiagnostic.ts",
           "sha256": "4821812697701522da0570a97a8873a9edf9035b1063d8f081f2d1ab143018c6",
           "bytes": 11791
-        },
-        {
-          "file": "src/main/ai/runtime/uar/uarToolNames.ts",
-          "sha256": "d762396a1084904fe58d771403412abd448e8147b1d148a76196c6dd8e02025d",
-          "bytes": 711
-        },
-        {
-          "file": "scripts/gates/bauar-secret-projection-history.ts",
-          "sha256": "a12bd988258334bb3b876ef1b3f3cbe1524211d2cd59a75675cd5a21126167c0",
-          "bytes": 1892
         }
       ],
       "diffExclusions": [
@@ -752,7 +742,7 @@
       "name": "bossfang",
       "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
       "head": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
-      "diffSha256": "c971198b53791beb86a03ebd07115c14cc5c9f21e90540730f4f18ae14d50db1",
+      "diffSha256": "351810f66eadc4f9802538272ab51f977fe9267a81d3cf21814a5784c79d0f8a",
       "files": [
         {
           "file": "crates/librefang-api/Cargo.toml",
@@ -781,8 +771,8 @@
         },
         {
           "file": "crates/librefang-api/src/routes/network.rs",
-          "sha256": "cef991630f21ce6d1ca9a2fd7833c177b8efa22f1e2d0b51bd278c1b7f5fd156",
-          "bytes": 103546
+          "sha256": "3f079a2095e8f20b7c7fb512652666553e8071cd924c30dd71ebefa245d93cab",
+          "bytes": 103549
         },
         {
           "file": "crates/librefang-api/src/routes/task_queue.rs",
@@ -791,13 +781,13 @@
         },
         {
           "file": "crates/librefang-api/src/routes/uar_delegation.rs",
-          "sha256": "5f7a57b26e11e7b13924edd95864043b258bff1bbaaf5efd9e85ac31cea69f04",
-          "bytes": 20011
+          "sha256": "52db7cd0f6d53f524554ce425a77ecc2b89c08c15241b2a27564dc60cfcb7b83",
+          "bytes": 19872
         },
         {
           "file": "crates/librefang-api/src/routes/uar_delegation/connections.rs",
-          "sha256": "3be7097aa85335e856b624d8a6271200b013557f44b5791f7561009d24dbb3c9",
-          "bytes": 5704
+          "sha256": "47d62d54ce4d891ab6c5c9f108ff44745eea18f4fd7ea6974f762d8010711961",
+          "bytes": 5943
         },
         {
           "file": "crates/librefang-api/src/routes/uar_delegation/job_mapping.rs",
@@ -821,8 +811,8 @@
         },
         {
           "file": "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
-          "sha256": "a37225c1c0ec8b50ba9d06ba27ca68c48bc75f66ea2b11c3e469429f868b6436",
-          "bytes": 9406
+          "sha256": "8777351f2f1695e7b292298e7f8767194e9fcbadc636abbf81698e5e4b5b73f4",
+          "bytes": 9389
         },
         {
           "file": "crates/librefang-api/src/routes/uar/delegated_view_tests.rs",
@@ -1073,31 +1063,6 @@
           "file": "crates/librefang-channels/src/bridge.rs",
           "sha256": "ef41822f9cd0f7f026beedb10065ad94b973e112af4202e0bc7be462abc77895",
           "bytes": 642110
-        },
-        {
-          "file": "crates/librefang-api/src/routes/uar_delegation/diagnostic.rs",
-          "sha256": "2211d9c9913e492ce8b3f15ad7d52863dc346fd874f5627f260ada334a176ff2",
-          "bytes": 3062
-        },
-        {
-          "file": "crates/librefang-api/src/routes/uar_delegation/schema.rs",
-          "sha256": "aa09fca598e253d11a0449203be3e62745d532a0a4c30fbeefa2f644efdce3f2",
-          "bytes": 1257
-        },
-        {
-          "file": "crates/librefang-api/src/routes/channels.rs",
-          "sha256": "fb26536faf58a1c5b228fe68832e3eaa00f8b9768edeb8232f9de072ad361765",
-          "bytes": 173379
-        },
-        {
-          "file": "crates/librefang-api/src/channel_observers/control.rs",
-          "sha256": "dd565c196bc32908cca82391e73a4b7554f36391b12b9f013d17ff7527612096",
-          "bytes": 11618
-        },
-        {
-          "file": "crates/librefang-api/src/routes/sidecar_toml.rs",
-          "sha256": "892292d07005fe0a78a76fb9143cca4690fcb9b91806304c213913fadb975a55",
-          "bytes": 22457
         }
       ],
       "diffExclusions": [
@@ -1109,6 +1074,6 @@
   ],
   "priorBinding": "source-inventory-fixed-diagnostic-delivery-04.json",
   "corrections": [
-    "History assertion checkpoint only, unchanged source assertions/production app09"
+    "Complete fixture-only actual binding flags and projection stream fixed taxonomy; production app07 unchanged"
   ]
 }

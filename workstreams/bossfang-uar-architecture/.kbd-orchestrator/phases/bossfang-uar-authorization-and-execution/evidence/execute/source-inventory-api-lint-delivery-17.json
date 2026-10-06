@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "time": "2026-10-06T23:24:24.344Z",
+  "time": "2026-10-06T22:58:26.667Z",
   "kind": "Current source binding, not test result; immutable gate handoffs preserve executed input",
   "records": [
     {
@@ -591,7 +591,7 @@
       "name": "boss",
       "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
       "head": "e2ae2ce21245030293c0bea96ed02ae853b820a7",
-      "diffSha256": "f398dd498fdd7c0b29bdaeb3f6a662ee6e6246059d98dde34b8f38e8378e3182",
+      "diffSha256": "e702e2ee3fd147565d7d39719e39b7e223ba5892e5b8bb5f749e62534692eec0",
       "files": [
         {
           "file": "scripts/gates/bauar-approval-client.ts",
@@ -610,13 +610,13 @@
         },
         {
           "file": "scripts/gates/bauar-secret-projection-revision.ts",
-          "sha256": "c4ce8de875e949d9351a4e5d7db2e82bc7887869b83b1a0e423ab07ec619f6f0",
-          "bytes": 14775
+          "sha256": "31b13e9f1d0e555a95908a9609c45ffeed5bc84d818ee5aff3b46c0b9376dbc7",
+          "bytes": 11161
         },
         {
           "file": "scripts/gates/bauar-secret-projection.ts",
-          "sha256": "51b994cc92ae3296ee4b97f171acfe8d9cc3388cb9451dafa7e4a0b4d3fa8eda",
-          "bytes": 27470
+          "sha256": "f78ef2b9ee326bdd8d6f4cbf566c431036806f5ace7846800d67d70cb92d42df",
+          "bytes": 26825
         },
         {
           "file": "scripts/gates/uar-exact-tool-admission.ts",
@@ -670,8 +670,8 @@
         },
         {
           "file": "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
-          "sha256": "5b0e002e326761eb9ea59f71bbc072bb86a57b995f0dd5ff68fc791e0109df3e",
-          "bytes": 28202
+          "sha256": "772c22ddb96a8f8ff021aecc1cffa6f52cf7170e616e3f34c46412966eedf006",
+          "bytes": 27869
         },
         {
           "file": "src/main/ai/runtime/uar/uarSecretProjection.ts",
@@ -717,8 +717,8 @@
         },
         {
           "file": "src/main/ai/runtime/uar/UarHostToolAdmission.ts",
-          "sha256": "3df14c27411e3fba114a682a1de7038eb66f8072ff51602af9c54315964e40b9",
-          "bytes": 18900
+          "sha256": "af40c4b1112919b85a44871a2907dc1a8f99c69a6bb23805303072a5f5fb85ed",
+          "bytes": 18931
         },
         {
           "file": "src/main/ai/runtime/uar/uarHostClaimRevalidation.ts",
@@ -729,16 +729,6 @@
           "file": "tests/e2e/gates/bauarHostAdmissionDiagnostic.ts",
           "sha256": "4821812697701522da0570a97a8873a9edf9035b1063d8f081f2d1ab143018c6",
           "bytes": 11791
-        },
-        {
-          "file": "src/main/ai/runtime/uar/uarToolNames.ts",
-          "sha256": "d762396a1084904fe58d771403412abd448e8147b1d148a76196c6dd8e02025d",
-          "bytes": 711
-        },
-        {
-          "file": "scripts/gates/bauar-secret-projection-history.ts",
-          "sha256": "a12bd988258334bb3b876ef1b3f3cbe1524211d2cd59a75675cd5a21126167c0",
-          "bytes": 1892
         }
       ],
       "diffExclusions": [
@@ -1109,6 +1099,6 @@
   ],
   "priorBinding": "source-inventory-fixed-diagnostic-delivery-04.json",
   "corrections": [
-    "History assertion checkpoint only, unchanged source assertions/production app09"
+    "Observed required API clippy06 sites complete; source-only freeze, earlier H28 inputs preserved"
   ]
 }

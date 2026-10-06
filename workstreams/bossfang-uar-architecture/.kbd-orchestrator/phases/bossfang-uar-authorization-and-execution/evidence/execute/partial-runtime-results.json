@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "time": "2026-10-06T22:51:06.950Z",
+  "time": "2026-10-06T23:28:44.519Z",
   "phaseCertification": "incomplete",
   "passed": [
     {
@@ -182,6 +182,11 @@
       "kernelExecutableSha256": "4593abf4ac2c5c43d2f8654b0c50897fbf0fa08d3ff991244b91067988ab6368",
       "uarMainExecutableSha256": "a269e4078685400f9d10dba33a010945939afac668f367e5856da1a1ca27a454",
       "limitation": "Manual selected admission and native automatic wake profiles only. Cron/deferred producers without JobAttemptRef remain native; automatic UAR cron/job selection is unsupported."
+    },
+    {
+      "label": "boss-approval-runtime-15-acceptance",
+      "primary": 9,
+      "receipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/boss-approval-runtime-15-acceptance.json"
     }
   ],
   "failed": [
@@ -1746,10 +1751,68 @@
       "label": "bossfang-owned-libraries-clippy-05",
       "receipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-owned-libraries-clippy-05.json",
       "exitCode": 101
+    },
+    {
+      "label": "boss-approval-client-runtime-14",
+      "receipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-approval-client-runtime-14.json",
+      "exitCode": 1
+    },
+    {
+      "label": "boss-secret-projection-runtime-05",
+      "receipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-secret-projection-runtime-05.json",
+      "exitCode": 1
+    },
+    {
+      "label": "bossfang-owned-libraries-clippy-06",
+      "receipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-owned-libraries-clippy-06.json",
+      "exitCode": 101
+    },
+    {
+      "label": "boss-secret-projection-runtime-06",
+      "receipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-secret-projection-runtime-06.json",
+      "exitCode": 1
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-secret-projection-runtime-07",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "--import",
+        "tsx",
+        "scripts/gates/bauar-secret-projection.ts",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/boss-secret-projection-runtime-07-acceptance.json"
+      ],
+      "startedAt": "2026-10-06T23:18:36.145Z",
+      "finishedAt": "2026-10-06T23:20:26.172Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-secret-projection-runtime-07.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-secret-projection-runtime-08",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "--import",
+        "tsx",
+        "scripts/gates/bauar-secret-projection.ts",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/boss-secret-projection-runtime-08-acceptance.json"
+      ],
+      "startedAt": "2026-10-06T23:27:20.976Z",
+      "finishedAt": "2026-10-06T23:27:54.891Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-secret-projection-runtime-08.log",
+      "result": "failed",
+      "buildEnvironment": {}
     }
   ],
   "incidentalSupportTests": "Identity and inline first attempts included imported support unit tests; these are excluded from primary evidence and subsequent scoped retries. This initial overscope is an A-9 deviation.",
-  "primaryCasesPassed": 37,
-  "currentCompileCorrection": "Desktop13 actual MCP invocation binding mismatch after successful non-consuming revalidation; original host state invalidated then finish409. Projection04 actual stream error prevented revision inspection; false flag is unperformed, not evidence of mismatch. Required clippy06 active.",
-  "receiptCount": 150
+  "primaryCasesPassed": 46,
+  "currentCompileCorrection": "Approval15 six remaining cases PASS; retained3 malformed ID cases yield9total. Projection06 actual SECRET_IN_EXECUTABLE_ARTIFACT traced to credential baseURL displaymetadata;2site display correction complete, node11/app09 PASS, failedprojection07 active. BF selectedCLI02 and ownedclippy07 PASS. D0/globalfmt/package/review unresolved.",
+  "receiptCount": 167
 }

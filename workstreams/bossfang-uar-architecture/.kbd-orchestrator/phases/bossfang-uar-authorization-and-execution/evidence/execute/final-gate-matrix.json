@@ -132,7 +132,8 @@
       "final-gates/boss-electron-current-build-03.json",
       "final-gates/boss-electron-current-build-04.json",
       "final-gates/boss-electron-current-build-05.json",
-      "final-gates/boss-electron-current-build-07.json"
+      "final-gates/boss-electron-current-build-07.json",
+      "final-gates/boss-electron-current-build-08.json"
     ],
     "typecheckReceipts": [
       "final-gates/boss-typecheck-node-02.json",
@@ -146,9 +147,11 @@
       "final-gates/boss-typecheck-e2e-03.json",
       "final-gates/boss-typecheck-e2e-04.json",
       "final-gates/boss-typecheck-node-08.json",
-      "final-gates/boss-typecheck-e2e-07.json"
+      "final-gates/boss-typecheck-e2e-07.json",
+      "final-gates/boss-typecheck-node-10.json",
+      "final-gates/boss-typecheck-e2e-09.json"
     ],
-    "runtimeStatus": "13 FAILED: successful approval+revalidation then actual MCP binding rejection/no effect",
+    "runtimeStatus": "9 PASS source-grouped:6actualruntime15 +3retainedruntime11 malformed IDs",
     "nativeSqlite": {
       "status": "observed-isolated-abi149-build-and-publication",
       "buildReceipt": "final-gates/boss-sqlite-electron-abi-build-01.json",
@@ -182,7 +185,14 @@
       "e2e": "final-gates/boss-typecheck-e2e-05.json",
       "runtime": "desktop11 active; 3 observed cases; full acceptance pending"
     },
-    "projectionStatus": "04 FAILED: catalog/write/run success; stream failed before inspection; false unperformed revision flag not mismatch proof"
+    "projectionStatus": {
+      "status": "failed-history-assertions",
+      "receipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/boss-secret-projection-runtime-08-observation.json",
+      "primaryPass": false,
+      "nodeCheck": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-typecheck-node-12.json",
+      "bundleBinding": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/boss-connected-instance-build-09-manifest.json"
+    },
+    "approvalAcceptance": "boss-approval-runtime-15-acceptance.json"
   },
   "bossfang": {
     "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
@@ -222,9 +232,9 @@
     "nativePeerCorrection": "harness-native-clock-envelope-correction/receipt.json",
     "selectedCliBuild": "final-gates/bossfang-selected-cli-build-01.json",
     "nativeContinuationDiagnostic": "harness-native-continuation-diagnostic/receipt.json",
-    "selectedCliStatus": "Selected CLI build command PASS; owned-library clippy failed on unchanged storage dependency baseline, no waiver",
-    "selectedCliManifest": "bossfang-selected-cli-build-01-manifest.json",
-    "activeClippy": "06 active, explicitly api+kernel uar-driver features",
+    "selectedCliStatus": "02 PASS currentpostlint debug source69; no runtime/package cert",
+    "selectedCliManifest": "bossfang-selected-cli-build-02-manifest.json",
+    "activeClippy": "07 PASS, exact source69 manifest retained",
     "clippyBaselineAttribution": "bossfang-clippy-baseline-attribution-01.json",
     "auxiliaryModelCorrection": "harness-memory-auxiliary-correction/receipt.json",
     "kernelStageDiagnostic": {
@@ -261,7 +271,7 @@
     "bossfang": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42",
     "evidence": "Actual cargo compiler-artifact filenames, observed 2026-10-06; directories distinct, existing machine build/cache configuration inherited"
   },
-  "updatedAt": "2026-10-06T22:51:06.950Z",
+  "updatedAt": "2026-10-06T23:28:44.519Z",
   "observedRuntimeResults": "partial-runtime-results.json",
   "formatting": {
     "receipt": "final-gates/uar-format-check-01.json",
@@ -279,8 +289,9 @@
     "Shared OpenSpec stale owner ESRCH; lock retained by rename, no product/config/service/KBD mutation"
   ],
   "canonicalCheckpoint": {
-    "parentRevision": 181,
-    "bossfangRevision": 71,
-    "status": "Execute in progress; certification blocked at rev181; independent correction work continues"
+    "revision": 185,
+    "execute": "in_progress",
+    "certification": "blocked",
+    "lintBlocker": "cleared actual07 PASS"
   }
 }

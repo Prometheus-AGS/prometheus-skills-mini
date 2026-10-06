@@ -1,0 +1,22 @@
+{
+  "status": "prepared-not-applied; approval gate writer hold",
+  "observed": "Projection06 actual RUN_ERROR SECRET_IN_EXECUTABLE_ARTIFACT with providerRequests0",
+  "ownedPath": "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
+  "beforeSha256": "772c22ddb96a8f8ff021aecc1cffa6f52cf7170e616e3f34c46412966eedf006",
+  "proposedSha256": "5b0e002e326761eb9ea59f71bbc072bb86a57b995f0dd5ff68fc791e0109df3e",
+  "sourceProof": [
+    "uarModelAssignments.ts connectedInstance and credential.base_url both use endpoint.baseUrl",
+    "UarRuntimeConnection193 captures credential.base_url; buildArtifact398 copied it into display extension",
+    "UAR credentials.rs215 captures base_url; manager4673–4691 rejects captured values in immutable executable snapshot"
+  ],
+  "correction": "Project only connected_instance at new catalog artifact construction before sourceRevision and at cloned inline artifact construction. The catalog boundary is untrusted; project the display property only when actually a string without rewriting other fields.",
+  "preserved": [
+    "Original stored Agent and provider/baseURL credentials",
+    "Provider/model/effective_identity/policy routing",
+    "All UAR checks and immutable snapshot revision normalization",
+    "Catalog source provenance and current expected_revision update semantics"
+  ],
+  "apiEffects": "No API schema/signature change. New catalog display metadata is redacted before its authoritative revision. Existing catalog remains unmodified by inline cloning; its projected inline snapshot receives a newly normalized UAR revision when bytes differ.",
+  "scope": "Two surgical UarRuntimeConnection edits, no helper/module/formatter or other production changes.",
+  "verification": "Source anchors and expected hashes only. No product write, build, test, gate or runtime acceptance."
+}

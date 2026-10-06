@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "time": "2026-10-06T23:35:22.346Z",
-  "kind": "frozen-diagnostic-only-delivery",
+  "time": "2026-10-06T23:31:23.993Z",
+  "kind": "frozen-complete-fixture-delivery",
   "records": [
     {
       "name": "uar",
@@ -614,11 +614,6 @@
           "bytes": 1154
         },
         {
-          "file": "scripts/gates/bauar-secret-projection-mcp-diagnostic.ts",
-          "sha256": "41b13d9172eeb7b9f05c3d74b502bd8e72f658c13e44e32c35f3dd63fcd363df",
-          "bytes": 2159
-        },
-        {
           "file": "scripts/gates/bauar-secret-projection-mcp.ts",
           "sha256": "3695b1e9e6c8c8579682d1a84a70008261c5ebb72bfc631b64734bf9c33ff125",
           "bytes": 13479
@@ -630,8 +625,8 @@
         },
         {
           "file": "scripts/gates/bauar-secret-projection.ts",
-          "sha256": "a72999978813799f174191b311a5ce089a56ed1dc9a1ba718744e7c1e70760f9",
-          "bytes": 28069
+          "sha256": "537fa1654b226ebbcd2ddbd306dccbf9b18da13d19f51dcc6c35100db4e15f74",
+          "bytes": 27533
         },
         {
           "file": "scripts/gates/uar-exact-tool-admission.ts",
@@ -1120,11 +1115,14 @@
       "exclusionNote": "D0 diagnostic source not read or hashed in this refresh"
     }
   ],
-  "priorBinding": "source-inventory-cold-history-postlint-delivery-21.json",
+  "priorBinding": "source-inventory-history-diagnostic-delivery-20.json",
   "corrections": [
     {
-      "scope": "Fixed booleans/counts for actual MCP assertion failure; no production changes or weakened assertions",
-      "artifact": "projection-mcp-assertion-diagnostic/receipt.json"
+      "scope": "Fixture-only cold-session close barrier and focused postlint scenario; production unchanged from prior inventories",
+      "artifacts": [
+        "projection-history-lifecycle-correction/receipt.json",
+        "bossfang-postlint-scenario/receipt.json"
+      ]
     }
   ]
 }

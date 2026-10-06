@@ -86,7 +86,7 @@
       },
       "resourceChild": {
         "change": "uar-bauar-resource-boundary",
-        "status": "Draft inherited parent contract, strict validation valid:true; exact production claims pending inventory",
+        "status": "R1/R2 authoring active; R3 capture and R4 exact claims accepted, finite projector/canonical receipt claims pending contract",
         "taskMap": {
           "1": "parent04/8 configuration/source prerequisite",
           "2": "parent04/1 grants",
@@ -94,7 +94,67 @@
           "4": "parent04/4 UAR projection",
           "5": "parent04/9 and8 acceptance",
           "6": "parent04/10 V2"
-        }
+        },
+        "acceptedSlices": {
+          "R1": {
+            "paths": [
+              "src/uar/runtime/turn/host/mcp.rs",
+              "src/uar/runtime/turn/host/mod.rs",
+              "src/mcp/runtime.rs",
+              "tests/bauar_resource_grants.rs",
+              "tests/support/bauar_resource_peer.rs"
+            ],
+            "scope": "Retain actual grant/policy checks and author actual receiver/router/selected config source scenarios. No gratuitous grant rewrite; capture contributions later R3."
+          },
+          "R2": {
+            "paths": [
+              "src/mcp/stdio_process.rs",
+              "src/mcp/registry.rs",
+              "tests/bauar_stdio_boundary.rs",
+              "tests/fixtures/bauar_mcp_stdio.mjs"
+            ],
+            "scope": "Null raw child stderr at active launch paths; preserve direct-child env/supervision/unsupported sandbox semantics and author exact scenarios. Unreachable stdio_client excluded."
+          },
+          "R3Capture": {
+            "owner": "/root/uar_execution",
+            "paths": [
+              "src/uar/security/middleware.rs",
+              "src/uar/security/sidecar_guard.rs",
+              "src/uar/security/mod.rs",
+              "src/uar/security/credential_capture.rs",
+              "src/uar/runtime/turn/request.rs",
+              "src/uar/runtime/turn/bindings.rs",
+              "src/uar/runtime/thread/kernel.rs",
+              "src/uar/runtime/manager.rs",
+              "src/llm/orchestrator.rs",
+              "src/uar/api/routes.rs",
+              "src/uar/api/full_harness/handlers.rs",
+              "src/server.rs",
+              "src/uar/api/openai/routes.rs",
+              "src/uar/api/acp/routes.rs",
+              "src/uar/api/acp/handler.rs",
+              "src/uar/api/a2a/handler.rs",
+              "src/uar/api/a2a/grpc.rs",
+              "src/uar/api/a2a/thread_service.rs",
+              "src/uar/runtime/actor/messages.rs",
+              "src/uar/runtime/actor/system.rs",
+              "src/uar/runtime/actor/agent_actor.rs",
+              "src/uar/runtime/thread/actor_host.rs"
+            ],
+            "contract": "evidence/execute/uar-projection-capture-contract.md",
+            "scope": "Redaction-only accepted ingress contribution; once-resolved actual provider ClientConfig before same constructor, explicit constructor-owned/opaque unknown-corpus limits; root snapshot to children. No authority/session-manager changes. Manager, bindings and orchestrator exclusive capture owner until handover.",
+            "supportedProfile": "Explicit configured/request/captured nonempty client keys and captured host resources; preserve empty-key constructor-owned and opaque driver behavior but document incomplete corpus and static UAR early failures; no universal DLP or dependency-internal guarantee."
+          },
+          "R4": {
+            "owner": "/root/uar_execution",
+            "paths": [
+              "src/uar/api/routes.rs",
+              "tests/bauar_inline_revision.rs"
+            ],
+            "scope": "Normalize already validated inline artifact with existing provider catalog metadata before revision/tool admission consumers. No global ToolAdmissionContext API change; provider-derived revision authoritative."
+          }
+        },
+        "owner": "/root/uar_resource"
       },
       "hostProofTask5": {
         "pathExtension": "src/uar/runtime/turn/host/mcp_tests.rs",
@@ -113,6 +173,12 @@
           "tests/run_retention/sessions.rs"
         ],
         "scope": "Only originating-ID migration and cohesive strict broker/SSE helper source scenarios. actor messages needs no edit; full-harness handlers read-only. No execution or D0 work."
+      },
+      "approvalSourceHandoff": "evidence/execute/exact-approval-authoring.md",
+      "providerSourceHandoff": {
+        "receipt": "evidence/execute/uar-provider-handoff.json",
+        "manifestSha256": "880a1ff8f5765375fd87b75cd09d7f82255e040af9429a06b0a7cc6f45703a1d",
+        "status": "Source contract only; six full-harness files match C05; source mutable and acceptance pending"
       }
     },
     "boss": {
@@ -221,10 +287,20 @@
         "crates/librefang-llm-drivers/src/drivers/uar_run/canonical.rs",
         "crates/librefang-llm-drivers/src/drivers/uar_run/wire.rs",
         "crates/librefang-api/src/routes/uar_delegation.rs",
-        "crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs"
+        "crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/retained.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/selection.rs",
+        "crates/librefang-api/src/routes/uar_delegation/job_mapping.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/mapping.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/mapping_tests.rs",
+        "crates/librefang-kernel/src/kernel_api.rs"
       ],
       "selectionScheduling": "Storage source handoff64409f0 permits selected-dispatch/input mapping authoring against existing provider contract; final provider/control checkpoint remains open",
-      "selectionContract": "Existing AppState Arc<UarRunControl> is explicitly passed into typed kernel selected seams; Native and Delegated results stay distinct. New admission source scenarios authorized, unexecuted."
+      "selectionContract": "Existing AppState Arc<UarRunControl> is explicitly passed into typed kernel selected seams; Native and Delegated results stay distinct. New admission source scenarios authorized, unexecuted.",
+      "reservationContract": "Opaque private PendingUarAdmission separates read-only descriptor preflight from credential retention. Only durable Created winner installs exact prepared transport if vacant and admits; Existing never prepares/installs; installation conflict is unknown requiring reconciliation.",
+      "selectionHandoff": "evidence/execute/selection-handoff/receipt.json",
+      "mappingContract": "Authenticated non-synthetic registered initiating Owner and authorized real stored task/assignedagent; remote app service authority separate. Delegated-user/tenant mapping unsupported. Stable selected namespace from storedjob+attempt1, tagged retained slots reject legacy replacement; explicit refresh preserves tag; no retry_count replacement."
     }
   },
   "scope": "Nested OpenSpec scopes planning artifacts; exact product claims above explicitly bound to task driver under authorized cross-repository scope. No broad source-root write grant. No production work until its dependency/task begins.",

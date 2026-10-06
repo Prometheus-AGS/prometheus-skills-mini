@@ -1,0 +1,28 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-6.1-sol/high",
+  "producer_model": "unknown",
+  "isolation_mode": "harness-native-file-backed",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [],
+  "checked_classes": [
+    "Dependency ordering: strict consumer approval changes require final UAR01/02 handover; D0 remains unresolved",
+    "Ownership conflicts: serial storage, selection, control, retry claims and network handover",
+    "Competing execution authorities: reuse UarRunControl/RunManager; selected attempts bypass native loops; observed events are not execution",
+    "Admission before durability: committed private A2A reservation precedes network admission; unavailable storage denies dispatch",
+    "False cross-store atomicity: event/cursor/outcome atomic private SQLite; downstream views reconcile",
+    "Uncertainty-driven re-execution: original identity retained on lost responses, epochs and credential changes; no replacement admission",
+    "Uncovered dispatch eligibility: normal streaming/non-streaming, retry/PATCH/sweep/cron/workflow/approval/completion wakes; selected ephemeral rejected",
+    "Approval revision substitution: preserve caller-observed exact identity/revision and reject legacy shapes",
+    "Untrusted MCP attribution: actual auth branch and owned local listener/peer; delegated_user unsupported without mapping",
+    "Secret projection overclaim: finite sources and exclusions explicit; earliest response/content boundaries and split deltas covered",
+    "Operator decisions: unsupported restart, strict cutover, no external receivers/IdP/custody, empty runtime defaults and application preservation",
+    "Premature completion: full production gate and packaged evidence required; historical/setup receipts not current acceptance"
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

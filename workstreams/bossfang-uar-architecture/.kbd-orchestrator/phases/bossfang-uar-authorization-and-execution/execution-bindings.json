@@ -44,7 +44,35 @@
         "scheduling": "Independent config-only exception in execute-scope-amendment.md; no D0 work"
       },
       "identityInventory": "Only InMemoryApiKeyStorage, no database migration; typed HTTP/gRPC/body workspace paths enumerated.",
-      "model": "gpt-6-astra/high"
+      "model": "gpt-6-astra/high",
+      "constructorExtensions": [
+        {
+          "task": "uar-bauar-identity-boundaries/2",
+          "paths": [
+            "tests/settings_persistence.rs",
+            "tests/a2a_thread_service.rs"
+          ],
+          "scope": "SecurityConfig constructor fields only; no unrelated test changes"
+        }
+      ],
+      "jwksParallelClaim": {
+        "task": "uar-bauar-identity-boundaries/6",
+        "owner": "/root/jwks_implementation",
+        "paths": [
+          "src/uar/security/verifier/jwks_cache.rs"
+        ],
+        "integrationOwner": "/root/uar_execution",
+        "handoff": "New module authoring only; verifier/mod.rs wiring serial after identity-task2; source/test acceptance remains deferred"
+      },
+      "identityTask3Begun": {
+        "parentRevision": 105,
+        "childRevision": 46,
+        "scope": "Versioned key identity and role attenuation; existing exact constructors in prerequisite receipt accepted for mechanical field propagation, no new host authority"
+      },
+      "identityTask3ModuleExtensions": [
+        "src/uar/security/api_keys/policy.rs",
+        "src/uar/security/api_keys/tests.rs"
+      ]
     },
     "boss": {
       "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
@@ -107,9 +135,24 @@
       "projectId": "aade093e-a167-429e-a35b-d652b15b1c9c",
       "base": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
       "owner": "/root/bossfang_execution",
-      "status": "Residual child design pending",
+      "status": "Corrected material design native planning review PASS; full provider/approval handover remains pending before control integration",
       "baselineNote": "Existing integrated consumer dependency checkpoint; 16beef ancestor279commits,1239changedfiles. Only isolated branch advanced; no original branch changed. Review new feature delta againstbac, no broad historical certification.",
-      "model": "gpt-6-astra/high"
+      "model": "gpt-6-astra/high",
+      "acceptedDesigns": [
+        "bossfang-bauar-harness-delegation",
+        "bossfang-bauar-mcp-attribution"
+      ],
+      "initialClaims": [
+        "crates/librefang-types/src/uar_run.rs",
+        "crates/librefang-runtime/src/a2a.rs",
+        "crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
+        "crates/librefang-api/src/routes/uar_delegation/storage.rs"
+      ],
+      "initialOwner": "/root/bossfang_execution in storage/schema role; explicit serial handover to feature stewardship",
+      "taskMap": {
+        "bauar-03-harness-delegation": "bossfang-bauar-harness-delegation numeric1 through9 in registered order; storage2 independent, final provider/strict-control checkpoint prerequisite remains open",
+        "bauar-04-resource-credential-lifecycle": "bossfang-bauar-mcp-attribution task1 prerequisite,2-3 implementation after network checkpoint,4 V1,5 V2"
+      }
     }
   },
   "scope": "Nested OpenSpec scopes planning artifacts; exact product claims above explicitly bound to task driver under authorized cross-repository scope. No broad source-root write grant. No production work until its dependency/task begins.",

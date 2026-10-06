@@ -41,3 +41,17 @@ The former blanket D0-before-product-edit scheduling rule is narrowed to work wh
 The Boss finite run-secret projection may be authored alongside UAR identity in its disjoint worktree, using the already-authored strict client as its serial predecessor. Final integration/review/build gates stay at the full selected delivery boundary. Corrected material design review is a planning prerequisite, not a partial production QA gate. No source finding is closed by this scheduling change.
 
 Three clean product worktrees were created under ~/.claude/worktrees/bauar-{uar,bossfang,boss}. Each has a separately registered nested workstreams/bauar KBD UUID. The Boss's existing checkout hook automatically ran pnpm install and reported Passed during worktree creation; working-tree status remained clean. No service was started, no dependency version was selected or changed by this driver, and that hook output is not product acceptance.
+
+Task01/6 component authoring is parallel on only the new JWKS cache module. The identity worker retains exclusive verifier/mod.rs integration ownership. This changes scheduling only; configured 60/300/5-second policy, single-flight semantics and completed-boundary acceptance are unchanged. No D0 operation is involved.
+
+### Design confirmation availability — 2026-10-06T14:08:24.229Z
+
+The corrected material design confirmation through MiniMax-M3 timed out after one 300000ms attempt. This is not a PASS and the prior BLOCK remains recorded. Apply adversarial-review’s documented fresh-context native fallback when a team slot is free: exact artifact mandate plus packet only, gpt-6.1-sol/high native route, same model family isolation disclosed and producer identity unknown. This is planning review, not premature production QA. Independent approved production remains eligible while this receipt is pending. The D0 diagnostic remains blocked and is not retried or substituted.
+
+Native fallback adaptation: the confirmation packet is 146624 bytes. Use a fresh file-backed packet wrapper containing only the mandate and exact packet path; the reviewer must hydrate that one packet in full and inspect no product source or conversation. Log this as harness-native-file-backed, not the stronger literal REST payload guarantee. No production QA is opened by this planning review.
+
+### Accepted material refinement and independent storage
+
+Native confirmation returns zero findings with twelve explicit checked classes. Original BLOCK and primary timeout receipts are preserved. This approves the corrected repository-specific design for source authoring only; full provider/strict-approval handover remains required before control integration. Parent03/1 and child prerequisite1 remain open until that final checkpoint exists. Independent F-STORAGE task2 may begin against existing bac04cb6/uar a7cb972 contract after this design acceptance; it does not exercise providers or make runtime claims. Exact initial paths are recorded in execution-bindings.json; schema storage handoff precedes selection writes.
+
+UAR identity task3 adds exact cohesive policy.rs and tests.rs under security/api_keys to partition the existing541-line module by responsibility; no UserContext fields or broader directory grant.

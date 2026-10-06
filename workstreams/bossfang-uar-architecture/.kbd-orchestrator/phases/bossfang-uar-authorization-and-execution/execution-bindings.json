@@ -95,6 +95,24 @@
           "5": "parent04/9 and8 acceptance",
           "6": "parent04/10 V2"
         }
+      },
+      "hostProofTask5": {
+        "pathExtension": "src/uar/runtime/turn/host/mcp_tests.rs",
+        "config": "security.trusted_host_principals defaultempty; exact enforced issuer/subject/tenant + operator host_id; existing trusted_hosts policy still applies",
+        "credentialKind": "Signed uar_credential_kind=issuer for privileged configured JWT; api_key for exchange; missing/unknown unclassified user/owner only. Direct/exchanged keys cannot gain host or cross-owner admin authority",
+        "launch": "Actual SidecarGuard token/Host/Origin marker is separate from roles and tenant identity",
+        "migration": "Reissue privileged issuer credentials before opting in; no IdP selected or new service"
+      },
+      "exactApprovalExtensions": {
+        "paths": [
+          "src/embedded.rs",
+          "tests/a2a_thread_service.rs",
+          "tests/tool_call_protocol.rs",
+          "src/uar/runtime/thread/approval_tests.rs",
+          "tests/support/approval_events.rs",
+          "tests/run_retention/sessions.rs"
+        ],
+        "scope": "Only originating-ID migration and cohesive strict broker/SSE helper source scenarios. actor messages needs no edit; full-harness handlers read-only. No execution or D0 work."
       }
     },
     "boss": {
@@ -157,7 +175,13 @@
         "path": "scripts/gates/bauar-secret-projection-mcp.ts",
         "scope": "Real SDK/MCP server and claim orchestration scenarios, no execution; keep new gate modules <=500 lines"
       },
-      "eventsFixtureScope": "Controlled projection-only canaries through real run/SSE/Electron; no fabricated execution or approval authority acceptance"
+      "eventsFixtureScope": "Controlled projection-only canaries through real run/SSE/Electron; no fabricated execution or approval authority acceptance",
+      "systemPromptContract": "Captured finite projection applies before catalog upsert/source hash and to per-run inline artifact, mutually exclusive with agent_id. Gate-owned synthetic If-Match race source scenario accepted; arbitrary JS/Rust float canonicalization remains explicitly unverified; no unprojected fallback.",
+      "projectionHandoff": "evidence/execute/boss-projection-handoff/receipt.json",
+      "projectionSourceComplete": {
+        "childRevision": 42,
+        "scope": "All three source tasks complete, acceptance remains pending"
+      }
     },
     "bossfang": {
       "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
@@ -185,7 +209,22 @@
         "bauar-04-resource-credential-lifecycle": "bossfang-bauar-mcp-attribution task1 prerequisite,2-3 implementation after network checkpoint,4 V1,5 V2"
       },
       "storageHandoff": "evidence/execute/storage-handoff-final/receipt.json",
-      "storageLayoutCorrection": "New storage-specific scenarios in their cohesive <=500-line test module; old A2A scenarios untouched. Re-snapshot after owner handoff; initial snapshot is pre-correction."
+      "storageLayoutCorrection": "New storage-specific scenarios in their cohesive <=500-line test module; old A2A scenarios untouched. Re-snapshot after owner handoff; initial snapshot is pre-correction.",
+      "selectionClaims": [
+        "crates/librefang-kernel/src/kernel/mod.rs",
+        "crates/librefang-kernel/src/kernel/agent_execution.rs",
+        "crates/librefang-kernel/src/kernel/messaging.rs",
+        "crates/librefang-kernel/src/kernel/ephemeral_spawn.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
+        "crates/librefang-types/src/uar_run.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/canonical.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/wire.rs",
+        "crates/librefang-api/src/routes/uar_delegation.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs"
+      ],
+      "selectionScheduling": "Storage source handoff64409f0 permits selected-dispatch/input mapping authoring against existing provider contract; final provider/control checkpoint remains open",
+      "selectionContract": "Existing AppState Arc<UarRunControl> is explicitly passed into typed kernel selected seams; Native and Delegated results stay distinct. New admission source scenarios authorized, unexecuted."
     }
   },
   "scope": "Nested OpenSpec scopes planning artifacts; exact product claims above explicitly bound to task driver under authorized cross-repository scope. No broad source-root write grant. No production work until its dependency/task begins.",

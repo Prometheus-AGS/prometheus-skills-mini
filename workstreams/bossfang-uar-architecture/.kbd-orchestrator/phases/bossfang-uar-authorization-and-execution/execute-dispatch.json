@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "phase": "bossfang-uar-authorization-and-execution",
+  "dispatchedAt": "2026-10-06T12:32:24.403Z",
+  "backend": "openspec",
+  "stage": "execute",
+  "status": "active-independent-authoring-d0-blocked",
+  "model": "gpt-6-astra",
+  "reasoningEffort": "high",
+  "workers": [
+    "/root/uar_execution",
+    "/root/boss_execution",
+    "/root/bossfang_execution"
+  ],
+  "assignedChanges": [
+    "bauar-01-identity-boundaries",
+    "bauar-02-execution-authorization",
+    "bauar-03-harness-delegation",
+    "bauar-04-resource-credential-lifecycle"
+  ],
+  "pendingWork": "Identity source2–6 authored/unverified; UAR exact approval/helper2–3 active. Boss projection3/model-prompt correction active. Bossfang storage2 handed over, selection3 active; final provider checkpoint1 open. Resource inventory1 begun, precise claims pending. All runtime gates deferred; D0 blocked, never retried.",
+  "approval": "Approved. Use the agent team to execute.",
+  "updatedAt": "2026-10-06T14:54:55.373Z",
+  "operatorDecisions": {
+    "restart": "unsupported-unknown-reconciliation",
+    "externalReceivers": [],
+    "credentialCustody": "existing-application",
+    "approvalCompatibility": "strict-owned-client-cutover"
+  }
+}

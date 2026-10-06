@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-06T11:59:43.722Z",
+  "harness": {
+    "desktopVersion": "unverified",
+    "cliVersion": "codex-cli 0.160.1"
+  },
+  "nativeCatalogSource": "Current collaboration.spawn_agent tool schema, read 2026-10-06",
+  "nativeCandidates": [
+    {
+      "model": "gpt-6-astra",
+      "effort": "high",
+      "basis": "Exposed tool schema; machine default and The Boss hard role policy; no comparative implementation result"
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "basis": "Exposed native alternative; no relative performance claim"
+    }
+  ],
+  "overrideRule": "fork_turns none or positive count for explicit override; full-history inherits and forbids overrides per current tool schema, overriding conflicting Superpowers prose",
+  "implementationLaunchVerified": false,
+  "reviewRoute": {
+    "model": "MiniMax-M3",
+    "provider": "minimax",
+    "connection": "minimax-direct",
+    "endpoint": "http://localhost:4000/v1/chat/completions",
+    "sameDayEvidence": "review/spec/findings.json",
+    "workspaceWorker": false
+  },
+  "producerCanonicalIdentity": "unknown",
+  "constraints": [
+    "No workers launched in Plan",
+    "No provider changes",
+    "No unavailable model silently substituted"
+  ],
+  "teamMapping": {
+    "boss": "boss-core hard role native gpt-6-astra/high preserved",
+    "bossfang": "bossfang-stewards authored Claude opus; proposed explicit Codex gpt-6-astra/high mapping preserves roles; revalidate at dispatch"
+  }
+}

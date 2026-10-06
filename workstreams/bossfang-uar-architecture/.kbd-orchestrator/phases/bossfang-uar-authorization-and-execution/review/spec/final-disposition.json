@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-06T11:13:52.043Z",
+  "completedRounds": 2,
+  "rejectedIncompleteAttempts": 1,
+  "verdict": "PASS",
+  "critical": 0,
+  "warning": 1,
+  "suggestion": 1,
+  "reviewedSpecBodiesUnchanged": true,
+  "reviewedDigests": {
+    "bauar-01-identity-boundaries/proposal.md": "840a27d56d18fb1112b1187842da65720f7ed74e61eda5b47849d685c8b11cec",
+    "bauar-01-identity-boundaries/design.md": "8c1eeefb4927cbc5e946cc0c1a4f0d0c7b85fd953705448806e690c3deb2cdb9",
+    "bauar-01-identity-boundaries/tasks.md": "89f2febf91cc21d649fb8a4666a0dcbed5116bd4879cf9ce178da9f5905646d5",
+    "bauar-01-identity-boundaries/specs/uar-principal-authority/spec.md": "ca090df27aadf5870c2fc7abbf490d65db78b2b24ee9cc7c641eb0f0680fbbda",
+    "bauar-02-execution-authorization/proposal.md": "aa5a141e0dd0f4d603816e682d7205f6738713b040c3969127292076919b0e58",
+    "bauar-02-execution-authorization/design.md": "010d6b19ac179196b4753e52434fdd429c266e5275e9d29e06c533a381f7af25",
+    "bauar-02-execution-authorization/tasks.md": "c0ec9db0d9ebc0101fc44f6f1f945ee7289121f3b4c0e59f329d1dd3a3b90750",
+    "bauar-02-execution-authorization/specs/execution-bound-authorization/spec.md": "c19a3054c50ea84bffd8a438c0fbfe72f7d29b2ab090abfc93ca9fb4e2dfd172",
+    "bauar-03-harness-delegation/proposal.md": "13da69ef247ce1906cdbd2f88eaf24233bd151b7d7bd3e6665587673348cc42b",
+    "bauar-03-harness-delegation/design.md": "32edbbb68ce9542e41b51e0031ce157333e94b2cb600f6f5eb33fe6ba98f07b9",
+    "bauar-03-harness-delegation/tasks.md": "4892dfaa9100ab65f7df397e9b250be746af542b2dec4e74f5ca2cc876a6c74e",
+    "bauar-03-harness-delegation/specs/job-harness-delegation/spec.md": "4eacd75af74b72dfbc86e02e99411d05f12b658d54eb002d12fe0c9c0e90147b",
+    "bauar-04-resource-credential-lifecycle/proposal.md": "fbae32d9fdb0e7e2414c63ab495c2fe1b8f3bb22836cc850963b5ba87424ac6b",
+    "bauar-04-resource-credential-lifecycle/design.md": "d444c05726db52dc8b62343bde6bfa8d1f6261ab8d36fdd1f1fe4d2a01cbbddc",
+    "bauar-04-resource-credential-lifecycle/tasks.md": "6078cf370d4d0bbc99c3c3c46adb5c4983c0efc9abfbae53c66fba8dde9650a6",
+    "bauar-04-resource-credential-lifecycle/specs/mcp-resource-authority/spec.md": "0a13e7fa2fd798da7d970952a212cf1f1b1f57a5a19af504c78bd6863fad5f4b"
+  },
+  "producerIdentity": "unknown",
+  "crossModelCheck": "unverified-producer-unknown",
+  "languageScreenScore": 0,
+  "carryForward": [
+    "Require verified UserContext in auth.rs create/list/revoke, remove anonymous fallback, enforce non-disclosing owner/tenant management policy",
+    "Split persisted attenuation fixture into allowed, disallowed and reserved cases"
+  ],
+  "productCertification": false
+}

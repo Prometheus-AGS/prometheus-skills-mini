@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "stage": "assess",
+  "observedAt": "2026-10-06T09:45:19.152Z",
+  "selectedSources": [
+    {
+      "root": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini",
+      "revision": "6044ecdeb5c8c957646fef422d886a4568212888",
+      "selection": "local working-source baseline; no remote update",
+      "dirtyStatus": "?? docs/research/bossfang-uar-architecture-review-2026-10-06.md\n?? workstreams/\n"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime",
+      "revision": "a7cb972992d4f83db6585449ea81af0fe4a1c990",
+      "selection": "local working-source baseline; no remote update",
+      "dirtyStatus": " M .kbd-orchestrator/current-waypoint.json\n M .prometheus/knowledge/wiki/index.md\n M .prometheus/knowledge/wiki/log.md\n M crates/prometheus-skill-system\n M frontend/.storybook/main.ts\n M frontend/.storybook/preview.tsx\n M frontend/eslint-flat2-baseline.config.js\n M frontend/eslint.config.js\n M frontend/index.html\n M frontend/package.json\n m frontend/packages/prometheus-entity-management\n M frontend/pnpm-lock.yaml\n M frontend/src/index.css\n M frontend/src/main.tsx\n M frontend/src/shared/theme/tokens.css\n M frontend/vitest.config.ts\n M pnpm-lock.yaml\n M scripts/check-flat2-style.mjs\n M scripts/check-frontend-boundaries.mjs\n M scripts/test-frontend-boundaries-negative.mjs\n M static/.vite/markdown-engine-graph.json\n M static/index.html\n M vendor/git/liter-llm\n?? .kbd-orchestrator/phases/fix-better-default-chunker-327/\n?? .prometheus/knowledge/wiki/.index.lock\n?? .prometheus/knowledge/wiki/karpathy-session-32c16b997679ee7e.md\n?? docs/codex/\n?? docs/design/\n?? frontend/packages/uar-ui/\n?? migrations/history.txt\n?? scripts/fixtures/frontend-boundaries-allowed/__library__/\n?? scripts/fixtures/frontend-boundary-cases/allowlist-growth/\n?? scripts/fixtures/frontend-boundary-cases/allowlist-malformed/\n?? scripts/fixtures/frontend-boundary-cases/allowlist-stale/\n?? scripts/fixtures/frontend-boundary-cases/library-app-import/\n?? scripts/fixtures/frontend-boundary-cases/library-direct-fetch/\n?? scripts/fixtures/frontend-boundary-cases/library-entity-import/\n?? scripts/fixtures/frontend-boundary-cases/library-relative-escape/\n?? scripts/fixtures/frontend-boundary-cases/library-service-import/\n?? scripts/fixtures/frontend-boundary-cases/library-state-import/\n?? scripts/fixtures/frontend-boundary-cases/library-tauri-import/\n?? scripts/frontend-boundary-allowlist.txt\n"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/references/librefang",
+      "revision": "16beef0fcf3053970a901990df4fedbdf86bd87d",
+      "selection": "local working-source baseline; no remote update",
+      "dirtyStatus": "?? .agents/\n?? .investigation/\n?? .kimi-code/skills/\n?? .playwright-mcp/\n?? .prometheus/events.jsonl\n?? .prometheus/knowledge/\n?? .prometheus/project.json.pre-main-switch\n"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/the-boss",
+      "revision": "e2ae2ce21245030293c0bea96ed02ae853b820a7",
+      "selection": "local working-source baseline; no remote update",
+      "dirtyStatus": " M .prometheus/knowledge/wiki/index.md\n M .prometheus/knowledge/wiki/log.md\n M resources/prometheus-skills-mini\n?? .minimax/agents/.builtin/\n?? .prometheus/knowledge/wiki/karpathy-session-158ec35fc1a8c2cd.md\n?? .prometheus/knowledge/wiki/karpathy-session-2f1db6d4059103d6.md\n?? .prometheus/knowledge/wiki/karpathy-session-391c765cc2befbdf.md\n?? .prometheus/knowledge/wiki/karpathy-session-7a32c79f84988524.md\n?? .prometheus/knowledge/wiki/karpathy-session-8200c3aa308f27c1.md\n?? .prometheus/knowledge/wiki/karpathy-session-953e1fbc906e0d42.md\n?? .prometheus/knowledge/wiki/karpathy-session-9a1c438d4bfd20a0.md\n?? .prometheus/knowledge/wiki/karpathy-session-a6f1db801985bc0d.md\n?? .prometheus/knowledge/wiki/karpathy-session-bb5947a1efa61c5a.md\n?? .prometheus/knowledge/wiki/karpathy-session-c22e507c058b63db.md\n?? .prometheus/knowledge/wiki/karpathy-session-c64d46179866e9b0.md\n?? .prometheus/knowledge/wiki/karpathy-session-d74f6e1fe7ceec5c.md\n?? .prometheus/project.json\n?? docs/ci-cd-independence-research-2026-10-02.md\n?? docs/research/\n?? manifests/\n"
+    }
+  ],
+  "review": {
+    "file": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/docs/research/bossfang-uar-architecture-review-2026-10-06.md",
+    "sha256": "638ccdc38bdda7f98fa18c3cedb3c6ba66242ae42bef6887dd9a9b434a7b3ad2"
+  },
+  "remoteSourceSync": {
+    "status": "not_available",
+    "reason": "The installed pk CLI does not implement sources; no remote/private knowledge source was selected or synchronized. Local commits and file hashes are resolved directly."
+  }
+}

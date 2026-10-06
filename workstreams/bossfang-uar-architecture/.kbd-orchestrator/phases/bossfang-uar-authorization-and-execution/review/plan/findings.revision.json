@@ -1,0 +1,42 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "MiniMax-M3",
+  "producer_model": "unknown",
+  "cross_model_check": "unverified-producer-unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "plan.md",
+      "claim": "Plan prose mandates A2A cancel binding to the same owner/attempt receipt and cancel forwarding to the exact UAR execution, but no per-task contract (03/1–7 or 04/1–8) implements either requirement.",
+      "evidence": "Plan states: \"For selected delegated jobs, bind both views to the same owner/attempt receipt and forward cancel to the exact UAR execution; never claim local status mutation proves remote termination.\" Yet 03/5 covers \"Numeric SSE cursor atomic with product event; replay dedup/gap reconciliation; exact approval forwarding; never dispatch observed tools\" (SSE stream, not A2A), 03/6 covers \"Guard explicit task_retry, stale sweep, cron and restart resumption with attempt/outcome; cancel acknowledgement differs from actual terminal/unknown cleanup\" (retry/resumption, not the A2A cancel binding or forwarding), and 03/7 covers \"Product history/usage projection and C05.3 externally visible A2A task lookup all resolve same attempt authority\" (lookup only). The cancel-side binding for routes/uar.rs TASK_STORE (lines 474–477 per additional-call-evidence) and routes/network.rs kernel.a2a_tasks (line 546) plus the forwarding to the UAR execution has no task assignment. The 'never claim local status mutation proves remote termination' guard is also unassigned.",
+      "suggested_fix": "Add a new P3 task between 03/7 and 03/8 (e.g., 03/8 covering 'Bind both A2A views to the same owner/attempt receipt; forward cancel to UAR; mark local state as cancel requested not terminal; reconcile with UAR's actual cancel confirmation; verify that local status mutation never substitutes for remote termination evidence') and renumber 03/8/9 accordingly. Or explicitly extend 03/7 to cover the cancel side. Update the LIFECYCLE/HARNESS gate row to enumerate the A2A cancel verification."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "claim": "LIFECYCLE acceptance gate text does not enumerate the new requirement to include pending-task wake and both A2A lookup/cancel routes.",
+      "evidence": "Plan prose says: \"Include pending-wake and both A2A lookup/cancel routes in LIFECYCLE acceptance.\" but the LIFECYCLE row in the acceptance matrix says only: \"Lost admission reconciles, exact repeat freezes receipt, same-namespace changed body yields 409 admission_digest_conflict; credential revision not silently changed; reconnect/dedup/gap handling creates no run; cancel/terminal/cleanup remain distinct; retry/sweep/cron/restart never resubmit uncertain effects.\" Pending-task wake (accessors.rs:831 → triggers_and_workflow.rs:783,799,959 per additional-call-evidence) and 'both A2A routes' (specifically routes/uar.rs vs routes/network.rs as distinct stores) are not enumerated. The 'cron/restart' mention does not name pending-task wake; the 'cancel/terminal/cleanup' mention does not name both routes or the local-state-mutation case.",
+      "suggested_fix": "Update the LIFECYCLE row to explicitly enumerate: (1) pending-task wake at accessors.rs:831 → triggers_and_workflow.rs:783,799,959 does not bypass delegated uncertainty; (2) both A2A routes (routes/uar.rs TASK_STORE and routes/network.rs kernel.a2a_tasks) cancel forwarding produces local state marked 'cancel requested' not 'terminal' until UAR confirms; (3) local status mutation in either store is not claimed as remote termination; (4) reconciliation with the owning harness produces a single authoritative cancel outcome."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "claim": "Task 03/6 title does not include the pending-task wake guard for delegated uncertainty, despite the F-RETRY note explicitly calling this out as a reachable resumption path.",
+      "evidence": "Plan prose and the F-RETRY note in repository-bindings.json say: \"Pending-task wake reconciliation reads pending tasks and dispatches trigger matches; do not bypass delegated uncertainty through this path.\" and \"Additional inspected paths are pending-task wakes (kernel/accessors.rs:831 → triggers_and_workflow.rs:783,799,959).\" Yet 03/6 title is \"Guard explicit task_retry, stale sweep, cron and restart resumption with attempt/outcome; cancel acknowledgement differs from actual terminal/unknown cleanup\" — pending-task wake / reconcile_pending_task_wakes is not named. The plan also says in 03's prose: 'at 03/1 revalidate this inventory at the accepted C05 checkpoint, including any new boot/resumption edges' but no task title reflects this guard.",
+      "suggested_fix": "Add the pending-task wake guard explicitly to 03/6's title (e.g., \"Guard explicit task_retry, stale sweep, pending-task wake, cron and restart resumption with attempt/outcome\") or add a sub-bullet to the 03/6 Additional binding / observable exit specifying that accessors.rs:831 reconcile_pending_task_wakes must consult the same delegated attempt classification as stale sweep and not dispatch on uncertain outcomes."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "repository-bindings.json",
+      "claim": "routes/network.rs is listed in both F-HARNESS and F-MCP claim paths without per-slice or per-method distinction, while the plan prose says it 'transfers from 03 delegated task views to 04 MCP attribution'.",
+      "evidence": "F-HARNESS paths include \"crates/librefang-api/src/routes/network.rs\"; F-MCP paths include the same file. Plan prose says: \"routes/network.rs transfers from 03 delegated task views to 04 MCP attribution.\" F-HARNESS note says: \"routes/network.rs transfers serially to F-MCP.\" The binding format does not specify which functions/methods/sections each claim may write during 03 vs 04, leaving the dual-claim potentially ambiguous if both claim intent to write the same surface.",
+      "suggested_fix": "Add a per-claim annotation (e.g., \"F-HARNESS: routes/network.rs delegated task views (send/get, lines 483/500) during 03; F-MCP: routes/network.rs MCP attribution and inbound classification during 04\") or split the path entries by line range / function name. This makes the serial ownership enforceable rather than relying on prose alone."
+    }
+  ],
+  "checked_classes": [],
+  "reviewedAt": "2026-10-06T12:17:33.932Z",
+  "scope": "Targeted revision review after whole-set PASS; complete current plan/bindings and C05 specification context.",
+  "adaptation": "Node24 LTS REST; packet-only; vendor reasoning removed without persistence."
+}

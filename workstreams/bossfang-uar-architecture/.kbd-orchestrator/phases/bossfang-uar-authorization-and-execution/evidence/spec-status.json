@@ -1,0 +1,418 @@
+[
+  {
+    "changeName": "bauar-01-identity-boundaries",
+    "schemaName": "spec-driven",
+    "planningHome": {
+      "kind": "repo",
+      "root": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+      "changesDir": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes",
+      "defaultSchema": "spec-driven"
+    },
+    "changeRoot": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-01-identity-boundaries",
+    "artifactPaths": {
+      "proposal": {
+        "outputPath": "proposal.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-01-identity-boundaries/proposal.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-01-identity-boundaries/proposal.md"
+        ]
+      },
+      "specs": {
+        "outputPath": "specs/**/*.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-01-identity-boundaries/specs/**/*.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-01-identity-boundaries/specs/uar-principal-authority/spec.md"
+        ]
+      },
+      "design": {
+        "outputPath": "design.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-01-identity-boundaries/design.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-01-identity-boundaries/design.md"
+        ]
+      },
+      "tasks": {
+        "outputPath": "tasks.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-01-identity-boundaries/tasks.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-01-identity-boundaries/tasks.md"
+        ]
+      }
+    },
+    "isPlanningComplete": true,
+    "isComplete": true,
+    "applyRequires": [
+      "tasks"
+    ],
+    "nextSteps": [
+      "All planning artifacts are complete. Run openspec instructions apply --change \"bauar-01-identity-boundaries\" --json to inspect implementation progress."
+    ],
+    "actionContext": {
+      "mode": "repo-local",
+      "sourceOfTruth": "repo",
+      "planningArtifacts": [
+        "proposal",
+        "specs",
+        "design",
+        "tasks"
+      ],
+      "linkedContext": [],
+      "allowedEditRoots": [
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture"
+      ],
+      "requiresAffectedAreaSelection": false,
+      "constraints": [
+        "Repo-local change artifacts and implementation edits are scoped to this project."
+      ]
+    },
+    "artifacts": [
+      {
+        "id": "proposal",
+        "outputPath": "proposal.md",
+        "status": "done",
+        "requires": []
+      },
+      {
+        "id": "specs",
+        "outputPath": "specs/**/*.md",
+        "status": "done",
+        "requires": [
+          "proposal"
+        ]
+      },
+      {
+        "id": "design",
+        "outputPath": "design.md",
+        "status": "done",
+        "requires": [
+          "proposal"
+        ]
+      },
+      {
+        "id": "tasks",
+        "outputPath": "tasks.md",
+        "status": "done",
+        "requires": [
+          "specs",
+          "design"
+        ]
+      }
+    ],
+    "root": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+      "source": "nearest"
+    }
+  },
+  {
+    "changeName": "bauar-02-execution-authorization",
+    "schemaName": "spec-driven",
+    "planningHome": {
+      "kind": "repo",
+      "root": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+      "changesDir": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes",
+      "defaultSchema": "spec-driven"
+    },
+    "changeRoot": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-02-execution-authorization",
+    "artifactPaths": {
+      "proposal": {
+        "outputPath": "proposal.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-02-execution-authorization/proposal.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-02-execution-authorization/proposal.md"
+        ]
+      },
+      "specs": {
+        "outputPath": "specs/**/*.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-02-execution-authorization/specs/**/*.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-02-execution-authorization/specs/execution-bound-authorization/spec.md"
+        ]
+      },
+      "design": {
+        "outputPath": "design.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-02-execution-authorization/design.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-02-execution-authorization/design.md"
+        ]
+      },
+      "tasks": {
+        "outputPath": "tasks.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-02-execution-authorization/tasks.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-02-execution-authorization/tasks.md"
+        ]
+      }
+    },
+    "isPlanningComplete": true,
+    "isComplete": true,
+    "applyRequires": [
+      "tasks"
+    ],
+    "nextSteps": [
+      "All planning artifacts are complete. Run openspec instructions apply --change \"bauar-02-execution-authorization\" --json to inspect implementation progress."
+    ],
+    "actionContext": {
+      "mode": "repo-local",
+      "sourceOfTruth": "repo",
+      "planningArtifacts": [
+        "proposal",
+        "specs",
+        "design",
+        "tasks"
+      ],
+      "linkedContext": [],
+      "allowedEditRoots": [
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture"
+      ],
+      "requiresAffectedAreaSelection": false,
+      "constraints": [
+        "Repo-local change artifacts and implementation edits are scoped to this project."
+      ]
+    },
+    "artifacts": [
+      {
+        "id": "proposal",
+        "outputPath": "proposal.md",
+        "status": "done",
+        "requires": []
+      },
+      {
+        "id": "specs",
+        "outputPath": "specs/**/*.md",
+        "status": "done",
+        "requires": [
+          "proposal"
+        ]
+      },
+      {
+        "id": "design",
+        "outputPath": "design.md",
+        "status": "done",
+        "requires": [
+          "proposal"
+        ]
+      },
+      {
+        "id": "tasks",
+        "outputPath": "tasks.md",
+        "status": "done",
+        "requires": [
+          "specs",
+          "design"
+        ]
+      }
+    ],
+    "root": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+      "source": "nearest"
+    }
+  },
+  {
+    "changeName": "bauar-03-harness-delegation",
+    "schemaName": "spec-driven",
+    "planningHome": {
+      "kind": "repo",
+      "root": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+      "changesDir": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes",
+      "defaultSchema": "spec-driven"
+    },
+    "changeRoot": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-03-harness-delegation",
+    "artifactPaths": {
+      "proposal": {
+        "outputPath": "proposal.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-03-harness-delegation/proposal.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-03-harness-delegation/proposal.md"
+        ]
+      },
+      "specs": {
+        "outputPath": "specs/**/*.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-03-harness-delegation/specs/**/*.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-03-harness-delegation/specs/job-harness-delegation/spec.md"
+        ]
+      },
+      "design": {
+        "outputPath": "design.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-03-harness-delegation/design.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-03-harness-delegation/design.md"
+        ]
+      },
+      "tasks": {
+        "outputPath": "tasks.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-03-harness-delegation/tasks.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-03-harness-delegation/tasks.md"
+        ]
+      }
+    },
+    "isPlanningComplete": true,
+    "isComplete": true,
+    "applyRequires": [
+      "tasks"
+    ],
+    "nextSteps": [
+      "All planning artifacts are complete. Run openspec instructions apply --change \"bauar-03-harness-delegation\" --json to inspect implementation progress."
+    ],
+    "actionContext": {
+      "mode": "repo-local",
+      "sourceOfTruth": "repo",
+      "planningArtifacts": [
+        "proposal",
+        "specs",
+        "design",
+        "tasks"
+      ],
+      "linkedContext": [],
+      "allowedEditRoots": [
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture"
+      ],
+      "requiresAffectedAreaSelection": false,
+      "constraints": [
+        "Repo-local change artifacts and implementation edits are scoped to this project."
+      ]
+    },
+    "artifacts": [
+      {
+        "id": "proposal",
+        "outputPath": "proposal.md",
+        "status": "done",
+        "requires": []
+      },
+      {
+        "id": "specs",
+        "outputPath": "specs/**/*.md",
+        "status": "done",
+        "requires": [
+          "proposal"
+        ]
+      },
+      {
+        "id": "design",
+        "outputPath": "design.md",
+        "status": "done",
+        "requires": [
+          "proposal"
+        ]
+      },
+      {
+        "id": "tasks",
+        "outputPath": "tasks.md",
+        "status": "done",
+        "requires": [
+          "specs",
+          "design"
+        ]
+      }
+    ],
+    "root": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+      "source": "nearest"
+    }
+  },
+  {
+    "changeName": "bauar-04-resource-credential-lifecycle",
+    "schemaName": "spec-driven",
+    "planningHome": {
+      "kind": "repo",
+      "root": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+      "changesDir": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes",
+      "defaultSchema": "spec-driven"
+    },
+    "changeRoot": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-04-resource-credential-lifecycle",
+    "artifactPaths": {
+      "proposal": {
+        "outputPath": "proposal.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-04-resource-credential-lifecycle/proposal.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-04-resource-credential-lifecycle/proposal.md"
+        ]
+      },
+      "specs": {
+        "outputPath": "specs/**/*.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-04-resource-credential-lifecycle/specs/**/*.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-04-resource-credential-lifecycle/specs/mcp-resource-authority/spec.md"
+        ]
+      },
+      "design": {
+        "outputPath": "design.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-04-resource-credential-lifecycle/design.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-04-resource-credential-lifecycle/design.md"
+        ]
+      },
+      "tasks": {
+        "outputPath": "tasks.md",
+        "resolvedOutputPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-04-resource-credential-lifecycle/tasks.md",
+        "existingOutputPaths": [
+          "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-04-resource-credential-lifecycle/tasks.md"
+        ]
+      }
+    },
+    "isPlanningComplete": true,
+    "isComplete": true,
+    "applyRequires": [
+      "tasks"
+    ],
+    "nextSteps": [
+      "All planning artifacts are complete. Run openspec instructions apply --change \"bauar-04-resource-credential-lifecycle\" --json to inspect implementation progress."
+    ],
+    "actionContext": {
+      "mode": "repo-local",
+      "sourceOfTruth": "repo",
+      "planningArtifacts": [
+        "proposal",
+        "specs",
+        "design",
+        "tasks"
+      ],
+      "linkedContext": [],
+      "allowedEditRoots": [
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture"
+      ],
+      "requiresAffectedAreaSelection": false,
+      "constraints": [
+        "Repo-local change artifacts and implementation edits are scoped to this project."
+      ]
+    },
+    "artifacts": [
+      {
+        "id": "proposal",
+        "outputPath": "proposal.md",
+        "status": "done",
+        "requires": []
+      },
+      {
+        "id": "specs",
+        "outputPath": "specs/**/*.md",
+        "status": "done",
+        "requires": [
+          "proposal"
+        ]
+      },
+      {
+        "id": "design",
+        "outputPath": "design.md",
+        "status": "done",
+        "requires": [
+          "proposal"
+        ]
+      },
+      {
+        "id": "tasks",
+        "outputPath": "tasks.md",
+        "status": "done",
+        "requires": [
+          "specs",
+          "design"
+        ]
+      }
+    ],
+    "root": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+      "source": "nearest"
+    }
+  }
+]

@@ -7,16 +7,15 @@ sidebar_label: Adversarial Review
 
 `skills/adversarial-review/SKILL.md` describes isolated, cross-model adversarial review of KBD
 artifacts and change diffs: it dispatches a fresh-context LLM judge over an OpenAI-compatible REST
-gateway (`liter-llm api`) with an explicit mandate to find problems. **The model that produced an
-artifact or change is never the model that reviews it.** It runs as a pipeline stage inside
-`kbd-assess`/`analyze`/`plan` (artifact mode) and `kbd-execute`'s per-change QA gate (diff mode).
+gateway (`liter-llm api`) with an explicit mandate to find problems. Independent acceptance requires recorded evidence that the judge differs from the producer in the required model family. Configured aliases and fresh contexts alone do not establish that. It runs as a pipeline stage inside
+`kbd-assess`/`analyze`/`plan` (artifact mode) and the completed-phase QA boundary after all planned production changes (diff mode).
 Findings are severity-bucketed (`CRITICAL` / `WARNING` / `SUGGESTION`), and the judge's own report
 is screened by the sycophancy anti-theater gate before it is surfaced.
 
 This is a full Node port of the full pack's 6,146-line bash + inline Python implementation, with
 `python3` and `curl` eliminated entirely (plain JS objects and `fetch`).
 
-## The judge/producer isolation guarantee
+## Judge and producer evidence
 
 The pipeline's central invariant: **judge ≠ producer**. `lib/review/judge-findings.mjs` (a port of
 the extract/normalize block in `dispatch-judge.sh`) computes `cross_model_check`, the artifact's
@@ -76,9 +75,7 @@ A port of the 919-line `build-review-packet.sh`, split by responsibility:
 
 ## Exit contract
 
-Gateway unreachable → caller falls back to a fresh-context subagent and records
-`isolation_mode=harness-native`. This preserves the source pack's C8a guarantee: the KBD loop keeps
-working with the liter-llm gateway down.
+Gateway unreachable can select a fresh-context native fallback recorded as `isolation_mode=harness-native`. That records dispatch isolation, not a verified different model family. Record the actual route and inference evidence; if a distinct judge cannot be established, independent QA remains pending. Local lifecycle work can continue without fabricating a passing review.
 
 ## See also
 

@@ -5,8 +5,7 @@ sidebar_label: Overview
 
 # Scaffolding
 
-Five skills that turn a refined artifact into a buildable project, or layer an agent-UI host onto
-one.
+Scaffolding skills generate project source or add an agent UI host. A generated project still needs its declared SDKs, dependencies, real transports and platform integration evidence.
 
 | Skill | Description |
 |---|---|
@@ -16,7 +15,7 @@ one.
 | `scaffold-react-vite-tauri` | Wrap a scaffolded Vite/React project in a Tauri 2 shell. Tauri 2 supports desktop (macOS/Windows/Linux) + mobile (iOS + Android) from the same source. The Vite dist is served by Tauri's WebView; the React app's responsive primitives (`useBreakpoint`, `ResponsiveShell`) drive form-factor switching automatically. |
 | `scaffold-flutter-a2ui` | Layer an A2UI rendering host onto a Flutter project, with a parity test asserting the same output as the web and MCP-UI hosts. Use for mobile agent UI, cross-platform A2UI rendering, or Flutter surfaces driven by agent output. |
 
-These are guidance/scaffolding skills — they generate project structure and code, and the actual
+Framework versions in this table describe the current skill templates; consult the actual template manifests and current official SDK documentation before scaffolding or migration. These are guidance/scaffolding skills — they generate project structure and code, and the actual
 scaffolders run via Node tooling per this pack's own constitution (no shell-script scaffolders).
 
 ## See also

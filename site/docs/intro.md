@@ -15,22 +15,11 @@ runs.
 
 ## Why a mini port exists
 
-The original port analysis recorded that the full pack's `skill-system.json` stated its Windows posture plainly: Windows is supported
-only through Git Bash or WSL, and the "full" install profile is macOS/Linux only. The full pack's
-tree has 73 `.sh` files under `shared/scripts/`, 117 more under `skills/process/`, hooks that
-probe for `bash -c 'exit 0'` and fail with `MISSING_SHELL` when neither Git Bash nor a compiled
-binary exists, a hard `jq` dependency, Python on several critical paths (a 671-line
-`record-progress.py`), and 11 of 13 install targets that use symlinks — every one of these is
-either impossible or fragile on a stock Windows 10/11 box without WSL.
-
-This repository is the answer: the same KBD lifecycle, the same skill-driven workflow, rewritten
-as pure Node.js ESM modules with no shell scripts, no Python, and no symlinks anywhere in the
-install or runtime path.
+The full pack supports its skills profile on Windows through Git Bash or WSL; its native service profile is macOS/Linux. Mini implements its local process workflow with Node ESM, copy delivery and no Python or shell dependency in the pack's runtime. External harnesses and optional services have their own prerequisites and acceptance limits.
 
 ## What's actually ported today
 
-The current distribution contains **97 skills**, including **40 portable UI/UX entries**
-from the shared 41-entry catalog. Mini excludes the full-only Impeccable native engine and
+The generated [Skills Catalog](/docs/catalog) lists the distribution inventory. It includes portable UI/UX entries from the shared catalog. Mini excludes the full-only Impeccable native engine and
 ships a bounded context/workflow adaptation. See the [Skills Catalog](/docs/catalog) for
 actual frontmatter descriptions and user-only invocation labels.
 
@@ -57,20 +46,11 @@ records macOS and offline Linux-container integration evidence. Native Windows e
 live invocation of every harness and full Electron installed-app acceptance remain open;
 no release certification is claimed here.
 
-## Two services, not eleven
+## Optional services
 
-The full pack's runtime surface includes SurrealDB, surreal-memory, a liter-llm gateway,
-`prometheus-knowledge`, `forge-rs`, `openai-proxy`, `prometheus-exec`, and a learning-worker timer
-— eight-plus daemons. This pack keeps exactly two, because the KBD/adversarial-review loop
-genuinely needs them:
+Mini supports independently configured surreal-memory and a liter-llm gateway. The Windows-oriented Compose stack adds SurrealDB beneath surreal-memory; its namespace/database is `memory/main_local_384`. Native full-pack configuration uses `memory/mcp` and is a separate installation. Follow [service operations](/docs/services/docker-services) for ownership, data and platform limits.
 
-1. **surreal-memory** (backed by SurrealDB) — agent memory, ideation-mindmap.
-2. **liter-llm gateway** — the cross-model critic and judge for adversarial review.
-
-On Windows both run under Docker Compose (`docker/compose.yaml`). On macOS/Linux they run exactly
-as in the full pack today. The KBD loop keeps working when both are down: memory writes fall back
-to a durable local outbox, and review falls back to a fresh-context subagent recording
-`isolation_mode=harness-native`.
+Local KBD state and the memory outbox do not require a live service. A missing gateway does not turn a same-model fresh-context review into independent QA: a native fallback needs recorded distinct-model evidence, or independent review remains pending. Mini's scoped memory source supports the canonical REST contract and a durable file tier; it does not include the full Python learning writer, Cortex feeder, project cards or intake executor. Source changes and regenerated installed artifacts are separate evidence boundaries.
 
 ## Where to go next
 

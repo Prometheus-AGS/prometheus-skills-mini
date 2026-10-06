@@ -8,16 +8,23 @@ Loaded when Docker, memory-bridge, review-dispatch or MCP config files are read.
 
 Exactly two services exist, and no change may add a third without an OpenSpec proposal that says why:
 
-| Service | Purpose | Endpoint (every platform) |
+| Capability | Purpose | Supplied Compose endpoint |
 |---|---|---|
 | surreal-memory + SurrealDB | agent memory: reflections, recall, mindmaps | `http://localhost:23001/mcp/sse`; SurrealDB `127.0.0.1:28000` |
 | liter-llm gateway | the adversarial-review **judge** and **critic** models | `http://localhost:4000/v1` (OpenAI-compatible) |
 
-**Windows:** Docker, via `docker/compose.yaml` — three containers. **macOS and Linux:** exactly as the
-source pack runs them today (native launchd/systemd units); the same compose file also works there.
-Ports, the SSE path, the namespace/database (`memory` / `main_local_384`) and the model names
-(`kbd-judge`, `kbd-critic`) are identical everywhere, so **client code has no platform branch**. Only how
-the process starts differs.
+`docker/compose.yaml` supplies three containers for these two optional capabilities on
+supported Docker hosts, including Windows without invoking WSL. Mini does not ship a native
+LaunchAgent/systemd installer. It can discover a separately installed full native stack while
+preserving that stack's service ownership. Native availability is not supplied service management
+or acceptance evidence for every platform.
+
+Mini Compose defaults to namespace/database `memory` / `main_local_384`; the full native memory
+service uses `memory` / `mcp`. Selecting another owner or endpoint does not migrate data. Configure
+the intended endpoint and dataset explicitly, preserve database volumes, and verify the actual
+memory/gateway operations. The supplied gateway config declares `kbd-judge` and `kbd-critic`;
+external/native deployments may advertise different models. Discovery is not inference proof.
+See [current service operations](../../../docs/service-operations.md) for ownership and recovery.
 
 ## Compose rules — each one is a real boundary (A-3) or a Windows fact
 

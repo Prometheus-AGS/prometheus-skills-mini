@@ -8,28 +8,8 @@ sidebar_label: Installation
 `skill-system.json` at the repository root is the distribution manifest. It declares one
 inventory root and nine possible harness targets:
 
-```json
-{
-  "schemaVersion": "prometheus-mini-skill-system-v1",
-  "name": "prometheus-skills-mini",
-  "releaseVersion": "0.2.0",
-  "platforms": { "skills": ["darwin", "linux", "win32"] },
-  "inventory": {
-    "roots": [{ "id": "core", "path": "skills", "scan": "children" }]
-  },
-  "targets": [
-    { "id": "claude", "path": ".claude/skills", "mode": "copy" },
-    { "id": "codex", "path": ".codex/skills", "mode": "copy" },
-    { "id": "opencode", "path": ".opencode/skills", "mode": "copy" },
-    { "id": "agents", "path": ".agents/skills", "mode": "copy" },
-    { "id": "cursor", "path": ".cursor/skills", "mode": "copy" },
-    { "id": "gemini", "path": ".gemini/skills", "mode": "copy" },
-    { "id": "windsurf", "path": ".windsurf/skills", "mode": "copy" },
-    { "id": "zed", "path": ".zed/skills", "mode": "copy" },
-    { "id": "cline", "path": ".cline/skills", "mode": "copy" }
-  ]
-}
-```
+Read the current release, target IDs and detection rules directly from `skill-system.json`; the generated catalog supplies the corresponding inventory. The manifest's nine targets use copy mode.
+
 
 Every target's `mode` is `"copy"` — **never `"symlink"`**. This is a deliberate, repo-wide rule:
 symlinks need Developer Mode or elevation on Windows, exactly what this pack exists to avoid
@@ -38,12 +18,15 @@ generator only materializes a harness's skill directory when that harness is act
 
 ## Generating the distribution
 
+Complete all phase production before generation or validation. Use isolated output paths and homes for local integration; command availability is not authorization to change a live harness.
+
+
 ```bash
 node scripts/generate-skill-system-distribution.mjs           # writes dist/ and both marketplaces
 node scripts/generate-skill-system-distribution.mjs --check   # verifies, exits non-zero on drift
 ```
 
-This reads `skill-system.json`, scans `skills/` (97 distributed skill directories), and produces:
+This reads `skill-system.json`, scans the declared `skills/` inventory, and produces:
 
 - `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json` — one plugin listed
   (itself), per `lib/distribution/marketplace.mjs`.
@@ -101,8 +84,7 @@ full-pack install.
 
 Distribution makes skill payloads available. Project adoption also needs managed instructions,
 the UI protocol and an active-team record. Follow [UI/UX routing and adoption](/docs/ui-ux/overview)
-for bootstrap or separate UI/creator commands. The current inventory includes 40 portable UI
-entries from the shared 41-entry catalog. Local helpers run directly with Node 22+ and bundled
+for bootstrap or separate UI/creator commands. The generated catalog records the included portable UI entries. Local helpers run directly with Node 22+ and bundled
 assets; they need neither optional service. The full-pack anti-shadowing constraint still applies.
 
 Proposal-only creator `export` does not install a project team; normal project creation finishes

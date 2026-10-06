@@ -5,7 +5,7 @@ sidebar_label: Routing and Adoption
 
 # UI/UX routing and project-team adoption
 
-Mini distributes **97 skills**, including **40 portable UI/UX entries** from the shared
+The generated mini catalog supplies the current distribution inventory, including **40 portable UI/UX entries** from the shared
 41-entry full/mini catalog. The extra full-only entry is Impeccable's native engine.
 Catalog inclusion records provenance and suitability; it is not a claim that a skill is
 universally best. See the [catalog lock](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/skills/prometheus-ui-ux/references/catalog.lock.json).

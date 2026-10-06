@@ -5,7 +5,7 @@ sidebar_label: Skills
 
 # KBD Skills
 
-All 24 skills in this family, with descriptions drawn directly from each `SKILL.md`'s frontmatter.
+This reference summarizes the KBD family. The generated catalog and current skill frontmatter are the inventory authority.
 
 ## Lifecycle stages
 
@@ -45,7 +45,7 @@ All 24 skills in this family, with descriptions drawn directly from each `SKILL.
 
 | Skill | Description |
 |---|---|
-| `kbd-bottleneck-detector` | Evaluate or repair canonical KBD task, phase, and ZeeSpec boundaries. Use when progress receipts, projections, or build gates may be stale, or when the user mentions "bottleneck detector". Do NOT use for creating or advancing phases. |
+| `kbd-bottleneck-detector` | Evaluate or repair canonical KBD task and phase boundaries. Use when progress receipts, projections, or build gates may be stale, or when the user mentions "bottleneck detector". Do NOT use for creating or advancing phases. |
 | `kbd-memory-recall` | Query surreal-memory for prior similar KBD work and write a markdown digest at `.kbd-orchestrator/phases/<phase>/prior-context.md`. Used as planning input before `/kbd-assess`. Degrades gracefully when the memory endpoint is unreachable. |
 | `kbd-inject-agent-rules` | Idempotently inject the agent-rules or UI/UX-routing managed pack into a target project's `CLAUDE.md` and/or `AGENTS.md`. Re-runnable — overwrites only the selected fenced region; everything else is byte-preserved. Supports `--refresh` to re-validate cached source URLs, and `--dry-run` for a target-file diff preview. |
 | `kbd-evolve` | Use for domain-landscape-first evolution of a KBD project — when the roadmap is empty, exhausted, or you want to recalibrate against external reality rather than follow internal plans. Surveys the external landscape of the project's problem domain, scores improvement opportunities, and produces a ranked evolution brief a new phase can consume as its seed. |

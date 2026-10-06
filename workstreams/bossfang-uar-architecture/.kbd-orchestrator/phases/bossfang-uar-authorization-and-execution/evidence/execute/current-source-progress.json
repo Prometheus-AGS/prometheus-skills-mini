@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "time": "2026-10-06T20:54:07.723Z",
+  "time": "2026-10-06T21:20:44.743Z",
   "kind": "canonical status and observed command receipts; not certification",
   "canonical": {
     "schemaVersion": "2",
@@ -3699,7 +3699,7 @@
   ],
   "pendingPermission": "None for continuing approved eligible Execute work; later Reflect requires human handover",
   "D0": "Rejected, excluded and not retried",
-  "observedBlocker": "HARNESS22 fixed pending diagnostics active; desktop05 actual UAR408 at skill-selection IPC, fixed request-stage diagnosis active. SelectedCLIbuild active. Globalfmt failed/unwaived; D0 excluded. Package and final review pending",
+  "observedBlocker": "Completed metadata-only source correction; sidecar02 build and affected Boss node04/e2e02 checks active. Harness23 diagnostic reached12cases then unclassified kernel SIGABRT; exact continuation/fixture-stack correction frozen. Complete desktop/harness/package/review acceptance pending; no new primary PASS",
   "observedCommands": [
     {
       "schemaVersion": 1,
@@ -3810,6 +3810,24 @@
     },
     {
       "schemaVersion": 1,
+      "label": "boss-approval-client-runtime-06",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "--import",
+        "tsx",
+        "scripts/gates/bauar-approval-client.ts"
+      ],
+      "startedAt": "2026-10-06T20:58:49.930Z",
+      "finishedAt": "2026-10-06T21:00:51.728Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-approval-client-runtime-06.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
       "label": "boss-dsh-current-build-01",
       "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss/packages/dsh-bridge",
       "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
@@ -3909,6 +3927,24 @@
       "exitCode": 0,
       "signal": null,
       "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-electron-current-build-03.log",
+      "result": "command-completed-not-yet-case-certified",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-electron-current-build-04",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "--max-old-space-size=8192",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/run-boss-existing-electron-build.mjs",
+        "app"
+      ],
+      "startedAt": "2026-10-06T20:55:23.778Z",
+      "finishedAt": "2026-10-06T20:56:18.911Z",
+      "exitCode": 0,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-electron-current-build-04.log",
       "result": "command-completed-not-yet-case-certified",
       "buildEnvironment": {}
     },
@@ -4717,6 +4753,46 @@
       "exitCode": 1,
       "signal": null,
       "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-21.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-22",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T20:52:05.199Z",
+      "finishedAt": "2026-10-06T20:54:22.792Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-22.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-23",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T21:03:40.504Z",
+      "finishedAt": "2026-10-06T21:06:53.321Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-23.log",
       "result": "failed",
       "buildEnvironment": {}
     },

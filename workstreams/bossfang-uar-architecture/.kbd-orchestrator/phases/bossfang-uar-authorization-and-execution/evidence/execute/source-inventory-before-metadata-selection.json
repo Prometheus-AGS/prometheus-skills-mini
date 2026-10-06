@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "time": "2026-10-06T21:19:32.458Z",
+  "time": "2026-10-06T20:46:07.832Z",
   "kind": "Current source binding, not test result; immutable gate handoffs preserve executed input",
   "records": [
     {
       "name": "uar",
       "root": "/Users/gqadonis/.claude/worktrees/bauar-uar",
       "head": "8bff32deb870f6363e94687a2e22492f91a34dfd",
-      "diffSha256": "3e0edfcf1d42818823ca126532af18e66c5d522050ba9c12320e814f69aa9824",
+      "diffSha256": "79a1b06d800f3a3e5f2f5b6700b632fff61ce9d9381103c6a90ea0815a4223cf",
       "files": [
         {
           "file": "docs/API_KEYS.md",
@@ -140,11 +140,6 @@
           "bytes": 59608
         },
         {
-          "file": "src/uar/api/skills.rs",
-          "sha256": "75ff7b320f6ce92ee97331f47e264a9dae1d9a405a890e5588b334bab13cc493",
-          "bytes": 28310
-        },
-        {
           "file": "src/uar/api/sse.rs",
           "sha256": "0eefc7542b68262e359697b2f10147f8de29e7a789a830d06f0dbbdc4af762d4",
           "bytes": 52326
@@ -170,26 +165,6 @@
           "bytes": 31015
         },
         {
-          "file": "src/uar/persistence/mod.rs",
-          "sha256": "36a1c0591cace708f49cf5d3f0627b9cb77f897f1cc45432fee2eed632e64586",
-          "bytes": 21752
-        },
-        {
-          "file": "src/uar/persistence/providers/memory.rs",
-          "sha256": "9c061ed68477742284b3c8da60e8541430cca7748e33153043095332c826f721",
-          "bytes": 34527
-        },
-        {
-          "file": "src/uar/persistence/providers/postgres.rs",
-          "sha256": "ba6865442529f0dc636502bf9483c90cf508f2ea07a63493719472aa6626b3a3",
-          "bytes": 68014
-        },
-        {
-          "file": "src/uar/persistence/providers/surreal.rs",
-          "sha256": "fabdb3b6b1fbc09d1cb07dbe03b02b2bcdd47d6c9e4b4a54b837251286f8a32a",
-          "bytes": 124866
-        },
-        {
           "file": "src/uar/runtime/actor/agent_actor.rs",
           "sha256": "d890da10b95892f1acfdb3476f8f810eca1a6220a8391bb2787f81b252a0bc76",
           "bytes": 6797
@@ -206,8 +181,8 @@
         },
         {
           "file": "src/uar/runtime/manager.rs",
-          "sha256": "55ff4407c9a05e44ec9c15c67b68f5241b0dde43323520faae74aef5f270499f",
-          "bytes": 330283
+          "sha256": "60f0a97292eeb2dca6b6acb9c734aacf763959dd19a99f081d77cd7da3da1a95",
+          "bytes": 330282
         },
         {
           "file": "src/uar/runtime/presentation_history_tests.rs",
@@ -218,21 +193,6 @@
           "file": "src/uar/runtime/presentations_tests.rs",
           "sha256": "2a6e6651d78fa9225184ff04b1092b9f241733e00115a3afd3b541dd03beb57b",
           "bytes": 21435
-        },
-        {
-          "file": "src/uar/runtime/skills/registry.rs",
-          "sha256": "edc26364829dcc6a10ce37cb1de74db367cef59f761d89baa9cf46465bb96dd7",
-          "bytes": 16739
-        },
-        {
-          "file": "src/uar/runtime/skills/service.rs",
-          "sha256": "feedd62a5078fd7922e8b31696a599f902e84de7c5019ace98d914697a723b0b",
-          "bytes": 73853
-        },
-        {
-          "file": "src/uar/runtime/skills/service/selection.rs",
-          "sha256": "61c45334ed5e33e904e5d6c5ad31aefda2f1fb597a5253983dd5ca7219a165cc",
-          "bytes": 7192
         },
         {
           "file": "src/uar/runtime/thread/actor_host.rs",
@@ -261,8 +221,8 @@
         },
         {
           "file": "src/uar/runtime/turn/bindings.rs",
-          "sha256": "041222e6ee1b18b1cba1806a28893d5adf631f1563b9100331365387b9ff51fc",
-          "bytes": 20917
+          "sha256": "d2a77d2b307108781b60f85a4715ac73fc8fa03f89a054df683e8e6c97a712f8",
+          "bytes": 20896
         },
         {
           "file": "src/uar/runtime/turn/host/event_projection.rs",
@@ -270,14 +230,14 @@
           "bytes": 9477
         },
         {
-          "file": "src/uar/runtime/turn/host/mcp_tests.rs",
-          "sha256": "29497c18cef197ea4ad13cde46599e8f69f0591c9ee42d2ba1d4f62599a40fe8",
-          "bytes": 12177
-        },
-        {
           "file": "src/uar/runtime/turn/host/mcp.rs",
           "sha256": "ffbce8153ab1cdd9e5d8a702112b5d12fc0b6f6a4e63b483c7ca024a98b6c81b",
           "bytes": 15209
+        },
+        {
+          "file": "src/uar/runtime/turn/host/mcp_tests.rs",
+          "sha256": "29497c18cef197ea4ad13cde46599e8f69f0591c9ee42d2ba1d4f62599a40fe8",
+          "bytes": 12177
         },
         {
           "file": "src/uar/runtime/turn/host/mod.rs",
@@ -445,11 +405,6 @@
           "bytes": 11986
         },
         {
-          "file": "tests/bauar_skill_selection.rs",
-          "sha256": "7259b7f716f68bf90abc3bf9530fe8ca0a6e40796d7db60ce2bda5933f3a212a",
-          "bytes": 8668
-        },
-        {
           "file": "tests/bauar_stdio_boundary.rs",
           "sha256": "9e7edefe5f2f30ec84e0e073e2be29257c4b7a31964d2c85fa53e869a4332dc2",
           "bytes": 12071
@@ -582,8 +537,7 @@
       ],
       "diffExclusions": [
         "workstreams",
-        "tests/bauar_session_owner.rs",
-        "src/uar/mcp_server.rs"
+        "tests/bauar_session_owner.rs"
       ],
       "exclusionNote": "D0 diagnostic source not read or hashed in this refresh"
     },
@@ -591,7 +545,7 @@
       "name": "boss",
       "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
       "head": "e2ae2ce21245030293c0bea96ed02ae853b820a7",
-      "diffSha256": "367b7eb1f7f04d52ebc1ec1cf083ea129dc5fdd94a9355c092c13e02060254b5",
+      "diffSha256": "d6050aa0fd2317c228bc2043ee074cda86b2402bc84068428addaa981124d016",
       "files": [
         {
           "file": "scripts/gates/bauar-approval-client.ts",
@@ -624,14 +578,14 @@
           "bytes": 12574
         },
         {
-          "file": "src/main/ai/mcp/createMcpBridgeServer.ts",
-          "sha256": "4f5a53804d8e8e6854e985b50c287232001d0c7fb8eabe92311108c7b8c2e430",
-          "bytes": 12671
-        },
-        {
           "file": "src/main/ai/mcp/McpRuntimeService.ts",
           "sha256": "843f4bea1fcc0053eea07255791facc19f01cbe35132e7c5650e8695dee6a728",
           "bytes": 56627
+        },
+        {
+          "file": "src/main/ai/mcp/createMcpBridgeServer.ts",
+          "sha256": "4f5a53804d8e8e6854e985b50c287232001d0c7fb8eabe92311108c7b8c2e430",
+          "bytes": 12671
         },
         {
           "file": "src/main/ai/mcp/types.ts",
@@ -649,24 +603,9 @@
           "bytes": 16909
         },
         {
-          "file": "src/main/ai/runtime/uar/uarApprovalLifecycle.ts",
-          "sha256": "0392afd1f308aafd972482a7e1ab653d859abf0df63cbfc95162cc4882d2b8ad",
-          "bytes": 5711
-        },
-        {
-          "file": "src/main/ai/runtime/uar/UarCatalogAdministrationAdapter.ts",
-          "sha256": "c2dbf92de831d3ec9571370ab93b4fa82049636e936fd457add2fddb01a15e40",
-          "bytes": 15823
-        },
-        {
           "file": "src/main/ai/runtime/uar/UarHostMcpBridge.ts",
           "sha256": "f084d4c7801098183982df7ac455fe78243aaa365f9a9f517322ad17948fc9f9",
           "bytes": 7727
-        },
-        {
-          "file": "src/main/ai/runtime/uar/uarProjectedMcpTransport.ts",
-          "sha256": "b1a6789dd2b31860b8589e40ae584974da8853b56cbf95b4cd0639b041d6d33a",
-          "bytes": 2484
         },
         {
           "file": "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
@@ -674,19 +613,24 @@
           "bytes": 27869
         },
         {
-          "file": "src/main/ai/runtime/uar/uarSecretProjection.ts",
-          "sha256": "26f7468574dc8e6d3162188607ebb0bb5ef622422aeebd30a7892b3399d15ffd",
-          "bytes": 4587
-        },
-        {
-          "file": "src/main/ai/runtime/uar/uarStartupDiagnostic.ts",
-          "sha256": "4bfc7f03a781aa0ea6b74b9e5099eeb57a0b86dfe9344c54d1f6f2ab5da2995e",
-          "bytes": 2165
-        },
-        {
           "file": "src/main/ai/runtime/uar/UarToolApprovalController.ts",
           "sha256": "74bec6dbd5b054cc7b1a5b5372393d1d51e8445e4b46b6f54c93739ddadf187c",
           "bytes": 6558
+        },
+        {
+          "file": "src/main/ai/runtime/uar/uarApprovalLifecycle.ts",
+          "sha256": "0392afd1f308aafd972482a7e1ab653d859abf0df63cbfc95162cc4882d2b8ad",
+          "bytes": 5711
+        },
+        {
+          "file": "src/main/ai/runtime/uar/uarProjectedMcpTransport.ts",
+          "sha256": "b1a6789dd2b31860b8589e40ae584974da8853b56cbf95b4cd0639b041d6d33a",
+          "bytes": 2484
+        },
+        {
+          "file": "src/main/ai/runtime/uar/uarSecretProjection.ts",
+          "sha256": "26f7468574dc8e6d3162188607ebb0bb5ef622422aeebd30a7892b3399d15ffd",
+          "bytes": 4587
         },
         {
           "file": "src/shared/types/prometheusIntegration.ts",
@@ -700,8 +644,13 @@
         },
         {
           "file": "tests/e2e/gates/uarExperienceGate.test.ts",
-          "sha256": "46820ee01ea4a14918e142565201060ab19e4ec8d56df64bf3ef61fe0f1049e6",
-          "bytes": 26068
+          "sha256": "4b92b8eecb2418b17c96a3bf9770f118de161fe80e4697a30a37f64fe6bc61c9",
+          "bytes": 25936
+        },
+        {
+          "file": "src/main/ai/runtime/uar/uarStartupDiagnostic.ts",
+          "sha256": "4bfc7f03a781aa0ea6b74b9e5099eeb57a0b86dfe9344c54d1f6f2ab5da2995e",
+          "bytes": 2165
         }
       ],
       "diffExclusions": [
@@ -753,6 +702,26 @@
           "bytes": 18055
         },
         {
+          "file": "crates/librefang-api/src/routes/uar.rs",
+          "sha256": "1302acf0fb8c45272a444133801b1f09929f1f1d3fec907564261d70adf0fc33",
+          "bytes": 18344
+        },
+        {
+          "file": "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
+          "sha256": "8777351f2f1695e7b292298e7f8767194e9fcbadc636abbf81698e5e4b5b73f4",
+          "bytes": 9389
+        },
+        {
+          "file": "crates/librefang-api/src/routes/uar/delegated_view.rs",
+          "sha256": "db71c4a71479069e30ae2496494ba228f00376f39393878238acc49cfa6bbd59",
+          "bytes": 5870
+        },
+        {
+          "file": "crates/librefang-api/src/routes/uar/delegated_view_tests.rs",
+          "sha256": "65c1d5128f24bbb7a4c8acd323ce04633a13aa5a3eef7ff451f3fb8651b681f0",
+          "bytes": 4667
+        },
+        {
           "file": "crates/librefang-api/src/routes/uar_delegation.rs",
           "sha256": "8793233ed1a7edc0089bcc1ac13c34418e0f1857900ff07cfacc56af22682b1f",
           "bytes": 19830
@@ -778,26 +747,6 @@
           "bytes": 3447
         },
         {
-          "file": "crates/librefang-api/src/routes/uar.rs",
-          "sha256": "1302acf0fb8c45272a444133801b1f09929f1f1d3fec907564261d70adf0fc33",
-          "bytes": 18344
-        },
-        {
-          "file": "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
-          "sha256": "8777351f2f1695e7b292298e7f8767194e9fcbadc636abbf81698e5e4b5b73f4",
-          "bytes": 9389
-        },
-        {
-          "file": "crates/librefang-api/src/routes/uar/delegated_view_tests.rs",
-          "sha256": "65c1d5128f24bbb7a4c8acd323ce04633a13aa5a3eef7ff451f3fb8651b681f0",
-          "bytes": 4667
-        },
-        {
-          "file": "crates/librefang-api/src/routes/uar/delegated_view.rs",
-          "sha256": "db71c4a71479069e30ae2496494ba228f00376f39393878238acc49cfa6bbd59",
-          "bytes": 5870
-        },
-        {
           "file": "crates/librefang-api/src/server.rs",
           "sha256": "cc910d166979671657ff3c0592e14ef7db59e657a4659aaeb3bdff0fadaeb372",
           "bytes": 221707
@@ -816,11 +765,6 @@
           "file": "crates/librefang-kernel/Cargo.toml",
           "sha256": "17028deeeb59c65642652704ce203521eeb681e519847b1bdd9f822294090ef9",
           "bytes": 5377
-        },
-        {
-          "file": "crates/librefang-kernel/src/kernel_api.rs",
-          "sha256": "4848f9eb7ee28a4756a5da4d5d825e1a671ea95a95c5aaf95eac0ee76cdf7783",
-          "bytes": 86959
         },
         {
           "file": "crates/librefang-kernel/src/kernel/ephemeral_spawn.rs",
@@ -848,19 +792,14 @@
           "bytes": 107171
         },
         {
-          "file": "crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs",
-          "sha256": "747e2424d2c6247b67aee42f176508983adca0fcc608bbe9262fca44212a5db8",
-          "bytes": 6367
-        },
-        {
           "file": "crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
           "sha256": "0bb62e66b555dd934fcaa20004a6a5100e715ac59cfa6e18cad9e069cd581922",
           "bytes": 11577
         },
         {
-          "file": "crates/librefang-kernel/src/kernel/uar_harness/lifecycle_tests.rs",
-          "sha256": "a584765c209b26a8c049369185f1b4bef852c7723418083df79600c83248e95d",
-          "bytes": 5161
+          "file": "crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs",
+          "sha256": "747e2424d2c6247b67aee42f176508983adca0fcc608bbe9262fca44212a5db8",
+          "bytes": 6367
         },
         {
           "file": "crates/librefang-kernel/src/kernel/uar_harness/lifecycle.rs",
@@ -868,14 +807,19 @@
           "bytes": 4354
         },
         {
-          "file": "crates/librefang-kernel/src/kernel/uar_harness/mapping_tests.rs",
-          "sha256": "85e8c6ea2f09325c384bb21fed9fa333d931530a88022639983f3c6427f102d2",
-          "bytes": 4220
+          "file": "crates/librefang-kernel/src/kernel/uar_harness/lifecycle_tests.rs",
+          "sha256": "a584765c209b26a8c049369185f1b4bef852c7723418083df79600c83248e95d",
+          "bytes": 5161
         },
         {
           "file": "crates/librefang-kernel/src/kernel/uar_harness/mapping.rs",
           "sha256": "7d510ffb684c79e8f67e973287e373ccbeaa753f6129f31294f33f35fc3f6bc1",
           "bytes": 12810
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/uar_harness/mapping_tests.rs",
+          "sha256": "85e8c6ea2f09325c384bb21fed9fa333d931530a88022639983f3c6427f102d2",
+          "bytes": 4220
         },
         {
           "file": "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
@@ -886,6 +830,11 @@
           "file": "crates/librefang-kernel/src/kernel/uar_harness/observation.rs",
           "sha256": "10673b4eac85f8c75a2f891bb30f9705cc0f57089c700b15f7f40906467854b5",
           "bytes": 4900
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel_api.rs",
+          "sha256": "4848f9eb7ee28a4756a5da4d5d825e1a671ea95a95c5aaf95eac0ee76cdf7783",
+          "bytes": 86959
         },
         {
           "file": "crates/librefang-kernel/tests/bauar_harness_delegation.rs",
@@ -913,14 +862,14 @@
           "bytes": 6009
         },
         {
-          "file": "crates/librefang-llm-drivers/src/drivers/uar_run/presentation_tests.rs",
-          "sha256": "b9129b2748db1b97d2fe0f80a456bcd986169691bc2bce7038907f5aecc5e3b6",
-          "bytes": 5028
-        },
-        {
           "file": "crates/librefang-llm-drivers/src/drivers/uar_run/presentation.rs",
           "sha256": "c04f6b31bb9f5cb269edcc8d1bc2cb70216d72da59580b6eff8cd1fcd8f272a0",
           "bytes": 12393
+        },
+        {
+          "file": "crates/librefang-llm-drivers/src/drivers/uar_run/presentation_tests.rs",
+          "sha256": "b9129b2748db1b97d2fe0f80a456bcd986169691bc2bce7038907f5aecc5e3b6",
+          "bytes": 5028
         },
         {
           "file": "crates/librefang-llm-drivers/src/drivers/uar_run/retained.rs",
@@ -948,14 +897,14 @@
           "bytes": 148695
         },
         {
-          "file": "crates/librefang-memory/src/substrate/task_dispatch_tests.rs",
-          "sha256": "562bfe445f4fec214ff2f7ca847497387067b7cc4d9362f40d3e0e9d26a6339e",
-          "bytes": 11046
-        },
-        {
           "file": "crates/librefang-memory/src/substrate/task_dispatch.rs",
           "sha256": "816f64ff517ec66ae8124213286b7fd8ad3cb7ed1826ac271c44cfbb4adb1dfe",
           "bytes": 17822
+        },
+        {
+          "file": "crates/librefang-memory/src/substrate/task_dispatch_tests.rs",
+          "sha256": "562bfe445f4fec214ff2f7ca847497387067b7cc4d9362f40d3e0e9d26a6339e",
+          "bytes": 11046
         },
         {
           "file": "crates/librefang-runtime/src/a2a.rs",
@@ -963,14 +912,14 @@
           "bytes": 84849
         },
         {
-          "file": "crates/librefang-runtime/src/a2a/uar_delegation_store_tests.rs",
-          "sha256": "734a8b789146c3a442da92d09e5b4c71662fc290514820265e5f66d7f4cb3bf3",
-          "bytes": 11754
-        },
-        {
           "file": "crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
           "sha256": "ea7d8c41e4b902dfcd5c1f9c84b40671316709d6bbaf69d6cdebaa39dde651f6",
           "bytes": 25066
+        },
+        {
+          "file": "crates/librefang-runtime/src/a2a/uar_delegation_store_tests.rs",
+          "sha256": "734a8b789146c3a442da92d09e5b4c71662fc290514820265e5f66d7f4cb3bf3",
+          "bytes": 11754
         },
         {
           "file": "crates/librefang-testing/Cargo.toml",
@@ -994,23 +943,23 @@
         },
         {
           "file": "scripts/integration/bauar-harness-gate.mjs",
-          "sha256": "c087632753adb573123c57ca96f50d39a70b3b0b44cd00beb6652e3b8f0028ef",
-          "bytes": 30213
-        },
-        {
-          "file": "scripts/integration/bauar-harness-native.mjs",
-          "sha256": "88c62169d378aabe79bc8312e0080298dfafcb8716d9c4da4cd5939a5af1fe8a",
-          "bytes": 8807
+          "sha256": "28af4288095189455f0723dde8bffa7f13f35efc1e11d9ecffc2b82bd200478d",
+          "bytes": 29887
         },
         {
           "file": "scripts/integration/bauar-harness-peer.mjs",
-          "sha256": "a8237cea06f21105cdb85a69fda3dad933ec46e12ab39ad82e597da6a7ea5ee5",
-          "bytes": 13764
+          "sha256": "983718269109ec047757cd8c84ac9e1d7ab3cb97fd44aaaff6e32dbeef16fa90",
+          "bytes": 10729
         },
         {
           "file": "scripts/integration/bauar-harness-runtime.mjs",
           "sha256": "2f4faba41b92de2728cd451b61023b55a8e554086d4b09cc1e460214f505f9cb",
           "bytes": 15033
+        },
+        {
+          "file": "scripts/integration/bauar-harness-native.mjs",
+          "sha256": "ae5009ffd00ada7b8b5fdccb6546f7bcb5345bbd99dad8ba524c589a19ac5e8d",
+          "bytes": 6260
         }
       ],
       "diffExclusions": [
@@ -1020,10 +969,11 @@
       "exclusionNote": "D0 diagnostic source not read or hashed in this refresh"
     }
   ],
-  "priorBinding": "source-inventory-before-metadata-selection.json",
+  "priorBinding": "source-inventory-before-startup-clock-diagnostics.json",
   "corrections": [
-    "Completed metadata-only production+real scenario source handoff",
-    "Desktop returned-agent selection assertion",
-    "Wire-proven native continuation fixture + kernel documented test-stack floor"
+    "Strict desktop administration schema5 alignment to existing UAR producer",
+    "Private harness fixture restores committed16MiBdebug-test stack contract only",
+    "Native helper extracted with preserved assertions and fixed safe diagnostics",
+    "Safe fixed desktop startup milestones; native peer exact appended-clock recognition only"
   ]
 }

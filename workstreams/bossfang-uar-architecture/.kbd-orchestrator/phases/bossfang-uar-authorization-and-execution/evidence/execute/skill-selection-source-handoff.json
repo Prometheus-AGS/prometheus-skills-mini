@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "status": "source-only-handoff-no-runtime-acceptance",
+  "observedFailure": "boss-approval-client-runtime-06: HTTP408 skill_binding_update PUT agent_skills; catalog GET not reached",
+  "sourceRoot": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+  "head": "8bff32deb870f6363e94687a2e22492f91a34dfd",
+  "files": [
+    {
+      "path": "src/uar/persistence/mod.rs",
+      "sha256": "36a1c0591cace708f49cf5d3f0627b9cb77f897f1cc45432fee2eed632e64586",
+      "lines": 596,
+      "currentWholeWorkingDiffSha256": "34e47884d9f23ae1c4ec949eb34e5eef6752f33550d5309cbb2c62be7279f9d5",
+      "newFile": false
+    },
+    {
+      "path": "src/uar/persistence/providers/memory.rs",
+      "sha256": "9c061ed68477742284b3c8da60e8541430cca7748e33153043095332c826f721",
+      "lines": 971,
+      "currentWholeWorkingDiffSha256": "92f6df165f32b6e59ffce7d9d4a488aa703bc6f3ebecc3e310d2bcf7b6193a87",
+      "newFile": false
+    },
+    {
+      "path": "src/uar/persistence/providers/postgres.rs",
+      "sha256": "ba6865442529f0dc636502bf9483c90cf508f2ea07a63493719472aa6626b3a3",
+      "lines": 1805,
+      "currentWholeWorkingDiffSha256": "4cb690a2be816eaabeacef3513cfbf3371ca7b3dcda5948d110164fb79c38618",
+      "newFile": false
+    },
+    {
+      "path": "src/uar/persistence/providers/surreal.rs",
+      "sha256": "fabdb3b6b1fbc09d1cb07dbe03b02b2bcdd47d6c9e4b4a54b837251286f8a32a",
+      "lines": 3249,
+      "currentWholeWorkingDiffSha256": "e67bda95a3d61ab8502d5190b70bc3a4290df479a50af84570f8b1a4426d701e",
+      "newFile": false
+    },
+    {
+      "path": "src/uar/runtime/skills/registry.rs",
+      "sha256": "edc26364829dcc6a10ce37cb1de74db367cef59f761d89baa9cf46465bb96dd7",
+      "lines": 463,
+      "currentWholeWorkingDiffSha256": "3c57f87ddfff80154563ff4e957158da15f605037cff4a6fb4f917afa34717f3",
+      "newFile": false
+    },
+    {
+      "path": "src/uar/runtime/skills/service.rs",
+      "sha256": "feedd62a5078fd7922e8b31696a599f902e84de7c5019ace98d914697a723b0b",
+      "lines": 2032,
+      "currentWholeWorkingDiffSha256": "e18cad9e3e3ed31996ae8d4165837d24a038b747e4ef602d98cbe179fe81dd7f",
+      "newFile": false
+    },
+    {
+      "path": "src/uar/runtime/skills/service/selection.rs",
+      "sha256": "61c45334ed5e33e904e5d6c5ad31aefda2f1fb597a5253983dd5ca7219a165cc",
+      "lines": 202,
+      "currentWholeWorkingDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "newFile": true
+    },
+    {
+      "path": "src/uar/api/skills.rs",
+      "sha256": "75ff7b320f6ce92ee97331f47e264a9dae1d9a405a890e5588b334bab13cc493",
+      "lines": 840,
+      "currentWholeWorkingDiffSha256": "f0938fb70a7f0bf202a2428abd1041106706aa0112d81fe064e8f717b65af988",
+      "newFile": false
+    },
+    {
+      "path": "src/uar/runtime/turn/bindings.rs",
+      "sha256": "041222e6ee1b18b1cba1806a28893d5adf631f1563b9100331365387b9ff51fc",
+      "lines": 468,
+      "currentWholeWorkingDiffSha256": "82f4c3195c10342da401eb3fd60b9da549844c69ce2a7a71e51c8994cdd72a2f",
+      "newFile": false
+    },
+    {
+      "path": "src/uar/runtime/manager.rs",
+      "sha256": "55ff4407c9a05e44ec9c15c67b68f5241b0dde43323520faae74aef5f270499f",
+      "lines": 7523,
+      "currentWholeWorkingDiffSha256": "48a35a4d2fcd14cdd5fd76412c37fae568c62a375f2111183662975e55ea038d",
+      "newFile": false
+    },
+    {
+      "path": "tests/bauar_skill_selection.rs",
+      "sha256": "7259b7f716f68bf90abc3bf9530fe8ca0a6e40796d7db60ce2bda5933f3a212a",
+      "lines": 241,
+      "currentWholeWorkingDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "newFile": true
+    }
+  ],
+  "commandsRun": [
+    {
+      "kind": "source-mutation-only",
+      "command": "rustfmt --edition 2024 --config skip_children=true src/uar/runtime/skills/service/selection.rs tests/bauar_skill_selection.rs",
+      "exitCode": 0
+    }
+  ],
+  "execution": {
+    "tests": false,
+    "builds": false,
+    "checks": false,
+    "services": false,
+    "dependencyMutations": false,
+    "canonicalMutations": false
+  },
+  "released": true
+}

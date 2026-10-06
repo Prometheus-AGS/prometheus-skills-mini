@@ -77,6 +77,13 @@
       "status": "observed-command-pass",
       "receipt": "final-gates/uar-server-profile-check-01.json",
       "scope": "cargo check no-default-features server-full main binary; no runtime or package certification"
+    },
+    "metadataSelection": {
+      "status": "source-correction-active-no-new-runtime-result",
+      "scopeAcceptance": "skill-metadata-correction-scope-acceptance.json",
+      "design": "skill-selection-metadata-correction-design.md",
+      "observedPutFailure": "final-gates/boss-approval-client-runtime-06.json",
+      "priorSidecarReflectsCorrection": false
     }
   },
   "boss": {
@@ -101,7 +108,8 @@
       "final-gates/boss-electron-current-build-01.json",
       "final-gates/boss-electron-utility-build-01.json",
       "final-gates/boss-electron-current-build-02.json",
-      "final-gates/boss-electron-current-build-03.json"
+      "final-gates/boss-electron-current-build-03.json",
+      "final-gates/boss-electron-current-build-04.json"
     ],
     "typecheckReceipts": [
       "final-gates/boss-typecheck-node-02.json",
@@ -110,7 +118,7 @@
       "final-gates/boss-typecheck-aicore-01.json",
       "final-gates/boss-typecheck-node-03.json"
     ],
-    "runtimeStatus": "runtime05 readiness/schema/provider save passed, downstream IPC305 Request timed out; actual handler diagnosis active. Earlier readiness04 intermittent cause unestablished",
+    "runtimeStatus": "runtime06 actual UAR HTTP408 skill_binding_update PUT agent_skills; subsequent catalog GET not reached. Metadata-only producer correction active; no approval PASS",
     "nativeSqlite": {
       "status": "observed-isolated-abi149-build-and-publication",
       "buildReceipt": "final-gates/boss-sqlite-electron-abi-build-01.json",
@@ -133,7 +141,8 @@
       "resourceFileCount": 11,
       "releaseCertified": false
     },
-    "startupDiagnostic": "desktop-startup-milestone-diagnostic/receipt.json"
+    "startupDiagnostic": "desktop-startup-milestone-diagnostic/receipt.json",
+    "skillStageDiagnostic": "desktop-skill-update-stage-diagnostic/receipt.json"
   },
   "bossfang": {
     "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
@@ -159,18 +168,20 @@
       "Python branding checker unavailable under Node-only rule; no port/install"
     ],
     "targetDir": "/tmp/librefang-target-bauar-delivery-001",
-    "observedBlocker": "HARNESS21 passed first native request/race controls, pending sweep marker timeout. Actual pending row native claimed and stale-reset; peer/queue diagnostics active. No production native fault inferred. Earlier cancellation timeout unresolved",
+    "observedBlocker": "HARNESS23 reached12 Node cases then kernel contract SIGABRT, cause not established. Four rejected continuations positively correlated to exact ActionIntent nudge/original native prefix/emitted assistant. Bounded fixture correction active, no full PASS",
     "terminalObservationCorrection": "harness-terminal-proof-correction-handoff/receipt.json",
     "timeoutDiagnostic": "harness-rpc-operation-diagnostic/receipt.json",
     "a2aSnapshotCorrection": "harness-a2a-available-observation-correction/receipt.json",
     "latestCompile": "final-gates/bossfang-a2a-observation-compile-14.json",
     "diagnosticOnlyReceipts": [
-      "final-gates/bossfang-harness-runtime-18.json"
+      "final-gates/bossfang-harness-runtime-18.json",
+      "final-gates/bossfang-harness-runtime-23.json"
     ],
     "diagnosticSource": "harness-native-process-diagnostic-final/receipt.json",
     "fixtureStackCorrection": "desktop-schema-and-host-stack-correction/receipt.json",
     "nativePeerCorrection": "harness-native-clock-envelope-correction/receipt.json",
-    "selectedCliBuild": "final-gates/bossfang-selected-cli-build-01.json"
+    "selectedCliBuild": "final-gates/bossfang-selected-cli-build-01.json",
+    "nativeContinuationDiagnostic": "harness-native-continuation-diagnostic/receipt.json"
   },
   "certification": {
     "D0": "blocked automatic approval review; no eligible receipt or permitted signed waiver supplied",
@@ -188,7 +199,7 @@
     "bossfang": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42",
     "evidence": "Actual cargo compiler-artifact filenames, observed 2026-10-06; directories distinct, existing machine build/cache configuration inherited"
   },
-  "updatedAt": "2026-10-06T20:51:42.172Z",
+  "updatedAt": "2026-10-06T21:14:55.584Z",
   "observedRuntimeResults": "partial-runtime-results.json",
   "formatting": {
     "receipt": "final-gates/uar-format-check-01.json",

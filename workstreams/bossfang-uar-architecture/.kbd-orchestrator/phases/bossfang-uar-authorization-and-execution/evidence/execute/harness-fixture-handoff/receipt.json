@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "status": "source-authored-unverified",
+  "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "frozenAt": "2026-10-06T16:56:57.994Z",
+  "testsRun": [],
+  "sourceFiles": [
+    {
+      "path": "scripts/integration/bauar-harness-gate.mjs",
+      "sha256": "89ae2e8f1f366dca13e9e45184c342d31104309cb2ab1e3db0290f4fa4fad541",
+      "lines": 399,
+      "snapshot": "01-scripts_integration_bauar-harness-gate.mjs.txt"
+    },
+    {
+      "path": "scripts/integration/bauar-harness-peer.mjs",
+      "sha256": "490c9721c00d22bebbee3091d7ba35c1b2fdffc407edb16815216dfd08f15c08",
+      "lines": 175,
+      "snapshot": "02-scripts_integration_bauar-harness-peer.mjs.txt"
+    },
+    {
+      "path": "scripts/integration/bauar-harness-runtime.mjs",
+      "sha256": "988c224bb96c20d28c75f60b76c7f4abd5c5732e2f6d213f81abd7591194fb10",
+      "lines": 180,
+      "snapshot": "03-scripts_integration_bauar-harness-runtime.mjs.txt"
+    },
+    {
+      "path": "crates/librefang-api/tests/bauar_harness_host.rs",
+      "sha256": "aedf8b0e16ad25e659fa01ca120b1901e22eedbb37c3bd0acb634e5b895fb172",
+      "lines": 139,
+      "snapshot": "04-crates_librefang-api_tests_bauar_harness_host.rs.txt"
+    },
+    {
+      "path": "crates/librefang-kernel/tests/bauar_harness_delegation.rs",
+      "sha256": "ad7d2512d5e7abd7396740e035dc52f613ead9b24413c8eb70794f2028efdaa4",
+      "lines": 112,
+      "snapshot": "05-crates_librefang-kernel_tests_bauar_harness_delegation.rs.txt"
+    }
+  ],
+  "expectedLogicalCaseCounts": {
+    "nodeOrchestration": 13,
+    "kernelFixture": 5
+  },
+  "physicalKernelTest": "bauar_kernel_entry_contract",
+  "privateHostTest": "bauar_private_host",
+  "gateArgs": [
+    "node24",
+    "scripts/integration/bauar-harness-gate.mjs",
+    "<built-current-api-host-test-bin>",
+    "<built-current-kernel-test-bin>",
+    "<built-current-uar-bin>",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar"
+  ],
+  "requiredBossfangFeatures": [
+    "uar-driver",
+    "surreal-backend"
+  ],
+  "limits": [
+    "Fixture uses actual private process/router/verifier/storage/config and controlled model/MCP; no external inference certification",
+    "Primary explicitmanual selection config nativewakefalse/nosweeper; separate native/selectedwinner and pending/stale privateconfigured positive scenarios",
+    "Private command storage/event split deliberate selectedfirst window, notpublictaskpost atomicity proof",
+    "Cron/deferred without JobAttemptRef nativeunchanged; noautomaticUARatpost/backgroundscheduling claim",
+    "Current actual resource/public C03 seeding compatibility and compiler/runtimeassertions unverified",
+    "D0 excluded entirely; no broadall-target execution permitted"
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "status": "eligible-cumulative-gates-started",
+  "scope": "Isolated selected phase delivery; no original release gate closure",
+  "createdAt": "2026-10-06T16:31:30.815Z",
+  "gateOrder": [
+    "All eligible selected production and scenario source handoffs",
+    "One cumulative production-path acceptance matrix; serialized writer per build dir",
+    "Required applicable local checks/package",
+    "Deterministic artifacts QA then independent cumulative diff review"
+  ],
+  "uar": {
+    "root": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+    "features": [
+      "server-full",
+      "test-probes"
+    ],
+    "targets": [
+      {
+        "name": "bauar_identity_boundary",
+        "minimumCases": 8
+      },
+      {
+        "name": "bauar_full_harness_cursor",
+        "minimumCases": 2
+      },
+      {
+        "name": "bauar_inline_revision",
+        "minimumCases": 1
+      },
+      {
+        "name": "bauar_resource_grants",
+        "minimumCases": 1
+      },
+      {
+        "name": "bauar_secret_projection",
+        "minimumCases": 2,
+        "primaryCaseCount": 1
+      },
+      {
+        "name": "bauar_stdio_boundary",
+        "minimumCases": 2
+      },
+      {
+        "name": "bauar_receipt_projection",
+        "minimumCases": 3,
+        "status": "source-handoff"
+      }
+    ],
+    "requiredEvidence": [
+      "Actual executed nonzero case counts",
+      "Exact product HEAD/diff/per-file hashes",
+      "Controlled owner/run/approval/epoch/cursor/effect correlation",
+      "No raw credential values"
+    ],
+    "blockedExcluded": "D0 session-owner diagnostic/fixture and conditional correction. Never run test --all-targets or broad suite that reroutes it.",
+    "limits": [
+      "test-probes is test-only never release build",
+      "Actual external receiver/IdP not selected",
+      "Synthetic model responses make actual production execution deterministic; no external model certification"
+    ],
+    "targetDir": "/Users/gqadonis/.claude/worktrees/bauar-uar/target"
+  },
+  "boss": {
+    "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+    "node": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+    "gates": [
+      "scripts/gates/bauar-approval-client.ts",
+      "scripts/gates/bauar-secret-projection.ts"
+    ],
+    "packaging": "Applicable actual Electron/current-source package required; old cached app not acceptance",
+    "prerequisiteStatus": "Electron44.2.0 package resolves but actual Electron.app executable absent. Root resolution alone cannot prove transitive rolldown absence; no import/install/build run.",
+    "prerequisiteReceipt": "evidence/execute/boss-package-resolution-prerequisite.json"
+  },
+  "bossfang": {
+    "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+    "harness": "Frozen 5-source actual-kernel/real-UAR private-process matrix",
+    "mcp": {
+      "target": "bauar_mcp_identity",
+      "minimumCases": 1,
+      "features": [
+        "uar-driver",
+        "surreal-backend"
+      ],
+      "profile": "one coordinated actual router/effect/auth/audit/config matrix; OIDC issuer and configured UAR preservation excluded"
+    },
+    "flags": {
+      "SKIP_DASHBOARD_BUILD": "1"
+    },
+    "target": "Private isolated target, one writer",
+    "limits": [
+      "No new/shared daemon",
+      "No cargo build/run live-daemon workflow",
+      "Python branding checker unavailable under Node-only rule; no port/install"
+    ],
+    "targetDir": "/tmp/librefang-target-bauar-delivery-001"
+  },
+  "certification": {
+    "D0": "blocked automatic approval review; no eligible receipt or permitted signed waiver supplied",
+    "finalExecute": "Open until every required task/gate resolved; source handoff is not PASS",
+    "reflect": "Requires later human handover after Execute completion"
+  },
+  "deliveryCheckpoint": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/execute-source-readiness.json",
+  "startedAt": "2026-10-06T17:07:49.498Z",
+  "commands": [
+    "final-gates/uar-compile-01.json",
+    "final-gates/bossfang-api-compile-01.json"
+  ]
+}

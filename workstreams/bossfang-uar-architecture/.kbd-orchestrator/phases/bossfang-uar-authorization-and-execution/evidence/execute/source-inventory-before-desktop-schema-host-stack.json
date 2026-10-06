@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "time": "2026-10-06T20:46:07.832Z",
+  "time": "2026-10-06T20:06:23.521Z",
   "kind": "Current source binding, not test result; immutable gate handoffs preserve executed input",
   "records": [
     {
@@ -545,7 +545,7 @@
       "name": "boss",
       "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
       "head": "e2ae2ce21245030293c0bea96ed02ae853b820a7",
-      "diffSha256": "d6050aa0fd2317c228bc2043ee074cda86b2402bc84068428addaa981124d016",
+      "diffSha256": "4a250d7c911aa1771b3234f71add72b19ce5413088d14d90c0938c3a1a4b60d0",
       "files": [
         {
           "file": "scripts/gates/bauar-approval-client.ts",
@@ -634,7 +634,7 @@
         },
         {
           "file": "src/shared/types/prometheusIntegration.ts",
-          "sha256": "8f8ec9888df045f4af385c207c7894bddb7b7471f71b35f4d5f25dd6398617f7",
+          "sha256": "b225f019ffb48d12b3291f16a92eefe2db228877bf0db96e791742980100801b",
           "bytes": 27566
         },
         {
@@ -646,11 +646,6 @@
           "file": "tests/e2e/gates/uarExperienceGate.test.ts",
           "sha256": "4b92b8eecb2418b17c96a3bf9770f118de161fe80e4697a30a37f64fe6bc61c9",
           "bytes": 25936
-        },
-        {
-          "file": "src/main/ai/runtime/uar/uarStartupDiagnostic.ts",
-          "sha256": "4bfc7f03a781aa0ea6b74b9e5099eeb57a0b86dfe9344c54d1f6f2ab5da2995e",
-          "bytes": 2165
         }
       ],
       "diffExclusions": [
@@ -943,23 +938,18 @@
         },
         {
           "file": "scripts/integration/bauar-harness-gate.mjs",
-          "sha256": "28af4288095189455f0723dde8bffa7f13f35efc1e11d9ecffc2b82bd200478d",
-          "bytes": 29887
+          "sha256": "1ca2a5fcc96651d66169b0562ace4403788762e65994ce84ab5f7529c83edeae",
+          "bytes": 32025
         },
         {
           "file": "scripts/integration/bauar-harness-peer.mjs",
-          "sha256": "983718269109ec047757cd8c84ac9e1d7ab3cb97fd44aaaff6e32dbeef16fa90",
-          "bytes": 10729
+          "sha256": "c0ce593aa5f4ff5be703468d65cb725f6558ddf234d2749bb1e14694dec939c7",
+          "bytes": 9542
         },
         {
           "file": "scripts/integration/bauar-harness-runtime.mjs",
-          "sha256": "2f4faba41b92de2728cd451b61023b55a8e554086d4b09cc1e460214f505f9cb",
-          "bytes": 15033
-        },
-        {
-          "file": "scripts/integration/bauar-harness-native.mjs",
-          "sha256": "ae5009ffd00ada7b8b5fdccb6546f7bcb5345bbd99dad8ba524c589a19ac5e8d",
-          "bytes": 6260
+          "sha256": "058858423f1035ef9fa11d889cd9c5bd4943cb12b843701fe53e5985e3439053",
+          "bytes": 13704
         }
       ],
       "diffExclusions": [
@@ -969,11 +959,16 @@
       "exclusionNote": "D0 diagnostic source not read or hashed in this refresh"
     }
   ],
-  "priorBinding": "source-inventory-before-startup-clock-diagnostics.json",
+  "priorBinding": "source-inventory-before-format-and-workspace-corrections.json",
   "corrections": [
-    "Strict desktop administration schema5 alignment to existing UAR producer",
-    "Private harness fixture restores committed16MiBdebug-test stack contract only",
-    "Native helper extracted with preserved assertions and fixed safe diagnostics",
-    "Safe fixed desktop startup milestones; native peer exact appended-clock recognition only"
+    "accepted-run-future-correction-handoff/receipt.json",
+    "owned-format-correction-handoff/receipt.json",
+    "identity-module-path-correction.json",
+    "mcp-workspace-fixture-correction.json",
+    "kernel-query-depth-correction.json",
+    "harness-terminal-proof-correction-handoff/receipt.json",
+    "harness-definitive-conflict-correction-handoff/receipt.json",
+    "harness-a2a-available-observation-correction/receipt.json",
+    "harness-rpc-operation-diagnostic/receipt.json"
   ]
 }

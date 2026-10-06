@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "time": "2026-10-06T19:48:10.433Z",
+  "time": "2026-10-06T20:54:07.723Z",
   "phaseCertification": "incomplete",
   "passed": [
     {
@@ -146,53 +146,1257 @@
     }
   ],
   "failed": [
-    "boss-typecheck-node-01",
-    "uar-compile-01",
-    "uar-cursor-runtime-01",
-    "uar-identity-runtime-01",
-    "uar-inline-runtime-01",
-    "uar-receipt-runtime-01",
-    "uar-secret-runtime-01",
-    "bossfang-api-compile-01",
-    "uar-secret-runtime-02",
-    "bossfang-api-compile-02",
-    "bossfang-mcp-runtime-01",
-    "uar-secret-runtime-03",
-    "uar-identity-runtime-02",
-    "uar-secret-runtime-04",
-    "uar-identity-runtime-03",
-    "bossfang-kernel-compile-01",
-    "uar-identity-runtime-04",
-    "uar-identity-runtime-05",
-    "bossfang-kernel-compile-02",
-    "uar-format-check-01",
-    "bossfang-matrix-compile-03",
-    "bossfang-mcp-runtime-02",
-    "uar-owned-format-compile-10",
-    "bossfang-harness-runtime-01",
-    "bossfang-mcp-runtime-03",
-    "bossfang-harness-runtime-02",
-    "bossfang-harness-runtime-03",
-    "bossfang-mcp-runtime-04",
-    "bossfang-mcp-runtime-05",
-    "bossfang-harness-runtime-04",
-    "bossfang-harness-runtime-05",
-    "bossfang-mcp-runtime-06",
-    "boss-dsh-current-build-01",
-    "bossfang-harness-runtime-06",
-    "boss-dsh-current-build-02",
-    "bossfang-harness-runtime-07",
-    "bossfang-harness-runtime-08",
-    "bossfang-harness-runtime-09",
-    "boss-typecheck-web-01",
-    "bossfang-harness-runtime-10",
-    "boss-approval-client-runtime-01",
-    "bossfang-harness-runtime-11",
-    "bossfang-harness-runtime-12",
-    "boss-approval-client-runtime-02"
+    {
+      "schemaVersion": 1,
+      "label": "boss-approval-client-runtime-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "--import",
+        "tsx",
+        "scripts/gates/bauar-approval-client.ts"
+      ],
+      "startedAt": "2026-10-06T19:28:34.866Z",
+      "finishedAt": "2026-10-06T19:30:12.512Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-approval-client-runtime-01.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-approval-client-runtime-02",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "--import",
+        "tsx",
+        "scripts/gates/bauar-approval-client.ts"
+      ],
+      "startedAt": "2026-10-06T19:39:35.863Z",
+      "finishedAt": "2026-10-06T19:40:18.730Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-approval-client-runtime-02.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-approval-client-runtime-03",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "--import",
+        "tsx",
+        "scripts/gates/bauar-approval-client.ts"
+      ],
+      "startedAt": "2026-10-06T20:25:11.783Z",
+      "finishedAt": "2026-10-06T20:26:47.869Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-approval-client-runtime-03.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-approval-client-runtime-04",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "--import",
+        "tsx",
+        "scripts/gates/bauar-approval-client.ts"
+      ],
+      "startedAt": "2026-10-06T20:36:01.569Z",
+      "finishedAt": "2026-10-06T20:38:42.140Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-approval-client-runtime-04.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-approval-client-runtime-05",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "--import",
+        "tsx",
+        "scripts/gates/bauar-approval-client.ts"
+      ],
+      "startedAt": "2026-10-06T20:48:01.225Z",
+      "finishedAt": "2026-10-06T20:50:38.674Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-approval-client-runtime-05.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-dsh-current-build-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss/packages/dsh-bridge",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/run-boss-existing-native-tool.mjs",
+        "tsdown"
+      ],
+      "startedAt": "2026-10-06T19:10:03.577Z",
+      "finishedAt": "2026-10-06T19:10:03.652Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-dsh-current-build-01.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-dsh-current-build-02",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss/packages/dsh-bridge",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/run-boss-existing-native-tool.mjs",
+        "tsdown"
+      ],
+      "startedAt": "2026-10-06T19:10:44.210Z",
+      "finishedAt": "2026-10-06T19:10:45.378Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-dsh-current-build-02.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-typecheck-node-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.node.json",
+        "--composite",
+        "false"
+      ],
+      "startedAt": "2026-10-06T17:08:51.407Z",
+      "finishedAt": "2026-10-06T17:12:26.058Z",
+      "exitCode": 2,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-typecheck-node-01.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-typecheck-web-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.web.json",
+        "--composite",
+        "false"
+      ],
+      "startedAt": "2026-10-06T19:19:21.827Z",
+      "finishedAt": "2026-10-06T19:20:33.460Z",
+      "exitCode": null,
+      "signal": "SIGABRT",
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-typecheck-web-01.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-api-compile-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "cargo",
+      "args": [
+        "test",
+        "-p",
+        "librefang-api",
+        "--offline",
+        "--locked",
+        "--features",
+        "uar-driver",
+        "--no-run",
+        "--message-format=json",
+        "--test",
+        "bauar_harness_host",
+        "--test",
+        "bauar_mcp_identity"
+      ],
+      "startedAt": "2026-10-06T17:07:27.761Z",
+      "finishedAt": "2026-10-06T17:57:36.138Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-api-compile-01.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "CARGO_TARGET_DIR": "/tmp/librefang-target-bauar-delivery-001",
+        "SKIP_DASHBOARD_BUILD": "1"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-api-compile-02",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "cargo",
+      "args": [
+        "test",
+        "-p",
+        "librefang-api",
+        "--offline",
+        "--locked",
+        "--features",
+        "uar-driver",
+        "--no-run",
+        "--message-format=json",
+        "--test",
+        "bauar_harness_host",
+        "--test",
+        "bauar_mcp_identity"
+      ],
+      "startedAt": "2026-10-06T18:01:16.604Z",
+      "finishedAt": "2026-10-06T18:01:51.061Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-api-compile-02.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "CARGO_TARGET_DIR": "/tmp/librefang-target-bauar-delivery-001",
+        "SKIP_DASHBOARD_BUILD": "1"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T18:55:56.000Z",
+      "finishedAt": "2026-10-06T18:56:35.535Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-01.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-02",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T18:57:41.806Z",
+      "finishedAt": "2026-10-06T18:57:51.496Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-02.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-03",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T18:59:37.807Z",
+      "finishedAt": "2026-10-06T18:59:43.142Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-03.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-04",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T19:05:02.258Z",
+      "finishedAt": "2026-10-06T19:05:20.272Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-04.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-05",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T19:07:16.206Z",
+      "finishedAt": "2026-10-06T19:07:22.025Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-05.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-06",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T19:10:02.177Z",
+      "finishedAt": "2026-10-06T19:10:07.441Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-06.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-07",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T19:13:26.773Z",
+      "finishedAt": "2026-10-06T19:13:32.304Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-07.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-08",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T19:17:11.015Z",
+      "finishedAt": "2026-10-06T19:17:17.718Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-08.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-09",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T19:19:13.280Z",
+      "finishedAt": "2026-10-06T19:19:20.169Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-09.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-10",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T19:27:27.351Z",
+      "finishedAt": "2026-10-06T19:27:44.924Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-10.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-11",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T19:33:30.607Z",
+      "finishedAt": "2026-10-06T19:33:47.618Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-11.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-12",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T19:36:10.631Z",
+      "finishedAt": "2026-10-06T19:36:22.222Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-12.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-13",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T19:46:43.503Z",
+      "finishedAt": "2026-10-06T19:48:22.301Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-13.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-14",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T19:51:06.639Z",
+      "finishedAt": "2026-10-06T19:52:37.665Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-14.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-15",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T19:54:55.731Z",
+      "finishedAt": "2026-10-06T19:56:30.619Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-15.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-16",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T20:01:57.392Z",
+      "finishedAt": "2026-10-06T20:04:23.852Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-16.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-17",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T20:11:38.976Z",
+      "finishedAt": "2026-10-06T20:13:52.286Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-17.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-18",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T20:17:32.450Z",
+      "finishedAt": "2026-10-06T20:18:53.122Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-18.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-19",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T20:22:28.954Z",
+      "finishedAt": "2026-10-06T20:24:29.326Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-19.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-20",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T20:33:53.467Z",
+      "finishedAt": "2026-10-06T20:37:10.397Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-20.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-harness-runtime-21",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "scripts/integration/bauar-harness-gate.mjs",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+        "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "startedAt": "2026-10-06T20:45:26.893Z",
+      "finishedAt": "2026-10-06T20:48:20.559Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-21.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-kernel-compile-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "cargo",
+      "args": [
+        "test",
+        "-p",
+        "librefang-kernel",
+        "--offline",
+        "--locked",
+        "--features",
+        "uar-driver",
+        "--no-run",
+        "--message-format=json",
+        "--test",
+        "bauar_harness_delegation"
+      ],
+      "startedAt": "2026-10-06T18:04:14.631Z",
+      "finishedAt": "2026-10-06T18:23:14.225Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-kernel-compile-01.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "CARGO_TARGET_DIR": "/tmp/librefang-target-bauar-delivery-001",
+        "SKIP_DASHBOARD_BUILD": "1"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-kernel-compile-02",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "cargo",
+      "args": [
+        "test",
+        "-p",
+        "librefang-kernel",
+        "--offline",
+        "--locked",
+        "--features",
+        "uar-driver",
+        "--no-run",
+        "--message-format=json",
+        "--test",
+        "bauar_harness_delegation"
+      ],
+      "startedAt": "2026-10-06T18:28:25.915Z",
+      "finishedAt": "2026-10-06T18:29:36.884Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-kernel-compile-02.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "CARGO_TARGET_DIR": "/tmp/librefang-target-bauar-delivery-001",
+        "SKIP_DASHBOARD_BUILD": "1"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-matrix-compile-03",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "cargo",
+      "args": [
+        "test",
+        "-p",
+        "librefang-kernel",
+        "-p",
+        "librefang-api",
+        "--offline",
+        "--locked",
+        "--features",
+        "uar-driver",
+        "--no-run",
+        "--message-format=json",
+        "--test",
+        "bauar_harness_delegation",
+        "--test",
+        "bauar_mcp_identity",
+        "--test",
+        "bauar_harness_host"
+      ],
+      "startedAt": "2026-10-06T18:30:55.396Z",
+      "finishedAt": "2026-10-06T18:46:37.300Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-matrix-compile-03.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "CARGO_TARGET_DIR": "/tmp/librefang-target-bauar-delivery-001",
+        "SKIP_DASHBOARD_BUILD": "1"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-mcp-runtime-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_mcp_identity-7421f759e9f5aac3",
+      "args": [
+        "--test-threads=1",
+        "--exact",
+        "actual_mcp_identity_admission_effect_attribution_and_preservation"
+      ],
+      "startedAt": "2026-10-06T18:03:04.207Z",
+      "finishedAt": "2026-10-06T18:03:20.571Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-mcp-runtime-01.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "LIBREFANG_ALLOW_NO_AUTH": "1",
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-mcp-runtime-02",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_mcp_identity-7250440faf34e7c1",
+      "args": [
+        "--test-threads=1",
+        "--exact",
+        "actual_mcp_identity_admission_effect_attribution_and_preservation"
+      ],
+      "startedAt": "2026-10-06T18:48:39.782Z",
+      "finishedAt": "2026-10-06T18:48:57.114Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-mcp-runtime-02.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "LIBREFANG_ALLOW_NO_AUTH": "1",
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-mcp-runtime-03",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_mcp_identity-7250440faf34e7c1",
+      "args": [
+        "--test-threads=1",
+        "--exact",
+        "actual_mcp_identity_admission_effect_attribution_and_preservation"
+      ],
+      "startedAt": "2026-10-06T18:55:57.202Z",
+      "finishedAt": "2026-10-06T18:57:04.213Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-mcp-runtime-03.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "LIBREFANG_ALLOW_NO_AUTH": "1",
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-mcp-runtime-04",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_mcp_identity-7250440faf34e7c1",
+      "args": [
+        "--test-threads=1",
+        "--exact",
+        "actual_mcp_identity_admission_effect_attribution_and_preservation"
+      ],
+      "startedAt": "2026-10-06T19:00:42.113Z",
+      "finishedAt": "2026-10-06T19:01:25.608Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-mcp-runtime-04.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "LIBREFANG_ALLOW_NO_AUTH": "1",
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-mcp-runtime-05",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_mcp_identity-7250440faf34e7c1",
+      "args": [
+        "--test-threads=1",
+        "--exact",
+        "actual_mcp_identity_admission_effect_attribution_and_preservation"
+      ],
+      "startedAt": "2026-10-06T19:04:18.612Z",
+      "finishedAt": "2026-10-06T19:05:18.449Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-mcp-runtime-05.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "LIBREFANG_ALLOW_NO_AUTH": "1",
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "bossfang-mcp-runtime-06",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "command": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_mcp_identity-7250440faf34e7c1",
+      "args": [
+        "--test-threads=1",
+        "--exact",
+        "actual_mcp_identity_admission_effect_attribution_and_preservation"
+      ],
+      "startedAt": "2026-10-06T19:08:41.290Z",
+      "finishedAt": "2026-10-06T19:09:12.778Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-mcp-runtime-06.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "LIBREFANG_ALLOW_NO_AUTH": "1",
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-compile-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "cargo",
+      "args": [
+        "test",
+        "-p",
+        "universal-agent-runtime",
+        "--offline",
+        "--locked",
+        "--features",
+        "server-full,test-probes",
+        "--no-run",
+        "--message-format=json",
+        "--test",
+        "bauar_identity_boundary",
+        "--test",
+        "bauar_full_harness_cursor",
+        "--test",
+        "bauar_inline_revision",
+        "--test",
+        "bauar_resource_grants",
+        "--test",
+        "bauar_secret_projection",
+        "--test",
+        "bauar_stdio_boundary",
+        "--test",
+        "bauar_receipt_projection"
+      ],
+      "startedAt": "2026-10-06T17:07:27.761Z",
+      "finishedAt": "2026-10-06T17:46:29.197Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-compile-01.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "CARGO_TARGET_DIR": "/Users/gqadonis/.claude/worktrees/bauar-uar/target"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-cursor-runtime-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_full_harness_cursor-8ce5b5b7bfd2190d",
+      "args": [
+        "--test-threads=1"
+      ],
+      "startedAt": "2026-10-06T17:55:23.304Z",
+      "finishedAt": "2026-10-06T17:55:30.063Z",
+      "exitCode": null,
+      "signal": "SIGABRT",
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-cursor-runtime-01.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-format-check-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "cargo",
+      "args": [
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "startedAt": "2026-10-06T18:36:41.651Z",
+      "finishedAt": "2026-10-06T18:36:49.147Z",
+      "exitCode": 1,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-format-check-01.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-identity-runtime-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_identity_boundary-2be66c641df1f49b",
+      "args": [
+        "--test-threads=1"
+      ],
+      "startedAt": "2026-10-06T17:55:07.095Z",
+      "finishedAt": "2026-10-06T17:55:50.440Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-identity-runtime-01.log",
+      "result": "failed",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-identity-runtime-02",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_identity_boundary-2be66c641df1f49b",
+      "args": [
+        "--test-threads=1",
+        "--skip",
+        "sidecar_process::",
+        "--skip",
+        "stub_llm::",
+        "--skip",
+        "incomplete_remote_policy_is_rejected_at_actual_startup"
+      ],
+      "startedAt": "2026-10-06T18:00:51.081Z",
+      "finishedAt": "2026-10-06T18:08:11.166Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-identity-runtime-02.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-identity-runtime-03",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_identity_boundary-2be66c641df1f49b",
+      "args": [
+        "--test-threads=1",
+        "--skip",
+        "sidecar_process::",
+        "--skip",
+        "stub_llm::",
+        "--skip",
+        "incomplete_remote_policy_is_rejected_at_actual_startup",
+        "--skip",
+        "real_jwks_rotation_cooldown_failed_refresh_hard_age_and_recovery"
+      ],
+      "startedAt": "2026-10-06T18:15:25.983Z",
+      "finishedAt": "2026-10-06T18:16:24.280Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-identity-runtime-03.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-identity-runtime-04",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_identity_boundary-2be66c641df1f49b",
+      "args": [
+        "--test-threads=1",
+        "--skip",
+        "sidecar_process::",
+        "--skip",
+        "stub_llm::",
+        "--skip",
+        "incomplete_remote_policy_is_rejected_at_actual_startup",
+        "--skip",
+        "real_jwks_rotation_cooldown_failed_refresh_hard_age_and_recovery"
+      ],
+      "startedAt": "2026-10-06T18:24:28.602Z",
+      "finishedAt": "2026-10-06T18:25:11.356Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-identity-runtime-04.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-identity-runtime-05",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_identity_boundary-2be66c641df1f49b",
+      "args": [
+        "--test-threads=1",
+        "--exact",
+        "explicit_local_startup_validates_signed_registered_claims_before_run_admission"
+      ],
+      "startedAt": "2026-10-06T18:29:12.132Z",
+      "finishedAt": "2026-10-06T18:29:26.566Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-identity-runtime-05.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-inline-runtime-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_inline_revision-c1c11a93b525a226",
+      "args": [
+        "--test-threads=1"
+      ],
+      "startedAt": "2026-10-06T17:56:54.641Z",
+      "finishedAt": "2026-10-06T17:57:08.976Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-inline-runtime-01.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-owned-format-compile-10",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "cargo",
+      "args": [
+        "test",
+        "-p",
+        "universal-agent-runtime",
+        "--offline",
+        "--locked",
+        "--features",
+        "server-full,test-probes",
+        "--no-run",
+        "--message-format=json",
+        "--test",
+        "bauar_identity_boundary",
+        "--test",
+        "bauar_full_harness_cursor",
+        "--test",
+        "bauar_inline_revision",
+        "--test",
+        "bauar_resource_grants",
+        "--test",
+        "bauar_secret_projection",
+        "--test",
+        "bauar_stdio_boundary",
+        "--test",
+        "bauar_receipt_projection"
+      ],
+      "startedAt": "2026-10-06T18:49:49.833Z",
+      "finishedAt": "2026-10-06T18:50:48.261Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-owned-format-compile-10.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "CARGO_TARGET_DIR": "/Users/gqadonis/.claude/worktrees/bauar-uar/target"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-receipt-runtime-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_receipt_projection-c77c467c300bf6e7",
+      "args": [
+        "--test-threads=1"
+      ],
+      "startedAt": "2026-10-06T17:56:56.973Z",
+      "finishedAt": "2026-10-06T17:57:18.357Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-receipt-runtime-01.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-secret-runtime-01",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_secret_projection-14856fbce3ec5a1f",
+      "args": [
+        "--test-threads=1",
+        "--skip",
+        "sidecar_process::"
+      ],
+      "startedAt": "2026-10-06T17:56:58.147Z",
+      "finishedAt": "2026-10-06T17:57:18.707Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-secret-runtime-01.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-secret-runtime-02",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_secret_projection-14856fbce3ec5a1f",
+      "args": [
+        "--test-threads=1",
+        "--exact",
+        "actual_provider_and_mcp_copies_hide_variants_without_changing_execution"
+      ],
+      "startedAt": "2026-10-06T18:00:54.586Z",
+      "finishedAt": "2026-10-06T18:01:35.094Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-secret-runtime-02.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-secret-runtime-03",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_secret_projection-14856fbce3ec5a1f",
+      "args": [
+        "--test-threads=1",
+        "--exact",
+        "actual_provider_and_mcp_copies_hide_variants_without_changing_execution"
+      ],
+      "startedAt": "2026-10-06T18:04:47.421Z",
+      "finishedAt": "2026-10-06T18:05:36.657Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-secret-runtime-03.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "label": "uar-secret-runtime-04",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "command": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_secret_projection-14856fbce3ec5a1f",
+      "args": [
+        "--test-threads=1",
+        "--exact",
+        "actual_provider_and_mcp_copies_hide_variants_without_changing_execution"
+      ],
+      "startedAt": "2026-10-06T18:11:24.241Z",
+      "finishedAt": "2026-10-06T18:12:00.175Z",
+      "exitCode": 101,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-secret-runtime-04.log",
+      "result": "failed",
+      "buildEnvironment": {
+        "RUST_MIN_STACK": "33554432"
+      }
+    }
   ],
   "incidentalSupportTests": "Identity and inline first attempts included imported support unit tests; these are excluded from primary evidence and subsequent scoped retries. This initial overscope is an A-9 deviation.",
   "primaryCasesPassed": 18,
-  "currentCompileCorrection": "All selected targets emitted current executable via compile10/11 and Bossfang04/05; pure formatting/module movement did not justify rerunning previously passing runtime cases",
-  "receiptCount": 85
+  "currentCompileCorrection": "Desktopstrictschema5decoder and current-sourceapp03PASS; safe startup milestones. Nativepeer clock-envelope correction reachedoriginalmodel/race; pending sweep marker unresolved",
+  "receiptCount": 102
 }

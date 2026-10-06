@@ -1,0 +1,133 @@
+// Real native task-posted and selected-winner race plus native task-board sweep.
+// Source moved from the complete HARNESS gate; no substituted receipt or execution.
+import assert from 'node:assert/strict';
+import { writeFile } from 'node:fs/promises';
+import { until, expected } from './bauar-harness-runtime.mjs';
+
+export async function nativeCompatibilityGate({ stopHost, getHostStatus, hostStart, config, configPath,
+  admissions, job, agent, peer, hostCommand, getBase, auth, selection, effects,
+  proxy, admit, approval, board, decide, terminal, passed }) {
+  // Same real router, separately restarted with ordinary automatic wakes enabled.
+  await stopHost();
+  config.task_board.assignee_wake = true;
+  Object.assign(config.task_board, { pending_grace_secs: 1, sweep_interval_secs: 1,
+    claim_ttl_secs: 1, max_retries: 2 });
+  await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
+  await hostStart();
+  const beforeTraffic = structuredClone(peer.modelDiagnostics);
+  const nativeBefore = admissions(), nativeId = await job('BAUAR_NATIVE_RACE', agent);
+  try {
+    await until('actual native TaskPosted model invocation', () => peer.modelCalls.some(call => call.label === 'BAUAR_NATIVE_RACE'));
+  } catch (error) {
+    const checkpoint = { stage: 'native_task_posted', readsSucceeded: false };
+    const failureKind = error => {
+      if (['TimeoutError', 'AbortError', 'AssertionError'].includes(error?.name)) return error.name;
+      const code = error?.cause?.code ?? error?.code;
+      return ['ECONNREFUSED', 'ECONNRESET', 'EPIPE', 'UND_ERR_SOCKET'].includes(code) ? code : 'unclassified';
+    };
+    try {
+      const row = await board(nativeId);
+      Object.assign(checkpoint, { boardReadSucceeded: true,
+        status: ['pending', 'in_progress', 'completed', 'failed', 'cancelled'].includes(row.status) ? row.status : null,
+        assignedToExpectedAgent: row.assigned_to === agent });
+    } catch (failure) { checkpoint.boardReadFailure = failureKind(failure); }
+    try {
+      const intent = await hostCommand({ operation: 'read_intent', job_id: nativeId });
+      Object.assign(checkpoint, { intentReadSucceeded: true,
+        intent: ['unclaimed', 'native', 'selected', 'unknown', 'missing'].includes(intent.kind) ? intent.kind : null });
+    } catch (failure) { checkpoint.intentReadFailure = failureKind(failure); }
+    checkpoint.readsSucceeded = checkpoint.boardReadSucceeded === true && checkpoint.intentReadSucceeded === true;
+    checkpoint.host = getHostStatus();
+    checkpoint.modelTraffic = Object.fromEntries(['requests', 'authorized', 'parsed', 'labeled', 'nativeLabeled']
+      .map(key => [key, peer.modelDiagnostics[key] - beforeTraffic[key]]));
+    checkpoint.modelFailures = Object.fromEntries(Object.keys(beforeTraffic.failures)
+      .map(key => [key, peer.modelDiagnostics.failures[key] - beforeTraffic.failures[key]]));
+    console.error(JSON.stringify({ nativeWakeCheckpoint: checkpoint }));
+    throw error;
+  }
+  assert.equal((await hostCommand({ operation: 'read_intent', job_id: nativeId })).kind, 'native');
+  await expected(getBase(), `/api/uar/jobs/${nativeId}/admission`, { ...auth, method: 'POST', body: selection }, [409]);
+  assert.equal(admissions(), nativeBefore);
+  assert.equal(effects('BAUAR_NATIVE_RACE'), 0);
+  const selectedRow = await hostCommand({ operation: 'store_pending_job', label: 'BAUAR_SELECTED_RACE', agent_id: agent });
+  assert.equal(selectedRow.initialEventPublished, false);
+  const descriptor = proxy.pauseNext('GET', /\/full-harness\/v1\/capabilities$/);
+  const selectedFuture = admit(selectedRow.id);
+  await until('real descriptor held after selected intent', () => descriptor.observed);
+  assert.equal((await hostCommand({ operation: 'read_intent', job_id: selectedRow.id })).kind, 'selected');
+  await hostCommand({ operation: 'publish_stored_task', job_id: selectedRow.id });
+  assert.equal(admissions(), nativeBefore);
+  assert.equal(peer.modelCalls.filter(call => call.label === 'BAUAR_SELECTED_RACE').length, 0);
+  descriptor.release();
+  const winner = await selectedFuture;
+  const winnerApproval = await approval(winner.bossTaskId);
+  for (const mutation of [{ method: 'PATCH', path: `/api/tasks/${selectedRow.id}`, body: { status: 'pending' } },
+    { method: 'POST', path: `/api/tasks/${selectedRow.id}/retry` },
+    { method: 'DELETE', path: `/api/tasks/${selectedRow.id}` }]) {
+    const refused = await expected(getBase(), mutation.path, { ...auth, ...mutation }, [409]);
+    assert.equal(refused.error, 'selected_job_original_control_required');
+  }
+  assert.equal(peer.modelCalls.filter(call => call.label === 'BAUAR_SELECTED_RACE').length, 1);
+  const beforePendingTraffic = structuredClone(peer.modelDiagnostics), beforePendingInputs = peer.modelInputShapes.length;
+  const pendingNative = await hostCommand({ operation: 'store_pending_job', label: 'BAUAR_NATIVE_PENDING', agent_id: agent });
+  assert.equal((await hostCommand({ operation: 'start_task_board_sweep' })).started, true);
+  try {
+    await until('real pending sweep invokes native model', () => peer.modelCalls.some(call => call.label === 'BAUAR_NATIVE_PENDING'));
+  } catch (error) {
+    const checkpoint = { stage: 'native_pending_sweep', host: getHostStatus(), rows: {} };
+    for (const [name, id] of [['originalNative', nativeId], ['pendingNative', pendingNative.id], ['selected', selectedRow.id]]) {
+      const item = {}; checkpoint.rows[name] = item;
+      try {
+        const row = await board(id);
+        Object.assign(item, { boardReadSucceeded: true,
+          status: ['pending', 'in_progress', 'completed', 'failed', 'cancelled'].includes(row.status) ? row.status : null,
+          retryCount: Number.isInteger(row.retry_count) ? row.retry_count : null,
+          assignedPresent: Boolean(row.assigned_to), assignedToExpectedAgent: row.assigned_to === agent,
+          claimedAtPresent: Boolean(row.claimed_at) });
+      } catch { item.boardReadSucceeded = false; }
+      try {
+        const intent = await hostCommand({ operation: 'read_intent', job_id: id });
+        item.intent = ['unclaimed', 'native', 'selected', 'unknown', 'missing'].includes(intent.kind) ? intent.kind : null;
+        item.intentReadSucceeded = true;
+      } catch { item.intentReadSucceeded = false; }
+    }
+    try {
+      const runtime = await expected(getBase(), `/api/agents/${agent}/runtime`, auth);
+      checkpoint.activeSessionCount = Array.isArray(runtime) ? runtime.length : null;
+      checkpoint.activeSessionsAllRunning = Array.isArray(runtime) && runtime.every(item => item.state === 'running');
+    } catch { checkpoint.runtimeReadSucceeded = false; }
+    try {
+      const detail = await expected(getBase(), `/api/agents/${agent}`, auth);
+      checkpoint.agentState = ['Created', 'Running', 'Suspended', 'Terminated', 'Crashed'].includes(detail.state) ? detail.state : null;
+    } catch { checkpoint.agentReadSucceeded = false; }
+    checkpoint.modelTraffic = Object.fromEntries(['requests', 'authorized', 'parsed', 'labeled', 'nativeLabeled', 'clockTailSkipped']
+      .map(key => [key, peer.modelDiagnostics[key] - beforePendingTraffic[key]]));
+    checkpoint.modelFailures = Object.fromEntries(Object.keys(beforePendingTraffic.failures)
+      .map(key => [key, peer.modelDiagnostics.failures[key] - beforePendingTraffic.failures[key]]));
+    checkpoint.modelInputShapes = peer.modelInputShapes.slice(beforePendingInputs);
+    console.error(JSON.stringify({ nativePendingCheckpoint: checkpoint }));
+    throw error;
+  }
+  await until('actual native claim ages into stale reset', async () => {
+    const row = await board(pendingNative.id);
+    return row.retry_count > 0 && row.status === 'pending';
+  });
+  assert.equal((await hostCommand({ operation: 'read_intent', job_id: pendingNative.id })).kind, 'native');
+  assert.equal((await hostCommand({ operation: 'read_intent', job_id: selectedRow.id })).kind, 'selected');
+  assert.equal(peer.modelCalls.filter(call => call.label === 'BAUAR_NATIVE_PENDING').length, 1);
+  assert.equal(peer.modelCalls.filter(call => call.label === 'BAUAR_SELECTED_RACE').length, 1);
+  assert.equal(effects('BAUAR_SELECTED_RACE'), 0);
+  assert.equal(effects('BAUAR_NATIVE_PENDING'), 0);
+  assert.equal(admissions(), nativeBefore + 1);
+  passed('actual-pending-and-stale-sweep-preserves-selected-intent');
+  await decide(winner.bossTaskId, winnerApproval.id, true);
+  await terminal(winner.bossTaskId, 'completed');
+  assert.equal(effects('BAUAR_SELECTED_RACE'), 1);
+  assert.equal(admissions(), nativeBefore + 1);
+  passed('enabled-wake-native-and-selected-cas-winners');
+  await stopHost();
+  config.task_board.assignee_wake = false;
+  await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
+  await hostStart();
+
+}

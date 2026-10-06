@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "time": "2026-10-06T20:46:07.832Z",
+  "time": "2026-10-06T20:36:29.516Z",
   "kind": "Current source binding, not test result; immutable gate handoffs preserve executed input",
   "records": [
     {
@@ -545,7 +545,7 @@
       "name": "boss",
       "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
       "head": "e2ae2ce21245030293c0bea96ed02ae853b820a7",
-      "diffSha256": "d6050aa0fd2317c228bc2043ee074cda86b2402bc84068428addaa981124d016",
+      "diffSha256": "89b86ecdc9a3895f53550e7898524db95d64d36754c43e558a2372cbcc875164",
       "files": [
         {
           "file": "scripts/gates/bauar-approval-client.ts",
@@ -646,11 +646,6 @@
           "file": "tests/e2e/gates/uarExperienceGate.test.ts",
           "sha256": "4b92b8eecb2418b17c96a3bf9770f118de161fe80e4697a30a37f64fe6bc61c9",
           "bytes": 25936
-        },
-        {
-          "file": "src/main/ai/runtime/uar/uarStartupDiagnostic.ts",
-          "sha256": "4bfc7f03a781aa0ea6b74b9e5099eeb57a0b86dfe9344c54d1f6f2ab5da2995e",
-          "bytes": 2165
         }
       ],
       "diffExclusions": [
@@ -948,8 +943,8 @@
         },
         {
           "file": "scripts/integration/bauar-harness-peer.mjs",
-          "sha256": "983718269109ec047757cd8c84ac9e1d7ab3cb97fd44aaaff6e32dbeef16fa90",
-          "bytes": 10729
+          "sha256": "f68a4eb8cdcdd5d1d4b3af2f345a33095d25fe9a195ac4ef5c3fb2a5bfe9f862",
+          "bytes": 10251
         },
         {
           "file": "scripts/integration/bauar-harness-runtime.mjs",
@@ -969,11 +964,10 @@
       "exclusionNote": "D0 diagnostic source not read or hashed in this refresh"
     }
   ],
-  "priorBinding": "source-inventory-before-startup-clock-diagnostics.json",
+  "priorBinding": "source-inventory-before-desktop-schema-host-stack.json",
   "corrections": [
     "Strict desktop administration schema5 alignment to existing UAR producer",
     "Private harness fixture restores committed16MiBdebug-test stack contract only",
-    "Native helper extracted with preserved assertions and fixed safe diagnostics",
-    "Safe fixed desktop startup milestones; native peer exact appended-clock recognition only"
+    "Native helper extracted with preserved assertions and fixed safe diagnostics"
   ]
 }

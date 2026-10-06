@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-06T20:52:04.925Z",
+  "trigger": "HARNESS21 pending native model marker absent despite actual native claim and stale reset",
+  "scope": "Fixed original/pending/selected row and intent, public agent registry/lifecycle, physical request counters and known input marker booleans only; no raw prompt/IDs; original90swait/assertions unchanged",
+  "files": [
+    {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "file": "scripts/integration/bauar-harness-peer.mjs",
+      "sha256": "d988ac53da5b1b2377ed06f05aa01296ea62ad3c00a0f3134ea754db5433c83f",
+      "frozen": "scripts_integration_bauar-harness-peer.mjs.txt",
+      "lines": 219
+    },
+    {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "file": "scripts/integration/bauar-harness-native.mjs",
+      "sha256": "b59bd4c592a962727369d9d38c04387ac02772ba5b52de2b684bc8e9b1709aba",
+      "frozen": "scripts_integration_bauar-harness-native.mjs.txt",
+      "lines": 133
+    }
+  ],
+  "verification": "Diagnostic-only source; runtime pending; public registry does not prove every semaphore holder"
+}

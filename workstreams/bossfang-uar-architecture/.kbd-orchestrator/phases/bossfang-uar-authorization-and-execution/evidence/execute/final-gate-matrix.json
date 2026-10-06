@@ -87,7 +87,7 @@
       "scripts/gates/bauar-secret-projection.ts"
     ],
     "packaging": "Applicable actual Electron/current-source package required; old cached app not acceptance",
-    "prerequisiteStatus": "Existing exact pinned payloads reused via supported public APIs; current DSH/SDK/AIcore/app/utility builds passed; no restoration/install/download/dependency change",
+    "prerequisiteStatus": "Actual source app/utility builds and4typechecks retained PASS; exact isolated SQLiteABI149 repaired; genuine no-test-probes server-full sidecar build PASS and complete11fileprivatepayload staged",
     "prerequisiteReceipt": "evidence/execute/boss-package-resolution-prerequisite.json",
     "prerequisiteReceipts": [
       "pinned-native-existing-inventory.json",
@@ -99,15 +99,18 @@
       "final-gates/boss-sdk-current-build-01.json",
       "final-gates/boss-aicore-current-build-01.json",
       "final-gates/boss-electron-current-build-01.json",
-      "final-gates/boss-electron-utility-build-01.json"
+      "final-gates/boss-electron-utility-build-01.json",
+      "final-gates/boss-electron-current-build-02.json",
+      "final-gates/boss-electron-current-build-03.json"
     ],
     "typecheckReceipts": [
       "final-gates/boss-typecheck-node-02.json",
       "final-gates/boss-typecheck-web-02.json",
       "final-gates/boss-typecheck-e2e-01.json",
-      "final-gates/boss-typecheck-aicore-01.json"
+      "final-gates/boss-typecheck-aicore-01.json",
+      "final-gates/boss-typecheck-node-03.json"
     ],
-    "runtimeStatus": "Approval runtime02 failed before approval execution: wrong standalone server override and incomplete payload. Actual server-full sidecar profile build active; no desktop approval PASS.",
+    "runtimeStatus": "runtime05 readiness/schema/provider save passed, downstream IPC305 Request timed out; actual handler diagnosis active. Earlier readiness04 intermittent cause unestablished",
     "nativeSqlite": {
       "status": "observed-isolated-abi149-build-and-publication",
       "buildReceipt": "final-gates/boss-sqlite-electron-abi-build-01.json",
@@ -119,7 +122,18 @@
       "status": "read-only-existing-contract-inventory; not executed",
       "currentBossExternalCurrentUar": "Existing runtime override can be used with a complete private payload in a packaged app; behavior remains unverified",
       "bundledCurrentUar": "No supported dirty-current-source staging; existing local preparer and independent after-pack check bind the clean local pin; canonical packaging binds existing release source. Requires legitimate packaging contract/pin handover, not weakening validation."
-    }
+    },
+    "sidecarProfile": {
+      "status": "observed-build-pass-development-only",
+      "receipt": "final-gates/boss-uar-sidecar-profile-build-01.json",
+      "compilerManifest": "boss-uar-sidecar-profile-build-01-manifest.json",
+      "features": "server-full; no test-probes; no defaults",
+      "payloadManifestSha256": "b989a38f0c162ced4820135af56434ebb2c41bcf028c1be275ca2e8325433663",
+      "executableSha256": "cfb1734885daf33f0a1cad139538ad087868094625445455cb755d2c57778e18",
+      "resourceFileCount": 11,
+      "releaseCertified": false
+    },
+    "startupDiagnostic": "desktop-startup-milestone-diagnostic/receipt.json"
   },
   "bossfang": {
     "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
@@ -145,11 +159,18 @@
       "Python branding checker unavailable under Node-only rule; no port/install"
     ],
     "targetDir": "/tmp/librefang-target-bauar-delivery-001",
-    "observedBlocker": "HARNESS16 passes9 authored scenarios including exact original-run reconnect and two admission/capture crash cases, then actual native TaskPosted model invocation never observed within existing90s gate budget. Native compatibility/event fixture trace active; no full harness PASS.",
+    "observedBlocker": "HARNESS21 passed first native request/race controls, pending sweep marker timeout. Actual pending row native claimed and stale-reset; peer/queue diagnostics active. No production native fault inferred. Earlier cancellation timeout unresolved",
     "terminalObservationCorrection": "harness-terminal-proof-correction-handoff/receipt.json",
     "timeoutDiagnostic": "harness-rpc-operation-diagnostic/receipt.json",
     "a2aSnapshotCorrection": "harness-a2a-available-observation-correction/receipt.json",
-    "latestCompile": "final-gates/bossfang-a2a-observation-compile-14.json"
+    "latestCompile": "final-gates/bossfang-a2a-observation-compile-14.json",
+    "diagnosticOnlyReceipts": [
+      "final-gates/bossfang-harness-runtime-18.json"
+    ],
+    "diagnosticSource": "harness-native-process-diagnostic-final/receipt.json",
+    "fixtureStackCorrection": "desktop-schema-and-host-stack-correction/receipt.json",
+    "nativePeerCorrection": "harness-native-clock-envelope-correction/receipt.json",
+    "selectedCliBuild": "final-gates/bossfang-selected-cli-build-01.json"
   },
   "certification": {
     "D0": "blocked automatic approval review; no eligible receipt or permitted signed waiver supplied",
@@ -167,7 +188,7 @@
     "bossfang": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42",
     "evidence": "Actual cargo compiler-artifact filenames, observed 2026-10-06; directories distinct, existing machine build/cache configuration inherited"
   },
-  "updatedAt": "2026-10-06T20:06:23.521Z",
+  "updatedAt": "2026-10-06T20:51:42.172Z",
   "observedRuntimeResults": "partial-runtime-results.json",
   "formatting": {
     "receipt": "final-gates/uar-format-check-01.json",
@@ -179,5 +200,14 @@
     "ownedScope": "32 new/helper files; max452lines",
     "ownedCheck": "final-gates/uar-owned-format-check-02.json",
     "pathFixCheck": "final-gates/uar-identity-module-format-03.json"
+  },
+  "processLimits": [
+    "Observed source-hook ordering gap retained in selected-cli-boundary-ordering.json",
+    "Shared OpenSpec stale owner ESRCH; lock retained by rename, no product/config/service/KBD mutation"
+  ],
+  "canonicalCheckpoint": {
+    "parentRevision": 179,
+    "bossfangRevision": 71,
+    "status": "execute-in-progress; task9active not complete"
   }
 }

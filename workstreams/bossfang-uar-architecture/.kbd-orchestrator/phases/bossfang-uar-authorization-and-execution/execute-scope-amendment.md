@@ -24,8 +24,6 @@ The UAR D0 lockfile/pin inconsistency blocks UAR production, not the separately 
 
 UAR current a7cb972 includes ancestor C05 provider fcfce6d with identical full-harness provider files. Bossfang main lacks full-run consumer work already implemented on a separate release branch; accepted consumer checkpoint and residual scope require a source-binding amendment before code. No other worktree is merged or modified here.
 
-## Isolation and observed setup
-
 ## Independent default-configuration scheduling amendment
 
 The user's explicit removal of runtime presets is a disjoint configuration change. Parent 04/7 may therefore be authored before 01–03, with a repository child for the exact `mcp.json` edit. This supersedes the old `additionalDefaultsClaim: mcp.json after D0` scheduling restriction only for this ordinary configuration file. It does not run, assist or retry the blocked D0 diagnostic, authorize UAR Rust changes, or move V1/V2 earlier. Runtime empty-default and application-supplied configuration acceptance remain deferred to the complete production boundary. The only immediate observation is the resulting JSON shape and bounded diff.
@@ -33,5 +31,13 @@ The user's explicit removal of runtime presets is a disjoint configuration chang
 The initial D0 dependency inconsistency was resolved using the existing recorded Liter source override. The current D0 blocker is automatic safety review, not an unresolved dependency choice. No session-isolation behavior was executed or established.
 
 ## Isolation and observed setup (continued)
+
+## Continued development after blocked diagnostic — 2026-10-06
+
+The operator explicitly directed continued development because this phase blocks the main release. D0 remains blocked by automatic safety review: do not retry, rephrase, move its execution to another agent/route, or infer a result. Parent02/5 and conditional02/6 remain unresolved; release certification still requires eligible evidence or an explicitly permitted waiver, neither of which is supplied here.
+
+The former blanket D0-before-product-edit scheduling rule is narrowed to work whose correctness depends on its result: session-manager ownership correction. Approved identity, exact-approval, secret-projection and resource-boundary authoring may proceed independently, and Bossfang storage/selection may proceed after corrected design acceptance against the existing provider contract. The accepted pre-edit source remains identified by a7cb972 and D0's hashes; any future eligible baseline observation must name that exact source, not the modified implementation. No diagnostic is performed by this amendment.
+
+The Boss finite run-secret projection may be authored alongside UAR identity in its disjoint worktree, using the already-authored strict client as its serial predecessor. Final integration/review/build gates stay at the full selected delivery boundary. Corrected material design review is a planning prerequisite, not a partial production QA gate. No source finding is closed by this scheduling change.
 
 Three clean product worktrees were created under ~/.claude/worktrees/bauar-{uar,bossfang,boss}. Each has a separately registered nested workstreams/bauar KBD UUID. The Boss's existing checkout hook automatically ran pnpm install and reported Passed during worktree creation; working-tree status remained clean. No service was started, no dependency version was selected or changed by this driver, and that hook output is not product acceptance.

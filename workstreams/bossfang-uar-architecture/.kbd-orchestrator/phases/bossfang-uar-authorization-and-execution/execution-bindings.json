@@ -53,7 +53,8 @@
       "base": "e2ae2ce21245030293c0bea96ed02ae853b820a7",
       "owner": "/root/boss_execution",
       "acceptedDesigns": [
-        "boss-bauar-approval-client"
+        "boss-bauar-approval-client",
+        "boss-bauar-secret-projection"
       ],
       "claims": [
         "src/main/ai/runtime/uar/UarToolApprovalController.ts",
@@ -74,9 +75,31 @@
           "4": "boss-bauar-approval-client/4",
           "7": "boss-bauar-approval-client/5",
           "8": "boss-bauar-approval-client/6"
+        },
+        "bauar-04-resource-credential-lifecycle": {
+          "4": [
+            "boss-bauar-secret-projection/1",
+            "boss-bauar-secret-projection/2",
+            "boss-bauar-secret-projection/3"
+          ],
+          "9": "boss-bauar-secret-projection/4",
+          "10": "boss-bauar-secret-projection/5"
         }
       },
-      "model": "gpt-6-astra/high"
+      "model": "gpt-6-astra/high",
+      "secretProjectionClaims": [
+        "src/main/ai/runtime/uar/uarSecretProjection.ts",
+        "src/main/ai/runtime/uar/uarProjectedMcpTransport.ts",
+        "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
+        "src/main/ai/runtime/uar/UarHostMcpBridge.ts",
+        "src/main/ai/runtime/uar/UarAguiAdapter.ts",
+        "src/main/ai/runtime/uar/UarToolApprovalController.ts",
+        "src/main/ai/runtime/agentMcpServers.ts",
+        "src/main/ai/mcp/createMcpBridgeServer.ts",
+        "src/main/ai/mcp/McpRuntimeService.ts",
+        "src/main/ai/mcp/types.ts",
+        "scripts/gates/bauar-secret-projection.ts"
+      ]
     },
     "bossfang": {
       "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",

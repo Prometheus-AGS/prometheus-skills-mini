@@ -62,7 +62,12 @@
           "src/uar/security/verifier/jwks_cache.rs"
         ],
         "integrationOwner": "/root/uar_execution",
-        "handoff": "New module authoring only; verifier/mod.rs wiring serial after identity-task2; source/test acceptance remains deferred"
+        "handoff": "New module authoring only; verifier/mod.rs wiring serial after identity-task2; source/test acceptance remains deferred",
+        "scenarioIntegrationExtensions": [
+          "src/uar/security/verifier/test_support.rs",
+          "src/uar/security/verifier/tests.rs"
+        ],
+        "currentOwner": "/root/uar_execution serial integration after cache worker handoff"
       },
       "identityTask3Begun": {
         "parentRevision": 105,
@@ -72,7 +77,25 @@
       "identityTask3ModuleExtensions": [
         "src/uar/security/api_keys/policy.rs",
         "src/uar/security/api_keys/tests.rs"
-      ]
+      ],
+      "identityTask4Proof": {
+        "type": "VerifiedIdentity, claims.rs",
+        "source": "Configured verified JWT or validated retained API key; no untrusted serde construction",
+        "constructorPaths": "Exact UserContext paths enumerated in evidence/execute/uar-prerequisites.md and already accepted binding; synthetic/admin contexts None",
+        "scope": "Mechanical propagation plus actual key policy/callers; no host proof"
+      },
+      "resourceChild": {
+        "change": "uar-bauar-resource-boundary",
+        "status": "Draft inherited parent contract, strict validation valid:true; exact production claims pending inventory",
+        "taskMap": {
+          "1": "parent04/8 configuration/source prerequisite",
+          "2": "parent04/1 grants",
+          "3": "parent04/3 stdio",
+          "4": "parent04/4 UAR projection",
+          "5": "parent04/9 and8 acceptance",
+          "6": "parent04/10 V2"
+        }
+      }
     },
     "boss": {
       "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
@@ -126,8 +149,15 @@
         "src/main/ai/mcp/createMcpBridgeServer.ts",
         "src/main/ai/mcp/McpRuntimeService.ts",
         "src/main/ai/mcp/types.ts",
-        "scripts/gates/bauar-secret-projection.ts"
-      ]
+        "scripts/gates/bauar-secret-projection.ts",
+        "scripts/gates/bauar-secret-projection-mcp.ts",
+        "scripts/gates/bauar-secret-projection-events.ts"
+      ],
+      "task2FixtureExtension": {
+        "path": "scripts/gates/bauar-secret-projection-mcp.ts",
+        "scope": "Real SDK/MCP server and claim orchestration scenarios, no execution; keep new gate modules <=500 lines"
+      },
+      "eventsFixtureScope": "Controlled projection-only canaries through real run/SSE/Electron; no fabricated execution or approval authority acceptance"
     },
     "bossfang": {
       "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
@@ -146,13 +176,16 @@
         "crates/librefang-types/src/uar_run.rs",
         "crates/librefang-runtime/src/a2a.rs",
         "crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
-        "crates/librefang-api/src/routes/uar_delegation/storage.rs"
+        "crates/librefang-api/src/routes/uar_delegation/storage.rs",
+        "crates/librefang-runtime/src/a2a/uar_delegation_store_tests.rs"
       ],
       "initialOwner": "/root/bossfang_execution in storage/schema role; explicit serial handover to feature stewardship",
       "taskMap": {
         "bauar-03-harness-delegation": "bossfang-bauar-harness-delegation numeric1 through9 in registered order; storage2 independent, final provider/strict-control checkpoint prerequisite remains open",
         "bauar-04-resource-credential-lifecycle": "bossfang-bauar-mcp-attribution task1 prerequisite,2-3 implementation after network checkpoint,4 V1,5 V2"
-      }
+      },
+      "storageHandoff": "evidence/execute/storage-handoff-final/receipt.json",
+      "storageLayoutCorrection": "New storage-specific scenarios in their cohesive <=500-line test module; old A2A scenarios untouched. Re-snapshot after owner handoff; initial snapshot is pre-correction."
     }
   },
   "scope": "Nested OpenSpec scopes planning artifacts; exact product claims above explicitly bound to task driver under authorized cross-repository scope. No broad source-root write grant. No production work until its dependency/task begins.",

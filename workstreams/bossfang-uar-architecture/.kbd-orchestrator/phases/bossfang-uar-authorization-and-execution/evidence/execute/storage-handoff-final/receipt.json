@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-06T14:36:42.554Z",
+  "sourceRoot": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "base": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+  "sourceAuthor": "/root/bossfang_execution storage/schema role",
+  "status": "Final source-authoring handoff only; no compile/runtime certification",
+  "sources": [
+    {
+      "path": "crates/librefang-types/src/uar_run.rs",
+      "snapshot": "1-uar_run.rs.txt",
+      "sha256": "d7263d263dc7ecf63aa2c4250c04cfcc6f04094ce27e0d14bd7b64e500747c3a",
+      "lines": 321
+    },
+    {
+      "path": "crates/librefang-runtime/src/a2a.rs",
+      "snapshot": "2-a2a.rs.txt",
+      "sha256": "92aff70118ad30093e410b5532d78f4f896163de673cb18877ae3c7578ab3f2e",
+      "lines": 2157
+    },
+    {
+      "path": "crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
+      "snapshot": "3-uar_delegation_store.rs.txt",
+      "sha256": "c35dd9b908f5157cf317bd0eedffb7d5c6fefd2581c2e4ab6522b1d62e4a8ae2",
+      "lines": 368
+    },
+    {
+      "path": "crates/librefang-api/src/routes/uar_delegation/storage.rs",
+      "snapshot": "4-storage.rs.txt",
+      "sha256": "3a8315eae672d635b0ea1f45529d70e47cf4edef5ffa9954b1116b51731d5e3b",
+      "lines": 106
+    },
+    {
+      "path": "crates/librefang-runtime/src/a2a/uar_delegation_store_tests.rs",
+      "snapshot": "5-uar_delegation_store_tests.rs.txt",
+      "sha256": "734a8b789146c3a442da92d09e5b4c71662fc290514820265e5f66d7f4cb3bf3",
+      "lines": 193
+    }
+  ],
+  "prior": "../storage-handoff/receipt.json pre-layout correction preserved",
+  "handoverTo": "F-SELECTION feature-steward; task3 not yet begun",
+  "api": [
+    "reserve_uar_job_attempt",
+    "get_uar_job_attempt",
+    "list_uar_job_attempts",
+    "apply_uar_attempt_event",
+    "uar_attempt_events_after"
+  ],
+  "remaining": [
+    "Selection must commit original reservation before outgoing admission",
+    "Control must enforce finite secret projection and decoded presentation bound before atomic observation",
+    "Complete production runtime scenarios and builds"
+  ]
+}

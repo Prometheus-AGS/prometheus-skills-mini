@@ -391,6 +391,27 @@
         "handoff": "Immutable schema API source required before feature wiring",
         "status": "accepted source allocation; gates pending",
         "export": "Surgical pub reexport substrate::task_dispatch typed APIs only; no unrelated wiring"
+      },
+      "task6Feature": {
+        "owner": "bossfang-feature-steward",
+        "handoff": "evidence/execute/task6-schema-handoff/receipt.json",
+        "paths": [
+          "crates/librefang-kernel/src/kernel/mod.rs",
+          "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+          "crates/librefang-kernel/src/kernel/handles/task_queue.rs",
+          "crates/librefang-kernel/src/kernel/accessors.rs",
+          "crates/librefang-kernel/src/kernel/cron_tick.rs",
+          "crates/librefang-kernel/src/kernel/triggers_and_workflow.rs",
+          "crates/librefang-kernel/src/kernel/uar_harness/lifecycle.rs",
+          "crates/librefang-api/src/routes/task_queue.rs",
+          "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
+          "crates/librefang-api/src/routes/uar.rs",
+          "crates/librefang-api/src/routes/network.rs",
+          "crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
+          "crates/librefang-api/src/routes/uar_delegation/job_mapping.rs"
+        ],
+        "scope": "Task6 only; shared existing modules surgical. Native exact-list claim before prompt; selected intent before preflight; Existing absent A2A unknown. No schema writes. Request exact trait/test extension before any additional path.",
+        "contract": "evidence/execute/task6-dispatch-intent-contract.md"
       }
     }
   },

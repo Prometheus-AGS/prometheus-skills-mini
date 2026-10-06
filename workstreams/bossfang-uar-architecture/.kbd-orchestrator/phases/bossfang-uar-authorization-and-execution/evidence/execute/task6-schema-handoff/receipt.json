@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "task": "bossfang-bauar-harness-delegation/6/schema",
+  "role": "surrealdb-schema-engineer",
+  "status": "source-authored-unverified",
+  "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/",
+  "baseline": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+  "parentRevisionBegun": 151,
+  "childRevisionBegun": 44,
+  "sourceFiles": [
+    {
+      "path": "crates/librefang-memory/src/lib.rs",
+      "sha256": "11dcd40df8fa588b580b6a9ebdaab8f76fe66828cb226936760ce8a7f79512fd",
+      "lines": 118,
+      "snapshot": "01-crates_librefang-memory_src_lib.rs.txt"
+    },
+    {
+      "path": "crates/librefang-memory/src/substrate.rs",
+      "sha256": "85d62519b26c78035109ebefa0ba57a93c83e991310a4e2aae68339859a5f354",
+      "lines": 3562,
+      "snapshot": "02-crates_librefang-memory_src_substrate.rs.txt"
+    },
+    {
+      "path": "crates/librefang-memory/src/substrate/task_dispatch.rs",
+      "sha256": "816f64ff517ec66ae8124213286b7fd8ad3cb7ed1826ac271c44cfbb4adb1dfe",
+      "lines": 295,
+      "snapshot": "03-crates_librefang-memory_src_substrate_task_dispatch.rs.txt"
+    },
+    {
+      "path": "crates/librefang-memory/src/substrate/task_dispatch_tests.rs",
+      "sha256": "562bfe445f4fec214ff2f7ca847497387067b7cc4d9362f40d3e0e9d26a6339e",
+      "lines": 168,
+      "snapshot": "04-crates_librefang-memory_src_substrate_task_dispatch_tests.rs.txt"
+    }
+  ],
+  "migration": "none; existing SQLite collaboration task_queue.payload version-one tag",
+  "scope": "Live concrete SQLite TaskQueue only; SurrealTaskBackend unchanged",
+  "testsRun": [],
+  "claimsReleased": true,
+  "featureCallersChanged": false,
+  "priorSourceCheckpoint": "control-handoff/receipt.json coordinator56c681d",
+  "frozenAt": "2026-10-06T16:26:18.157Z"
+}

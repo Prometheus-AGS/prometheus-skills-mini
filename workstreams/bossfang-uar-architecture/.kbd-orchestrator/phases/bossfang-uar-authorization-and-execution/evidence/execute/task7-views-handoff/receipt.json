@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "task": "bossfang-bauar-harness-delegation/7",
+  "role": "bossfang-feature-steward",
+  "status": "source-authored-unverified",
+  "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/",
+  "baseline": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+  "priorCheckpoint": "task6-feature-handoff/receipt.json coordinator4e75fe0",
+  "parentRevisionBegun": 157,
+  "childRevisionBegun": 48,
+  "sourceFiles": [
+    {
+      "path": "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
+      "sha256": "152dc85d5db49ed1f7f99133392f5d816d92198845b2b337d6132ef3ca2189b1",
+      "lines": 222,
+      "snapshot": "01-crates_librefang-api_src_routes_uar_delegated_tasks.rs.txt"
+    },
+    {
+      "path": "crates/librefang-api/src/routes/uar/delegated_view.rs",
+      "sha256": "db71c4a71479069e30ae2496494ba228f00376f39393878238acc49cfa6bbd59",
+      "lines": 119,
+      "snapshot": "02-crates_librefang-api_src_routes_uar_delegated_view.rs.txt"
+    },
+    {
+      "path": "crates/librefang-api/src/routes/uar/delegated_view_tests.rs",
+      "sha256": "65c1d5128f24bbb7a4c8acd323ce04633a13aa5a3eef7ff451f3fb8651b681f0",
+      "lines": 66,
+      "snapshot": "03-crates_librefang-api_src_routes_uar_delegated_view_tests.rs.txt"
+    },
+    {
+      "path": "crates/librefang-api/src/routes/uar.rs",
+      "sha256": "1302acf0fb8c45272a444133801b1f09929f1f1d3fec907564261d70adf0fc33",
+      "lines": 499,
+      "snapshot": "04-crates_librefang-api_src_routes_uar.rs.txt"
+    },
+    {
+      "path": "crates/librefang-api/src/routes/network.rs",
+      "sha256": "560b981114b988be3bbd4028977260479c7c185609b66154a70af10ebd930850",
+      "lines": 2587,
+      "snapshot": "05-crates_librefang-api_src_routes_network.rs.txt"
+    },
+    {
+      "path": "crates/librefang-api/src/routes/uar_delegation.rs",
+      "sha256": "8793233ed1a7edc0089bcc1ac13c34418e0f1857900ff07cfacc56af22682b1f",
+      "lines": 483,
+      "snapshot": "06-crates_librefang-api_src_routes_uar_delegation.rs.txt"
+    },
+    {
+      "path": "crates/librefang-types/src/uar_run.rs",
+      "sha256": "f1ff656e2850160dd0f2267835f4b1556d67fbd07f8c72ce8166cd9e3a108d3f",
+      "lines": 354,
+      "snapshot": "07-crates_librefang-types_src_uar_run.rs.txt"
+    },
+    {
+      "path": "crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+      "sha256": "4f30483a93ee6927591935fb4a13b9e07b93352f192c26a8be1ad6c6449c1927",
+      "lines": 421,
+      "snapshot": "08-crates_librefang-llm-drivers_src_drivers_uar_run_mod.rs.txt"
+    },
+    {
+      "path": "crates/librefang-llm-drivers/src/drivers/uar_run/presentation.rs",
+      "sha256": "c04f6b31bb9f5cb269edcc8d1bc2cb70216d72da59580b6eff8cd1fcd8f272a0",
+      "lines": 258,
+      "snapshot": "09-crates_librefang-llm-drivers_src_drivers_uar_run_presentation.rs.txt"
+    },
+    {
+      "path": "crates/librefang-llm-drivers/src/drivers/uar_run/presentation_tests.rs",
+      "sha256": "b9129b2748db1b97d2fe0f80a456bcd986169691bc2bce7038907f5aecc5e3b6",
+      "lines": 106,
+      "snapshot": "10-crates_librefang-llm-drivers_src_drivers_uar_run_presentation_tests.rs.txt"
+    }
+  ],
+  "testsRun": [],
+  "claimsReleased": true,
+  "networkRelease": "MCP slices only after coordinator snapshot acceptance",
+  "strictSelectedCancel": {
+    "surfaces": [
+      "POST /a2a tasks/cancel params:{id,expectedRevision}",
+      "POST /a2a/tasks/{id}/cancel body:{expectedRevision}",
+      "POST /api/uar/delegations/{id}/cancel body:{expectedRevision}"
+    ],
+    "nativeManualCompatibility": "Existing body-free shape remains valid for ordinary native/manual tasks",
+    "noLookupRevisionSubstitution": true
+  },
+  "usage": {
+    "wire": "agui.done data.usage",
+    "fields": [
+      "input_tokens",
+      "output_tokens",
+      "total_tokens",
+      "model"
+    ],
+    "cost": "omitted; provider exposes only cost_usd_estimate",
+    "defaults": "none; absent/invalid stays unavailable; no invented total"
+  },
+  "profile": "Explicit manual stored-job selection. Native TaskPosted claim may win before later selected request. No automatic selection-at-post mapping or background UAR readiness claimed.",
+  "limitations": [
+    "No compiler/build/test/lint/formatter/service or gate run.",
+    "Full-stack owner/missing-revision/stale-revision/no-effect and provider usage restart scenarios assigned to independent FTEST source; still pending execution.",
+    "Historical metadata-only events have no reconstructed output or usage; historyIsExecutable always false.",
+    "Captured finite local secret dictionary does not certify provider-owned secret corpus completeness.",
+    "Native-first winner rejects late selected admission. Production assignee_wake defaults unchanged."
+  ],
+  "createdAt": "2026-10-06T16:46:55.221Z",
+  "frozenAt": "2026-10-06T16:47:49.495Z"
+}

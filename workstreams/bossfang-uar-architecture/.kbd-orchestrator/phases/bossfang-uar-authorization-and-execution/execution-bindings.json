@@ -177,7 +177,16 @@
             "scheduling": "May begin independent new projector modules, host/mod delegation preserving APIs, receipt metadata, destination capture and static native warning now; manager/orchestrator blocked until capture handover.",
             "retentionOrdering": "Private run-local staging until same once-resolved provider corpus, original shared session authority unchanged; content-free active shell; bounded publication max4MiB/1000events, static staging failures. Publish projected content via existing semantics, no stale whole-state overwrite. Known captured variants in executable retained snapshot -> static SECRET_IN_EXECUTABLE_ARTIFACT, never mutate artifact authority/revision. Inspect actual early awaited approvals before withholding control events.",
             "worldState": "Project copied update messages before record_world_state, preserve baseline/control state and original shared session authority; detached staging baseline restored through existing API, no stale overwrite or session-manager correction.",
-            "preRoutingLimit": "Project existing captured auth/host/MCP input copies at manager RAG/classifier seams. Generation credentials resolved later cannot cover earlier external routing calls; constructor-owned or opaque routing credentials remain unknown. Do not repeat or resolve all providers, disable routing, or claim universal containment."
+            "preRoutingLimit": "Project existing captured auth/host/MCP input copies at manager RAG/classifier seams. Generation credentials resolved later cannot cover earlier external routing calls; constructor-owned or opaque routing credentials remain unknown. Do not repeat or resolve all providers, disable routing, or claim universal containment.",
+            "receiptFixture": {
+              "owner": "/root/uar_resource_continue",
+              "paths": [
+                "tests/bauar_receipt_projection.rs",
+                "tests/support/bauar_receipt_peer.rs"
+              ],
+              "scope": "Actual in-process router/RunManager/Liter HTTP/NativeSkill/canonical preservation into same private embedded SurrealKV store; retrieve through PersistenceLayer public read API. No-store actual early return. Produced receipt primary; replay clone secondary. No public HTTP retrieval route claimed. Source only, no D0 or shared service.",
+              "status": "proposal accepted source authoring"
+            }
           },
           "Cursor": {
             "owner": "/root/uar_execution",
@@ -408,10 +417,27 @@
           "crates/librefang-api/src/routes/uar.rs",
           "crates/librefang-api/src/routes/network.rs",
           "crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
-          "crates/librefang-api/src/routes/uar_delegation/job_mapping.rs"
+          "crates/librefang-api/src/routes/uar_delegation/job_mapping.rs",
+          "crates/librefang-kernel/src/kernel_api.rs",
+          "crates/librefang-kernel/src/kernel/uar_harness/lifecycle_tests.rs",
+          "crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs"
         ],
         "scope": "Task6 only; shared existing modules surgical. Native exact-list claim before prompt; selected intent before preflight; Existing absent A2A unknown. No schema writes. Request exact trait/test extension before any additional path.",
-        "contract": "evidence/execute/task6-dispatch-intent-contract.md"
+        "contract": "evidence/execute/task6-dispatch-intent-contract.md",
+        "extension": "Object-safe read_job_dispatch_intent and reconcile_selected_jobs forwards; fixed-unavailable defaults; actual admission scenario signature migration and cohesive lifecycle scenarios only."
+      },
+      "harnessFixture": {
+        "owner": "/root/boss_execution as separate source scenario author, bossfang-feature-steward responsibility",
+        "paths": [
+          "crates/librefang-api/tests/bauar_harness_host.rs",
+          "scripts/integration/bauar-harness-runtime.mjs",
+          "scripts/integration/bauar-harness-peer.mjs",
+          "scripts/integration/bauar-harness-gate.mjs",
+          "crates/librefang-kernel/tests/bauar_harness_delegation.rs"
+        ],
+        "scope": "Source only under active lifecycle authoring, future03/8 execution pending. Private real LibreFangKernel/server router test-host port0; current standalone UAR process; real registered Owner and independent verified service JWT; public real config/catalog/binding seeding; real private persistence. Controlled model/MCP and exact byte fault proxy. No new shared daemon, fake UAR receipt or D0.",
+        "handoff": "Full fixture source required before final delivery gates; production writer remains separate exact paths.",
+        "model": "gpt-6-astra/high"
       }
     }
   },

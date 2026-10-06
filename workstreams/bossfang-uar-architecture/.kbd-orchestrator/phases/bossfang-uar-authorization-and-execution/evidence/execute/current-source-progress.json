@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "time": "2026-10-06T18:27:13.088Z",
+  "time": "2026-10-06T19:48:10.433Z",
   "kind": "canonical status and observed command receipts; not certification",
   "canonical": {
     "schemaVersion": "2",
@@ -1067,7 +1067,7 @@
     "submodulePins": {},
     "replicaView": {
       "replicaId": "69cddcdf-6458-4402-82b3-dcf30e2694b5",
-      "localHead": "bcbc11c00f794facf36d66e8245811fd9a3308d0",
+      "localHead": "4de46106b718c2a3d9a3f90207dd8d76a02efec9",
       "activePathStatus": "current",
       "submodules": {}
     },
@@ -1273,10 +1273,94 @@
       "finishedAt": "2026-10-06T17:12:26.058Z"
     },
     {
+      "label": "uar-compile-01",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T17:46:29.197Z"
+    },
+    {
+      "label": "uar-compile-02",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T17:54:54.963Z"
+    },
+    {
+      "label": "uar-cursor-runtime-01",
+      "exitCode": null,
+      "signal": "SIGABRT",
+      "finishedAt": "2026-10-06T17:55:30.063Z"
+    },
+    {
+      "label": "uar-identity-runtime-01",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T17:55:50.440Z"
+    },
+    {
+      "label": "uar-cursor-runtime-02",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T17:56:27.466Z"
+    },
+    {
+      "label": "uar-inline-runtime-01",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T17:57:08.976Z"
+    },
+    {
+      "label": "uar-stdio-runtime-01",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T17:57:12.830Z"
+    },
+    {
+      "label": "uar-receipt-runtime-01",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T17:57:18.357Z"
+    },
+    {
+      "label": "uar-secret-runtime-01",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T17:57:18.707Z"
+    },
+    {
       "label": "bossfang-api-compile-01",
       "exitCode": 101,
       "signal": null,
       "finishedAt": "2026-10-06T17:57:36.138Z"
+    },
+    {
+      "label": "uar-compile-03",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T17:59:56.448Z"
+    },
+    {
+      "label": "uar-receipt-runtime-02",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:01:15.692Z"
+    },
+    {
+      "label": "uar-inline-runtime-02",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:01:31.287Z"
+    },
+    {
+      "label": "uar-secret-runtime-02",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:01:35.094Z"
+    },
+    {
+      "label": "uar-grants-runtime-01",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:01:38.170Z"
     },
     {
       "label": "bossfang-api-compile-02",
@@ -1291,112 +1375,10 @@
       "finishedAt": "2026-10-06T18:03:17.406Z"
     },
     {
-      "label": "bossfang-kernel-compile-01",
-      "exitCode": 101,
-      "signal": null,
-      "finishedAt": "2026-10-06T18:23:14.225Z"
-    },
-    {
       "label": "bossfang-mcp-runtime-01",
       "exitCode": 101,
       "signal": null,
       "finishedAt": "2026-10-06T18:03:20.571Z"
-    },
-    {
-      "label": "uar-compile-01",
-      "exitCode": 101,
-      "signal": null,
-      "finishedAt": "2026-10-06T17:46:29.197Z"
-    },
-    {
-      "label": "uar-compile-02",
-      "exitCode": 0,
-      "signal": null,
-      "finishedAt": "2026-10-06T17:54:54.963Z"
-    },
-    {
-      "label": "uar-compile-03",
-      "exitCode": 0,
-      "signal": null,
-      "finishedAt": "2026-10-06T17:59:56.448Z"
-    },
-    {
-      "label": "uar-compile-06",
-      "exitCode": 0,
-      "signal": null,
-      "finishedAt": "2026-10-06T18:14:56.004Z"
-    },
-    {
-      "label": "uar-cursor-runtime-01",
-      "exitCode": null,
-      "signal": "SIGABRT",
-      "finishedAt": "2026-10-06T17:55:30.063Z"
-    },
-    {
-      "label": "uar-cursor-runtime-02",
-      "exitCode": 0,
-      "signal": null,
-      "finishedAt": "2026-10-06T17:56:27.466Z"
-    },
-    {
-      "label": "uar-grants-runtime-01",
-      "exitCode": 0,
-      "signal": null,
-      "finishedAt": "2026-10-06T18:01:38.170Z"
-    },
-    {
-      "label": "uar-identity-compile-07",
-      "exitCode": 0,
-      "signal": null,
-      "finishedAt": "2026-10-06T18:24:01.243Z"
-    },
-    {
-      "label": "uar-identity-runtime-01",
-      "exitCode": 101,
-      "signal": null,
-      "finishedAt": "2026-10-06T17:55:50.440Z"
-    },
-    {
-      "label": "uar-identity-runtime-02",
-      "exitCode": 101,
-      "signal": null,
-      "finishedAt": "2026-10-06T18:08:11.166Z"
-    },
-    {
-      "label": "uar-identity-runtime-03",
-      "exitCode": 101,
-      "signal": null,
-      "finishedAt": "2026-10-06T18:16:24.280Z"
-    },
-    {
-      "label": "uar-identity-runtime-04",
-      "exitCode": 101,
-      "signal": null,
-      "finishedAt": "2026-10-06T18:25:11.356Z"
-    },
-    {
-      "label": "uar-inline-runtime-01",
-      "exitCode": 101,
-      "signal": null,
-      "finishedAt": "2026-10-06T17:57:08.976Z"
-    },
-    {
-      "label": "uar-inline-runtime-02",
-      "exitCode": 0,
-      "signal": null,
-      "finishedAt": "2026-10-06T18:01:31.287Z"
-    },
-    {
-      "label": "uar-receipt-runtime-01",
-      "exitCode": 101,
-      "signal": null,
-      "finishedAt": "2026-10-06T17:57:18.357Z"
-    },
-    {
-      "label": "uar-receipt-runtime-02",
-      "exitCode": 0,
-      "signal": null,
-      "finishedAt": "2026-10-06T18:01:15.692Z"
     },
     {
       "label": "uar-secret-compile-04",
@@ -1405,28 +1387,22 @@
       "finishedAt": "2026-10-06T18:03:49.051Z"
     },
     {
-      "label": "uar-secret-compile-05",
-      "exitCode": 0,
-      "signal": null,
-      "finishedAt": "2026-10-06T18:09:15.610Z"
-    },
-    {
-      "label": "uar-secret-runtime-01",
-      "exitCode": 101,
-      "signal": null,
-      "finishedAt": "2026-10-06T17:57:18.707Z"
-    },
-    {
-      "label": "uar-secret-runtime-02",
-      "exitCode": 101,
-      "signal": null,
-      "finishedAt": "2026-10-06T18:01:35.094Z"
-    },
-    {
       "label": "uar-secret-runtime-03",
       "exitCode": 101,
       "signal": null,
       "finishedAt": "2026-10-06T18:05:36.657Z"
+    },
+    {
+      "label": "uar-identity-runtime-02",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:08:11.166Z"
+    },
+    {
+      "label": "uar-secret-compile-05",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:09:15.610Z"
     },
     {
       "label": "uar-secret-runtime-04",
@@ -1435,19 +1411,373 @@
       "finishedAt": "2026-10-06T18:12:00.175Z"
     },
     {
+      "label": "uar-compile-06",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:14:56.004Z"
+    },
+    {
       "label": "uar-secret-runtime-05",
       "exitCode": 0,
       "signal": null,
       "finishedAt": "2026-10-06T18:16:21.135Z"
     },
     {
-      "label": "uar-stdio-runtime-01",
+      "label": "uar-identity-runtime-03",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:16:24.280Z"
+    },
+    {
+      "label": "bossfang-kernel-compile-01",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:23:14.225Z"
+    },
+    {
+      "label": "uar-identity-compile-07",
       "exitCode": 0,
       "signal": null,
-      "finishedAt": "2026-10-06T17:57:12.830Z"
+      "finishedAt": "2026-10-06T18:24:01.243Z"
+    },
+    {
+      "label": "uar-identity-runtime-04",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:25:11.356Z"
+    },
+    {
+      "label": "uar-identity-compile-08",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:28:38.846Z"
+    },
+    {
+      "label": "uar-identity-runtime-05",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:29:26.566Z"
+    },
+    {
+      "label": "bossfang-kernel-compile-02",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:29:36.884Z"
+    },
+    {
+      "label": "uar-identity-compile-09",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:31:49.622Z"
+    },
+    {
+      "label": "uar-identity-runtime-06",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:34:58.906Z"
+    },
+    {
+      "label": "uar-format-check-01",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:36:49.147Z"
+    },
+    {
+      "label": "bossfang-matrix-compile-03",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:46:37.300Z"
+    },
+    {
+      "label": "bossfang-mcp-runtime-02",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:48:57.114Z"
+    },
+    {
+      "label": "bossfang-kernel-compile-04",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:49:59.767Z"
+    },
+    {
+      "label": "uar-owned-format-check-02",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:50:19.201Z"
+    },
+    {
+      "label": "uar-owned-format-compile-10",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:50:48.261Z"
+    },
+    {
+      "label": "bossfang-mcp-compile-05",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:55:30.944Z"
+    },
+    {
+      "label": "uar-identity-module-compile-11",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:55:31.197Z"
+    },
+    {
+      "label": "uar-identity-module-format-03",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:56:09.726Z"
+    },
+    {
+      "label": "bossfang-harness-runtime-01",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:56:35.535Z"
+    },
+    {
+      "label": "bossfang-mcp-runtime-03",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:57:04.213Z"
+    },
+    {
+      "label": "bossfang-harness-runtime-02",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:57:51.496Z"
+    },
+    {
+      "label": "bossfang-harness-runtime-03",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T18:59:43.142Z"
+    },
+    {
+      "label": "bossfang-mcp-compile-06",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:00:14.670Z"
+    },
+    {
+      "label": "uar-server-profile-check-01",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:00:27.981Z"
+    },
+    {
+      "label": "bossfang-mcp-runtime-04",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:01:25.608Z"
+    },
+    {
+      "label": "bossfang-mcp-compile-07",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:03:58.094Z"
+    },
+    {
+      "label": "bossfang-host-compile-08",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:04:26.253Z"
+    },
+    {
+      "label": "bossfang-mcp-runtime-05",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:05:18.449Z"
+    },
+    {
+      "label": "bossfang-harness-runtime-04",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:05:20.272Z"
+    },
+    {
+      "label": "bossfang-harness-runtime-05",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:07:22.025Z"
+    },
+    {
+      "label": "bossfang-mcp-compile-09",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:07:28.504Z"
+    },
+    {
+      "label": "bossfang-mcp-runtime-06",
+      "exitCode": 101,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:09:12.778Z"
+    },
+    {
+      "label": "boss-dsh-current-build-01",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:10:03.652Z"
+    },
+    {
+      "label": "bossfang-harness-runtime-06",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:10:07.441Z"
+    },
+    {
+      "label": "boss-dsh-current-build-02",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:10:45.378Z"
+    },
+    {
+      "label": "bossfang-mcp-compile-10",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:12:24.625Z"
+    },
+    {
+      "label": "bossfang-harness-runtime-07",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:13:32.304Z"
+    },
+    {
+      "label": "bossfang-mcp-runtime-07",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:13:59.152Z"
+    },
+    {
+      "label": "boss-dsh-current-build-03",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:15:41.197Z"
+    },
+    {
+      "label": "boss-sdk-current-build-01",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:16:15.706Z"
+    },
+    {
+      "label": "boss-aicore-current-build-01",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:17:13.314Z"
+    },
+    {
+      "label": "bossfang-harness-runtime-08",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:17:17.718Z"
+    },
+    {
+      "label": "boss-typecheck-node-02",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:18:59.032Z"
+    },
+    {
+      "label": "bossfang-harness-runtime-09",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:19:20.169Z"
+    },
+    {
+      "label": "boss-typecheck-web-01",
+      "exitCode": null,
+      "signal": "SIGABRT",
+      "finishedAt": "2026-10-06T19:20:33.460Z"
+    },
+    {
+      "label": "boss-typecheck-web-02",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:25:53.125Z"
+    },
+    {
+      "label": "boss-typecheck-e2e-01",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:26:35.152Z"
+    },
+    {
+      "label": "bossfang-harness-terminal-compile-11",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:27:05.634Z"
+    },
+    {
+      "label": "boss-typecheck-aicore-01",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:27:14.242Z"
+    },
+    {
+      "label": "bossfang-harness-runtime-10",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:27:44.924Z"
+    },
+    {
+      "label": "boss-electron-current-build-01",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:27:55.047Z"
+    },
+    {
+      "label": "boss-electron-utility-build-01",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:28:14.248Z"
+    },
+    {
+      "label": "boss-approval-client-runtime-01",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:30:12.512Z"
+    },
+    {
+      "label": "bossfang-approval-conflict-compile-12",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:32:52.762Z"
+    },
+    {
+      "label": "bossfang-harness-runtime-11",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:33:47.618Z"
+    },
+    {
+      "label": "bossfang-harness-runtime-12",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:36:22.222Z"
+    },
+    {
+      "label": "boss-sqlite-electron-abi-build-01",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:38:34.564Z"
+    },
+    {
+      "label": "boss-approval-client-runtime-02",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:40:18.730Z"
+    },
+    {
+      "label": "bossfang-terminal-proof-compile-13",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-06T19:46:10.789Z"
     }
   ],
-  "pendingPermission": "Restore pinned Electron44.2.0/rolldown1.2.6 build payloads; no versions, lockfiles or shared service change",
+  "pendingPermission": "Pinned payload restoration remains unanswered and unperformed. Existing exact payload reuse enabled source builds without provisioning.",
   "D0": "Rejected, excluded and not retried",
-  "observedBlocker": "Six identity runtime cases: child stack overflow; exact failing endpoint under investigation"
+  "observedBlocker": "HARNESS13 active after terminal proof correction. Boss runtime02 blocked by incorrect standalone binary override/incomplete payload; actual server-full sidecar compilation active. D0 excluded; required global fmt failed/unwaived; package, final QA/review pending."
 }

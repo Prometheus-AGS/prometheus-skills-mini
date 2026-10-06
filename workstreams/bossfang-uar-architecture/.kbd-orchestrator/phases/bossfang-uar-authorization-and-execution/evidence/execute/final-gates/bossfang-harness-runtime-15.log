@@ -1,0 +1,21 @@
+{"harnessCompletedCase":"registered-owner-and-explicit-unsupported","completedCaseCount":1}
+{"boardReconciliationCheckpoint":{"streaming":false,"completedCaseCount":1,"retainedAfterA2a":{"executionState":"completed","effectState":"effect_unconfirmed","recoveryState":"available","appliedCursor":23,"attemptRevision":5,"attempt":1},"observedAtDrain":{"admissionState":"admitted","terminalPresent":true,"appliedCursor":23,"attemptRevision":5},"reconciliationCommandSucceeded":true,"boardCompleted":true}}
+{"harnessCompletedCase":"normal-exact-approval-and-reconciliation","completedCaseCount":2}
+{"boardReconciliationCheckpoint":{"streaming":true,"completedCaseCount":2,"retainedAfterA2a":{"executionState":"completed","effectState":"effect_unconfirmed","recoveryState":"available","appliedCursor":21,"attemptRevision":5,"attempt":1},"observedAtDrain":{"admissionState":"admitted","terminalPresent":true,"appliedCursor":21,"attemptRevision":5},"reconciliationCommandSucceeded":true,"boardCompleted":true}}
+{"harnessStage":"incomplete_terminal_start"}
+{"harnessStage":"incomplete_terminal_approved"}
+{"harnessStage":"incomplete_terminal_before_restart"}
+{"harnessStage":"incomplete_terminal_after_restart"}
+{"harnessStage":"incomplete_terminal_finished"}
+{"harnessCompletedCase":"streaming-and-outcome-commit-crash","completedCaseCount":3}
+{"harnessCompletedCase":"exact-denial-no-effect","completedCaseCount":4}
+{"harnessCompletedCase":"three-surface-cancellation-exact-caller-revision","completedCaseCount":5}
+{"harnessCompletedCase":"lost-admission-and-decision-response-no-reenactment","completedCaseCount":6}
+{"harnessRequestTimeout":{"operation":"a2a_rpc","method":"POST","rpcMethod":"tasks/get"}}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+[DOMException [TimeoutError]: The operation was aborted due to timeout]
+
+Node.js v24.21.0

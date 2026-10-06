@@ -63,7 +63,21 @@
     ],
     "targetDir": "/Users/gqadonis/.claude/worktrees/bauar-uar/target",
     "compileSelection": "Only named integration targets; no libtests, --all-targets, D0 fixture or session-owner diagnostic",
-    "observedBlocker": "Six remaining identity cases: child stack overflow confirmed; exact failing endpoint under investigation, auth policy assertions remain unverified."
+    "observedBlocker": "All8identity scenarios passed; server-full no-default profile check passed; owned formatting passed. Required global formatter remains failed/unwaived and excluded D0 unresolved.",
+    "identityEvidence": {
+      "primaryCasesPassed": 8,
+      "receipts": [
+        "final-gates/uar-identity-runtime-01.json",
+        "final-gates/uar-identity-runtime-02.json",
+        "final-gates/uar-identity-runtime-06.json"
+      ],
+      "externalDeploymentCertified": false
+    },
+    "buildProfileEvidence": {
+      "status": "observed-command-pass",
+      "receipt": "final-gates/uar-server-profile-check-01.json",
+      "scope": "cargo check no-default-features server-full main binary; no runtime or package certification"
+    }
   },
   "boss": {
     "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
@@ -73,8 +87,39 @@
       "scripts/gates/bauar-secret-projection.ts"
     ],
     "packaging": "Applicable actual Electron/current-source package required; old cached app not acceptance",
-    "prerequisiteStatus": "Electron44.2.0 actual executable and pinned rolldown1.2.6 native binding absent; actual tsdown transitive resolution inspected. Restoration permission remains pending; workspace declaration outputs also absent.",
-    "prerequisiteReceipt": "evidence/execute/boss-package-resolution-prerequisite.json"
+    "prerequisiteStatus": "Existing exact pinned payloads reused via supported public APIs; current DSH/SDK/AIcore/app/utility builds passed; no restoration/install/download/dependency change",
+    "prerequisiteReceipt": "evidence/execute/boss-package-resolution-prerequisite.json",
+    "prerequisiteReceipts": [
+      "pinned-native-existing-inventory.json",
+      "pinned-typescript-existing-inventory.json",
+      "boss-existing-native-build-adaptation.json"
+    ],
+    "buildReceipts": [
+      "final-gates/boss-dsh-current-build-03.json",
+      "final-gates/boss-sdk-current-build-01.json",
+      "final-gates/boss-aicore-current-build-01.json",
+      "final-gates/boss-electron-current-build-01.json",
+      "final-gates/boss-electron-utility-build-01.json"
+    ],
+    "typecheckReceipts": [
+      "final-gates/boss-typecheck-node-02.json",
+      "final-gates/boss-typecheck-web-02.json",
+      "final-gates/boss-typecheck-e2e-01.json",
+      "final-gates/boss-typecheck-aicore-01.json"
+    ],
+    "runtimeStatus": "Approval runtime02 failed before approval execution: wrong standalone server override and incomplete payload. Actual server-full sidecar profile build active; no desktop approval PASS.",
+    "nativeSqlite": {
+      "status": "observed-isolated-abi149-build-and-publication",
+      "buildReceipt": "final-gates/boss-sqlite-electron-abi-build-01.json",
+      "publicationReceipt": "sqlite-electron-abi-publication.json",
+      "originalUnchanged": true,
+      "adaptation": "Node orchestrates existing native compiler; upstream node-gyp invokes its own Python/gyp backend. No authored Python or shell script; this is a documented Node-only toolchain limitation."
+    },
+    "packagedAcceptanceInventory": {
+      "status": "read-only-existing-contract-inventory; not executed",
+      "currentBossExternalCurrentUar": "Existing runtime override can be used with a complete private payload in a packaged app; behavior remains unverified",
+      "bundledCurrentUar": "No supported dirty-current-source staging; existing local preparer and independent after-pack check bind the clean local pin; canonical packaging binds existing release source. Requires legitimate packaging contract/pin handover, not weakening validation."
+    }
   },
   "bossfang": {
     "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
@@ -86,7 +131,9 @@
         "uar-driver",
         "surreal-backend"
       ],
-      "profile": "one coordinated actual router/effect/auth/audit/config matrix; OIDC issuer and configured UAR preservation excluded"
+      "profile": "one coordinated actual router/effect/auth/audit/config matrix; OIDC issuer and configured UAR preservation excluded",
+      "status": "observed-pass",
+      "receipt": "final-gates/bossfang-mcp-runtime-07.json"
     },
     "flags": {
       "SKIP_DASHBOARD_BUILD": "1"
@@ -98,7 +145,11 @@
       "Python branding checker unavailable under Node-only rule; no port/install"
     ],
     "targetDir": "/tmp/librefang-target-bauar-delivery-001",
-    "observedBlocker": "Kernel integration compile API feature mismatch; correcting existing uar-driver forwarding without dependencies or warning suppression."
+    "observedBlocker": "HARNESS16 passes9 authored scenarios including exact original-run reconnect and two admission/capture crash cases, then actual native TaskPosted model invocation never observed within existing90s gate budget. Native compatibility/event fixture trace active; no full harness PASS.",
+    "terminalObservationCorrection": "harness-terminal-proof-correction-handoff/receipt.json",
+    "timeoutDiagnostic": "harness-rpc-operation-diagnostic/receipt.json",
+    "a2aSnapshotCorrection": "harness-a2a-available-observation-correction/receipt.json",
+    "latestCompile": "final-gates/bossfang-a2a-observation-compile-14.json"
   },
   "certification": {
     "D0": "blocked automatic approval review; no eligible receipt or permitted signed waiver supplied",
@@ -116,6 +167,17 @@
     "bossfang": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42",
     "evidence": "Actual cargo compiler-artifact filenames, observed 2026-10-06; directories distinct, existing machine build/cache configuration inherited"
   },
-  "updatedAt": "2026-10-06T18:27:35.611Z",
-  "observedRuntimeResults": "partial-runtime-results.json"
+  "updatedAt": "2026-10-06T20:06:23.521Z",
+  "observedRuntimeResults": "partial-runtime-results.json",
+  "formatting": {
+    "receipt": "final-gates/uar-format-check-01.json",
+    "status": "global-failed-unwaived; owned-scope-passed",
+    "emittedPathLabels": 135,
+    "uniquePathAttribution": "pending; duplicate includes/vendor paths present",
+    "uniqueFiles": 132,
+    "attribution": "uar-format-triage-01.json:51 untouched baseline,55 edited incumbents,23 new,2 vendor,1 excluded D0 metadata only",
+    "ownedScope": "32 new/helper files; max452lines",
+    "ownedCheck": "final-gates/uar-owned-format-check-02.json",
+    "pathFixCheck": "final-gates/uar-identity-module-format-03.json"
+  }
 }

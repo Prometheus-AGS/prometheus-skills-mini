@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "time": "2026-10-06T18:29:38.882Z",
+  "time": "2026-10-06T20:06:23.521Z",
   "kind": "Current source binding, not test result; immutable gate handoffs preserve executed input",
   "records": [
     {
       "name": "uar",
       "root": "/Users/gqadonis/.claude/worktrees/bauar-uar",
       "head": "8bff32deb870f6363e94687a2e22492f91a34dfd",
-      "diffSha256": "ea72f7fe447da8c6c75e3b48554d1032cdc60ee1c74d6d21523cdb64cf8ddd8d",
+      "diffSha256": "79a1b06d800f3a3e5f2f5b6700b632fff61ce9d9381103c6a90ea0815a4223cf",
       "files": [
         {
           "file": "docs/API_KEYS.md",
@@ -181,8 +181,8 @@
         },
         {
           "file": "src/uar/runtime/manager.rs",
-          "sha256": "e88ab0d01bdef1f15b9d658d50d55a738cdf09ad00d9e2dd1ef8c42ab1ec09a5",
-          "bytes": 330120
+          "sha256": "60f0a97292eeb2dca6b6acb9c734aacf763959dd19a99f081d77cd7da3da1a95",
+          "bytes": 330282
         },
         {
           "file": "src/uar/runtime/presentation_history_tests.rs",
@@ -201,8 +201,8 @@
         },
         {
           "file": "src/uar/runtime/thread/approval_tests.rs",
-          "sha256": "8f49f50d2e131c079ed87cc2be5561c85944b797fa4eb10758af254e299ddb60",
-          "bytes": 5118
+          "sha256": "c1c6daa2b020b5691e63b1718e2acc00fe0563344410c694c5b8f5263bd0f24a",
+          "bytes": 5893
         },
         {
           "file": "src/uar/runtime/thread/approvals.rs",
@@ -226,8 +226,8 @@
         },
         {
           "file": "src/uar/runtime/turn/host/event_projection.rs",
-          "sha256": "dfb94716a0d7b28d934095169ed2aef459ad92275ef8fcac30539df88b189f19",
-          "bytes": 8652
+          "sha256": "55fac6382dc363357545d2a20a88a8ddc49c50f484713b7695bfa329c1dc33b6",
+          "bytes": 9477
         },
         {
           "file": "src/uar/runtime/turn/host/mcp.rs",
@@ -236,8 +236,8 @@
         },
         {
           "file": "src/uar/runtime/turn/host/mcp_tests.rs",
-          "sha256": "f3f1cb962bf413ad3051746c2ae3f02573872a47ee549ea79d17e31ecd5dbc5b",
-          "bytes": 9800
+          "sha256": "29497c18cef197ea4ad13cde46599e8f69f0591c9ee42d2ba1d4f62599a40fe8",
+          "bytes": 12177
         },
         {
           "file": "src/uar/runtime/turn/host/mod.rs",
@@ -246,18 +246,18 @@
         },
         {
           "file": "src/uar/runtime/turn/host/receipt_projection.rs",
-          "sha256": "f7aaeb83128b60e776fd26a9160458dfa4cc8f92bc13e6f052a4c8c7277ecdfe",
-          "bytes": 1813
+          "sha256": "26eb43b226f28457cd8c38dabeaf8f387b2fc9d1ef779dceb33bab4c61b06350",
+          "bytes": 1930
         },
         {
           "file": "src/uar/runtime/turn/host/secret_projection.rs",
-          "sha256": "9ef53b7fa0ea0399549a38eb5c360b1f2eadc62363c170b055b2f5144c54770d",
-          "bytes": 5280
+          "sha256": "47558fea97a13c1c3f24e1c5591f3e00bd3f1bea3cb18b17a28d4a3e332b8e87",
+          "bytes": 5810
         },
         {
           "file": "src/uar/runtime/turn/host/secret_stream.rs",
-          "sha256": "f923b2f9cfe6e47dde123d999059186c487de0d92de2ef6dfde2af532ae69794",
-          "bytes": 5830
+          "sha256": "9c30e2a3eaeebf8dd76ecce508ab06a30465dcf5ec33da20b882f30636398340",
+          "bytes": 6797
         },
         {
           "file": "src/uar/runtime/turn/request.rs",
@@ -276,18 +276,38 @@
         },
         {
           "file": "src/uar/security/api_keys/policy.rs",
-          "sha256": "3eed84e7b80be7eab1942417ddf4c25324f48ea2c24b1450c93ed78aee6855a7",
-          "bytes": 5079
+          "sha256": "4d495e682a27e61ee7ea5ec40e6742eb18346c3a8bee8583f56cb35179241bd1",
+          "bytes": 5922
         },
         {
           "file": "src/uar/security/api_keys/tests.rs",
-          "sha256": "28aa212d1c54c69d82aa23ae9e88d505738de377b63655d8272dfa4f0f87d2aa",
-          "bytes": 18027
+          "sha256": "4866d91b0bc8617a075465a461d7674e27541a4e5d26e2caaad3dab908c2c041",
+          "bytes": 130
+        },
+        {
+          "file": "src/uar/security/api_keys/tests/authority.rs",
+          "sha256": "c6307a1c9d2f54720f00aafd5f09a3c65a522481434fb0736e0064f5ff866496",
+          "bytes": 4801
+        },
+        {
+          "file": "src/uar/security/api_keys/tests/lifecycle.rs",
+          "sha256": "789347219ae5879ea45bbf851b91b3a49ff639cbce277862b995eea055d5df7e",
+          "bytes": 4489
+        },
+        {
+          "file": "src/uar/security/api_keys/tests/management.rs",
+          "sha256": "cf5614c31b5df78821abb396d65166526bdd8d64784744627eed1a60e3b2faff",
+          "bytes": 9883
+        },
+        {
+          "file": "src/uar/security/api_keys/tests/support.rs",
+          "sha256": "96a71781aee002ae61bd79955f035c0fa717b377c397fad7c69381c1b5f42902",
+          "bytes": 3008
         },
         {
           "file": "src/uar/security/authority.rs",
-          "sha256": "36b2bc7802b473a9e3e3973685af599a236cd7d686aa97b94e99cdcaa377ab71",
-          "bytes": 7409
+          "sha256": "7e29a7ddd0ecac287c807e92101bcab24ca8c8974aab4b5595cbe38fd728e3cb",
+          "bytes": 8128
         },
         {
           "file": "src/uar/security/claims.rs",
@@ -326,13 +346,13 @@
         },
         {
           "file": "src/uar/security/verifier/test_support.rs",
-          "sha256": "f811e23cb963e2c5c9b4e75d903e442d76e0612441d578f8d6f37664c2f29f93",
-          "bytes": 8866
+          "sha256": "638dfd85bda4167ba7d0f1da7bf64843dc2a64f92ee57d107ff57ef716a59dd8",
+          "bytes": 9034
         },
         {
           "file": "src/uar/security/verifier/tests.rs",
-          "sha256": "a971ae596ed7296e3da666049653f96d5686f0299bea1cff8ae04d9cbac3a22c",
-          "bytes": 7878
+          "sha256": "f831bb94771dad7bfa596333b4f993e002c4c961b07c52031b9f4f35d88a5f29",
+          "bytes": 8594
         },
         {
           "file": "tests/a2a_thread_service.rs",
@@ -341,43 +361,53 @@
         },
         {
           "file": "tests/bauar_full_harness_cursor.rs",
-          "sha256": "bec3fa2c6df5ca0856bd48c99ead37c89b209be32f42b893f4968e6db40481d2",
-          "bytes": 11099
+          "sha256": "de354385c0f3ac88bf5fd095373d4c9186df09068310e95dacb69bc0535e6bc8",
+          "bytes": 13177
         },
         {
           "file": "tests/bauar_identity_boundary.rs",
-          "sha256": "73a953c16dbadc7964c8d4b7fb01f5b17f21f8f868b41cb9eb63fbcabf933e8e",
-          "bytes": 22241
+          "sha256": "4ed982bf76ffc80625622f89e77ce4db63cc78bed107a22913f3c47d66fd18f3",
+          "bytes": 2157
+        },
+        {
+          "file": "tests/bauar_identity_boundary/key_authority.rs",
+          "sha256": "38fc5f5a2521882bb410d13c340d26574e7beebdf3fe8e76bf55e6e6dc0644c4",
+          "bytes": 13004
+        },
+        {
+          "file": "tests/bauar_identity_boundary/local_admission.rs",
+          "sha256": "983166f349dffebaf9e0fc086e1862c3c59ffb216a8beb1c309820bd30534802",
+          "bytes": 2519
+        },
+        {
+          "file": "tests/bauar_identity_boundary/remote_jwks.rs",
+          "sha256": "fba40deae93b28254e4b5eb98c9d16834dfc73f12ca6ba052025e0863951c352",
+          "bytes": 9194
         },
         {
           "file": "tests/bauar_inline_revision.rs",
-          "sha256": "84b0188c6929af49ef6ab937f3fd9445474dafa5657a943ba969d00125b2c15e",
-          "bytes": 6744
+          "sha256": "eda0d2dbe2d0069551433af6abe79d067111dbe0d8f6e72b799299d548e09105",
+          "bytes": 7553
         },
         {
           "file": "tests/bauar_receipt_projection.rs",
-          "sha256": "7b12fdd9124b15c20b4cdfaf3a0b6b26ce8f944ea9695bac1e765dc921d076e2",
-          "bytes": 13712
+          "sha256": "cf33d7811338d43300c6d64b42af38186619386635dbf0e4423728962ca8a689",
+          "bytes": 16580
         },
         {
           "file": "tests/bauar_resource_grants.rs",
-          "sha256": "4c078449b1ed06e9c9ef047e56ee42de711026687b2d5f1f01824da9816cf863",
-          "bytes": 8377
+          "sha256": "dbbf3d35f9f0a299aa7dc364d379dff7aaa82a222c71c4ac35a00c40e2cd46ad",
+          "bytes": 9662
         },
         {
           "file": "tests/bauar_secret_projection.rs",
-          "sha256": "67d2087d0d62a2829a904d5cce991e9d17bc0132746ee1708538aad529ac480a",
-          "bytes": 17411
-        },
-        {
-          "file": "tests/bauar_session_owner.rs",
-          "sha256": "4ee6ebe48d7c0a58f761110218565f640ad6d30b91fc500cbf69203933918b8b",
-          "bytes": 16438
+          "sha256": "a4b3ec9761fddb35ccaa14946a8964bb6ce9512a3d30ad983a65d166bcf1ef86",
+          "bytes": 11986
         },
         {
           "file": "tests/bauar_stdio_boundary.rs",
-          "sha256": "9822c669fe75cbae05395ea3deda0be3ff77fa36b1868a32cfdd8ab73f63d92a",
-          "bytes": 10488
+          "sha256": "9e7edefe5f2f30ec84e0e073e2be29257c4b7a31964d2c85fa53e869a4332dc2",
+          "bytes": 12071
         },
         {
           "file": "tests/context_history_integrity.rs",
@@ -446,28 +476,38 @@
         },
         {
           "file": "tests/support/approval_events.rs",
-          "sha256": "d4d9ba500b77e107302f301e6d2530c2ecd8605da96430ac8effcfc81551ec37",
-          "bytes": 1801
+          "sha256": "6202284e853c5d9bf031695841b6399f6af56bd15a29ea6310d35da087179331",
+          "bytes": 2173
+        },
+        {
+          "file": "tests/support/bauar_identity_jwks.rs",
+          "sha256": "8097ce5d1c43947b776ce431a2ba985a09a4b33b1fd07e9db436163927c37937",
+          "bytes": 4354
         },
         {
           "file": "tests/support/bauar_identity_peer.rs",
-          "sha256": "d2da5d661177e8b0814362a6e0e30aab4630460898583b21b7f6633dfd6ac350",
-          "bytes": 19548
+          "sha256": "0bacaa617b09e65114792e2c2921514990ee71c48a0fe310727db04a1293b384",
+          "bytes": 18211
         },
         {
           "file": "tests/support/bauar_receipt_peer.rs",
-          "sha256": "5eefc1948af389845cbd683ac177257fe4d13b65048123397386468d694aed3f",
-          "bytes": 6808
+          "sha256": "6f299836e4c6ffcbf1fe7c8e0681df6f70f3b572fd775e215f428453c80a6232",
+          "bytes": 7751
         },
         {
           "file": "tests/support/bauar_resource_peer.rs",
-          "sha256": "86ad1c6dccdda3407aa59f6434bd3c435468fd3c3096e66e10fb191ac4f78c66",
-          "bytes": 9495
+          "sha256": "c5326d41d82ce9652286ca5f24b411cef62436226f717c0bd56e8ed50384a71b",
+          "bytes": 11339
+        },
+        {
+          "file": "tests/support/bauar_secret_harness.rs",
+          "sha256": "f4ba448932721a141e1ee06769fea9daec645a6932b87fa9bdd56bebf3eabf66",
+          "bytes": 8596
         },
         {
           "file": "tests/support/bauar_secret_provider.rs",
-          "sha256": "37251d28ce0b869eb519423229ab71d89d45f3a91c07405fa9dd987026687f71",
-          "bytes": 6656
+          "sha256": "525af8bdba51c8310f5756e30fa15f3cf059d8a066981435cf48eb82b27f24a6",
+          "bytes": 7610
         },
         {
           "file": "tests/support/principal_host.rs",
@@ -496,8 +536,10 @@
         }
       ],
       "diffExclusions": [
-        "workstreams"
-      ]
+        "workstreams",
+        "tests/bauar_session_owner.rs"
+      ],
+      "exclusionNote": "D0 diagnostic source not read or hashed in this refresh"
     },
     {
       "name": "boss",
@@ -607,14 +649,17 @@
         }
       ],
       "diffExclusions": [
-        "workstreams"
-      ]
+        "workstreams",
+        "tests/bauar_session_owner.rs",
+        "tests/e2e/gates/artifacts"
+      ],
+      "exclusionNote": "Generated Playwright screenshots/traces/results are runtime evidence, excluded from source inventory; no credential values copied."
     },
     {
       "name": "bossfang",
       "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
       "head": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
-      "diffSha256": "c05b101292229b8a47cbe9c55c717613033064fdf885f3477989e0e6fb88427c",
+      "diffSha256": "818e89ad32038e57aa4354bf87cc2d1cab1f59cb5a5c6afcad03647ed03111f2",
       "files": [
         {
           "file": "crates/librefang-api/Cargo.toml",
@@ -658,8 +703,8 @@
         },
         {
           "file": "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
-          "sha256": "152dc85d5db49ed1f7f99133392f5d816d92198845b2b337d6132ef3ca2189b1",
-          "bytes": 9379
+          "sha256": "8777351f2f1695e7b292298e7f8767194e9fcbadc636abbf81698e5e4b5b73f4",
+          "bytes": 9389
         },
         {
           "file": "crates/librefang-api/src/routes/uar/delegated_view.rs",
@@ -688,8 +733,8 @@
         },
         {
           "file": "crates/librefang-api/src/routes/uar_delegation/observation.rs",
-          "sha256": "c6822f7a585a7983fb7559e706f444fa641dcfd044812a25354069c4013d0956",
-          "bytes": 5028
+          "sha256": "a004240d7e7aa5d4088a47850f478289caa8e7ec6c610ad0c1d941a2a2ebb51c",
+          "bytes": 5744
         },
         {
           "file": "crates/librefang-api/src/routes/uar_delegation/storage.rs",
@@ -703,13 +748,13 @@
         },
         {
           "file": "crates/librefang-api/tests/bauar_harness_host.rs",
-          "sha256": "dfde68c59db6472705770e814f8db1aa1bbb8041a561f64fe53c0d865b3da50a",
-          "bytes": 7703
+          "sha256": "16cb6df5b9f9924d3fc6ac7046029145b87652681809f9e85ff5ffbe1f184d1d",
+          "bytes": 9315
         },
         {
           "file": "crates/librefang-api/tests/bauar_mcp_identity.rs",
-          "sha256": "5f597db1a0218e24f469979ec05b1d0deb88d2519ac0cfb3fd5eb40f743cb230",
-          "bytes": 20353
+          "sha256": "58cd94344f4809ace97654df422ce6821577377f2b84b388d7673583c871a73a",
+          "bytes": 26361
         },
         {
           "file": "crates/librefang-kernel/Cargo.toml",
@@ -778,8 +823,8 @@
         },
         {
           "file": "crates/librefang-kernel/src/kernel/uar_harness/observation.rs",
-          "sha256": "4c2cf72eae1c7ce14bca5c689618aaec98fe4e226208cd9642b33bdb9cc235ba",
-          "bytes": 3951
+          "sha256": "10673b4eac85f8c75a2f891bb30f9705cc0f57089c700b15f7f40906467854b5",
+          "bytes": 4900
         },
         {
           "file": "crates/librefang-kernel/src/kernel_api.rs",
@@ -788,8 +833,8 @@
         },
         {
           "file": "crates/librefang-kernel/tests/bauar_harness_delegation.rs",
-          "sha256": "ad7d2512d5e7abd7396740e035dc52f613ead9b24413c8eb70794f2028efdaa4",
-          "bytes": 7208
+          "sha256": "8ec42a438e3ebed28d6489016bfa6eeb1eede75bd041513bca2c539ad0058ec4",
+          "bytes": 7346
         },
         {
           "file": "crates/librefang-llm-drivers/src/drivers/uar_run/approval.rs",
@@ -808,8 +853,8 @@
         },
         {
           "file": "crates/librefang-llm-drivers/src/drivers/uar_run/observation.rs",
-          "sha256": "d83f62fcf1c27048341a934754d3436039b1014bd3e46a09713ba35bcc915c8f",
-          "bytes": 4854
+          "sha256": "c4f724cf1dbc7509343c687b88fbddbfa90b2fe0ac2a258d98fab22a512fe418",
+          "bytes": 6009
         },
         {
           "file": "crates/librefang-llm-drivers/src/drivers/uar_run/presentation.rs",
@@ -863,8 +908,8 @@
         },
         {
           "file": "crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
-          "sha256": "9c9fd34e90f146fc1228858dea31cfc39ff4f5971f53fd8f7aeee97f094fc372",
-          "bytes": 20951
+          "sha256": "ea7d8c41e4b902dfcd5c1f9c84b40671316709d6bbaf69d6cdebaa39dde651f6",
+          "bytes": 25066
         },
         {
           "file": "crates/librefang-runtime/src/a2a/uar_delegation_store_tests.rs",
@@ -893,28 +938,37 @@
         },
         {
           "file": "scripts/integration/bauar-harness-gate.mjs",
-          "sha256": "89ae2e8f1f366dca13e9e45184c342d31104309cb2ab1e3db0290f4fa4fad541",
-          "bytes": 24047
+          "sha256": "1ca2a5fcc96651d66169b0562ace4403788762e65994ce84ab5f7529c83edeae",
+          "bytes": 32025
         },
         {
           "file": "scripts/integration/bauar-harness-peer.mjs",
-          "sha256": "490c9721c00d22bebbee3091d7ba35c1b2fdffc407edb16815216dfd08f15c08",
-          "bytes": 8645
+          "sha256": "c0ce593aa5f4ff5be703468d65cb725f6558ddf234d2749bb1e14694dec939c7",
+          "bytes": 9542
         },
         {
           "file": "scripts/integration/bauar-harness-runtime.mjs",
-          "sha256": "f5f7915cbcb89e2ce66ecb5a17fd7d3e942b94b85700492d132306eb75521c16",
-          "bytes": 10745
+          "sha256": "058858423f1035ef9fa11d889cd9c5bd4943cb12b843701fe53e5985e3439053",
+          "bytes": 13704
         }
       ],
       "diffExclusions": [
-        "workstreams"
-      ]
+        "workstreams",
+        "tests/bauar_session_owner.rs"
+      ],
+      "exclusionNote": "D0 diagnostic source not read or hashed in this refresh"
     }
   ],
-  "priorBinding": "source-inventory-before-identity-localization.json",
+  "priorBinding": "source-inventory-before-format-and-workspace-corrections.json",
   "corrections": [
-    "identity-localization-correction-handoff/receipt.json",
-    "kernel-feature-correction-handoff/receipt.json"
+    "accepted-run-future-correction-handoff/receipt.json",
+    "owned-format-correction-handoff/receipt.json",
+    "identity-module-path-correction.json",
+    "mcp-workspace-fixture-correction.json",
+    "kernel-query-depth-correction.json",
+    "harness-terminal-proof-correction-handoff/receipt.json",
+    "harness-definitive-conflict-correction-handoff/receipt.json",
+    "harness-a2a-available-observation-correction/receipt.json",
+    "harness-rpc-operation-diagnostic/receipt.json"
   ]
 }

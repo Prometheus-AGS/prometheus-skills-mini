@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "label": "bossfang-a2a-observation-compile-14",
+  "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "command": "cargo",
+  "args": [
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "librefang-kernel",
+    "-p",
+    "librefang-api",
+    "--features",
+    "librefang-kernel/uar-driver,librefang-api/uar-driver",
+    "--test",
+    "bauar_harness_host",
+    "--test",
+    "bauar_harness_delegation",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "startedAt": "2026-10-06T19:58:55.295Z",
+  "finishedAt": "2026-10-06T20:01:08.712Z",
+  "exitCode": 0,
+  "signal": null,
+  "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-a2a-observation-compile-14.log",
+  "result": "command-completed-not-yet-case-certified",
+  "buildEnvironment": {
+    "SKIP_DASHBOARD_BUILD": "1"
+  }
+}

@@ -1,0 +1,23 @@
+{"boardReconciliationCheckpoint":{"streaming":false,"completedCaseCount":1,"retainedAfterA2a":{"executionState":"completed","effectState":"effect_unconfirmed","recoveryState":"available","appliedCursor":23,"attemptRevision":5,"attempt":1},"observedAtDrain":{"admissionState":"admitted","terminalPresent":true,"appliedCursor":23,"attemptRevision":5},"reconciliationCommandSucceeded":true,"boardCompleted":true}}
+{"boardReconciliationCheckpoint":{"streaming":true,"completedCaseCount":2,"retainedAfterA2a":{"executionState":"completed","effectState":"effect_unconfirmed","recoveryState":"reconciliation_required","appliedCursor":21,"attemptRevision":5,"attempt":1},"observedAtDrain":{"admissionState":"admitted","terminalPresent":true,"appliedCursor":21,"attemptRevision":5},"reconciliationCommandSucceeded":true,"boardCompleted":false}}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'in_progress'
+- 'completed'
+
+    at file:///Users/gqadonis/.claude/worktrees/bauar-bossfang/scripts/integration/bauar-harness-gate.mjs:255:12
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'in_progress',
+  expected: 'completed',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

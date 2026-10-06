@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-06T19:58:55.113Z",
+  "trigger": "HARNESS15 exact tasks/get POST timeout after six prior scenarios; live observer waits for execution despite no unread receipt events",
+  "scope": "Same validated observer, snapshot only A2A refresh_task, original receipt exact applied cursor and empty private carry, live events unchanged",
+  "limitations": "Partial-secret groups retain existing failclosed drain; not absolute time bound; no fabricated terminal/effect certainty/new loop or admission",
+  "files": [
+    {
+      "file": "crates/librefang-llm-drivers/src/drivers/uar_run/observation.rs",
+      "sha256": "c4f724cf1dbc7509343c687b88fbddbfa90b2fe0ac2a258d98fab22a512fe418",
+      "lines": 129,
+      "frozen": "crates_librefang-llm-drivers_src_drivers_uar_run_observation.rs.txt"
+    },
+    {
+      "file": "crates/librefang-kernel/src/kernel/uar_harness/observation.rs",
+      "sha256": "10673b4eac85f8c75a2f891bb30f9705cc0f57089c700b15f7f40906467854b5",
+      "lines": 98,
+      "frozen": "crates_librefang-kernel_src_kernel_uar_harness_observation.rs.txt"
+    },
+    {
+      "file": "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
+      "sha256": "8777351f2f1695e7b292298e7f8767194e9fcbadc636abbf81698e5e4b5b73f4",
+      "lines": 222,
+      "frozen": "crates_librefang-api_src_routes_uar_delegated_tasks.rs.txt"
+    }
+  ],
+  "verification": "source-frozen; compile/runtime pending"
+}

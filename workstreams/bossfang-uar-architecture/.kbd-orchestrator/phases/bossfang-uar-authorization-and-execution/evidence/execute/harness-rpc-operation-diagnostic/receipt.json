@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-06T19:54:54.936Z",
+  "trigger": "HARNESS14 a2a_rpc POST TimeoutError; get versus cancel not yet identified",
+  "scope": "Allowlisted RPC method and completed static authored scenario, no product/timing/retry/assertion change",
+  "files": [
+    {
+      "file": "scripts/integration/bauar-harness-gate.mjs",
+      "sha256": "1ca2a5fcc96651d66169b0562ace4403788762e65994ce84ab5f7529c83edeae",
+      "lines": 499,
+      "frozen": "scripts_integration_bauar-harness-gate.mjs.txt"
+    },
+    {
+      "file": "scripts/integration/bauar-harness-runtime.mjs",
+      "sha256": "058858423f1035ef9fa11d889cd9c5bd4943cb12b843701fe53e5985e3439053",
+      "lines": 236,
+      "frozen": "scripts_integration_bauar-harness-runtime.mjs.txt"
+    }
+  ]
+}

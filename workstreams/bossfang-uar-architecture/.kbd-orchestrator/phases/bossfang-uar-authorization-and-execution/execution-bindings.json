@@ -12,7 +12,8 @@
       "owner": "/root/uar_execution",
       "acceptedDesigns": [
         "uar-bauar-identity-boundaries",
-        "uar-bauar-execution-authorization"
+        "uar-bauar-execution-authorization",
+        "uar-bauar-runtime-defaults"
       ],
       "claims": "Exact paths in those child design.md files and enumerated UserContext constructor paths in evidence/execute/uar-prerequisites.md; conditional session correction remains gated by D0.",
       "taskMap": {
@@ -34,7 +35,14 @@
           "8": "uar-bauar-execution-authorization/6"
         }
       },
-      "additionalDefaultsClaim": "mcp.json after D0",
+      "additionalDefaultsClaim": {
+        "path": "mcp.json",
+        "owner": "/root",
+        "childChange": "uar-bauar-runtime-defaults",
+        "task": "1",
+        "parentTask": "bauar-04-resource-credential-lifecycle/7",
+        "scheduling": "Independent config-only exception in execute-scope-amendment.md; no D0 work"
+      },
       "identityInventory": "Only InMemoryApiKeyStorage, no database migration; typed HTTP/gRPC/body workspace paths enumerated.",
       "model": "gpt-6-astra/high"
     },
@@ -52,7 +60,9 @@
         "src/main/ai/runtime/uar/uarApprovalLifecycle.ts",
         "src/shared/types/prometheusIntegration.ts",
         "scripts/gates/bauar-approval-client.ts",
-        "scripts/gates/uar-exact-tool-admission.ts"
+        "scripts/gates/uar-exact-tool-admission.ts",
+        "tests/e2e/gates/uarExperienceGate.test.ts",
+        "tests/e2e/gates/bauarApprovalClientFixture.ts"
       ],
       "taskMap": {
         "bauar-02-execution-authorization": {

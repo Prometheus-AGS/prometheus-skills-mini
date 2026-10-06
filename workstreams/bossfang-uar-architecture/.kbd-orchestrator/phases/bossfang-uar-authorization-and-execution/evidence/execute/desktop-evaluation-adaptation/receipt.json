@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:45:07.588Z",
+  "observation": "Desktop12 TypeError dynamic import callback absent at evaluate. Projection03 capture_install failed before stream with unknown error; identical first awaitimport observed source",
+  "sources": [
+    {
+      "file": "tests/e2e/gates/bauarHostAdmissionDiagnostic.ts",
+      "sha256": "eda008eb910abdc4b554f3ecf3f687a9aaf568f5bbf24ce906d9a3412d395d6d",
+      "bytes": 8197
+    },
+    {
+      "file": "scripts/gates/bauar-secret-projection.ts",
+      "sha256": "924e28f9dd16f4eb8d4946fd45236bde4ea5398714cb4abe34d70936a7c1f0a2",
+      "bytes": 25317
+    },
+    {
+      "file": "scripts/gates/bauar-secret-projection-revision.ts",
+      "sha256": "31b13e9f1d0e555a95908a9609c45ffeed5bc84d818ee5aff3b46c0b9376dbc7",
+      "bytes": 11161
+    },
+    {
+      "file": "scripts/gates/bauar-secret-projection-mcp.ts",
+      "sha256": "3695b1e9e6c8c8579682d1a84a70008261c5ebb72bfc631b64734bf9c33ff125",
+      "bytes": 13479
+    },
+    {
+      "file": "scripts/gates/bauar-secret-projection-events.ts",
+      "sha256": "8ed59b1c52cc939616b3639fe51c68895b80b7a0be7af821e1d80b3a7c4094e1",
+      "bytes": 9839
+    }
+  ],
+  "correction": "Serialized evaluate callbacks use actualbuilt-in process.getBuiltinModule; OTel genuine sameCJSmodule via createRequire anchored originalresolvedURL; callback methods selfcontained removeactualTSXambient__name",
+  "sourceInspection": "PinnedTSX4.21.0 keepNames; actualrunnerreflects helpercount tozero. Moduleentryidentity/sourcehash perprojection-serialized-callbacks-handoff.json; no evaluate/launch proof",
+  "primaryGuidance": {
+    "libraryId": "/websites/nodejs_latest-v24_x_api",
+    "source": "https://nodejs.org/docs/latest-v24.x/api/process.html#processgetbuiltinmoduleid",
+    "retrieved": "Context7 resolve thenquery on2026-10-06",
+    "claims": "Synchronous globallyavailable retrievalofactualbuilt-inmodule; avoidsdynamicloader dependency, regardlessrequirecache"
+  },
+  "scope": "Ownedfixtures only; no productcode, fakeglobal/module, authority/effect orassertion change",
+  "verification": "changedchecks pending; runtimeunconfirmed"
+}

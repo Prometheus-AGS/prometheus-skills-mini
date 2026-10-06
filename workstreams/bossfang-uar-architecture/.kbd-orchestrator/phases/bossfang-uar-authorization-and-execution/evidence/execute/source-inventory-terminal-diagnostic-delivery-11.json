@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "time": "2026-10-06T22:49:47.871Z",
+  "time": "2026-10-06T22:36:36.490Z",
   "kind": "Current source binding, not test result; immutable gate handoffs preserve executed input",
   "records": [
     {
@@ -600,23 +600,23 @@
         },
         {
           "file": "scripts/gates/bauar-secret-projection-events.ts",
-          "sha256": "8ed59b1c52cc939616b3639fe51c68895b80b7a0be7af821e1d80b3a7c4094e1",
-          "bytes": 9839
+          "sha256": "97d43d87c94d4ac5b5d9e8584e8c62d026da9f6b6a236807ffea6886f31604db",
+          "bytes": 9780
         },
         {
           "file": "scripts/gates/bauar-secret-projection-mcp.ts",
-          "sha256": "3695b1e9e6c8c8579682d1a84a70008261c5ebb72bfc631b64734bf9c33ff125",
-          "bytes": 13479
+          "sha256": "5898b5581d6ee4dae52bbe4140cc13af57aedc7d82d9283625a0759891569bc8",
+          "bytes": 13284
         },
         {
           "file": "scripts/gates/bauar-secret-projection-revision.ts",
-          "sha256": "31b13e9f1d0e555a95908a9609c45ffeed5bc84d818ee5aff3b46c0b9376dbc7",
-          "bytes": 11161
+          "sha256": "fadfff693388d59169d07469091b0f36d1158e1d6c8cf558abfbd0dbf95c92ea",
+          "bytes": 11025
         },
         {
           "file": "scripts/gates/bauar-secret-projection.ts",
-          "sha256": "924e28f9dd16f4eb8d4946fd45236bde4ea5398714cb4abe34d70936a7c1f0a2",
-          "bytes": 25317
+          "sha256": "8c61d31f09df9bb249f60f6a576636429383bfe3c74aaa7c4ebc91a101cc97b0",
+          "bytes": 24925
         },
         {
           "file": "scripts/gates/uar-exact-tool-admission.ts",
@@ -727,8 +727,8 @@
         },
         {
           "file": "tests/e2e/gates/bauarHostAdmissionDiagnostic.ts",
-          "sha256": "eda008eb910abdc4b554f3ecf3f687a9aaf568f5bbf24ce906d9a3412d395d6d",
-          "bytes": 8197
+          "sha256": "fddf34968a06cf4fc3448eb6086617ef6aed014a28c3924fa2e762529d15267a",
+          "bytes": 8185
         }
       ],
       "diffExclusions": [
@@ -742,7 +742,7 @@
       "name": "bossfang",
       "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
       "head": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
-      "diffSha256": "351810f66eadc4f9802538272ab51f977fe9267a81d3cf21814a5784c79d0f8a",
+      "diffSha256": "12104a2af4528a9dfe6bb8bf90a60807d32076b65bfc7baec312373dd544b3bc",
       "files": [
         {
           "file": "crates/librefang-api/Cargo.toml",
@@ -906,8 +906,8 @@
         },
         {
           "file": "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
-          "sha256": "35c412f6be557983452e4e1af06f36bd10e594dcea7e9333575d29928ce33904",
-          "bytes": 4592
+          "sha256": "bb563b2a359bdc0bc90efc932d973578da5b838a8534d441ee5de0f30d4936fe",
+          "bytes": 4251
         },
         {
           "file": "crates/librefang-kernel/src/kernel/uar_harness/observation.rs",
@@ -931,8 +931,8 @@
         },
         {
           "file": "crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
-          "sha256": "6c77fd436d484986cc51e42ad8ff14e099abc493d363b49b4296066687ad5eb5",
-          "bytes": 14240
+          "sha256": "afa74efb0d304d14c6761712f77e5cd892a928c1777e9a4939987439b5b917d4",
+          "bytes": 14233
         },
         {
           "file": "crates/librefang-llm-drivers/src/drivers/uar_run/observation.rs",
@@ -951,8 +951,8 @@
         },
         {
           "file": "crates/librefang-llm-drivers/src/drivers/uar_run/retained.rs",
-          "sha256": "069ce86d115fc6b6e4ba03839711208443173668ab49587d1f6ea4ff55a5fe6a",
-          "bytes": 7859
+          "sha256": "69456722d5a3577d49ad4c7f8974adc1a237eb5e001c8de4c829f2e8d266d21d",
+          "bytes": 7867
         },
         {
           "file": "crates/librefang-llm-drivers/src/drivers/uar_run/selection.rs",
@@ -971,8 +971,8 @@
         },
         {
           "file": "crates/librefang-memory/src/substrate.rs",
-          "sha256": "bc51001773870b91881686c27f7a3880ac64011fdc60ddfee2cbc7d67a04bfd8",
-          "bytes": 148659
+          "sha256": "85d62519b26c78035109ebefa0ba57a93c83e991310a4e2aae68339859a5f354",
+          "bytes": 148695
         },
         {
           "file": "crates/librefang-memory/src/substrate/task_dispatch_tests.rs",
@@ -981,8 +981,8 @@
         },
         {
           "file": "crates/librefang-memory/src/substrate/task_dispatch.rs",
-          "sha256": "2e0af44e725bb805df5b3891dd98b9682f1f56d2fe866d3aa696360a4d9c25f4",
-          "bytes": 17847
+          "sha256": "816f64ff517ec66ae8124213286b7fd8ad3cb7ed1826ac271c44cfbb4adb1dfe",
+          "bytes": 17822
         },
         {
           "file": "crates/librefang-runtime/src/a2a.rs",
@@ -1058,11 +1058,6 @@
           "file": "crates/librefang-storage/src/channel_routes.rs",
           "sha256": "bb853ace2079e7cfd805143b718b271103aa3e502eec261cce25a4e0f8acc2ee",
           "bytes": 30766
-        },
-        {
-          "file": "crates/librefang-channels/src/bridge.rs",
-          "sha256": "ef41822f9cd0f7f026beedb10065ad94b973e112af4202e0bc7be462abc77895",
-          "bytes": 642110
         }
       ],
       "diffExclusions": [
@@ -1074,6 +1069,18 @@
   ],
   "priorBinding": "source-inventory-fixed-diagnostic-delivery-04.json",
   "corrections": [
-    "Observed required driver clippy05 corrections; immutable earlier runtime source proof retained, no relabeling"
+    "Completed metadata-only production+real scenario source handoff",
+    "Desktop returned-agent selection assertion",
+    "Wire-proven native continuation fixture + kernel documented test-stack floor",
+    "Observed E0277 manager String-return capture uses existing terminal error cleanup",
+    "Readiness07 fixed JSON/schema/truncation diagnostic counters only",
+    {
+      "time": "2026-10-06T22:02:29.586Z",
+      "description": "Frozen fixture-only exact approval counters/native physical markers; added actual Boss startup service and provider fixture hash context; complete diff hashes refreshed excluding D0/source session correction"
+    },
+    {
+      "time": "2026-10-06T22:18:57.245Z",
+      "description": "Complete Boss host protocol/revision/claim/caller source boundary; current fixed BF kernel stage fixture included; no D0 reads"
+    }
   ]
 }

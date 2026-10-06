@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:38:54.956Z",
+  "observed": "clippy03 exactly4errors",
+  "files": [
+    {
+      "file": "crates/librefang-memory/src/substrate/task_dispatch.rs",
+      "sha256": "2e0af44e725bb805df5b3891dd98b9682f1f56d2fe866d3aa696360a4d9c25f4",
+      "bytes": 17847
+    },
+    {
+      "file": "crates/librefang-memory/src/substrate.rs",
+      "sha256": "bc51001773870b91881686c27f7a3880ac64011fdc60ddfee2cbc7d67a04bfd8",
+      "bytes": 148659
+    },
+    {
+      "file": "crates/librefang-channels/src/bridge.rs",
+      "sha256": "ef41822f9cd0f7f026beedb10065ad94b973e112af4202e0bc7be462abc77895",
+      "bytes": 642110
+    }
+  ],
+  "correction": "Option<Box<Checkpoint>>; sameSQLbranch expression; privateBox<DurableDispatch> and2consumers; contains_key",
+  "attribution": "Harness/lateinit phase-authored;bridgebyte-identical acceptedbac04cbbefore correction perworker",
+  "impact": "Privatefields only, no publicsignatures; JSONnull/objectshape source-preserved. No authority/persistence-query/effect/retry changes; no newguards orlint suppression",
+  "sourceStatus": "released",
+  "verification": "failed-onlyclippy04pending; H28receipt retains original prelint source, not relabeledcurrent-source",
+  "sourceBinding": "source-inventory-required-lint-delivery-12.json",
+  "snapshots": [
+    {
+      "file": "crates__librefang-channels__src__bridge.rs.txt",
+      "kind": "source evidence snapshot; not product code"
+    },
+    {
+      "file": "crates__librefang-memory__src__substrate.rs.txt",
+      "kind": "source evidence snapshot; not product code"
+    },
+    {
+      "file": "crates__librefang-memory__src__substrate__task_dispatch.rs",
+      "kind": "source evidence snapshot; not product code"
+    }
+  ]
+}

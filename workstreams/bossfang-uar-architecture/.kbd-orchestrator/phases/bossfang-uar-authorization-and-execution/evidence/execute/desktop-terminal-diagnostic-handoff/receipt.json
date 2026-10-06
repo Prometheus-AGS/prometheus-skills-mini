@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:36:36.490Z",
+  "files": [
+    {
+      "file": "src/main/ai/runtime/uar/UarHostToolAdmission.ts",
+      "sha256": "af40c4b1112919b85a44871a2907dc1a8f99c69a6bb23805303072a5f5fb85ed",
+      "bytes": 18931
+    },
+    {
+      "file": "tests/e2e/gates/bauarHostAdmissionDiagnostic.ts",
+      "sha256": "fddf34968a06cf4fc3448eb6086617ef6aed014a28c3924fa2e762529d15267a",
+      "bytes": 8185
+    },
+    {
+      "file": "tests/e2e/gates/bauarApprovalClientFixture.ts",
+      "sha256": "3eca018f068e3f970aeca48876c16a36b0c3a85e4765771621bde731305a2081",
+      "bytes": 16054
+    },
+    {
+      "file": "scripts/gates/bauar-approval-client.ts",
+      "sha256": "3253f8c5f7cbade71559b5031a550e094c7235bb7611265d0ac37bd794492295",
+      "bytes": 1796
+    },
+    {
+      "file": "scripts/gates/bauar-secret-projection.ts",
+      "sha256": "8c61d31f09df9bb249f60f6a576636429383bfe3c74aaa7c4ebc91a101cc97b0",
+      "bytes": 24925
+    },
+    {
+      "file": "scripts/gates/bauar-secret-projection-revision.ts",
+      "sha256": "fadfff693388d59169d07469091b0f36d1158e1d6c8cf558abfbd0dbf95c92ea",
+      "bytes": 11025
+    }
+  ],
+  "productionChange": "Only authenticated exact-known admission terminal409 body adds fixed state/outcome enums; same status and all transition/authority/effect checks",
+  "privateDiagnostic": "Passive original current-run advertised endpoint observations; delegates original bytes/methods unchanged; buffers bounded and discarded; only fixed state/outcome/refusal/counts emitted",
+  "scenarioSelection": "BAUAR_APPROVAL_CASES=approve,deny,reconnect,edited,cancel,unavailable retains passed3withoutretest. Unset original9; invalidemptyduplicatesrefused.",
+  "projection": "Registration operation/status/revision-match diagnostic only; all assertions/timeouts intact",
+  "sourceStatus": "released",
+  "verification": "required changed node/e2e checks pending before actual app rebuild; no new primary PASS",
+  "excluded": [
+    "D0",
+    "debugger",
+    "class/source reload",
+    "raw bodies/IDs/tokens/errors",
+    "authority transition change",
+    "effect retry"
+  ]
+}

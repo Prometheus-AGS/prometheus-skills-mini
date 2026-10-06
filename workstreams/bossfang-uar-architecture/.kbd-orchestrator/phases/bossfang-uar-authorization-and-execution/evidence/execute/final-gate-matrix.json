@@ -100,6 +100,11 @@
       "namedCompileManifest": "uar-selection-compile-12-manifest.json",
       "runtimeAcceptance": "skill-selection-runtime-acceptance.json",
       "runtimeReceipt": "final-gates/uar-selection-runtime-01.json"
+    },
+    "postgresPreviewCheck": {
+      "status": "actual compiler PASS; runtime untested",
+      "receipt": "final-gates/uar-postgres-preview-profile-check-01.json",
+      "manifest": "uar-postgres-preview-profile-check-01-manifest.json"
     }
   },
   "boss": {
@@ -126,7 +131,8 @@
       "final-gates/boss-electron-current-build-02.json",
       "final-gates/boss-electron-current-build-03.json",
       "final-gates/boss-electron-current-build-04.json",
-      "final-gates/boss-electron-current-build-05.json"
+      "final-gates/boss-electron-current-build-05.json",
+      "final-gates/boss-electron-current-build-07.json"
     ],
     "typecheckReceipts": [
       "final-gates/boss-typecheck-node-02.json",
@@ -136,9 +142,13 @@
       "final-gates/boss-typecheck-node-03.json",
       "final-gates/boss-typecheck-node-04.json",
       "final-gates/boss-typecheck-e2e-02.json",
-      "final-gates/boss-typecheck-node-05.json"
+      "final-gates/boss-typecheck-node-05.json",
+      "final-gates/boss-typecheck-e2e-03.json",
+      "final-gates/boss-typecheck-e2e-04.json",
+      "final-gates/boss-typecheck-node-08.json",
+      "final-gates/boss-typecheck-e2e-07.json"
     ],
-    "runtimeStatus": "Desktop08 passed startup and exact post-selection assertion; failed before malformed-approval capture assertions with fixed provider no-effect refusal. Cause unestablished; bounded fixture counters active, no approval PASS.",
+    "runtimeStatus": "13 FAILED: successful approval+revalidation then actual MCP binding rejection/no effect",
     "nativeSqlite": {
       "status": "observed-isolated-abi149-build-and-publication",
       "buildReceipt": "final-gates/boss-sqlite-electron-abi-build-01.json",
@@ -163,7 +173,16 @@
     },
     "startupDiagnostic": "desktop-startup-milestone-diagnostic/receipt.json",
     "skillStageDiagnostic": "desktop-skill-update-stage-diagnostic/receipt.json",
-    "startupClassificationDiagnostic": "desktop-startup-json-classification/receipt.json"
+    "startupClassificationDiagnostic": "desktop-startup-json-classification/receipt.json",
+    "hostProtocolCorrection": {
+      "receipt": "host-admission-protocol-correction-handoff/receipt.json",
+      "sourceStatus": "complete",
+      "build": "final-gates/boss-electron-current-build-06.json",
+      "node": "final-gates/boss-typecheck-node-06.json",
+      "e2e": "final-gates/boss-typecheck-e2e-05.json",
+      "runtime": "desktop11 active; 3 observed cases; full acceptance pending"
+    },
+    "projectionStatus": "04 FAILED: catalog/write/run success; stream failed before inspection; false unperformed revision flag not mismatch proof"
   },
   "bossfang": {
     "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
@@ -189,7 +208,7 @@
       "Python branding checker unavailable under Node-only rule; no port/install"
     ],
     "targetDir": "/tmp/librefang-target-bauar-delivery-001",
-    "observedBlocker": "HARNESS24 failed-only retry active, exact continuation correlation and documented fixture stack floors preserved; no full harness PASS",
+    "observedBlocker": "HARNESS26 passed12 named Node cases then classified Rust panic exit101 in separate kernel contract. Exact assertion unknown; fixed private stage diagnostic source active, no full PASS",
     "terminalObservationCorrection": "harness-terminal-proof-correction-handoff/receipt.json",
     "timeoutDiagnostic": "harness-rpc-operation-diagnostic/receipt.json",
     "a2aSnapshotCorrection": "harness-a2a-available-observation-correction/receipt.json",
@@ -205,8 +224,24 @@
     "nativeContinuationDiagnostic": "harness-native-continuation-diagnostic/receipt.json",
     "selectedCliStatus": "Selected CLI build command PASS; owned-library clippy failed on unchanged storage dependency baseline, no waiver",
     "selectedCliManifest": "bossfang-selected-cli-build-01-manifest.json",
-    "activeClippy": "final-gates/bossfang-owned-libraries-clippy-01.json",
-    "clippyBaselineAttribution": "bossfang-clippy-baseline-attribution-01.json"
+    "activeClippy": "06 active, explicitly api+kernel uar-driver features",
+    "clippyBaselineAttribution": "bossfang-clippy-baseline-attribution-01.json",
+    "auxiliaryModelCorrection": "harness-memory-auxiliary-correction/receipt.json",
+    "kernelStageDiagnostic": {
+      "receipt": "harness-kernel-stage-diagnostic/receipt.json",
+      "compile": "bossfang-kernel-stage-compile-15-manifest.json",
+      "observed": "H27 failed legacy_call after 3 kernel cases; 12 Node cases reached",
+      "correction": "bossfang-legacy-fixture-correction/receipt.json",
+      "compile16": "active",
+      "fullAcceptance": "pending"
+    },
+    "harnessAcceptance": {
+      "status": "observed-pass",
+      "primaryCases": 18,
+      "receipt": "final-gates/bossfang-harness-runtime-28.json",
+      "acceptance": "bossfang-harness-runtime-28-acceptance.json",
+      "sourceBinding": "source-inventory-projection-and-legacy-delivery-08.json"
+    }
   },
   "certification": {
     "D0": "blocked automatic approval review; no eligible receipt or permitted signed waiver supplied",
@@ -226,7 +261,7 @@
     "bossfang": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42",
     "evidence": "Actual cargo compiler-artifact filenames, observed 2026-10-06; directories distinct, existing machine build/cache configuration inherited"
   },
-  "updatedAt": "2026-10-06T21:58:02.190Z",
+  "updatedAt": "2026-10-06T22:51:06.950Z",
   "observedRuntimeResults": "partial-runtime-results.json",
   "formatting": {
     "receipt": "final-gates/uar-format-check-01.json",

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:13:16.620Z",
+  "kind": "source-complete fixed private kernel stage diagnostic",
+  "observedFailure": "final-gates/bossfang-harness-runtime-26.json",
+  "productionChanged": false,
+  "files": [
+    {
+      "file": "crates/librefang-kernel/tests/bauar_harness_delegation.rs",
+      "sha256": "92f5b27312d693197719301d38a27d46e88d0b739ceb8e5aabcf0b721a53a0ed",
+      "bytes": 9331,
+      "lines": 165
+    },
+    {
+      "file": "scripts/integration/bauar-harness-kernel-stage.mjs",
+      "sha256": "94f1c848d75bc2eaa880502ec03cb6b3abb2c1d0a73b2a00ada38ee186c30e38",
+      "bytes": 2432,
+      "lines": 64
+    },
+    {
+      "file": "scripts/integration/bauar-harness-gate.mjs",
+      "sha256": "32db682d3fdfec4daf6c36b65276522066fe33e3e35c342782218c796e2ae047",
+      "bytes": 30880,
+      "lines": 484
+    }
+  ],
+  "preserved": "All original requests/assertions/actual receipt semantics unchanged; no raw process output or error content; gate remains below500lines",
+  "execution": "pending named kernel fixture compile15"
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:18:57.245Z",
+  "kind": "complete production and owned-caller protocol correction source boundary",
+  "observedFailure": "final-gates/boss-approval-client-runtime-10.json",
+  "scopeAcceptance": "host-admission-protocol-correction-scope.json",
+  "files": [
+    {
+      "file": "src/main/ai/runtime/uar/UarHostToolAdmission.ts",
+      "sha256": "d3b9c223860f2c19e71388a30390d300691957b680c4d018731560d290dc6be6",
+      "bytes": 18927,
+      "lines": 497
+    },
+    {
+      "file": "src/main/ai/runtime/uar/uarHostClaimRevalidation.ts",
+      "sha256": "1eb8c3c3ed50dcd362a0fff7e2571d6f0a8418f43bc526a44be0002e7ab7d92f",
+      "bytes": 2546,
+      "lines": 49
+    },
+    {
+      "file": "scripts/gates/uar-exact-tool-admission.ts",
+      "sha256": "eba2c5bc4bdda9fef443349ce553a0b73d474a77964b140c49cea2cb10d51c58",
+      "bytes": 16908,
+      "lines": 364
+    },
+    {
+      "file": "scripts/gates/bauar-secret-projection-mcp.ts",
+      "sha256": "5898b5581d6ee4dae52bbe4140cc13af57aedc7d82d9283625a0759891569bc8",
+      "bytes": 13284,
+      "lines": 249
+    }
+  ],
+  "securityBoundary": "Actual paired-host prepared invocation and one-use approved MCP dispatch; original revision plus live forwarded lease/budget facts enforced",
+  "compatibility": "Strict owned-caller cutover; historical snapshots are non-executable presentation evidence",
+  "claimSemantics": "Exact preserved invocation/receipt/live host policy/facts; non-consuming unchanged receipt, real tools/call remains consuming claim before effect",
+  "consumer": "UAR strict comparisons unchanged",
+  "execution": "pending current Boss build06 and affected checks; no runtime PASS"
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:33:13.002Z",
+  "receipt": "final-gates/bossfang-harness-runtime-28.json",
+  "acceptance": "bossfang-harness-runtime-28-acceptance.json",
+  "sourceBinding": "source-inventory-projection-and-legacy-delivery-08.json",
+  "artifacts": [
+    {
+      "name": "host",
+      "path": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+      "sha256": "ba08a405b362ae39e46bdf1acc3b6dfe91ecd8c543f90a16b70e2cdeb495732b"
+    },
+    {
+      "name": "kernel",
+      "path": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-9029d9b338b86a1a",
+      "sha256": "4593abf4ac2c5c43d2f8654b0c50897fbf0fa08d3ff991244b91067988ab6368"
+    },
+    {
+      "name": "uar",
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+      "sha256": "a269e4078685400f9d10dba33a010945939afac668f367e5856da1a1ca27a454"
+    }
+  ],
+  "limitation": "Checksums freshly observed after H28 before any artifact rebuild; actual compiler manifests retain exact original builds"
+}

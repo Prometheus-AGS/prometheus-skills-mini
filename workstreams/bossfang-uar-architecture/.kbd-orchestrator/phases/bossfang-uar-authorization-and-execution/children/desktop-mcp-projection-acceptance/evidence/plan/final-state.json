@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-07T10:56:49.849Z",
+  "canonicalRevision": 207,
+  "phaseId": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+  "stage": {
+    "id": "plan",
+    "title": "Plan native admission and desktop discovery acceptance",
+    "sequence": 4,
+    "status": "complete"
+  },
+  "changeIds": [
+    "bauar-05-native-discovery-admission"
+  ],
+  "pendingTasks": 10,
+  "projectId": "7041aa63-d951-4b19-a59c-b963d65b3b83",
+  "runId": "project-20261006T094115Z",
+  "parentCompletion": {
+    "implementation": {
+      "completed": 0,
+      "total": 5,
+      "status": "blocked",
+      "summary": null,
+      "blockers": []
+    },
+    "evidence": {
+      "completed": 0,
+      "total": 0,
+      "status": "pending",
+      "summary": null,
+      "blockers": []
+    },
+    "certification": {
+      "completed": 0,
+      "total": 0,
+      "status": "blocked",
+      "summary": "Required selected BF owned-libraries clippy07 passed. Desktop corrected runtime, excluded D0 session-owner evidence, unwaived global UAR formatting, current-source packaging and cumulative independent review remain incomplete. Execute stays active.",
+      "blockers": []
+    },
+    "publication": {
+      "completed": 0,
+      "total": 0,
+      "status": "pending",
+      "summary": null,
+      "blockers": []
+    }
+  },
+  "pendingApprovalFor": "execute",
+  "productChanged": false
+}

@@ -1,0 +1,45 @@
+{
+  "artifactVersion": 1,
+  "at": "2026-10-07T10:47:45.556Z",
+  "status": "PASS",
+  "backendTaskCount": 10,
+  "assignmentRowCount": 10,
+  "identityReconciled": true,
+  "dependencyGraphAcyclic": true,
+  "productInventory": [
+    {
+      "name": "uar",
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "head": "8bff32deb870f6363e94687a2e22492f91a34dfd",
+      "headMatches": true,
+      "checkedFiles": 114,
+      "changedFiles": []
+    },
+    {
+      "name": "boss",
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "head": "e2ae2ce21245030293c0bea96ed02ae853b820a7",
+      "headMatches": true,
+      "checkedFiles": 32,
+      "changedFiles": []
+    },
+    {
+      "name": "bossfang",
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "head": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+      "headMatches": true,
+      "checkedFiles": 70,
+      "changedFiles": []
+    }
+  ],
+  "existingOwnedPathsVerified": 23,
+  "proposedNewPaths": [
+    "/Users/gqadonis/.claude/worktrees/bauar-boss/src/main/ai/runtime/uar/toolAdmission/wire.ts",
+    "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates/bauar-native-admission-controls.ts"
+  ],
+  "productTestsRun": false,
+  "buildsRun": false,
+  "FC_UAR_PERSISTENCE": "unresolved; acceptance blocked",
+  "planSha256": "802d6545b80c3a1b7cfd9e2fc24ca1236f3d2cb75f3532e0bb9d8332e35913d4",
+  "manifestSha256": "872677fabc0a05a93c0263c1c6be803548fa0cfb5d00adb7f537b7a6c1e07caf"
+}

@@ -1,0 +1,41 @@
+{
+  "artifactVersion": 1,
+  "at": "2026-10-07T10:58:11.612Z",
+  "status": "PASS",
+  "backendTaskCount": 10,
+  "assignmentRowCount": 10,
+  "identityReconciled": true,
+  "dependencyGraphAcyclic": true,
+  "productInventory": [
+    {
+      "name": "uar",
+      "checked": 114,
+      "changed": []
+    },
+    {
+      "name": "boss",
+      "checked": 32,
+      "changed": []
+    },
+    {
+      "name": "bossfang",
+      "checked": 70,
+      "changed": []
+    }
+  ],
+  "existingOwnedPathsVerified": 23,
+  "proposedNewPaths": [
+    "/Users/gqadonis/.claude/worktrees/bauar-boss/src/main/ai/runtime/uar/toolAdmission/wire.ts",
+    "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates/bauar-native-admission-controls.ts"
+  ],
+  "productTestsRun": false,
+  "buildsRun": false,
+  "FC_UAR_PERSISTENCE": "unresolved; acceptance blocked",
+  "planSha256": "a68ad679fcda6badad4387092319d97e4f471eb9acbbcfb10ce9a0d3f8666dce",
+  "manifestSha256": "5c64ad0fb3caadfa598720f0846dbd7e1f1929906d4900fb06ba42bd7c174820",
+  "finalRegistrationRevision": 207,
+  "canonicalPendingTaskCount": 10,
+  "openspecValidation": "PASS after non-task reference emission; official managed CLI1.14.1 selected cache",
+  "openspecValidationReceipt": "/Users/gqadonis/.prometheus/openspec/receipts/ef38d0ae220bea1773edced2/1791370507597-d458fca2-8d77-4011-9b83-aa68cec6922e.json",
+  "FC_POSTACK_CANCEL": "unresolved; acceptance blocked"
+}

@@ -1,0 +1,83 @@
+{
+  "at": "2026-10-07T10:46:59.495Z",
+  "revision": 7,
+  "teamId": "boss-core",
+  "tasks": [
+    {
+      "id": "execution-prerequisites",
+      "title": "Resolve isolated repository child ownership and source prerequisites",
+      "owner": "boss-runtime",
+      "harness": "codex",
+      "status": "complete",
+      "revision": 2,
+      "dependsOn": [],
+      "evidence": [
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/execution-bindings.json",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/boss-prerequisites.md"
+      ],
+      "remaining": [],
+      "kbd": {
+        "projectId": "7041aa63-d951-4b19-a59c-b963d65b3b83",
+        "runId": "project-20261006T094115Z",
+        "phaseId": "bossfang-uar-authorization-and-execution",
+        "changeId": "bauar-02-execution-authorization",
+        "taskId": "1"
+      },
+      "modelPolicy": {
+        "model": "gpt-6-astra"
+      }
+    },
+    {
+      "id": "exact-approval-client",
+      "title": "Implement exact originating approval identity in owned Boss client",
+      "owner": "boss-runtime",
+      "harness": "codex",
+      "status": "running",
+      "revision": 1,
+      "dependsOn": [
+        "execution-prerequisites"
+      ],
+      "evidence": [],
+      "remaining": [
+        "Controller, lifecycle projection and authored scenarios; acceptance after complete production"
+      ],
+      "kbd": {
+        "projectId": "7041aa63-d951-4b19-a59c-b963d65b3b83",
+        "runId": "project-20261006T094115Z",
+        "phaseId": "bossfang-uar-authorization-and-execution",
+        "changeId": "bauar-02-execution-authorization",
+        "taskId": "3"
+      },
+      "modelPolicy": {
+        "model": "gpt-6-astra"
+      }
+    },
+    {
+      "id": "run-secret-projection",
+      "title": "Implement finite run-owned secret projection under accepted exact source claims",
+      "owner": "boss-runtime",
+      "harness": "codex",
+      "status": "running",
+      "revision": 1,
+      "dependsOn": [
+        "execution-prerequisites"
+      ],
+      "evidence": [
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/execution-bindings.json"
+      ],
+      "remaining": [
+        "Author child1 context then serial child2 transport and child3 event wiring; V1/V2 remain deferred"
+      ],
+      "kbd": {
+        "projectId": "7041aa63-d951-4b19-a59c-b963d65b3b83",
+        "runId": "project-20261006T094115Z",
+        "phaseId": "bossfang-uar-authorization-and-execution",
+        "changeId": "bauar-04-resource-credential-lifecycle",
+        "taskId": "4"
+      },
+      "modelPolicy": {
+        "model": "gpt-6-astra"
+      }
+    }
+  ]
+}

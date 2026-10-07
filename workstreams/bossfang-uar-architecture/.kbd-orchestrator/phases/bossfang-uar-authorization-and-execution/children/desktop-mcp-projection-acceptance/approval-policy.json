@@ -8,9 +8,10 @@
   "authorizedStages": [
     "assess",
     "analyze",
-    "spec"
+    "spec",
+    "plan"
   ],
-  "pendingApprovalFor": "plan",
+  "pendingApprovalFor": "execute",
   "inheritedExecuteScope": "Parent production fixes already authorized; new child handovers retain stage stops.",
   "restrictions": [
     "Do not retry or route around D0 diagnostic",
@@ -29,8 +30,13 @@
       "stage": "spec",
       "at": "2026-10-07T07:44:50.661Z",
       "source": "Operator Approved in reply to explicit Spec handover including proposed scope amendment."
+    },
+    {
+      "stage": "plan",
+      "at": "2026-10-07T10:35:37.770Z",
+      "source": "Operator Approved in reply to explicit Plan handover request."
     }
   ],
-  "stageCompleted": "spec",
+  "stageCompleted": "plan",
   "productChangesAuthorized": false
 }

@@ -26,3 +26,7 @@ These are proposed backend task IDs for Plan registration, all unfinished. Spec 
 - Plan must assign exact writers/files, canonical child tasks, build prerequisites and approval handover before Execute; none are marked complete by Spec artifacts.
 - Stop at Execute completion for human handover to Reflect. Reflection and any child exit or parent reconciliation require their prescribed approvals.
 - Archive only after all implementation tasks and human lifecycle gates are actually satisfied; no parent release certification or publication is authorized by this change.
+
+## Task model assignment reference
+
+The sole current assignment table is [/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/plan.md](/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/plan.md#task-model-assignments). Matching keys are full phase path bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance, change bauar-05-native-discovery-admission, backend IDs1–10 (displayed1.1,1.2,1.3,1.4,2.1,2.2,3.1,3.2,3.3,3.4). The verified backend resolver prints numeric IDs; titles and checkboxes are unchanged. Commands and prerequisites are declarations in execution-manifest.json, not execution receipts.

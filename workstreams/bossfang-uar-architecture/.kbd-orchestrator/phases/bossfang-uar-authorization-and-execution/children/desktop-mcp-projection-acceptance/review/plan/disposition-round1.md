@@ -1,0 +1,3 @@
+# Round1 disposition
+
+Fresh native artifact review PASS,0 CRITICAL/2 WARNING; findings schema Draft-07 passed Ajv8.17.1 and findings screen passed score0.0803571417927742. Corrected the missing Rust caller compilation declaration with a compile-only --no-run command. Added the post-acknowledgment/pre-dispatch cancellation case as its own unresolved real-control prerequisite; held acknowledgment is explicitly not equivalent coverage. These acceptance limitations carry into Execute. REST review produced no usable normalized findings; native fork_turns=none/file-backed packet fallback is weaker than the exact inline-packet contract. Exact producer identity remains unknown, so cross-model check is unverified. This stage review does not certify runtime behavior.

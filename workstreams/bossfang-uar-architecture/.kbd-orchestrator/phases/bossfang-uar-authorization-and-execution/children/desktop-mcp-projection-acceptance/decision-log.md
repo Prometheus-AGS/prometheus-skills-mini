@@ -13,3 +13,7 @@ Evidence: analysis.md; library-candidates.json; static source contracts and inve
 Open decisions for Spec/Plan: authoritative native discriminator and claim transition; strict one-time claim/terminal/cancel semantics; deferred total versus target-specific preparation/approval counts; required changed desktop payload build and locked dependency restoration in isolated Boss.
 
 No product edits, tests, builds, dependency installation, pin/service changes, release or parent completion.
+
+## 2026-10-07 — Spec contract after approved amendment
+
+Operator approved Spec including native claim/terminal scope. OpenSpec bauar-05-native-discovery-admission selects strict v2, required runtime_native/host_mcp source-derived authority, separate consuming native claim, receiver-consuming MCP claim and claimed-only finish. Lost acknowledgment, restart and terminal failure remain unknown requiring reconciliation without replay. Eager/deferred actual desktop acceptance uses distinct discovery/target counters and exact approvals. Proposed stable task IDs 1.1–3.4 are unfinished and await Plan registration. No product changes or runtime verification in Spec. Parent release/gates and excluded D0 remain untouched.

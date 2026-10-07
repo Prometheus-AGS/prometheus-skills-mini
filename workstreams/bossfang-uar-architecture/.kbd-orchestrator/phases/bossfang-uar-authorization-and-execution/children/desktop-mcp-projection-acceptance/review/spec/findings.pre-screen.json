@@ -1,0 +1,25 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "harness-native-model-unresolved",
+  "producer_model": "unknown",
+  "isolation_mode": "harness-native",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "tasks.md",
+      "claim": "Task ordering places acceptance-caller edits after their compilation and source-manifest checkpoint, leaving verification of the final caller sources unspecified.",
+      "evidence": "Task 3.1 requires \"compile affected callers\" and delivery of \"source/artifact manifests\". Task 3.2 subsequently requires \"author or finish executable real-path acceptance scenarios A1–A6 in their owned gate surfaces\". verification.md A6 requires \"HEAD + dirty source inventory hashes + successful compiler/build receipts\" for the completed candidate. No subsequent task explicitly refreshes the inventory or compiles callers changed during 3.2.",
+      "suggested_fix": "After groups 1 and 2 complete, finish acceptance scenario authoring before task 3.1 compilation and manifest capture; reserve task 3.2 for executing the finished scenarios. Keep all authoring and verification after complete production as required."
+    }
+  ],
+  "checked_classes": [
+    "Execution-kind substitution: the spec binds source-derived kind to invocation, digest, receipt and persisted host record, and requires cross-kind refusal before dispatch.",
+    "Duplicate consumption and terminal bypass: consuming native claims are separated from nonconsuming MCP revalidation, repeated claims cannot provide another dispatch acknowledgment, and finish remains claimed-only.",
+    "Uncertain completion and restart replay: lost acknowledgments, cancellation, terminal persistence failures and old persisted authority explicitly prohibit automatic replay.",
+    "Discovery approval inheritance: discovery and target require separate admissions and exact approvals, with source-specific positive counts.",
+    "Scope and certification inflation: product edits remain unauthorized at Spec, D0 paths are explicitly excluded, and child evidence cannot close parent or remote deployment gates.",
+    "Historical causation: runtime12's exact branch remains explicitly unknown; static findings are not represented as reproduced runtime evidence."
+  ]
+}

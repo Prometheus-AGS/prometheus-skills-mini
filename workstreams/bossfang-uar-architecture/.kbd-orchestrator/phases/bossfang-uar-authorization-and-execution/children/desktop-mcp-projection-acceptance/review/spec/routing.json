@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-07T08:05:21.593Z",
+  "preferredCritic": "MiniMax-M3",
+  "preferredCriticOutcome": "request-unavailable-after-300000ms",
+  "backupConfigured": false,
+  "fallback": "fresh-context-team-artifact-review",
+  "fallbackAgent": "spec_artifact_review",
+  "fallbackModelOverride": false,
+  "crossModelGuarantee": false,
+  "packetDelivery": "file-backed frozen artifact packet",
+  "adaptation": "Preferred REST request did not produce usable review. Native reviewer receives a compact mandate and file-backed packet pointer rather than inlined mandate+packet; this is disclosed weaker assurance, not exact REST isolation certification.",
+  "productReview": false,
+  "productChanges": false
+}

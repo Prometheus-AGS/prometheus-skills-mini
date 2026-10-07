@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-07T08:01:13.938Z",
+  "mode": "read-only-static-spec-contract",
+  "agents": [
+    "uar_execution",
+    "boss_execution"
+  ],
+  "productChanges": false,
+  "tests": false,
+  "builds": false,
+  "contract": {
+    "version": 2,
+    "executionKinds": [
+      "runtime_native",
+      "host_mcp"
+    ],
+    "consumingNativePath": "/uar/admission/v2/claim-native",
+    "mcpClaimNonconsuming": true,
+    "finishClaimedOnly": true,
+    "matchingOwnedCallersRequired": true
+  },
+  "acceptance": {
+    "eagerTargetPreparations": 1,
+    "deferredTotalPreparations": 2,
+    "deferredExactApprovals": 2,
+    "targetEffects": 1
+  },
+  "sourceEvidence": "../analyze/team-source-contract.json",
+  "limitations": [
+    "Source tracing is not runtime reproduction",
+    "All implementation and runtime gates pending"
+  ]
+}

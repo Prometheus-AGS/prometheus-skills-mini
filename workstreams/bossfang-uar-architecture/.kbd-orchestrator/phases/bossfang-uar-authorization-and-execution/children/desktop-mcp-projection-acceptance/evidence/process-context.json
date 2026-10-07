@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-07T00:33:32.741Z",
+  "sourceRevision": 189,
+  "parentStage": "in_progress",
+  "parentChanges": [
+    {
+      "id": "bauar-01-identity-boundaries",
+      "status": "in_progress",
+      "completedTasks": 6,
+      "totalTasks": 7
+    },
+    {
+      "id": "bauar-02-execution-authorization",
+      "status": "blocked",
+      "completedTasks": 2,
+      "totalTasks": 8
+    },
+    {
+      "id": "bauar-03-harness-delegation",
+      "status": "in_progress",
+      "completedTasks": 8,
+      "totalTasks": 9
+    },
+    {
+      "id": "bauar-04-resource-credential-lifecycle",
+      "status": "in_progress",
+      "completedTasks": 8,
+      "totalTasks": 10
+    }
+  ],
+  "openSpecRefresh": {
+    "schemaVersion": 1,
+    "time": "2026-10-07T00:23:45.527Z",
+    "operation": "refresh",
+    "project": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+    "status": "refreshed",
+    "version": "1.14.1",
+    "latestVerified": true,
+    "policy": "registry-latest",
+    "backup": "/Users/gqadonis/.prometheus/openspec/backups/1791332625249-0aa2685e-c503-482c-9cdc-d20fc2302b56",
+    "output": "Force updating 2 tool(s): codex, minimax-code\n\n- Updating Codex...\n✔ Updated Codex\n- Updating MiniMax Code...\n✔ Updated MiniMax Code\n\n✓ Updated: Codex, MiniMax Code (v1.14.1)\nCommands skipped for: codex (uses skills)\nTools: Codex, MiniMax Code\n\n",
+    "authoredPathsChanged": [],
+    "compatibility": "Generated integration artifacts refreshed; authored specification semantics not migrated or validated"
+  },
+  "modelPreflight": {
+    "status": "ok",
+    "gateway": "http://localhost:4000/v1",
+    "roles": {
+      "judge": {
+        "alias": "gpt-6.1-sol",
+        "identity": {
+          "providerId": "openai",
+          "providerConnectionId": "openai-proxy-8181",
+          "modelId": "gpt-6.1-sol"
+        },
+        "source": "models.toml"
+      },
+      "critic": {
+        "alias": "MiniMax-M3",
+        "identity": {
+          "providerId": "minimax",
+          "providerConnectionId": "minimax-direct",
+          "modelId": "MiniMax-M3"
+        },
+        "source": "models.toml"
+      },
+      "backup": {
+        "alias": "",
+        "identity": null,
+        "source": "unconfigured"
+      },
+      "generator": {
+        "alias": "kbd-frontier",
+        "identity": null,
+        "source": "models.toml"
+      }
+    },
+    "providers_detected": [
+      "openai",
+      "gemini",
+      "groq",
+      "fireworks",
+      "openrouter"
+    ],
+    "classes_available": [
+      "small",
+      "medium",
+      "frontier"
+    ],
+    "distinct_models": 2,
+    "config_path": "/Users/gqadonis/.config/liter-llm/liter-llm-proxy.toml",
+    "config_exists": true,
+    "config_defects": [],
+    "checked_at": "2026-10-06T09:42:48Z"
+  },
+  "typecheck16": {
+    "schemaVersion": 1,
+    "label": "boss-typecheck-node-16",
+    "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+    "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+    "args": [
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tsconfig.node.json",
+      "--composite",
+      "false"
+    ],
+    "startedAt": "2026-10-06T23:47:44.303Z",
+    "finishedAt": "2026-10-06T23:47:53.313Z",
+    "exitCode": 0,
+    "signal": null,
+    "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-typecheck-node-16.log",
+    "result": "command-completed-not-yet-case-certified",
+    "buildEnvironment": {}
+  },
+  "runtime11": {
+    "schemaVersion": 1,
+    "time": "2026-10-06T23:47:29.070Z",
+    "kind": "actual-runtime-failure",
+    "gate": "boss-secret-projection-runtime-11",
+    "commandReceipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-secret-projection-runtime-11.json",
+    "sourceBinding": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/source-inventory-mcp-run-diagnostic-delivery-23.json",
+    "productionBundle": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/boss-connected-instance-build-09-manifest.json",
+    "sourceCause": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/projection-mcp-approval-source-cause/receipt.json",
+    "logSha256": "998c9d702de4c38f38e6ca5d27171b106969b6b1e96ef144755e4219a92f979f",
+    "projectionFailure": {
+      "stage": "mcp_run",
+      "scenario": "success"
+    },
+    "mcpRunFailure": {
+      "mode": "success",
+      "failureCategory": "unclassified",
+      "turn": {
+        "available": true,
+        "done": false,
+        "cancelled": false,
+        "streamErrorPresent": false,
+        "streamCategory": "none",
+        "chunkCount": 5,
+        "approvalRequests": 1,
+        "approvalDecisionsSent": 0
+      },
+      "actualCallDelta": 0,
+      "calls": [],
+      "providerRequestCount": 3,
+      "authorizedProviderRequestCount": 3,
+      "canaryFreeProviderRequestCount": 3,
+      "modelToolInputCount": 0,
+      "matchingModelToolInputCount": 0,
+      "redactedMatchingModelToolInputCount": 0,
+      "capture": {
+        "catalogStatus": "success",
+        "catalogWriteStatus": "success",
+        "runStatus": "success",
+        "inspectionStatus": "not_observed",
+        "stream": {
+          "status": "success",
+          "frames": 32,
+          "runErrors": 0,
+          "categories": [],
+          "parseFailed": false,
+          "incomplete": false
+        },
+        "captureCount": 1,
+        "catalogWrites": 1,
+        "inspectionsCompleted": 0,
+        "catalogRevisionMatches": [
+          true
+        ],
+        "runRevisionMatches": [
+          false
+        ]
+      }
+    },
+    "primaryPass": false,
+    "conclusion": "Actual original180s failed wait has one approval request, no decision, no effect and no stream error; source confirms baseline Ask and fixture never replies. Smallest fixture-only correction enables existing exact-ID approval response for the original MCP loop.",
+    "limits": [
+      "runRevisionMatches false is not inspected/completed proof; inspectionStatus not_observed and no inspections complete",
+      "Earlier runtime09 assertion failure remains unlocalized",
+      "No production approval policy change or gate weakening"
+    ]
+  },
+  "approvalFixtureCorrection": {
+    "schemaVersion": 1,
+    "kind": "fixture-source-correction",
+    "status": "frozen-unverified",
+    "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates/bauar-secret-projection.ts",
+    "beforeSha256": "b542f7c1b93e98e2e468f1cf5400c6229e87f1bd3b67144c2e79d026a0d05aaa",
+    "afterSha256": "490c0fd2569971a9e2f002ef551041ac3c07995be071bd00bcacc3dad2e3beaf",
+    "lines": 419,
+    "observed": {
+      "attempt": "projection-runtime11",
+      "stage": "mcp_run",
+      "scenario": "success",
+      "turnAvailable": true,
+      "done": false,
+      "errorPresent": false,
+      "chunkCount": 5,
+      "approvalRequests": 1,
+      "approvalDecisionsSent": 0,
+      "actualCallDelta": 0,
+      "providerRequests": 3,
+      "providerAuthorized": true,
+      "providerCanaryFree": true,
+      "streamFrames": 32,
+      "streamErrors": 0
+    },
+    "correction": "Existing success/isError/error MCP runTurn invocation opts into actual approval responses with { approve: true }. Unchanged helper forwards the emitted approvalId through existing IPC.",
+    "preserved": {
+      "productionPolicy": true,
+      "exactAuthorityChecks": true,
+      "allAssertions": true,
+      "timeout180000ms": true,
+      "helperUnchanged": true,
+      "mainByteEquivalentAfterReversingSingleEdit": true
+    },
+    "limitations": {
+      "runtime09FailureNotIndependentlyResolved": true,
+      "actualAcceptancePending": true
+    },
+    "execution": {
+      "tests": false,
+      "builds": false,
+      "gates": false,
+      "services": false,
+      "productionEdits": false
+    }
+  }
+}

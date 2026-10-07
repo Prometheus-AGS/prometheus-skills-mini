@@ -1,0 +1,25 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "MiniMax-M3",
+  "judge_identity": {
+    "providerId": "minimax",
+    "providerConnectionId": "minimax-direct",
+    "modelId": "MiniMax-M3"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [],
+  "checked_classes": [
+    "Gaps the assessment missed (goals with no corresponding gap analysis) — All four goals have a corresponding section: goal 1 (attribute + distinguish stages) is covered by F1/F2/F3 and the goals table; goal 2 (smallest correction) is covered by F1/F2 correction candidates and the Spec alignment section; goal 3 (complete gate rerun) is covered by F4's correction candidate and Build health/coverage; goal 4 (handoff without parent certification) is covered by the Handover boundary and the explicit 'This child grants no parent implementation/certification completion' statement in the Verdict. The 'Exact approval and actual execution' row in the goals table also keeps exact approval distinct from preparation/execution as goal 1 requires.",
+    "Claims about the codebase unsupported by inspected_evidence or contradicted by it — Spot-checked every quoted path:range and stat against inspected_evidence. bauar-secret-projection.ts:133–145 (F1 cites 133–144, F2 cites 134–147; both inside the corrected 133–147 range from round1). src/mcp/exposure.rs:9,79–128 with eagerMcpCap 32 matches line 100's MCP_EAGER_TOOL_LIMIT guard and the contract's eagerMcpCap:32. src/llm/orchestrator.rs:1754–1786 registers SearchToolsTool when snapshot.has_deferred(). src/uar/runtime/native_skills/search_tools.rs:47–55,83–92 returns status selected_for_next_step. runtime12 preparedInvocationCount=0, mcpCallCountBefore=0, mcpCallCountAfter=0, frames=20, runErrors=0, runSnapshotMatched=true, streamErrorPresent=false all match the assessment's claims. typecheck16 exitCode 0 matches 'TypeScript tsc... exit0'. parent changes 01 6/7, 02 2/8, 03 8/9, 04 8/10 match processContext.parentChanges.",
+    "Vague findings that cannot drive a plan — F1's correction candidate names the concrete fixture behavior to add (propose advertised search_tools control, then select target on next step) and what not to touch (production caps, provider reorder, tool injection, admission bypass). F2 names the concrete discriminator (fixture's actual call history) and what is/isn't admissible in receipts (no model bodies or credentials, only safe booleans/counts). F3 names the concrete evidence-gap remediation (provider-local boolean/count at completed delivery boundary, reusing existing counters, preserving assertions as oracle). F4 names the concrete gate-completion requirement (complete the selected correction first, retain original assertions and source/payload binding, record platform limits separately). All four are testable by a plan stage.",
+    "Goals restated as findings instead of assessed — F1-F4 are each grounded in either fixture static analysis (F1, F2) or receipt/receipt-limitation evidence (F3) or gate-completion evidence (F4), not restatements of goal language. The assessment also explicitly states 'Deferred exposure as the cause of runtime 12 remains a hypothesis' and conditions every correction candidate on Analyze confirmation ('contingent on Analyze Q1 establishing applicability to runtime12', 'if Analyze confirms discovery continuation is needed'), so it does not promote candidate corrections to proven cause."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

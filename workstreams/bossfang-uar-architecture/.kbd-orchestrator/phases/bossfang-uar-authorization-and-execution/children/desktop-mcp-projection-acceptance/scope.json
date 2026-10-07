@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-07T00:25:10.224Z",
+  "parentPhase": "bossfang-uar-authorization-and-execution",
+  "childPhase": "desktop-mcp-projection-acceptance",
+  "parentStage": "execute",
+  "observedFailure": "evidence/execute/boss-secret-projection-runtime-12-observation.json",
+  "owningChange": "bauar-04-resource-credential-lifecycle",
+  "ownedResponsibility": "Diagnose and correct desktop projection acceptance; preserve exact authority and side-effect assertions",
+  "potentialWriteRoots": [
+    "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance"
+  ],
+  "productChangesAuthorizedInThisStage": false,
+  "stageStops": true,
+  "excludedDiagnostic": "D0 automatic-review-rejected session-owner diagnostic"
+}

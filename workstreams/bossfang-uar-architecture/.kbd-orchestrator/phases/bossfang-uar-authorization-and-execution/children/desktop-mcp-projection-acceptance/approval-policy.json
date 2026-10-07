@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-07T00:36:13.825Z",
+  "parentPhase": "bossfang-uar-authorization-and-execution",
+  "childPhase": "desktop-mcp-projection-acceptance",
+  "authorizationSource": "Operator requested kbd-new-child to select and fix a blocking issue; earlier explicit instruction requires each stage handover reviewed and approved.",
+  "stageStops": true,
+  "authorizedStages": [
+    "assess"
+  ],
+  "pendingApprovalFor": "analyze",
+  "inheritedExecuteScope": "Parent production fixes already authorized; new child handovers retain stage stops.",
+  "restrictions": [
+    "Do not retry or route around D0 diagnostic",
+    "No release or publication",
+    "No parent certification or shipping-gate closure",
+    "No code changes in Assess"
+  ]
+}

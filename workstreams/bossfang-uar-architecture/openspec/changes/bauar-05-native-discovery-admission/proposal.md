@@ -28,4 +28,3 @@ None in the promoted main-spec inventory (the actual OpenSpec inventory is empty
 UAR admission wire, authority construction/equality, HTTP port, lifecycle, standalone port and surgical dispatcher consistency; Boss admission wire/record owner, host revalidation/bridge advertisement and owned callers; existing projection/provider/MCP fixtures and their counters. Exact source ownership is declared in design.md and verification.md.
 
 The user approved the child scope amendment for Spec on2026-10-07. These are planning artifacts only. Plan and Execute handovers remain separately gated; no product code changes, tests, release/package bypass or parent certification occur here. Unrelated parent blockers, including excluded D0, remain unchanged.
-

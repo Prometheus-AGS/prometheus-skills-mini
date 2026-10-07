@@ -6,14 +6,23 @@
   "authorizationSource": "Operator requested kbd-new-child to select and fix a blocking issue; earlier explicit instruction requires each stage handover reviewed and approved.",
   "stageStops": true,
   "authorizedStages": [
-    "assess"
+    "assess",
+    "analyze"
   ],
-  "pendingApprovalFor": "analyze",
+  "pendingApprovalFor": "spec",
   "inheritedExecuteScope": "Parent production fixes already authorized; new child handovers retain stage stops.",
   "restrictions": [
     "Do not retry or route around D0 diagnostic",
     "No release or publication",
     "No parent certification or shipping-gate closure",
-    "No code changes in Assess"
+    "No code changes in Assess",
+    "No product changes in Analyze"
+  ],
+  "approvals": [
+    {
+      "stage": "analyze",
+      "at": "2026-10-07T07:17:51.400Z",
+      "source": "Operator: Approved (in reply to explicit Analyze handover request)."
+    }
   ]
 }

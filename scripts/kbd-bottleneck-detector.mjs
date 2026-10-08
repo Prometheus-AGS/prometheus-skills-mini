@@ -18,8 +18,8 @@ import { spawnExecutable } from '../lib/platform/spawn.mjs';
 import { evaluateBottleneck } from '../lib/kbd/bottleneck-guard.mjs';
 
 const USAGE = `Usage: node scripts/kbd-bottleneck-detector.mjs status
-       node scripts/kbd-bottleneck-detector.mjs evaluate <task|phase|zeespec> <before|after> <subject>
-       node scripts/kbd-bottleneck-detector.mjs repair <task|phase|zeespec> <before|after> <subject>`;
+       node scripts/kbd-bottleneck-detector.mjs evaluate <task|change|phase> <before|after> <subject>
+       node scripts/kbd-bottleneck-detector.mjs repair <task|change|phase> <before|after> <subject>`;
 
 function die(message, code = 1) {
   process.stderr.write(`kbd-bottleneck-detector: ${message}\n`);
@@ -57,7 +57,7 @@ function runStatus() {
 
 function runEvaluate(mode, args) {
   const [boundary, edge, subject] = args;
-  if (!boundary || !edge || !subject) die(`usage: ${mode} <task|phase|zeespec> <before|after> <subject>`);
+  if (!boundary || !edge || !subject) die(`usage: ${mode} <task|change|phase> <before|after> <subject>`);
   const precommit = mode === 'repair';
   const result = evaluateBottleneck(boundary, edge, subject, precommit, { root: '.' });
   if (result.status === 2) die('guard subcommand unavailable (prometheus CLI missing or predates guard)');

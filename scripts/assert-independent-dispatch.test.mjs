@@ -5,9 +5,9 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { tempDir } from '../lib/platform/paths.mjs';
 
 const scriptPath = fileURLToPath(new URL('./assert-independent-dispatch.mjs', import.meta.url));
 const LONG_A = 'this particular substantive line is well over twenty four characters';
@@ -19,7 +19,7 @@ function run(args) {
 }
 
 function writeSession({ topic, sets }) {
-  const session = fs.mkdtempSync(path.join(os.tmpdir(), 'assert-independence-cli-'));
+  const session = fs.mkdtempSync(path.join(tempDir(), 'assert-independence-cli-'));
   fs.mkdirSync(path.join(session, 'sets'), { recursive: true });
   if (topic !== undefined) fs.writeFileSync(path.join(session, 'topic.txt'), topic);
   for (const [n, { input, output }] of Object.entries(sets)) {
@@ -65,7 +65,7 @@ test('exits 1 on usage error (missing --session)', () => {
 });
 
 test('exits 1 when sets/ does not exist under session', () => {
-  const session = fs.mkdtempSync(path.join(os.tmpdir(), 'assert-independence-empty-'));
+  const session = fs.mkdtempSync(path.join(tempDir(), 'assert-independence-empty-'));
 
   const result = run(['--session', session]);
 

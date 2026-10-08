@@ -1,11 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import os from 'node:os';
 import crypto from 'node:crypto';
+import { stateDir } from '../paths.mjs';
 
 export const MINIMUM_VERSION = '1.14.0';
 export const REGISTRY = 'https://registry.npmjs.org';
-export const cacheHome = () => path.resolve(process.env.PROMETHEUS_OPENSPEC_HOME || path.join(os.homedir(), '.prometheus', 'openspec'));
+export const cacheHome = () => path.resolve(process.env.PROMETHEUS_OPENSPEC_HOME || stateDir('openspec'));
 export const readJson = file => fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null;
 
 export function writeJson(file, value) {

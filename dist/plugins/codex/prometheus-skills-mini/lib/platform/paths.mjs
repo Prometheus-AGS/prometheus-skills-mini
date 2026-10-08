@@ -23,6 +23,11 @@ export function createPaths({ home, temp } = {}) {
   };
 }
 
+/** Resolve a named value from a supplied environment map, falling back to the empty string. */
+export function envValue(env, name) {
+  return env?.[name] ?? '';
+}
+
 const defaultPaths = createPaths();
 
 export const homeDir = defaultPaths.homeDir;

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
+import { tempDir } from '../platform/paths.mjs';
 import { bindingAt, object, readJson, runJson, writeJson } from './io.mjs';
 
 /** Read-only canonical authority; never substitute a possibly stale waypoint projection. */
@@ -65,7 +65,7 @@ export function reconcileKbd(project) {
   const state = runJson(process.execPath, [entry, 'status', '--root', stateRoot], project);
   if (!state.activeIterationId) return { status: 'idle', reason: 'no-active-cadence-iteration' };
   const canonical = canonicalSnapshot(project);
-  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'cadence-kbd-'));
+  const directory = fs.mkdtempSync(path.join(tempDir(), 'cadence-kbd-'));
   try {
     const input = path.join(directory, 'canonical.json');
     const authored = binding.dispatchFile ? readJson(path.resolve(project, binding.dispatchFile)) : {};

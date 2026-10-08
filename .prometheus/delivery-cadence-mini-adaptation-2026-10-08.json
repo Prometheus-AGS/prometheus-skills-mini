@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-08",
+  "sourceManifest": ".prometheus/delivery-cadence-source.json",
+  "baseline": {
+    "sourceRevision": "ce0984f0db9329a57bda73035e4a00565cce544e",
+    "payloadDigest": "363a6e90f3215ac98877aa641844009af16cafec34161d500b166e104528f1f4"
+  },
+  "approvedRemovals": [
+    {
+      "path": "skills/delivery-cadence/scripts/refresh-skill-pack.sh",
+      "sha256": "ab9ef1292e78882693b94929ffc1874f93f2b58605ff260a84b5ba256208f755",
+      "reason": "Bash procedure depending on forbidden POSIX/Python interpreters and missing upstream installers; capability retired, not ported, under the Node-only contract."
+    },
+    {
+      "path": "skills/delivery-cadence/examples/refresh-skill-pack-shim.sh",
+      "sha256": "3ee5446238777d04f8b9ece7c48d53d75c111a272cdafb9da2626ca23cfbde36",
+      "reason": "Bash shim example for the retired refresh procedure; removed with it."
+    }
+  ],
+  "changedDocumentation": [
+    "skills/delivery-cadence/SKILL.md",
+    "skills/delivery-cadence/references/profile.md"
+  ],
+  "finalPayloadHashes": {
+    "completedAt": "2026-10-08T11:20:39.230Z",
+    "sourceTree": "skills/delivery-cadence",
+    "fileCount": 52,
+    "payloadDigest": "73eec663c58c034b449695029b7303f7977d8eb830367b5413d94ee3db4cd822",
+    "files": {
+      "SKILL.md": "1d567b2a2063d06ce7c8be23b32cf6cf9e81b3716388a0c202c180eea4f6591a",
+      "assets/boss-provider-setup.mjs": "fb9d16c97ac9ea2798a110ac1d0fd7f10ee444ed6bdd5a5c5f97755d676ac9e8",
+      "assets/hooks/email-api.mjs": "c4041e45942e11b8c620477671336a134b6d692f34eca5a8e6b8fe3f3c026733",
+      "assets/hooks/local-summary.mjs": "982979f0f577e73dcc795ec422d76a09283489e5685c7ef854265919a6b05ff7",
+      "assets/hooks/webhook.mjs": "8a1ebebfa19995554faa858c76ddf728990792bd7fc2978477079e75c71a7607",
+      "examples/README.md": "97b553749e2a5bcea97360054489abb47a9ebe890bf2638ad2997e3cbdbce20b",
+      "examples/boss-consumer-capabilities.json": "014bcc583fbd96dbbb0e2f62faccc2501d2d1b95f3bcfe4116f83b2767bf276f",
+      "examples/operation-admission.json": "45713d6f2534bc2c831234a754958bf7c27436672c2cc6f209a757ae63c0ef8c",
+      "references/adapters.md": "0407a04cc2b73004c5f4082aaea24b106b59ba1f32ad8180f39e3d3c6c561a88",
+      "references/boss-profile.md": "053490d87bb2777ca52fbdb16e797d3dc4acef0d32fe967bd0681ae07d9377f1",
+      "references/child-recovery.md": "07df9c6b24c63c8d92c0e33cd7aaf6b71f69f9b0ed84f29c25003da7a831e737",
+      "references/hooks.md": "cba791dd450af9c4548d925d289e5237a577b74b40a46a146199ac4dba38f9d9",
+      "references/measurement.md": "5f9423d0dde7684f922262d9e1c61a6b69b6397e073bca1f1b5ee045fc5772e2",
+      "references/pipeline-contract.md": "0fb64a7049ec74d93e58a62535decc83cfddf7f1e10d40e0264c0d8df5eefae1",
+      "references/profile.md": "b48801344ec0d956f6a6e2f1635c4185ae5bc9fb178d99b936cd289b8b11dbc7",
+      "references/source-reconciliation.md": "844d82fb32288c025285411cf6fb41ca83c7a5dddd9791003ca67518375e83ed",
+      "schemas/event.schema.json": "88330f7e1454c96a3f42b420aa0ee83badd5ca120d09327de67d73fb3cc2fb76",
+      "schemas/pipeline-v3.schema.json": "17b04b234541a20842813425be110f0ef0452b7642a9235b8b11bd87e241e49c",
+      "schemas/profile.schema.json": "5e9de2d0a4fbb1eccf119f6bf927fadcfa461af988adbdd102c4a92ed905c8b5",
+      "schemas/state.schema.json": "aff50bf9b20c4100d868404deca5d772c4ebdfbc8393a31aa2cb13f35b4a2a10",
+      "scripts/boss-launch.mjs": "b65e29fed109107809706caee3dba99504a196870321d1951591978f8acb99ea",
+      "scripts/cadence.mjs": "b09e5c6b86589ba3c0b28c312bd30415b3a918c0e08cf94de9d5ea3ee9bee91a",
+      "scripts/lib/activity.mjs": "99987b1f09a5de0092c7de5ee56d6e015767288d931f61c88d703f7fe7f90730",
+      "scripts/lib/candidates.mjs": "ed39bba58309e264c3959ce190c1eba72fd6c0dd880c98f6df8bf65666056561",
+      "scripts/lib/checkpoint-receipts.mjs": "61c65d25b3390e6469515200a1ae02c2bc36f138a6bed3b04467e5d75ce599c9",
+      "scripts/lib/checkpoints.mjs": "2bce3a91ecce1d0148ac1a7e723f932985a2e886dbacc44dbbf6d890a91c50bd",
+      "scripts/lib/children.mjs": "19e4d6583a7a7324d93e7bddaaf495e5863bd4fa95dad439a378000738e98025",
+      "scripts/lib/command-recovery.mjs": "fba01821b006b685bffeff69ee0a435b6e50c5df5cb7cd2bdbdfb6d2d62c8f47",
+      "scripts/lib/delivery-contract.mjs": "0f6c17a9bd581385e99249119beaa76fa5aea69987ed4b03850c26a81ad67fab",
+      "scripts/lib/engine.mjs": "5297fdedf330507a99b48665828a14e9283af99b211c0a7755df045a940d9aeb",
+      "scripts/lib/finish-effects.mjs": "e1dbc5cd0e83fbbf980479ed43d642a5fdd9ef061ffaae5b4174e6ca1af0e1ee",
+      "scripts/lib/hook-registry.mjs": "6710ffd1d41af689ed1d9360ad91298e3ecf21ec1ffd1f6401613d5b77b57794",
+      "scripts/lib/hook-runner.mjs": "4c33b5495bd13f91afba7beb2344194afd69bf41b0c0fab515d694ef07975cb7",
+      "scripts/lib/hooks.mjs": "9eb1b12a4ad7ab72517e9bdd5ccf9c86ed82f966333ef1328020755d56e0df75",
+      "scripts/lib/jobs.mjs": "e750c90df28b2ca02bf5d96aa2df90276007323f2d26e62378daef108e9e2ed2",
+      "scripts/lib/lifecycle.mjs": "816b572f1840a199085c14e1218a82d2fd95629b2c601dceab5968d34eed57c0",
+      "scripts/lib/operation-readiness.mjs": "9262ef37fa1df6e1c10a2dace7f05670bdc408456ab52a3cd7ed6719fca1f186",
+      "scripts/lib/opportunities.mjs": "99995830d3e9a22d03469087da4eb9e446a2f8ebc9371038e708a06515e9d8ab",
+      "scripts/lib/pipeline-data.mjs": "b1e108ddb39c676b5bcc1721ecda12120103d7eed43e4940fdd40348c229469f",
+      "scripts/lib/pipeline-report.mjs": "1b94067f394c58b8ebda62ebc44f7f7beb288936dcd2fb485860f92db12974a0",
+      "scripts/lib/process.mjs": "c04f245e214af823c401660116881918f6455c79e143b4bdc4628859a321116b",
+      "scripts/lib/profile.mjs": "b90a156330f27825cced4b6fde4bce45f44148926e978696edd294112793bfd2",
+      "scripts/lib/publication-effects.mjs": "9232afdc02bac6a4455c25935b4df0ff36be002e26278995e47802a47693c53e",
+      "scripts/lib/publication-receipts.mjs": "21d441bc5022a141a58fa3664e29e46b83c9fa06d2371e770311f283b1aa4112",
+      "scripts/lib/publication.mjs": "780a75109547bd0b037a8206536b8b3c69267452c37bb2050ff6c78156c03a7e",
+      "scripts/lib/report.mjs": "6309cc3cace590a1174d3de97ef2c5e6f1a3ed23a6c07be4ed32ce2f43fafc8d",
+      "scripts/lib/resources.mjs": "c249c2480256dee6095ed79daab41c3defe0f1d93bf84ac1af8d10fdfdbfc542",
+      "scripts/lib/storage.mjs": "aea6a16614f7386f76049d2095b49b5114136c85b03a56c69c80e2aabc9bf4f1",
+      "scripts/lib/work-ahead-repair.mjs": "221f6ef699d143e74400321cde92969de359c6fef9c321404801a89bb7d4b724",
+      "scripts/lib/work-ahead.mjs": "274e6be3416c67c25d7fb4d459970f5e02e2f04e39d19d7426fb93053cba7ede",
+      "scripts/publication-receipt.mjs": "e7bb2fac01e9fde7b9067267e185d405dbfbdb3722b0f7ff8713ede564d86ed8",
+      "scripts/sync-mini.mjs": "91d1613eaf3ba4a9756a9bb65be1ca92b3e8efa49d1a6a38c18c564c97c5732e"
+    }
+  },
+  "finalPayloadHashesNote": "Completed after payload regeneration (task 6.2). Both harness distributions regenerated from this source; generate-skill-system-distribution --check reports no drift.",
+  "syncRefusal": "sync-mini.mjs continues to refuse locally changed/removed owned files; synchronization was NOT invoked or weakened, and any future shared-payload sync requires explicit reconciliation.",
+  "identityStatement": "The adapted mini payload is NOT byte-identical to the shared source after adaptation.",
+  "changedDocumentationNote": "Source-level documentation edits. The harness payload copies are regenerated from this source (never hand-edited); both payloads verify with generate-skill-system-distribution --check (no drift) at the completed boundary.",
+  "regeneratedPayloadDocumentation": [
+    "dist/plugins/claude/prometheus-skills-mini/skills/delivery-cadence/SKILL.md",
+    "dist/plugins/claude/prometheus-skills-mini/skills/delivery-cadence/references/profile.md",
+    "dist/plugins/codex/prometheus-skills-mini/skills/delivery-cadence/SKILL.md",
+    "dist/plugins/codex/prometheus-skills-mini/skills/delivery-cadence/references/profile.md"
+  ]
+}

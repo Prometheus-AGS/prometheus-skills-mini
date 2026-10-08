@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-08T10:39:58.451Z",
+  "argv": [
+    "prometheus",
+    "kbd",
+    "--path",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+    "stage",
+    "transition",
+    "--command-id",
+    "mini-qa-spec-complete-20261008",
+    "--phase",
+    "bossfang-uar-authorization-and-execution::mini-pack-qa-remediation",
+    "--id",
+    "spec",
+    "--status",
+    "complete"
+  ],
+  "exitCode": 0,
+  "revision": 271,
+  "activePath": {
+    "phasePath": [
+      "bossfang-uar-authorization-and-execution",
+      "bossfang-uar-authorization-and-execution::mini-pack-qa-remediation"
+    ],
+    "phaseId": "bossfang-uar-authorization-and-execution::mini-pack-qa-remediation",
+    "stageId": "spec",
+    "changeId": null,
+    "taskId": null,
+    "commit": "7765b14d345c3d759b97e7be116f8919484ccebb"
+  },
+  "committedLocally": true,
+  "fullResponseRetained": false,
+  "idempotencyNote": "The transition command was invoked twice with the same --command-id (second invocation to parse output); revision remained 271, consistent with command-id idempotency. No duplicate stage event intended.",
+  "requiredArtifacts": {
+    "proposal": "workstreams/bossfang-uar-architecture/openspec/changes/bauar-mini-qa-remediation/proposal.md",
+    "design": "workstreams/bossfang-uar-architecture/openspec/changes/bauar-mini-qa-remediation/design.md",
+    "tasks": "workstreams/bossfang-uar-architecture/openspec/changes/bauar-mini-qa-remediation/tasks.md",
+    "specs": 6,
+    "strictValidation": "passed",
+    "reviewSummary": "evidence/spec/review-summary.json",
+    "handoff": "handoffs/spec.handoff.json"
+  },
+  "stderr": ""
+}

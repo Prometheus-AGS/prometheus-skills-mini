@@ -1,0 +1,59 @@
+{
+  "kind": "source-only remaining serialized callback correction",
+  "files": [
+    {
+      "path": "scripts/gates/bauar-secret-projection.ts",
+      "lines": 459,
+      "sha256": "924e28f9dd16f4eb8d4946fd45236bde4ea5398714cb4abe34d70936a7c1f0a2"
+    },
+    {
+      "path": "scripts/gates/bauar-secret-projection-revision.ts",
+      "lines": 218,
+      "sha256": "31b13e9f1d0e555a95908a9609c45ffeed5bc84d818ee5aff3b46c0b9376dbc7"
+    },
+    {
+      "path": "scripts/gates/bauar-secret-projection-mcp.ts",
+      "lines": 251,
+      "sha256": "3695b1e9e6c8c8579682d1a84a70008261c5ebb72bfc631b64734bf9c33ff125"
+    },
+    {
+      "path": "scripts/gates/bauar-secret-projection-events.ts",
+      "lines": 182,
+      "sha256": "8ed59b1c52cc939616b3639fe51c68895b80b7a0be7af821e1d80b3a7c4094e1"
+    }
+  ],
+  "moduleProof": {
+    "version": "1.9.0",
+    "entry": "/Users/gqadonis/.claude/worktrees/bauar-boss/node_modules/.pnpm/@opentelemetry+api@1.9.0/node_modules/@opentelemetry/api/build/src/index.js",
+    "entrySha256": "3147edead496bab6ca9fe2b68d16b82fa3eb7d126c2bd62e63902c95295edd23",
+    "commonJs": true,
+    "sameResolvedPath": true,
+    "sameRealPath": true,
+    "declaredExportLines": [
+      "exports.trace = exports.propagation = exports.metrics = exports.diag = exports.context = exports.INVALID_SPAN_CONTEXT = exports.INVALID_TRACEID = exports.INVALID_SPANID = exports.isValidSpanId = exports.isValidTraceId = exports.isSpanContextValid = exports.createTraceState = exports.TraceFlags = exports.SpanStatusCode = exports.SpanKind = exports.SamplingDecision = exports.ProxyTracerProvider = exports.ProxyTracer = exports.defaultTextMapSetter = exports.defaultTextMapGetter = exports.ValueType = exports.createNoopMeter = exports.DiagLogLevel = exports.DiagConsoleLogger = exports.ROOT_CONTEXT = exports.createContextKey = exports.baggageEntryMetadataFromString = void 0;"
+    ]
+  },
+  "changes": [
+    "MCP external OTel import uses genuine node:module createRequire anchored to the original resolved file URL, requiring that same CommonJS entry.",
+    "MCP restore and event restore/rewrite/abort use object methods to remove serialized ambient keepNames helper calls."
+  ],
+  "reflection": {
+    "command": "TSX_TSCONFIG_PATH=tsconfig.node.json Node24 --import tsx; import modules and inspect exported function source only",
+    "before": {
+      "mcpInstallHelpers": 1,
+      "mcpInstallDynamicImports": 1,
+      "eventInstallHelpers": 3
+    },
+    "after": {
+      "allEightHelperExportsAmbientNameCalls": 0,
+      "allEightHelperExportsDynamicImports": 0
+    }
+  },
+  "preserved": [
+    "Actual shared OTel registry and original tracer delegation",
+    "All assertions, awaits, timeouts, matching, projection mutation and cleanup semantics",
+    "Production source unchanged"
+  ],
+  "executed": "Only source import/reflection and path resolution; no Electron evaluate, launch, test, build, compiler or gate.",
+  "acceptance": "Pending root runtime gates."
+}

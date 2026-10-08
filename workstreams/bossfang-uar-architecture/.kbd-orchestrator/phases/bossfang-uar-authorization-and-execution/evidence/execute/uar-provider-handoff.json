@@ -1,0 +1,736 @@
+{
+  "schemaVersion": 1,
+  "kind": "uar_provider_source_handoff",
+  "createdAt": "2026-10-06T15:07:46.384Z",
+  "stage": "Execute",
+  "parentTask": "bauar-03/1",
+  "evidenceClass": "source-interface-prerequisite-only",
+  "runtimeAccepted": false,
+  "workspace": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+  "source": {
+    "baseline": "a7cb972992d4f83db6585449ea81af0fe4a1c990",
+    "head": "8bff32deb870f6363e94687a2e22492f91a34dfd",
+    "c05": "fcfce6d226b50eee502c5f272e9215112d933e29",
+    "headSinceBaseline": "8bff32deb870f6363e94687a2e22492f91a34dfd docs: bind approved Bossfang UAR execution children",
+    "dirty": true,
+    "scope": [
+      "Cargo.lock",
+      "Cargo.toml",
+      "docs/API_KEYS.md",
+      "docs/operations/execution-authorization.md",
+      "example.config.yaml",
+      "mcp.json",
+      "src/config.rs",
+      "src/server.rs",
+      "src/uar/api/a2a/grpc.rs",
+      "src/uar/api/a2a/handler.rs",
+      "src/uar/api/auth.rs",
+      "src/uar/api/full_harness.rs",
+      "src/uar/api/full_harness/a2a_projection.rs",
+      "src/uar/api/full_harness/error.rs",
+      "src/uar/api/full_harness/handlers.rs",
+      "src/uar/api/full_harness/mutations.rs",
+      "src/uar/api/full_harness/types.rs",
+      "src/uar/api/routes.rs",
+      "src/uar/api/sse.rs",
+      "src/uar/compiler/ir.rs",
+      "src/uar/domain/artifact.rs",
+      "src/uar/domain/policy.rs",
+      "src/uar/runtime/actor/messages.rs",
+      "src/uar/runtime/cost_budget.rs",
+      "src/uar/runtime/manager.rs",
+      "src/uar/runtime/thread/approvals.rs",
+      "src/uar/runtime/tool_admission/http.rs",
+      "src/uar/runtime/tool_admission/lifecycle.rs",
+      "src/uar/runtime/tool_admission/mod.rs",
+      "src/uar/runtime/turn/host/credentials.rs",
+      "src/uar/runtime/turn/host/history.rs",
+      "src/uar/runtime/turn/host/mcp.rs",
+      "src/uar/runtime/turn/host/mod.rs",
+      "src/uar/security/api_keys.rs",
+      "src/uar/security/api_keys/policy.rs",
+      "src/uar/security/authority.rs",
+      "src/uar/security/claims.rs",
+      "src/uar/security/middleware.rs",
+      "src/uar/security/sidecar_guard.rs",
+      "src/uar/security/verifier/jwks_cache.rs",
+      "src/uar/security/verifier/mod.rs",
+      "versions.toml"
+    ],
+    "trackedDiffFromHeadSha256": "50c68bf8536db8d74dc68d7c9bce1b798f1db6d20fc5109ccdca852a4d579f72",
+    "trackedDiffFromBaselineSha256": "50c68bf8536db8d74dc68d7c9bce1b798f1db6d20fc5109ccdca852a4d579f72",
+    "manifestSha256": "880a1ff8f5765375fd87b75cd09d7f82255e040af9429a06b0a7cc6f45703a1d",
+    "untrackedContentCapturedSeparately": [
+      "docs/operations/execution-authorization.md",
+      "src/uar/security/api_keys/policy.rs",
+      "src/uar/security/authority.rs",
+      "src/uar/security/verifier/jwks_cache.rs"
+    ],
+    "files": [
+      {
+        "path": "Cargo.lock",
+        "bytes": 382914,
+        "sha256": "1035e0befe1cf67eeb229f570c6308548914408407c65b6644cfe3d5278d086b",
+        "baselineSha256": "1035e0befe1cf67eeb229f570c6308548914408407c65b6644cfe3d5278d086b",
+        "headSha256": "1035e0befe1cf67eeb229f570c6308548914408407c65b6644cfe3d5278d086b",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "Cargo.toml",
+        "bytes": 26428,
+        "sha256": "eac8203e6273e382e8eb6128560e7d63f45ffee8bda51596eae563f2a83be95a",
+        "baselineSha256": "eac8203e6273e382e8eb6128560e7d63f45ffee8bda51596eae563f2a83be95a",
+        "headSha256": "eac8203e6273e382e8eb6128560e7d63f45ffee8bda51596eae563f2a83be95a",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "docs/API_KEYS.md",
+        "bytes": 11486,
+        "sha256": "c2c2c58e505167b71ab15ef944894a1f7c765a65da9e94c87355b3942ef4d373",
+        "baselineSha256": "3e493ce2fdb09134591c1ca5be434e542f6f2d210e75a42d60f213f264225617",
+        "headSha256": "3e493ce2fdb09134591c1ca5be434e542f6f2d210e75a42d60f213f264225617",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "docs/operations/execution-authorization.md",
+        "bytes": 3183,
+        "sha256": "8f0bd44d372529a3daf9d470aca4a06895bc358a305dd36dd649583f2cce3404",
+        "baselineSha256": null,
+        "headSha256": null,
+        "changedSinceBaseline": true,
+        "trackedAtHead": false
+      },
+      {
+        "path": "example.config.yaml",
+        "bytes": 26851,
+        "sha256": "0ef072215eee71618f78acbb48559c8e07e0203cfa694010e41ce3f3f8fddaa7",
+        "baselineSha256": "2512352162a557d05a105f4d47b2b97a127d626182d4b59bb4dc5856e335cadd",
+        "headSha256": "2512352162a557d05a105f4d47b2b97a127d626182d4b59bb4dc5856e335cadd",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "mcp.json",
+        "bytes": 22,
+        "sha256": "38935ac9bd01a9a91be32d16fc131d8b9d46fbcede88855e85c01f31c7347615",
+        "baselineSha256": "63658df707f461eb944dddcbd3f11e0410496b4653b41315b14c9c4f9ce5eacd",
+        "headSha256": "63658df707f461eb944dddcbd3f11e0410496b4653b41315b14c9c4f9ce5eacd",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/config.rs",
+        "bytes": 110270,
+        "sha256": "53f8d9b25ba9bbdb364abc49e8c96f64399663a679c12d257c460e426aad740b",
+        "baselineSha256": "4041d2da2f0e8c08d44a49dcb9397c9d55ff54e35b27f8c5feb52d8f195a6b05",
+        "headSha256": "4041d2da2f0e8c08d44a49dcb9397c9d55ff54e35b27f8c5feb52d8f195a6b05",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/server.rs",
+        "bytes": 299776,
+        "sha256": "448dcf902cc311033ef3d15ede7d4aaf56744095cf7559699dd5b1451c1fba71",
+        "baselineSha256": "4870d878416dfae4eefeca7dbde08eadf2c544c6ea333c90df6ed1e61b2158a0",
+        "headSha256": "4870d878416dfae4eefeca7dbde08eadf2c544c6ea333c90df6ed1e61b2158a0",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/api/a2a/grpc.rs",
+        "bytes": 20762,
+        "sha256": "0070670397758e4c2045564e5a126e81ba2b18c37162c9701bb05d59505f845c",
+        "baselineSha256": "a0c49c156123e894c8d9c40655fb5bd7b83175a0767670d94d3297d6f7aa3b2c",
+        "headSha256": "a0c49c156123e894c8d9c40655fb5bd7b83175a0767670d94d3297d6f7aa3b2c",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/api/a2a/handler.rs",
+        "bytes": 17682,
+        "sha256": "5676f635c74a91f46ff257bfcdca279027ac691908d99c9d2040b866a4226cda",
+        "baselineSha256": "40a4023f49803e582580d7c69103b5e10a0ad53c4e3ebc5b73c619966c4c0494",
+        "headSha256": "40a4023f49803e582580d7c69103b5e10a0ad53c4e3ebc5b73c619966c4c0494",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/api/auth.rs",
+        "bytes": 6501,
+        "sha256": "5dc7d67ff0220facb714281b320f9fee7dd7db633078b86397d08d5a5ae84d14",
+        "baselineSha256": "872586db5109488d06d2a2653e978ae1745b307bebfbc0d9592605c73af5aa9c",
+        "headSha256": "872586db5109488d06d2a2653e978ae1745b307bebfbc0d9592605c73af5aa9c",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/api/full_harness.rs",
+        "bytes": 15138,
+        "sha256": "d4733bb58892b255c730f249253da089026a97bc21b74b1654d62ca06a6d9f46",
+        "baselineSha256": "d4733bb58892b255c730f249253da089026a97bc21b74b1654d62ca06a6d9f46",
+        "headSha256": "d4733bb58892b255c730f249253da089026a97bc21b74b1654d62ca06a6d9f46",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/api/full_harness/a2a_projection.rs",
+        "bytes": 1655,
+        "sha256": "0e12c07a411bd799baf68a6704e7f15dfa6a48af9f49abaf7f72b59e5cb0b93c",
+        "baselineSha256": "0e12c07a411bd799baf68a6704e7f15dfa6a48af9f49abaf7f72b59e5cb0b93c",
+        "headSha256": "0e12c07a411bd799baf68a6704e7f15dfa6a48af9f49abaf7f72b59e5cb0b93c",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/api/full_harness/error.rs",
+        "bytes": 3429,
+        "sha256": "d089957541c0c92a5865973333fb2a1dafd6d4d7fe322f3a352d88b34215a7c8",
+        "baselineSha256": "d089957541c0c92a5865973333fb2a1dafd6d4d7fe322f3a352d88b34215a7c8",
+        "headSha256": "d089957541c0c92a5865973333fb2a1dafd6d4d7fe322f3a352d88b34215a7c8",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/api/full_harness/handlers.rs",
+        "bytes": 15801,
+        "sha256": "57f8396680d5ae33711259dabd732e5f5c097c324ad5e7c211ec1e39cb6f672e",
+        "baselineSha256": "57f8396680d5ae33711259dabd732e5f5c097c324ad5e7c211ec1e39cb6f672e",
+        "headSha256": "57f8396680d5ae33711259dabd732e5f5c097c324ad5e7c211ec1e39cb6f672e",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/api/full_harness/mutations.rs",
+        "bytes": 4513,
+        "sha256": "51441297c7a8d4309d5c4d97e43bc47f1304abbc290f97c44cf34c1c6eba2097",
+        "baselineSha256": "51441297c7a8d4309d5c4d97e43bc47f1304abbc290f97c44cf34c1c6eba2097",
+        "headSha256": "51441297c7a8d4309d5c4d97e43bc47f1304abbc290f97c44cf34c1c6eba2097",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/api/full_harness/types.rs",
+        "bytes": 2206,
+        "sha256": "791af90d2a9e50fcafa58ad46cf5021c741ef636ab0f6ece56725dfff6fc88a5",
+        "baselineSha256": "791af90d2a9e50fcafa58ad46cf5021c741ef636ab0f6ece56725dfff6fc88a5",
+        "headSha256": "791af90d2a9e50fcafa58ad46cf5021c741ef636ab0f6ece56725dfff6fc88a5",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/api/routes.rs",
+        "bytes": 58878,
+        "sha256": "f1ae70d78e726ea2342d62f94f81394e441f00de224fb8602f7b9bfaedf57d3c",
+        "baselineSha256": "3dec899912d5b5cd064244cdf077899e1cc68c2db36c61296219c3129aa49824",
+        "headSha256": "3dec899912d5b5cd064244cdf077899e1cc68c2db36c61296219c3129aa49824",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/api/sse.rs",
+        "bytes": 51379,
+        "sha256": "47bed82091e94b5bd906930feb18b8bc47a21f33312acc8ee68756fc635970e1",
+        "baselineSha256": "47bed82091e94b5bd906930feb18b8bc47a21f33312acc8ee68756fc635970e1",
+        "headSha256": "47bed82091e94b5bd906930feb18b8bc47a21f33312acc8ee68756fc635970e1",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/compiler/ir.rs",
+        "bytes": 33240,
+        "sha256": "01e44d580c178de99ad19c36bd306d66aa38260b1b806dc26f617cb9b44bb7f8",
+        "baselineSha256": "01e44d580c178de99ad19c36bd306d66aa38260b1b806dc26f617cb9b44bb7f8",
+        "headSha256": "01e44d580c178de99ad19c36bd306d66aa38260b1b806dc26f617cb9b44bb7f8",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/domain/artifact.rs",
+        "bytes": 11056,
+        "sha256": "5f745652490784dd23264961dbde4b2b9820e61653a5109222339764b1d0acce",
+        "baselineSha256": "5f745652490784dd23264961dbde4b2b9820e61653a5109222339764b1d0acce",
+        "headSha256": "5f745652490784dd23264961dbde4b2b9820e61653a5109222339764b1d0acce",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/domain/policy.rs",
+        "bytes": 40897,
+        "sha256": "0ccea64122dccff18c6cb80b6ff4b53f8101155a13d8c015d470dead625afa1f",
+        "baselineSha256": "0ccea64122dccff18c6cb80b6ff4b53f8101155a13d8c015d470dead625afa1f",
+        "headSha256": "0ccea64122dccff18c6cb80b6ff4b53f8101155a13d8c015d470dead625afa1f",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/runtime/actor/messages.rs",
+        "bytes": 6084,
+        "sha256": "9b55d0906ce2730bfe092283699870a3324e05e41c943b6c792cfbd2485ad9fb",
+        "baselineSha256": "9b55d0906ce2730bfe092283699870a3324e05e41c943b6c792cfbd2485ad9fb",
+        "headSha256": "9b55d0906ce2730bfe092283699870a3324e05e41c943b6c792cfbd2485ad9fb",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/runtime/cost_budget.rs",
+        "bytes": 50742,
+        "sha256": "15caecb636b07265572b391cc4d3069ca578b748aeccc98b9a0d211f46525f5b",
+        "baselineSha256": "15caecb636b07265572b391cc4d3069ca578b748aeccc98b9a0d211f46525f5b",
+        "headSha256": "15caecb636b07265572b391cc4d3069ca578b748aeccc98b9a0d211f46525f5b",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/runtime/manager.rs",
+        "bytes": 324246,
+        "sha256": "e0832a36f6d7893bc1cb3bb9b0360845d8881e2744a28fcce7bcdb7a2b3f714a",
+        "baselineSha256": "1a5434fcdbda80f6a943ac8e2ef32ecf7e1bf6c6c7276a3b27ac0aa4d3e7e3b6",
+        "headSha256": "1a5434fcdbda80f6a943ac8e2ef32ecf7e1bf6c6c7276a3b27ac0aa4d3e7e3b6",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/runtime/thread/approvals.rs",
+        "bytes": 8798,
+        "sha256": "5526a9e9dec334bca39a723a35fc34669a5db8152f54f0846c0381fd10790441",
+        "baselineSha256": "5c1e49633bbd432a891ffe209a27fd883df841508e533ad96891798978cc8ddc",
+        "headSha256": "5c1e49633bbd432a891ffe209a27fd883df841508e533ad96891798978cc8ddc",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/runtime/tool_admission/http.rs",
+        "bytes": 10849,
+        "sha256": "32fe0797faa66ee2a501b7eb724ea6ab00ee1f13cce66f74bc63c14eb3da7db5",
+        "baselineSha256": "32fe0797faa66ee2a501b7eb724ea6ab00ee1f13cce66f74bc63c14eb3da7db5",
+        "headSha256": "32fe0797faa66ee2a501b7eb724ea6ab00ee1f13cce66f74bc63c14eb3da7db5",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/runtime/tool_admission/lifecycle.rs",
+        "bytes": 17494,
+        "sha256": "dacdb79a64a7268962e21b64bf349fb1ef4a875a01f6040b86d220af4dc079cb",
+        "baselineSha256": "dacdb79a64a7268962e21b64bf349fb1ef4a875a01f6040b86d220af4dc079cb",
+        "headSha256": "dacdb79a64a7268962e21b64bf349fb1ef4a875a01f6040b86d220af4dc079cb",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/runtime/tool_admission/mod.rs",
+        "bytes": 33726,
+        "sha256": "bf2f0c71a8ef508d54f0f188a57d40d4a5e712cf5c700f0f353ca3be2331a2f4",
+        "baselineSha256": "bf2f0c71a8ef508d54f0f188a57d40d4a5e712cf5c700f0f353ca3be2331a2f4",
+        "headSha256": "bf2f0c71a8ef508d54f0f188a57d40d4a5e712cf5c700f0f353ca3be2331a2f4",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/runtime/turn/host/credentials.rs",
+        "bytes": 8640,
+        "sha256": "032bfa38a9aa25236eb7f69c089e3509816423b4183c0494bedff955c42a83f1",
+        "baselineSha256": "032bfa38a9aa25236eb7f69c089e3509816423b4183c0494bedff955c42a83f1",
+        "headSha256": "032bfa38a9aa25236eb7f69c089e3509816423b4183c0494bedff955c42a83f1",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/runtime/turn/host/history.rs",
+        "bytes": 4898,
+        "sha256": "7916740b46e7aa68b5c2b58be14fb5bc4ea512878728b3875de6bb481aebd44e",
+        "baselineSha256": "7916740b46e7aa68b5c2b58be14fb5bc4ea512878728b3875de6bb481aebd44e",
+        "headSha256": "7916740b46e7aa68b5c2b58be14fb5bc4ea512878728b3875de6bb481aebd44e",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/runtime/turn/host/mcp.rs",
+        "bytes": 15163,
+        "sha256": "8b3a6730a4a09da8e922857fc3593faaa13f86cb3fb73155031fca22edc9df2f",
+        "baselineSha256": "834f637829f3ebc441d02154be6af2abb93d7d0aa5dd15a5e3a843a0c4a62c2a",
+        "headSha256": "834f637829f3ebc441d02154be6af2abb93d7d0aa5dd15a5e3a843a0c4a62c2a",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/runtime/turn/host/mod.rs",
+        "bytes": 4115,
+        "sha256": "8b9ff62c9f05ed0930d08606d48654a694b84459d991dbcdbb974477550b0de3",
+        "baselineSha256": "8b9ff62c9f05ed0930d08606d48654a694b84459d991dbcdbb974477550b0de3",
+        "headSha256": "8b9ff62c9f05ed0930d08606d48654a694b84459d991dbcdbb974477550b0de3",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/security/api_keys.rs",
+        "bytes": 18190,
+        "sha256": "7921807eea94fb22bd5bee022df6d2fcc16d34a7518ee220f92e9d4672cec342",
+        "baselineSha256": "7ab717f0e7f322fc23fb20646843baf05a9c22532a1420f3ac6d1e0184d9b35a",
+        "headSha256": "7ab717f0e7f322fc23fb20646843baf05a9c22532a1420f3ac6d1e0184d9b35a",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/security/api_keys/policy.rs",
+        "bytes": 5079,
+        "sha256": "3eed84e7b80be7eab1942417ddf4c25324f48ea2c24b1450c93ed78aee6855a7",
+        "baselineSha256": null,
+        "headSha256": null,
+        "changedSinceBaseline": true,
+        "trackedAtHead": false
+      },
+      {
+        "path": "src/uar/security/authority.rs",
+        "bytes": 7409,
+        "sha256": "36b2bc7802b473a9e3e3973685af599a236cd7d686aa97b94e99cdcaa377ab71",
+        "baselineSha256": null,
+        "headSha256": null,
+        "changedSinceBaseline": true,
+        "trackedAtHead": false
+      },
+      {
+        "path": "src/uar/security/claims.rs",
+        "bytes": 5842,
+        "sha256": "c97b1f0be5bbb8f78a8f64fd99b8b11a975a7f40466998e57fabdbe093e628fd",
+        "baselineSha256": "6540955a94f92a2b7d0396c4db671a7c40cc20101945bf2ed684a725adf4467d",
+        "headSha256": "6540955a94f92a2b7d0396c4db671a7c40cc20101945bf2ed684a725adf4467d",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/security/middleware.rs",
+        "bytes": 20639,
+        "sha256": "89dd58660bb28a96ae60c18d1a4963f27c38f5bb4b09901028501c08d6570f3e",
+        "baselineSha256": "797ee94eeda641bb1df391897a94b53a76d0f7bec35077105ca5aea464e4b1a7",
+        "headSha256": "797ee94eeda641bb1df391897a94b53a76d0f7bec35077105ca5aea464e4b1a7",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/security/sidecar_guard.rs",
+        "bytes": 6665,
+        "sha256": "2345f5e543d6c246f901e0887efa52737f473ecf867e1a0f38b712c426da531a",
+        "baselineSha256": "5701decbb1e6ba3e0821c50e07ebab6ec6d81640319378aa337b779da69da925",
+        "headSha256": "5701decbb1e6ba3e0821c50e07ebab6ec6d81640319378aa337b779da69da925",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "src/uar/security/verifier/jwks_cache.rs",
+        "bytes": 8063,
+        "sha256": "298064dd873e6387f5366803b476a16393d68f0088f3bc1cbc8d0e1808d7004a",
+        "baselineSha256": null,
+        "headSha256": null,
+        "changedSinceBaseline": true,
+        "trackedAtHead": false
+      },
+      {
+        "path": "src/uar/security/verifier/mod.rs",
+        "bytes": 9167,
+        "sha256": "5aadadfd15579f8dfbfc212ebeedb410a46cc67fb850c616434305aa19099de3",
+        "baselineSha256": "2ecab6828f68567e30d78cb1438219dcaad3e414e091a36f54ab354b80e025c2",
+        "headSha256": "2ecab6828f68567e30d78cb1438219dcaad3e414e091a36f54ab354b80e025c2",
+        "changedSinceBaseline": true,
+        "trackedAtHead": true
+      },
+      {
+        "path": "versions.toml",
+        "bytes": 2194,
+        "sha256": "262e5864da030bb4c5107fe5a7aed2a5ea03818304a34c7abf01c6c932645e48",
+        "baselineSha256": "262e5864da030bb4c5107fe5a7aed2a5ea03818304a34c7abf01c6c932645e48",
+        "headSha256": "262e5864da030bb4c5107fe5a7aed2a5ea03818304a34c7abf01c6c932645e48",
+        "changedSinceBaseline": false,
+        "trackedAtHead": true
+      }
+    ],
+    "providerPreservation": [
+      {
+        "path": "src/uar/api/full_harness.rs",
+        "c05Sha256": "d4733bb58892b255c730f249253da089026a97bc21b74b1654d62ca06a6d9f46",
+        "currentSha256": "d4733bb58892b255c730f249253da089026a97bc21b74b1654d62ca06a6d9f46",
+        "equalsC05": true
+      },
+      {
+        "path": "src/uar/api/full_harness/a2a_projection.rs",
+        "c05Sha256": "0e12c07a411bd799baf68a6704e7f15dfa6a48af9f49abaf7f72b59e5cb0b93c",
+        "currentSha256": "0e12c07a411bd799baf68a6704e7f15dfa6a48af9f49abaf7f72b59e5cb0b93c",
+        "equalsC05": true
+      },
+      {
+        "path": "src/uar/api/full_harness/error.rs",
+        "c05Sha256": "d089957541c0c92a5865973333fb2a1dafd6d4d7fe322f3a352d88b34215a7c8",
+        "currentSha256": "d089957541c0c92a5865973333fb2a1dafd6d4d7fe322f3a352d88b34215a7c8",
+        "equalsC05": true
+      },
+      {
+        "path": "src/uar/api/full_harness/handlers.rs",
+        "c05Sha256": "57f8396680d5ae33711259dabd732e5f5c097c324ad5e7c211ec1e39cb6f672e",
+        "currentSha256": "57f8396680d5ae33711259dabd732e5f5c097c324ad5e7c211ec1e39cb6f672e",
+        "equalsC05": true
+      },
+      {
+        "path": "src/uar/api/full_harness/mutations.rs",
+        "c05Sha256": "51441297c7a8d4309d5c4d97e43bc47f1304abbc290f97c44cf34c1c6eba2097",
+        "currentSha256": "51441297c7a8d4309d5c4d97e43bc47f1304abbc290f97c44cf34c1c6eba2097",
+        "equalsC05": true
+      },
+      {
+        "path": "src/uar/api/full_harness/types.rs",
+        "c05Sha256": "791af90d2a9e50fcafa58ad46cf5021c741ef636ab0f6ece56725dfff6fc88a5",
+        "currentSha256": "791af90d2a9e50fcafa58ad46cf5021c741ef636ab0f6ece56725dfff6fc88a5",
+        "equalsC05": true
+      }
+    ],
+    "captureStable": true
+  },
+  "profile": {
+    "basePath": "/api/uar/full-harness/v1",
+    "profile": "full_harness_v1",
+    "packageVersion": "1.0.0",
+    "protocolVersion": 1,
+    "recovery": "unsupported_after_restart",
+    "retention": {
+      "mode": "process_ephemeral",
+      "terminal_ttl_seconds": "configured RunsConfig.retention_after_terminal_secs",
+      "terminal_record_cap": "configured RunsConfig.max_retained_terminal; zero disables cap"
+    },
+    "steer_supported": false,
+    "providerAncestryIsNotRuntimeAcceptance": true
+  },
+  "identity": {
+    "requiredForFullHarness": [
+      "authenticated non-anonymous subject",
+      "typed tenant when remote",
+      "x-uar-workspace-id selecting an operator-authorized mapping"
+    ],
+    "remoteMapping": "configured verified issuer + subject + tenant -> workspace; header/body never grants authority",
+    "localLaunch": "SidecarGuard private launch proof + asserted local principal; distinct from JWT tenant identity",
+    "serviceHost": "signed uar_credential_kind=issuer + exact trusted_host_principals issuer/subject/tenant -> host_id + destination trusted_hosts",
+    "apiKeys": "direct and exchanged credentials preserve issuer/subject/tenant and attenuated roles; no service host or cross-owner admin promotion",
+    "legacyTokens": "missing/unknown credential kind is unclassified; ordinary owner authority only",
+    "downstream": "provider/MCP resource credential is not UAR authentication or host provenance"
+  },
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/capabilities",
+      "request": "no body; authenticated principal",
+      "response": "RuntimeDescriptor: profile,runtime_epoch,recovery,retention,steer_supported"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks",
+      "request": {
+        "required": {
+          "admission_id": "nonempty string",
+          "native_task_id": "nonempty string",
+          "input": "string"
+        },
+        "agentSelector": "artifact OR agent_id OR deployment_binding_id; ambiguity rejected",
+        "optional": [
+          "service_placement",
+          "session_id",
+          "run_credentials",
+          "mcp_servers",
+          "tool_admission",
+          "working_directory",
+          "reasoning_effort",
+          "history",
+          "skill_attachments",
+          "flattened presentation negotiation"
+        ]
+      },
+      "response": "202 TaskReceipt; reservation precedes native run entry; same owner/workspace/admission and identical canonical body digest replays frozen admission response",
+      "idempotencyConflict": "409 admission_digest_conflict; do not replace admission_id to retry an uncertain effect"
+    },
+    {
+      "method": "GET",
+      "path": "/admissions/{admission_id}",
+      "request": "same owner/workspace; no body",
+      "response": "current process-local TaskReceipt or explicit unresolved/expired result"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/{task_id}",
+      "request": "same owner/workspace; no body",
+      "response": "TaskReceipt with current revision/state/cursor"
+    },
+    {
+      "method": "GET",
+      "path": "/tasks/{task_id}/stream",
+      "request": "optional last_event_id:u64 query or Last-Event-ID header; query wins",
+      "response": "existing native SSE history followed by live stream; duplicates suppressed; unrecoverable gap emitted rather than silently jumping"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/{task_id}/tool-approval",
+      "request": {
+        "expected_revision": "u64 required",
+        "approved": "boolean required",
+        "approval_id": "nonempty string from exact originating pending event required"
+      },
+      "response": "TaskReceipt; 409 revision_conflict or approval_unresolved leaves no alternative waiter selected"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/{task_id}/cancel",
+      "request": {
+        "expected_revision": "u64 required"
+      },
+      "response": "TaskReceipt.cancellation separates requested,acknowledged,terminal,cleanup_uncertain; acknowledgement is not terminal/effect reversal"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/{task_id}/detach",
+      "request": {
+        "expected_revision": "u64 required",
+        "observer_id": "nonempty string required"
+      },
+      "response": "observer detach receipt; no execution cancellation"
+    },
+    {
+      "method": "POST",
+      "path": "/tasks/{task_id}/steer",
+      "request": "owned task identity",
+      "response": "422 capability_unsupported"
+    }
+  ],
+  "receipt": {
+    "required": [
+      "admission_id",
+      "task_id",
+      "native_task_id",
+      "run_id",
+      "workspace_id",
+      "runtime_epoch",
+      "revision",
+      "state",
+      "retention",
+      "cancellation",
+      "detached",
+      "detached_observers",
+      "created_at",
+      "unsupported_semantics",
+      "links"
+    ],
+    "optional": [
+      "agent_id",
+      "cursor",
+      "effective_service_binding",
+      "diagnostics",
+      "terminal_at",
+      "expires_at"
+    ],
+    "states": [
+      "reserved",
+      "submitted",
+      "working",
+      "input_required",
+      "completed",
+      "failed",
+      "cancelled",
+      "rejected"
+    ],
+    "links": [
+      "status",
+      "stream",
+      "tool_approval",
+      "cancel",
+      "detach",
+      "steer"
+    ]
+  },
+  "mapping": {
+    "input": "Full harness uses CreateRunRequest.input, a string; do not send OpenAI messages as an implicit substitute.",
+    "model": "Agent artifact policy.provider.default {provider,model}, with explicit fallback list; no top-level model field in full-harness CreateRunRequest.",
+    "budgets": "No top-level full-harness budget request field. Artifact extensions.budgets carries BudgetsSection: max_tokens_per_turn,max_tokens_per_session,max_tool_calls_per_turn,max_cost_per_session_usd,timeout_seconds,rate_limit{requests_per_minute,tokens_per_minute}; consumer must map supported semantics deliberately, not assume arbitrary extra JSON is enforced.",
+    "history": "history {session_id,messages}; exact request session match; <=1000 messages and <=4MiB counted payload; only user/assistant/tool roles; valid unique tool calls and corresponding nonduplicate results; warm session may ignore seed.",
+    "tools": "Artifact tool allow/deny,max_concurrent,execution_mode; effective policy/governance and prepared host admission still apply. Chat compatibility tools field is not a tool grant.",
+    "pairedAdmission": "tool_admission camelCase {version:1,hostEpoch,url,headers}; actual SidecarGuard authority required, HTTP loopback /uar/admission/v1; not enabled by ordinary JWT role or configured MCP service-host proof.",
+    "credentials": "Run-local provider set requires default/fallback coverage; provider_kind openai_compatible or anthropic; secrets nonserialized/redacted. MCP grants require registered destination, typed host proof, scope/lease/owner constraints.",
+    "reasoning": "none|low|medium|high|max only",
+    "workingDirectory": "canonical existing directory input; not by itself filesystem authorization"
+  },
+  "modelProvider": {
+    "paths": [
+      "/api/chat/completion",
+      "/v1/chat/completions"
+    ],
+    "implementation": "src/server.rs::api_chat_completion + server-local ChatCompletionRequest; not the smaller src/uar/api/openai/types.rs shape",
+    "requestFields": [
+      "model?",
+      "messages[]",
+      "message?",
+      "temperature? compatibility",
+      "tools[]? compatibility",
+      "stream",
+      "stream_mode / stream_format",
+      "session_id?",
+      "attachments[]",
+      "memory_enabled",
+      "prompt_caching_enabled?",
+      "agent_id?",
+      "run_policy?",
+      "presentation negotiation"
+    ],
+    "replay": "stream=true + x-uar-run-id + Last-Event-ID together, owner-bound and stream-format matched",
+    "limitation": "OpenAI completion surface does not return full_harness task receipt/admission/revision control contract; transport compatibility does not make it a full-harness provider."
+  },
+  "failures": {
+    "400": [
+      "admission_invalid",
+      "workspace_required",
+      "approval_invalid",
+      "detach_invalid"
+    ],
+    "401": [
+      "principal_invalid"
+    ],
+    "404": [
+      "task_not_found",
+      "task_unresolved for missing process-local admission"
+    ],
+    "409": [
+      "admission_digest_conflict",
+      "revision_conflict",
+      "approval_unresolved",
+      "recovery_unsupported"
+    ],
+    "410": [
+      "retention_expired",
+      "task_unresolved for current-epoch unavailable receipt/stream"
+    ],
+    "422": [
+      "capability_unsupported"
+    ],
+    "envelope": "{error:{code,message,task_id?,admission_id?}}; native admission errors retain their status/code in rejected receipt",
+    "unknown": "Lost create/effect response or prior epoch remains unknown/unsupported; reconcile exact admission/task under original owner/workspace, do not auto-submit a new invocation."
+  },
+  "consumerChecklist": [
+    "Discover capabilities/profile and runtime_epoch before selecting full-harness behavior.",
+    "Bind authenticated identity/workspace independently of downstream credentials.",
+    "Retain admission_id + exact request body across uncertain create response, and task_id/native_task_id/run_id/epoch/revision/cursor from receipt.",
+    "Submit exact approval ID plus current expected_revision; never substitute latest pending implicitly.",
+    "Map budgets, model, history and tool constraints only through supported fields; report unsupported semantics.",
+    "Treat cancellation receipt stages distinctly; never turn unknown or unsupported recovery into automatic replay."
+  ],
+  "priorHandoffs": [
+    "uar-prerequisites.md",
+    "identity-policy-authoring.md",
+    "key-attenuation-authoring.md",
+    "key-management-authoring.md",
+    "jwks-integration-authoring.md",
+    "host-provenance-authoring.md",
+    "exact-approval-authoring.md"
+  ],
+  "limitations": [
+    "Read-only source interface handoff; no source QA or runtime certification.",
+    "No tests/compiler/build/lint/gates/services/dependency changes or product writes.",
+    "No D0 fixture or session-manager work.",
+    "C05 original provider completion, parent integration, shipping and V1/V2 gates remain separate.",
+    "Later resource projection changes require refreshed hashes and a superseding handoff."
+  ]
+}

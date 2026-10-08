@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:29:01.889Z",
+  "requirement": "Required owned-library clippy check failed under -D warnings; bounded correction to continue approved release-blocking Execute",
+  "observation": "bossfang-owned-libraries-clippy-01.json: large_enum_variant and missing_docs in librefang-storage",
+  "baseline": "bossfang-clippy-baseline-attribution-01.json",
+  "paths": [
+    "crates/librefang-storage/src/channel_actions.rs",
+    "crates/librefang-storage/src/channel_actions/surreal_impl/observers.rs",
+    "crates/librefang-storage/src/channel_routes.rs"
+  ],
+  "correction": "Box only Suppressed receipt and 3 constructors; document 3 named RouteOutcome fields. No lint suppression or adjacent cleanup.",
+  "impact": "Public Rust Suppressed payload changes to Box<ActionReceipt>; internal current API consumer discards payload. Adds one allocation for suppression. Serialized data/wire/database statements unchanged.",
+  "owner": "bossfang_execution",
+  "verification": "Root runs only failed required clippy after source release; retained harness18 PASS is not repeated unless changed behavior requires it",
+  "excluded": [
+    "D0",
+    "shared services",
+    "operator pins",
+    "formatting sweep",
+    "phase completion"
+  ]
+}

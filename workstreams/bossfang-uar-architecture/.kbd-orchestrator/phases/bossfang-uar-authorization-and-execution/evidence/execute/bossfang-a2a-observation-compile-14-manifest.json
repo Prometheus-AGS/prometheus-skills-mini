@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-06T20:01:57.225Z",
+  "sourceCommandReceipt": "final-gates/bossfang-a2a-observation-compile-14.json",
+  "compileStatus": "observed-pass",
+  "sourceBinding": "harness-a2a-available-observation-correction/receipt.json",
+  "executables": [
+    {
+      "target": "purge_sentinels",
+      "features": [
+        "default",
+        "surreal-backend",
+        "uar-driver"
+      ],
+      "executable": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/target/debug/purge_sentinels",
+      "sha256": "70973871dd2daeb8618f7b66a42cdcff301fef9fb1d24293912c2cd34b5f8042"
+    },
+    {
+      "target": "bauar_harness_delegation",
+      "features": [
+        "default",
+        "surreal-backend",
+        "uar-driver"
+      ],
+      "executable": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+      "sha256": "5c17f9d44bd095e4a20fa0a2fe53fbe6e9e70152cfcd5dd806f7e6b09ddf6882"
+    },
+    {
+      "target": "bauar_harness_host",
+      "features": [
+        "default",
+        "surreal-backend",
+        "telemetry",
+        "test-util",
+        "uar-driver"
+      ],
+      "executable": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+      "sha256": "ba08a405b362ae39e46bdf1acc3b6dfe91ecd8c543f90a16b70e2cdeb495732b"
+    }
+  ]
+}

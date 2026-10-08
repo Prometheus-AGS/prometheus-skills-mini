@@ -1,0 +1,69 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "MiniMax-M3",
+  "judge_identity": {
+    "providerId": "minimax",
+    "providerConnectionId": "minimax-direct",
+    "modelId": "MiniMax-M3"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "claim": "F1 and F2 evidence citations for the controlled-provider fixture (bauar-secret-projection.ts:148–161 and 148–165) describe a read_projection check and a role:tool branch, but the inspected evidence at those lines shows only the request handler's response emission (closing brace, content-delta loop, stop event, provider setup) — the cited decision logic is in unshown code above line 148.",
+      "evidence": "Inspected evidence first fixture branch: line 148 = `}` (closes an unshown block), lines 149-155 = delta emission loop writing `{ role: 'assistant', reasoning_content: ... }` and `{ content: ... }` events, line 156 = `response.end(event({}, 'stop') + 'data: [DONE]\\n\\n')`, lines 157-161 = `})` closing the request handler plus `provider.listen`, `provider.address()`, an `assert`, and a `baseUrl` constant. No `read_projection` string and no `role: 'tool'` branch appear in this range. The high-level conclusion (provider doesn't prepare tools, treats any tool message as completion) is supported by runtime 12's `preparedInvocationCount: 0` and `matchingToolInputCount: 0`, but the specific mechanism attributed to lines 148-161/165 is not directly verifiable from the packet. Line 165 (cited by F2) is `checkpoint('desktop_bootstrap')` — a test checkpoint, not a provider branch.",
+      "suggested_fix": "Replace the line-cited mechanism in F1 and F2 with either (a) a hash-bound quote of the actual decision logic (extend the inspected_evidence snippet to include the missing code above 148), or (b) an explicit 'inferred from runtime 12 behavior; not directly observed at the cited lines' framing so Analyze does not treat the line citation as the evidence."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "F3's 'smallest correction candidate' prescribes a new diagnostic-capture mechanism (passive finite observations for target advertised, search advertised/proposed, target proposed, exact approval decision and actual target effect) at the 'applicable completed delivery boundary' — this is new infrastructure, not a same-scope fixture correction like F1/F2.",
+      "evidence": "F3 smallest correction: 'At the applicable completed delivery boundary, include passive finite observations for target advertised, search advertised/proposed, target proposed, exact approval decision and actual target effect. Keep original assertions as the outcome oracle. Existing diagnosis/corrections and source24 remain immutable; a new receipt must describe new evidence.' Adding new capture fields requires capture-system changes, new source binding, new acceptance criteria, and its own analysis of where the boundary lives. F1 and F2 corrections stay within the controlled-provider fixture; F3 crosses into the diagnostic capture path. The label 'smallest correction' undersizes the scope.",
+      "suggested_fix": "Move F3's prescription out of the 'smallest correction candidate' slot and into a separate 'evidence-gap remediation' section, with an explicit note that it is capture-system infrastructure, not a fixture fix, and that Analyze must evaluate it independently."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "F1's 'smallest correction candidate' is internally inconsistent with 'Open questions for Analyze' Q1, which explicitly asks whether the deferred-exposure hypothesis is the actual cause of runtime 12.",
+      "evidence": "F1 smallest correction: 'Have the controlled provider propose the actually advertised search_tools control when its target is deferred, then select the actual target name in the next model request.' This is a specific, conditional-on-hypothesis fixture change. Open questions Q1: 'Can the next source-bound real-path observation establish target-deferred/search-advertised/fixture-stop as the cause, or does a different catalog/exposure problem occur before host preparation?' The prescriptive direction commits to the first option while the question raises it as unresolved. The same artifact both prescribes and questions the diagnosis.",
+      "suggested_fix": "Either mark F1's smallest correction as 'contingent on Q1 resolution', or drop Q1 and treat the diagnosis as established. Shipping both forms leaves Analyze with conflicting signals."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "Multiple process and state claims are asserted without packet support: parent change task counts (01 6/7; 02 2/8; 03 8/9; 04 8/10), 'Runtime11's wait was separately localized and corrected', 'OpenSpec preflight actually refreshed 1.14.1 with latestVerified:true, authoredPathsChanged:[]', 'Model preflight was actually read from its fresh 24h cache and reports ok with 2 configured models', and 'Existing Boss fixture Node compiler16: PASS' (an undefined term — Node does not compile TypeScript; the standard toolchain is tsc/ts-node).",
+      "evidence": "prior_handoffs is null. The file_tree lists only the KBD worktree (with .kbd-orchestrator/, .prometheus/, openspec/, .agents/), and inspected_evidence contains no OpenSpec change specs, no OpenSpec preflight output, no model-preflight output, no runtime 11 evidence, and no 'Node compiler16' definition. The assessment references a [creation receipt](evidence/creation-receipt.json) and a [source contract receipt](evidence/uar-exposure-source-contract.json) as markdown links, but neither file appears in the packet's inspected_evidence (the latter's content is mirrored under the key `uarSourceContract`; the former is not present at all).",
+      "suggested_fix": "Either source each claim to a specific file and add that file to inspected_evidence, or remove the unsupported claims. Define or replace 'Node compiler16' with a verifiable tool name (tsc / ts-node / etc.)."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "The 'Spec alignment' section lists Parent04 requirements (application-supplied MCP configuration, finite owner/run credentials, independent receiver validation, known credential echo projection, preserved secret custody, source-specific deployment claims) without sourcing the Parent04 spec from the packet.",
+      "evidence": "Spec alignment paragraph opens: 'Parent04 requires actual application-supplied MCP configuration, finite owner/run credentials, independent receiver validation, known credential echo projection, preserved secret custody and source-specific deployment claims.' The packet has no openspec/changes/.../04 spec, no requirement list, and no link to a Parent04 file. The requirement list is asserted as fact rather than quoted.",
+      "suggested_fix": "Either cite the specific Parent04 spec file (and add it to inspected_evidence), or reframe the requirement list as 'the assessor's interpretation of Parent04 scope' rather than a direct quote from a spec not in the packet."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "assessment.md",
+      "claim": "F4 ('The whole gate and parent release are still incomplete') restates the original observation rather than adding new analysis beyond the verdict and goal-status table.",
+      "evidence": "F4 evidence: 'E2 is exit1, with failure at the first positive MCP mode; success receipts for the whole projection gate are absent.' This is the same symptom reported in the verdict's first paragraph ('Runtime 12 fails at its first positive MCP assertion with zero prepared invocations and zero MCP calls'). F4's smallest correction ('Complete the selected correction before one failed-gate rerun. Retain each original positive/negative assertion and source/payload binding. Record platform/package limitations separately rather than waive them from child success.') also restates goal 3 ('Complete the failed projection gate once after the complete correction').",
+      "suggested_fix": "Either merge F4 into the verdict/goal-status table, or strengthen it with a specific untested branch or sink that F1-F3 do not already cover (the Spec alignment section mentions event split/partial/reconnect/interruption/cancel/snapshot/error/approval branches — pick one and identify the gap)."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "assessment.md",
+      "claim": "The 'Current flow and ownership' Mermaid diagram mixes current and proposed states in a single graph: the dotted 'D[Propose search_tools] → N[Select tools for next step] → V' path is labeled 'required when deferred' and does not exist in the current fixture, which goes 'P → |target absent: current fixture| → S[Normal assistant stop]'.",
+      "evidence": "Mermaid source includes `P -.->|required when deferred| D[Propose search_tools]` and `D --> N[Select tools for next step]`, `N --> V`. The current fixture has no path to D or N; it stops at S. The dotted arrow is the only visual cue that this is a proposed path; downstream readers may miss it.",
+      "suggested_fix": "Split into two diagrams: 'Current flow (target absent → stop)' and 'Proposed flow (target deferred → search_tools → select → freeze again)'. Keep the current diagram in the Assess record and mark the proposed diagram as a candidate for Analyze/Plan."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

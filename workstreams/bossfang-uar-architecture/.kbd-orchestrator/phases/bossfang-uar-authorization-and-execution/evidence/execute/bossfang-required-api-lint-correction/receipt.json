@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-06T22:58:50.749Z",
+  "status": "source_frozen_verification_pending",
+  "sourceRoot": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "failureEvidence": "../final-gates/bossfang-owned-libraries-clippy-06.log",
+  "files": [
+    {
+      "source": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-api/src/routes/uar_delegation/connections.rs",
+      "snapshot": "connections.rs",
+      "sha256": "3be7097aa85335e856b624d8a6271200b013557f44b5791f7561009d24dbb3c9",
+      "bytes": 5704,
+      "lines": 170,
+      "declaration": "Immutable byte-exact source snapshot, not registered in any build target."
+    },
+    {
+      "source": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-api/src/routes/uar_delegation/diagnostic.rs",
+      "snapshot": "diagnostic.rs",
+      "sha256": "2211d9c9913e492ce8b3f15ad7d52863dc346fd874f5627f260ada334a176ff2",
+      "bytes": 3062,
+      "lines": 90,
+      "declaration": "Immutable byte-exact source snapshot, not registered in any build target."
+    },
+    {
+      "source": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-api/src/routes/uar_delegation.rs",
+      "snapshot": "uar_delegation.rs",
+      "sha256": "5f7a57b26e11e7b13924edd95864043b258bff1bbaaf5efd9e85ac31cea69f04",
+      "bytes": 20011,
+      "lines": 490,
+      "declaration": "Immutable byte-exact source snapshot, not registered in any build target."
+    },
+    {
+      "source": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-api/src/routes/uar_delegation/schema.rs",
+      "snapshot": "schema.rs",
+      "sha256": "aa09fca598e253d11a0449203be3e62745d532a0a4c30fbeefa2f644efdce3f2",
+      "bytes": 1257,
+      "lines": 18,
+      "declaration": "Immutable byte-exact source snapshot, not registered in any build target."
+    },
+    {
+      "source": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-api/src/routes/channels.rs",
+      "snapshot": "channels.rs.txt",
+      "sha256": "fb26536faf58a1c5b228fe68832e3eaa00f8b9768edeb8232f9de072ad361765",
+      "bytes": 173379,
+      "lines": 3821,
+      "declaration": "Immutable plain-text original source evidence; byte-exact copy of the corrected oversized incumbent, not executable evidence code or a new implementation module. No reformatting or source partition was performed."
+    },
+    {
+      "source": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-api/src/channel_observers/control.rs",
+      "snapshot": "control.rs",
+      "sha256": "dd565c196bc32908cca82391e73a4b7554f36391b12b9f013d17ff7527612096",
+      "bytes": 11618,
+      "lines": 304,
+      "declaration": "Immutable byte-exact source snapshot, not registered in any build target."
+    },
+    {
+      "source": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-api/src/routes/network.rs",
+      "snapshot": "network.rs.txt",
+      "sha256": "cef991630f21ce6d1ca9a2fd7833c177b8efa22f1e2d0b51bd278c1b7f5fd156",
+      "bytes": 103546,
+      "lines": 2612,
+      "declaration": "Immutable plain-text original source evidence; byte-exact copy of the corrected oversized incumbent, not executable evidence code or a new implementation module. No reformatting or source partition was performed."
+    },
+    {
+      "source": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-api/src/routes/sidecar_toml.rs",
+      "snapshot": "sidecar_toml.rs.txt",
+      "sha256": "892292d07005fe0a78a76fb9143cca4690fcb9b91806304c213913fadb975a55",
+      "bytes": 22457,
+      "lines": 579,
+      "declaration": "Immutable plain-text original source evidence; byte-exact copy of the corrected oversized incumbent, not executable evidence code or a new implementation module. No reformatting or source partition was performed."
+    },
+    {
+      "source": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-api/src/routes/uar/delegated_tasks.rs",
+      "snapshot": "delegated_tasks.rs",
+      "sha256": "a37225c1c0ec8b50ba9d06ba27ca68c48bc75f66ea2b11c3e469429f868b6436",
+      "bytes": 9406,
+      "lines": 222,
+      "declaration": "Immutable byte-exact source snapshot, not registered in any build target."
+    }
+  ],
+  "changes": [
+    {
+      "paths": [
+        "routes/uar_delegation/connections.rs",
+        "routes/uar_delegation/diagnostic.rs",
+        "routes/uar_delegation.rs"
+      ],
+      "description": "Actual handlers, associated imports, RefreshRequest and function reexports gated by uar-driver. Enabled handler signatures/bodies and registered routing/auth checks retained. Disabled router registration unchanged."
+    },
+    {
+      "paths": [
+        "routes/uar_delegation/schema.rs",
+        "routes/uar_delegation.rs"
+      ],
+      "description": "OpenAPI annotations moved to unconditional hidden-public schema functions; existing __path descriptor names reexported. No runtime route is registered to these empty documentation functions."
+    },
+    {
+      "paths": [
+        "routes/channels.rs"
+      ],
+      "description": "Feature-specific observer field declarations keep enabled names and use underscore storage with explicit serde rename when not both surreal-backend and uar-driver. Same typed JSON extraction in both profiles. Surreal capability branch now returns its existing tail expression."
+    },
+    {
+      "paths": [
+        "channel_observers/control.rs",
+        "routes/network.rs"
+      ],
+      "description": "Equivalent None-or-below-threshold predicates preserve Owner/Admin rejection truth tables."
+    },
+    {
+      "paths": [
+        "routes/sidecar_toml.rs",
+        "routes/channels.rs"
+      ],
+      "description": "Command and args grouped into SidecarCommand; existing upsert body destructures the borrowed fields. One production caller and two existing test callers updated; all existing assertions retained."
+    },
+    {
+      "paths": [
+        "routes/uar/delegated_tasks.rs"
+      ],
+      "description": "Private parse_task_ref error boxed and moved out at its two callers; response codes, IDs, error messages and control flow unchanged."
+    }
+  ],
+  "openapiAnnotationProof": [
+    {
+      "operation": "connections",
+      "baseline": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+      "annotation": "#[utoipa::path(get,path=\"/api/uar/connections\",tag=\"uar\",responses((status=200,description=\"Secret-free active original run bindings and private credential presence\")))]\n",
+      "sha256": "21e904e1f4ad69ad567d1d009865b64851c9369e02cd99fe66da1cf13b43efa6",
+      "presentByteForByteInSchema": true
+    },
+    {
+      "operation": "refresh",
+      "baseline": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+      "annotation": "#[utoipa::path(post,path=\"/api/uar/connections/refresh\",tag=\"uar\",request_body=crate::types::JsonObject,responses((status=200,description=\"Original connection credential replaced after exact identity, epoch and owned receipt validation\"),(status=410,description=\"Original UAR runtime epoch no longer recoverable\")))]\n",
+      "sha256": "b13c0e6693fc9d5463c8cfbcee717da6df316b306e9625ef7df6403978d49647",
+      "presentByteForByteInSchema": true
+    },
+    {
+      "operation": "diagnostic_route",
+      "baseline": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+      "annotation": "#[utoipa::path(post, path=\"/api/uar/diagnostics/delegation\", tag=\"uar\", request_body=crate::types::JsonObject,\n    responses((status=201,description=\"Real inline diagnostic admission projection; body workspaceId/providerId/model and optional bossTaskId\"),\n    (status=202,description=\"Admission outcome unresolved; retain task identity for reconciliation\"),\n    (status=503,description=\"uar-driver feature unavailable\")))]\n",
+      "sha256": "1bd2277635141437f4a57658d6887f87913a90ebf668f21a25e42a27554a6e29",
+      "presentByteForByteInSchema": true
+    }
+  ],
+  "disabledObserverJsonShape": {
+    "derive": "Deserialize (no ToSchema derive on this request)",
+    "enabledCondition": "all(feature = surreal-backend, feature = uar-driver)",
+    "fields": [
+      {
+        "jsonName": "observer_instance_id",
+        "rustType": "String",
+        "serdeDefault": false,
+        "enabledRustField": "observer_instance_id",
+        "disabledRustField": "_observer_instance_id",
+        "disabledSerdeRename": "observer_instance_id"
+      },
+      {
+        "jsonName": "source",
+        "rustType": "librefang_channels::channel_route::ChannelScope",
+        "serdeDefault": false,
+        "enabledRustField": "source",
+        "disabledRustField": "_source",
+        "disabledSerdeRename": "source"
+      },
+      {
+        "jsonName": "source_grant_issuer",
+        "rustType": "String",
+        "serdeDefault": false,
+        "enabledRustField": "source_grant_issuer",
+        "disabledRustField": "_source_grant_issuer",
+        "disabledSerdeRename": "source_grant_issuer"
+      },
+      {
+        "jsonName": "source_grant_id",
+        "rustType": "String",
+        "serdeDefault": false,
+        "enabledRustField": "source_grant_id",
+        "disabledRustField": "_source_grant_id",
+        "disabledSerdeRename": "source_grant_id"
+      },
+      {
+        "jsonName": "recipient_grant_issuer",
+        "rustType": "String",
+        "serdeDefault": false,
+        "enabledRustField": "recipient_grant_issuer",
+        "disabledRustField": "_recipient_grant_issuer",
+        "disabledSerdeRename": "recipient_grant_issuer"
+      },
+      {
+        "jsonName": "recipient_grant_id",
+        "rustType": "String",
+        "serdeDefault": false,
+        "enabledRustField": "recipient_grant_id",
+        "disabledRustField": "_recipient_grant_id",
+        "disabledSerdeRename": "recipient_grant_id"
+      },
+      {
+        "jsonName": "recipient_grant_revision",
+        "rustType": "String",
+        "serdeDefault": false,
+        "enabledRustField": "recipient_grant_revision",
+        "disabledRustField": "_recipient_grant_revision",
+        "disabledSerdeRename": "recipient_grant_revision"
+      },
+      {
+        "jsonName": "source_profile",
+        "rustType": "Option<String>",
+        "serdeDefault": true,
+        "enabledRustField": "source_profile",
+        "disabledRustField": "_source_profile",
+        "disabledSerdeRename": "source_profile"
+      }
+    ],
+    "compatibility": "Required fields remain required; ChannelScope deserialization unchanged; optional source_profile retains default; unknown-field policy unchanged."
+  },
+  "publicRustImpact": [
+    "upsert_sidecar_in_vec signature now takes SidecarCommand instead of separate command and args arguments; external Rust callers must adapt. HTTP and persisted sidecar shapes are unchanged.",
+    "New hidden-public schema module exposes documentation functions and generated descriptors so they remain reachable without runtime feature; these are not route handlers.",
+    "Private parse_task_ref Box error is internal only.",
+    "Enabled UAR handler and request Rust signatures are unchanged; unavailable runtime handler symbols are now omitted consistently with existing disabled routing."
+  ],
+  "baselineAttribution": {
+    "commit": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+    "inherited": [
+      "UAR connections/diagnostic handler/import feature boundaries",
+      "CreateChannelObserverRequest fields and capability return",
+      "channel observer Owner predicate",
+      "sidecar helper eight-argument signature",
+      "private parse_task_ref large error"
+    ],
+    "phaseAuthored": [
+      "MCP Admin predicate in routes/network.rs"
+    ],
+    "newForCorrection": [
+      "schema.rs documentation separation",
+      "SidecarCommand grouping type",
+      "cfg-specific disabled observer field storage names"
+    ]
+  },
+  "verification": {
+    "performed": "Source inspection, frozen source hash verification, baseline source comparison and annotation byte equality only.",
+    "notPerformed": [
+      "tests",
+      "builds",
+      "clippy",
+      "formatter",
+      "runtime gates",
+      "OpenAPI generation"
+    ],
+    "limitations": "Dynamic behavior and compiler/lint acceptance for these changes await root-owned failed-gate rerun; no runtime pass is claimed."
+  },
+  "immutability": "All snapshots and this receipt created exclusively; existing evidence is never replaced. Workflow-frozen; no file permissions changed.",
+  "sourceMutationDuringReceiptTask": false
+}

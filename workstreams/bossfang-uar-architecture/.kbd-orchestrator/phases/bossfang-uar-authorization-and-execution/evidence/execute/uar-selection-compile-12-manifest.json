@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T21:52:35.958Z",
+  "receipt": "final-gates/uar-selection-compile-12.json",
+  "sourceBinding": "source-inventory-metadata-delivery-02.json",
+  "sourceHead": "8bff32deb870f6363e94687a2e22492f91a34dfd",
+  "sourceFilesChecked": 114,
+  "sourceHashesUnchanged": true,
+  "artifacts": [
+    {
+      "target": "bauar_skill_selection",
+      "kind": [
+        "test"
+      ],
+      "testProfile": true,
+      "features": [
+        "a2a-transport",
+        "admin-ui",
+        "api-docs",
+        "cedar-governance",
+        "document-intelligence",
+        "local-models",
+        "minimal",
+        "response-quality",
+        "server",
+        "server-full",
+        "surreal-backend",
+        "telemetry",
+        "test-probes",
+        "wasm-runtime"
+      ],
+      "executable": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_skill_selection-f9e723aef3a84054",
+      "sha256": "3052b64075d94c4bca0ce4deed20d0ebc61d4be8c3237e6c089db3a9281006c4"
+    },
+    {
+      "target": "universal-agent-runtime",
+      "kind": [
+        "bin"
+      ],
+      "testProfile": false,
+      "features": [
+        "a2a-transport",
+        "admin-ui",
+        "api-docs",
+        "cedar-governance",
+        "document-intelligence",
+        "local-models",
+        "minimal",
+        "response-quality",
+        "server",
+        "server-full",
+        "surreal-backend",
+        "telemetry",
+        "test-probes",
+        "wasm-runtime"
+      ],
+      "executable": "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+      "sha256": "a269e4078685400f9d10dba33a010945939afac668f367e5856da1a1ca27a454"
+    },
+    {
+      "target": "uar-sidecar",
+      "kind": [
+        "bin"
+      ],
+      "testProfile": false,
+      "features": [
+        "a2a-transport",
+        "admin-ui",
+        "api-docs",
+        "cedar-governance",
+        "document-intelligence",
+        "local-models",
+        "minimal",
+        "response-quality",
+        "server",
+        "server-full",
+        "surreal-backend",
+        "telemetry",
+        "test-probes",
+        "wasm-runtime"
+      ],
+      "executable": "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/uar-sidecar",
+      "sha256": "3020817559ab913639ba77f2861bf29e8a928a969532ffee224d5472714b6393"
+    }
+  ],
+  "scope": "Only named integration target; actual main for remaining harness. Test-probes strictly fixture only; production payload03 already staged separately"
+}

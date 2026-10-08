@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:14:53.023Z",
+  "kind": "accepted bounded Execute contract correction",
+  "observedFailure": "final-gates/boss-approval-client-runtime-10.json",
+  "sourceFinding": "UAR compare includes authorityRevision; Boss shared receipt omits it and serde defaults missing revision empty. Separate existing UAR /claim POST has no Boss route.",
+  "scope": "Existing approved exact invocation/approval/host protocol tasks; no architecture ownership or deployment expansion",
+  "owner": "boss_execution",
+  "consumer": "UAR unchanged strict comparisons",
+  "correction": [
+    "Required original authorityRevision in new host invocation, persistence snapshot and exact returned receipt",
+    "Exact original revision included downstream MCP claim comparison and updated owned callers",
+    "Authenticated non-consuming /claim revalidation of existing authorized record, original invocation/receipt and applicable current policy/grant/lease/budget/decision",
+    "Real MCP dispatch remains sole consuming host claim before effect; cancellation and unknown outcomes preserved"
+  ],
+  "historicalState": "Optional snapshot revision solely for old presentation evidence; no executable replay authority or migration",
+  "securityBoundary": "Actual paired-host prepared tool invocation and approved one-use MCP execution; strict cutover of owned callers",
+  "exclusions": [
+    "No D0 session-owner source/diagnostic/correction",
+    "No UAR comparison weakening",
+    "No new service/dependency/config/pin",
+    "No fresh authorization, synthetic effect or recovery/replay"
+  ],
+  "verification": "Complete coherent producer/route/owned callers before failed-only actual desktop gate; root owns builds and acceptance"
+}

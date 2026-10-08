@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T21:48:49.980Z",
+  "receipt": "final-gates/bossfang-owned-libraries-clippy-01.json",
+  "acceptedSourceHead": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+  "errors": [
+    "large_enum_variant channel_actions.rs412",
+    "missing_docs channel_routes.rs99/101/103"
+  ],
+  "files": [
+    {
+      "file": "crates/librefang-storage/src/channel_actions.rs",
+      "headSha256": "8310644266cabb121380afeeedb1d89175a7aea62206c5e05207869847321d7c",
+      "currentSha256": "8310644266cabb121380afeeedb1d89175a7aea62206c5e05207869847321d7c",
+      "unchangedAtAcceptedBaseline": true
+    },
+    {
+      "file": "crates/librefang-storage/src/channel_routes.rs",
+      "headSha256": "ce631d3a45c59b6862376b4fd837888bff5bf39556031ea447a380e8d760aafc",
+      "currentSha256": "ce631d3a45c59b6862376b4fd837888bff5bf39556031ea447a380e8d760aafc",
+      "unchangedAtAcceptedBaseline": true
+    }
+  ],
+  "status": "required lint failed and unwaived; compiler stopped in unchanged local dependency before all requested libraries checked",
+  "scope": "No channel/storage cleanup, source lint suppression or waiver implemented"
+}

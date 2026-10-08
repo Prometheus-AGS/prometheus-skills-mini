@@ -127,8 +127,8 @@ constraints:
     severity: blocking
     source: 'AGENTS.md A-3; .claude/rules/docker-services.md — Compose rules'
     description: 'No inline database credentials or provider keys in code, config or Compose files'
-    check: 'git grep --no-index --exclude-standard -n -E -e "--(user|pass)=" -e "sk-[A-Za-z0-9_-]{20,}" -- "docker/*" "*.mjs" "*.json" "*.toml" "*.yaml" "*.yml"'
-    note: 'Credentials reach containers through env_file / ${VAR} from a git-ignored docker/.env. Markdown is excluded on purpose: the docs quote the source pack''s root/root as the thing not to do.'
+    check: 'node scripts/check-hardcoded-secrets.mjs'
+    note: 'Credentials reach containers through env_file / ${VAR} from a git-ignored docker/.env. The Node checker (lib/secret-scan/) preserves the original git-grep check''s effective scope — it enumerates candidates with the identical `git grep --no-index --exclude-standard` pathspec list, and `docker/*` has always included Markdown (the original failure record includes docker/AGENTS.md:28; the old note claiming Markdown exclusion was stale). Beyond line scanning it also inspects every parsed JSON property name and string value, classifying hits as key, value or text. It admits only the finite hash-bound dispositions in lib/secret-scan/dispositions.json — the 24 known non-credential occurrences, each bound by file + kind + sha256 of the exact match substring; any new or changed hit fails, a disposition no longer observed fails as stale, and reports carry only file, line, JSON pointer and digest, never a matched value. Proof it still discriminates: lib/secret-scan/scanner.test.mjs (synthetic credentials are detected, the real tree passes, a one-byte mutation re-fails).'
 
   - id: compose-ports-loopback-only
     severity: blocking

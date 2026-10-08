@@ -1,0 +1,2487 @@
+//! LibreFangKernel — assembles all subsystems and provides the main API.
+
+use crate::auth::AuthManager;
+use crate::background::{self, BackgroundExecutor};
+use crate::config::load_config;
+use crate::error::{KernelError, KernelResult};
+use crate::metering::MeteringEngine;
+use crate::router;
+use crate::supervisor::Supervisor;
+use crate::triggers::{TriggerEngine, TriggerId, TriggerPattern};
+use crate::workflow::{DryRunStep, StepAgent, Workflow, WorkflowEngine, WorkflowId, WorkflowRunId};
+
+use librefang_memory::MemorySubstrate;
+use librefang_runtime::agent_loop::{
+    run_agent_loop, run_agent_loop_streaming, strip_provider_prefix, AgentLoopResult,
+};
+use librefang_runtime::audit::AuditLog;
+use librefang_runtime::drivers;
+// `kernel_handle::self` is needed by `kernel::tests` (call sites like
+// `kernel_handle::ApprovalGate::resolve_user_tool_decision(...)`) —
+// keep the self alias alongside the prelude wildcard so tests.rs resolves.
+// The `self` alias is `cfg(test)` because the non-test build no longer
+// references `kernel_handle::Foo` from inside this file (Phase 3a moved
+// the last such use into `kernel::accessors`); the wildcard prelude is
+// still needed unconditionally for trait-method resolution on the
+// `KernelHandle` impl bodies that remain in this file.
+#[cfg(test)]
+use librefang_runtime::kernel_handle;
+use librefang_runtime::kernel_handle::prelude::*;
+use librefang_runtime::llm_driver::exhaustion::ProviderExhaustionStore;
+use librefang_runtime::llm_driver::{
+    CompletionRequest, CompletionResponse, DriverConfig, LlmDriver, LlmError, StreamEvent,
+};
+use librefang_runtime::python_runtime::{self, PythonConfig};
+use librefang_runtime::routing::ModelRouter;
+use librefang_runtime::sandbox::{SandboxConfig, WasmSandbox};
+use librefang_runtime::tool_runner::builtin_tool_definitions;
+use librefang_types::agent::*;
+use librefang_types::capability::{glob_matches, Capability};
+use librefang_types::config::{AuthProfile, AutoRouteStrategy, KernelConfig};
+use librefang_types::error::LibreFangError;
+use librefang_types::event::*;
+use librefang_types::memory::Memory;
+use librefang_types::tool::{AgentLoopSignal, ToolDefinition};
+
+use arc_swap::ArcSwap;
+use async_trait::async_trait;
+use librefang_channels::types::SenderContext;
+use std::collections::HashSet;
+use std::path::{Path, PathBuf};
+// `Ordering` is no longer used in this file's non-test code (Phase 3a moved
+// the last unprefixed-`Ordering` users into `kernel::accessors`); the
+// remaining mod.rs sites all spell it `std::sync::atomic::Ordering::*`
+// inline. `kernel::tests` still references the bare `Ordering` ident via
+// `use super::*`, so keep the import in scope under `cfg(test)` only.
+#[cfg(test)]
+use std::sync::atomic::Ordering;
+use std::sync::{Arc, OnceLock, Weak};
+use tracing::{debug, error, info, instrument, warn};
+
+fn read_config_override<'a, T>(
+    lock: &'a std::sync::RwLock<T>,
+    state: &'static str,
+) -> std::sync::RwLockReadGuard<'a, T> {
+    lock.read().unwrap_or_else(|poisoned| {
+        warn!(
+            state,
+            "kernel config override read lock poisoned; recovering inner state"
+        );
+        lock.clear_poison();
+        poisoned.into_inner()
+    })
+}
+
+fn write_config_override<'a, T>(
+    lock: &'a std::sync::RwLock<T>,
+    state: &'static str,
+) -> std::sync::RwLockWriteGuard<'a, T> {
+    lock.write().unwrap_or_else(|poisoned| {
+        warn!(
+            state,
+            "kernel config override write lock poisoned; recovering inner state"
+        );
+        lock.clear_poison();
+        poisoned.into_inner()
+    })
+}
+
+/// Per-trait `kernel_handle::*` impls live in their own files under
+/// `kernel/handles/` to keep this file from doubling as a trait-impl
+/// dumping ground. The submodules are descendants of `kernel`, so they
+/// retain access to `LibreFangKernel`'s private fields and inherent
+/// methods without any visibility surgery.
+mod handles;
+
+// Cohesive free-fn / non-`LibreFangKernel`-impl chunks pulled out of
+// this file in Phase 2 of the kernel/mod.rs split. Re-exported below so
+// existing call sites — including `super::foo` references from
+// `kernel::tests` — continue to resolve unchanged.
+//
+// `accessors` (Phase 3a) hosts the first inherent `impl LibreFangKernel`
+// block — public-facade getters and lifecycle helpers (vault, GC sweep,
+// background sweep tasks). Listed alongside the Phase 2 modules in
+// alphabetical order; it is a sibling submodule, so private fields and
+// inherent methods on `LibreFangKernel` remain visible without surgery.
+mod accessors;
+mod agent_execution;
+mod agent_runtime;
+mod agent_state;
+mod assistant_routing;
+mod background_lifecycle;
+mod bindings_and_handle;
+mod boot;
+mod config_reload_ops;
+mod cron_bridge;
+// Cron session compaction helpers (#4683 / #3693). Cherry-picked into
+// this file from upstream main so `kernel::tests` resolves the helper
+// fns it asserts on. Long-term these belong inside the cron-tick body
+// rewrite that the rebase-on-main work will do.
+#[allow(dead_code)]
+mod cron_compaction;
+mod cron_script;
+// Phase 3b: cron scheduler tick loop — formerly the longest closure in
+// this file (#4683 landing zone). Extracted as `pub(super) async fn`
+// so the body can be edited and reviewed in isolation.
+mod cron_tick;
+mod ephemeral_spawn;
+mod goal_lifecycle;
+mod hands_lifecycle;
+mod llm_drivers;
+mod mcp_setup;
+pub use mcp_setup::McpReconnectError;
+mod mcp_summary;
+mod messaging;
+pub mod mission_workspace;
+mod pooled_driver;
+mod prompt_context;
+mod provider_probe;
+mod provisioning_ops;
+mod reviewer_sanitize;
+mod session_ops;
+mod spawn;
+pub mod step_agent;
+mod subsystem_forwards;
+pub mod subsystems;
+mod task_registry;
+mod tools_and_skills;
+pub use tools_and_skills::{PendingSkillMcpDeclarations, SemanticMemoryAccess, SkillReloadOutcome};
+mod triggers_and_workflow;
+pub mod uar_harness;
+
+// `cron_deliver_response`, `cron_fan_out_targets`, and `cron_script_wake_gate`
+// are now consumed by `kernel::cron_tick` after Phase 3b lifted the cron
+// tick loop body out of mod.rs. They are still imported by `cron_tick`
+// directly via the `super::` path, so no re-export is needed here.
+// Re-export cron_compaction helpers so `kernel::tests`'s `super::*`
+// references continue to resolve byte-for-byte.
+#[allow(unused_imports)]
+use cron_compaction::{
+    cron_clamp_keep_recent, cron_compute_keep_count, cron_resolve_compaction_mode,
+    try_summarize_trim,
+};
+use cron_script::atomic_write_toml;
+use mcp_summary::{mcp_summary_cache_key, render_mcp_summary};
+use provider_probe::probe_all_local_providers_once;
+pub use provider_probe::probe_and_update_local_provider;
+use reviewer_sanitize::{sanitize_reviewer_block, sanitize_reviewer_line};
+
+/// Synthetic `SenderContext.channel` value the cron dispatcher uses for
+/// `[[cron_jobs]]` fires. Matched in [`KernelHandle::resolve_user_tool_decision`]
+/// to bypass per-user RBAC the same way the `system_call=true` flag does
+/// — daemon-driven calls have no user to attribute to.
+///
+/// Public so that out-of-crate carve-out sites (`librefang-api::ws.rs` for
+/// the dashboard, `librefang-runtime::agent_loop` for the sender-prefix
+/// deny-list, …) can reference the same string instead of duplicating the
+/// literal. The runtime path can't import this directly (circular dep),
+/// but exposing it lets api/cli code stay in lock-step.
+pub const SYSTEM_CHANNEL_CRON: &str = "cron";
+
+/// Synthetic `SenderContext.channel` value the autonomous-loop dispatcher
+/// uses for agents whose manifest declares `[autonomous]`. Same RBAC
+/// carve-out as [`SYSTEM_CHANNEL_CRON`] — both are kernel-internal and
+/// have no user to attribute to. Issue #3243.
+pub const SYSTEM_CHANNEL_AUTONOMOUS: &str = "autonomous";
+
+/// Synthetic `SenderContext.channel` value the dashboard WebSocket
+/// (`librefang-api::ws::handle_ws`) uses when forwarding browser-initiated
+/// turns to the kernel. The display name is hard-coded "Web UI" and
+/// `user_id` is the resolved client IP — neither is a real human identity,
+/// which is why the sender-prefix builder (`librefang-runtime::
+/// agent_loop::build_sender_prefix`, #4666) carves this channel out
+/// alongside [`SYSTEM_CHANNEL_CRON`] / [`SYSTEM_CHANNEL_AUTONOMOUS`].
+pub const SYSTEM_CHANNEL_WEBUI: &str = "webui";
+
+/// Minimum tolerated value for `cron_session_max_messages` (#3459).
+/// Mirrors `agent_loop::MIN_HISTORY_MESSAGES`. Smaller values silently
+/// destroy enough history to break prompt cache reuse and tool-result
+/// referencing.  `0` is treated as "disable" before this clamp is applied.
+const MIN_CRON_HISTORY_MESSAGES: usize = 4;
+
+/// Resolve `cron_session_max_messages` from config into an effective cap.
+///
+/// - `None`    → no cap (pass through)
+/// - `Some(0)` → caller set "disable"; treat as no cap
+/// - `Some(n)` where `n < MIN_CRON_HISTORY_MESSAGES` → clamp up, emit warning
+/// - `Some(n)` otherwise → use as-is
+pub(crate) fn resolve_cron_max_messages(raw: Option<usize>) -> Option<usize> {
+    match raw {
+        None => None,
+        Some(0) => None,
+        Some(n) if n < MIN_CRON_HISTORY_MESSAGES => {
+            tracing::warn!(
+                requested = n,
+                applied = MIN_CRON_HISTORY_MESSAGES,
+                "cron_session_max_messages too small; clamped"
+            );
+            Some(MIN_CRON_HISTORY_MESSAGES)
+        }
+        other => other,
+    }
+}
+
+/// Resolve `cron_session_max_tokens` from config into an effective cap.
+///
+/// - `None`    → no cap
+/// - `Some(0)` → disable (treat as no cap)
+/// - `Some(n)` otherwise → use as-is
+pub(crate) fn resolve_cron_max_tokens(raw: Option<u64>) -> Option<u64> {
+    match raw {
+        Some(0) => None,
+        other => other,
+    }
+}
+
+/// Resolve the cron session-size warn threshold (#3693).
+///
+/// Pure function so it can be unit-tested without a kernel.  Returns
+/// the absolute token count at which the kernel should emit a
+/// `tracing::warn!` after pruning — or `None` to skip warning.
+///
+/// Inputs:
+/// - `max_tokens`     — already-resolved `cron_session_max_tokens`
+///   (post `resolve_cron_max_tokens`).
+/// - `warn_fallback`  — `cron_session_warn_total_tokens`, used when
+///   `max_tokens` is `None`.
+/// - `fraction`       — `cron_session_warn_fraction`. Must be in
+///   `(0.0, 1.0]`; out-of-range or non-finite values disable the
+///   warn.
+pub(crate) fn resolve_cron_warn_threshold(
+    max_tokens: Option<u64>,
+    warn_fallback: Option<u64>,
+    fraction: Option<f64>,
+) -> Option<u64> {
+    let frac = fraction?;
+    if !frac.is_finite() || frac <= 0.0 || frac > 1.0 {
+        return None;
+    }
+    let budget = max_tokens.or(warn_fallback)?;
+    if budget == 0 {
+        return None;
+    }
+    // ceil so a near-budget estimate still trips the warn before the
+    // hard cap; saturate to budget so callers can compare with `>=`.
+    let raw = (budget as f64) * frac;
+    let threshold = raw.ceil() as u64;
+    Some(threshold.min(budget))
+}
+
+// ---------------------------------------------------------------------------
+// Per-task trigger recursion depth (bug #3780)
+// ---------------------------------------------------------------------------
+
+// Per-task trigger-chain recursion depth counter.
+// Declared at module level so it has a true `'static` key, as required by
+// `tokio::task_local!`.  Each independent event-processing task establishes
+// its own scope via `PUBLISH_EVENT_DEPTH.scope(Cell::new(0), future)`,
+// keeping depth counts isolated between concurrent chains.
+tokio::task_local! {
+    static PUBLISH_EVENT_DEPTH: std::cell::Cell<u32>;
+}
+
+/// Extract a `(user_text, assistant_text)` seed pair for session-label
+/// generation.  Returns `None` when the session lacks at least one
+/// non-empty user message AND one non-empty assistant message — there
+/// is nothing to title until both sides have spoken once.
+fn extract_label_seed(messages: &[librefang_types::message::Message]) -> Option<(String, String)> {
+    use librefang_types::message::{ContentBlock, MessageContent, Role};
+
+    fn text_of(m: &librefang_types::message::Message) -> String {
+        match &m.content {
+            MessageContent::Text(t) => t.trim().to_string(),
+            MessageContent::Blocks(blocks) => {
+                let mut buf = String::new();
+                for b in blocks {
+                    if let ContentBlock::Text { text, .. } = b {
+                        if !buf.is_empty() {
+                            buf.push(' ');
+                        }
+                        buf.push_str(text.trim());
+                    }
+                }
+                buf
+            }
+        }
+    }
+
+    let user = messages
+        .iter()
+        .find(|m| m.role == Role::User)
+        .map(text_of)
+        .filter(|s| !s.is_empty())?;
+    let assistant = messages
+        .iter()
+        .find(|m| m.role == Role::Assistant)
+        .map(text_of)
+        .filter(|s| !s.is_empty())?;
+    Some((user, assistant))
+}
+
+/// Clean up a raw model-generated title: strip surrounding quotes,
+/// keep only the first line, and cap at 60 chars (UTF-8 safe).  Models
+/// occasionally prefix with `Title:` or wrap in quotes despite the
+/// prompt — the cleanup keeps the column rendering tidy without
+/// rejecting otherwise-valid titles.
+fn sanitize_session_title(raw: &str) -> String {
+    let first_line = raw.lines().next().unwrap_or("").trim();
+    // Strip a leading "Title:" / "title:" prefix some models add.
+    let without_prefix = first_line
+        .strip_prefix("Title:")
+        .or_else(|| first_line.strip_prefix("title:"))
+        .unwrap_or(first_line)
+        .trim();
+    // Strip surrounding ASCII quotes / single quotes / backticks.
+    let trimmed = without_prefix
+        .trim_matches('"')
+        .trim_matches('\'')
+        .trim_matches('`')
+        .trim();
+    // Cap at 60 chars (UTF-8 safe) — same ceiling derive_session_label
+    // uses, so list views don't shift width when one path beats the
+    // other.
+    librefang_types::truncate_str(trimmed, 60)
+        .trim()
+        .to_string()
+}
+
+/// Env var that overrides `KernelConfig.api_key` (#6635). Read by
+/// `boot_with_config` to fold the value into the live config, and again by
+/// `build_mcp_bridge_cfg` because a config reload drops that fold. Mirrors
+/// `librefang_api::server::API_KEY_ENV`, which the crate boundary keeps us
+/// from sharing.
+pub(crate) const API_KEY_ENV: &str = "LIBREFANG_API_KEY";
+
+/// Build the MCP bridge config that lets CLI-based drivers (Claude Code)
+/// reach back into the daemon's own `/mcp` endpoint. Uses loopback when the
+/// API listens on a wildcard address.
+fn build_mcp_bridge_cfg(cfg: &KernelConfig) -> librefang_llm_driver::McpBridgeConfig {
+    let listen = cfg.api_listen.trim();
+    let base = if listen.is_empty() {
+        "http://127.0.0.1:4545".to_string()
+    } else if listen.starts_with("0.0.0.0")
+        || listen.starts_with("[::]")
+        || listen.starts_with("::")
+    {
+        let port = listen.rsplit(':').next().unwrap_or("4545");
+        format!("http://127.0.0.1:{port}")
+    } else {
+        format!("http://{listen}")
+    };
+    // Outbound leg of #6613: this bearer is *transmitted* to the daemon's own
+    // API, so unlike the inbound auth path it needs the plaintext, not a hash.
+    // Resolve the same env / `vault:` indirection the API layer applies when
+    // deciding what to accept — sending the literal string `vault:master` would
+    // fail against a daemon that resolved the same field to the vault's value.
+    //
+    // `LIBREFANG_API_KEY` is consulted here rather than relied upon to already
+    // sit in `cfg.api_key`. `boot_with_config` does fold it in at boot, but
+    // `reload_config` re-reads `config.toml` from disk and never re-applies the
+    // override — so on an env-only deployment the next driver rebuild after a
+    // reload would hand the bridge an empty key and every self-call would 401.
+    // Same precedence as the API layer's `resolve_credential`: env, then
+    // `vault:`, then the literal.
+    let api_key = match std::env::var(API_KEY_ENV) {
+        Ok(key) if !key.trim().is_empty() => key.trim().to_string(),
+        _ => resolve_vault_prefixed(cfg.api_key.trim(), &cfg.home_dir),
+    };
+    // A hash-only config is the one posture that resolves to nothing here while the daemon still enforces auth, and it is the posture `api_key_hash`'s own documentation and `librefang hash-api-key` both recommend ("put the hash here and leave `api_key` unset").
+    // `api_key_hash` cannot be substituted: a verifier does not yield the secret it verifies, and this leg *transmits* the credential.
+    // So the bridge goes out with no `Authorization` header and the daemon's own middleware answers 401 — precisely because #6613 made it treat a hash as configured auth.
+    //
+    // Nothing downstream can explain that: the driver reports a failed tool call, not a missing kernel-side credential.
+    // Say it here, where the empty result is produced, and name the two fixes that keep the secret out of `config.toml` while staying transmittable.
+    if api_key.is_empty() && !cfg.api_key_hash.trim().is_empty() {
+        warn!(
+            "[mcp bridge] no transmittable api_key: `api_key_hash` is set but `api_key` \
+             and ${API_KEY_ENV} are empty. CLI-based drivers (claude-code) call this \
+             daemon's own /mcp endpoint and will get 401 on every tool call, because a \
+             hash verifies a key rather than yielding one. Set `api_key = \
+             \"vault:NAME\"` or ${API_KEY_ENV} — the hash stays in use for inbound auth."
+        );
+    }
+    librefang_llm_driver::McpBridgeConfig {
+        base_url: base,
+        api_key: (!api_key.is_empty()).then_some(api_key),
+    }
+}
+
+/// Expand a `vault:KEY_NAME` reference against `<home_dir>/vault.enc`, leaving
+/// any other value untouched.
+///
+/// Mirrors step 2 of the API layer's credential resolution
+/// (`librefang_api::server::resolve_credential`). Kept as a separate small
+/// function rather than shared because the two live on opposite sides of the
+/// kernel/API boundary and carry opposite directions of trust: the API layer
+/// decides what to *accept*, this decides what to *send*.
+fn resolve_vault_prefixed(value: &str, home_dir: &std::path::Path) -> String {
+    let Some(vault_key) = value.strip_prefix("vault:") else {
+        return value.to_string();
+    };
+    let mut vault = librefang_extensions::vault::CredentialVault::new(home_dir.join("vault.enc"));
+    match vault.unlock() {
+        Ok(()) => match vault.get(vault_key) {
+            Some(secret) => secret.to_string(),
+            None => {
+                warn!("Vault key '{vault_key}' not found in vault; MCP bridge will be unauthenticated");
+                String::new()
+            }
+        },
+        Err(e) => {
+            warn!("Could not unlock vault to resolve the MCP bridge api_key: {e}");
+            String::new()
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Prompt metadata cache — avoids redundant filesystem I/O and skill registry
+// iteration on every message.
+// ---------------------------------------------------------------------------
+
+/// TTL for cached prompt metadata entries (30 seconds).
+const PROMPT_CACHE_TTL: std::time::Duration = std::time::Duration::from_secs(30);
+
+/// Best-effort load of the raw `config.toml` as a `toml::Value` for
+/// skill config-var injection.  Used **only** at boot and on
+/// `reload_config` — never on the per-message hot path (#3722).
+///
+/// A missing or unparseable file falls back to an empty table, matching
+/// the behaviour the inline read previously had on `read_to_string` /
+/// `from_str` errors.
+fn load_raw_config_toml(config_path: &Path) -> toml::Value {
+    let empty = || toml::Value::Table(toml::map::Map::new());
+    if !config_path.exists() {
+        return empty();
+    }
+    let contents = match std::fs::read_to_string(config_path) {
+        Ok(s) => s,
+        Err(e) => {
+            // Not on the hot path — surface the failure so a misconfigured
+            // file doesn't silently disable `[skills.config.*]` injection
+            // for the whole process lifetime.
+            tracing::warn!(
+                path = %config_path.display(),
+                error = %e,
+                "failed to read raw config.toml for skill config injection; \
+                 falling back to empty table"
+            );
+            return empty();
+        }
+    };
+    match toml::from_str(&contents) {
+        Ok(v) => v,
+        Err(e) => {
+            tracing::warn!(
+                path = %config_path.display(),
+                error = %e,
+                "failed to parse raw config.toml for skill config injection; \
+                 falling back to empty table"
+            );
+            empty()
+        }
+    }
+}
+
+/// Cached workspace context and identity files for an agent's workspace.
+#[derive(Clone, Debug)]
+pub(crate) struct CachedWorkspaceMetadata {
+    workspace_context: Option<String>,
+    soul_md: Option<String>,
+    user_md: Option<String>,
+    memory_md: Option<String>,
+    agents_md: Option<String>,
+    bootstrap_md: Option<String>,
+    identity_md: Option<String>,
+    heartbeat_md: Option<String>,
+    tools_md: Option<String>,
+    created_at: std::time::Instant,
+}
+
+impl CachedWorkspaceMetadata {
+    fn is_expired(&self) -> bool {
+        self.created_at.elapsed() > PROMPT_CACHE_TTL
+    }
+}
+
+/// Cached skill summary and prompt context for a given skill allowlist.
+#[derive(Clone, Debug)]
+pub(crate) struct CachedSkillMetadata {
+    skill_summary: String,
+    skill_prompt_context: String,
+    /// Total number of enabled skills represented in this summary.
+    /// Used by the prompt builder for progressive disclosure (inline vs summary mode).
+    skill_count: usize,
+    /// Pre-formatted skill config variable section for the system prompt.
+    /// Empty when no skills declare config variables or none have resolvable values.
+    skill_config_section: String,
+    created_at: std::time::Instant,
+}
+
+impl CachedSkillMetadata {
+    fn is_expired(&self) -> bool {
+        self.created_at.elapsed() > PROMPT_CACHE_TTL
+    }
+}
+
+/// Cached tool list for an agent, keyed by agent ID.
+/// Stores the computed tool definitions along with generation counters that were
+/// current at the time the cache was populated, enabling staleness detection.
+#[derive(Clone, Debug)]
+struct CachedToolList {
+    tools: Arc<Vec<ToolDefinition>>,
+    skill_generation: u64,
+    mcp_generation: u64,
+    created_at: std::time::Instant,
+}
+
+impl CachedToolList {
+    fn is_expired(&self) -> bool {
+        self.created_at.elapsed() > PROMPT_CACHE_TTL
+    }
+
+    fn is_stale(&self, skill_gen: u64, mcp_gen: u64) -> bool {
+        self.skill_generation != skill_gen || self.mcp_generation != mcp_gen
+    }
+}
+
+/// Thread-safe cache for prompt-building metadata. Avoids redundant filesystem
+/// scans and skill registry iteration on every incoming message.
+///
+/// Keyed by workspace path (for workspace metadata) and a sorted skill
+/// allowlist string (for skill metadata). Entries expire after [`PROMPT_CACHE_TTL`].
+///
+/// Invalidated explicitly on skill reload, config reload, or workspace change.
+struct PromptMetadataCache {
+    workspace: dashmap::DashMap<PathBuf, CachedWorkspaceMetadata>,
+    skills: dashmap::DashMap<String, CachedSkillMetadata>,
+    /// Per-agent cached tool list. Invalidated by TTL, generation counters
+    /// (skill reload / MCP tool changes), or explicit removal.
+    tools: dashmap::DashMap<AgentId, CachedToolList>,
+}
+
+impl PromptMetadataCache {
+    fn new() -> Self {
+        Self {
+            workspace: dashmap::DashMap::new(),
+            skills: dashmap::DashMap::new(),
+            tools: dashmap::DashMap::new(),
+        }
+    }
+
+    /// Invalidate all cached entries (used on skill reload, config reload).
+    fn invalidate_all(&self) {
+        self.workspace.clear();
+        self.skills.clear();
+        self.tools.clear();
+    }
+
+    /// Build a cache key for the skill allowlist.
+    fn skill_cache_key(allowlist: &[String]) -> String {
+        if allowlist.is_empty() {
+            return String::from("*");
+        }
+        let mut sorted = allowlist.to_vec();
+        sorted.sort();
+        sorted.join(",")
+    }
+}
+
+/// The main LibreFang kernel — coordinates all subsystems.
+/// Stub LLM driver used when no providers are configured.
+/// Returns a helpful error so the dashboard still boots and users can configure providers.
+struct StubDriver;
+
+#[async_trait]
+impl LlmDriver for StubDriver {
+    async fn complete(&self, _request: CompletionRequest) -> Result<CompletionResponse, LlmError> {
+        Err(LlmError::MissingApiKey(
+            "No LLM provider configured. Set an API key (e.g. GROQ_API_KEY) and restart, \
+             configure a provider via the dashboard, \
+             or use Ollama for local models (no API key needed)."
+                .to_string(),
+        ))
+    }
+
+    fn is_configured(&self) -> bool {
+        false
+    }
+}
+
+#[derive(Clone, PartialEq, Eq)]
+struct RotationKeySpec {
+    name: String,
+    api_key: String,
+    use_primary_driver: bool,
+}
+
+/// Custom Debug impl that redacts the API key to prevent accidental log leakage.
+impl std::fmt::Debug for RotationKeySpec {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("RotationKeySpec")
+            .field("name", &self.name)
+            .field("api_key", &"<redacted>")
+            .field("use_primary_driver", &self.use_primary_driver)
+            .finish()
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub(crate) enum AssistantRouteTarget {
+    Specialist(String),
+    Hand(String),
+}
+
+impl AssistantRouteTarget {
+    fn route_type(&self) -> &'static str {
+        match self {
+            Self::Specialist(_) => "specialist",
+            Self::Hand(_) => "hand",
+        }
+    }
+
+    fn name(&self) -> &str {
+        match self {
+            Self::Specialist(name) | Self::Hand(name) => name,
+        }
+    }
+}
+
+fn collect_rotation_key_specs(
+    profiles: Option<&[AuthProfile]>,
+    primary_api_key: Option<&str>,
+) -> Vec<RotationKeySpec> {
+    let mut seen_keys = HashSet::new();
+    let mut specs = Vec::new();
+    let mut sorted_profiles = profiles.map_or_else(Vec::new, |items| items.to_vec());
+    sorted_profiles.sort_by_key(|profile| profile.priority);
+
+    for profile in sorted_profiles {
+        let Ok(api_key) = std::env::var(&profile.api_key_env) else {
+            warn!(
+                profile = %profile.name,
+                env_var = %profile.api_key_env,
+                "Auth profile env var not set — skipping"
+            );
+            continue;
+        };
+        if api_key.is_empty() || !seen_keys.insert(api_key.clone()) {
+            continue;
+        }
+        specs.push(RotationKeySpec {
+            name: profile.name,
+            use_primary_driver: primary_api_key == Some(api_key.as_str()),
+            api_key,
+        });
+    }
+
+    if let Some(primary_api_key) = primary_api_key.filter(|key| !key.is_empty()) {
+        if seen_keys.insert(primary_api_key.to_string()) {
+            specs.insert(
+                0,
+                RotationKeySpec {
+                    name: "primary".to_string(),
+                    api_key: primary_api_key.to_string(),
+                    use_primary_driver: true,
+                },
+            );
+        }
+    }
+
+    specs
+}
+
+/// Resolve the effective session id used by the dispatch site in
+/// `send_message_full_with_upstream`. Mirrors the resolution that
+/// `execute_llm_agent` performs internally so the kernel and any failure /
+/// supervisor logs agree on which session id was actually used — including
+/// when `session_mode = "new"` would otherwise mint a fresh id deeper in
+/// the stack. Returns `None` for module types that do not carry a session
+/// (wasm, python).
+fn resolve_dispatch_session_id(
+    module: &str,
+    agent_id: AgentId,
+    entry_session_id: SessionId,
+    manifest_session_mode: librefang_types::agent::SessionMode,
+    sender_context: Option<&SenderContext>,
+    session_mode_override: Option<librefang_types::agent::SessionMode>,
+    session_id_override: Option<SessionId>,
+) -> Option<SessionId> {
+    if module.starts_with("wasm:") || module.starts_with("python:") {
+        return None;
+    }
+    if let Some(sid) = session_id_override {
+        return Some(sid);
+    }
+    Some(match sender_context {
+        Some(ctx) if !ctx.channel.is_empty() && !ctx.use_canonical_session => {
+            // Audit: cron-channel-name-not-reserved. Shared with the streaming
+            // resolver and with the channel bridge's reset handlers (#7701), so
+            // a raw external `ctx.channel` matching a reserved system channel
+            // (cron / autonomous / webui) cannot collide with the internal
+            // system session, and `/new` addresses the session this turn used.
+            // See `channel_session_id`.
+            LibreFangKernel::channel_session_id(
+                agent_id,
+                &ctx.channel,
+                ctx.chat_id.as_deref(),
+                ctx.is_internal_system,
+            )
+        }
+        _ => {
+            let mode = session_mode_override.unwrap_or(manifest_session_mode);
+            match mode {
+                librefang_types::agent::SessionMode::Persistent => entry_session_id,
+                librefang_types::agent::SessionMode::New => SessionId::new(),
+            }
+        }
+    })
+}
+
+#[cfg(test)]
+mod resolve_dispatch_session_id_scope_tests {
+    use super::*;
+
+    fn ctx_with(channel: &str, is_internal_system: bool) -> SenderContext {
+        SenderContext {
+            channel: channel.to_string(),
+            is_internal_system,
+            ..Default::default()
+        }
+    }
+
+    /// Finding #21: the non-streaming dispatch resolver must apply the same
+    /// reserved-system-channel guard (`resolve_scope_channel`) as the streaming
+    /// path, so an external caller supplying `channel = "cron"` cannot land on
+    /// the internal cron session `SessionId::for_channel(agent, "cron")`.
+    #[test]
+    fn external_reserved_channel_does_not_collide_with_internal_cron_session() {
+        let agent = AgentId::new();
+        let entry = SessionId::new();
+        let internal_cron_sid = SessionId::for_channel(agent, "cron");
+
+        // External caller (is_internal_system = false) with a reserved name is
+        // rewritten to `ext-cron` and must NOT collide with the internal id.
+        let external = resolve_dispatch_session_id(
+            "claude-code",
+            agent,
+            entry,
+            librefang_types::agent::SessionMode::Persistent,
+            Some(&ctx_with("cron", false)),
+            None,
+            None,
+        )
+        .expect("non-wasm/python module must resolve a session id");
+        assert_ne!(
+            external, internal_cron_sid,
+            "external channel=\"cron\" must not share the internal cron session"
+        );
+        assert_eq!(
+            external,
+            SessionId::for_channel(agent, "ext-cron"),
+            "external reserved name must derive the sanitized `ext-cron` session"
+        );
+
+        // Trusted internal system caller keeps deriving the legacy cron id so
+        // existing persistent history stays continuous.
+        let internal = resolve_dispatch_session_id(
+            "claude-code",
+            agent,
+            entry,
+            librefang_types::agent::SessionMode::Persistent,
+            Some(&ctx_with("cron", true)),
+            None,
+            None,
+        )
+        .expect("non-wasm/python module must resolve a session id");
+        assert_eq!(
+            internal, internal_cron_sid,
+            "internal system caller must keep the legacy for_channel(agent, \"cron\") id"
+        );
+    }
+}
+
+/// One in-flight `(agent, session)` loop. Stored in
+/// `LibreFangKernel.running_tasks` to support per-session cancellation
+/// (`stop_session_run`) and runtime introspection
+/// (`list_running_sessions` / `GET /api/agents/{id}/runtime`).
+///
+/// `started_at` is captured at spawn time, before the agent loop yields
+/// — callers reading the snapshot get a stable wall-clock timestamp for
+/// "when was this turn launched", independent of how long the loop has
+/// been blocked on the LLM or a tool. UTC, RFC3339-serialised on the wire.
+pub(crate) struct RunningTask {
+    pub(crate) abort: tokio::task::AbortHandle,
+    pub(crate) started_at: chrono::DateTime<chrono::Utc>,
+    /// Unique id for this turn — used by cleanup to ensure a task only
+    /// removes its OWN entry from `running_tasks`, never a successor's
+    /// (#3445 stale-entry guard). Compared with `Uuid` equality.
+    pub(crate) task_id: uuid::Uuid,
+}
+
+pub struct LibreFangKernel {
+    /// Boot-time home directory (immutable — cannot hot-reload).
+    home_dir_boot: PathBuf,
+    /// Absolute path of the `config.toml` this kernel was booted from (immutable — cannot hot-reload).
+    ///
+    /// Resolved exactly once, in `boot` / `boot_with_config`, and read by every surface that re-reads or persists the configuration — hot-reload, the mtime watcher, and every API route that writes into the file (#6695).
+    /// Deriving it a second time from `home_dir_boot` is what let the daemon load `LIBREFANG_CONFIG_PATH` and then write somewhere else.
+    config_path_boot: PathBuf,
+    /// Boot-time data directory (immutable — cannot hot-reload).
+    data_dir_boot: PathBuf,
+    /// What the deployment's provisioning tree currently owns (#6695).
+    ///
+    /// Swapped wholesale by [`Self::apply_provisioning`] so a reader never observes a half-applied plan, and read on every resource write guard — which is why it is an `ArcSwap` rather than a lock.
+    /// Empty and disabled unless `LIBREFANG_PROVISIONING_PATH` is set, which is every installation that has not opted in.
+    pub(crate) provisioning: ArcSwap<crate::provisioning::ProvisioningRuntime>,
+    /// Kernel configuration (atomically swappable for hot-reload).
+    pub(crate) config: ArcSwap<KernelConfig>,
+    /// Cached raw `config.toml` value used for skill config-var injection.
+    ///
+    /// Refreshed once at boot and once per successful `reload_config` call —
+    /// **never** on the per-message hot path (#3722).  `KernelConfig` itself
+    /// is strongly-typed and does not preserve the open-ended
+    /// `[skills.config.<key>]` namespace that `resolve_config_vars`
+    /// walks, so we keep a separate `toml::Value` snapshot.
+    pub(crate) raw_config_toml: ArcSwap<toml::Value>,
+    /// Agent registries + scheduler + supervisor + lock maps + traces.
+    /// See [`subsystems::AgentSubsystem`].
+    pub(crate) agents: subsystems::AgentSubsystem,
+    /// Event buses + mid-turn injection channels + sticky routing
+    /// state + session-stream-hub GC guard. See
+    /// [`subsystems::EventSubsystem`].
+    pub(crate) events: subsystems::EventSubsystem,
+    /// Memory substrate + wiki vault + proactive memory + prompt store.
+    /// See [`subsystems::MemorySubsystem`].
+    pub(crate) memory: subsystems::MemorySubsystem,
+    /// Workflow engine + triggers + background + cron + command queue.
+    /// See [`subsystems::WorkflowSubsystem`].
+    pub(crate) workflows: subsystems::WorkflowSubsystem,
+    /// LLM drivers + model catalog + embedding fallback. See
+    /// [`subsystems::LlmSubsystem`].
+    pub(crate) llm: subsystems::LlmSubsystem,
+    /// WASM sandbox engine (shared across all WASM agent executions).
+    wasm_sandbox: WasmSandbox,
+    /// RBAC + device pairing + credential vault. See
+    /// [`subsystems::SecuritySubsystem`].
+    pub(crate) security: subsystems::SecuritySubsystem,
+    /// Plugin skill registry + hand registry + skill review bookkeeping.
+    /// See [`subsystems::SkillsSubsystem`].
+    pub(crate) skills: subsystems::SkillsSubsystem,
+    /// MCP connection pool + OAuth + tool cache + catalog + health
+    /// monitor + summary cache. See [`subsystems::McpSubsystem`].
+    pub(crate) mcp: subsystems::McpSubsystem,
+    /// Web search + browser + media understanding + TTS + media drivers.
+    /// See [`subsystems::MediaSubsystem`].
+    pub(crate) media: subsystems::MediaSubsystem,
+    /// A2A registry + OFP peers + channel adapters + bindings + broadcast
+    /// + delivery tracker. See [`subsystems::MeshSubsystem`].
+    pub(crate) mesh: subsystems::MeshSubsystem,
+    /// Approval enforcement + lifecycle hooks + sweeper guards. See
+    /// [`subsystems::GovernanceSubsystem`].
+    pub(crate) governance: subsystems::GovernanceSubsystem,
+    /// Per-LibreFang-session ACP `fs/*` clients, populated by the ACP
+    /// adapter at `session/new` time so runtime tools can route file
+    /// reads/writes back through the editor instead of the local
+    /// filesystem (#3313). Lookup is per-tool-call so we keep this as a
+    /// top-level field rather than wrapping it in a subsystem — there's
+    /// no other coupled state, and the runtime accesses the map via
+    /// `kernel.acp_fs_clients` at the deepest tool path.
+    pub(crate) acp_fs_clients: dashmap::DashMap<
+        librefang_types::agent::SessionId,
+        std::sync::Arc<dyn librefang_runtime::kernel_handle::AcpFsClient>,
+    >,
+    /// Per-LibreFang-session ACP `terminal/*` clients (#3313).
+    /// Same shape as `acp_fs_clients`; lets `shell_exec` route
+    /// commands through the editor's terminal panel.
+    pub(crate) acp_terminal_clients: dashmap::DashMap<
+        librefang_types::agent::SessionId,
+        std::sync::Arc<dyn librefang_runtime::kernel_handle::AcpTerminalClient>,
+    >,
+    /// Auto-reply engine.
+    pub(crate) auto_reply_engine: crate::auto_reply::AutoReplyEngine,
+    /// Persistent + background process registries. See
+    /// [`subsystems::ProcessSubsystem`].
+    pub(crate) processes: subsystems::ProcessSubsystem,
+    /// Boot timestamp for uptime calculation.
+    pub(crate) booted_at: std::time::Instant,
+    // whatsapp_gateway_pid removed alongside the whatsapp sidecar
+    // migration — the Baileys gateway is no longer auto-spawned by
+    // the kernel.
+    /// Hot-reloadable tool policy override (set via config hot-reload, read in available_tools).
+    pub(crate) tool_policy_override:
+        std::sync::RwLock<Option<librefang_types::tool_policy::ToolPolicy>>,
+    /// Pluggable context engine for memory recall, assembly, and compaction.
+    pub(crate) context_engine: Option<Box<dyn librefang_runtime::context_engine::ContextEngine>>,
+    /// Runtime config passed to context-engine lifecycle hooks.
+    context_engine_config: librefang_runtime::context_engine::ContextEngineConfig,
+    /// Lazily-built per-agent context engines (#6264). Keyed by a stable
+    /// fingerprint of the agent manifest's `[context_engine]` override so
+    /// agents that select the same engine config share one instance. Each
+    /// distinct override is built at most once per process and stored as a
+    /// `'static` reference (the engine lives for the daemon's lifetime, like
+    /// the kernel-global `context_engine` above), so
+    /// [`Self::context_engine_for_agent`] can hand back a borrow that
+    /// outlives the lock and survives across the agent loop's `.await`.
+    /// Agents without an override are served the kernel-global engine and
+    /// never touch this map.
+    context_engine_overrides: std::sync::Mutex<
+        std::collections::HashMap<
+            String,
+            &'static dyn librefang_runtime::context_engine::ContextEngine,
+        >,
+    >,
+    /// Weak self-reference for trigger dispatch (set after Arc wrapping).
+    self_handle: OnceLock<Weak<LibreFangKernel>>,
+    /// Whether we've already logged the "no provider" audit entry (prevents spam).
+    pub(crate) provider_unconfigured_logged: std::sync::atomic::AtomicBool,
+    /// Config reload barrier — write-locked during `apply_hot_actions_inner` to prevent
+    /// concurrent readers from seeing a half-updated configuration (e.g. new provider
+    /// URLs but old default model). Read-locked in message hot paths so multiple
+    /// requests proceed in parallel but block briefly during a reload.
+    /// Uses `tokio::sync::RwLock` so guards are `Send` and can be held across `.await`.
+    pub(crate) config_reload_lock: tokio::sync::RwLock<()>,
+    /// Cache for workspace context, identity files, and skill metadata to avoid
+    /// redundant filesystem I/O and registry scans on every message.
+    prompt_metadata_cache: PromptMetadataCache,
+    /// Audit trail + cost metering + hot-reloadable budget. See
+    /// [`subsystems::MeteringSubsystem`].
+    pub(crate) metering: subsystems::MeteringSubsystem,
+    /// Shutdown signal sender for background tasks (e.g., approval expiry sweep).
+    shutdown_tx: tokio::sync::watch::Sender<bool>,
+    /// Checkpoint manager — takes automatic shadow-git snapshots before every
+    /// `file_write` / `apply_patch` tool call.  `None` when the base
+    /// directory could not be resolved at boot.
+    pub(crate) checkpoint_manager:
+        Option<Arc<librefang_runtime::checkpoint_manager::CheckpointManager>>,
+    /// Live, atomically-swappable handle to `KernelConfig.taint_rules`.
+    ///
+    /// The kernel mirrors `config.load().taint_rules` into this swap on boot
+    /// and on every config reload (see [`Self::reload_config`]). Each
+    /// connected MCP server holds an [`Arc::clone`] of this same swap as its
+    /// `taint_rule_sets` field, so reading via `.load()` at scan time always
+    /// returns the latest registry — without restarting the server. The
+    /// scanner takes a single `.load()` per call so a mid-call reload can't
+    /// change the rule set under an in-flight tool invocation.
+    pub(crate) taint_rules_swap: librefang_runtime::mcp::TaintRuleSetsHandle,
+    /// Pluggable hook that swaps the live tracing `EnvFilter` when
+    /// `config.log_level` changes via hot-reload. Injected by the binary
+    /// (`librefang-cli` for the daemon) post-construction; absent for
+    /// in-process callers that don't own a tracing subscriber, in which
+    /// case `log_level` changes still update `KernelConfig` in-memory but
+    /// don't take effect on the active filter (the hot-reload action is a
+    /// no-op with a warning).
+    pub(crate) log_reloader: OnceLock<crate::log_reload::LogLevelReloaderArc>,
+
+    /// Optional OAuth/OIDC cache invalidator. Implemented by
+    /// `librefang-api::oauth` (which owns the JWKS + discovery
+    /// `LazyLock`s) and injected post-construction via
+    /// [`Self::set_oauth_cache_invalidator`]. Fired from
+    /// `apply_hot_actions_inner` when
+    /// [`crate::config_reload::HotAction::ReloadExternalAuth`] is
+    /// queued, so an IdP swap takes effect on the next token
+    /// validation instead of waiting out the 1h cache TTL.
+    ///
+    /// Absent for embedded kernels that don't run the HTTP surface —
+    /// in that case `[external_auth]` edits are a no-op anyway since
+    /// no OIDC validation is happening.
+    pub(crate) oauth_cache_invalidator:
+        OnceLock<crate::oauth_cache_invalidator::OauthCacheInvalidatorArc>,
+}
+
+/// Bounded in-memory delivery receipt tracker.
+/// Stores up to `MAX_RECEIPTS` most recent delivery receipts per agent.
+pub struct DeliveryTracker {
+    receipts: dashmap::DashMap<AgentId, Vec<librefang_channels::types::DeliveryReceipt>>,
+}
+
+impl Default for DeliveryTracker {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl DeliveryTracker {
+    const MAX_RECEIPTS: usize = 10_000;
+    const MAX_PER_AGENT: usize = 500;
+
+    /// Create a new empty delivery tracker.
+    pub fn new() -> Self {
+        Self {
+            receipts: dashmap::DashMap::new(),
+        }
+    }
+
+    /// Record a delivery receipt for an agent.
+    pub fn record(&self, agent_id: AgentId, receipt: librefang_channels::types::DeliveryReceipt) {
+        let mut entry = self.receipts.entry(agent_id).or_default();
+        entry.push(receipt);
+        // Per-agent cap
+        if entry.len() > Self::MAX_PER_AGENT {
+            let drain = entry.len() - Self::MAX_PER_AGENT;
+            entry.drain(..drain);
+        }
+        // Global cap: evict oldest agents' receipts if total exceeds limit
+        drop(entry);
+        let total: usize = self.receipts.iter().map(|e| e.value().len()).sum();
+        if total > Self::MAX_RECEIPTS {
+            // Simple eviction: remove oldest entries from first agent found
+            if let Some(mut oldest) = self.receipts.iter_mut().next() {
+                let to_remove = total - Self::MAX_RECEIPTS;
+                let drain = to_remove.min(oldest.value().len());
+                oldest.value_mut().drain(..drain);
+            }
+        }
+    }
+
+    /// Get recent delivery receipts for an agent (newest first).
+    pub fn get_receipts(
+        &self,
+        agent_id: AgentId,
+        limit: usize,
+    ) -> Vec<librefang_channels::types::DeliveryReceipt> {
+        self.receipts
+            .get(&agent_id)
+            .map(|entries| entries.iter().rev().take(limit).cloned().collect())
+            .unwrap_or_default()
+    }
+
+    /// Create a receipt for a successful send.
+    pub fn sent_receipt(
+        channel: &str,
+        recipient: &str,
+    ) -> librefang_channels::types::DeliveryReceipt {
+        librefang_channels::types::DeliveryReceipt {
+            message_id: uuid::Uuid::new_v4().to_string(),
+            channel: channel.to_string(),
+            recipient: Self::sanitize_recipient(recipient),
+            status: librefang_channels::types::DeliveryStatus::Sent,
+            timestamp: chrono::Utc::now(),
+            error: None,
+        }
+    }
+
+    /// Create a receipt for a failed send.
+    pub fn failed_receipt(
+        channel: &str,
+        recipient: &str,
+        error: &str,
+    ) -> librefang_channels::types::DeliveryReceipt {
+        librefang_channels::types::DeliveryReceipt {
+            message_id: uuid::Uuid::new_v4().to_string(),
+            channel: channel.to_string(),
+            recipient: Self::sanitize_recipient(recipient),
+            status: librefang_channels::types::DeliveryStatus::Failed,
+            timestamp: chrono::Utc::now(),
+            // Sanitize error: no credentials, max 256 chars
+            error: Some(
+                error
+                    .chars()
+                    .take(256)
+                    .collect::<String>()
+                    .replace(|c: char| c.is_control(), ""),
+            ),
+        }
+    }
+
+    /// Sanitize recipient to avoid PII logging.
+    fn sanitize_recipient(recipient: &str) -> String {
+        let s: String = recipient
+            .chars()
+            .filter(|c| !c.is_control())
+            .take(64)
+            .collect();
+        s
+    }
+
+    /// Remove receipt entries for agents not in the live set.
+    pub fn gc_stale_agents(&self, live_agents: &std::collections::HashSet<AgentId>) -> usize {
+        let stale: Vec<AgentId> = self
+            .receipts
+            .iter()
+            .filter(|entry| !live_agents.contains(entry.key()))
+            .map(|entry| *entry.key())
+            .collect();
+        let count = stale.len();
+        for id in stale {
+            self.receipts.remove(&id);
+        }
+        count
+    }
+}
+
+pub(crate) mod workspace_setup;
+use workspace_setup::*;
+/// Public so the API's clone route can re-point a copied IDENTITY.md at the clone's name (#8469), and so the identity-file `PUT` route serializes with the kernel's front-matter edits (#8447).
+pub use workspace_setup::{lock_identity_front_matter, reconcile_identity_name};
+
+/// Spawn a fire-and-forget tokio task that logs panics instead of silently
+/// swallowing them (#3740).
+///
+/// `tokio::spawn` drops panics when the returned `JoinHandle` is not awaited.
+/// This wrapper catches any panic from the inner future and logs it at `error`
+/// level so it surfaces in traces and structured logs.
+///
+/// Thin alias over [`crate::supervised_spawn::spawn_supervised`] (#3740) — kept
+/// for the existing `spawn_logged(tag, fut)` call sites in this file.
+fn spawn_logged(
+    tag: &'static str,
+    fut: impl std::future::Future<Output = ()> + Send + 'static,
+) -> tokio::task::JoinHandle<()> {
+    crate::supervised_spawn::spawn_supervised(tag, fut)
+}
+
+/// SECURITY (#3533): reject manifest `module` strings that escape the
+/// LibreFang home dir. Centralised so every entry point that accepts a
+/// manifest goes through the same check — without this, hot-reload,
+/// `update_manifest`, and boot-time SQLite restore all bypassed the
+/// validation that lived inline in `spawn_agent_inner` and a hostile
+/// `agent.toml` (peer push, MCP-installed agent, skill bundle, or just
+/// edit on disk + restart) could ship `module = "python:/etc/passwd.py"`
+/// and have the host interpreter exec it under the agent's capabilities.
+///
+/// Returns `Err(KernelError)` ready to be `?`-propagated by callers; logs
+/// a `warn!` with the agent name so the rejection is visible to operators
+/// even when the caller chooses to skip-and-continue (e.g. the boot loop
+/// must not abort the whole process for one bad manifest).
+fn validate_manifest_module_path(manifest: &AgentManifest, agent_name: &str) -> KernelResult<()> {
+    if let Err(reason) = librefang_runtime::python_runtime::validate_module_string(&manifest.module)
+    {
+        warn!(agent = %agent_name, %reason, "Rejecting manifest — invalid module path");
+        return Err(KernelError::LibreFang(
+            librefang_types::error::LibreFangError::Internal(format!(
+                "Invalid module path: {reason}"
+            )),
+        ));
+    }
+    Ok(())
+}
+
+/// Surface a mis-declared `channel_overrides.group_trigger_patterns` at manifest-acceptance time instead of letting it fail silently on every group message (#6732).
+///
+/// WARN, never reject: a mis-escaped alias is an operator typo, not a security problem, and an agent that cannot be woken by name is still a working agent.
+/// Failing the spawn would turn a cosmetic mistake into an outage.
+///
+/// Centralised next to [`validate_manifest_module_path`] and called from every path that accepts a manifest — spawn (via `validate_spawnable`), hand-role activation, on-disk hot-reload, `update_manifest`, and boot-time restore from persistent storage — because the underlying bug is invisible by construction: the pattern compiles, so the lazy `error!` inside the channel bridge never fires, and the only symptom is an agent that never answers to its own name.
+/// See [`librefang_channels::bridge::validate_group_trigger_patterns`] for the diagnosis.
+fn warn_invalid_group_trigger_patterns(manifest: &AgentManifest, agent_name: &str) {
+    let Some(overrides) = manifest.channel_overrides.as_ref() else {
+        return;
+    };
+    for diagnostic in librefang_channels::bridge::validate_group_trigger_patterns(
+        &overrides.group_trigger_patterns,
+    ) {
+        warn!(
+            agent = %agent_name,
+            %diagnostic,
+            "Agent declares a group trigger pattern that will never match — the agent cannot be woken by that alias in group chats"
+        );
+    }
+}
+
+// Accessors / lifecycle helpers live in `kernel::accessors`.
+
+mod manifest_helpers;
+use manifest_helpers::*;
+
+// ── Background skill review helpers ────────────────────────────────
+//
+// These are top-level so they can be unit-tested without constructing
+// a kernel, and so `background_skill_review` — a method on
+// `LibreFangKernel` — can import them by short name.
+
+/// Classification of errors returned from `background_skill_review`.
+///
+/// The retry loop in [`LibreFangKernel::serve_agent`] treats `Transient`
+/// as retry-eligible and `Permanent` as "break out immediately". See the
+/// docstring on `background_skill_review` for the detailed rules.
+#[derive(Debug, Clone)]
+pub(crate) enum ReviewError {
+    /// Network / timeout / rate-limit / LLM-driver fault; retry OK.
+    Transient(String),
+    /// Parse / validation / security-blocked; retry would be
+    /// non-idempotent (fresh LLM call, different output each time).
+    Permanent(String),
+}
+
+// `mcp_summary_cache_key` and `render_mcp_summary` live in `kernel::mcp_summary`.
+
+// `sanitize_reviewer_line` and `sanitize_reviewer_block` live in `kernel::reviewer_sanitize`.
+
+// `cron_script_wake_gate`, `atomic_write_toml`, and the private `parse_wake_gate` helper live in `kernel::cron_script`.
+
+/// Adapter from the kernel's `send_channel_message` to the
+/// `CronChannelSender` trait used by the multi-target fan-out engine.
+struct KernelCronBridge {
+    kernel: Arc<LibreFangKernel>,
+}
+
+// `CronChannelSender` impl, `cron_fan_out_targets`, and `cron_deliver_response` live in `kernel::cron_bridge`. The `KernelCronBridge` struct definition stays here because it holds an `Arc<LibreFangKernel>` shared with the rest of the cron dispatcher.
+
+/// Does one `[[notification.agent_rules]]` entry's `agent_pattern` select this agent?
+///
+/// `AgentNotificationRule::agent_pattern` is documented as a glob over agent names (`"social-*"`), and a name is the only spelling an operator can write ahead of time — the id is a UUID minted at registration.
+/// Every notification path identifies the agent by that id, so matching the id alone would make the documented form silently never fire; both are tried.
+/// `agent_name` is `None` for an identifier with no live agent behind it, such as the `"system"` pseudo-agent that daemon-level events are attributed to.
+fn agent_rule_matches(pattern: &str, agent_id: &str, agent_name: Option<&str>) -> bool {
+    glob_matches(pattern, agent_id) || agent_name.is_some_and(|name| glob_matches(pattern, name))
+}
+
+/// Resolve which targets one notification is delivered to.
+///
+/// Precedence, most specific first:
+///
+/// 1. Every `[[notification.agent_rules]]` entry that `agent_rule_matches` selects for this agent and whose `events` list contains `event_type`.
+///    This is the full-fidelity form — several targets, thread ids, any event type — so it stays authoritative wherever an operator has written one.
+/// 2. `agent_target`, a per-agent shorthand the caller read off the agent's manifest.
+///    Today that is `autonomous.heartbeat_channel` on the `health_check_failed` path; it is more specific than a global channel list and less specific than a rule written against this event.
+/// 3. The global list for the event type: `[notification] approval_channels` for approval requests, `alert_channels` for the alert family.
+///
+/// Each layer falls through to the next only when it yields nothing, and an unrecognised `event_type` resolves to no targets at all rather than to the alert list.
+///
+/// Free-standing rather than a method so the precedence is one readable expression that can be reasoned about without a booted kernel.
+fn resolve_notification_targets(
+    notification: &librefang_types::approval::NotificationConfig,
+    agent_id: &str,
+    agent_name: Option<&str>,
+    event_type: &str,
+    agent_target: Option<&librefang_types::approval::NotificationTarget>,
+) -> Vec<librefang_types::approval::NotificationTarget> {
+    let rule_targets: Vec<librefang_types::approval::NotificationTarget> = notification
+        .agent_rules
+        .iter()
+        .filter(|rule| {
+            agent_rule_matches(&rule.agent_pattern, agent_id, agent_name)
+                && rule.events.iter().any(|e| e == event_type)
+        })
+        .flat_map(|rule| rule.channels.clone())
+        .collect();
+    if !rule_targets.is_empty() {
+        return rule_targets;
+    }
+
+    if let Some(target) = agent_target {
+        return vec![target.clone()];
+    }
+
+    match event_type {
+        "approval_requested" => notification.approval_channels.clone(),
+        "task_completed"
+        | "task_failed"
+        | "tool_failure"
+        | "health_check_failed"
+        | "model_migrated" => notification.alert_channels.clone(),
+        _ => Vec::new(),
+    }
+}
+
+impl LibreFangKernel {
+    /// Mark all active Hands' cron jobs as due-now so the next scheduler tick fires them.
+    /// Called after a provider is first configured so Hands resume immediately.
+    /// Update legacy concrete registry entries that should track the kernel default model.
+    /// Agents carrying the `default/default` sentinel resolve the new value at execution time and require no rewrite.
+    ///
+    /// Agents eligible for update:
+    /// - Dashboard-created agents (no source_toml_path, no custom api_key_env) whose
+    ///   stored provider matches `old_provider` — these were using the old default
+    ///
+    /// `old_model` narrows the match to agents also pinned to that specific model.
+    /// Pass `None` for a full provider switch, where every dashboard-created agent on the old provider should move regardless of which model it was on.
+    /// Pass `Some(old_model)` for an intra-provider free-model migration (the old and new provider are the same), so only agents actually pinned to the delisted model move — an agent deliberately pinned to a different model on the same provider must not be silently overwritten.
+    ///
+    /// Returns a per-agent partial-failure list `(agent_name, error)`. An
+    /// empty vec means every eligible agent was migrated cleanly. Callers
+    /// (the provider-switch API handlers) surface this so an operator sees
+    /// which agents are still pinned to the old provider on disk instead of
+    /// the switch silently half-applying (#5137).
+    #[must_use]
+    pub fn sync_default_model_agents(
+        &self,
+        old_provider: &str,
+        old_model: Option<&str>,
+        dm: &librefang_types::config::DefaultModelConfig,
+    ) -> Vec<(String, String)> {
+        let mut failures: Vec<(String, String)> = Vec::new();
+        for entry in self.agents.registry.list() {
+            let is_default_provider = entry.manifest.model.provider.is_empty()
+                || entry.manifest.model.provider == "default";
+            let is_default_model =
+                entry.manifest.model.model.is_empty() || entry.manifest.model.model == "default";
+            if is_default_provider && is_default_model {
+                continue;
+            }
+            // Dashboard-created agents that were using the old default provider:
+            // no source TOML, no custom API key, and saved provider == old default
+            // The built-in assistant is excluded because users can explicitly select its model in the dashboard.
+            // Provider equality alone cannot distinguish that choice from a legacy resolved default.
+            // When `old_model` is set (intra-provider free-model migration) the stored model must also match.
+            // Under this condition, an agent deliberately pinned to a different model on the same provider is left alone.
+            let is_stale_dashboard_default = entry.name != "assistant"
+                && entry.source_toml_path.is_none()
+                && entry.manifest.model.api_key_env.is_none()
+                && entry.manifest.model.base_url.is_none()
+                && entry.manifest.model.provider == old_provider
+                && old_model
+                    .map(|m| entry.manifest.model.model == m)
+                    .unwrap_or(true);
+
+            if is_stale_dashboard_default {
+                if let Err(e) = self.agents.registry.update_model_and_provider(
+                    entry.id,
+                    dm.model.clone(),
+                    dm.provider.clone(),
+                ) {
+                    tracing::error!(
+                        agent = %entry.name,
+                        error = %e,
+                        "Failed to update agent model/provider during default-model sync"
+                    );
+                    failures.push((entry.name.clone(), e.to_string()));
+                    continue;
+                }
+                if !dm.api_key_env.is_empty() {
+                    if let Some(mut e) = self.agents.registry.get(entry.id) {
+                        if e.manifest.model.api_key_env.is_none() {
+                            e.manifest.model.api_key_env = Some(dm.api_key_env.clone());
+                        }
+                        if dm.base_url.is_some() && e.manifest.model.base_url.is_none() {
+                            e.manifest.model.base_url.clone_from(&dm.base_url);
+                        }
+                        // Merge extra_params from default_model (agent-level keys take precedence)
+                        for (key, value) in &dm.extra_params {
+                            e.manifest
+                                .model
+                                .extra_params
+                                .entry(key.clone())
+                                .or_insert(value.clone());
+                        }
+                        if let Err(err) = self.memory.substrate.save_agent(&e) {
+                            tracing::error!(
+                                agent = %entry.name,
+                                error = %err,
+                                "Failed to persist agent after default-model sync"
+                            );
+                            failures.push((entry.name.clone(), err.to_string()));
+                        }
+                    }
+                } else if let Some(e) = self.agents.registry.get(entry.id) {
+                    if let Err(err) = self.memory.substrate.save_agent(&e) {
+                        tracing::error!(
+                            agent = %entry.name,
+                            error = %err,
+                            "Failed to persist agent after default-model sync"
+                        );
+                        failures.push((entry.name.clone(), err.to_string()));
+                    }
+                }
+            }
+        }
+        failures
+    }
+
+    pub fn trigger_all_hands(&self) {
+        let hand_agents: Vec<AgentId> = self
+            .skills
+            .hand_registry
+            .list_instances()
+            .into_iter()
+            .filter(|inst| inst.status == librefang_hands::HandStatus::Active)
+            .filter_map(|inst| inst.agent_id())
+            .collect();
+
+        for agent_id in &hand_agents {
+            self.workflows
+                .cron_scheduler
+                .mark_due_now_by_agent(*agent_id);
+        }
+
+        if !hand_agents.is_empty() {
+            info!(
+                count = hand_agents.len(),
+                "Marked active hands as due for immediate execution"
+            );
+        }
+    }
+
+    /// Push a notification message to a single [`NotificationTarget`].
+    async fn push_to_target(
+        &self,
+        target: &librefang_types::approval::NotificationTarget,
+        message: &str,
+    ) {
+        if let Err(e) = self
+            .send_channel_message(
+                &target.channel_type,
+                &target.recipient,
+                message,
+                target.thread_id.as_deref(),
+                None,
+            )
+            .await
+        {
+            warn!(
+                channel = %target.channel_type,
+                recipient = %target.recipient,
+                error = %e,
+                "Failed to push notification"
+            );
+        }
+    }
+
+    /// Push an interactive approval notification with Approve/Reject buttons.
+    ///
+    /// When TOTP is enabled, the message includes instructions for providing
+    /// the TOTP code and the Approve button is removed (code must be typed).
+    async fn push_approval_interactive(
+        &self,
+        target: &librefang_types::approval::NotificationTarget,
+        message: &str,
+        request_id: &str,
+    ) {
+        let short_id = &request_id[..std::cmp::min(8, request_id.len())];
+        let totp_enabled = self.governance.approval_manager.requires_totp();
+
+        let display_message = if totp_enabled {
+            format!("{message}\n\nTOTP required. Reply: /approve {short_id} <6-digit-code>")
+        } else {
+            message.to_string()
+        };
+
+        // When TOTP is enabled, only show Reject button (approve needs typed code).
+        let buttons = if totp_enabled {
+            vec![vec![librefang_channels::types::InteractiveButton {
+                label: "Reject".to_string(),
+                action: format!("/reject {short_id}"),
+                style: Some("danger".to_string()),
+                url: None,
+            }]]
+        } else {
+            vec![vec![
+                librefang_channels::types::InteractiveButton {
+                    label: "Approve".to_string(),
+                    action: format!("/approve {short_id}"),
+                    style: Some("primary".to_string()),
+                    url: None,
+                },
+                librefang_channels::types::InteractiveButton {
+                    label: "Reject".to_string(),
+                    action: format!("/reject {short_id}"),
+                    style: Some("danger".to_string()),
+                    url: None,
+                },
+            ]]
+        };
+
+        let interactive = librefang_channels::types::InteractiveMessage {
+            text: display_message.clone(),
+            buttons,
+        };
+
+        // Resolve through the same helper every outbound send uses (#8055).
+        // `NotificationTarget.channel_type` is a channel *type* (`"slack"`) while the bridge keys the registry by instance `name` (`"slack-hr"`), so the bare `channel_adapters.get(&target.channel_type)` that used to sit here missed on every named instance and dropped straight to the plain-text fallback below — silently costing the approver the Approve / Reject buttons on the one notification whose entire point is those buttons.
+        // Resolving to an owned `Arc` also stops a `DashMap` shard guard from being held across the `send_interactive` await.
+        match handles::channel_sender::resolve_channel_adapter(
+            &self.mesh.channel_adapters,
+            &target.channel_type,
+            None,
+        ) {
+            Ok(adapter) => {
+                let user = librefang_channels::types::ChannelUser {
+                    platform_id: target.recipient.clone(),
+                    display_name: target.recipient.clone(),
+                    librefang_user: None,
+                };
+                if let Err(e) = adapter.send_interactive(&user, &interactive).await {
+                    warn!(
+                        channel = %target.channel_type,
+                        error = %e,
+                        "Failed to send interactive approval notification, falling back to text"
+                    );
+                    // Fallback to plain text
+                    self.push_to_target(target, &display_message).await;
+                }
+            }
+            Err(e) => {
+                // No adapter resolved — fall back to send_channel_message, which reports its own failure.
+                debug!(
+                    channel = %target.channel_type,
+                    error = %e,
+                    "No adapter resolved for interactive approval notification, falling back to text"
+                );
+                self.push_to_target(target, &display_message).await;
+            }
+        }
+    }
+
+    /// The registered name behind a notification `agent_id`, when there is one.
+    ///
+    /// Notification callers pass the agent's UUID (or a pseudo-agent identifier such as `"system"` for daemon-level events), while `[[notification.agent_rules]]` patterns are written against names — see [`agent_rule_matches`].
+    fn notification_agent_name(&self, agent_id: &str) -> Option<String> {
+        agent_id
+            .parse::<AgentId>()
+            .ok()
+            .and_then(|uid| self.agents.registry.get_arc(uid))
+            .map(|entry| entry.name.clone())
+    }
+
+    /// Push a notification to all configured targets, resolving routing rules.
+    /// Resolution: per-agent rules (matching event) > global channels for that event type.
+    ///
+    /// When `session_id` is `Some`, ` [session=<uuid>]` is appended to the
+    /// delivered message so operators can correlate the alert with the
+    /// failing session's history (matches the `session_id` field in the
+    /// `Agent loop failed — recorded in supervisor` warn log).
+    /// Pass `None` for agent-level alerts that aren't session-scoped
+    /// (e.g. `health_check_failed`).
+    async fn push_notification(
+        &self,
+        agent_id: &str,
+        event_type: &str,
+        message: &str,
+        session_id: Option<&SessionId>,
+    ) {
+        self.push_notification_routed(agent_id, event_type, message, session_id, None)
+            .await
+    }
+
+    /// [`Self::push_notification`] with one extra target the caller read off the agent's own manifest.
+    ///
+    /// Only the heartbeat monitor supplies one today: `autonomous.heartbeat_channel` is the per-agent shorthand for "send this agent's unresponsive alert here", resolved by [`crate::heartbeat::resolve_heartbeat_channel`].
+    /// It sits *between* the two `config.toml` layers — see [`resolve_notification_targets`] for the full precedence — so an operator who already routes `health_check_failed` through `[[notification.agent_rules]]` keeps that routing, and one who wrote only the manifest field gets delivery instead of silence.
+    async fn push_notification_routed(
+        &self,
+        agent_id: &str,
+        event_type: &str,
+        message: &str,
+        session_id: Option<&SessionId>,
+        agent_target: Option<&librefang_types::approval::NotificationTarget>,
+    ) {
+        let cfg = self.config.load_full();
+        let agent_name = self.notification_agent_name(agent_id);
+        let targets = resolve_notification_targets(
+            &cfg.notification,
+            agent_id,
+            agent_name.as_deref(),
+            event_type,
+            agent_target,
+        );
+
+        let delivered: std::borrow::Cow<'_, str> = match session_id {
+            Some(sid) => std::borrow::Cow::Owned(format!("{message} [session={sid}]")),
+            None => std::borrow::Cow::Borrowed(message),
+        };
+
+        for target in &targets {
+            self.push_to_target(target, &delivered).await;
+        }
+    }
+
+    /// Record and notify operators that LibreFang changed a configured model automatically.
+    pub async fn notify_model_migrated(
+        &self,
+        agent_id: &str,
+        provider: &str,
+        old_model: &str,
+        new_model: &str,
+        reason: &str,
+    ) {
+        let detail =
+            format!("{provider} model migrated from `{old_model}` to `{new_model}`: {reason}");
+        self.metering.audit_log.record_with_context(
+            agent_id,
+            librefang_runtime::audit::AuditAction::ConfigChange,
+            detail.clone(),
+            "success",
+            None,
+            None,
+        );
+        self.push_notification(agent_id, "model_migrated", &detail, None)
+            .await;
+    }
+
+    /// Resolve an agent identifier string (either a UUID or a human-readable
+    /// name) to a live `AgentId`. A valid-UUID-format string that doesn't
+    /// resolve to a live agent falls through to name lookup so stale or
+    /// hallucinated UUIDs from an LLM don't bypass the name path.
+    ///
+    /// On miss, the error lists every currently-registered agent so the
+    /// caller (typically an LLM) can recover without an extra agent_list
+    /// round trip.
+    fn resolve_agent_identifier(&self, agent_id: &str) -> Result<AgentId, String> {
+        if let Ok(uid) = agent_id.parse::<AgentId>() {
+            if self.agents.registry.get(uid).is_some() {
+                return Ok(uid);
+            }
+        }
+        if let Some(entry) = self.agents.registry.find_by_name(agent_id) {
+            return Ok(entry.id);
+        }
+        let available: Vec<String> = self
+            .agents
+            .registry
+            .list()
+            .iter()
+            .map(|a| format!("{} ({})", a.name, a.id))
+            .collect();
+        Err(if available.is_empty() {
+            format!("Agent not found: '{agent_id}'. No agents are currently registered.")
+        } else {
+            format!(
+                "Agent not found: '{agent_id}'. Call agent_list to see valid agents. Currently registered: [{}]",
+                available.join(", ")
+            )
+        })
+    }
+}
+
+// ---- BEGIN role-trait impls (split from former `impl KernelHandle for LibreFangKernel`, #3746) ----
+//
+// All 16 `impl kernel_handle::* for LibreFangKernel` blocks now live in
+// `kernel::handles::*`. Each sub-module is a descendant of `kernel`, so
+// it retains access to `LibreFangKernel`'s private fields and inherent
+// methods without any visibility surgery. Specifically:
+//
+//   - `kernel::handles::agent_control`    — `kernel_handle::AgentControl`
+//   - `kernel::handles::memory_access`    — `kernel_handle::MemoryAccess`
+//   - `kernel::handles::task_queue`       — `kernel_handle::TaskQueue`
+//   - `kernel::handles::event_bus`        — `kernel_handle::EventBus`
+//   - `kernel::handles::knowledge_graph`  — `kernel_handle::KnowledgeGraph`
+//   - `kernel::handles::cron_control`     — `kernel_handle::CronControl`
+//   - `kernel::handles::hands_control`    — `kernel_handle::HandsControl`
+//   - `kernel::handles::approval_gate`    — `kernel_handle::ApprovalGate`
+//   - `kernel::handles::a2a_registry`     — `kernel_handle::A2ARegistry`
+//   - `kernel::handles::channel_sender`   — `kernel_handle::ChannelSender`
+//   - `kernel::handles::prompt_store`     — `kernel_handle::PromptStore`
+//   - `kernel::handles::workflow_runner`  — `kernel_handle::WorkflowRunner`
+//   - `kernel::handles::goal_control`     — `kernel_handle::GoalControl`
+//   - `kernel::handles::tool_policy`      — `kernel_handle::ToolPolicy`
+//   - `kernel::handles::api_auth`         — `kernel_handle::ApiAuth`
+//   - `kernel::handles::session_writer`   — `kernel_handle::SessionWriter`
+//
+// ---- END role-trait impls (#3746) ----
+
+// ---------------------------------------------------------------------------
+// Approval resolution helpers (Step 5)
+// ---------------------------------------------------------------------------
+
+impl LibreFangKernel {
+    /// Render an agent identifier for human-facing messages: `"name" (short-id)`
+    /// when the agent is in the registry, otherwise the raw id verbatim.
+    ///
+    /// Do not use this for audit detail strings or any field that downstream
+    /// queries filter on — those need the canonical UUID so that
+    /// `/api/audit/query?agent=<uuid>` keeps working. This helper is for
+    /// operator-facing copy (push notifications, channel messages,
+    /// human-readable descriptions) only.
+    fn approval_agent_display(&self, agent_id: &str) -> String {
+        if agent_id.is_empty() {
+            return "\"unknown\"".to_string();
+        }
+
+        if let Ok(aid) = agent_id.parse::<AgentId>() {
+            if let Some(entry) = self.agents.registry.get(aid) {
+                let short = agent_id.get(..8).unwrap_or(agent_id);
+                // Names are user-configured free text. Escape embedded `"` so
+                // adapters that interpret the surrounding context (Telegram
+                // MarkdownV2, Discord, etc.) don't see a malformed message
+                // that fails to render — operators can't approve what they
+                // can't see.
+                let safe_name = entry.name.replace('"', "\\\"");
+                return format!("\"{}\" ({})", safe_name, short);
+            }
+        }
+        format!("\"{}\"", agent_id)
+    }
+
+    async fn notify_escalated_approval(
+        &self,
+        req: &librefang_types::approval::ApprovalRequest,
+        request_id: uuid::Uuid,
+    ) {
+        use librefang_types::capability::glob_matches;
+
+        let policy = self.governance.approval_manager.policy();
+        let cfg = self.config.load_full();
+        // A notification rule's `agent_pattern` is written against the agent's name; `req.agent_id` is its UUID.
+        let agent_name = self.notification_agent_name(&req.agent_id);
+        let targets: Vec<librefang_types::approval::NotificationTarget> =
+            if !req.route_to.is_empty() {
+                req.route_to.clone()
+            } else {
+                let routed: Vec<_> = policy
+                    .routing
+                    .iter()
+                    .filter(|r| glob_matches(&r.tool_pattern, &req.tool_name))
+                    .flat_map(|r| r.route_to.clone())
+                    .collect();
+                if !routed.is_empty() {
+                    routed
+                } else {
+                    resolve_notification_targets(
+                        &cfg.notification,
+                        &req.agent_id,
+                        agent_name.as_deref(),
+                        "approval_requested",
+                        None,
+                    )
+                }
+            };
+
+        let msg = format!(
+            "{} ESCALATION #{}: Approval still needed: agent {} wants to run `{}` - {}",
+            req.risk_level.emoji(),
+            req.escalation_count,
+            self.approval_agent_display(&req.agent_id),
+            req.tool_name,
+            req.description,
+        );
+        let req_id_str = request_id.to_string();
+        for target in &targets {
+            self.push_approval_interactive(target, &msg, &req_id_str)
+                .await;
+        }
+    }
+
+    /// Handle the aftermath of an approval decision: execute tool (if approved),
+    /// build terminal result (if denied/expired/skipped), update session, notify agent.
+    pub(crate) async fn handle_approval_resolution(
+        &self,
+        _request_id: uuid::Uuid,
+        decision: librefang_types::approval::ApprovalDecision,
+        deferred: librefang_types::tool::DeferredToolExecution,
+    ) {
+        use librefang_types::approval::ApprovalDecision;
+        use librefang_types::tool::{ToolExecutionStatus, ToolResult};
+
+        let agent_id = match deferred.agent_id.as_str() {
+            "" => {
+                warn!(
+                    "handle_approval_resolution: empty agent_id in deferred tool '{}', skipping resolution",
+                    deferred.tool_name
+                );
+                return;
+            }
+            s => match uuid::Uuid::parse_str(s) {
+                Ok(u) => AgentId(u),
+                Err(e) => {
+                    warn!(
+                        "handle_approval_resolution: invalid agent_id '{s}': {e}, skipping resolution"
+                    );
+                    return;
+                }
+            },
+        };
+
+        let result = match &decision {
+            ApprovalDecision::Approved => match self.execute_deferred_tool(&deferred).await {
+                Ok(r) => r,
+                Err(e) => ToolResult::error(
+                    deferred.tool_use_id.clone(),
+                    format!("Failed to execute approved tool: {e}"),
+                ),
+            },
+            ApprovalDecision::Denied => ToolResult::with_status(
+                deferred.tool_use_id.clone(),
+                format!(
+                    "Tool '{}' was denied by human operator.",
+                    deferred.tool_name
+                ),
+                ToolExecutionStatus::Denied,
+            ),
+            ApprovalDecision::TimedOut => ToolResult::with_status(
+                deferred.tool_use_id.clone(),
+                format!("Tool '{}' approval request expired.", deferred.tool_name),
+                ToolExecutionStatus::Expired,
+            ),
+            ApprovalDecision::ModifyAndRetry { feedback } => ToolResult::with_status(
+                deferred.tool_use_id.clone(),
+                format!(
+                    "[MODIFY_AND_RETRY] Tool '{}': {}",
+                    deferred.tool_name, feedback
+                ),
+                ToolExecutionStatus::ModifyAndRetry,
+            ),
+            ApprovalDecision::Skipped => ToolResult::with_status(
+                deferred.tool_use_id.clone(),
+                format!("Tool '{}' was skipped.", deferred.tool_name),
+                ToolExecutionStatus::Skipped,
+            ),
+        };
+
+        // Let the live agent loop own patching and persistence when it can accept
+        // the resolution signal. Fall back to direct session mutation only when the
+        // agent is not currently reachable.
+        if !self.notify_agent_of_resolution(&agent_id, &deferred, &decision, &result) {
+            self.replace_tool_result_in_session(&agent_id, &deferred.tool_use_id, &result)
+                .await;
+            // Patching the session updates the on-disk tool_result but
+            // does NOT fire a new agent turn. After a channel-originated
+            // tool call, the LLM responded to the original `WaitingApproval`
+            // placeholder with "OK, waiting on approval" prose and the
+            // agent loop went idle — so the user sees the bot's
+            // `Approved [abc12345] file_write — …` confirmation from
+            // the channel listener and then silence forever (reported
+            // post-#5483 + #5484 by an operator: "approve 就没然后了").
+            //
+            // Wake the agent with a synthetic continuation. The text
+            // mirrors the in-flight `handle_mid_turn_signal` injection
+            // at `tool_call.rs::825-865` so the LLM sees the same
+            // payload shape whether it was live during the resolve or
+            // resumed from idle.
+            self.wake_agent_after_approval(&agent_id, &deferred, &decision, &result)
+                .await;
+        }
+    }
+
+    /// Synthesize a `[System]` continuation message and feed it to the
+    /// agent via `send_message_full` so the loop wakes up, sees the
+    /// just-patched tool_result, and generates a response that flows
+    /// back to the originating channel.
+    ///
+    /// No-op when:
+    /// - `(deferred.channel, deferred.sender_id)` is missing — non-channel
+    ///   sources (dashboard direct, cron, autonomous, inline-blocking
+    ///   `request_approval`) need their own resume path; we don't have
+    ///   a chat to route a response to.
+    /// - The kernel self-handle is unavailable (early boot / shutdown).
+    /// - `send_message_full` fails — logged at WARN; the patched
+    ///   session is still on disk so the next user-initiated turn will
+    ///   see the resolved result, just without an immediate response.
+    async fn wake_agent_after_approval(
+        &self,
+        agent_id: &AgentId,
+        deferred: &librefang_types::tool::DeferredToolExecution,
+        decision: &librefang_types::approval::ApprovalDecision,
+        result: &librefang_types::tool::ToolResult,
+    ) {
+        let (Some(channel), Some(sender_id)) =
+            (deferred.channel.as_deref(), deferred.sender_id.as_deref())
+        else {
+            debug!(
+                agent_id = %agent_id,
+                tool_use_id = %deferred.tool_use_id,
+                "Approval resolved with no channel/sender context — session patched but agent left idle (non-channel source; next user message will see the resolved result)"
+            );
+            return;
+        };
+
+        let kernel_handle = match self.self_handle.get().and_then(|w| w.upgrade()) {
+            Some(arc) => arc,
+            None => {
+                warn!(
+                    agent_id = %agent_id,
+                    "wake_agent_after_approval: kernel self-handle unavailable — agent will stay idle until next external trigger"
+                );
+                return;
+            }
+        };
+
+        // Prefer the originating chat_id over sender_id. In DMs they
+        // coincide and the previous synth-from-sender_id behaviour
+        // worked by accident; in groups `sender_id` is the human user
+        // and `chat_id` is the group conversation. Routing the reply
+        // via the group's chat_id puts the agent's follow-up back in
+        // the original thread, matching #5489's intent end-to-end.
+        let routing_chat_id = deferred
+            .chat_id
+            .as_deref()
+            .filter(|c| !c.is_empty())
+            .unwrap_or(sender_id);
+        let sender_ctx = librefang_channels::types::SenderContext {
+            // Audit: cron-channel-name-not-reserved. `deferred.channel`
+            // was captured upstream from a `SenderContext` that may
+            // predate the construction-site sanitizer. Re-sanitize on
+            // replay so a stored unsanitized value cannot resurrect
+            // the collision.
+            channel: librefang_channels::types::sanitize_channel_name(channel),
+            user_id: sender_id.to_string(),
+            chat_id: Some(routing_chat_id.to_string()),
+            ..Default::default()
+        };
+
+        let result_preview = librefang_types::truncate_str(&result.content, 300);
+        let msg = format!(
+            "[System] Tool '{}' approval resolved ({}). Result: {}",
+            deferred.tool_name,
+            decision.as_str(),
+            result_preview
+        );
+
+        let loop_result = match self
+            .send_message_full(
+                *agent_id,
+                &msg,
+                kernel_handle,
+                None,
+                Some(&sender_ctx),
+                None,
+                None,
+                None,
+            )
+            .await
+        {
+            Ok(r) => r,
+            Err(e) => {
+                warn!(
+                    agent_id = %agent_id,
+                    tool_use_id = %deferred.tool_use_id,
+                    error = %e,
+                    "Failed to wake agent after approval resolution — session patched, will need an external trigger to continue"
+                );
+                return;
+            }
+        };
+
+        info!(
+            agent_id = %agent_id,
+            tool_use_id = %deferred.tool_use_id,
+            channel = channel,
+            response_len = loop_result.response.len(),
+            silent = loop_result.silent,
+            "Woke idle agent after approval resolution — routing agent reply back to originating chat"
+        );
+
+        // CRITICAL: send_message_full returns the agent's reply as
+        // `AgentLoopResult.response` but does NOT route it through
+        // the channel adapter — that's the channel bridge's job in
+        // the normal inbound flow (`bridge.rs` does
+        // `send_message_full(...)` then `send_response(adapter, ...)`).
+        // Skipping this step is what made "tap [Approve] → silence"
+        // surface in production: the agent loop ran and produced a
+        // perfect natural-language follow-up that nobody ever showed
+        // the user. Route it now through the canonical outbound path,
+        // keyed by the original tool call's `channel` and `account_id`.
+        if loop_result.silent || loop_result.response.is_empty() {
+            debug!(
+                agent_id = %agent_id,
+                tool_use_id = %deferred.tool_use_id,
+                "Agent's post-approval reply was silent/empty — nothing to forward to channel"
+            );
+            return;
+        }
+        // Route the reply through the canonical account-qualified outbound path (#6492 Bug 2).
+        // `send_channel_message` delegates to `handles::channel_sender::resolve_channel_adapter`, whose precedence rules are documented there.
+        // The previous bare `channel_adapters.get(channel)` ignored `deferred.account_id`, so on a multi-account daemon a post-approval reply for a non-first account was delivered to the wrong account's adapter (wrong bot/chat) or missed entirely.
+        //
+        // `channel` here is the *channel type* the inbound turn was stamped with (`librefang_channels::bridge` uses `channel_type_str(adapter.channel_type())`), while the bridge keys the adapter registry by instance `name`.
+        // Resolving the two against each other is what #8055 fixed; keep that in mind before reintroducing any direct `channel_adapters` lookup on this path.
+        //
+        // Reusing the canonical path also picks up the adapter's `output_format` override for free, exactly as a normal inbound reply would.
+        // `thread_id: None` — the wake path carries no thread context (mirrors the pre-fix `adapter.send()`, which never threaded).
+        // On an adapter-miss OR a send failure the call returns `Err`; we log WARN (it does not log itself) — the reply is still persisted in session history, so the next user turn surfaces it.
+        if let Err(e) = self
+            .send_channel_message(
+                channel,
+                routing_chat_id,
+                &loop_result.response,
+                None,
+                deferred.account_id.as_deref(),
+            )
+            .await
+        {
+            warn!(
+                agent_id = %agent_id,
+                tool_use_id = %deferred.tool_use_id,
+                channel = channel,
+                account_id = ?deferred.account_id,
+                recipient = routing_chat_id,
+                error = %e,
+                "No active adapter for the originating channel/account, or delivery failed — post-approval agent reply produced but not delivered; reply is still persisted in session history so the next user turn surfaces it"
+            );
+        }
+    }
+
+    fn build_deferred_tool_exec_context<'a>(
+        &'a self,
+        kernel_handle: &'a Arc<dyn librefang_runtime::kernel_handle::KernelHandle>,
+        skill_snapshot: &'a librefang_skills::registry::SkillRegistry,
+        deferred: &'a librefang_types::tool::DeferredToolExecution,
+        // Borrowed from the caller's `config.load()` guard: the guard has to
+        // outlive the context it is lent to, and a local one here would not.
+        tts_config: &'a librefang_types::config::TtsConfig,
+    ) -> librefang_runtime::tool_runner::ToolExecContext<'a> {
+        let cfg = self.config.load();
+        librefang_runtime::tool_runner::ToolExecContext {
+            kernel: Some(kernel_handle),
+            allowed_tools: deferred.allowed_tools.as_deref(),
+            // Deferred resume path has no live agent-loop context, so the
+            // lazy-load meta-tools fall back to the builtin catalog.
+            available_tools: None,
+            caller_agent_id: if deferred.agent_id.is_empty() {
+                None
+            } else {
+                uuid::Uuid::parse_str(&deferred.agent_id)
+                    .ok()
+                    .map(|_| deferred.agent_id.as_str())
+            },
+            skill_registry: Some(skill_snapshot),
+            // Deferred tools have already passed the approval gate; skill
+            // allowlist is not available here so we skip the check (None).
+            allowed_skills: None,
+            mcp_connections: Some(&self.mcp.mcp_connections),
+            web_ctx: Some(&self.media.web_ctx),
+            browser_ctx: Some(&self.media.browser_ctx),
+            allowed_env_vars: deferred.allowed_env_vars.as_deref(),
+            workspace_root: deferred.workspace_root.as_deref(),
+            media_engine: Some(&self.media.media_engine),
+            media_drivers: Some(&self.media.media_drivers),
+            exec_policy: deferred.exec_policy.as_ref(),
+            // Gated on `enabled` exactly as the agent-loop producers are.
+            //
+            // Not a billing fix: `TtsEngine::synthesize` refuses on
+            // `!config.enabled` before any network call. The gate supplies the
+            // *live* value in place of the engine's boot-time clone, so a
+            // daemon hot-reloaded from `enabled = true` to `false` stops
+            // synthesising on resume too — and it removes the discrepancy where
+            // the same call yielded `.mp3` directly and `.ogg` after
+            // "Allow once".
+            tts_engine: if tts_config.enabled {
+                Some(&self.media.tts_engine)
+            } else {
+                None
+            },
+            tts_config: Some(tts_config),
+            docker_config: None,
+            process_manager: Some(&self.processes.manager),
+            sender_id: deferred.sender_id.as_deref(),
+            channel: deferred.channel.as_deref(),
+            chat_id: deferred.chat_id.as_deref(),
+            // #6443: restore the originating account so an approved, deferred
+            // channel_send still enforces the cross-account (cross-tenant) guard.
+            sender_account_id: deferred.account_id.as_deref(),
+            // Restore the originating SessionId from v36's persisted
+            // `deferred_payload` so a post-restart `Allow once` resumes
+            // through the *original* editor's `acp_fs_client` /
+            // `acp_terminal_client` rather than silently falling back
+            // to local fs / shell. `None` for deferred rows written
+            // before this field existed (pre-#3313 H1) — those still
+            // resume, just without ACP routing.
+            session_id: deferred.session_id,
+            spill_threshold_bytes: cfg.tool_results.spill_threshold_bytes,
+            max_artifact_bytes: cfg.tool_results.max_artifact_bytes,
+            checkpoint_manager: self.checkpoint_manager.as_ref(),
+            process_registry: Some(&self.processes.registry),
+            // Deferred tool executions run after the originating session's turn
+            // has already ended (approval flow), so no live session interrupt is
+            // available.  We set None here; if a session interrupt is needed for
+            // deferred tools in the future, wire it through DeferredToolExecution.
+            interrupt: None,
+            // Deferred executions have already passed the approval gate, and the
+            // originating session's checker is no longer live — skip the
+            // session-scoped dangerous-command check here.
+            dangerous_command_checker: None,
+            // #7744: deliberately `None`, and this is the one decision the
+            // issue thread left genuinely open, so it is recorded here rather
+            // than in a commit message.
+            //
+            // `DeferredToolExecution` is persisted. A principal written into
+            // it would be resolved at *defer* time and consumed at *resume*
+            // time — possibly after a restart, a config reload, or the
+            // deletion of the user it names — so it would be an assertion
+            // about the past presented as a live one. That is the same failure
+            // mode as stamping an unauthenticated sender: it looks
+            // authoritative and is not.
+            //
+            // The three candidate answers are (a) stamp it and accept the
+            // staleness, (b) re-resolve at resume and fail closed if the
+            // principal is gone, (c) refuse to defer a tool call that needs an
+            // owner. Choosing between them needs the enforcement semantics
+            // that this increment deliberately does not have yet — with
+            // nothing reading the owner, all three are indistinguishable — so
+            // the conservative one is taken and the choice is left to the PR
+            // that makes ownership restrict something.
+            //
+            // Concretely: a `workflow_create` or `cron_create` that goes
+            // through the approval gate is recorded unowned. That is a real
+            // gap, and it is narrower than the alternative of recording an
+            // owner nobody re-verified.
+            acting_principal: None,
+        }
+    }
+
+    /// Execute a deferred tool after it has been approved.
+    async fn execute_deferred_tool(
+        &self,
+        deferred: &librefang_types::tool::DeferredToolExecution,
+    ) -> Result<librefang_types::tool::ToolResult, String> {
+        use librefang_runtime::tool_runner::execute_tool_raw;
+
+        // Build a kernel handle reference so tools can call back into the kernel.
+        let kernel_handle: Arc<dyn librefang_runtime::kernel_handle::KernelHandle> =
+            match self.self_handle.get().and_then(|w| w.upgrade()) {
+                Some(arc) => arc,
+                None => {
+                    return Err("Kernel self-handle unavailable".to_string());
+                }
+            };
+
+        // Snapshot the skill registry (drops the read lock before the async await).
+        let skill_snapshot = self
+            .skills
+            .skill_registry
+            .read()
+            .map_err(|e| format!("skill_registry lock poisoned: {e}"))?
+            .snapshot();
+
+        let resume_cfg = self.config.load();
+        let ctx = self.build_deferred_tool_exec_context(
+            &kernel_handle,
+            &skill_snapshot,
+            deferred,
+            &resume_cfg.tts,
+        );
+
+        let result = execute_tool_raw(
+            &deferred.tool_use_id,
+            &deferred.tool_name,
+            &deferred.input,
+            &ctx,
+        )
+        .await;
+
+        Ok(result)
+    }
+
+    /// Replace or reconcile a resolved approval result in the persisted session.
+    ///
+    /// This fallback may run concurrently with an in-flight agent-loop save, so it
+    /// always reloads the latest persisted session just before writing and only
+    /// patches against that snapshot. If another writer already persisted the same
+    /// terminal result, this becomes a no-op instead of appending a duplicate.
+    async fn replace_tool_result_in_session(
+        &self,
+        agent_id: &AgentId,
+        tool_use_id: &str,
+        result: &librefang_types::tool::ToolResult,
+    ) {
+        // Resolve the agent's session_id from the registry.
+        let session_id = match self.agents.registry.get(*agent_id) {
+            Some(entry) => entry.session_id,
+            None => {
+                warn!(
+                    agent_id = %agent_id,
+                    "replace_tool_result_in_session: agent not found in registry"
+                );
+                return;
+            }
+        };
+
+        let mut session = match self.memory.substrate.get_session_async(session_id).await {
+            Ok(Some(s)) => s,
+            Ok(None) => {
+                warn!(
+                    agent_id = %agent_id,
+                    "replace_tool_result_in_session: session not found"
+                );
+                return;
+            }
+            Err(e) => {
+                warn!(
+                    agent_id = %agent_id,
+                    error = %e,
+                    "replace_tool_result_in_session: failed to load session"
+                );
+                return;
+            }
+        };
+
+        fn reconcile_tool_result(
+            session: &mut librefang_memory::session::Session,
+            tool_use_id: &str,
+            result: &librefang_types::tool::ToolResult,
+        ) -> bool {
+            use librefang_types::message::{ContentBlock, MessageContent};
+            use librefang_types::tool::ToolExecutionStatus;
+
+            let mut replaced = false;
+            let mut already_final = false;
+            let mut messages_mutated = false;
+            'outer: for msg in &mut session.messages {
+                let blocks = match &mut msg.content {
+                    MessageContent::Blocks(blocks) => blocks,
+                    _ => continue,
+                };
+                for block in blocks.iter_mut() {
+                    if let ContentBlock::ToolResult {
+                        tool_use_id: ref id,
+                        content,
+                        is_error,
+                        status,
+                        approval_request_id,
+                        ..
+                    } = block
+                    {
+                        if id == tool_use_id {
+                            if *status == ToolExecutionStatus::WaitingApproval {
+                                *content = result.content.clone();
+                                *is_error = result.is_error;
+                                *status = result.status;
+                                *approval_request_id = None;
+                                replaced = true;
+                                messages_mutated = true;
+                                break 'outer;
+                            }
+
+                            if *status == result.status && *content == result.content {
+                                already_final = true;
+                                break 'outer;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if !replaced && !already_final {
+                if let Some(last_message) = session.messages.last_mut() {
+                    let block = ContentBlock::ToolResult {
+                        tool_use_id: result.tool_use_id.clone(),
+                        tool_name: result.tool_name.clone().unwrap_or_default(),
+                        content: result.content.clone(),
+                        is_error: result.is_error,
+                        status: result.status,
+                        approval_request_id: None,
+                    };
+
+                    match &mut last_message.content {
+                        MessageContent::Blocks(blocks) => blocks.push(block),
+                        MessageContent::Text(text) => {
+                            let prior = std::mem::take(text);
+                            last_message.content = MessageContent::Blocks(vec![
+                                ContentBlock::Text {
+                                    text: prior,
+                                    provider_metadata: None,
+                                },
+                                block,
+                            ]);
+                        }
+                    }
+                    replaced = true;
+                    messages_mutated = true;
+                }
+            }
+
+            if messages_mutated {
+                session.mark_messages_mutated();
+            }
+
+            replaced || already_final
+        }
+
+        if !reconcile_tool_result(&mut session, tool_use_id, result) {
+            debug!(
+                agent_id = %agent_id,
+                tool_use_id,
+                "replace_tool_result_in_session: terminal result already present or no writable message found"
+            );
+            return;
+        }
+
+        let persisted_session = match self.memory.substrate.get_session_async(session_id).await {
+            Ok(Some(s)) => s,
+            Ok(None) => {
+                warn!(
+                    agent_id = %agent_id,
+                    "replace_tool_result_in_session: session disappeared before reconcile-save"
+                );
+                return;
+            }
+            Err(e) => {
+                warn!(
+                    agent_id = %agent_id,
+                    error = %e,
+                    "replace_tool_result_in_session: failed to reload latest session"
+                );
+                return;
+            }
+        };
+
+        session = persisted_session;
+        if reconcile_tool_result(&mut session, tool_use_id, result) {
+            if let Err(e) = self.memory.substrate.save_session_async(&session).await {
+                warn!(
+                    agent_id = %agent_id,
+                    error = %e,
+                    "replace_tool_result_in_session: failed to save session"
+                );
+            }
+        } else {
+            debug!(
+                agent_id = %agent_id,
+                tool_use_id,
+                "replace_tool_result_in_session: terminal result already present or no writable message found"
+            );
+        }
+    }
+
+    /// Notify the running agent loop about an approval resolution via an explicit mid-turn signal.
+    fn notify_agent_of_resolution(
+        &self,
+        agent_id: &AgentId,
+        deferred: &librefang_types::tool::DeferredToolExecution,
+        decision: &librefang_types::approval::ApprovalDecision,
+        result: &librefang_types::tool::ToolResult,
+    ) -> bool {
+        let senders: Vec<(
+            (AgentId, SessionId),
+            tokio::sync::mpsc::Sender<AgentLoopSignal>,
+        )> = self
+            .events
+            .injection_senders
+            .iter()
+            .filter(|e| e.key().0 == *agent_id)
+            .map(|e| (*e.key(), e.value().clone()))
+            .collect();
+
+        if senders.is_empty() {
+            debug!(
+                agent_id = %agent_id,
+                "Approval resolution: no active agent loop to notify"
+            );
+            return false;
+        }
+
+        let mut delivered = false;
+        let mut closed_keys: Vec<(AgentId, SessionId)> = Vec::new();
+        for (key, tx) in senders {
+            match tx.try_send(AgentLoopSignal::ApprovalResolved {
+                tool_use_id: deferred.tool_use_id.clone(),
+                tool_name: deferred.tool_name.clone(),
+                decision: decision.as_str().to_string(),
+                result_content: result.content.clone(),
+                result_is_error: result.is_error,
+                result_status: result.status,
+            }) {
+                Ok(()) => {
+                    debug!(
+                        agent_id = %agent_id,
+                        session_id = %key.1,
+                        "Approval resolution injected into agent loop"
+                    );
+                    delivered = true;
+                }
+                Err(tokio::sync::mpsc::error::TrySendError::Full(_)) => {
+                    warn!(
+                        agent_id = %agent_id,
+                        session_id = %key.1,
+                        "Approval resolution injection channel full — falling back to session patch"
+                    );
+                }
+                Err(tokio::sync::mpsc::error::TrySendError::Closed(_)) => {
+                    debug!(
+                        agent_id = %agent_id,
+                        session_id = %key.1,
+                        "Approval resolution: agent loop is not running (injection channel closed)"
+                    );
+                    closed_keys.push(key);
+                }
+            }
+        }
+        for key in closed_keys {
+            self.events.injection_senders.remove(&key);
+        }
+        delivered
+    }
+}
+
+// --- Local-provider probe helpers ---
+//
+// Shared between the periodic background probe (see `start_background_agents`)
+// and the on-demand refresh path in `/api/providers/{id}/test`. Authoritative
+// for the `auth_status` of local providers (Ollama / vLLM / LM Studio /
+// lemonade) — no other code writes `NotRequired` or `LocalOffline` to them.
+
+// `probe_and_update_local_provider` and `probe_all_local_providers_once` live in `kernel::provider_probe`. The inherent `LibreFangKernel::probe_local_provider` method-style facade stays here.
+impl LibreFangKernel {
+    /// Method-style facade over [`probe_and_update_local_provider`] so callers
+    /// outside this crate (e.g. `librefang-api`) do not need to import the
+    /// free function from `librefang_kernel::kernel`. Tracks the
+    /// KernelHandle boundary cleanup in #3744.
+    pub async fn probe_local_provider(
+        self: &Arc<Self>,
+        provider_id: &str,
+        base_url: &str,
+        log_offline_as_warn: bool,
+    ) -> librefang_runtime::provider_health::ProbeResult {
+        probe_and_update_local_provider(self, provider_id, base_url, log_offline_as_warn).await
+    }
+}
+
+// --- OFP Wire Protocol integration ---
+
+#[async_trait]
+impl librefang_wire::peer::PeerHandle for LibreFangKernel {
+    fn local_agents(&self) -> Vec<librefang_wire::message::RemoteAgentInfo> {
+        self.agents
+            .registry
+            .list()
+            .iter()
+            .map(|entry| librefang_wire::message::RemoteAgentInfo {
+                id: entry.id.0.to_string(),
+                name: entry.name.clone(),
+                description: entry.manifest.description.clone(),
+                tags: entry.manifest.tags.clone(),
+                tools: entry.manifest.capabilities.tools.clone(),
+                state: format!("{:?}", entry.state),
+            })
+            .collect()
+    }
+
+    async fn handle_agent_message(
+        &self,
+        agent: &str,
+        message: &str,
+        _sender: Option<&str>,
+    ) -> Result<String, String> {
+        // Resolve agent by name or ID
+        let agent_id = if let Ok(uuid) = uuid::Uuid::parse_str(agent) {
+            AgentId(uuid)
+        } else {
+            // Find by name
+            self.agents
+                .registry
+                .list()
+                .iter()
+                .find(|e| e.name == agent)
+                .map(|e| e.id)
+                .ok_or_else(|| format!("Agent not found: {agent}"))?
+        };
+
+        match self.send_message(agent_id, message).await {
+            Ok(result) => Ok(result.response),
+            Err(e) => Err(format!("{e}")),
+        }
+    }
+
+    fn discover_agents(&self, query: &str) -> Vec<librefang_wire::message::RemoteAgentInfo> {
+        let q = query.to_lowercase();
+        self.agents
+            .registry
+            .list()
+            .iter()
+            .filter(|entry| {
+                entry.name.to_lowercase().contains(&q)
+                    || entry.manifest.description.to_lowercase().contains(&q)
+                    || entry
+                        .manifest
+                        .tags
+                        .iter()
+                        .any(|t| t.to_lowercase().contains(&q))
+            })
+            .map(|entry| librefang_wire::message::RemoteAgentInfo {
+                id: entry.id.0.to_string(),
+                name: entry.name.clone(),
+                description: entry.manifest.description.clone(),
+                tags: entry.manifest.tags.clone(),
+                tools: entry.manifest.capabilities.tools.clone(),
+                state: format!("{:?}", entry.state),
+            })
+            .collect()
+    }
+
+    fn uptime_secs(&self) -> u64 {
+        self.booted_at.elapsed().as_secs()
+    }
+}
+
+#[cfg(test)]
+mod tests;

@@ -1,0 +1,17 @@
+{
+  "stage": "assess",
+  "completedAt": "2026-10-07T20:49:38.261Z",
+  "outputs": [
+    "assessment.md",
+    "evidence/assess/secret-count-reconciliation-v3.json",
+    "evidence/assess/whole-worktree-symlink-inventory.json",
+    "evidence/assess/assessment-source-bindings.json",
+    "review/assess/findings-r1.json",
+    "review/assess/findings-r2.json",
+    "review/assess/screen-r2-receipt.json"
+  ],
+  "nextStage": "analyze",
+  "summaryForNext": "Seven original mini QA failures and an actual three-link ignored-dependency violation remain unrepaired. Original secret inventory is 20 matching lines across 19 files; targeted current inventory is 18 lines/24 raw occurrences, including 11 JSON-key occurrences omitted by the first classifier. Two artifact review rounds retain one CRITICAL count-label finding and two WARNINGs (scoped prior-context path and source traceability); final static revisions address them but are not re-vetted under the two-round cap. Both gateway reviews have unverified-producer-unknown independence. Analyze must settle the five documented design questions. No tests, product repairs, dependency-pin changes or sibling certification occurred; stop for operator Analyze approval.",
+  "skipped": false,
+  "skipReason": null
+}

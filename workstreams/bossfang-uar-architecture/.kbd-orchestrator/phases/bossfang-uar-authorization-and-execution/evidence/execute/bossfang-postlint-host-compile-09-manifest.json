@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T23:34:13.631Z",
+  "commandReceipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-host-compile-09.json",
+  "sourceBinding": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/source-inventory-cold-history-postlint-delivery-21.json",
+  "artifact": {
+    "reason": "compiler-artifact",
+    "package_id": "path+file:///Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-api#2026.9.19",
+    "manifest_path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-api/Cargo.toml",
+    "target": {
+      "kind": [
+        "test"
+      ],
+      "crate_types": [
+        "bin"
+      ],
+      "name": "bauar_harness_host",
+      "src_path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-api/tests/bauar_harness_host.rs",
+      "edition": "2021",
+      "doc": false,
+      "doctest": false,
+      "test": true
+    },
+    "profile": {
+      "opt_level": "0",
+      "debuginfo": "line-tables-only",
+      "debug_assertions": true,
+      "overflow_checks": true,
+      "test": true
+    },
+    "features": [
+      "default",
+      "surreal-backend",
+      "telemetry",
+      "test-util",
+      "uar-driver"
+    ],
+    "filenames": [
+      "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d"
+    ],
+    "executable": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+    "fresh": false
+  },
+  "hostExecutableSha256": "d0b7043a71fb308744905f4aee4521de9f5422e76709c95bbc4e30448138a0af",
+  "compileLogSha256": "5969cf1dc2c92ce997a40550e4a171abb00c38fefc056c1a1489dc24d5f6c227",
+  "scope": "Actual current host compilation only, runtime pending"
+}

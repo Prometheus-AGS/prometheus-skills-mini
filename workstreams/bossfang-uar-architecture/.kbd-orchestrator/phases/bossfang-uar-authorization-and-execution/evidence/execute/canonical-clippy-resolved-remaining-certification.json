@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T23:01:29.656Z",
+  "beforeRevision": 183,
+  "afterRevision": 185,
+  "commands": [
+    {
+      "command": "/Users/gqadonis/.local/bin/prometheus",
+      "args": [
+        "kbd",
+        "--path",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+        "blocker",
+        "clear",
+        "--command-id",
+        "bauar-required-clippy-passed-20261006",
+        "--id",
+        "bauar-required-bossfang-clippy",
+        "--resolution",
+        "Actual owned-libraries clippy07 passed with explicit API and kernel uar-driver features; source-inventory-api-lint-delivery-17.json and bossfang-owned-clippy-07-manifest.json. No runtime/package or phase certification."
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "1b6a88bd443694861c0c63bfea45520e778eb69e945444225cce928bfb9e7aaf"
+    },
+    {
+      "command": "/Users/gqadonis/.local/bin/prometheus",
+      "args": [
+        "kbd",
+        "--path",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+        "completion",
+        "set",
+        "--command-id",
+        "bauar-certification-remaining-boundaries-20261006",
+        "--dimension",
+        "certification",
+        "--completed",
+        "0",
+        "--total",
+        "0",
+        "--status",
+        "blocked",
+        "--summary",
+        "Required selected BF owned-libraries clippy07 passed. Desktop corrected runtime, excluded D0 session-owner evidence, unwaived global UAR formatting, current-source packaging and cumulative independent review remain incomplete. Execute stays active."
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "90cab8c081d5e8dd53669f700ea717fa6586fd7e769ee514b501bc52178ae659"
+    }
+  ],
+  "completion": {
+    "implementation": {
+      "completed": 0,
+      "total": 4,
+      "status": "blocked",
+      "summary": null,
+      "blockers": []
+    },
+    "evidence": {
+      "completed": 0,
+      "total": 0,
+      "status": "pending",
+      "summary": null,
+      "blockers": []
+    },
+    "certification": {
+      "completed": 0,
+      "total": 0,
+      "status": "blocked",
+      "summary": "Required selected BF owned-libraries clippy07 passed. Desktop corrected runtime, excluded D0 session-owner evidence, unwaived global UAR formatting, current-source packaging and cumulative independent review remain incomplete. Execute stays active.",
+      "blockers": []
+    },
+    "publication": {
+      "completed": 0,
+      "total": 0,
+      "status": "pending",
+      "summary": null,
+      "blockers": []
+    }
+  },
+  "stage": "execute in_progress; no phase closure",
+  "retainedPrimary": 37
+}

@@ -1,0 +1,125 @@
+# CI for prometheus-skills-mini.
+#
+# The point of this workflow is evidence. Nothing in this repository has been
+# observed on Windows, and the development host runs a Current (non-LTS) Node,
+# so every Windows and LTS claim is self-reported until these jobs run.
+#
+# The Windows legs check out with core.autocrlf=true on purpose: that is the
+# default most likely to break the rules build and its parsers, so it is the
+# one worth testing against.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: ${{ matrix.os }} · node ${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        node: [22, 24]
+
+    steps:
+      # Before checkout, so .gitattributes is tested under the hostile line-ending
+      # default and tracked evidence paths can exceed Windows' legacy path limit.
+      - name: Configure Windows checkout
+        if: runner.os == 'Windows'
+        run: |
+          git config --global core.autocrlf true
+          git config --global core.longpaths true
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - run: npm ci
+
+      - run: node --test
+
+      - run: node rules/build.mjs --check
+
+      # One command, both reports: the in-process one and the child-process one for
+      # rules/build.mjs, which the default reporter cannot see. Fails below threshold.
+      - run: npm run coverage
+
+      # The pinned CLI's JavaScript entry, run by node directly: no npx, no
+      # .cmd shim, no global install. platform-spawn replaces this one step
+      # with `node scripts/spec-validate.mjs`.
+      # The project's shell-free entry point: on Windows `openspec` is a .cmd that node cannot
+      # run without a shell, so spawnNodeCli starts its JavaScript entry with process.execPath.
+      - run: node scripts/spec-validate.mjs
+
+      # Every file hooks.json names must resolve. A missing entry file fails in
+      # Node's loader before any of our code runs, on every hook event, so no
+      # hook can detect or report it — the source pack shipped exactly that bug.
+      # The list is derived from the manifest, never hand-kept.
+      - run: node --test hooks/hooks.test.mjs
+
+      # Cold start against the 1 s budget, on the platform where it is in doubt.
+      # A distribution, not one number: the timeout fires on the tail, and Windows
+      # process creation is slower and noisier than macOS.
+      - name: Measure hook cold start against the 1 s budget
+        if: runner.os == 'Windows'
+        run: node scripts/hook-cold-start.mjs
+
+  # The kbd-new-phase integration tests drive the canonical KBD runtime through
+  # the real `prometheus` executable ("no CLI substitutes"). The matrix above has
+  # no such binary, so those tests skip there with a visible reason. This job
+  # builds the real CLI from the public full pack at a pinned commit and runs
+  # them with PROMETHEUS_CLI_REQUIRED=1, where a missing binary is a failure,
+  # never a skip. Bump PROMETHEUS_CLI_REF deliberately, alongside the full pack.
+  kbd-runtime:
+    name: kbd runtime integration (real prometheus CLI)
+    runs-on: ubuntu-latest
+    env:
+      PROMETHEUS_CLI_REF: 540af0299d9360761d2dcea7a484f010c568c0f3
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/checkout@v4
+        with:
+          repository: Prometheus-AGS/prometheus-skill-system
+          ref: ${{ env.PROMETHEUS_CLI_REF }}
+          path: .ci/prometheus-skill-system
+          # Every local path crate the CLI builds from (cargo metadata, source == null).
+          sparse-checkout: |
+            tools/prometheus-cli
+            substrate/kbd-runtime
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            .ci/prometheus-skill-system/tools/prometheus-cli/target
+          key: prometheus-cli-${{ runner.os }}-${{ env.PROMETHEUS_CLI_REF }}
+
+      # libdbus-sys (the CLI's OS keyring dependency) links the system D-Bus library on Linux.
+      - name: Install system libraries for the CLI build
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq libdbus-1-dev pkg-config
+
+      - name: Build the real prometheus CLI
+        run: cargo build --locked --release --bin prometheus --manifest-path .ci/prometheus-skill-system/tools/prometheus-cli/Cargo.toml
+
+      - run: npm ci
+
+      - name: kbd-new-phase integration against the real CLI
+        env:
+          PROMETHEUS_CLI_REQUIRED: '1'
+          PROMETHEUS_CLI_TEST_BINARY: ${{ github.workspace }}/.ci/prometheus-skill-system/tools/prometheus-cli/target/release/prometheus
+        run: node --test scripts/kbd-new-phase.integration.test.mjs

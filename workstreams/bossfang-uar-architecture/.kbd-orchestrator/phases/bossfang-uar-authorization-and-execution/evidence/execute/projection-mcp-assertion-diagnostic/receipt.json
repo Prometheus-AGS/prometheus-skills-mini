@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "kind": "fixture-diagnostic-source-handoff",
+  "status": "frozen-unverified",
+  "observedFailure": "Projection09: mcp_assertions / success; preceding history, unchanged-store, HTTP and throw assertions reached without failure.",
+  "files": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates/bauar-secret-projection.ts",
+      "beforeSha256": "537fa1654b226ebbcd2ddbd306dccbf9b18da13d19f51dcc6c35100db4e15f74",
+      "sha256": "a72999978813799f174191b311a5ce089a56ed1dc9a1ba718744e7c1e70760f9",
+      "beforeLines": 490,
+      "lines": 496
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates/bauar-secret-projection-mcp-diagnostic.ts",
+      "beforeSha256": null,
+      "sha256": "41b13d9172eeb7b9f05c3d74b502bd8e72f658c13e44e32c35f3dd63fcd363df",
+      "lines": 42
+    }
+  ],
+  "scheme": {
+    "conditions": "Exact boolean mirrors of original main assertions389-399; non-applicable error-mode conditions are null.",
+    "counts": "Revision captures, prepared invocations, actual MCP calls before/after/delta, matching and redacted matching model tool inputs.",
+    "stream": "Presence and existing registrationReason finite category only; canary detection emitted as inverse boolean.",
+    "capture": "Existing readCaptureDiagnostic snapshot: fixed HTTP categories, finite source-allowlisted run codes, counts, revision booleans and parser flags; diagnostic read failure becomes null.",
+    "emission": "Existing outer failure only when stage is mcp_assertions; original exception rethrown and generic failure text preserved."
+  },
+  "byteEquivalence": {
+    "assertionsUnchanged": true,
+    "expectationsUnchanged": true,
+    "timeoutsUnchanged": true,
+    "method": "Reverse only four recorded instrumentation insertions and reproduce entire original main byte-for-byte."
+  },
+  "scope": {
+    "productionChanges": false,
+    "rawErrorOrContentOutput": false,
+    "identifiersOrCredentialsOutput": false,
+    "extraModelOrToolCalls": false,
+    "existingCaptureOnly": true
+  },
+  "verification": {
+    "sourceComparisonOnly": true,
+    "tests": false,
+    "builds": false,
+    "gates": false,
+    "formatter": false,
+    "rootRuntimePending": true
+  }
+}

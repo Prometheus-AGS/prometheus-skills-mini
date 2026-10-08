@@ -1,0 +1,75 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "kimi-code",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/constraints.md",
+      "claim": "The required `no-hardcoded-secrets` constraint correction is missing from the diff even though task 4.3 requires exactly that check expression to be updated.",
+      "evidence": "Acceptance criterion 4.3 says: \"Correct exactly the `no-hardcoded-secrets` check expression in `.kbd-orchestrator/constraints.md` to invoke the Node checker and fix its stale note\"; the diff contains new `scripts/check-hardcoded-secrets.mjs` and `lib/secret-scan/*` but no hunk for `.kbd-orchestrator/constraints.md`.",
+      "suggested_fix": "Add the `.kbd-orchestrator/constraints.md` hunk changing only the `no-hardcoded-secrets` check to `node scripts/check-hardcoded-secrets.mjs` and updating the stale note."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "skills/delivery-cadence/SKILL.md",
+      "line": 19,
+      "claim": "The retired refresh documentation does not include the required carried-payload marker `one referenced asset is absent`.",
+      "evidence": "Acceptance criterion 1.2 requires declaring the capability unavailable with exact carried-payload markers `UNAVAILABLE IN THIS PROJECT` and `one referenced asset is absent` where a reference must remain; the replacement text in `skills/delivery-cadence/SKILL.md` includes `UNAVAILABLE IN THIS PROJECT` but not `one referenced asset is absent`, and the same omission appears in `skills/delivery-cadence/references/profile.md` and both regenerated dist copies.",
+      "suggested_fix": "Add the exact `one referenced asset is absent` marker to the unavailable refresh documentation where the absent refresh asset is referenced, and regenerate payloads."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "lib/secret-scan/scanner.test.mjs",
+      "line": 70,
+      "claim": "The checker verification omits the required Docker Markdown in-scope control.",
+      "evidence": "The spec scenario `Docker Markdown stays in scope` requires that introducing a credential-shaped value into a `docker/` Markdown file fails; `lib/secret-scan/scanner.test.mjs` positive controls create `config.json`, `tool.mjs`, and historical JSON packets, but no test writes a `docker/*.md` or `docker/AGENTS.md` fixture.",
+      "suggested_fix": "Add a scanner test that writes a credential-shaped token or inline option to a `docker/AGENTS.md` or other `docker/` Markdown fixture and asserts the checker fails without printing the value."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "lib/secret-scan/scanner.test.mjs",
+      "line": 70,
+      "claim": "The checker verification omits the required JSON key-side detection control for an undispositioned credential-shaped property name.",
+      "evidence": "The spec scenario `Key-side detection` requires a JSON document containing a credential-shaped property name or value to fail; existing tests cover JSON string values and an `.mjs` text token, while the only key-related checks are disposition-bound historical keys, not an undispositioned synthetic property-name failure.",
+      "suggested_fix": "Add a positive control with a JSON object whose property name is credential-shaped and assert a `kind: \"key\"` violation is produced and the raw key is not printed."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "lib/secret-scan/scanner.mjs",
+      "line": 116,
+      "claim": "Unparseable JSON files are silently downgraded to text scanning instead of failing safely.",
+      "evidence": "`scanText` catches `JSON.parse` errors and sets `document = undefined`, then continues to emit only raw-line `text` hits; the acceptance criteria require JSON key and value inspection for JSON files and fail-safe behavior, so malformed JSON in a scanned `.json` file can hide key/value classification and pointer/location enforcement.",
+      "suggested_fix": "Treat JSON parse errors for `.json` candidates as scan errors that make `scanRepository` fail, or otherwise report an explicit checker error rather than silently falling back to text scanning."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "lib/secret-scan/scanner.mjs",
+      "line": 101,
+      "claim": "JSON hit line attribution is incorrect when the same secret-shaped substring appears multiple times on a line before the parsed occurrence.",
+      "evidence": "`scanText` builds line candidates only by digest and assigns parsed key/value hits with `candidates.find((entry) => !entry.used && entry.digest === digest)`, so duplicate same-digest matches in a JSON document are consumed FIFO without checking the parsed value's actual position or pointer; dispositions are required to bind to exact file, line, JSON field and digest.",
+      "suggested_fix": "Track JSON token offsets/locations or use a parser that provides source positions so parsed key/value hits bind to their actual line and pointer, not merely the first unused matching digest."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "lib/secret-scan/dispositions.json",
+      "line": 2,
+      "claim": "The disposition store does not record the required receipt provenance for each accepted occurrence.",
+      "evidence": "Acceptance criterion 4.1 and the spec scenario `Disposition store derives from the named receipts` require dispositions derived from named evidence receipts and auditable traceability; `lib/secret-scan/dispositions.json` entries include file, kind, line, pointer, sha256 and class, but no receipt/source field tying each entry to `secret-syntax-adjudication.json`, `secret-context-dispositions.json`, `secret-key-dispositions.json`, `secret-key-structure.json`, `secret-count-reconciliation-v3.json`, or `identifier-key-context.json`.",
+      "suggested_fix": "Add per-disposition provenance fields identifying the source receipt(s) and occurrence identifier/hash used to derive the disposition."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

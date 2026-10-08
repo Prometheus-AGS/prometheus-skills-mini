@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "label": "uar-selection-format-check-01",
+  "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+  "command": "rustfmt",
+  "args": [
+    "--check",
+    "--edition",
+    "2024",
+    "--config",
+    "skip_children=true",
+    "src/uar/runtime/skills/service/selection.rs",
+    "tests/bauar_skill_selection.rs"
+  ],
+  "startedAt": "2026-10-06T21:21:23.941Z",
+  "finishedAt": "2026-10-06T21:21:25.547Z",
+  "exitCode": 0,
+  "signal": null,
+  "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-selection-format-check-01.log",
+  "result": "command-completed-not-yet-case-certified",
+  "buildEnvironment": {}
+}

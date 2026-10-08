@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:17:28.563Z",
+  "receipt": "final-gates/bossfang-kernel-stage-compile-15.json",
+  "sourceBinding": "source-inventory-bossfang-kernel-stage-delivery-05.json",
+  "sourceHead": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+  "sourceFilesChecked": 60,
+  "sourceHashesBound": true,
+  "artifacts": [
+    {
+      "target": "bauar_harness_delegation",
+      "executable": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-9029d9b338b86a1a",
+      "features": [
+        "default",
+        "surreal-backend",
+        "uar-driver"
+      ],
+      "testProfile": true,
+      "sha256": "5fa51fcbd0c6d57fdc90f2ceba1a952d1a1cb37d2ae631c7e376fb9fcaeb885e"
+    }
+  ],
+  "scope": "Only named kernel fixture; defaults plus uar-driver. No production source correction/release/package certification"
+}

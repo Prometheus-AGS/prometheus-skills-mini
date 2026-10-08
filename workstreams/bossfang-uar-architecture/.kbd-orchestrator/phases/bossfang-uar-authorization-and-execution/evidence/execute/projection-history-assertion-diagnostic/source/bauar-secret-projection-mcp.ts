@@ -1,0 +1,251 @@
+import assert from 'node:assert/strict'
+import { randomUUID } from 'node:crypto'
+import { createServer } from 'node:http'
+import { createRequire } from 'node:module'
+import { join } from 'node:path'
+import { pathToFileURL } from 'node:url'
+
+import { Client } from '@modelcontextprotocol/sdk/client/index.js'
+import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js'
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
+import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
+import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js'
+import type { ElectronApplication } from '@playwright/test'
+
+import { createUarHostMcpBridge } from '../../src/main/ai/runtime/uar/UarHostMcpBridge'
+import { UAR_TOOL_ADMISSION_META_KEY, UAR_TOOL_ADMISSION_VERSION } from '../../src/main/ai/runtime/uar/UarHostToolAdmission'
+import { createUarSecretProjection } from '../../src/main/ai/runtime/uar/uarSecretProjection'
+
+export type ProjectionToolMode = 'success' | 'isError' | 'error' | 'cancel'
+type Call = { mode: ProjectionToolMode; originalArguments: boolean }
+
+function toolServer(
+  canary: string,
+  calls: Call[],
+  beforeEffect: (request: any) => void = () => undefined,
+  privateOutput: () => string = () => ''
+): McpServer {
+  const server = new McpServer({ name: 'projection-fixture', version: '1.0.0' }, { capabilities: { tools: {} } })
+  server.server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: [{
+    name: 'read_projection', description: 'Read a synthetic projection fixture', annotations: { readOnlyHint: true },
+    inputSchema: { type: 'object', properties: { echo: { type: 'string' }, mode: { type: 'string' } }, required: ['echo', 'mode'] }
+  }] }))
+  server.server.setRequestHandler(CallToolRequestSchema, async (request, extra) => {
+    beforeEffect(request)
+    const mode = request.params.arguments?.mode as ProjectionToolMode
+    calls.push({ mode, originalArguments: request.params.arguments?.echo === canary })
+    if (request.params._meta?.progressToken !== undefined) {
+      await extra.sendNotification({ method: 'notifications/progress', params: {
+        progressToken: request.params._meta.progressToken, progress: 1, total: 1, message: `Fixture progress ${canary}`
+      } })
+    }
+    if (mode === 'cancel') {
+      await new Promise<void>((resolve) => {
+        if (extra.signal.aborted) resolve()
+        else extra.signal.addEventListener('abort', () => resolve(), { once: true })
+      })
+      throw extra.signal.reason
+    }
+    if (mode === 'error') throw new Error(`Fixture diagnostic ${canary}`)
+    return {
+      content: [{ type: 'text', text: `Benign tool result ${canary} ${privateOutput()}` }],
+      structuredContent: { nested: { credentialEcho: canary }, benign: 'kept' },
+      isError: mode === 'isError'
+    }
+  })
+  return server
+}
+
+/** Real HTTP SDK fixture used as an external server by the isolated application. */
+export async function startProjectionMcp(canary: string) {
+  const calls: Call[] = []
+  const server = toolServer(canary, calls)
+  const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: randomUUID })
+  await server.connect(transport)
+  let authorized = 0
+  const http = createServer((request, response) => {
+    if (request.headers.authorization !== `Bearer ${canary}`) {
+      response.writeHead(403).end()
+      return
+    }
+    authorized += 1
+    void transport.handleRequest(request, response).catch(() => {
+      if (!response.headersSent) response.writeHead(500)
+      response.end()
+    })
+  })
+  await new Promise<void>((resolve) => http.listen(0, '127.0.0.1', resolve))
+  const address = http.address()
+  assert(address && typeof address !== 'string')
+  return {
+    url: `http://127.0.0.1:${address.port}/mcp`, calls,
+    authenticatedRequests: () => authorized,
+    async close() {
+      await server.close()
+      http.closeAllConnections()
+      await new Promise<void>((resolve) => http.close(() => resolve()))
+    }
+  }
+}
+
+/** Exercise the production bridge over authenticated HTTP, including its exact admission store. */
+export async function exerciseProjectedClaims(canary: string) {
+  const calls: Call[] = []
+  let bridge: Awaited<ReturnType<typeof createUarHostMcpBridge>>
+  const server = toolServer(canary, calls, (request) => {
+    const meta = request.params._meta[UAR_TOOL_ADMISSION_META_KEY]
+    assert.equal(bridge.approvalSnapshot().find((entry) => entry.admissionId === meta.admissionId)?.state, 'claimed')
+  }, () => bridge.redactions.join(' '))
+  const projection = createUarSecretProjection([canary])
+  bridge = await createUarHostMcpBridge(
+    { fixture: { name: 'fixture', instance: server } },
+    { ownerId: 'projection-owner', workspace: '/projection', disposition: () => 'auto' },
+    () => undefined, () => projection
+  )
+  const mounted = bridge.servers[0]!
+  const client = new Client({ name: 'projection-gate', version: '1.0.0' })
+  const transport = new StreamableHTTPClientTransport(new URL(mounted.url), { requestInit: { headers: mounted.headers } })
+  const post = async (operation: string, body: unknown) => {
+    const response = await fetch(`${bridge.toolAdmission.url}/${operation}`, {
+      method: 'POST', headers: { ...bridge.toolAdmission.headers, 'content-type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+    assert.equal(response.status, 200)
+    return response.json() as Promise<Record<string, any>>
+  }
+  try {
+    assert.equal((await fetch(mounted.url)).status, 403)
+    await client.connect(transport)
+    assert(transport.sessionId)
+    let ordinal = 0
+    for (const mode of ['success', 'isError', 'error', 'cancel'] as const) {
+      ordinal += 1
+      const args = { echo: canary, mode }
+      const invocation = {
+        version: UAR_TOOL_ADMISSION_VERSION, invocationId: `projection-${ordinal}`, modelToolCallId: `call-${ordinal}`,
+        attempt: 1, rootRunId: 'projection-root', executingRunId: 'projection-root', ownerId: 'projection-owner',
+        workspace: '/projection', runtimeEpoch: 'projection-runtime', hostEpoch: bridge.toolAdmission.hostEpoch,
+        authorityRevision: `projection-authority-${ordinal}`, principalId: 'projection-owner', budgetRevision: 'budget-v1',
+        lease: { leaseId: `projection-lease-${ordinal}`, task: 'projection-root', active: true, attempt: 1, epoch: 'projection-runtime', holder: 'projection-owner',
+          expiresAt: Math.floor(Date.now() / 1_000) + 600 },
+        budgetReservation: { reservationId: `projection-reservation-${ordinal}`, budgetId: 'projection-budget', active: true, amount: 1, unit: 'tool_call', revision: 'budget-v1',
+          expiresAt: Math.floor(Date.now() / 1_000) + 600 },
+        catalogRevision: 'catalog-v1', mountedServerId: 'fixture', nativeToolName: 'read_projection',
+        providerToolName: 'fixture__read_projection', runPolicyRevision: 'policy-v1', toolPolicyRevision: 'tools-v1',
+        approvalClass: 'not_required', callIndex: ordinal, validatedArguments: args
+      }
+      const prepared = await post('prepare', { invocation })
+      const receipt = await post('resolve', { admissionId: prepared.admissionId, invocationId: prepared.invocationId, localDisposition: 'allowed', approved: true })
+      assert.deepEqual(await post('claim', { admissionId: prepared.admissionId, invocation, receipt }), receipt)
+      const progress: unknown[] = []
+      const request = { name: 'read_projection', arguments: args, _meta: {
+        [UAR_TOOL_ADMISSION_META_KEY]: {
+          version: UAR_TOOL_ADMISSION_VERSION, admissionId: prepared.admissionId, invocationId: prepared.invocationId,
+          runtimeEpoch: 'projection-runtime', hostEpoch: bridge.toolAdmission.hostEpoch, authorityRevision: prepared.authorityRevision
+        }
+      } }
+      const abort = new AbortController()
+      const pending = client.callTool(request, undefined, { signal: abort.signal, onprogress: (value) => {
+        progress.push(value)
+        if (mode === 'cancel') abort.abort(new Error('Projection fixture cancellation'))
+      } })
+      if (mode === 'cancel') {
+        await assert.rejects(pending)
+      } else if (mode === 'error') {
+        await assert.rejects(pending, (error: Error) => !error.message.includes(canary) && error.message.includes('<redacted>'))
+      } else {
+        const result = await pending
+        assert.equal(result.isError, mode === 'isError')
+        assert.equal(JSON.stringify(result).includes(canary), false)
+        assert(bridge.redactions.every((secret) => !JSON.stringify(result).includes(secret)))
+        assert(JSON.stringify(result).includes('<redacted>'))
+        assert.equal((result.structuredContent as any)?.benign, 'kept')
+      }
+      assert.equal(progress.length, 1)
+      assert.equal(JSON.stringify(progress).includes(canary), false)
+      assert(JSON.stringify(progress).includes('<redacted>'))
+      await assert.rejects(() => client.callTool(request))
+      assert.equal(calls.length, ordinal)
+    }
+    assert(calls.every((call) => call.originalArguments))
+    return { authenticated: true, claimBeforeEffect: true, replayRejected: true, originalArguments: true,
+      progress: true, structuredAndError: true, bridgePrivateValues: true, cancellation: true }
+  } finally {
+    await Promise.allSettled([client.close(), bridge.close()])
+  }
+}
+
+/** Observe real per-call logger output and real OTel span data; delegate every original consumer. */
+export async function installMcpSinkCapture(app: ElectronApplication, canary: string): Promise<void> {
+  const require = createRequire(join(process.cwd(), 'package.json'))
+  await app.evaluate(async (_, input) => {
+    const { createRequire } = process.getBuiltinModule('node:module')
+    const { fileURLToPath } = process.getBuiltinModule('node:url')
+    const require = createRequire(input.otelUrl)
+    const { trace } = require(fileURLToPath(input.otelUrl))
+    const state = globalThis as any
+    const logs: Array<{ canary: boolean; replacement: boolean; error: boolean }> = []
+    const spans: Array<{ canary: boolean; replacement: boolean; inputReplacement: boolean; error: boolean }> = []
+    const restorers: Array<() => void> = []
+    for (const level of ['debug', 'warn', 'error'] as const) {
+      const original = console[level]
+      console[level] = (...args: unknown[]) => {
+        const text = JSON.stringify(args, (_, value) => value instanceof Error
+          ? { message: value.message, stack: value.stack } : value)
+        if (/McpRuntimeService|McpBridge/.test(text) && /Calling tool|Error calling tool|failed to call tool/.test(text)) {
+          logs.push({ canary: text.includes(input.canary), replacement: text.includes('<redacted>'), error: level === 'error' })
+        }
+        original.apply(console, args)
+      }
+      restorers.push(() => { console[level] = original })
+    }
+    const originalGetTracer = trace.getTracer
+    trace.getTracer = (...args: unknown[]) => {
+      const tracer = originalGetTracer.apply(trace, args)
+      return new Proxy(tracer, { get(target, property) {
+        if (property !== 'startActiveSpan') {
+          const value = Reflect.get(target, property)
+          return typeof value === 'function' ? value.bind(target) : value
+        }
+        return (...spanArgs: any[]) => {
+          const callback = spanArgs.at(-1)
+          if (spanArgs[1]?.attributes?.tags === 'MCP') {
+            spanArgs[spanArgs.length - 1] = (span: any) => {
+              const originalEnd = span.end
+              span.end = (...endArgs: unknown[]) => {
+                const text = JSON.stringify({ attributes: span.attributes, status: span.status, events: span.events })
+                spans.push({ canary: text.includes(input.canary), replacement: text.includes('<redacted>'),
+                  inputReplacement: String(span.attributes?.inputs).includes('<redacted>'), error: span.status?.code === 2 })
+                return originalEnd.apply(span, endArgs)
+              }
+              return callback(span)
+            }
+          }
+          return target.startActiveSpan(...spanArgs)
+        }
+      } })
+    }
+    restorers.push(() => { trace.getTracer = originalGetTracer })
+    state.__bauarMcpSinks = { logs, spans, restore() { restorers.reverse().forEach((restore) => restore()) } }
+  }, { canary, otelUrl: pathToFileURL(require.resolve('@opentelemetry/api')).href })
+}
+
+export async function finishMcpSinkCapture(app: ElectronApplication) {
+  const result = await app.evaluate(() => {
+    const state = globalThis as any
+    const capture = state.__bauarMcpSinks
+    capture.restore()
+    delete state.__bauarMcpSinks
+    return { logs: capture.logs, spans: capture.spans } as {
+      logs: Array<{ canary: boolean; replacement: boolean; error: boolean }>
+      spans: Array<{ canary: boolean; replacement: boolean; inputReplacement: boolean; error: boolean }>
+    }
+  })
+  assert(result.logs.length > 0 && result.spans.length >= 3)
+  assert(result.logs.every((entry) => !entry.canary))
+  assert(result.logs.some((entry) => entry.error && entry.replacement))
+  assert(result.spans.every((entry) => !entry.canary && entry.inputReplacement))
+  assert(result.spans.some((entry) => entry.error && entry.replacement))
+  assert(result.spans.some((entry) => !entry.error && entry.replacement))
+  return { logs: result.logs.length, spans: result.spans.length, canaryAbsent: true, actualConsumersDelegated: true }
+}

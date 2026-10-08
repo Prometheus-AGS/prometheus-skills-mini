@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "status": "source-authored-unverified",
+  "frozenAt": "2026-10-06T16:27:50.259Z",
+  "root": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+  "notes": "Source handed off; runtime unverified; actual canonical stored-receipt scenario source remains to author. Finite captured corpus only; opaque/refreshable credentials, early later-selected provider keys and dependency logs outside guarantee. No session-owner correction.",
+  "testsRun": [],
+  "files": [
+    {
+      "path": "src/uar/persistence/agent_threads.rs",
+      "sha256": "a864391c18dddb7e14059bf3b1683aa36b9b9a03d6d8a0c4ecb711f25388d324",
+      "lines": 859,
+      "snapshot": "01-src_uar_persistence_agent_threads.rs.txt"
+    },
+    {
+      "path": "src/uar/runtime/turn/host/secret_projection.rs",
+      "sha256": "9ef53b7fa0ea0399549a38eb5c360b1f2eadc62363c170b055b2f5144c54770d",
+      "lines": 126,
+      "snapshot": "02-src_uar_runtime_turn_host_secret_projection.rs.txt"
+    },
+    {
+      "path": "src/uar/runtime/turn/host/secret_stream.rs",
+      "sha256": "f923b2f9cfe6e47dde123d999059186c487de0d92de2ef6dfde2af532ae69794",
+      "lines": 128,
+      "snapshot": "03-src_uar_runtime_turn_host_secret_stream.rs.txt"
+    },
+    {
+      "path": "src/uar/runtime/turn/host/receipt_projection.rs",
+      "sha256": "f7aaeb83128b60e776fd26a9160458dfa4cc8f92bc13e6f052a4c8c7277ecdfe",
+      "lines": 41,
+      "snapshot": "04-src_uar_runtime_turn_host_receipt_projection.rs.txt"
+    },
+    {
+      "path": "src/uar/runtime/turn/host/event_projection.rs",
+      "sha256": "dfb94716a0d7b28d934095169ed2aef459ad92275ef8fcac30539df88b189f19",
+      "lines": 179,
+      "snapshot": "05-src_uar_runtime_turn_host_event_projection.rs.txt"
+    },
+    {
+      "path": "src/uar/runtime/turn/host/mod.rs",
+      "sha256": "a094d1496119a5c62112790c8486007a24c08508d83ce249f536b635243e83f4",
+      "lines": 124,
+      "snapshot": "06-src_uar_runtime_turn_host_mod.rs.txt"
+    },
+    {
+      "path": "src/uar/runtime/turn/host/mcp.rs",
+      "sha256": "ffbce8153ab1cdd9e5d8a702112b5d12fc0b6f6a4e63b483c7ca024a98b6c81b",
+      "lines": 436,
+      "snapshot": "07-src_uar_runtime_turn_host_mcp.rs.txt"
+    },
+    {
+      "path": "src/mcp/runtime.rs",
+      "sha256": "2107903dc1fea8bdbbd341b180e11ac9f4a2be1720995003d15093ceb614888a",
+      "lines": 928,
+      "snapshot": "08-src_mcp_runtime.rs.txt"
+    },
+    {
+      "path": "src/llm/orchestrator.rs",
+      "sha256": "dc5a76e4e39e96a26bc9100bd7a0971ef027f825918ca3366537d27631de4021",
+      "lines": 3352,
+      "snapshot": "09-src_llm_orchestrator.rs.txt"
+    },
+    {
+      "path": "src/uar/runtime/manager.rs",
+      "sha256": "e88ab0d01bdef1f15b9d658d50d55a738cdf09ad00d9e2dd1ef8c42ab1ec09a5",
+      "lines": 7521,
+      "snapshot": "10-src_uar_runtime_manager.rs.txt"
+    },
+    {
+      "path": "src/llm/anthropic_driver.rs",
+      "sha256": "ed1c06ee5cddab76394f3ba583eed5ddc4793215ea8c85197156b3bb32a78e32",
+      "lines": 548,
+      "snapshot": "11-src_llm_anthropic_driver.rs.txt"
+    },
+    {
+      "path": "tests/bauar_secret_projection.rs",
+      "sha256": "3579357980603bd6ee6f30ded9c45824837caa43489cad6a2e4b218d6bce2600",
+      "lines": 246,
+      "snapshot": "12-tests_bauar_secret_projection.rs.txt"
+    },
+    {
+      "path": "tests/support/bauar_secret_provider.rs",
+      "sha256": "37251d28ce0b869eb519423229ab71d89d45f3a91c07405fa9dd987026687f71",
+      "lines": 122,
+      "snapshot": "13-tests_support_bauar_secret_provider.rs.txt"
+    },
+    {
+      "path": "src/uar/runtime/world_state/runtime.rs",
+      "sha256": "f91c0fc3c2430bfdea5acb2610b50c62a8054f37cffb4211fffd1f9440a6cfac",
+      "lines": 127,
+      "snapshot": "14-src_uar_runtime_world_state_runtime.rs.txt"
+    }
+  ]
+}

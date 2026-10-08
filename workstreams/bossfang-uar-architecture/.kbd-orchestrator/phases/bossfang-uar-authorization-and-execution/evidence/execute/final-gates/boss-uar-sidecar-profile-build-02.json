@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "label": "boss-uar-sidecar-profile-build-02",
+  "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+  "command": "cargo",
+  "args": [
+    "build",
+    "--offline",
+    "--locked",
+    "-p",
+    "universal-agent-runtime",
+    "--no-default-features",
+    "--features",
+    "server-full",
+    "--bin",
+    "uar-sidecar",
+    "--message-format=json"
+  ],
+  "startedAt": "2026-10-06T21:19:48.078Z",
+  "finishedAt": "2026-10-06T21:29:07.952Z",
+  "exitCode": 101,
+  "signal": null,
+  "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-uar-sidecar-profile-build-02.log",
+  "result": "failed",
+  "buildEnvironment": {}
+}

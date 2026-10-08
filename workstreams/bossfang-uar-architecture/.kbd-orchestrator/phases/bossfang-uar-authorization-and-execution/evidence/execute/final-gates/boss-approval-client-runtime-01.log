@@ -1,0 +1,36 @@
+
+Running 1 test using 1 worker
+
+(node:36746) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 tests/e2e/gates/uarExperienceGate.test.ts:127:5 › Gate V: a configured catalog agent runs through Boss with A2UI, approval reconnect and knowledge (1.1m)
+
+
+  1) tests/e2e/gates/uarExperienceGate.test.ts:127:5 › Gate V: a configured catalog agent runs through Boss with A2UI, approval reconnect and knowledge 
+
+    Error: The Boss main window did not become ready
+
+      83 |     await new Promise((resolve) => setTimeout(resolve, 250))
+      84 |   }
+    > 85 |   throw new Error('The Boss main window did not become ready')
+         |         ^
+      86 | }
+      87 |
+      88 | async function launch(profile: string): Promise<{ app: ElectronApplication; page: Page }> {
+        at mainWindow (/Users/gqadonis/.claude/worktrees/bauar-boss/tests/e2e/gates/uarExperienceGate.test.ts:85:9)
+        at launch (/Users/gqadonis/.claude/worktrees/bauar-boss/tests/e2e/gates/uarExperienceGate.test.ts:99:23)
+        at /Users/gqadonis/.claude/worktrees/bauar-boss/tests/e2e/gates/uarExperienceGate.test.ts:165:20
+
+    Error Context: tests/e2e/gates/artifacts/bauar-approval-client/missing/uarExperienceGate-Gate-V-a-90fdc-val-reconnect-and-knowledge/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    tests/e2e/gates/artifacts/bauar-approval-client/missing/uarExperienceGate-Gate-V-a-90fdc-val-reconnect-and-knowledge/trace.zip
+    Usage:
+
+        npx playwright show-trace tests/e2e/gates/artifacts/bauar-approval-client/missing/uarExperienceGate-Gate-V-a-90fdc-val-reconnect-and-knowledge/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests/e2e/gates/uarExperienceGate.test.ts:127:5 › Gate V: a configured catalog agent runs through Boss with A2UI, approval reconnect and knowledge 
+Approval case missing failed (1)

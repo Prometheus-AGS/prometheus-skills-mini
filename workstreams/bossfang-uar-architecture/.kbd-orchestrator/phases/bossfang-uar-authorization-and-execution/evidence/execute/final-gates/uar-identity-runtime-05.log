@@ -1,0 +1,18 @@
+
+running 1 test
+test explicit_local_startup_validates_signed_registered_claims_before_run_admission ... FAILED
+
+failures:
+
+---- explicit_local_startup_validates_signed_registered_claims_before_run_admission stdout ----
+
+thread 'explicit_local_startup_validates_signed_registered_claims_before_run_admission' (209504349) panicked at tests/support/bauar_identity_peer.rs:204:9:
+identity fixture transport failure; stage=send; endpoint=run_admission; method=POST; response_ordinal=9; timeout=false; connect=false; child_observed=false; os_status=None; exit_status=unavailable; fatal_markers=[("stack_overflow", true), ("fatal_runtime_error", true), ("abort", true), ("panic", false), ("startup_error", false), ("server_error", false), ("allocation_failure", false)]; panic_sources=[]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    explicit_local_startup_validates_signed_registered_claims_before_run_admission
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 14 filtered out; finished in 13.77s
+

@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-06T14:14:23.686Z",
+  "scope": "material design refinement only; not product QA or certification",
+  "model": "gpt-6.1-sol/high",
+  "agent": "/root/design_confirmation",
+  "packetSha256": "6b1d5852ef16a28c49ca41c1e65e9e0f41840594909465b5d991d3d76879f924",
+  "isolationMode": "harness-native-file-backed",
+  "limitations": [
+    "same model family",
+    "producer canonical identity unknown",
+    "file-backed wrapper rather than literal REST payload"
+  ],
+  "primaryTimeout": "unavailable-receipt.json",
+  "prior": "Original execute-design BLOCK preserved; corrections and new result do not rewrite old review",
+  "sycophancyScreen": {
+    "status": "PASS",
+    "score": 0,
+    "strictness": "strict",
+    "command": "scripts/adversarial-review/check-findings-sycophancy.mjs --counter-key bauar-design-confirmation",
+    "productQa": false
+  }
+}

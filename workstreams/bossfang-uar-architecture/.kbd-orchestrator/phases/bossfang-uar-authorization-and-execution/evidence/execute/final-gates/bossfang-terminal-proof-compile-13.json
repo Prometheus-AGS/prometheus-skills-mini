@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "label": "bossfang-terminal-proof-compile-13",
+  "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "command": "cargo",
+  "args": [
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "librefang-kernel",
+    "-p",
+    "librefang-api",
+    "--features",
+    "librefang-kernel/uar-driver,librefang-api/uar-driver",
+    "--test",
+    "bauar_harness_host",
+    "--test",
+    "bauar_harness_delegation",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "startedAt": "2026-10-06T19:44:56.917Z",
+  "finishedAt": "2026-10-06T19:46:10.789Z",
+  "exitCode": 0,
+  "signal": null,
+  "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-terminal-proof-compile-13.log",
+  "result": "command-completed-not-yet-case-certified",
+  "buildEnvironment": {
+    "SKIP_DASHBOARD_BUILD": "1"
+  }
+}

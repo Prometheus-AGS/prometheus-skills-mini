@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "phase": "bossfang-uar-authorization-and-execution",
+  "status": "proposed-conditional-not-dispatched",
+  "roots": {
+    "uar": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime",
+    "bossfang": "/Users/gqadonis/Projects/references/librefang",
+    "boss": "/Users/gqadonis/Projects/prometheus/the-boss"
+  },
+  "claims": {
+    "U-ID": {
+      "repo": "uar",
+      "owner": "UAR security implementer",
+      "paths": [
+        "src/config.rs",
+        "src/uar/api/auth.rs",
+        "src/uar/security/api_keys.rs",
+        "src/uar/security/claims.rs",
+        "src/uar/security/verifier/mod.rs"
+      ],
+      "newPaths": [
+        "src/uar/security/verifier/jwks_cache.rs"
+      ],
+      "note": "Enumerate every persisted-key backend and migration file at 01/1; no backend wildcard is a write grant. Split new responsibilities into <=500-line modules; only surgical wiring in oversized existing files."
+    },
+    "U-HOST": {
+      "repo": "uar",
+      "owner": "UAR trusted host implementer",
+      "paths": [
+        "src/uar/runtime/turn/host/mcp.rs",
+        "src/uar/runtime/turn/host/credentials.rs",
+        "src/uar/runtime/turn/host/mod.rs",
+        "src/mcp/runtime.rs",
+        "src/mcp/binding_cache.rs",
+        "src/mcp/registry.rs",
+        "src/mcp/config.rs"
+      ],
+      "note": "Serial ownership transfer 01 typed provenance -> 04 immutable grants/stdio. Kernels do not gain effect authority."
+    },
+    "U-APPROVAL": {
+      "repo": "uar",
+      "owner": "UAR execution implementer",
+      "paths": [
+        "src/uar/api/routes.rs",
+        "src/uar/runtime/actor/messages.rs",
+        "src/uar/runtime/manager.rs",
+        "src/uar/runtime/thread/approvals.rs",
+        "src/uar/runtime/tool_admission/mod.rs",
+        "src/uar/runtime/tool_admission/lifecycle.rs"
+      ],
+      "note": "full_harness.rs and handlers.rs are read-only provider contract unless a separately reviewed provider delta is required."
+    },
+    "U-F6": {
+      "repo": "uar",
+      "owner": "UAR transport implementer",
+      "paths": [
+        "src/uar/mcp_server.rs"
+      ],
+      "newPaths": [
+        "tests/bauar_session_owner.rs"
+      ],
+      "note": "Production file remains read-only until unchanged-baseline 02/5 reproduces crossover. No rmcp upgrade implied."
+    },
+    "U-PROJECTION": {
+      "repo": "uar",
+      "owner": "UAR projection implementer",
+      "paths": [
+        "src/uar/runtime/turn/host/mod.rs",
+        "src/llm/orchestrator.rs"
+      ],
+      "newPaths": [
+        "src/uar/runtime/turn/host/secret_projection.rs"
+      ],
+      "note": "Bind actual tool-result to event/history/model sink call sites at accepted checkpoint before writes; this is a proposed insertion surface, not an assertion that the full sink graph is enumerated."
+    },
+    "U-TEST": {
+      "repo": "uar",
+      "owner": "UAR integration implementer/verifier at completed boundary",
+      "paths": [
+        "tests/remote_mcp_run_grants.rs",
+        "tests/tool_admission_integration.rs",
+        "tests/mcp_projection.rs",
+        "tests/support/principal_host.rs",
+        "tests/support/sidecar_process.rs",
+        "tests/integration/live/agent_instance_cases.rs",
+        "tests/sidecar_session_principal/isolation.rs",
+        "tests/run_retention/runs.rs"
+      ],
+      "newPaths": [
+        "tests/bauar_authorization.rs"
+      ],
+      "note": "Select real router fixtures with JWT enabled/private stores; migrate positive helpers without masking negatives."
+    },
+    "B-APPROVAL": {
+      "repo": "boss",
+      "owner": "boss-runtime with boss-security contract",
+      "paths": [
+        "src/main/ai/runtime/uar/UarToolApprovalController.ts",
+        "src/main/ai/runtime/uar/uarApprovalLifecycle.ts",
+        "src/main/ai/runtime/uar/UarApprovalLifecycleStore.ts",
+        "src/main/ai/runtime/uar/UarAdministrationAdapter.ts"
+      ],
+      "note": "Resolve exact shared response/event types and consumers using Compass plus source fallback before materialization. No unrelated renderer redesign."
+    },
+    "B-CLAIM": {
+      "repo": "boss",
+      "owner": "boss-runtime",
+      "paths": [
+        "src/main/ai/runtime/uar/UarHostToolAdmission.ts",
+        "src/main/ai/runtime/uar/UarHostMcpBridge.ts",
+        "scripts/gates/uar-exact-tool-admission.ts"
+      ],
+      "note": "Preserve current claim-before-effect; no change unless scenario exposes a contract delta."
+    },
+    "B-PROJECTION": {
+      "repo": "boss",
+      "owner": "boss-security/boss-runtime serial ownership",
+      "paths": [
+        "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
+        "src/main/ai/runtime/uar/UarHostMcpBridge.ts"
+      ],
+      "note": "integrationConfig.ts is a storage reference, not generic remote custody permission; selected host supplement controls any storage change."
+    },
+    "B-BUILD": {
+      "repo": "boss",
+      "owner": "boss-verifier at completed boundary",
+      "paths": [
+        "package.json",
+        "scripts/validate-release-package.cjs"
+      ],
+      "note": "Read-only command/payload evidence; no packaging/config rewrite authorized."
+    },
+    "F-HARNESS": {
+      "repo": "bossfang",
+      "owner": "bossfang-feature-steward with explicit kernel scope extension",
+      "paths": [
+        "crates/librefang-kernel/src/kernel/agent_execution.rs",
+        "crates/librefang-kernel/src/kernel/messaging.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar.rs",
+        "crates/librefang-api/src/routes/uar.rs",
+        "crates/librefang-api/src/routes/network.rs"
+      ],
+      "newPaths": [
+        "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/observation.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/lifecycle.rs"
+      ],
+      "note": "C05.1 selection; C05.2 lifecycle; C05.3 reconciliation and both identified A2A task lookup/cancel views for selected delegated jobs. Native task behavior preserved. Actual module exports/shared types require exact ownership supplement before writes; routes/network.rs transfers serially to F-MCP.",
+      "functionSlices": {
+        "crates/librefang-api/src/routes/uar.rs": [
+          "handle_a2a_rpc",
+          "dispatch_message_send",
+          "dispatch_tasks_get",
+          "dispatch_tasks_cancel"
+        ],
+        "crates/librefang-api/src/routes/network.rs": [
+          "a2a_send_task",
+          "a2a_get_task",
+          "a2a_cancel_task"
+        ]
+      },
+      "handoff": "03 sole writer completes delegated A2A view/cancel wiring and records checkpoint; only then F-MCP receives routes/network.rs for 04. No concurrent claims."
+    },
+    "F-STORAGE": {
+      "repo": "bossfang",
+      "owner": "surrealdb-schema-engineer then feature-steward serial handoff",
+      "paths": [
+        "crates/librefang-memory/src/substrate.rs",
+        "crates/librefang-memory/src/migration.rs",
+        "crates/librefang-memory/src/backends/surreal_task.rs",
+        "crates/librefang-kernel/src/kernel/handles/task_queue.rs",
+        "crates/librefang-types/src/task.rs"
+      ],
+      "newPaths": [
+        "crates/librefang-memory/src/harness_attempt.rs"
+      ],
+      "note": "Backend decision must enumerate SQLite and configured Surreal task path; do not claim both supported until atomic projection transaction is implemented/verified. Migration number allocated at accepted checkpoint."
+    },
+    "F-RETRY": {
+      "repo": "bossfang",
+      "owner": "bossfang-feature-steward",
+      "paths": [
+        "crates/librefang-kernel/src/kernel/handles/task_queue.rs",
+        "crates/librefang-kernel/src/kernel/accessors.rs",
+        "crates/librefang-kernel/src/kernel/cron_tick.rs",
+        "crates/librefang-api/src/routes/task_queue.rs",
+        "crates/librefang-memory/src/substrate.rs",
+        "crates/librefang-memory/src/backends/surreal_task.rs",
+        "crates/librefang-kernel/src/kernel/triggers_and_workflow.rs"
+      ],
+      "note": "Explicit retry -> handle -> substrate; stale sweep in accessors; cron AgentTurn -> send_message_full. Other reachable resumption/A2A paths must be resolved at 03/1, not assumed absent. Pending-task wake reconciliation reads pending tasks and dispatches trigger matches; do not bypass delegated uncertainty through this path."
+    },
+    "F-MCP": {
+      "repo": "bossfang",
+      "owner": "bossfang-feature-steward with explicit API scope extension",
+      "paths": [
+        "crates/librefang-api/src/middleware.rs",
+        "crates/librefang-api/src/routes/network.rs"
+      ],
+      "note": "Bind identity structs and mode configuration at accepted checkpoint. Extend team default ownership explicitly; no blanket API write grant.",
+      "functionSlices": {
+        "crates/librefang-api/src/routes/network.rs": [
+          "mcp_http",
+          "mcp_identity_error"
+        ]
+      },
+      "handoff": "04 MCP attribution only after F-HARNESS release; no changes to a2a_send_task/a2a_get_task/a2a_cancel_task unless explicitly re-planned."
+    },
+    "F-TEST": {
+      "repo": "bossfang",
+      "owner": "feature-steward authors; merge-reviewer independently reviews final delivery",
+      "paths": [
+        "crates/librefang-kernel/tests/kernel_handle_contract_task.rs",
+        "crates/librefang-api/tests/task_board_assignee_wake_test.rs"
+      ],
+      "newPaths": [
+        "crates/librefang-kernel/tests/bauar_harness_delegation.rs",
+        "crates/librefang-api/tests/bauar_mcp_identity.rs"
+      ],
+      "note": "Real kernel dispatch, UAR router/executor, product persistence and safe effect required; no test-only adapter substitute."
+    },
+    "REMOTE": {
+      "repo": null,
+      "owner": null,
+      "paths": [],
+      "note": "Unassigned by design: actual receiver and host/custodian required; no wildcard sibling permission. Supplement must fix repository root, base SHA, child change, exact files, resource contract and acceptance command."
+    }
+  },
+  "materialization": {
+    "when": "After explicit Execute handover; before any product mutation",
+    "requirements": [
+      "Revalidate source SHA and selected digests; preserve unrelated uncommitted files.",
+      "Create isolated product worktrees outside original checkouts, respecting repository convention.",
+      "Resolve C05 and shared-file ownership; claim exact files and obtain accepted dependency checkpoint.",
+      "Create repository-local OpenSpec child deltas under that worktree using the reviewed parent requirements; validate before kbd-apply.",
+      "Record child project UUID, worktree root, parent task key -> child task IDs, owner, baseline and acceptance references. Do not reuse original shipping KBD UUID or move original active phase.",
+      "Register children through typed runtime APIs only; parent coordinating tasks complete from linked child receipts, never solely from dispatch.",
+      "Re-review material child design changes; do not dispatch unresolved file sets or remote/durable supplements."
+    ]
+  }
+}

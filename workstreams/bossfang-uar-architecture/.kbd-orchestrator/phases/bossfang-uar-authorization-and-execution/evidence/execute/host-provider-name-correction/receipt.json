@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "kind": "source-authoring-handoff",
+  "name": "host-provider-name-correction",
+  "createdAt": "2026-10-06T22:58:55.271Z",
+  "files": [
+    {
+      "path": "src/main/ai/runtime/uar/uarToolNames.ts",
+      "beforeSha256": "0e8ea3f584a29cbe3c74a1139249493ad35e4641c6ca7e001d619266ce2d1eb8",
+      "afterSha256": "d762396a1084904fe58d771403412abd448e8147b1d148a76196c6dd8e02025d",
+      "beforeLines": 4,
+      "afterLines": 17,
+      "absolutePath": "/Users/gqadonis/.claude/worktrees/bauar-boss/src/main/ai/runtime/uar/uarToolNames.ts",
+      "snapshotPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/host-provider-name-correction/uarToolNames.ts"
+    },
+    {
+      "path": "src/main/ai/runtime/uar/UarHostToolAdmission.ts",
+      "beforeSha256": "af40c4b1112919b85a44871a2907dc1a8f99c69a6bb23805303072a5f5fb85ed",
+      "afterSha256": "3df14c27411e3fba114a682a1de7038eb66f8072ff51602af9c54315964e40b9",
+      "beforeLines": 496,
+      "afterLines": 493,
+      "absolutePath": "/Users/gqadonis/.claude/worktrees/bauar-boss/src/main/ai/runtime/uar/UarHostToolAdmission.ts",
+      "snapshotPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/host-provider-name-correction/UarHostToolAdmission.ts"
+    }
+  ],
+  "evidence": {
+    "gate": "boss-approval-client-runtime-14",
+    "logPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-approval-client-runtime-14.log",
+    "logSha256": "a7a5a4640531167f0261844e66c2252f194f67e310cbd7fb4fb7e83dbf0ed24d",
+    "classification": "failed runtime evidence before this source correction",
+    "observerIncomplete": false,
+    "toolsCalls": 1,
+    "revalidationRequests": 1,
+    "revalidationRejected": 0,
+    "toolsCallRejection": "binding_mismatch",
+    "terminalState": "invalidated",
+    "terminalOutcome": "failed",
+    "dispatchBindings": {
+      "correlated": true,
+      "versionMatches": true,
+      "runtimeEpochMatches": true,
+      "hostEpochMatches": true,
+      "authorityRevisionMatches": true,
+      "invocationIdMatches": true,
+      "mountedServerMatches": true,
+      "nativeToolMatches": true,
+      "providerNameMatchesBossLegacy": false,
+      "providerNameMatchesUarCanonical": true,
+      "argumentDigestMatches": true
+    },
+    "noEffect": {
+      "providerCheckpointEffectExists": false,
+      "providerCheckpointEffectMarkerPresent": false,
+      "actualDispatchBlocked": true,
+      "basis": "Original host binding check invalidated the only observed tools/call before mounted transport dispatch. Initial provider checkpoint also observed no marker. Later positive filesystem-effect assertion was not reached; no full-gate PASS claim."
+    }
+  },
+  "pinnedAlgorithm": {
+    "absolutePath": "/Users/gqadonis/.claude/worktrees/bauar-uar/src/mcp/registry.rs",
+    "sha256": "668056c132d2beaabfe997729225aacc959cb3c40b3f0b80db91e2713237f162",
+    "lines": "1488-1518",
+    "steps": [
+      "Iterate Unicode scalar values; preserve only ASCII letters, digits, underscore and hyphen; replace every other scalar with one underscore.",
+      "Prefix t if resulting first character is absent or not an ASCII letter.",
+      "If length exceeds64, retain first51 sanitized characters, append underscore and12 lowercase hex characters from first6 SHA256 bytes of original UTF-8 input."
+    ]
+  },
+  "semantics": {
+    "rawEncoder": "encodeUarProviderToolName(rawName) never strips an adapter prefix. Host derives expected provider name from actual mountedServerName + double underscore + actual native tool name.",
+    "adapter": "toUarToolName preserves its existing one leading mcp__ adapter-prefix removal, then calls the raw encoder.",
+    "existingConsumers": "UarRuntimeDriver advertisement IDs, UarRuntimeConnection disabled-tool mappings and uarHostToolPolicy mappings already use shared toUarToolName.",
+    "authority": "Original authenticated invocation, receipt, provider name and all identity/revision/digest/lease/one-use guards stay unchanged. Exact providerToolName equality remains mandatory."
+  },
+  "security": {
+    "requirement": "A3 actual tool execution authority boundary",
+    "change": "Align expected provider identity with actual UAR producer encoding before the original consuming claim; no normalization or rewriting of authenticated bindings."
+  },
+  "scope": {
+    "productionFiles": 2,
+    "newFiles": 0,
+    "fixtureFilesChanged": 0,
+    "noOtherSourceEdits": true
+  },
+  "validation": {
+    "testsRun": false,
+    "buildsRun": false,
+    "gatesRun": false,
+    "formatterRun": false,
+    "sourceFrozen": true,
+    "runtimeAcceptance": "pending root-controlled failed-case rerun",
+    "unverified": "Post-correction behavior and unexercised encoding edge cases have no runtime verification from this worker."
+  }
+}

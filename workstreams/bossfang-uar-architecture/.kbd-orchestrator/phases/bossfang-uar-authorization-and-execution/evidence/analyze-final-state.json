@@ -1,0 +1,135 @@
+{
+  "at": "2026-10-06T10:39:47.395Z",
+  "isolated": {
+    "projectId": "7041aa63-d951-4b19-a59c-b963d65b3b83",
+    "revision": 12,
+    "lifecycle": "paused",
+    "activePath": {
+      "phasePath": [
+        "bossfang-uar-authorization-and-execution"
+      ],
+      "phaseId": "bossfang-uar-authorization-and-execution",
+      "stageId": "analyze",
+      "changeId": null,
+      "taskId": null,
+      "commit": "6044ecdeb5c8c957646fef422d886a4568212888"
+    },
+    "completion": {
+      "implementation": {
+        "completed": 0,
+        "total": 0,
+        "status": "pending",
+        "summary": null,
+        "blockers": []
+      },
+      "evidence": {
+        "completed": 0,
+        "total": 0,
+        "status": "pending",
+        "summary": null,
+        "blockers": []
+      },
+      "certification": {
+        "completed": 0,
+        "total": 0,
+        "status": "pending",
+        "summary": null,
+        "blockers": []
+      },
+      "publication": {
+        "completed": 0,
+        "total": 0,
+        "status": "pending",
+        "summary": null,
+        "blockers": []
+      }
+    },
+    "stages": {
+      "analyze": {
+        "id": "analyze",
+        "title": "Analyze architecture alternatives and build versus adopt decisions",
+        "sequence": 2,
+        "status": "complete"
+      },
+      "assess": {
+        "id": "assess",
+        "title": "Assess authorization and execution ownership against all review findings",
+        "sequence": 1,
+        "status": "complete"
+      }
+    }
+  },
+  "original": {
+    "projectId": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
+    "revision": 999,
+    "lifecycle": "ready",
+    "activePath": {
+      "phasePath": [
+        "the-boss-shipping-and-settings",
+        "the-boss-shipping-and-settings::uar-working-agent"
+      ],
+      "phaseId": "the-boss-shipping-and-settings::uar-working-agent",
+      "stageId": null,
+      "changeId": null,
+      "taskId": null,
+      "commit": "d5653d20ebab9a654049d0b2d7948073d5d1b103"
+    },
+    "completion": {
+      "implementation": {
+        "completed": 26,
+        "total": 43,
+        "status": "in_progress",
+        "summary": null,
+        "blockers": []
+      },
+      "evidence": {
+        "completed": 1,
+        "total": 1,
+        "status": "complete",
+        "summary": "Windows x64 and Apple Silicon installed acceptance, gate receipts, immutable release records, and OpenSpec archive recorded.",
+        "blockers": []
+      },
+      "certification": {
+        "completed": 1,
+        "total": 1,
+        "status": "complete",
+        "summary": "Cumulative certification passed with zero critical findings and explicit artifact-refiner, Gate V transcript, and Windows fallback limitations.",
+        "blockers": []
+      },
+      "publication": {
+        "completed": 2,
+        "total": 2,
+        "status": "complete",
+        "summary": "Windows x64 and Apple Silicon 2.2.3 artifacts published to GitHub Releases and reflected on the live landing site.",
+        "blockers": []
+      }
+    },
+    "stages": {
+      "assess": {
+        "id": "assess",
+        "title": "Assess P1 source and packaging gaps",
+        "sequence": 1,
+        "status": "complete"
+      },
+      "execute": {
+        "id": "execute",
+        "title": "Execute P1 working installed UAR agent",
+        "sequence": 5,
+        "status": "in_progress"
+      },
+      "plan": {
+        "id": "plan",
+        "title": "Plan complete P1 implementation",
+        "sequence": 4,
+        "status": "complete"
+      }
+    }
+  },
+  "originalUnchanged": true,
+  "trackedWorktreeChanges": [],
+  "worktreeStatus": [
+    "?? BOSSFANG-UAR-WORKSTREAM.md",
+    "?? docs/research/bossfang-uar-architecture-review-2026-10-06.md",
+    "?? workstreams/"
+  ]
+}

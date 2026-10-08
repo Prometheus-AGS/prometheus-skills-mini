@@ -1,0 +1,17 @@
+{
+  "stage": "analyze",
+  "completedAt": "2026-10-06T10:39:01.211Z",
+  "outputs": [
+    "analysis.md",
+    "library-candidates.json",
+    "decision-log.md",
+    "review/analyze/findings.json",
+    "review/analyze/final-disposition.json",
+    "evidence/analyze-artifact-checks.json",
+    "evidence/analyze-source-final.json"
+  ],
+  "nextStage": "spec",
+  "summaryForNext": "Ten evaluated candidates and nine custom-work/blocked-capability entries. Recommend Bossfang job orchestration with UAR as sole harness for delegated attempts; reuse C05, JWT primitives, run-scoped MCP and exact host admission. Remote identity policy and Bossfang receiving identity require explicit specification; remote receiver/IdP inventory and secret custody are unresolved. Recovery profile is proposed, not operator-approved. F6 remains an untested hypothesis: production-router two-JWT reproduction is prerequisite to any binding remediation; passing matrix requires identified enforcement and no effects/lifecycle crossover. Preserve all Assess scenarios and active C05/shipping ownership. Two independent review rounds completed; latest verdict BLOCK (1 critical, 3 warnings, 1 suggestion). Final author corrections and evidence disputes are documented; they have not been independently rechecked. Accept only as bounded Analyze handoff per skill two-round cap, not architecture certification or delivery-gate completion. Exact producer identity unknown. No product tests/code/dependency/service changes. STOP: explicit user approval required before Spec; no successor stage authorized.",
+  "skipped": false,
+  "skipReason": null
+}

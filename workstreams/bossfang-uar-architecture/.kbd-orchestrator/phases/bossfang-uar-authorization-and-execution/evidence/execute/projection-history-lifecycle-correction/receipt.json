@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "kind": "source-authoring-handoff",
+  "status": "source-frozen-unverified",
+  "change": "Projection history fixture awaits actual runtime connection disposal",
+  "files": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates/bauar-secret-projection.ts",
+      "beforeSha256": "51b994cc92ae3296ee4b97f171acfe8d9cc3388cb9451dafa7e4a0b4d3fa8eda",
+      "afterSha256": "537fa1654b226ebbcd2ddbd306dccbf9b18da13d19f51dcc6c35100db4e15f74",
+      "beforeLines": 489,
+      "lines": 490,
+      "snapshot": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/projection-history-lifecycle-correction/bauar-secret-projection.ts",
+      "beforeSnapshot": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/projection-history-lifecycle-correction/bauar-secret-projection.before.ts"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates/bauar-secret-projection-lifecycle.ts",
+      "beforeSha256": null,
+      "afterSha256": "aa89f82c774e3ee5839b5d0b379a0f08ae5258ed4677a4a63dff9219f1016dd7",
+      "lines": 18,
+      "snapshot": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/projection-history-lifecycle-correction/bauar-secret-projection-lifecycle.ts"
+    }
+  ],
+  "causeSources": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/src/main/ipc/handlers/ai.ts",
+      "snapshot": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/projection-history-lifecycle-correction/ai.ts",
+      "sha256": "f5c55fbdab96c56b2ba7c92a550cd7633fe934ee756ee645a0cc5dec463d2bc0",
+      "lines": 329
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/src/main/ai/agentSession/AgentSessionRuntimeService.ts",
+      "snapshot": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/projection-history-lifecycle-correction/AgentSessionRuntimeService.ts.txt",
+      "sha256": "168e767394245841da933e75d187803e76ea95445e41835b1f1837f458fced49",
+      "lines": 3505
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/src/main/ai/runtime/uar/UarRuntimeConnection.ts",
+      "snapshot": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/projection-history-lifecycle-correction/UarRuntimeConnection.ts.txt",
+      "sha256": "5b0e002e326761eb9ea59f71bbc072bb86a57b995f0dd5ff68fc791e0109df3e",
+      "lines": 721
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/src/main/ai/runtime/uar/uarHostHistory.ts",
+      "snapshot": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/projection-history-lifecycle-correction/uarHostHistory.ts",
+      "sha256": "6b2617e17867d237c98702f8ebc24f1e86eb0e21e54eae9f4ecb71dc0009ad0e",
+      "lines": 115
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/src/main/data/services/AgentSessionMessageService.ts",
+      "snapshot": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/projection-history-lifecycle-correction/AgentSessionMessageService.ts.txt",
+      "sha256": "a236607d6a22b9fc2002846c2f5ac1b25fa27443d328fd5705d3cde3ad6151d8",
+      "lines": 2073
+    }
+  ],
+  "compiledSourceEvidence": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/out/main/main.js",
+      "sha256": "433238c8e7b0ec11b9ea0e4d7337451cb854dbaf953c616309d60cfe79efb0ed",
+      "anchors": "54186,54209-54222,56891-56939"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/out/main/Application-opBOpRZi.js",
+      "sha256": "240ceecb1537986406c976d0ff7f959ca92e61ab38e2a507f3b9a6185c74731c",
+      "anchors": "4684 application export"
+    }
+  ],
+  "cause": {
+    "fixture": "After PATCH, close_warm releases a window lease rather than awaiting connection disposal.",
+    "handler": "ai.ts223-224 calls releaseWarmLease without a close barrier.",
+    "runtime": "AgentSessionRuntimeService1141-1152/1180-1187 no-ops for unknown holders; last release schedules a 10000ms grace at1190-1199.",
+    "history": "UarRuntimeConnection182/213-220 includes history only for cold generation;237 retains the accepted generation. The capture maps absent history to [].",
+    "seed": "MessageService790-813 persists merged data.parts; uarHostHistory29-65 accepts text and terminal dynamic-tool parts."
+  },
+  "correction": {
+    "call": "Actual cached compiled Application singleton -> AgentSessionRuntimeService.closeSession(original session)",
+    "barrier": "1059-1079 removes runtime entry and awaits its existing tracked close barrier; no sleep, timeout changes, sidecar restart or new authority.",
+    "catalog": "ensureCatalogAgent419-495 reads persisted catalog/link. Unchanged agent inputs preserve sourceRevision and return current; only missing catalog or changed source writes. Seed PATCH changes message data only.",
+    "scope": "One history-seed fixture call replaced. Other warm-release calls untouched."
+  },
+  "assertions": {
+    "byteEquivalent": true,
+    "method": "Restoring only added import and exact history close-call substitution reproduces entire original main source byte for byte.",
+    "expectationsChanged": false
+  },
+  "security": {
+    "privateSessionId": "Passed only to the actual in-process close method; never logged or included in receipt.",
+    "productionChanged": false,
+    "credentialsOrPromptDataRecorded": false,
+    "authoritySynthesized": false
+  },
+  "verification": {
+    "testsRun": false,
+    "buildsRun": false,
+    "gatesRun": false,
+    "formattersRun": false,
+    "sourceComparisonOnly": true,
+    "runtimeAcceptancePending": true
+  }
+}

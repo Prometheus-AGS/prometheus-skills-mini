@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-07T00:25:10.224Z",
+  "phaseId": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+  "sourceRevision": 188,
+  "childBeforeDispatches": 1,
+  "childIndex": 1,
+  "childCount": 1,
+  "hookInvocations": [
+    {
+      "status": 0,
+      "unsupported": true,
+      "index": "1",
+      "total": "1"
+    },
+    {
+      "status": 0,
+      "unsupported": true,
+      "index": "1",
+      "total": "1"
+    }
+  ],
+  "canonicalActivePath": {
+    "phasePath": [
+      "bossfang-uar-authorization-and-execution",
+      "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance"
+    ],
+    "phaseId": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+    "stageId": null,
+    "changeId": null,
+    "taskId": null,
+    "commit": "e5b380119129c6f8c69c08ba211c7178e4d61449"
+  },
+  "originalShippingReminderUnchanged": true,
+  "adaptations": [
+    "Supported typed runtime commands generate progress and waypoint; no manual projection writes.",
+    "Node hook dispatcher used exactly once after canonical activation with skill-required child position/count. Node new-child driver depth/max-depth counters do not match invoked skill; its unrelated implementation left untouched.",
+    "Installed hooks use unsupported shell strings; dispatcher records skips, not executed memory/reporting quality gates."
+  ],
+  "openSpecRefreshReceipt": "/Users/gqadonis/.prometheus/openspec/receipts/ef38d0ae220bea1773edced2/1791332625527-2941b823-4d59-48d9-bc3c-7bee77db06c7.json"
+}

@@ -1,0 +1,3756 @@
+//! Cluster pulled out of mod.rs in #4713 phase 3c.
+//!
+//! Hosts the `send_message*` / `send_message_streaming*` family plus the
+//! `resolve_agent_home_channel` helper and `run_forked_agent_streaming`.
+//! These methods form the public dispatch surface for agent turns
+//! (channel bridges, HTTP routes, inter-agent calls, fork spawns).
+//!
+//! Sibling submodule of `kernel::mod`, so it retains access to
+//! `LibreFangKernel`'s private fields and inherent methods without any
+//! visibility surgery — the pull-down rule (parent's private items are
+//! visible to children) means everything declared in mod.rs is reachable
+//! via `Self::*` from here.
+
+use std::sync::Arc;
+
+use crate::kernel::prompt_context::{attach_current_time_msg, current_time_precise_for_prompt};
+use librefang_channels::types::SenderContext;
+use librefang_runtime::agent_loop::{run_agent_loop, AgentLoopResult};
+use librefang_skills::SkillError;
+use librefang_types::agent::{AgentId, AgentState, SessionId};
+use librefang_types::error::LibreFangError;
+use tracing::info;
+
+use crate::error::{KernelError, KernelResult};
+use crate::metering::MeteringEngine;
+use crate::MeteringSubsystemApi;
+
+use super::*;
+
+impl LibreFangKernel {
+    /// Explicit durable-job entry. Selection occurs before native setup or
+    /// accounting. The mapper encodes selected message/context in admission;
+    /// the message argument applies only to Native.
+    pub async fn send_job_message(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        dispatch: uar_harness::ResolvedDispatch,
+    ) -> Result<uar_harness::JobDispatchOutcome<AgentLoopResult>, uar_harness::JobDispatchError> {
+        match dispatch {
+            uar_harness::ResolvedDispatch::Native => self.send_message(agent_id, message)
+                .await.map(uar_harness::JobDispatchOutcome::Native)
+                .map_err(uar_harness::JobDispatchError::Native),
+            uar_harness::ResolvedDispatch::Uar(selected) =>
+                uar_harness::dispatch_selected(self, agent_id, *selected).await
+                    .map(|receipt| uar_harness::JobDispatchOutcome::Delegated(Box::new(receipt))),
+        }
+    }
+
+    /// Selected streaming entry returns an admission receipt for the UAR
+    /// observer; it never fabricates a native stream or completion/usage result.
+    pub async fn send_job_message_streaming(
+        self: &Arc<Self>,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Option<Arc<dyn KernelHandle>>,
+        dispatch: uar_harness::ResolvedDispatch,
+    ) -> Result<uar_harness::JobDispatchOutcome<(
+        tokio::sync::mpsc::Receiver<StreamEvent>,
+        tokio::task::JoinHandle<KernelResult<AgentLoopResult>>,
+    )>, uar_harness::JobDispatchError> {
+        match dispatch {
+            uar_harness::ResolvedDispatch::Native =>
+                self.send_message_streaming(agent_id, message, kernel_handle)
+                    .map(uar_harness::JobDispatchOutcome::Native)
+                    .map_err(uar_harness::JobDispatchError::Native),
+            uar_harness::ResolvedDispatch::Uar(selected) =>
+                uar_harness::dispatch_selected(self, agent_id, *selected).await
+                    .map(|receipt| uar_harness::JobDispatchOutcome::Delegated(Box::new(receipt))),
+        }
+    }
+
+    /// Explicit ephemeral selection is refused before registry or loop setup.
+    pub async fn send_job_message_ephemeral(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        sender_context: Option<&SenderContext>,
+        owner: Option<UserId>,
+        dispatch: uar_harness::ResolvedDispatch,
+    ) -> Result<AgentLoopResult, uar_harness::JobDispatchError> {
+        dispatch.require_native_ephemeral()?;
+        self.send_message_ephemeral(agent_id, message, sender_context, owner)
+            .await.map_err(uar_harness::JobDispatchError::Native)
+    }
+
+    /// Send a message to an agent and get a response.
+    ///
+    /// Automatically upgrades the kernel handle from `self_handle` so that
+    /// agent turns triggered by cron, channels, events, or inter-agent calls
+    /// have full access to kernel tools (cron_create, agent_send, etc.).
+    pub async fn send_message(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+    ) -> KernelResult<AgentLoopResult> {
+        self.send_message_with_handle(agent_id, message, Some(self.kernel_handle()))
+            .await
+    }
+
+    /// Send a message honouring a per-call `SessionMode` override.
+    ///
+    /// Used by workflow step execution (#4834) so a step targeting a registry
+    /// agent can opt-in to a fresh session (`SessionMode::New`) or insist on
+    /// the agent's persistent session (`SessionMode::Persistent`), overriding
+    /// the target agent's manifest default. Resolution precedence is enforced
+    /// inside `send_message_full`: per-call > manifest > kernel default.
+    pub async fn send_message_with_session_mode(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        session_mode_override: Option<librefang_types::agent::SessionMode>,
+    ) -> KernelResult<AgentLoopResult> {
+        self.send_message_full(
+            agent_id,
+            message,
+            self.kernel_handle(),
+            None,
+            None,
+            session_mode_override,
+            None,
+            None,
+        )
+        .await
+    }
+
+    /// Send a multimodal message (text + images) to an agent and get a response.
+    ///
+    /// Used by channel bridges when a user sends a photo — the image is downloaded,
+    /// base64 encoded, and passed as `ContentBlock::Image` alongside any caption text.
+    pub async fn send_message_with_blocks(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        blocks: Vec<librefang_types::message::ContentBlock>,
+    ) -> KernelResult<AgentLoopResult> {
+        self.send_message_with_handle_and_blocks(
+            agent_id,
+            message,
+            Some(self.kernel_handle()),
+            Some(blocks),
+        )
+        .await
+    }
+
+    /// Send a message to an agent with sender identity context from a channel.
+    ///
+    /// The sender context (channel name, user ID, display name) is injected into
+    /// the agent's system prompt so it knows who is talking and from which channel.
+    pub async fn send_message_with_sender_context(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        sender: &SenderContext,
+    ) -> KernelResult<AgentLoopResult> {
+        self.send_message_full(
+            agent_id,
+            message,
+            self.kernel_handle(),
+            None,
+            Some(sender),
+            None,
+            None,
+            None,
+        )
+        .await
+    }
+
+    /// Send a message with both sender identity context and a per-call
+    /// deep-thinking override.
+    ///
+    /// Used by HTTP / channel paths that already track sender metadata but
+    /// also need to honour a per-message thinking flag (e.g. the chat UI's
+    /// deep-thinking toggle).
+    pub async fn send_message_with_sender_context_and_thinking(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        sender: &SenderContext,
+        thinking_override: Option<bool>,
+    ) -> KernelResult<AgentLoopResult> {
+        self.send_message_full(
+            agent_id,
+            message,
+            self.kernel_handle(),
+            None,
+            Some(sender),
+            None,
+            thinking_override,
+            None,
+        )
+        .await
+    }
+
+    /// Send a multimodal message with sender identity context from a channel.
+    ///
+    /// `thinking_override` follows [`Self::send_message_with_thinking_override`]: the channel bridge resolves it per conversation from `/think` (#7140).
+    pub async fn send_message_with_blocks_and_sender(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        blocks: Vec<librefang_types::message::ContentBlock>,
+        sender: &SenderContext,
+        thinking_override: Option<bool>,
+    ) -> KernelResult<AgentLoopResult> {
+        self.send_message_full(
+            agent_id,
+            message,
+            self.kernel_handle(),
+            Some(blocks),
+            Some(sender),
+            None,
+            thinking_override,
+            None,
+        )
+        .await
+    }
+
+    /// Send a message with an optional kernel handle for inter-agent tools.
+    ///
+    /// `kernel_handle` is `Option` only because some tests pass a stub handle;
+    /// production callers always reach this with `Some(...)` (see #3652). When
+    /// `None`, the kernel auto-wires its own self-handle.
+    pub async fn send_message_with_handle(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Option<Arc<dyn KernelHandle>>,
+    ) -> KernelResult<AgentLoopResult> {
+        let handle = kernel_handle.unwrap_or_else(|| self.kernel_handle());
+        self.send_message_full(agent_id, message, handle, None, None, None, None, None)
+            .await
+    }
+
+    /// Send a message to `agent_id` on behalf of `parent_agent_id`. If the
+    /// parent currently has an active session interrupt registered (i.e. is
+    /// mid-turn), it is threaded as an upstream signal to the child's loop
+    /// so a parent `/stop` cascades into the callee. When no parent
+    /// interrupt is registered (parent is idle, or caller is system-level),
+    /// behaves identically to [`Self::send_message`].
+    ///
+    /// Added for issue #3044 — previously a parent `agent_send`'ing to a
+    /// hand / subagent could not stop the child when the user cancelled,
+    /// because every new turn created a fresh, disconnected interrupt.
+    pub async fn send_message_as(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        parent_agent_id: AgentId,
+    ) -> KernelResult<AgentLoopResult> {
+        let upstream = self.any_session_interrupt_for_agent(parent_agent_id);
+        self.send_message_full_with_upstream(
+            agent_id,
+            message,
+            self.kernel_handle(),
+            None,
+            None,
+            None,
+            librefang_types::config::ThinkingOverride::Inherit,
+            None,
+            upstream,
+            false,
+            None, // agent_send to a subagent — no authenticated owner (#6460)
+        )
+        .await
+    }
+
+    /// Like [`Self::send_message_as`] but pins the callee to a deterministic
+    /// session derived from the caller-supplied `conversation_key`. The key is
+    /// namespaced to `(target_agent, "agent_send:<key>")` via
+    /// `SessionId::for_channel`, so the same key always maps to the same
+    /// session (history preserved) and a distinct key always starts an
+    /// independent thread. The derived `SessionId` is passed as
+    /// `session_id_override`, which takes precedence over the target manifest
+    /// `session_mode`.
+    pub async fn send_message_as_with_key(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        parent_agent_id: AgentId,
+        conversation_key: &str,
+    ) -> KernelResult<AgentLoopResult> {
+        let session_id =
+            SessionId::for_channel(agent_id, &format!("agent_send:{conversation_key}"));
+        let upstream = self.any_session_interrupt_for_agent(parent_agent_id);
+        self.send_message_full_with_upstream(
+            agent_id,
+            message,
+            self.kernel_handle(),
+            None,
+            None,
+            None,
+            librefang_types::config::ThinkingOverride::Inherit,
+            Some(session_id),
+            upstream,
+            false,
+            None, // agent_send to a subagent — no authenticated owner (#6460)
+        )
+        .await
+    }
+
+    /// Send a message with a per-call deep-thinking override.
+    ///
+    /// `thinking_override`:
+    /// - `Some(true)` — force thinking on (use default budget if manifest has none)
+    /// - `Some(false)` — force thinking off (clear any manifest/global setting)
+    /// - `None` — use the manifest/global default
+    pub async fn send_message_with_thinking_override(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Option<Arc<dyn KernelHandle>>,
+        thinking_override: Option<bool>,
+    ) -> KernelResult<AgentLoopResult> {
+        let handle = kernel_handle.unwrap_or_else(|| self.kernel_handle());
+        self.send_message_full(
+            agent_id,
+            message,
+            handle,
+            None,
+            None,
+            None,
+            thinking_override,
+            None,
+        )
+        .await
+    }
+
+    /// Send a message with an explicit session ID override, optional sender context,
+    /// and optional deep-thinking override.
+    ///
+    /// Used by the HTTP `/message` endpoint when the caller supplies a `session_id`
+    /// in the request body (multi-tab / multi-session UIs). Resolution order:
+    /// explicit session_id > channel-derived > registry canonical.
+    ///
+    /// Returns 400 if `session_id_override` belongs to a different agent.
+    pub async fn send_message_with_session_override(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Option<Arc<dyn KernelHandle>>,
+        sender_context: Option<&SenderContext>,
+        thinking_override: Option<bool>,
+        session_id_override: Option<SessionId>,
+    ) -> KernelResult<AgentLoopResult> {
+        let handle = kernel_handle.unwrap_or_else(|| self.kernel_handle());
+        self.send_message_full(
+            agent_id,
+            message,
+            handle,
+            None,
+            sender_context,
+            None,
+            thinking_override,
+            session_id_override,
+        )
+        .await
+    }
+
+    /// Send a message in **incognito mode**: the LLM turn runs normally (memory
+    /// reads are full-access) but session messages and proactive-memory writes
+    /// are silently suppressed. The conversation leaves no trace in SQLite.
+    ///
+    /// `incognito` is analogous to `is_fork` at the persistence boundary but
+    /// without the fork semantics (no shared parent prefix, no tool allowlist).
+    #[allow(clippy::too_many_arguments)]
+    pub async fn send_message_with_incognito(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Option<Arc<dyn KernelHandle>>,
+        sender_context: Option<&SenderContext>,
+        thinking_override: librefang_types::config::ThinkingOverride,
+        session_id_override: Option<SessionId>,
+        incognito: bool,
+        owner: Option<librefang_types::agent::UserId>,
+    ) -> KernelResult<AgentLoopResult> {
+        let handle = kernel_handle.unwrap_or_else(|| self.kernel_handle());
+        self.send_message_full_with_upstream(
+            agent_id,
+            message,
+            handle,
+            None,
+            sender_context,
+            None,
+            thinking_override,
+            session_id_override,
+            None,
+            incognito,
+            owner,
+        )
+        .await
+    }
+
+    /// Send a message with optional content blocks and an optional kernel handle.
+    ///
+    /// When `content_blocks` is `Some`, the LLM agent loop receives structured
+    /// multimodal content (text + images) instead of just a text string. This
+    /// enables vision models to process images sent from channels like Telegram.
+    ///
+    /// Per-agent locking ensures that concurrent messages for the same agent
+    /// are serialized (preventing session corruption), while messages for
+    /// different agents run in parallel.
+    pub async fn send_message_with_handle_and_blocks(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Option<Arc<dyn KernelHandle>>,
+        content_blocks: Option<Vec<librefang_types::message::ContentBlock>>,
+    ) -> KernelResult<AgentLoopResult> {
+        let handle = kernel_handle.unwrap_or_else(|| self.kernel_handle());
+        self.send_message_full(
+            agent_id,
+            message,
+            handle,
+            content_blocks,
+            None,
+            None,
+            None,
+            None,
+        )
+        .await
+    }
+
+    /// Resolve the **home channel** for an agent, if any.
+    ///
+    /// An agent's home channel is the channel instance in `config.toml` whose
+    /// `default_agent` field names this agent. It represents the natural
+    /// return path for proactive / trigger-fired messages that don't carry
+    /// an inbound `SenderContext`.
+    ///
+    /// Returns a synthetic `SenderContext` populated with:
+    /// - `channel` — the channel type (e.g. `"telegram"`, `"discord"`)
+    /// - `account_id` — the specific bot instance's `account_id` (when set)
+    /// - `use_canonical_session = true` — preserves the trigger's existing
+    ///   `session_mode` semantics; without this the kernel would switch to a
+    ///   channel-scoped `SessionId::for_channel(agent, channel)` which would
+    ///   break the "persistent vs new" contract triggers rely on.
+    ///
+    /// Returns `None` when no channel's `default_agent` matches this agent —
+    /// in that case callers should fall back to sender-context-less dispatch
+    /// (the pre-#2872 behavior).
+    pub(crate) fn resolve_agent_home_channel(&self, agent_id: AgentId) -> Option<SenderContext> {
+        let entry = self.agents.registry.get(agent_id)?;
+        let agent_name = entry.name.clone();
+        let cfg = self.config.load_full();
+
+        // Every channel is a sidecar; scan `cfg.sidecar_channels` for the
+        // first entry whose `default_agent` names this agent. The effective
+        // channel key is `channel_type` when set, else the entry `name` —
+        // same mapping `sidecar_default_agent` in channel_sender.rs uses
+        // for the inverted lookup.
+        cfg.sidecar_channels.iter().find_map(|sc| {
+            if sc.agent.as_deref() != Some(agent_name.as_str()) {
+                return None;
+            }
+            let channel = sc.channel_type.clone().unwrap_or_else(|| sc.name.clone());
+            Some(SenderContext {
+                channel,
+                account_id: None,
+                use_canonical_session: true,
+                ..Default::default()
+            })
+        })
+    }
+
+    /// Resolve the **default outbound conversation id** for an agent's home
+    /// channel, if one is configured (#6266).
+    ///
+    /// Mirrors [`Self::resolve_agent_home_channel`]'s home-channel lookup but
+    /// surfaces the channel instance's `default_conversation`
+    /// (`[[sidecar_channels]].default_conversation`). Callers use this as a
+    /// fallback destination when a turn carries no inbound conversation —
+    /// e.g. the mid-turn delegation-completion forward for a web-UI-originated
+    /// turn, whose `chat_id` is `None`.
+    ///
+    /// Returns `None` when no channel's `default_agent` matches this agent, or
+    /// the matching channel defines no (non-empty) `default_conversation`. In
+    /// that ambiguous case callers MUST NOT invent a destination — skipping
+    /// the forward is correct; delivering to a guessed chat is not.
+    pub(crate) fn resolve_agent_default_conversation(&self, agent_id: AgentId) -> Option<String> {
+        let entry = self.agents.registry.get(agent_id)?;
+        let agent_name = entry.name.clone();
+        let cfg = self.config.load_full();
+        sidecar_default_conversation(&cfg.sidecar_channels, agent_name.as_str())
+    }
+}
+
+/// Pure resolver: the `default_conversation` of the first `sidecar_channels`
+/// entry whose `agent` (a.k.a. `default_agent`) names `agent_name`, filtered
+/// to non-empty values.
+///
+/// First-match wins, deterministic because `sidecar_channels` is an ordered
+/// `Vec` — same ordering contract `sidecar_default_agent` in
+/// `handles/channel_sender.rs` relies on. Factored out as a free function so
+/// it is unit-testable without standing up a kernel.
+fn sidecar_default_conversation(
+    sidecar_channels: &[librefang_types::config::SidecarChannelConfig],
+    agent_name: &str,
+) -> Option<String> {
+    // Resolve the SAME channel `resolve_agent_home_channel` picks — the first
+    // entry whose agent matches — and read only THAT channel's
+    // `default_conversation`. Using `find().and_then()` (not `find_map`) is
+    // load-bearing: if the home channel has no default we must return `None`,
+    // never skip ahead to a *different* channel's default. Otherwise a forward
+    // could pair the home channel (e.g. telegram) with another channel's
+    // conversation id (e.g. a slack chat), delivering to the wrong place.
+    sidecar_channels
+        .iter()
+        .find(|sc| sc.agent.as_deref() == Some(agent_name))
+        .and_then(|sc| {
+            sc.default_conversation
+                .as_deref()
+                .filter(|s| !s.is_empty())
+                .map(str::to_string)
+        })
+}
+
+impl LibreFangKernel {
+    /// Send an ephemeral "side question" to an agent (`/btw` command).
+    ///
+    /// The message is answered using the agent's system prompt and model, but in a
+    /// **fresh temporary session** — no conversation history is loaded and the
+    /// exchange is **not persisted** to the real session. This lets users ask quick
+    /// throwaway questions without polluting the ongoing conversation context.
+    pub async fn send_message_ephemeral(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        sender_context: Option<&SenderContext>,
+        owner: Option<librefang_types::agent::UserId>,
+    ) -> KernelResult<AgentLoopResult> {
+        let entry = self.agents.registry.get(agent_id).ok_or_else(|| {
+            KernelError::LibreFang(LibreFangError::AgentNotFound(agent_id.to_string()))
+        })?;
+
+        if entry.state == AgentState::Suspended {
+            tracing::debug!(agent_id = %agent_id, "Skipping ephemeral message to suspended agent");
+            return Ok(AgentLoopResult::default());
+        }
+
+        // #4807: the pre-dispatch provider-budget gate was removed
+        // from this path. Budget exhaustion is now signalled through
+        // the shared `ProviderExhaustionStore` (flagged by
+        // `MeteringEngine::flag_provider_budget_exhausted` when a
+        // per-provider operator cap trips) and consumed by the LLM
+        // fallback chain (`FallbackDriver` + `FallbackChain`), so an
+        // exhausted primary provider falls over to a healthy slot
+        // instead of refusing the whole call. Unlike the regular
+        // `send_message_full` path, this ephemeral path does NOT pre-reserve
+        // the global `[budget]` or per-agent token quota — it enforces them
+        // only post-call via `check_all_and_record` below. That is acceptable
+        // here because an ephemeral `/btw` turn is a tool-less single shot
+        // (no loop, no concurrent-fire amplification), so the pre-call
+        // overshoot hold that #3616 added to the main path is not needed.
+
+        // Ephemeral: no tools — prevents side effects (tool writes to memory/disk)
+        let tools: Vec<librefang_types::tool::ToolDefinition> = vec![];
+        let mut manifest = entry.manifest.clone();
+
+        // Reuse the prompt-builder to get a proper system prompt
+        {
+            let mcp_tool_count = self.mcp.mcp_tools.lock().map(|t| t.len()).unwrap_or(0);
+            let shared_id = shared_memory_agent_id();
+            // Mirror the peer-scoping that `memory_store` applies on write
+            // (#4923). When the ephemeral call carries a sender (channel
+            // bridge, /btw with auth context), we read the same peer-scoped
+            // key the agent wrote on a non-ephemeral turn — so the agent
+            // doesn't re-ask the user's name on `/btw` queries.
+            let peer_id = sender_context
+                .map(|s| s.user_id.as_str())
+                .filter(|s| !s.is_empty());
+            // peer_scoped_key escapes colon-bearing peer_ids and rejects only
+            // empty ones (#5119 / #6100); on a malformed peer_id we skip the
+            // user_name lookup with a WARN so prompt assembly stays
+            // best-effort rather than failing the turn.
+            let user_name = match peer_scoped_key("user_name", peer_id) {
+                Ok(user_name_key) => self
+                    .memory
+                    .substrate
+                    .structured_get(shared_id, &user_name_key)
+                    .ok()
+                    .flatten()
+                    .and_then(|v| v.as_str().map(String::from)),
+                Err(e) => {
+                    tracing::warn!(
+                        peer_id = ?peer_id,
+                        error = %e,
+                        "skipping user_name lookup: invalid peer_id namespace"
+                    );
+                    None
+                }
+            };
+
+            let peer_agents: Vec<(String, String, String)> =
+                self.agents.registry.peer_agents_summary();
+
+            let ws_meta = if let Some(workspace) = manifest.workspace.as_ref() {
+                Some(
+                    self.cached_workspace_metadata_async(workspace, manifest.autonomous.is_some())
+                        .await,
+                )
+            } else {
+                None
+            };
+
+            let agent_id_str = agent_id.0.to_string();
+            // One pass over `tools` produces both the name list (for the
+            // hook payload + `PromptContext::granted_tools`) and the
+            // description hint map (for `PromptContext::granted_tool_hints`).
+            // Avoids three separate walks per send (#4805 review).
+            let (granted_tool_names, granted_tool_hints) =
+                librefang_runtime::prompt_builder::collect_granted_tool_names_and_hints(&tools);
+            let hook_ctx = librefang_runtime::hooks::HookContext {
+                agent_name: &manifest.name,
+                agent_id: agent_id_str.as_str(),
+                event: librefang_types::agent::HookEvent::BeforePromptBuild,
+                data: serde_json::json!({
+                    "phase": "build",
+                    "call_site": "ephemeral",
+                    "user_message": message,
+                    "is_subagent": false,
+                    "granted_tools": granted_tool_names,
+                }),
+            };
+            let dynamic_sections = self.governance.hooks.collect_prompt_sections(&hook_ctx);
+
+            // Re-read context.md per turn by default so external writers
+            // (cron jobs, integrations) reach the LLM on the next message.
+            // Opt out via `cache_context = true` on the manifest.
+            // Pre-loaded off the runtime worker (tokio::fs) so the struct
+            // literal below stays sync — see #3579.
+            let context_md = match manifest.workspace.as_ref() {
+                Some(w) => {
+                    librefang_runtime::agent_context::load_context_md_async(
+                        w,
+                        manifest.cache_context,
+                    )
+                    .await
+                }
+                None => None,
+            };
+
+            let prompt_ctx = librefang_runtime::prompt_builder::PromptContext {
+                agent_name: manifest.name.clone(),
+                agent_description: manifest.description.clone(),
+                base_system_prompt: manifest.model.system_prompt.clone(),
+                granted_tools: granted_tool_names,
+                granted_tool_hints,
+                recalled_memories: vec![],
+                skill_summary: String::new(),
+                skill_count: 0,
+                skill_prompt_context: String::new(),
+                skill_config_section: String::new(),
+                mcp_summary: if mcp_tool_count > 0 && !manifest.mcp_disabled {
+                    self.build_mcp_summary(&manifest.mcp_servers)
+                } else {
+                    String::new()
+                },
+                workspace_path: manifest.workspace.as_ref().map(|p| p.display().to_string()),
+                soul_md: ws_meta.as_ref().and_then(|m| m.soul_md.clone()),
+                user_md: ws_meta.as_ref().and_then(|m| m.user_md.clone()),
+                memory_md: ws_meta.as_ref().and_then(|m| m.memory_md.clone()),
+                canonical_context: None,
+                user_name,
+                channel_type: None,
+                sender_display_name: None,
+                sender_user_id: None,
+                is_subagent: false,
+                is_autonomous: manifest.autonomous.is_some(),
+                agents_md: ws_meta.as_ref().and_then(|m| m.agents_md.clone()),
+                bootstrap_md: ws_meta.as_ref().and_then(|m| m.bootstrap_md.clone()),
+                workspace_context: ws_meta.as_ref().and_then(|m| m.workspace_context.clone()),
+                identity_md: ws_meta.as_ref().and_then(|m| m.identity_md.clone()),
+                heartbeat_md: ws_meta.as_ref().and_then(|m| m.heartbeat_md.clone()),
+                tools_md: ws_meta.as_ref().and_then(|m| m.tools_md.clone()),
+                peer_agents,
+                current_date: Some(
+                    // Date only — omitting the clock time keeps the system prompt
+                    // stable across the ~1 440 turns in a day so LLM providers
+                    // (Anthropic, OpenAI) can cache it.  A per-minute timestamp
+                    // invalidates the prompt cache every 60 s, doubling effective
+                    // token cost (issue #3700).
+                    chrono::Local::now()
+                        .format("%A, %B %d, %Y (%Y-%m-%d %Z)")
+                        .to_string(),
+                ),
+                // This ephemeral (`/btw`) path DOES run through
+                // `agent_loop::prepare_llm_messages` (via `run_agent_loop`
+                // below), same as the other two call sites, so it gets the
+                // same treatment (#8131).
+                current_time_precise: current_time_precise_for_prompt(
+                    self.config.load_full().stable_prefix_mode,
+                ),
+                active_goals: self.active_goals_for_prompt(agent_id),
+                is_group: false,
+                was_mentioned: false,
+                context_md,
+                dynamic_sections,
+            };
+            manifest.model.system_prompt =
+                librefang_runtime::prompt_builder::build_system_prompt(&prompt_ctx);
+            attach_current_time_msg(&mut manifest, &prompt_ctx);
+        }
+
+        // #5980: pre-dispatch per-provider budget gate on the ephemeral
+        // (`/btw`) path too. Flags the shared `ProviderExhaustionStore` when
+        // this provider's operator cap is already crossed so a multi-provider
+        // agent's `FallbackDriver` skips the exhausted slot; a single-provider
+        // agent has no slot to skip to, so we hard-return `QuotaExceeded`.
+        let provider = manifest.model.provider.clone();
+        let exhausted = self.flag_provider_budget_if_exhausted(&provider);
+        if self.provider_exhausted_blocks_call(exhausted, &manifest, &self.config.load_full()) {
+            return Err(KernelError::LibreFang(LibreFangError::QuotaExceeded(
+                format!(
+                    "Provider '{provider}' hourly budget exhausted and the agent has no fallback chain"
+                ),
+            )));
+        }
+
+        let driver = self.resolve_driver_for_owner(&manifest, owner)?;
+
+        // Resolve the context window: agent.toml override > per-model operator
+        // override > catalog (#6568, #7774).
+        // The ephemeral `/btw` session is created empty below, so it carries no
+        // persisted hint to fall back to.
+        // Only the size reaches the agent loop; the layer that produced it is
+        // reported by the context report, not consumed here (#7774).
+        let ctx_window = super::manifest_helpers::resolve_context_window(
+            &self.llm.model_catalog.load(),
+            &manifest.model,
+            None,
+        )
+        .map(|resolved| resolved.tokens);
+
+        // Inject model_supports_tools for auto web search augmentation.
+        // Refs #4745: honour user-configured per-model capability overrides
+        // here too — when a user has manually flipped `supports_tools` for a
+        // model whose catalog metadata was wrong, the auto-augmentation path
+        // must respect that override or the runtime behaviour diverges from
+        // what the dashboard shows.
+        if let Some(supports) = Some(self.llm.model_catalog.load()).and_then(|cat| {
+            cat.find_model_for_manifest(&manifest.model.provider, &manifest.model.model)
+                .map(|m| cat.effective_capabilities(m).supports_tools)
+        }) {
+            manifest.metadata.insert(
+                "model_supports_tools".to_string(),
+                serde_json::Value::Bool(supports),
+            );
+        }
+
+        // Create a temporary in-memory session (empty — no history loaded)
+        let ephemeral_session_id = SessionId::new();
+        let mut ephemeral_session = librefang_memory::session::Session {
+            id: ephemeral_session_id,
+            agent_id,
+            parent_session_id: None,
+            messages: Vec::new(),
+            context_window_tokens: 0,
+            label: Some("ephemeral /btw".to_string()),
+            model_override: None,
+            messages_generation: 0,
+            last_repaired_generation: None,
+            peer_id: None,
+        };
+
+        info!(
+            agent = %entry.name,
+            agent_id = %agent_id,
+            "Ephemeral /btw message — using temporary session (no history, no persistence)"
+        );
+
+        let start_time = std::time::Instant::now();
+        let result = run_agent_loop(
+            &manifest,
+            message,
+            &mut ephemeral_session,
+            &self.memory.substrate,
+            driver,
+            &tools,
+            None, // no kernel handle — keep side questions simple
+            None, // no skills
+            None, // no MCP
+            None, // no web
+            None, // no browser
+            None, // no embeddings
+            manifest.workspace.as_deref(),
+            None, // no phase callback
+            None, // no media engine
+            None, // no media drivers
+            None, // no TTS
+            None, // no docker
+            None, // no hooks
+            ctx_window,
+            None, // no process manager
+            None, // no checkpoint manager (ephemeral /btw — side questions only)
+            None, // no process registry
+            None, // no content blocks
+            None, // no proactive memory
+            None, // no context engine
+            None, // no pending messages
+            &librefang_runtime::agent_loop::LoopOptions {
+                is_fork: false,
+                incognito: false,
+                allowed_tools: None,
+                interrupt: Some(librefang_runtime::interrupt::SessionInterrupt::new()),
+                max_iterations: self.config.load().agent_max_iterations,
+                max_history_messages: self.config.load().max_history_messages,
+                memory_fact_budget_percent: self.config.load().memory_fact_budget_percent,
+                aux_client: Some(self.llm.aux_client.load_full()),
+                parent_session_id: None,
+                // Ephemeral /btw sessions start with empty history so no
+                // stale tool results can accumulate — `None` uses compiled
+                // defaults, which is fine.  The fold helper's length
+                // fast-path exits on short histories.  Layer 2 / Layer 3
+                // byte-budget enforcement (defaults: 16 KB per result,
+                // 50 KB per turn) still applies — only fold no-ops here.
+                tool_results_config: None,
+                // #4976: ephemeral /btw uses an empty session — the
+                // compressor will never fire here. Leave at None so the
+                // loop falls back to compiled defaults.
+                compaction_config: None,
+                // Ephemeral /btw also starts empty — gateway pass would
+                // no-op (under threshold) so we skip it explicitly.
+                gateway_compression: None,
+                // Honour the operator's parallel-dispatch setting even for
+                // ephemeral /btw turns; default-off config is a no-op.
+                parallel_tools_config: Some(self.config.load().parallel_tools.clone()),
+                canvas_config: Some(self.config.load().canvas.clone()),
+                tts_config: Some(self.config.load().tts.clone()),
+                // Ephemeral /btw is a user-initiated turn, not a system fork.
+                system_call: false,
+                // #7744: `/btw` runs on an empty ephemeral session and the
+                // path carries no authenticated owner (its callers pass
+                // `None`). Anything it creates is recorded unowned rather
+                // than attributed to the agent that ran it.
+                acting_principal: None,
+            },
+        )
+        .await
+        .map_err(KernelError::LibreFang)?;
+
+        let latency_ms = start_time.elapsed().as_millis() as u64;
+
+        // NOTE: We intentionally do NOT save the ephemeral session, do NOT
+        // update canonical memory, do NOT write JSONL mirror, and do NOT
+        // append to the daily memory log. The side question is truly ephemeral.
+
+        // Atomically check quotas and record metering so cost tracking stays
+        // accurate (prevents TOCTOU race on concurrent ephemeral requests)
+        let model = &manifest.model.model;
+        let cost = MeteringEngine::estimate_cost_with_catalog(
+            &self.llm.model_catalog.load(),
+            model,
+            result.total_usage.input_tokens,
+            result.total_usage.output_tokens,
+            result.total_usage.cache_read_input_tokens,
+            result.total_usage.cache_creation_input_tokens,
+        );
+        // Ephemeral side-questions have no sender context — no user/channel
+        // attribution to record. Per-user budget rollup will skip these.
+        // session_id is also None: ephemerals run on a throwaway session
+        // that is not persisted in the sessions table.
+        //
+        // #4807 review nit 10: honour `actual_provider` so a chain
+        // fail-over bills the slot that did the work.
+        let billed_provider = result
+            .actual_provider
+            .clone()
+            .unwrap_or_else(|| manifest.model.provider.clone());
+        // #6460: mirror the `owner.or(attribution_user_id)` precedence used at the other two write sites (`execute_llm_agent`, the streaming task).
+        // `sender_context` is NOT always `None` here: the channel-bridge /btw path (`crates/librefang-api/src/channel_bridge.rs::send_message_ephemeral`) always calls through with `owner: None` but forwards a real `SenderContext`, so falling back to sender-derived attribution keeps that call attributed instead of silently unattributed.
+        // No fork reaches this path.
+        let attribution_user_id: Option<UserId> =
+            sender_context.and_then(|sc| self.security.auth.identify(&sc.channel, &sc.user_id));
+        let billed_user_id: Option<UserId> = owner.or(attribution_user_id);
+        let usage_record = librefang_memory::usage::UsageRecord {
+            agent_id,
+            provider: billed_provider,
+            // #6134: honour `actual_model` so a driver that resolved its own
+            // model (e.g. codex-cli) records the model it actually ran.
+            model: result.actual_model.clone().unwrap_or_else(|| model.clone()),
+            input_tokens: result.total_usage.input_tokens,
+            output_tokens: result.total_usage.output_tokens,
+            cost_usd: cost,
+            tool_calls: result.decision_traces.len() as u32,
+            latency_ms,
+            user_id: billed_user_id,
+            channel: None,
+            session_id: None,
+            // #7714: an ephemeral turn on a spawned worker still spends on
+            // its spawner's behalf, so it rolls up the same way as a full turn.
+            billed_agent_id: Some(crate::kernel::agent_execution::billed_agent_for(&entry)),
+        };
+        if let Err(e) = self.metering.engine.check_all_and_record(
+            &usage_record,
+            &manifest.resources,
+            &self.current_budget(),
+        ) {
+            tracing::warn!(
+                agent_id = %agent_id,
+                error = %e,
+                "Post-call quota check failed (ephemeral); recording usage anyway"
+            );
+            let _ = self.metering.engine.record(&usage_record);
+        } else if let Some(uid) = billed_user_id {
+            // #6460: per-user budget enforcement, post-call, mirroring the same audit-trail-only semantics as the other two write sites — a breach trips `BudgetExceeded` for dashboard visibility but does not deny this already-billed response.
+            if let Some(user_budget) = self.security.auth.budget_for(uid) {
+                if let Err(e) = self.metering.engine.check_user_budget(uid, &user_budget) {
+                    tracing::warn!(
+                        agent_id = %agent_id,
+                        user = %uid,
+                        error = %e,
+                        "Per-user budget check failed (ephemeral)"
+                    );
+                    self.metering.audit_log.record_with_context(
+                        agent_id.to_string(),
+                        librefang_runtime::audit::AuditAction::BudgetExceeded,
+                        format!("{e}"),
+                        "denied",
+                        Some(uid),
+                        None,
+                    );
+                }
+            }
+        }
+
+        // Record experiment metrics if running an experiment (kernel has cost info)
+        if let Some(ref ctx) = result.experiment_context {
+            let has_content = !result.response.trim().is_empty();
+            let no_tool_errors = result.iterations > 0;
+            let success = has_content && no_tool_errors;
+            if let Err(e) = self.record_experiment_request(
+                &ctx.experiment_id.to_string(),
+                &ctx.variant_id.to_string(),
+                latency_ms,
+                cost,
+                success,
+            ) {
+                // Dropping this silently undercounts the experiment arm and
+                // lets the auto-selected winner run on incomplete data.
+                tracing::error!(
+                    agent_id = %agent_id,
+                    experiment_id = %ctx.experiment_id,
+                    variant_id = %ctx.variant_id,
+                    error = %e,
+                    "Failed to record A/B experiment request metrics"
+                );
+            }
+        }
+
+        let mut result = result;
+        result.cost_usd = if cost > 0.0 { Some(cost) } else { None };
+        result.latency_ms = latency_ms;
+
+        Ok(result)
+    }
+
+    /// Decide the channel scope used to derive the per-channel `SessionId`,
+    /// applying the reserved-name defense-in-depth (audit:
+    /// cron-channel-name-not-reserved).
+    ///
+    /// Even if a construction-site sanitizer was skipped, an external
+    /// `SenderContext` whose `channel` matches a reserved kernel system channel
+    /// (`cron`, `autonomous`, `webui` — case-insensitive) must NOT share a
+    /// `SessionId` with the internal cron / autonomous / webui paths.
+    /// `is_internal_system` is the `#[serde(skip)]` trust flag the kernel's own
+    /// system constructors (cron tick, autonomous background tick, web UI) set;
+    /// when it is false and the channel collides, the name is rewritten to
+    /// `ext-<name>` so derivation lands on a disjoint session. Trusted internal
+    /// paths return the channel verbatim and keep deriving the legacy
+    /// `for_channel(agent, "<name>")` SessionId, so existing persistent history
+    /// stays continuous.
+    ///
+    /// This is deliberately keyed on `is_internal_system`, not
+    /// `is_internal_cron`: the latter is cron-only (it also gates `[SILENT]`
+    /// marker stripping), so reusing it would leave the autonomous internal
+    /// path — which sets a reserved `"autonomous"` channel without
+    /// `is_internal_cron` — to be wrongly rewritten to `ext-autonomous`.
+    /// Kernel-side alias for [`librefang_channels::types::resolve_scope_channel`], kept so the existing call sites and their tests read unchanged.
+    ///
+    /// The body moved to `librefang-channels` because `librefang-runtime` and `librefang-api` derive channel-scoped session ids too and could not reach a `pub(super)` helper — both of them skipped the guard as a result (#8243).
+    pub(super) fn resolve_scope_channel(channel: &str, is_internal_system: bool) -> String {
+        librefang_channels::types::resolve_scope_channel(channel, is_internal_system)
+    }
+
+    /// The `SessionId` a channel-scoped turn lands on.
+    ///
+    /// Single source of truth for the kernel-side dispatch and reset paths.
+    /// The reserved-name guard underneath it now lives in [`librefang_channels::types::resolve_scope_channel`], which is where the crates that cannot depend on `librefang-kernel` reach it: `librefang-runtime`'s `mirror_channel_send_to_session` derived its target with a bare `SessionId::for_sender_scope` until #8243, so a `channel_send` to a reserved name mirrored into the kernel's own session while every path here resolved `ext-<name>`.
+    /// Every dispatch resolver takes this branch for a `SenderContext` that names a channel and does not set `use_canonical_session` (`send_message_full_with_upstream`, `execute_llm_agent`, the streaming resolver), and the channel bridge's `/new` / `/reboot` / `/compact` handlers must name the same session or they reset one nobody is talking in.
+    ///
+    /// #7701 is what disagreement looks like, and it has now cost two rounds: the channels half of the pair drifted first (`session_scope` in `librefang-channels::bridge` is the mirror of this function, and its doc-comment carries that half of the story), and the kernel half re-inlined `for_sender_scope(agent, resolve_scope_channel(..), chat)` at three sites that each had to remember the reserved-name guard.
+    /// A reset that derives its own id "succeeds" against an empty session while the conversation the user can see keeps every message — the failure is silent on both ends, because the ack is generated from the reset that did nothing.
+    pub fn channel_session_id(
+        agent_id: AgentId,
+        channel: &str,
+        chat_id: Option<&str>,
+        is_internal_system: bool,
+    ) -> SessionId {
+        SessionId::for_sender_scope(
+            agent_id,
+            &Self::resolve_scope_channel(channel, is_internal_system),
+            chat_id,
+        )
+    }
+
+    /// Internal: send a message with all optional parameters (content blocks + sender context).
+    ///
+    /// This is the unified entry point for all message dispatch. When `sender_context`
+    /// is provided, the agent's system prompt includes the sender's identity (channel,
+    /// user ID, display name) so the agent knows who is talking and from where.
+    #[allow(clippy::too_many_arguments)]
+    pub(crate) async fn send_message_full(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Arc<dyn KernelHandle>,
+        content_blocks: Option<Vec<librefang_types::message::ContentBlock>>,
+        sender_context: Option<&SenderContext>,
+        session_mode_override: Option<librefang_types::agent::SessionMode>,
+        thinking_override: Option<bool>,
+        session_id_override: Option<SessionId>,
+    ) -> KernelResult<AgentLoopResult> {
+        // This entry point serves the paths with no single authenticated human
+        // owner — channel messages, cron fires, agent-to-agent sends — so it
+        // resolves the driver with `owner = None` (daemon-global credential).
+        // The API/DM paths that DO carry an `AuthenticatedApiUser` go through
+        // the owner-aware `*_ephemeral` / streaming entry points instead (#6460).
+        self.send_message_full_with_upstream(
+            agent_id,
+            message,
+            kernel_handle,
+            content_blocks,
+            sender_context,
+            session_mode_override,
+            // Every caller of this entry point predates #7946 and passes the
+            // legacy boolean; the mode-carrying variants reach
+            // `send_message_full_with_upstream` directly.
+            thinking_override.into(),
+            session_id_override,
+            None,
+            false,
+            None,
+        )
+        .await
+    }
+
+    /// Same as [`Self::send_message_full`] but threads an optional upstream
+    /// [`SessionInterrupt`] so a parent session's `/stop` can cascade into
+    /// this subagent's loop (issue #3044). Used by `tool_agent_send` when
+    /// the caller agent's own interrupt should gate the callee.
+    ///
+    /// Thin wrapper that establishes the task-local held-`agent_msg_locks`
+    /// registry (`held_agent_locks::scope`) around the real work in
+    /// [`Self::send_message_full_inner`]. The registry must span the whole
+    /// body — the per-agent lock is held across the entire agent loop, and
+    /// the re-entrant `agent_send` (#5125) / `channel_send` mirror (#5126)
+    /// tool paths run *inside* that loop on the same task. `scope` is
+    /// idempotent, so a transitively re-entered inner frame shares the
+    /// outer frame's set rather than masking it with a fresh one.
+    #[allow(clippy::too_many_arguments)]
+    async fn send_message_full_with_upstream(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Arc<dyn KernelHandle>,
+        content_blocks: Option<Vec<librefang_types::message::ContentBlock>>,
+        sender_context: Option<&SenderContext>,
+        session_mode_override: Option<librefang_types::agent::SessionMode>,
+        thinking_override: librefang_types::config::ThinkingOverride,
+        session_id_override: Option<SessionId>,
+        upstream_interrupt: Option<librefang_runtime::interrupt::SessionInterrupt>,
+        incognito: bool,
+        owner: Option<librefang_types::agent::UserId>,
+    ) -> KernelResult<AgentLoopResult> {
+        librefang_runtime::held_agent_locks::scope(self.send_message_full_inner(
+            agent_id,
+            message,
+            kernel_handle,
+            content_blocks,
+            sender_context,
+            session_mode_override,
+            thinking_override,
+            session_id_override,
+            upstream_interrupt,
+            incognito,
+            owner,
+        ))
+        .await
+    }
+
+    /// Real implementation of [`Self::send_message_full_with_upstream`].
+    /// Always invoked under `held_agent_locks::scope`; do not call directly.
+    #[allow(clippy::too_many_arguments)]
+    async fn send_message_full_inner(
+        &self,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Arc<dyn KernelHandle>,
+        content_blocks: Option<Vec<librefang_types::message::ContentBlock>>,
+        sender_context: Option<&SenderContext>,
+        session_mode_override: Option<librefang_types::agent::SessionMode>,
+        thinking_override: librefang_types::config::ThinkingOverride,
+        session_id_override: Option<SessionId>,
+        upstream_interrupt: Option<librefang_runtime::interrupt::SessionInterrupt>,
+        incognito: bool,
+        owner: Option<librefang_types::agent::UserId>,
+    ) -> KernelResult<AgentLoopResult> {
+        // Briefly acquire the config reload barrier to ensure we observe a
+        // fully-applied hot-reload (config swap + side effects are atomic
+        // under the writer's guard). We drop the guard immediately after —
+        // `self.config` is an `ArcSwap`, so any subsequent `.load()` already
+        // returns a consistent snapshot. Holding the read guard across the
+        // entire LLM call (multi-minute streams) was a bug (#3564):
+        // `tokio::sync::RwLock` is write-preferring, so a single
+        // `/api/config/reload` froze every new request behind the queued
+        // writer until the slowest in-flight stream completed.
+        {
+            let _config_guard = self.config_reload_lock.read().await;
+        }
+
+        let agent_id = self
+            .resolve_assistant_target(agent_id, message, sender_context)
+            .await?;
+
+        // Reject same-task re-entrant acquisition of `agent_msg_locks[agent_id]`
+        // (#5125). When this resolves to the agent-scoped lock (no
+        // `session_id_override`) and the current task *already* holds that
+        // agent's lock, acquiring `lock.lock().await` below would block the
+        // task on itself forever — `tokio::sync::Mutex` is not reentrant and
+        // there is no other task to release it. This is exactly the
+        // transitive `A -> B -> A` `agent_send` cycle: the depth limiter
+        // (`max_agent_call_depth`) permits it, and the direct
+        // `caller == agent_id` guard in `tool_agent_send` only catches the
+        // 1-hop case. Detect it *before* the lock acquisition (the only
+        // place that cannot itself deadlock) and fail loudly with the held
+        // chain so operators can see which agents form the cycle, instead
+        // of silently parking the worker thread.
+        //
+        // The session-scoped (`session_id_override`) path has the SAME
+        // hazard: `agent_send` with a `conversation_key` derives
+        // `SessionId::for_channel(agent, "agent_send:<key>")` and passes it as
+        // the override, so a transitive `A -> B -> A` cycle reusing the same
+        // key re-acquires `session_msg_locks[sid]` — also non-reentrant — on
+        // the same task. Check the held-session registry for that path rather
+        // than exempting it.
+        // An explicit `session_id_override` that equals the agent's canonical
+        // (persistent) session addresses the SAME session the no-override
+        // persistent path writes. Selecting the per-*session* lock for it while
+        // that path takes the per-*agent* lock would let the two dispatches
+        // write one session under two different mutexes concurrently — a lost
+        // update / corrupted history. Collapse such an override to the
+        // per-agent lock namespace so both serialize on the same mutex. The
+        // raw `session_id_override` is still passed to
+        // `resolve_dispatch_session_id` below, so the resolved session id is
+        // unchanged; only the lock (and its re-entrancy / held-lock tracking)
+        // is normalized. (Read the canonical id once here; it is mutable via
+        // switch_agent_session, but a concurrent switch mid-dispatch is out of
+        // scope, as it already is for the resolution read below.)
+        let canonical_session_id = self.agents.registry.get(agent_id).map(|e| e.session_id);
+        let session_lock_key: Option<SessionId> = match session_id_override {
+            Some(sid) if Some(sid) != canonical_session_id => Some(sid),
+            _ => None,
+        };
+
+        match session_lock_key {
+            None => {
+                if librefang_runtime::held_agent_locks::is_held(agent_id) {
+                    let mut chain: Vec<String> =
+                        librefang_runtime::held_agent_locks::held_snapshot()
+                            .into_iter()
+                            .map(|a| a.to_string())
+                            .collect();
+                    chain.push(agent_id.to_string());
+                    return Err(KernelError::LibreFang(LibreFangError::InvalidInput(
+                        format!(
+                            "agent_send: re-entrant message to agent {} would deadlock its \
+                             per-agent message lock (transitive A->B->A cycle). Currently-held \
+                             agent locks on this task: [{}]. Break the cycle or use the task \
+                             queue for the callback.",
+                            agent_id,
+                            chain.join(" -> "),
+                        ),
+                    )));
+                }
+            }
+            Some(sid) if librefang_runtime::held_agent_locks::is_session_held(sid) => {
+                let mut chain: Vec<String> =
+                    librefang_runtime::held_agent_locks::held_sessions_snapshot()
+                        .into_iter()
+                        .map(|s| s.to_string())
+                        .collect();
+                chain.push(sid.to_string());
+                return Err(KernelError::LibreFang(LibreFangError::InvalidInput(
+                    format!(
+                        "agent_send: re-entrant message on session {sid} would deadlock its \
+                         per-session message lock (transitive A->B->A cycle reusing the same \
+                         conversation_key). Currently-held session locks on this task: [{}]. \
+                         Break the cycle or use a different conversation_key for the callback.",
+                        chain.join(" -> "),
+                    ),
+                )));
+            }
+            Some(_) => {}
+        }
+
+        // When the caller supplies an explicit session_id, scope the lock to that
+        // session so concurrent messages to *different* sessions of the same agent
+        // are not serialized against each other (multi-tab / multi-session UIs).
+        // Without an override, fall back to the per-agent lock to preserve the
+        // existing serialization guarantee for single-session agents.
+        let (lock, agent_scoped) = if let Some(sid) = session_lock_key {
+            (
+                self.agents
+                    .session_msg_locks
+                    .entry(sid)
+                    .or_insert_with(|| Arc::new(tokio::sync::Mutex::new(())))
+                    .clone(),
+                false,
+            )
+        } else {
+            (
+                self.agents
+                    .agent_msg_locks
+                    .entry(agent_id)
+                    .or_insert_with(|| Arc::new(tokio::sync::Mutex::new(())))
+                    .clone(),
+                true,
+            )
+        };
+        let _guard = lock.lock().await;
+        // Record that this task now holds `agent_msg_locks[agent_id]` so the
+        // re-entrant `agent_send` (#5125) and `channel_send`-mirror (#5126)
+        // tool paths — which run inside the agent loop below on this same
+        // task — can detect the self-re-entry instead of deadlocking on a
+        // non-reentrant `tokio::sync::Mutex`. Only the agent-scoped lock is
+        // tracked: the session-scoped (`session_id_override`) lock is a
+        // different key space that those two paths never re-acquire, and
+        // tracking it by `agent_id` would risk a false-positive rejection.
+        // Declared *after* `_guard` so drop order is registry-then-mutex:
+        // while the entry is registered the mutex is provably still held,
+        // never the inverse. Drop is panic-safe (RAII unwinds destructors).
+        let _held_guard = if agent_scoped {
+            Some(librefang_runtime::held_agent_locks::HeldLockGuard::register(agent_id))
+        } else {
+            None
+        };
+        // Session-scoped sibling of `_held_guard`: record the held session so
+        // a re-entrant keyed `agent_send` (same conversation_key, transitive
+        // A->B->A) is rejected above instead of deadlocking on the
+        // non-reentrant `session_msg_locks[sid]` mutex.
+        let _held_session_guard = match session_lock_key {
+            Some(sid) if !agent_scoped => {
+                Some(librefang_runtime::held_agent_locks::HeldSessionLockGuard::register(sid))
+            }
+            _ => None,
+        };
+
+        // Pre-call global budget reservation (#3616). Estimate cost from
+        // the model's max output tokens and reserve it on the in-memory
+        // ledger so concurrent trigger fires can't all observe the same
+        // pre-call total and collectively overshoot the cap. Settled
+        // (after success) or released (on failure / suspended target)
+        // alongside the existing token reservation below.
+        let entry = self.agents.registry.get(agent_id).ok_or_else(|| {
+            KernelError::LibreFang(LibreFangError::AgentNotFound(agent_id.to_string()))
+        })?;
+
+        // #4807: the pre-dispatch provider-budget gate was removed
+        // from this path. Budget exhaustion is signalled through the
+        // shared `ProviderExhaustionStore` and consumed by the LLM
+        // fallback chain so an exhausted primary provider fails over
+        // to a healthy slot. See the ephemeral-path explanation
+        // above for the full rationale.
+
+        let estimated_usd = {
+            // Best-effort pre-call estimate: model.max_tokens worth of
+            // output, plus a conservative input estimate equal to the
+            // same token count. Real cost is settled later via
+            // `check_all_and_record`; this only sizes the in-memory hold.
+            let max_out = u64::from(entry.manifest.model.effective_max_tokens());
+            let est_in = max_out;
+            {
+                let catalog = self.llm.model_catalog.load();
+                MeteringEngine::estimate_cost_with_catalog(
+                    &catalog,
+                    &entry.manifest.model.model,
+                    est_in,
+                    max_out,
+                    0,
+                    0,
+                )
+            }
+        };
+        let usd_reservation = self
+            .metering
+            .engine
+            .reserve_global_budget(&self.current_budget(), estimated_usd)
+            .map_err(KernelError::LibreFang)?;
+
+        // Enforce quota on the effective target agent (after routing).
+        // Use reserve_tokens so the estimated token budget is pre-charged inside the same DashMap write-lock, closing the TOCTOU race where N concurrent callers all pass the check before any of them calls record_usage (#3736).
+        let estimated_tokens = u64::from(entry.manifest.model.effective_max_tokens());
+        let token_reservation = match self
+            .agents
+            .scheduler
+            .reserve_tokens(agent_id, estimated_tokens)
+        {
+            Ok(r) => r,
+            Err(e) => {
+                // Roll back the USD reservation — the call never dispatched.
+                usd_reservation.release();
+                return Err(KernelError::LibreFang(e));
+            }
+        };
+
+        // Skip suspended agents — cron/triggers should not dispatch to them
+        if entry.state == AgentState::Suspended {
+            tracing::debug!(agent_id = %agent_id, "Skipping message to suspended agent");
+            // No LLM call is made; release reservations without inflating
+            // llm_calls or the burst window.
+            token_reservation.release();
+            usd_reservation.release();
+            return Ok(AgentLoopResult::default());
+        }
+
+        // Resolve the effective session id up front for the LLM path so we
+        // can include it in supervisor / failure logs below, then pass it
+        // back down as the explicit override so the kernel and the log line
+        // agree on the id even when `session_mode = "new"` would otherwise
+        // mint a fresh session inside `execute_llm_agent`.
+        let resolved_session_id: Option<SessionId> = resolve_dispatch_session_id(
+            &entry.manifest.module,
+            agent_id,
+            entry.session_id,
+            entry.manifest.session_mode,
+            sender_context,
+            session_mode_override,
+            session_id_override,
+        );
+
+        // Dispatch based on module type
+        let result = match entry.manifest.module.as_str() {
+            module if module.starts_with("wasm:") => {
+                self.execute_wasm_agent(&entry, message, kernel_handle)
+                    .await
+            }
+            module if module.starts_with("python:") => {
+                self.execute_python_agent(&entry, agent_id, message).await
+            }
+            _ => {
+                // Default: LLM agent loop (builtin:chat or any unrecognized module)
+                self.execute_llm_agent(
+                    &entry,
+                    agent_id,
+                    message,
+                    kernel_handle,
+                    content_blocks,
+                    sender_context,
+                    session_mode_override,
+                    thinking_override,
+                    resolved_session_id.or(session_id_override),
+                    upstream_interrupt,
+                    incognito,
+                    owner,
+                )
+                .await
+            }
+        };
+
+        match result {
+            Ok(result) => {
+                // Settle the pre-charged token reservation with actual
+                // usage. The USD reservation is settled here too — actual
+                // cost will be recorded by `check_all_and_record` further
+                // down the call path; releasing the in-memory hold lets
+                // the next reservation pass see a consistent total.
+                token_reservation.settle(&result.total_usage);
+                usd_reservation.settle();
+                // Record tool calls for rate limiting
+                let tool_count = result.decision_traces.len() as u32;
+                self.agents
+                    .scheduler
+                    .record_tool_calls(agent_id, tool_count);
+
+                // Update last active time
+                let _ = self
+                    .agents
+                    .registry
+                    .set_state(agent_id, AgentState::Running);
+
+                // Store decision traces for API retrieval
+                if !result.decision_traces.is_empty() {
+                    self.agents
+                        .decision_traces
+                        .insert(agent_id, result.decision_traces.clone());
+                }
+
+                if result.provider_not_configured {
+                    if !self
+                        .provider_unconfigured_logged
+                        .swap(true, std::sync::atomic::Ordering::Relaxed)
+                    {
+                        self.metering.audit_log.record(
+                            agent_id.to_string(),
+                            librefang_runtime::audit::AuditAction::AgentMessage,
+                            "agent loop skipped",
+                            "failed: no LLM provider configured — configure via dashboard settings",
+                        );
+                    }
+                    return Ok(result);
+                }
+
+                // SECURITY: Record successful message in audit trail
+                self.metering.audit_log.record(
+                    agent_id.to_string(),
+                    librefang_runtime::audit::AuditAction::AgentMessage,
+                    format!(
+                        "tokens_in={}, tokens_out={}",
+                        result.total_usage.input_tokens, result.total_usage.output_tokens
+                    ),
+                    "ok",
+                );
+
+                // Push task_completed notification for autonomous (hand) agents
+                if let Some(entry) = self.agents.registry.get(agent_id) {
+                    let is_autonomous = entry.tags.iter().any(|t| t.starts_with("hand:"))
+                        || entry.manifest.autonomous.is_some();
+                    if is_autonomous {
+                        let name = &entry.name;
+                        let msg = format!(
+                            "Agent \"{}\" completed task (in={}, out={} tokens)",
+                            name, result.total_usage.input_tokens, result.total_usage.output_tokens,
+                        );
+                        self.push_notification(
+                            &agent_id.to_string(),
+                            "task_completed",
+                            &msg,
+                            resolved_session_id.as_ref(),
+                        )
+                        .await;
+                    }
+                }
+
+                // Skill evolution: check if any skill_evolve_* tools were used
+                // and hot-reload the registry so new/updated skills take effect
+                // immediately for subsequent messages.
+                let used_evolution_tool = result
+                    .decision_traces
+                    .iter()
+                    .any(|t| t.tool_name.starts_with("skill_evolve_"));
+                if used_evolution_tool {
+                    tracing::info!(
+                        agent_id = %agent_id,
+                        "Agent used skill evolution tools — reloading skill registry"
+                    );
+                    self.reload_skills();
+                }
+
+                // Background skill review: when the agent used enough tool calls
+                // to suggest a non-trivial workflow, spawn a background LLM call
+                // to evaluate whether the approach should be saved as a skill.
+                // Runs AFTER the response is delivered so it never competes with
+                // the user's task for model attention.
+                // Cooldown: per-agent, at most one review every SKILL_REVIEW_COOLDOWN_SECS.
+                let now_epoch = chrono::Utc::now().timestamp();
+                let agent_id_str = agent_id.to_string();
+                // Pre-claim gate 0a: per-agent opt-out. A2A worker agents
+                // and any agent where trigger responsiveness matters more
+                // than automatic skill distillation can set
+                // `auto_evolve = false` in agent.toml to skip the review
+                // entirely — no LLM call, no semaphore, no cooldown slot.
+                if !entry.manifest.auto_evolve {
+                    tracing::debug!(
+                        agent_id = %agent_id,
+                        "Skipping background skill review — auto_evolve disabled for this agent"
+                    );
+                }
+                // Pre-claim gate 0b: Stable mode / frozen registry. Skip
+                // spawning a review task entirely when the operator
+                // chose a no-skill-mutations posture — the review would
+                // write to disk and the reload_skills() call afterwards
+                // would silently no-op, so all we'd accomplish is to
+                // bill the default driver for nothing.
+                let registry_frozen = self
+                    .skills
+                    .skill_registry
+                    .read()
+                    .map(|r| r.is_frozen())
+                    .unwrap_or(false);
+                // Pre-claim gate 1: eligibility. Only consider claiming
+                // the cooldown slot if this loop actually suggested a
+                // review AND the agent didn't already evolve a skill
+                // AND the registry isn't frozen AND auto_evolve is on.
+                let eligible = result.skill_evolution_suggested
+                    && !used_evolution_tool
+                    && !registry_frozen
+                    && entry.manifest.auto_evolve;
+                // Pre-claim gate 2: budget. Background reviews are
+                // optional work — if the global budget is exhausted we
+                // want to skip WITHOUT burning the 5-minute cooldown
+                // slot, so that the next message (after any budget top-up
+                // or rollover) can re-try immediately. Checking before
+                // claim is the whole point here.
+                let budget_ok = if eligible {
+                    match self
+                        .metering
+                        .engine
+                        .check_global_budget(&self.current_budget())
+                    {
+                        Ok(()) => true,
+                        Err(e) => {
+                            tracing::debug!(
+                                agent_id = %agent_id,
+                                error = %e,
+                                "Skipping background skill review — global budget exhausted"
+                            );
+                            false
+                        }
+                    }
+                } else {
+                    false
+                };
+                // Semaphore-first: if no permit is available, drop the
+                // review WITHOUT burning the 5-min cooldown — so the next
+                // loop (after congestion clears) can retry. Previously
+                // the cooldown was claimed BEFORE the permit check,
+                // silently starving agents that happened to finish during
+                // a review stampede.
+                let permit_opt = if budget_ok {
+                    match self
+                        .skills
+                        .skill_review_concurrency
+                        .clone()
+                        .try_acquire_owned()
+                    {
+                        Ok(p) => Some(p),
+                        Err(_) => {
+                            tracing::info!(
+                                agent_id = %agent_id,
+                                "Skipping background skill review — global concurrency limit reached"
+                            );
+                            None
+                        }
+                    }
+                } else {
+                    None
+                };
+                // Atomic cooldown claim: only after we have a permit. The
+                // and_modify/or_insert CAS closes the check-then-insert
+                // race between concurrent agent loops for the same agent id.
+                let claimed = permit_opt.is_some()
+                    && self.try_claim_skill_review_slot(&agent_id_str, now_epoch);
+                if claimed {
+                    let permit = permit_opt.expect("permit was acquired before claim");
+                    // Prefer the driver the agent's own turn resolved to.
+                    // When an agent is pinned to a provider the global
+                    // default isn't configured for (or vice versa), using
+                    // `self.llm.default_driver` meant reviews failed with
+                    // "unknown provider" while the task itself had
+                    // succeeded — so complex workflows from those agents
+                    // never got distilled into skills. Fall back to the
+                    // default only if manifest resolution fails.
+                    let driver = self
+                        .resolve_driver(&entry.manifest)
+                        .unwrap_or_else(|_| self.llm.default_driver.clone());
+                    let skills_dir = self.home_dir_boot.join("skills");
+                    let trace_summary = Self::summarize_traces_for_review(&result.decision_traces);
+                    let response_summary = result.response.chars().take(2000).collect::<String>();
+                    let kernel_weak = self.self_handle.get().cloned();
+                    let audit_log = self.metering.audit_log.clone();
+                    let agent_id_for_task = agent_id_str.clone();
+                    // Cost-attribution model: use the agent's own model
+                    // so review spend rolls up under the same line the
+                    // main turn did (matches the driver choice above).
+                    // Falls back to the global default when the agent
+                    // didn't pin a provider/model pair.
+                    let default_model = if entry.manifest.model.provider.is_empty()
+                        || entry.manifest.model.model.is_empty()
+                    {
+                        self.default_model()
+                    } else {
+                        librefang_types::config::DefaultModelConfig {
+                            provider: entry.manifest.model.provider.clone(),
+                            model: entry.manifest.model.model.clone(),
+                            api_key_env: entry
+                                .manifest
+                                .model
+                                .api_key_env
+                                .clone()
+                                .unwrap_or_default(),
+                            base_url: entry.manifest.model.base_url.clone(),
+                            ..self.default_model()
+                        }
+                    };
+                    let review_agent_id = agent_id;
+                    let audit_log_success = audit_log.clone();
+                    let agent_id_for_success = agent_id_str.clone();
+                    let review_handle = spawn_logged("auto_memorize", async move {
+                        // Move the permit into the task so it's released
+                        // on task exit. Binding it to `_permit` keeps
+                        // clippy happy (dropped at end of scope).
+                        let _permit = permit;
+                        // Retry only on LLM-call-boundary (network/timeout/
+                        // rate-limit) errors. Post-parse failures (malformed
+                        // JSON, missing fields, security_blocked) are
+                        // classified Permanent and break out immediately —
+                        // a retry would issue a FRESH LLM call with the
+                        // same prompt, potentially applying a DIFFERENT
+                        // update on each attempt (non-idempotent), which
+                        // was the pre-fix behavior.
+                        const MAX_ATTEMPTS: u32 = 3;
+                        let mut last_err = String::new();
+                        let mut attempts_used = 0u32;
+                        for attempt in 0..MAX_ATTEMPTS {
+                            attempts_used = attempt + 1;
+                            if attempt > 0 {
+                                tokio::time::sleep(std::time::Duration::from_secs(
+                                    2u64.pow(attempt),
+                                ))
+                                .await;
+                            }
+                            match Self::background_skill_review(
+                                driver.clone(),
+                                &skills_dir,
+                                &trace_summary,
+                                &response_summary,
+                                kernel_weak.clone(),
+                                review_agent_id,
+                                &default_model,
+                            )
+                            .await
+                            {
+                                Ok(()) => {
+                                    last_err.clear();
+                                    audit_log_success.record(
+                                        agent_id_for_success.clone(),
+                                        librefang_runtime::audit::AuditAction::AgentMessage,
+                                        "skill_review",
+                                        format!("completed after {attempts_used} attempt(s)"),
+                                    );
+                                    break;
+                                }
+                                Err(ReviewError::Transient(e)) => {
+                                    tracing::debug!(
+                                        attempt = attempts_used,
+                                        error = %e,
+                                        "Background skill review attempt failed (transient, will retry)"
+                                    );
+                                    last_err = e;
+                                }
+                                Err(ReviewError::Permanent(e)) => {
+                                    tracing::debug!(
+                                        attempt = attempts_used,
+                                        error = %e,
+                                        "Background skill review attempt failed (permanent, not retrying)"
+                                    );
+                                    last_err = e;
+                                    break;
+                                }
+                            }
+                        }
+                        if !last_err.is_empty() {
+                            tracing::warn!(
+                                agent_id = %agent_id_for_task,
+                                attempts = attempts_used,
+                                error = %last_err,
+                                "Background skill review failed"
+                            );
+                            audit_log.record(
+                                agent_id_for_task,
+                                librefang_runtime::audit::AuditAction::AgentMessage,
+                                "skill_review",
+                                format!("failed after {attempts_used} attempt(s): {last_err}"),
+                            );
+                        }
+                    });
+                    // Track the review task so kill_agent can abort it and
+                    // release its semaphore permit promptly (#3705).
+                    self.register_agent_watcher(agent_id, review_handle);
+                }
+
+                Ok(result)
+            }
+            Err(e) => {
+                // Release the pre-charged token + USD reservations — the
+                // agent loop failed before completing, no usage to settle.
+                token_reservation.release();
+                usd_reservation.release();
+
+                // SECURITY: Record failed message in audit trail
+                self.metering.audit_log.record(
+                    agent_id.to_string(),
+                    librefang_runtime::audit::AuditAction::AgentMessage,
+                    "agent loop failed",
+                    format!("error: {e}"),
+                );
+
+                // Record the failure in supervisor for health reporting
+                self.agents.supervisor.record_panic();
+                let session_id_for_log = resolved_session_id
+                    .map(|s| s.0.to_string())
+                    .unwrap_or_else(|| "<none>".to_string());
+                warn!(
+                    agent_id = %agent_id,
+                    session_id = %session_id_for_log,
+                    error = %e,
+                    "Agent loop failed — recorded in supervisor"
+                );
+
+                // Push failure notification to alert_channels
+                let agent_name = self
+                    .agents
+                    .registry
+                    .get(agent_id)
+                    .map(|a| a.name.clone())
+                    .unwrap_or_else(|| agent_id.to_string());
+                // Push notification — use "tool_failure" for the repeated-tool-failure
+                // exit path so operators with tool_failure agent_rules get alerted.
+                let (event_type, fail_msg) = match &e {
+                    KernelError::LibreFang(LibreFangError::RepeatedToolFailures {
+                        iterations,
+                        error_count,
+                    }) => (
+                        "tool_failure",
+                        format!(
+                            "Agent \"{}\" exited after {} consecutive tool failures ({} errors in final iteration)",
+                            agent_name, iterations, error_count
+                        ),
+                    ),
+                    // Provider safety / content filter — distinct from generic
+                    // task_failed so operators can route refusals separately (#3450).
+                    KernelError::LibreFang(LibreFangError::ContentFiltered { message }) => (
+                        "content_filtered",
+                        format!(
+                            "Agent \"{}\" response blocked by provider safety filter: {}",
+                            agent_name,
+                            message.chars().take(200).collect::<String>()
+                        ),
+                    ),
+                    other => (
+                        "task_failed",
+                        format!(
+                            "Agent \"{}\" loop failed: {}",
+                            agent_name,
+                            other.to_string().chars().take(200).collect::<String>()
+                        ),
+                    ),
+                };
+                self.push_notification(
+                    &agent_id.to_string(),
+                    event_type,
+                    &fail_msg,
+                    resolved_session_id.as_ref(),
+                )
+                .await;
+
+                Err(e)
+            }
+        }
+    }
+
+    /// Send a message with LLM intent routing + streaming.
+    ///
+    /// When the target is the assistant, first classifies the message via a
+    /// lightweight LLM call and routes to the appropriate specialist.
+    pub async fn send_message_streaming_with_routing(
+        self: &Arc<Self>,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Option<Arc<dyn KernelHandle>>,
+    ) -> KernelResult<(
+        tokio::sync::mpsc::Receiver<StreamEvent>,
+        tokio::task::JoinHandle<KernelResult<AgentLoopResult>>,
+    )> {
+        let handle = kernel_handle.unwrap_or_else(|| self.kernel_handle());
+        self.send_message_streaming_resolved(
+            agent_id,
+            message,
+            handle,
+            None,
+            librefang_types::config::ThinkingOverride::Inherit,
+            None,
+        )
+        .await
+    }
+
+    /// Streaming variant with an explicit session ID override.
+    ///
+    /// Used by the HTTP `/message/stream` endpoint when the caller supplies a
+    /// `session_id` in the request body (multi-tab / multi-session UIs).
+    pub async fn send_message_streaming_with_routing_and_session_override(
+        self: &Arc<Self>,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Option<Arc<dyn KernelHandle>>,
+        session_id_override: Option<SessionId>,
+    ) -> KernelResult<(
+        tokio::sync::mpsc::Receiver<StreamEvent>,
+        tokio::task::JoinHandle<KernelResult<AgentLoopResult>>,
+    )> {
+        let handle = kernel_handle.unwrap_or_else(|| self.kernel_handle());
+        self.send_message_streaming_resolved(
+            agent_id,
+            message,
+            handle,
+            None,
+            librefang_types::config::ThinkingOverride::Inherit,
+            session_id_override,
+        )
+        .await
+    }
+
+    /// Streaming variant of [`Self::send_message_with_incognito`].
+    ///
+    /// Runs a normal streaming agent turn but with `incognito: true` in
+    /// `LoopOptions` so session messages and proactive-memory writes are
+    /// suppressed while memory reads remain full-access.
+    ///
+    /// `sender_context` is forwarded to the session resolver so per-chat
+    /// scoping (`SessionId::for_sender_scope`) fires when the caller is a
+    /// channel bridge. Passing `None` falls back to the per-agent
+    /// `Persistent` session pointer — appropriate for raw `api` callers
+    /// that don't identify a sender, but a silent privacy leak for channel
+    /// traffic. The HTTP `/message/stream` handler must build this from
+    /// the request body (see `request_sender_context` in
+    /// `crates/librefang-api/src/routes/agents/mod.rs`).
+    #[allow(clippy::too_many_arguments)]
+    pub async fn send_message_streaming_with_incognito(
+        self: &Arc<Self>,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Option<Arc<dyn KernelHandle>>,
+        sender_context: Option<&SenderContext>,
+        thinking_override: librefang_types::config::ThinkingOverride,
+        session_id_override: Option<SessionId>,
+        incognito: bool,
+        owner: Option<librefang_types::agent::UserId>,
+    ) -> KernelResult<(
+        tokio::sync::mpsc::Receiver<StreamEvent>,
+        tokio::task::JoinHandle<KernelResult<AgentLoopResult>>,
+    )> {
+        let handle = kernel_handle.unwrap_or_else(|| self.kernel_handle());
+        let effective_id = self
+            .resolve_assistant_target(agent_id, message, sender_context)
+            .await?;
+        let session_interrupt = librefang_runtime::interrupt::SessionInterrupt::new();
+        let loop_opts = librefang_runtime::agent_loop::LoopOptions {
+            is_fork: false,
+            incognito,
+            allowed_tools: None,
+            interrupt: Some(session_interrupt),
+            max_iterations: self.config.load().agent_max_iterations,
+            max_history_messages: self.config.load().max_history_messages,
+            memory_fact_budget_percent: self.config.load().memory_fact_budget_percent,
+            aux_client: Some(self.llm.aux_client.load_full()),
+            parent_session_id: None,
+            tool_results_config: Some(self.config.load().tool_results.clone()),
+            // #4976: per-agent compaction overrides are resolved inside
+            // `send_message_streaming_with_sender_and_opts` once the
+            // agent registry has been consulted — leave as None here.
+            compaction_config: None,
+            gateway_compression: Some(self.config.load().gateway_compression.clone()),
+            parallel_tools_config: Some(self.config.load().parallel_tools.clone()),
+            canvas_config: Some(self.config.load().canvas.clone()),
+            tts_config: Some(self.config.load().tts.clone()),
+            // User-initiated main turn, not a system-internal fork.
+            system_call: false,
+            // #7744: resolved in `send_message_streaming_with_sender_and_opts`,
+            // the first point where this agent's manifest is in hand — the
+            // same place `compaction_config` above is filled in.
+            acting_principal: None,
+        };
+        self.send_message_streaming_with_sender_and_opts(
+            effective_id,
+            message,
+            handle,
+            sender_context,
+            thinking_override,
+            session_id_override,
+            loop_opts,
+            owner,
+        )
+    }
+
+    /// Streaming entry point with per-call deep-thinking override.
+    ///
+    /// Used by the WebUI chat route so users can flip deep thinking on/off
+    /// per message from the UI.
+    pub async fn send_message_streaming_with_sender_context_routing_and_thinking(
+        self: &Arc<Self>,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Option<Arc<dyn KernelHandle>>,
+        sender: &SenderContext,
+        thinking_override: Option<bool>,
+    ) -> KernelResult<(
+        tokio::sync::mpsc::Receiver<StreamEvent>,
+        tokio::task::JoinHandle<KernelResult<AgentLoopResult>>,
+    )> {
+        let handle = kernel_handle.unwrap_or_else(|| self.kernel_handle());
+        self.send_message_streaming_resolved(
+            agent_id,
+            message,
+            handle,
+            Some(sender),
+            // The channel `/think` toggle is a boolean by construction (#7140);
+            // #7946's richer modes reach the kernel through the HTTP message
+            // routes, not through this entry point.
+            thinking_override.into(),
+            None,
+        )
+        .await
+    }
+
+    /// Streaming entry point that combines a sender context with a per-request
+    /// `session_id_override` (multi-tab WebSocket UIs, issue #2959). The
+    /// override wins over channel-derived session resolution. When `None`,
+    /// behavior is identical to
+    /// [`Self::send_message_streaming_with_sender_context_routing_and_thinking`].
+    #[allow(clippy::too_many_arguments)]
+    pub async fn send_message_streaming_with_sender_context_routing_thinking_and_session(
+        self: &Arc<Self>,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Option<Arc<dyn KernelHandle>>,
+        sender: &SenderContext,
+        thinking_override: Option<bool>,
+        session_id_override: Option<SessionId>,
+    ) -> KernelResult<(
+        tokio::sync::mpsc::Receiver<StreamEvent>,
+        tokio::task::JoinHandle<KernelResult<AgentLoopResult>>,
+    )> {
+        let handle = kernel_handle.unwrap_or_else(|| self.kernel_handle());
+        self.send_message_streaming_resolved(
+            agent_id,
+            message,
+            handle,
+            Some(sender),
+            // Boolean for the same reason as the sibling entry above: the
+            // WebSocket / channel deep-thinking toggle is on/off.
+            thinking_override.into(),
+            session_id_override,
+        )
+        .await
+    }
+
+    /// Send a message to an agent with streaming responses.
+    ///
+    /// Returns a receiver for incremental `StreamEvent`s and a `JoinHandle`
+    /// that resolves to the final `AgentLoopResult`. The caller reads stream
+    /// events while the agent loop runs, then awaits the handle for final stats.
+    ///
+    /// WASM and Python agents don't support true streaming — they execute
+    /// synchronously and emit a single `TextDelta` + `ContentComplete` pair.
+    pub fn send_message_streaming(
+        self: &Arc<Self>,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Option<Arc<dyn KernelHandle>>,
+    ) -> KernelResult<(
+        tokio::sync::mpsc::Receiver<StreamEvent>,
+        tokio::task::JoinHandle<KernelResult<AgentLoopResult>>,
+    )> {
+        let handle = kernel_handle.unwrap_or_else(|| self.kernel_handle());
+        self.send_message_streaming_with_sender(
+            agent_id,
+            message,
+            handle,
+            None,
+            librefang_types::config::ThinkingOverride::Inherit,
+        )
+    }
+
+    /// Run a *derivative* (forked) turn for an agent using the canonical
+    /// session's messages as a cache-aligned prefix. Used by auto-dream and
+    /// any future post-turn consumer that wants to fire an LLM call on top
+    /// of the agent's context without persisting into its history.
+    ///
+    /// Semantics vs. `send_message_streaming`:
+    ///
+    /// - **Does not persist** messages added by the fork turn. The session
+    ///   is shared with canonical at read time but writes stay in memory.
+    /// - **Does not trigger AgentLoopEnd consumers that filter on
+    ///   `is_fork`** — notably auto-dream's own hook skips fork turns, so
+    ///   a dream won't trigger a nested dream (the file lock would also
+    ///   prevent it, but this is cheaper).
+    /// - **Enforces a runtime tool allowlist** via `allowed_tools`. The
+    ///   list is NOT applied to the request schema sent to the provider
+    ///   (that would break cache alignment) — it's enforced at tool
+    ///   execute time with a synthetic error returned to the model.
+    ///
+    /// Rejects WASM / Python agents with `Err` — the fork mode only
+    /// makes sense for LLM-backed agents.
+    pub fn run_forked_agent_streaming(
+        self: &Arc<Self>,
+        agent_id: AgentId,
+        fork_prompt: &str,
+        allowed_tools: Option<Vec<String>>,
+    ) -> KernelResult<(
+        tokio::sync::mpsc::Receiver<StreamEvent>,
+        tokio::task::JoinHandle<KernelResult<AgentLoopResult>>,
+    )> {
+        let entry = self.agents.registry.get(agent_id).ok_or_else(|| {
+            KernelError::LibreFang(LibreFangError::AgentNotFound(agent_id.to_string()))
+        })?;
+        if entry.manifest.module.starts_with("wasm:")
+            || entry.manifest.module.starts_with("python:")
+        {
+            return Err(KernelError::LibreFang(LibreFangError::Internal(
+                "run_forked_agent_streaming is only supported for LLM agents".to_string(),
+            )));
+        }
+        // Inherit the parent turn's interrupt when one exists so a caller
+        // invoking `stop_agent_run(agent_id)` on the parent also cancels
+        // tools that are in-flight inside this fork (#2939). Both handles
+        // wrap the same `Arc<AtomicBool>`, so `cancel()` on either one is
+        // observed by both. When no parent is running (e.g. auto_memorize
+        // fires from an idle agent), fall back to a fresh interrupt so the
+        // fork still has a cancellation primitive for its own tools.
+        //
+        // Post-#3172 the interrupt map is keyed by (agent, session); the
+        // fork doesn't yet know which parent session is driving it, so we
+        // pick any in-flight one for the same agent. With concurrent
+        // loops the choice is best-effort, but cancellation chains via the
+        // shared Arc<AtomicBool> still work — `stop_agent_run(agent_id)`
+        // fans out across all sessions, so no matter which entry we
+        // borrowed from, the cascade reaches this fork.
+        //
+        // We also snapshot the parent session id from the same lookup so
+        // the kernel's session resolver can pin the fork to the parent
+        // turn's session for prompt-cache alignment, instead of
+        // re-reading `entry.session_id` later (which is mutable by
+        // `switch_agent_session`, producing a TOCTOU race — #4291). When
+        // no parent loop is in flight, fall back to the registry pointer
+        // — the only signal we have, and the fork will create/resume
+        // that session on its own.
+        let (parent_session_id, interrupt) =
+            match self.any_session_interrupt_with_id_for_agent(agent_id) {
+                Some((sid, intr)) => (sid, intr),
+                None => (
+                    entry.session_id,
+                    librefang_runtime::interrupt::SessionInterrupt::default(),
+                ),
+            };
+        let loop_opts = librefang_runtime::agent_loop::LoopOptions {
+            is_fork: true,
+            incognito: false,
+            allowed_tools,
+            interrupt: Some(interrupt),
+            max_iterations: self.config.load().agent_max_iterations,
+            max_history_messages: self.config.load().max_history_messages,
+            memory_fact_budget_percent: self.config.load().memory_fact_budget_percent,
+            aux_client: Some(self.llm.aux_client.load_full()),
+            parent_session_id: Some(parent_session_id),
+            tool_results_config: Some(self.config.load().tool_results.clone()),
+            // #4976: per-agent compaction overrides are resolved inside
+            // `send_message_streaming_with_sender_and_opts` once the
+            // agent registry has been consulted — leave as None here.
+            // Forks inherit the parent agent's compaction policy (the
+            // forked agent_id is identical to the parent's at this
+            // layer; allowed_tools is the only fork-specific override).
+            compaction_config: None,
+            gateway_compression: Some(self.config.load().gateway_compression.clone()),
+            parallel_tools_config: Some(self.config.load().parallel_tools.clone()),
+            canvas_config: Some(self.config.load().canvas.clone()),
+            tts_config: Some(self.config.load().tts.clone()),
+            // #6463: this is a system-internal fork (currently only the
+            // auto_dream background cycle) with no attributable end
+            // user — it runs on the parent's canonical session with a `None`
+            // sender context. Flag it so the runtime forwards
+            // `system_call = true` to the RBAC gate and its `memory_*` calls
+            // bypass the guest gate instead of hitting NeedsApproval on every
+            // dream cycle once `[[users]]` is configured. Mirrors the
+            // cron / autonomous channel carve-out for a path that has no
+            // synthetic channel to match on.
+            system_call: true,
+            // #7744: a fork must not inherit the parent turn's human. Left
+            // `None` here and re-resolved fork-aware in
+            // `send_message_streaming_with_sender_and_opts`, so what a fork
+            // creates is recorded against the agent's configured owner or
+            // nothing — never against the person whose turn spawned it.
+            acting_principal: None,
+        };
+        // INVARIANT: forks must use the canonical session so the parent turn's
+        // prompt-cache prefix is reused. Do NOT pass a `session_id_override`
+        // here — it would win over the fork branch in
+        // `send_message_streaming_with_sender_and_opts`'s session resolver and
+        // break cache alignment (see issue #2959 for the override semantics).
+        self.send_message_streaming_with_sender_and_opts(
+            agent_id,
+            fork_prompt,
+            self.kernel_handle(),
+            None, // no sender context — fork uses the canonical session
+            librefang_types::config::ThinkingOverride::Inherit, // no per-call override
+            None, // forks MUST stay on canonical — see invariant above
+            loop_opts,
+            None, // fork must not inherit the parent turn's owner (#6460)
+        )
+    }
+
+    fn send_message_streaming_with_sender(
+        self: &Arc<Self>,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Arc<dyn KernelHandle>,
+        sender_context: Option<&SenderContext>,
+        thinking_override: librefang_types::config::ThinkingOverride,
+    ) -> KernelResult<(
+        tokio::sync::mpsc::Receiver<StreamEvent>,
+        tokio::task::JoinHandle<KernelResult<AgentLoopResult>>,
+    )> {
+        self.send_message_streaming_with_sender_and_session(
+            agent_id,
+            message,
+            kernel_handle,
+            sender_context,
+            thinking_override,
+            None,
+        )
+    }
+
+    pub(crate) fn send_message_streaming_with_sender_and_session(
+        self: &Arc<Self>,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Arc<dyn KernelHandle>,
+        sender_context: Option<&SenderContext>,
+        thinking_override: librefang_types::config::ThinkingOverride,
+        session_id_override: Option<SessionId>,
+    ) -> KernelResult<(
+        tokio::sync::mpsc::Receiver<StreamEvent>,
+        tokio::task::JoinHandle<KernelResult<AgentLoopResult>>,
+    )> {
+        // TODO(#3044): the streaming entry does not yet accept an upstream
+        // interrupt, so any subagent invoked through a streaming path (rather
+        // than `tool_agent_send` → `send_message_as`) will not receive parent
+        // /stop cascade. All inter-agent dispatch today goes through the
+        // non-streaming `send_message_as`, so this is latent — but the next
+        // caller that adds streaming subagent dispatch must extend the
+        // cascade here.
+        // Construct the interrupt here; the registration into
+        // `session_interrupts` happens inside
+        // `send_message_streaming_with_sender_and_opts` once
+        // `effective_session_id` has been resolved (the map is keyed by
+        // `(agent, session)` post-#3172 and the session id is not yet known
+        // at this layer).
+        let session_interrupt = librefang_runtime::interrupt::SessionInterrupt::new();
+        let loop_opts = librefang_runtime::agent_loop::LoopOptions {
+            is_fork: false,
+            incognito: false,
+            allowed_tools: None,
+            interrupt: Some(session_interrupt),
+            max_iterations: self.config.load().agent_max_iterations,
+            max_history_messages: self.config.load().max_history_messages,
+            memory_fact_budget_percent: self.config.load().memory_fact_budget_percent,
+            aux_client: Some(self.llm.aux_client.load_full()),
+            parent_session_id: None,
+            tool_results_config: Some(self.config.load().tool_results.clone()),
+            // #4976: resolved inside the `_with_opts` callee once the
+            // registry has been consulted for this agent's manifest.
+            compaction_config: None,
+            gateway_compression: Some(self.config.load().gateway_compression.clone()),
+            parallel_tools_config: Some(self.config.load().parallel_tools.clone()),
+            canvas_config: Some(self.config.load().canvas.clone()),
+            tts_config: Some(self.config.load().tts.clone()),
+            // User-initiated main turn, not a system-internal fork.
+            system_call: false,
+            // #7744: resolved in `send_message_streaming_with_sender_and_opts`,
+            // the first point where this agent's manifest is in hand — the
+            // same place `compaction_config` above is filled in.
+            acting_principal: None,
+        };
+        self.send_message_streaming_with_sender_and_opts(
+            agent_id,
+            message,
+            kernel_handle,
+            sender_context,
+            thinking_override,
+            session_id_override,
+            loop_opts,
+            None, // channel-bridge streaming path has no authenticated owner (#6460)
+        )
+    }
+
+    /// Internal: same as [`Self::send_message_streaming_with_sender`] but
+    /// accepts a pre-built [`LoopOptions`]. `run_forked_agent_streaming`
+    /// passes `is_fork = true` + an `allowed_tools` filter so the spawned
+    /// agent_loop knows to skip session-saving and enforce the runtime
+    /// tool allowlist. All public streaming entry points above go through
+    /// this with the default `LoopOptions` (a normal main turn).
+    #[allow(clippy::too_many_arguments)]
+    fn send_message_streaming_with_sender_and_opts(
+        self: &Arc<Self>,
+        agent_id: AgentId,
+        message: &str,
+        kernel_handle: Arc<dyn KernelHandle>,
+        sender_context: Option<&SenderContext>,
+        thinking_override: librefang_types::config::ThinkingOverride,
+        session_id_override: Option<SessionId>,
+        mut loop_opts: librefang_runtime::agent_loop::LoopOptions,
+        owner: Option<librefang_types::agent::UserId>,
+    ) -> KernelResult<(
+        tokio::sync::mpsc::Receiver<StreamEvent>,
+        tokio::task::JoinHandle<KernelResult<AgentLoopResult>>,
+    )> {
+        // Try to acquire config reload barrier (non-blocking — this is a sync fn).
+        // If a reload is in progress we proceed without the guard.
+        let _config_guard = self.config_reload_lock.try_read();
+        let cfg = self.config.load();
+
+        let entry = self.agents.registry.get(agent_id).ok_or_else(|| {
+            KernelError::LibreFang(LibreFangError::AgentNotFound(agent_id.to_string()))
+        })?;
+
+        // #4976: resolve per-agent [compaction] overrides against the
+        // kernel-global config and stash the merged snapshot on
+        // `loop_opts` so the in-loop `ContextCompressor` builder picks
+        // up the agent's keep_recent / max_summary_tokens /
+        // token_threshold_ratio. Callers that already populated this
+        // field (forks, future overrides) win.
+        if loop_opts.compaction_config.is_none() {
+            let merged = match entry.manifest.compaction.as_ref() {
+                Some(o) if !o.is_empty() => o.resolve(&cfg.compaction),
+                _ => cfg.compaction.clone(),
+            };
+            loop_opts.compaction_config = Some(merged);
+        }
+
+        // #7744: resolve the principal this turn acts for, here rather than at
+        // the five call sites that build `LoopOptions`, for the same reason
+        // `compaction_config` is resolved here — this is the first point where
+        // the manifest is in hand. A caller that already populated the field
+        // wins.
+        //
+        // The fork clause mirrors `effective_owner` below: a fork must not
+        // inherit the parent turn's human, so what a fork creates is recorded
+        // against the agent's configured owner or nothing, never against the
+        // person whose turn spawned it.
+        if loop_opts.acting_principal.is_none() {
+            let turn_owner = if loop_opts.is_fork { None } else { owner };
+            loop_opts.acting_principal = librefang_types::principal::resolve_acting_principal(
+                turn_owner,
+                entry.manifest.owner.as_deref(),
+                cfg.default_owner_principal(),
+            );
+        }
+
+        // #4807: the pre-dispatch provider-budget gate was removed
+        // from this path. Budget exhaustion is signalled through the
+        // shared `ProviderExhaustionStore` and consumed by the LLM
+        // fallback chain so an exhausted primary provider fails over
+        // to a healthy slot. See the ephemeral-path explanation
+        // above for the full rationale.
+
+        // Reserve the global USD budget up front, mirroring the
+        // non-streaming path (#3616). Without this hold, N concurrent
+        // streaming turns all observe the same pre-call total and only the
+        // post-call `check_all_and_record` gate runs, so the global `[budget]`
+        // cap can be overshot under concurrency. The reservation is held for
+        // the duration of the spawned task and settled/released alongside the
+        // token reservation below.
+        let estimated_usd = {
+            let max_out = u64::from(entry.manifest.model.effective_max_tokens());
+            let est_in = max_out;
+            let catalog = self.llm.model_catalog.load();
+            MeteringEngine::estimate_cost_with_catalog(
+                &catalog,
+                &entry.manifest.model.model,
+                est_in,
+                max_out,
+                0,
+                0,
+            )
+        };
+        let usd_reservation = self
+            .metering
+            .engine
+            .reserve_global_budget(&self.current_budget(), estimated_usd)
+            .map_err(KernelError::LibreFang)?;
+
+        // Pre-charge the estimated token budget atomically to prevent the
+        // TOCTOU race (#3736).  The reservation is settled inside the spawned
+        // task after the LLM call completes.
+        let estimated_tokens = u64::from(entry.manifest.model.effective_max_tokens());
+        let token_reservation = match self
+            .agents
+            .scheduler
+            .reserve_tokens(agent_id, estimated_tokens)
+        {
+            Ok(r) => r,
+            Err(e) => {
+                // Roll back the USD reservation — the call never dispatched.
+                usd_reservation.release();
+                return Err(KernelError::LibreFang(e));
+            }
+        };
+
+        let is_wasm = entry.manifest.module.starts_with("wasm:");
+        let is_python = entry.manifest.module.starts_with("python:");
+
+        // Non-LLM modules: execute non-streaming and emit results as stream events
+        if is_wasm || is_python {
+            // Fan out to the session hub so attached clients see the
+            // synthesized text delta + complete event for non-LLM agents too.
+            let (tx, rx) = crate::session_stream_hub::install_stream_fanout(
+                &self.events.session_stream_hub,
+                entry.session_id,
+            );
+            let kernel_clone = Arc::clone(self);
+            let message_owned = message.to_string();
+            let entry_clone = entry.clone();
+
+            let handle = tokio::spawn(async move {
+                let result = if is_wasm {
+                    kernel_clone
+                        .execute_wasm_agent(&entry_clone, &message_owned, kernel_handle)
+                        .await
+                } else {
+                    kernel_clone
+                        .execute_python_agent(&entry_clone, agent_id, &message_owned)
+                        .await
+                };
+
+                match result {
+                    Ok(result) => {
+                        // Emit the complete response as a single text delta
+                        let _ = tx
+                            .send(StreamEvent::TextDelta {
+                                text: result.response.clone(),
+                            })
+                            .await;
+                        let _ = tx
+                            .send(StreamEvent::ContentComplete {
+                                stop_reason: librefang_types::message::StopReason::EndTurn,
+                                usage: result.total_usage,
+                            })
+                            .await;
+                        let _ = tx
+                            .send(StreamEvent::PhaseChange {
+                                phase: librefang_runtime::llm_driver::PHASE_RESPONSE_COMPLETE
+                                    .to_string(),
+                                detail: None,
+                            })
+                            .await;
+                        // Settle pre-charged reservation (#3736)
+                        token_reservation.settle(&result.total_usage);
+                        // Release the global USD hold — non-LLM modules incur
+                        // no provider cost, so there is nothing to settle.
+                        usd_reservation.release();
+                        let _ = kernel_clone
+                            .agents
+                            .registry
+                            .set_state(agent_id, AgentState::Running);
+                        Ok(result)
+                    }
+                    Err(e) => {
+                        // Non-LLM agent (wasm/python) failed — never made an
+                        // LLM call, release reservation without inflating
+                        // llm_calls.
+                        token_reservation.release();
+                        usd_reservation.release();
+                        kernel_clone.agents.supervisor.record_panic();
+                        warn!(agent_id = %agent_id, error = %e, "Non-LLM agent failed");
+                        Err(e)
+                    }
+                }
+            });
+
+            return Ok((rx, handle));
+        }
+
+        // LLM agent: true streaming via agent loop
+        // Session resolution order (highest priority first):
+        // 1. Explicit override from the HTTP caller (multi-tab / multi-session UIs).
+        //    Safety check: existing session must belong to this agent.
+        // 2. Channel-derived deterministic ID: `SessionId::for_channel(agent, scope)`.
+        // 3. Fork: always canonical to preserve prompt-cache alignment.
+        // 4. Session-mode fallback: Persistent = entry.session_id, New = fresh UUID.
+        let effective_session_id = if let Some(sid) = session_id_override {
+            if let Some(existing) = self
+                .memory
+                .substrate
+                .get_session(sid)
+                .map_err(KernelError::LibreFang)?
+            {
+                if existing.agent_id != agent_id {
+                    return Err(KernelError::LibreFang(LibreFangError::InvalidInput(
+                        format!("session {} belongs to a different agent", sid),
+                    )));
+                }
+            }
+            sid
+        } else {
+            match sender_context {
+                Some(ctx) if !ctx.channel.is_empty() && !ctx.use_canonical_session => {
+                    // Audit: cron-channel-name-not-reserved. The reserved-name
+                    // defense-in-depth lives inside `channel_session_id`, which
+                    // the `/new` / `/reboot` / `/compact` handlers also call so
+                    // a reset addresses this exact session (#7701).
+                    let derived = Self::channel_session_id(
+                        agent_id,
+                        &ctx.channel,
+                        ctx.chat_id.as_deref(),
+                        ctx.is_internal_system,
+                    );
+                    // #3692: surface when the channel branch silently
+                    // overrides a non-default manifest `session_mode`.
+                    // Operators previously had no way to tell from logs
+                    // why their `session_mode = "new"` declaration was
+                    // not producing per-fire isolation for channel /
+                    // cron traffic. Demoted to `trace!` when the
+                    // manifest is on the default (Persistent) so the
+                    // override is observationally a no-op.
+                    let requested_mode = entry.manifest.session_mode;
+                    if matches!(requested_mode, librefang_types::agent::SessionMode::New) {
+                        debug!(
+                            agent_id = %agent_id,
+                            effective_session_id = %derived,
+                            resolution_source = "channel-derived",
+                            requested_session_mode = ?requested_mode,
+                            channel = %ctx.channel,
+                            chat_id = ctx.chat_id.as_deref().unwrap_or(""),
+                            "session_mode override ignored: channel branch derives a deterministic SessionId::for_channel(agent, channel:chat)"
+                        );
+                    } else {
+                        tracing::trace!(
+                            agent_id = %agent_id,
+                            effective_session_id = %derived,
+                            resolution_source = "channel-derived",
+                            requested_session_mode = ?requested_mode,
+                            channel = %ctx.channel,
+                            "session resolved via channel branch"
+                        );
+                    }
+                    derived
+                }
+                // Fork calls always target the parent turn's session — the
+                // whole point of fork mode is to share the parent's
+                // context (and therefore its prompt-cache prefix). An agent
+                // with `session_mode = "new"` would otherwise land on
+                // `SessionId::new()` here, producing a fresh empty session
+                // and breaking cache alignment. Force Persistent for forks
+                // regardless of manifest.
+                //
+                // We read the parent session id from `loop_opts`, NOT from
+                // `entry.session_id`. The registry pointer is mutable by
+                // `switch_agent_session` / `update_session_id` and can flip
+                // between parent loop start and fork spawn, sending the
+                // fork to the wrong session and polluting that session's
+                // history (#4291). The fork-spawn site
+                // (`run_forked_agent_streaming`) snapshots the parent
+                // session at fork-construction time and threads it through
+                // `LoopOptions::parent_session_id`.
+                //
+                // NOTE: an explicit `session_id_override` (above) wins over
+                // this branch — if you ever plumb an override through a fork
+                // caller, prompt-cache alignment WILL break. The current
+                // `run_forked_agent_streaming` deliberately passes `None` to
+                // preserve this invariant.
+                _ if loop_opts.is_fork => loop_opts.parent_session_id.ok_or_else(|| {
+                    KernelError::LibreFang(LibreFangError::Internal(
+                        "fork loop_opts missing parent_session_id (must be set by \
+                         run_forked_agent_streaming before reaching the session resolver)"
+                            .to_string(),
+                    ))
+                })?,
+                _ => match entry.manifest.session_mode {
+                    librefang_types::agent::SessionMode::Persistent => entry.session_id,
+                    librefang_types::agent::SessionMode::New => SessionId::new(),
+                },
+            }
+        };
+
+        // Register the SessionInterrupt clone now that `effective_session_id`
+        // is known. Forks deliberately skip this — they share the parent's
+        // entry by lookup (see `run_forked_agent_streaming`) and must not
+        // overwrite it. See #3172 for the rekey rationale.
+        if !loop_opts.is_fork {
+            if let Some(interrupt) = loop_opts.interrupt.as_ref() {
+                self.agents
+                    .session_interrupts
+                    .insert((agent_id, effective_session_id), interrupt.clone());
+            }
+        }
+
+        let existing_session = self
+            .memory
+            .substrate
+            .get_session(effective_session_id)
+            .map_err(KernelError::LibreFang)?;
+        let session_was_new = existing_session.is_none();
+        // Derive `peer_id` for the freshly-materialised session row from the
+        // same `SenderContext.chat_id` that fed `SessionId::for_sender_scope`
+        // above. This is the field migration v16 added but `save_session`
+        // never wrote — populating it here means
+        // `idx_sessions_peer(agent_id, peer_id)` finally carries something
+        // and per-peer dashboards / cleanup queries return real rows.
+        // Canonical / cron / fork / explicit-override sessions keep `None`.
+        let peer_id_for_new_session: Option<String> = match sender_context {
+            Some(ctx)
+                if !ctx.channel.is_empty()
+                    && !ctx.use_canonical_session
+                    && session_id_override.is_none()
+                    && !loop_opts.is_fork =>
+            {
+                ctx.chat_id.clone()
+            }
+            _ => None,
+        };
+        let mut session = existing_session.unwrap_or_else(|| librefang_memory::session::Session {
+            id: effective_session_id,
+            agent_id,
+            parent_session_id: None,
+            messages: Vec::new(),
+            context_window_tokens: 0,
+            label: None,
+            model_override: None,
+            messages_generation: 0,
+            last_repaired_generation: None,
+            peer_id: peer_id_for_new_session.clone(),
+        });
+        // Existing rows pre-date this column being written; backfill on the
+        // first touch when we have a derivable peer. We only overwrite NULL
+        // — never trample a value that was already set by a previous save.
+        if session.peer_id.is_none() && peer_id_for_new_session.is_some() {
+            session.peer_id = peer_id_for_new_session;
+        }
+
+        // Lifecycle: emit SessionCreated only when get_session returned None.
+        if session_was_new {
+            self.events.session_lifecycle_bus.publish(
+                crate::session_lifecycle::SessionLifecycleEvent::SessionCreated {
+                    agent_id,
+                    session_id: effective_session_id,
+                },
+            );
+        }
+
+        // Snapshot the compaction config so the spawned task can recompute the
+        // `needs_compact` flag *after* reloading the session under the lock.
+        // Computing it here on the pre-lock snapshot would make it stale: a
+        // concurrent turn that committed history while we were waiting for
+        // the lock could push us across (or back below) the threshold.
+        //
+        // #4976: merge per-agent `[compaction]` overrides on top of the
+        // global config so a chat agent and an orchestrator can use
+        // different thresholds / summary budgets in the same daemon.
+        let compaction_config_snapshot = {
+            use librefang_runtime::compactor::CompactionConfig;
+            CompactionConfig::from_toml_with_overrides(
+                &cfg.compaction,
+                entry.manifest.compaction.as_ref(),
+            )
+        };
+
+        let tools = self.available_tools(agent_id);
+        let tools = entry.mode.filter_tools((*tools).clone());
+        // NOTE: fork-mode tool allowlist is NOT applied at request-build
+        // time — doing so would change the `tools` cache-key component
+        // and break Anthropic prompt-cache alignment between parent and
+        // fork. The allowlist is enforced at execute time via
+        // `LoopOptions::allowed_tools` in agent_loop instead. Before the
+        // forkedAgent migration this was filtered here by matching on
+        // `sender_context.channel == AUTO_DREAM_CHANNEL`.
+        //
+        // #5980: pre-dispatch per-provider budget gate on the streaming path
+        // too. Flags the shared `ProviderExhaustionStore` when this provider's
+        // operator cap is already crossed so a multi-provider agent's
+        // `FallbackDriver` skips the exhausted slot; a single-provider agent
+        // has no slot to skip to, so we hard-return `QuotaExceeded`.
+        let provider = entry.manifest.model.provider.clone();
+        let exhausted = self.flag_provider_budget_if_exhausted(&provider);
+        if self.provider_exhausted_blocks_call(exhausted, &entry.manifest, &cfg) {
+            return Err(KernelError::LibreFang(LibreFangError::QuotaExceeded(
+                format!(
+                    "Provider '{provider}' hourly budget exhausted and the agent has no fallback chain"
+                ),
+            )));
+        }
+
+        // A fork / sub-agent must never bill the parent turn's human owner —
+        // its spend is the sub-agent's, not the initiating user's — so the
+        // owner is defensively cleared on the fork path regardless of what the
+        // caller passed (#6460). Non-fork streaming turns resolve with the
+        // real owner.
+        let effective_owner = if loop_opts.is_fork { None } else { owner };
+        let driver = self.resolve_driver_for_owner(&entry.manifest, effective_owner)?;
+
+        let (tx, rx) = crate::session_stream_hub::install_stream_fanout(
+            &self.events.session_stream_hub,
+            effective_session_id,
+        );
+        let mut manifest = entry.manifest.clone();
+
+        // Apply per-session model override (#4898) before any manifest field is
+        // read downstream (model catalog lookup, system prompt build, billing).
+        // The pre-lock session snapshot already carries model_override; the
+        // reload inside the spawn task will produce the same value because the
+        // PATCH route updates the persisted session before returning.
+        if let Some(override_str) = session.model_override.as_deref() {
+            librefang_runtime::agent_loop::apply_session_model_override_to_manifest(
+                &mut manifest,
+                override_str,
+            )
+            .unwrap_or_else(|e| {
+                tracing::warn!(
+                    agent_id = %agent_id,
+                    error = %e,
+                    "session model override apply failed on streaming path, falling back to manifest default"
+                );
+            });
+        }
+
+        // Resolve the context window: agent.toml override > per-model operator
+        // override > catalog > session (#6568, #7774). Computed *after* the
+        // session model override is applied — the pre-#6568 code read
+        // `entry.manifest`, so a `/model` switch sized the budget from the
+        // manifest's original model.
+        let ctx_window = super::manifest_helpers::resolve_context_window(
+            &self.llm.model_catalog.load(),
+            &manifest.model,
+            Some(session.context_window_tokens),
+        )
+        .map(|resolved| resolved.tokens);
+
+        // Inject model_supports_tools for auto web search augmentation.
+        // Refs #4745: honour user capability overrides via effective_capabilities.
+        if let Some(supports) = Some(self.llm.model_catalog.load()).and_then(|cat| {
+            cat.find_model_for_manifest(&manifest.model.provider, &manifest.model.model)
+                .map(|m| cat.effective_capabilities(m).supports_tools)
+        }) {
+            manifest.metadata.insert(
+                "model_supports_tools".to_string(),
+                serde_json::Value::Bool(supports),
+            );
+        }
+
+        // Backfill thinking config from global config if per-agent is not set
+        // and the catalog does not mark the model as non-reasoning (#6398).
+        if manifest.thinking.is_none()
+            && super::manifest_helpers::global_thinking_backfill_allowed(
+                &self.llm.model_catalog.load(),
+                &manifest.model.provider,
+                &manifest.model.model,
+            )
+        {
+            manifest.thinking = cfg.thinking.clone();
+        }
+
+        // Apply per-call thinking override (from API request).
+        apply_thinking_override(&mut manifest, thinking_override);
+
+        // Lazy backfill: create workspace for existing agents spawned before workspaces
+        if manifest.workspace.is_none() {
+            let workspace_dir =
+                backfill_workspace_dir(&cfg, &manifest.tags, &manifest.name, agent_id)?;
+            if let Err(e) = ensure_workspace(&workspace_dir) {
+                warn!(agent_id = %agent_id, "Failed to backfill workspace (streaming): {e}");
+            } else {
+                migrate_identity_files(&workspace_dir);
+                manifest.workspace = Some(workspace_dir);
+                let _ = self
+                    .agents
+                    .registry
+                    .update_workspace(agent_id, manifest.workspace.clone());
+            }
+        }
+
+        // Build the structured system prompt via prompt_builder.
+        // Workspace metadata and skill summaries are cached to avoid redundant
+        // filesystem I/O and skill registry iteration on every message.
+        {
+            let mcp_tool_count = self.mcp.mcp_tools.lock().map(|t| t.len()).unwrap_or(0);
+            let shared_id = shared_memory_agent_id();
+            let stable_prefix_mode = cfg.stable_prefix_mode;
+            // Mirror the peer-scoping applied by `memory_store` on write: use
+            // the sender's user_id as the peer namespace so we read the same key
+            // the agent wrote.  Falls back to the unscoped key for system turns.
+            let peer_id = sender_context
+                .map(|s| s.user_id.as_str())
+                .filter(|s| !s.is_empty());
+            // peer_scoped_key escapes colon-bearing peer_ids and rejects only
+            // empty ones (#5119 / #6100); on a malformed peer_id we skip the
+            // user_name lookup with a WARN so prompt assembly stays
+            // best-effort rather than failing the turn.
+            let user_name = match peer_scoped_key("user_name", peer_id) {
+                Ok(user_name_key) => self
+                    .memory
+                    .substrate
+                    .structured_get(shared_id, &user_name_key)
+                    .ok()
+                    .flatten()
+                    .and_then(|v| v.as_str().map(String::from)),
+                Err(e) => {
+                    tracing::warn!(
+                        peer_id = ?peer_id,
+                        error = %e,
+                        "skipping user_name lookup: invalid peer_id namespace"
+                    );
+                    None
+                }
+            };
+
+            let peer_agents: Vec<(String, String, String)> =
+                self.agents.registry.peer_agents_summary();
+
+            // Use cached workspace metadata (identity files + workspace context)
+            let ws_meta = manifest.workspace.as_ref().map(|workspace| {
+                self.cached_workspace_metadata(workspace, manifest.autonomous.is_some())
+            });
+
+            // Use cached skill metadata (summary + prompt context)
+            let skill_meta = if manifest.skills_disabled {
+                None
+            } else {
+                Some(self.cached_skill_metadata(&manifest.skills))
+            };
+
+            let is_subagent_flag = manifest
+                .metadata
+                .get("is_subagent")
+                .and_then(|v| v.as_bool())
+                .unwrap_or(false);
+            let agent_id_str = agent_id.0.to_string();
+            // One pass over `tools` produces both the name list (for the
+            // hook payload + `PromptContext::granted_tools`) and the
+            // description hint map (for `PromptContext::granted_tool_hints`).
+            // Avoids three separate walks per send (#4805 review).
+            let (granted_tool_names, granted_tool_hints) =
+                librefang_runtime::prompt_builder::collect_granted_tool_names_and_hints(&tools);
+            let hook_ctx = librefang_runtime::hooks::HookContext {
+                agent_name: &manifest.name,
+                agent_id: agent_id_str.as_str(),
+                event: librefang_types::agent::HookEvent::BeforePromptBuild,
+                data: serde_json::json!({
+                    "phase": "build",
+                    "call_site": "streaming",
+                    "user_message": message,
+                    "session_id": effective_session_id.to_string(),
+                    "channel_type": sender_context.map(|s| s.channel.clone()),
+                    "is_group": sender_context.map(|s| s.is_group).unwrap_or(false),
+                    "is_subagent": is_subagent_flag,
+                    "granted_tools": granted_tool_names,
+                }),
+            };
+            let dynamic_sections = self.governance.hooks.collect_prompt_sections(&hook_ctx);
+
+            // Re-read context.md per turn (cache_context=true to opt out).
+            // NOTE: this site is inside `send_message_streaming_with_sender_and_opts`,
+            // which is intentionally a non-async wrapper returning a JoinHandle, so
+            // we cannot use the async variant here. The sync read remains a known
+            // blocking site tracked under #3579 — async-ifying it requires lifting
+            // the streaming entry path itself to async, which is out of scope for
+            // this PR.
+            let context_md = manifest.workspace.as_ref().and_then(|w| {
+                librefang_runtime::agent_context::load_context_md(w, manifest.cache_context)
+            });
+
+            let prompt_ctx = librefang_runtime::prompt_builder::PromptContext {
+                agent_name: manifest.name.clone(),
+                agent_description: manifest.description.clone(),
+                base_system_prompt: manifest.model.system_prompt.clone(),
+                granted_tools: granted_tool_names,
+                granted_tool_hints,
+                recalled_memories: vec![],
+                skill_summary: skill_meta
+                    .as_ref()
+                    .map(|s| s.skill_summary.clone())
+                    .unwrap_or_default(),
+                skill_count: skill_meta.as_ref().map(|s| s.skill_count).unwrap_or(0),
+                skill_prompt_context: skill_meta
+                    .as_ref()
+                    .map(|s| s.skill_prompt_context.clone())
+                    .unwrap_or_default(),
+                skill_config_section: skill_meta
+                    .as_ref()
+                    .map(|s| s.skill_config_section.clone())
+                    .unwrap_or_default(),
+                mcp_summary: if mcp_tool_count > 0 && !manifest.mcp_disabled {
+                    self.build_mcp_summary(&manifest.mcp_servers)
+                } else {
+                    String::new()
+                },
+                workspace_path: manifest.workspace.as_ref().map(|p| p.display().to_string()),
+                soul_md: ws_meta.as_ref().and_then(|m| m.soul_md.clone()),
+                user_md: ws_meta.as_ref().and_then(|m| m.user_md.clone()),
+                memory_md: ws_meta.as_ref().and_then(|m| m.memory_md.clone()),
+                canonical_context: if stable_prefix_mode {
+                    None
+                } else {
+                    self.memory
+                        .substrate
+                        .canonical_context(agent_id, Some(effective_session_id), None)
+                        .ok()
+                        .and_then(|(s, _)| s)
+                },
+                user_name,
+                channel_type: sender_context.map(|s| s.channel.clone()),
+                sender_user_id: sender_context.map(|s| s.user_id.clone()),
+                sender_display_name: sender_context.map(|s| s.display_name.clone()),
+                is_group: sender_context.map(|s| s.is_group).unwrap_or(false),
+                was_mentioned: sender_context.map(|s| s.was_mentioned).unwrap_or(false),
+                is_subagent: is_subagent_flag,
+                is_autonomous: manifest.autonomous.is_some(),
+                agents_md: ws_meta.as_ref().and_then(|m| m.agents_md.clone()),
+                bootstrap_md: ws_meta.as_ref().and_then(|m| m.bootstrap_md.clone()),
+                workspace_context: ws_meta.as_ref().and_then(|m| m.workspace_context.clone()),
+                identity_md: ws_meta.as_ref().and_then(|m| m.identity_md.clone()),
+                heartbeat_md: ws_meta.as_ref().and_then(|m| m.heartbeat_md.clone()),
+                tools_md: ws_meta.as_ref().and_then(|m| m.tools_md.clone()),
+                peer_agents,
+                current_date: Some(
+                    // Date only — omitting the clock time keeps the system prompt
+                    // stable across the ~1 440 turns in a day so LLM providers
+                    // (Anthropic, OpenAI) can cache it.  A per-minute timestamp
+                    // invalidates the prompt cache every 60 s, doubling effective
+                    // token cost (issue #3700).
+                    chrono::Local::now()
+                        .format("%A, %B %d, %Y (%Y-%m-%d %Z)")
+                        .to_string(),
+                ),
+                current_time_precise: current_time_precise_for_prompt(stable_prefix_mode),
+                active_goals: self.active_goals_for_prompt(agent_id),
+                context_md,
+                dynamic_sections,
+            };
+            manifest.model.system_prompt =
+                librefang_runtime::prompt_builder::build_system_prompt(&prompt_ctx);
+            // Pass stable_prefix_mode flag to the agent loop via metadata
+            manifest.metadata.insert(
+                STABLE_PREFIX_MODE_METADATA_KEY.to_string(),
+                serde_json::json!(stable_prefix_mode),
+            );
+            // Store canonical context separately for injection as user message
+            // (keeps system prompt stable across turns for provider prompt caching)
+            if let Some(cc_msg) =
+                librefang_runtime::prompt_builder::build_canonical_context_message(&prompt_ctx)
+            {
+                manifest.metadata.insert(
+                    "canonical_context_msg".to_string(),
+                    serde_json::Value::String(cc_msg),
+                );
+            }
+            // Same rationale as canonical_context_msg above: precise time
+            // travels as a per-turn user message, not the cached system
+            // prompt (#8131).
+            attach_current_time_msg(&mut manifest, &prompt_ctx);
+
+            // Pass prompt_caching config to the agent loop via metadata.
+            manifest.metadata.insert(
+                "prompt_caching".to_string(),
+                serde_json::Value::Bool(cfg.prompt_caching),
+            );
+            // Pass the prompt-cache strategy (#4970) as a string —
+            // the agent loop parses it back into a `PromptCacheStrategy`.
+            manifest.metadata.insert(
+                "prompt_cache_strategy".to_string(),
+                serde_json::Value::String(cfg.prompt_cache.strategy.to_string()),
+            );
+            manifest.metadata.insert(
+                "prompt_cache_ttl_hint_secs".to_string(),
+                serde_json::Value::from(cfg.prompt_cache.cache_ttl_hint_secs),
+            );
+
+            // Pass privacy config to the agent loop via metadata.
+            if let Ok(privacy_json) = serde_json::to_value(&cfg.privacy) {
+                manifest
+                    .metadata
+                    .insert("privacy".to_string(), privacy_json);
+            }
+        }
+
+        // Inject sender context into manifest metadata so the tool runner can
+        // use it for per-sender trust and channel-specific authorization rules.
+        // Mirrors `kernel/agent_execution.rs::execute_llm_agent` —
+        // `sender_display_name` is part of the same triple and must land here
+        // too, otherwise `build_sender_prefix` (#4666) falls back to
+        // `sender_user_id` and triggers / `agent_send` produce
+        // `[<numeric_id>]: ` instead of `[<friendly_name>]: ` for the same
+        // user identity.
+        if let Some(ctx) = sender_context {
+            if !ctx.user_id.is_empty() {
+                manifest.metadata.insert(
+                    "sender_user_id".to_string(),
+                    serde_json::Value::String(ctx.user_id.clone()),
+                );
+            }
+            if !ctx.channel.is_empty() {
+                manifest.metadata.insert(
+                    "sender_channel".to_string(),
+                    serde_json::Value::String(ctx.channel.clone()),
+                );
+            }
+            // Approval-flow group-chat support: stamp the raw chat_id
+            // alongside sender_channel + sender_user_id so the
+            // runtime's tool dispatch can thread it into
+            // `DeferredToolExecution.chat_id` for the bridge's
+            // approval listener to route `[Approve] [Deny]` keyboards
+            // back to the originating conversation (group or DM)
+            // instead of always to the human's DM with the bot.
+            if let Some(ref cid) = ctx.chat_id {
+                if !cid.is_empty() {
+                    manifest.metadata.insert(
+                        "sender_chat_id".to_string(),
+                        serde_json::Value::String(cid.clone()),
+                    );
+                }
+            }
+            // #6443: stamp the bot account / tenant the turn arrived on so the
+            // runtime can reject a cross-account (cross-tenant) `channel_send`.
+            // Empty account ids are dropped — an empty stamp would disable the
+            // guard (it treats `None`/empty as "account unknown").
+            if let Some(ref acct) = ctx.account_id {
+                if !acct.is_empty() {
+                    manifest.metadata.insert(
+                        librefang_types::agent::SENDER_ACCOUNT_ID_METADATA_KEY.to_string(),
+                        serde_json::Value::String(acct.clone()),
+                    );
+                }
+            }
+            // #5227: stamp the chat-qualified scope derived via the same
+            // formula as `SessionId::for_sender_scope`. Adapters whose
+            // `channel` string already embeds the chat (WhatsApp gateway:
+            // `"whatsapp:<jid>"`) collapse to the bare channel; adapters
+            // that split the two across `channel = "telegram"` +
+            // `chat_id = "<chatId>"` (Telegram sidecar, Slack, Discord, …)
+            // gain a distinct scope per chat — required by the cross-chat
+            // memory-bleed filter in `auto_memorize` / `auto_retrieve` /
+            // `setup_recalled_memories`. Without this stamp those channels
+            // would share `sender_channel = "telegram"` across DM and
+            // group and the filter would be a no-op.
+            if let Some(scope) =
+                librefang_types::agent::compose_sender_scope(&ctx.channel, ctx.chat_id.as_deref())
+            {
+                manifest.metadata.insert(
+                    "sender_chat_scope".to_string(),
+                    serde_json::Value::String(scope),
+                );
+            }
+            if !ctx.display_name.is_empty() {
+                manifest.metadata.insert(
+                    "sender_display_name".to_string(),
+                    serde_json::Value::String(ctx.display_name.clone()),
+                );
+            }
+        }
+
+        let memory = Arc::clone(&self.memory.substrate);
+        // Build link context from user message (auto-extract URLs for the agent)
+        let message_owned = if let Some(link_ctx) =
+            librefang_runtime::link_understanding::build_link_context(message, &cfg.links)
+        {
+            format!("{message}{link_ctx}")
+        } else {
+            message.to_string()
+        };
+        let kernel_clone = Arc::clone(self);
+
+        // RBAC M5: snapshot the caller's UserId / channel from the inbound
+        // SenderContext before we move into the spawned task. The auth
+        // manager maps `(channel, platform_id)` → UserId; if no binding
+        // exists we still record the channel so the spend rolls up under
+        // an "unknown user" bucket on that channel.
+        let attribution_user_id: Option<UserId> =
+            sender_context.and_then(|sc| self.security.auth.identify(&sc.channel, &sc.user_id));
+        let attribution_channel: Option<String> = sender_context.map(|sc| sc.channel.clone());
+        // #6460: the authenticated owner's vault key is billed upstream (via `effective_owner` → `resolve_driver_for_owner`), so usage attribution and the per-user budget gate must key on that owner when present — otherwise a plain authenticated stream (sender_context = None → attribution_user_id = None) records the owner's own-key spend unattributed and never enforces their budget.
+        // Use `effective_owner` (already null for forks, computed above) NOT the raw owner, so a sub-agent's spend is not mis-attributed to the parent turn's user.
+        // Snapshot into a Copy local before the spawn moves it into the task.
+        let billed_user_id: Option<UserId> = effective_owner.or(attribution_user_id);
+        // #7714: resolved here, before the spawn, so the async block moves a
+        // plain `AgentId` instead of borrowing the registry entry across the
+        // task boundary. Mirrors how `billed_user_id` is captured above.
+        let billed_agent_id = crate::kernel::agent_execution::billed_agent_for(&entry);
+
+        // `loop_opts` is already a local — the spawned async move will
+        // capture it. Agent loop reads these at each turn-end / save /
+        // tool-exec checkpoint (see `LoopOptions::is_fork` and
+        // `LoopOptions::allowed_tools`). Also snapshot `is_fork` here
+        // because we need it after the spawn (to gate `running_tasks`
+        // insertion) but `loop_opts` itself gets moved into the async
+        // block — can't be re-read outside.
+        let is_fork = loop_opts.is_fork;
+
+        // All config-derived values have been snapshotted above; release the
+        // reload barrier before spawning the async task.
+        drop(_config_guard);
+
+        // Acquire the same session/agent lock as the non-streaming path so concurrent turns are serialized.
+        // Clone the Arc here (sync fn); lock inside the spawn.
+        // `agent_scoped` tracks whether we are taking the per-agent lock (vs. a per-session lock for session_id_override callers); whichever branch is taken, the lock is registered in the matching task-local `held_agent_locks` set inside the spawn so the re-entrant `agent_send` (#5125) / `channel_send` mirror (#5126) tool paths and the in-turn auto-compaction can observe this streaming turn's holding of it and skip / reject as appropriate.
+        // Mirrors the non-streaming site at `send_message_full_inner` (~L871-906).
+        // Collapse an override that targets the agent's canonical session onto the per-agent lock, exactly as the non-streaming `send_message_full_inner` site does: an override equal to `entry.session_id` writes the SAME session the no-override persistent path writes, so taking the per-session lock here while that path takes the per-agent lock would let the two write one session under two mutexes concurrently (lost update).
+        // `effective_session_id` already resolves to the canonical id in that case, so only the lock namespace changes; a no-override channel dispatch keeps the per-agent lock (narrow fix — the channel-derived variant is unchanged here).
+        //
+        // Re-read the canonical id FRESH here rather than reusing the `entry` snapshot captured ~760 lines above (line ~2065): `entry.session_id` is mutable via `switch_agent_session` (#4291), and this non-async fn does substantial preemptible synchronous work (catalog/budget/quota, session-mode resolution) between that fetch and this decision, so a concurrent rotation could leave the snapshot stale and mis-select the lock namespace — reintroducing the very race this fix closes.
+        // Mirrors the non-streaming `send_message_full_inner` site, and the fork branch above which reads the parent session id from `loop_opts`, not `entry`.
+        let canonical_session_id = self.agents.registry.get(agent_id).map(|e| e.session_id);
+        let session_scoped_lock =
+            matches!(session_id_override, Some(sid) if Some(sid) != canonical_session_id);
+        let (session_lock, agent_scoped) = if session_scoped_lock {
+            (
+                self.agents
+                    .session_msg_locks
+                    .entry(effective_session_id)
+                    .or_insert_with(|| Arc::new(tokio::sync::Mutex::new(())))
+                    .clone(),
+                false,
+            )
+        } else {
+            (
+                self.agents
+                    .agent_msg_locks
+                    .entry(agent_id)
+                    .or_insert_with(|| Arc::new(tokio::sync::Mutex::new(())))
+                    .clone(),
+                true,
+            )
+        };
+
+        // Lifecycle: emit TurnStarted right before the spawn. Cloning the bus
+        // Arc separately keeps it usable inside the async block via `kernel_clone`.
+        self.events.session_lifecycle_bus.publish(
+            crate::session_lifecycle::SessionLifecycleEvent::TurnStarted {
+                agent_id,
+                session_id: effective_session_id,
+            },
+        );
+
+        // Unique id for this turn — used by cleanup-side `remove_if` so a
+        // late-finishing predecessor never wipes out a successor's entry
+        // (#3445 stale-entry guard).
+        let turn_task_id = uuid::Uuid::new_v4();
+
+        // Reload session after acquiring the lock so we never act on a stale
+        // snapshot captured before a concurrent turn's writes landed.
+        let handle = tokio::spawn(librefang_runtime::held_agent_locks::scope(async move {
+            // Acquire the session/agent serialization lock for the duration of
+            // this streaming turn.  This matches the non-streaming path and
+            // prevents concurrent streaming + non-streaming writes from
+            // producing last-write-wins data loss on session history.
+            let _session_guard = session_lock.lock().await;
+            // Record that this task now holds `agent_msg_locks[agent_id]` so the re-entrant `agent_send` (#5125) and `channel_send`-mirror (#5126) tool paths — which run inside `run_agent_loop_streaming` below on this same task — can detect the self-re-entry instead of deadlocking on the non-reentrant `tokio::sync::Mutex`.
+            // The session-scoped lock gets its own registration below rather than being tracked under `agent_id`, which would risk a false-positive rejection.
+            // Mirrors the non-streaming site at `send_message_full_inner` (~L890-906); declared *after* `_session_guard` so drop order is registry-then-mutex.
+            let _held_guard = if agent_scoped {
+                Some(librefang_runtime::held_agent_locks::HeldLockGuard::register(agent_id))
+            } else {
+                None
+            };
+            // Session-scoped sibling of `_held_guard`, mirroring the second registration at `send_message_full_inner`.
+            // This is not optional bookkeeping on the streaming path: the pre-loop auto-compaction a few lines below calls `compact_agent_session_in_lock_scope(.., agent_scoped = false)`, which re-acquires `session_msg_locks[effective_session_id]` on THIS task unless the registry reports it held — the very mutex `_session_guard` is holding, so an unregistered session-scoped turn parks forever the moment its session crosses the compaction threshold.
+            // It also arms the keyed-`agent_send` cycle rejection for tool calls issued during the turn, which is dead code without a registration to observe.
+            // Gated on `session_scoped_lock`, the same bit that selected the `session_msg_locks` entry above and the exact negation of `agent_scoped`, so the two registrations are mutually exclusive and exhaustive: every turn registers precisely the one lock it holds.
+            let _held_session_guard = if session_scoped_lock {
+                Some(
+                    librefang_runtime::held_agent_locks::HeldSessionLockGuard::register(
+                        effective_session_id,
+                    ),
+                )
+            } else {
+                None
+            };
+
+            // Reload session under the lock; keep the placeholder on miss.
+            match memory.get_session(effective_session_id) {
+                Ok(Some(reloaded)) => {
+                    session = reloaded;
+                }
+                Ok(None) => {
+                    // Brand-new session — keep the empty placeholder.
+                }
+                Err(e) => {
+                    warn!(
+                        agent_id = %agent_id,
+                        session_id = %effective_session_id,
+                        error = %e,
+                        "Failed to reload session under lock; proceeding with pre-lock snapshot (streaming)"
+                    );
+                }
+            }
+
+            // Decide against the freshly-reloaded session, not the pre-lock snapshot: a concurrent turn that wrote history while this one queued on `session_lock` could have moved it across the threshold in either direction.
+            // Fork turns must not auto-compact: compaction rewrites the canonical session on disk, so a dream or auto_memorize fork would compact the user's real conversation.
+            if !loop_opts.is_fork {
+                kernel_clone
+                    .auto_compact_before_turn(
+                        agent_id,
+                        &mut session,
+                        &manifest.model.system_prompt,
+                        &compaction_config_snapshot,
+                        agent_scoped,
+                    )
+                    .await;
+            }
+
+            let mut skill_snapshot = kernel_clone
+                .skills
+                .skill_registry
+                .read()
+                .unwrap_or_else(|e| e.into_inner())
+                .snapshot();
+
+            // Load workspace-scoped skills (override global skills with same name).
+            // See the non-streaming path in `agent_execution.rs` for why there is no `.exists()` guard and why a frozen registry is debug rather than warn (#7964).
+            if let Some(ref workspace) = manifest.workspace {
+                match skill_snapshot.load_workspace_skills(&workspace.join("skills")) {
+                    Ok(_) => {}
+                    Err(SkillError::RegistryFrozen(detail)) => {
+                        tracing::debug!(agent_id = %agent_id, "Stable mode (streaming): {detail}");
+                    }
+                    Err(e) => {
+                        warn!(agent_id = %agent_id, "Failed to load workspace skills (streaming): {e}");
+                    }
+                }
+            }
+
+            // Create a phase callback that emits PhaseChange events to WS/SSE clients
+            let phase_tx = tx.clone();
+            let phase_cb: librefang_runtime::agent_loop::PhaseCallback =
+                std::sync::Arc::new(move |phase| {
+                    use librefang_runtime::agent_loop::LoopPhase;
+                    let (phase_str, detail) = match &phase {
+                        LoopPhase::Thinking => ("thinking".to_string(), None),
+                        LoopPhase::ToolUse { tool_name } => {
+                            ("tool_use".to_string(), Some(tool_name.clone()))
+                        }
+                        LoopPhase::Streaming => ("streaming".to_string(), None),
+                        LoopPhase::Done => ("done".to_string(), None),
+                        LoopPhase::Error => ("error".to_string(), None),
+                    };
+                    let event = StreamEvent::PhaseChange {
+                        phase: phase_str,
+                        detail,
+                    };
+                    let _ = phase_tx.try_send(event);
+                });
+
+            // Set up mid-turn injection channel. Fork turns skip — inserting
+            // would overwrite the parent turn's channel (forks share the parent's
+            // session id for prompt-cache alignment).
+            let injection_rx = if loop_opts.is_fork {
+                None
+            } else {
+                Some(kernel_clone.setup_injection_channel(agent_id, effective_session_id))
+            };
+
+            let start_time = std::time::Instant::now();
+            // Snapshot config for the duration of the agent loop call
+            // (load_full returns Arc so the data stays alive across .await).
+            let loop_cfg = kernel_clone.config.load_full();
+
+            // Per-agent MCP pool (workspace-scoped roots).
+            let agent_mcp = kernel_clone
+                .build_agent_mcp_pool(manifest.workspace.as_deref())
+                .await;
+            let effective_mcp = agent_mcp
+                .as_ref()
+                .unwrap_or(&kernel_clone.mcp.mcp_connections);
+
+            let result = run_agent_loop_streaming(
+                &manifest,
+                &message_owned,
+                &mut session,
+                &memory,
+                driver,
+                &tools,
+                Some(kernel_handle),
+                tx,
+                Some(&skill_snapshot),
+                Some(effective_mcp),
+                Some(&kernel_clone.media.web_ctx),
+                Some(&kernel_clone.media.browser_ctx),
+                kernel_clone.llm.embedding_driver.as_deref(),
+                manifest.workspace.as_deref(),
+                Some(&phase_cb),
+                Some(&kernel_clone.media.media_engine),
+                Some(&kernel_clone.media.media_drivers),
+                if loop_cfg.tts.enabled {
+                    Some(&kernel_clone.media.tts_engine)
+                } else {
+                    None
+                },
+                if loop_cfg.docker.enabled {
+                    Some(&loop_cfg.docker)
+                } else {
+                    None
+                },
+                Some(&kernel_clone.governance.hooks),
+                ctx_window,
+                Some(&kernel_clone.processes.manager),
+                kernel_clone.checkpoint_manager.clone(),
+                Some(&kernel_clone.processes.registry),
+                None, // content_blocks (streaming path uses text only for now)
+                kernel_clone.memory.proactive_memory.get().cloned(),
+                kernel_clone.context_engine_for_agent(&manifest),
+                injection_rx.as_deref(),
+                &loop_opts,
+            )
+            .await;
+
+            // Tear down injection channel after loop finishes (skipped for
+            // forks since they never set one up — tearing down would
+            // remove the parent turn's entry under the shared
+            // (agent, session) key).
+            if !loop_opts.is_fork {
+                kernel_clone.teardown_injection_channel(agent_id, effective_session_id);
+            }
+
+            let latency_ms = start_time.elapsed().as_millis() as u64;
+
+            match result {
+                Ok(result) => {
+                    // Fork turns must not leak into on-disk persistence. The
+                    // in-loop `save_session_async` is already gated via
+                    // `LoopOptions::is_fork`, but the kernel wraps agent_loop
+                    // with three more persistence side effects that were
+                    // running regardless: `append_canonical` (cross-channel
+                    // memory layer), JSONL session mirror in the agent's
+                    // workspace, and the daily memory log. Without this gate
+                    // a dream / auto_memorize fork's messages would re-enter
+                    // future prompt context via any of those surfaces, which
+                    // is exactly the "ephemeral" guarantee the fork API
+                    // documents that it provides. Metering / usage stays
+                    // unchanged below — forks do consume real tokens and
+                    // should count against the agent's budget.
+                    if !loop_opts.is_fork {
+                        // Append new messages to canonical session for cross-channel memory.
+                        // Use run_agent_loop_streaming's own start index (post-trim) instead
+                        // of one captured here — the loop may trim session history and make
+                        // a locally-captured index stale (see #2067). Clamp defensively.
+                        let start = result.new_messages_start.min(session.messages.len());
+                        if start < session.messages.len() {
+                            let new_messages = session.messages[start..].to_vec();
+                            if let Err(e) = memory.append_canonical(
+                                agent_id,
+                                &new_messages,
+                                None,
+                                Some(effective_session_id),
+                            ) {
+                                warn!(agent_id = %agent_id, "Failed to update canonical session (streaming): {e}");
+                            }
+                        }
+
+                        // Write JSONL session mirror to workspace
+                        if let Some(ref workspace) = manifest.workspace {
+                            if let Err(e) =
+                                memory.write_jsonl_mirror(&session, &workspace.join("sessions"))
+                            {
+                                warn!("Failed to write JSONL session mirror (streaming): {e}");
+                            }
+                            // Append daily memory log (best-effort)
+                            append_daily_memory_log(workspace, &result.response);
+                        }
+                    }
+
+                    // Settle the pre-charged token reservation with actual usage
+                    // (#3736). This replaces record_usage for the token counters
+                    // while still correctly accounting for the burst window.
+                    token_reservation.settle(&result.total_usage);
+                    // Settle the global USD hold (#3616) — actual spend is
+                    // recorded via `check_all_and_record`; this frees the
+                    // pre-call ceiling that throttled concurrent fires.
+                    usd_reservation.settle();
+                    // Record tool calls for rate limiting
+                    let tool_count = result.decision_traces.len() as u32;
+                    kernel_clone
+                        .agents
+                        .scheduler
+                        .record_tool_calls(agent_id, tool_count);
+
+                    // Lifecycle: emit TurnCompleted alongside settle_reservation. Use
+                    // post-loop session length for message_count.
+                    kernel_clone.events.session_lifecycle_bus.publish(
+                        crate::session_lifecycle::SessionLifecycleEvent::TurnCompleted {
+                            agent_id,
+                            session_id: effective_session_id,
+                            message_count: session.messages.len(),
+                        },
+                    );
+
+                    // Atomically check quotas and persist usage to SQLite
+                    // (mirrors non-streaming path — prevents TOCTOU race)
+                    let model = &manifest.model.model;
+                    let cost = MeteringEngine::estimate_cost_with_catalog(
+                        &kernel_clone.llm.model_catalog.load(),
+                        model,
+                        result.total_usage.input_tokens,
+                        result.total_usage.output_tokens,
+                        result.total_usage.cache_read_input_tokens,
+                        result.total_usage.cache_creation_input_tokens,
+                    );
+                    // #4807 review nit 10: honour `actual_provider`
+                    // so a chain fail-over bills the slot that did the
+                    // work, not the manifest-nominated provider.
+                    let billed_provider = result
+                        .actual_provider
+                        .clone()
+                        .unwrap_or_else(|| manifest.model.provider.clone());
+                    let usage_record = librefang_memory::usage::UsageRecord {
+                        agent_id,
+                        provider: billed_provider,
+                        // #6134: honour `actual_model` so a driver that resolved its own
+                        // model (e.g. codex-cli) records the model it actually ran.
+                        model: result.actual_model.clone().unwrap_or_else(|| model.clone()),
+                        input_tokens: result.total_usage.input_tokens,
+                        output_tokens: result.total_usage.output_tokens,
+                        cost_usd: cost,
+                        tool_calls: result.decision_traces.len() as u32,
+                        latency_ms,
+                        // RBAC M5 + #6460: owner-preferred attribution captured
+                        // before the spawn — moves into this async block.
+                        user_id: billed_user_id,
+                        channel: attribution_channel.clone(),
+                        session_id: Some(effective_session_id),
+                        // #7714: same rollup as the non-streaming path.
+                        billed_agent_id: Some(billed_agent_id),
+                    };
+                    if let Err(e) = kernel_clone.metering.engine.check_all_and_record(
+                        &usage_record,
+                        &manifest.resources,
+                        &kernel_clone.current_budget(),
+                    ) {
+                        tracing::warn!(
+                            agent_id = %agent_id,
+                            error = %e,
+                            "Post-call quota check failed (streaming); recording usage anyway"
+                        );
+                        // Hash-chain audit: record BudgetExceeded so the
+                        // operator can correlate denied calls with spend.
+                        kernel_clone.metering.audit_log.record_with_context(
+                            agent_id.to_string(),
+                            librefang_runtime::audit::AuditAction::BudgetExceeded,
+                            format!("{e}"),
+                            "denied",
+                            billed_user_id,
+                            attribution_channel.clone(),
+                        );
+                        let _ = kernel_clone.metering.engine.record(&usage_record);
+                    } else if let Some(uid) = billed_user_id {
+                        // RBAC M5: per-user budget enforcement, post-call.
+                        // `check_all_and_record` already persisted the row,
+                        // so `query_user_*` reflects this call. A breach
+                        // doesn't roll back the current response (tokens
+                        // were already billed) — it trips BudgetExceeded
+                        // so the next call from this user gets denied at
+                        // the gate.
+                        if let Some(user_budget) = kernel_clone.security.auth.budget_for(uid) {
+                            if let Err(e) = kernel_clone
+                                .metering
+                                .engine
+                                .check_user_budget(uid, &user_budget)
+                            {
+                                tracing::warn!(
+                                    agent_id = %agent_id,
+                                    user = %uid,
+                                    error = %e,
+                                    "Per-user budget check failed (streaming)"
+                                );
+                                kernel_clone.metering.audit_log.record_with_context(
+                                    agent_id.to_string(),
+                                    librefang_runtime::audit::AuditAction::BudgetExceeded,
+                                    format!("{e}"),
+                                    "denied",
+                                    Some(uid),
+                                    attribution_channel.clone(),
+                                );
+                            }
+                        }
+                    }
+
+                    // Record experiment metrics if running an experiment.
+                    // Fork turns skip — a dream / auto_memorize fork is not
+                    // a user-initiated request and shouldn't distort the
+                    // experiment arm's latency / success / cost averages.
+                    // Token / cost accounting above still runs for forks
+                    // because those tokens were really billed.
+                    if !loop_opts.is_fork {
+                        if let Some(ref ctx) = result.experiment_context {
+                            let has_content = !result.response.trim().is_empty();
+                            let no_tool_errors = result.iterations > 0;
+                            let success = has_content && no_tool_errors;
+                            if let Err(e) = kernel_clone.record_experiment_request(
+                                &ctx.experiment_id.to_string(),
+                                &ctx.variant_id.to_string(),
+                                latency_ms,
+                                cost,
+                                success,
+                            ) {
+                                // Dropping this silently undercounts the
+                                // experiment arm and lets the auto-selected
+                                // winner run on incomplete data.
+                                tracing::error!(
+                                    agent_id = %agent_id,
+                                    experiment_id = %ctx.experiment_id,
+                                    variant_id = %ctx.variant_id,
+                                    error = %e,
+                                    "Failed to record A/B experiment request metrics (streaming)"
+                                );
+                            }
+                        }
+                    }
+
+                    let _ = kernel_clone
+                        .agents
+                        .registry
+                        .set_state(agent_id, AgentState::Running);
+
+                    // Post-loop compaction: if the session is now over the token threshold, compact it in the background for the next call.
+                    // Forks skip, for the same reason as the pre-loop check.
+                    if !loop_opts.is_fork {
+                        kernel_clone.spawn_compaction_after_turn(
+                            agent_id,
+                            &session,
+                            manifest.compaction.as_ref(),
+                            agent_scoped,
+                        );
+                    }
+
+                    // Skill evolution hot-reload: mirror the non-streaming
+                    // `send_message_full` path so ChatPage / SSE clients
+                    // also pick up evolved skills immediately after a turn.
+                    // Without this, `GET /api/skills/{name}` kept serving
+                    // stale versions after `skill_evolve_*` tool calls —
+                    // the disk had v0.1.8 while the in-memory registry
+                    // was still at v0.1.7, requiring an explicit
+                    // `POST /api/skills/reload` to converge.
+                    if result
+                        .decision_traces
+                        .iter()
+                        .any(|t| t.tool_name.starts_with("skill_evolve_"))
+                    {
+                        tracing::info!(
+                            agent_id = %agent_id,
+                            "Agent used skill evolution tools (streaming) — reloading skill registry"
+                        );
+                        kernel_clone.reload_skills();
+                    }
+
+                    // Task is finishing normally — remove the interrupt handle
+                    // so the map doesn't grow without bound.
+                    //
+                    // Forks share the parent's `SessionInterrupt` entry (see
+                    // `run_forked_agent_streaming`), so a fork must NOT remove
+                    // it on its own completion — that would orphan the parent
+                    // from `stop_agent_run` cancellation. Only the original
+                    // parent turn cleans up the map.
+                    if !loop_opts.is_fork {
+                        kernel_clone
+                            .agents
+                            .session_interrupts
+                            .remove(&(agent_id, effective_session_id));
+                        // #3445: only remove if THIS turn's entry is still
+                        // present — a faster successor turn may have already
+                        // swapped it for its own RunningTask.
+                        kernel_clone
+                            .agents
+                            .running_tasks
+                            .remove_if(&(agent_id, effective_session_id), |_, v| {
+                                v.task_id == turn_task_id
+                            });
+                    }
+                    Ok(result)
+                }
+                Err(e) => {
+                    kernel_clone.refresh_openrouter_catalog_after_model_not_found(&manifest, &e);
+                    // Release the pre-charged token reservation — the
+                    // streaming loop failed, no usage to settle.
+                    token_reservation.release();
+                    usd_reservation.release();
+                    kernel_clone.agents.supervisor.record_panic();
+                    warn!(agent_id = %agent_id, error = %e, "Streaming agent loop failed");
+                    // Lifecycle: emit TurnFailed before cleanup so subscribers
+                    // see the failure with the live session_id still valid.
+                    kernel_clone.events.session_lifecycle_bus.publish(
+                        crate::session_lifecycle::SessionLifecycleEvent::TurnFailed {
+                            agent_id,
+                            session_id: effective_session_id,
+                            error: e.to_string(),
+                        },
+                    );
+                    if !loop_opts.is_fork {
+                        kernel_clone
+                            .agents
+                            .session_interrupts
+                            .remove(&(agent_id, effective_session_id));
+                        // #3445: only remove if THIS turn's entry is still
+                        // present — see Ok branch above.
+                        kernel_clone
+                            .agents
+                            .running_tasks
+                            .remove_if(&(agent_id, effective_session_id), |_, v| {
+                                v.task_id == turn_task_id
+                            });
+                    }
+                    Err(KernelError::LibreFang(e))
+                }
+            }
+        }));
+
+        // Store abort handle for cancellation support. Fork turns skip —
+        // registering the fork's handle under the parent's `(agent, session)`
+        // key would overwrite the parent's entry (forks deliberately reuse
+        // the parent's session id for cache alignment), so a caller invoking
+        // `stop_agent_run(agent_id)` during the fork window would abort the
+        // fork instead of the parent. Forks are driven by their own caller
+        // (auto_memorize, dream) which has its own join handle and doesn't
+        // need external cancellation via the registry.
+        if !is_fork {
+            // #3739: atomically swap in the new task and abort the previous
+            // one if any.  `DashMap::insert` returns the displaced value
+            // under the same shard write-lock, so two concurrent
+            // `send_message_full` calls for the same (agent, session)
+            // can never both observe an empty slot and lose one of the
+            // abort handles.  The earlier `remove(...) → insert(...)`
+            // sequence had exactly that race window.
+            //
+            // #3445: skip insert if the task already finished while we
+            // were preparing to register it. The task's own cleanup
+            // path uses `remove_if(... task_id matches ...)`, but if it
+            // ran before our insert, the cleanup found nothing to
+            // remove and our insert here would leave a stale handle
+            // forever. `is_finished()` closes that window.
+            //
+            // Residual race: if the task finishes between is_finished()
+            // returning false and the insert below, cleanup already ran
+            // and found nothing; insert then leaves a completed entry.
+            // The entry is harmless — AbortHandle::abort() on an already-
+            // finished task is a no-op, and the next turn for the same
+            // (agent, session) will overwrite it with a fresh RunningTask.
+            if handle.is_finished() {
+                tracing::debug!(
+                    agent_id = %agent_id,
+                    session_id = %effective_session_id,
+                    "spawned task already finished; skipping running_tasks registration"
+                );
+            } else if self.agents.registry.get(agent_id).is_none() {
+                // #5142: close the kill/dispatch race window. The kill path
+                // (`kill_agent_with_purge`) calls `stop_agent_run(agent_id)`
+                // *then* `registry.remove(agent_id)`. A concurrent dispatch
+                // that snapshotted the entry before `stop_agent_run` but
+                // hasn't reached this insert yet would otherwise register an
+                // orphan `RunningTask` after the agent is gone — the abort
+                // handle then survives until the periodic GC sweep, and the
+                // spawned loop keeps burning provider tokens against a
+                // deleted agent. Re-check the registry here under the same
+                // shard read used by every other registry access; if the
+                // agent is gone, abort the just-spawned task and skip
+                // registration so the loop unwinds at its next `.await`
+                // instead of leaking.
+                tracing::info!(
+                    agent_id = %agent_id,
+                    session_id = %effective_session_id,
+                    "agent removed from registry before running_tasks insert; aborting spawned task"
+                );
+                handle.abort();
+            } else {
+                let new_task = RunningTask {
+                    abort: handle.abort_handle(),
+                    started_at: chrono::Utc::now(),
+                    task_id: turn_task_id,
+                };
+                if let Some(old_task) = self
+                    .agents
+                    .running_tasks
+                    .insert((agent_id, effective_session_id), new_task)
+                {
+                    // This was `debug!`, i.e. invisible under the default filter, even though it silently discards a turn's worth of work — including any tool side effects already committed.
+                    // The operator's only symptom was a reply that never arrived.
+                    //
+                    // The blast radius is much wider than "the same conversation": the abort key is `(AgentId, SessionId)`, and for a group channel the session is the whole CHANNEL, not the thread.
+                    // `SessionId::for_sender_scope(agent_id, scope_channel, ctx.chat_id)` is derived from `chat_id`, which the sidecar adapters set to the channel id, and `thread_id` is not part of the scope.
+                    // So a message from ANY user in ANY thread of that channel aborts whatever turn is in flight for that agent there.
+                    //
+                    // Logging only — the supersede policy itself (abort-newest-wins vs queueing) is unchanged.
+                    tracing::warn!(
+                        agent_id = %agent_id,
+                        session_id = %effective_session_id,
+                        superseded_task_id = %old_task.task_id,
+                        superseded_started_at = %old_task.started_at,
+                        superseded_run_secs = (chrono::Utc::now() - old_task.started_at).num_seconds(),
+                        "Superseding an in-flight turn: a newer message arrived for the same (agent, session) so the running turn is aborted and produces no reply. In a group channel the session spans the whole channel across all threads, so any user's message preempts any in-flight turn there."
+                    );
+                    old_task.abort.abort();
+                }
+                // #5142: a kill that lands *between* our registry check and
+                // the insert above would have aborted nothing (its
+                // `stop_agent_run` ran before our entry existed) yet
+                // `registry.remove` has since dropped the agent. Re-check
+                // post-insert and self-eject under the same `remove_if`
+                // task_id guard the cleanup path uses, so we never wipe a
+                // successor turn's entry.
+                if self.agents.registry.get(agent_id).is_none() {
+                    if let Some((_, evicted)) = self
+                        .agents
+                        .running_tasks
+                        .remove_if(&(agent_id, effective_session_id), |_, v| {
+                            v.task_id == turn_task_id
+                        })
+                    {
+                        tracing::info!(
+                            agent_id = %agent_id,
+                            session_id = %effective_session_id,
+                            "agent removed from registry during running_tasks insert; aborting spawned task"
+                        );
+                        evicted.abort.abort();
+                    }
+                }
+            }
+        }
+
+        Ok((rx, handle))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::sidecar_default_conversation;
+    use librefang_types::config::SidecarChannelConfig;
+
+    fn sc(json: serde_json::Value) -> SidecarChannelConfig {
+        serde_json::from_value(json).expect("valid SidecarChannelConfig")
+    }
+
+    /// #6266 — a home channel with a configured `default_conversation`
+    /// surfaces it as the fallback destination for an agent whose turn
+    /// carries no inbound `chat_id` (e.g. a web-UI-originated delegation).
+    #[test]
+    fn default_conversation_resolves_for_matching_agent() {
+        let chans = vec![sc(serde_json::json!({
+            "name": "tg",
+            "command": "python3",
+            "channel_type": "telegram",
+            "default_agent": "coder",
+            "default_conversation": "123456",
+        }))];
+        assert_eq!(
+            sidecar_default_conversation(&chans, "coder").as_deref(),
+            Some("123456")
+        );
+    }
+
+    /// Ambiguous case: the home channel matches the agent but defines no
+    /// `default_conversation` → `None`, so the forward stays a no-op
+    /// rather than guessing a recipient.
+    #[test]
+    fn default_conversation_is_none_when_unset() {
+        let chans = vec![sc(serde_json::json!({
+            "name": "tg",
+            "command": "python3",
+            "channel_type": "telegram",
+            "default_agent": "coder",
+        }))];
+        assert_eq!(sidecar_default_conversation(&chans, "coder"), None);
+    }
+
+    /// An empty-string `default_conversation` is treated as unset — never
+    /// delivered to.
+    #[test]
+    fn default_conversation_empty_string_is_none() {
+        let chans = vec![sc(serde_json::json!({
+            "name": "tg",
+            "command": "python3",
+            "channel_type": "telegram",
+            "default_agent": "coder",
+            "default_conversation": "",
+        }))];
+        assert_eq!(sidecar_default_conversation(&chans, "coder"), None);
+    }
+
+    /// A channel whose `default_agent` names a different agent does not
+    /// leak its `default_conversation` to this agent.
+    #[test]
+    fn default_conversation_ignores_non_matching_agent() {
+        let chans = vec![sc(serde_json::json!({
+            "name": "tg",
+            "command": "python3",
+            "channel_type": "telegram",
+            "default_agent": "someone-else",
+            "default_conversation": "999",
+        }))];
+        assert_eq!(sidecar_default_conversation(&chans, "coder"), None);
+    }
+
+    /// First-match wins, deterministic over the ordered `Vec`: when two
+    /// channels both name the agent, the first entry's
+    /// `default_conversation` is used.
+    #[test]
+    fn default_conversation_first_match_wins() {
+        let chans = vec![
+            sc(serde_json::json!({
+                "name": "tg-primary",
+                "command": "python3",
+                "channel_type": "telegram",
+                "default_agent": "coder",
+                "default_conversation": "first",
+            })),
+            sc(serde_json::json!({
+                "name": "tg-secondary",
+                "command": "python3",
+                "channel_type": "telegram",
+                "default_agent": "coder",
+                "default_conversation": "second",
+            })),
+        ];
+        assert_eq!(
+            sidecar_default_conversation(&chans, "coder").as_deref(),
+            Some("first")
+        );
+    }
+
+    /// Regression: when the agent's FIRST home channel has no
+    /// `default_conversation`, the resolver must return `None` — it must NOT
+    /// skip ahead and borrow a *later* channel's conversation id. Otherwise
+    /// the forward would pair the home channel `resolve_agent_home_channel`
+    /// picks (the first match) with a different channel's chat id, delivering
+    /// to the wrong place.
+    #[test]
+    fn default_conversation_does_not_borrow_from_a_later_channel() {
+        let chans = vec![
+            // First match — the home channel — has NO default_conversation.
+            sc(serde_json::json!({
+                "name": "tg-home",
+                "command": "python3",
+                "channel_type": "telegram",
+                "default_agent": "coder",
+            })),
+            // A later channel for the same agent DOES define one.
+            sc(serde_json::json!({
+                "name": "slack-other",
+                "command": "python3",
+                "channel_type": "slack",
+                "default_agent": "coder",
+                "default_conversation": "C999",
+            })),
+        ];
+        assert_eq!(
+            sidecar_default_conversation(&chans, "coder"),
+            None,
+            "must not borrow the slack channel's conversation for the telegram home channel"
+        );
+    }
+
+    /// `default_conversation` round-trips through serde and is absent by
+    /// default (additive field, existing configs keep deserializing).
+    #[test]
+    fn default_conversation_serde_default_absent() {
+        let c = sc(serde_json::json!({
+            "name": "tg",
+            "command": "python3",
+        }));
+        assert!(c.default_conversation.is_none());
+    }
+}

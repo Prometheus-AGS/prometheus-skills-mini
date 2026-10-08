@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:34:10.648Z",
+  "kind": "Read-only source investigation by uar_execution; not executed packaging",
+  "findings": [
+    {
+      "scope": "local UAR mode",
+      "blocker": "Requires exactly48bc45b59d02d4febf4ed36e352af367fef73049 and clean source; current admitted isolated UAR HEAD8bff32deb870f6363e94687a2e22492f91a34dfd differs and is dirty",
+      "lines": "local-uar-payload39–74"
+    },
+    {
+      "scope": "release UAR mode",
+      "blocker": "Requires pinned published ba7233875f8df3b2add68fc487d364428432c07d inventory/archive; private development11file payload cannot be relabeled"
+    },
+    {
+      "scope": "UAR packager",
+      "blocker": "Reads target/aarch64-apple-darwin/release/uar-sidecar; current genuine artifact is debug. Packager HEAD metadata alone does not certify dirty source."
+    },
+    {
+      "scope": "Boss intact beforePack",
+      "blocker": "Rebuilds SQLite, downloads bundled assets, packages Prometheus with npm ci and Compass download. No existing offline/no-install switch observed."
+    },
+    {
+      "scope": "smallest genuine artifact",
+      "command": "electron-builder --mac --arm64 --dir --publish never with mac.identity null",
+      "limitation": "Intact before/afterPack still apply. --prepackaged bypasses required hooks; unsigned directory does not satisfy signed installer validator."
+    }
+  ],
+  "sources": [
+    {
+      "name": "UAR packager",
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-uar/scripts/package-boss-sidecar.mjs",
+      "sha256": "9b6800d0cb47147b3ce63cf0c7fba46f8de8f03112f1b61ba1375d83dfc0b135",
+      "status": "source exists/checksum observed"
+    },
+    {
+      "name": "Boss local source pin",
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/build/local-uar-source.json",
+      "sha256": "bb07a53faa7923faadd5f4d1094abcb359e1b2200a53ad3f54a7293da8a0ac92",
+      "status": "source exists/checksum observed"
+    },
+    {
+      "name": "Boss local payload validator",
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/local-uar-payload.cjs",
+      "sha256": "6d6d06d41340c23ed26653b189bb1a6918395186ae60b0148e05bb4c59a13a13",
+      "status": "source exists/checksum observed"
+    },
+    {
+      "name": "Boss local payload preparer",
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/prepare-local-uar-payload.cjs",
+      "sha256": "c73da697be62d16886cbf176c38c35dbb7d05817f9290880d6f84e2b20a24da9",
+      "status": "source exists/checksum observed"
+    },
+    {
+      "name": "Boss before pack",
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/before-pack.js",
+      "sha256": "89b58e705cc519921bf99f1dc6bc726def61a055fd845893ae87fa8ec2df470f",
+      "status": "source exists/checksum observed"
+    },
+    {
+      "name": "Boss after pack",
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/after-pack.js",
+      "sha256": "ac3c365d13eec68d81100c88f2294da603aa5f0a768ec3482997c198619d2a0a",
+      "status": "source exists/checksum observed"
+    },
+    {
+      "name": "Boss Prometheus packaging",
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/package-prometheus.js",
+      "status": "exact existing .js source/checksum observed",
+      "sha256": "b21efd0599843e98b8d36812b40984feb2e3b7160c1de1cefc26068a27af81d3"
+    }
+  ],
+  "decision": "Packaged evidence remains blocked pending reviewed exact source/payload pin and packaging scope; do not alter operator pins, bypass hooks, install dependencies or download on this investigation",
+  "verification": "Static source findings; no compiler, package, signature, installer or release certification"
+}

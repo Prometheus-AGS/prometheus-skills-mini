@@ -1,0 +1,53 @@
+
+running 6 tests
+test explicit_local_startup_validates_signed_registered_claims_before_run_admission ... FAILED
+test http_key_issue_direct_exchange_revoke_preserve_identity_roles_and_bounded_ttl ... FAILED
+test key_metadata_and_mutation_require_owner_tenant_and_exact_issuer_admin_kind ... FAILED
+test remote_jwks_header_and_body_delay_share_the_total_verifier_budget ... FAILED
+test remote_jwks_router_requires_tenant_and_mapping_for_bearer_and_direct_key ... FAILED
+test standalone_host_grant_requires_mapped_issuer_credential_and_retains_scope_attenuation ... FAILED
+
+failures:
+
+---- explicit_local_startup_validates_signed_registered_claims_before_run_admission stdout ----
+
+thread 'explicit_local_startup_validates_signed_registered_claims_before_run_admission' (209435334) panicked at tests/support/bauar_identity_peer.rs:189:9:
+identity fixture transport failure; stage=send; timeout=false; connect=false; child_observed=false; os_status=None; exit_status=unavailable; fatal_markers=[("stack_overflow", true), ("fatal_runtime_error", true), ("abort", true), ("panic", false), ("startup_error", false), ("server_error", false), ("allocation_failure", false)]; panic_sources=[]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- http_key_issue_direct_exchange_revoke_preserve_identity_roles_and_bounded_ttl stdout ----
+
+thread 'http_key_issue_direct_exchange_revoke_preserve_identity_roles_and_bounded_ttl' (209438908) panicked at tests/support/bauar_identity_peer.rs:189:9:
+identity fixture transport failure; stage=send; timeout=false; connect=false; child_observed=false; os_status=None; exit_status=unavailable; fatal_markers=[("stack_overflow", true), ("fatal_runtime_error", true), ("abort", true), ("panic", false), ("startup_error", false), ("server_error", false), ("allocation_failure", false)]; panic_sources=[]
+
+---- key_metadata_and_mutation_require_owner_tenant_and_exact_issuer_admin_kind stdout ----
+
+thread 'key_metadata_and_mutation_require_owner_tenant_and_exact_issuer_admin_kind' (209439026) panicked at tests/support/bauar_identity_peer.rs:189:9:
+identity fixture transport failure; stage=send; timeout=false; connect=false; child_observed=false; os_status=None; exit_status=unavailable; fatal_markers=[("stack_overflow", true), ("fatal_runtime_error", true), ("abort", true), ("panic", false), ("startup_error", false), ("server_error", false), ("allocation_failure", false)]; panic_sources=[]
+
+---- remote_jwks_header_and_body_delay_share_the_total_verifier_budget stdout ----
+
+thread 'remote_jwks_header_and_body_delay_share_the_total_verifier_budget' (209439230) panicked at tests/support/bauar_identity_peer.rs:189:9:
+identity fixture transport failure; stage=send; timeout=false; connect=false; child_observed=false; os_status=None; exit_status=unavailable; fatal_markers=[("stack_overflow", true), ("fatal_runtime_error", true), ("abort", true), ("panic", false), ("startup_error", false), ("server_error", false), ("allocation_failure", false)]; panic_sources=[]
+
+---- remote_jwks_router_requires_tenant_and_mapping_for_bearer_and_direct_key stdout ----
+
+thread 'remote_jwks_router_requires_tenant_and_mapping_for_bearer_and_direct_key' (209440681) panicked at tests/support/bauar_identity_peer.rs:189:9:
+identity fixture transport failure; stage=send; timeout=false; connect=false; child_observed=false; os_status=None; exit_status=unavailable; fatal_markers=[("stack_overflow", true), ("fatal_runtime_error", true), ("abort", true), ("panic", false), ("startup_error", false), ("server_error", false), ("allocation_failure", false)]; panic_sources=[]
+
+---- standalone_host_grant_requires_mapped_issuer_credential_and_retains_scope_attenuation stdout ----
+
+thread 'standalone_host_grant_requires_mapped_issuer_credential_and_retains_scope_attenuation' (209440816) panicked at tests/support/bauar_identity_peer.rs:189:9:
+identity fixture transport failure; stage=send; timeout=false; connect=false; child_observed=false; os_status=None; exit_status=unavailable; fatal_markers=[("stack_overflow", true), ("fatal_runtime_error", true), ("abort", true), ("panic", false), ("startup_error", false), ("server_error", false), ("allocation_failure", false)]; panic_sources=[]
+
+
+failures:
+    explicit_local_startup_validates_signed_registered_claims_before_run_admission
+    http_key_issue_direct_exchange_revoke_preserve_identity_roles_and_bounded_ttl
+    key_metadata_and_mutation_require_owner_tenant_and_exact_issuer_admin_kind
+    remote_jwks_header_and_body_delay_share_the_total_verifier_budget
+    remote_jwks_router_requires_tenant_and_mapping_for_bearer_and_direct_key
+    standalone_host_grant_requires_mapped_issuer_credential_and_retains_scope_attenuation
+
+test result: FAILED. 0 passed; 6 failed; 0 ignored; 0 measured; 9 filtered out; finished in 42.12s
+

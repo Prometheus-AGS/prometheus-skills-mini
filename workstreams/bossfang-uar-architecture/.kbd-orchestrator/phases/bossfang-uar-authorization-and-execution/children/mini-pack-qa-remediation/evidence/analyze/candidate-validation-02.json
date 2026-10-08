@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-08T09:45:36.152Z",
+  "status": "valid-for-schema-keywords-checked",
+  "errors": [],
+  "schemaSha256": "3883ee839928a016ffb1f8aa5a1d26760b87512f5a967a1b30b7d936875f007b",
+  "fileSha256": "5717eecc47fdb3880eabea563229c3d66674fd2e131681a9850b788cd2ef8448",
+  "checkedKeywords": [
+    "type (including null)",
+    "required",
+    "properties",
+    "additionalProperties",
+    "items",
+    "enum",
+    "minimum",
+    "maximum",
+    "format:date-time"
+  ],
+  "previousAttempt": "candidate-validation.json",
+  "previousFailure": "Inline validator omitted the JSON null type, incorrectly rejecting three permitted nullable fields. Data was not changed to satisfy that bug.",
+  "limitation": "Direct artifact validation of this schema, not a general JSON Schema validator or product QA"
+}

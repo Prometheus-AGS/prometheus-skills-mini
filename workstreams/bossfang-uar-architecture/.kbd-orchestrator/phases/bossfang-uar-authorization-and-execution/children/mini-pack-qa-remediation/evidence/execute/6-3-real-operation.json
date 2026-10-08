@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "task": "6.3",
+  "time": "2026-10-08T11:38:52.154Z",
+  "scratchRoot": "/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/mini-qa-operation-rnzQqB",
+  "isolation": "All state under the mkdtemp scratch root and the managed override home; no services started, no installed or shared state mutated.",
+  "steps": [
+    {
+      "name": "waypoint-expansion",
+      "ok": true,
+      "detail": {
+        "cases": [
+          "custom home, braced",
+          "custom home, bare",
+          "missing home -> empty",
+          "null home -> empty",
+          "empty home -> empty",
+          "user substitution",
+          "unknown token passthrough",
+          "omitted env -> process.env set",
+          "omitted env -> process.env unset -> empty (no OS fallback)"
+        ]
+      }
+    },
+    {
+      "name": "managed-cache-override",
+      "ok": true,
+      "detail": {
+        "command": "node lib/platform/openspec/cli.mjs run --project <planning> -- list --json",
+        "exit": 0,
+        "overrideHome": "/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/mini-qa-operation-rnzQqB/override-openspec-home",
+        "receiptsDirCreated": true
+      }
+    },
+    {
+      "name": "discovery-supplied-root",
+      "ok": true,
+      "detail": {
+        "exit": 0,
+        "fixtureHome": "/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/mini-qa-operation-rnzQqB/discovery-home",
+        "resultSummary": [
+          "fullPack",
+          "candidates"
+        ]
+      }
+    },
+    {
+      "name": "cadence-cli-lifecycle",
+      "ok": true,
+      "detail": {
+        "stateRoot": "/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/mini-qa-operation-rnzQqB/cadence-state",
+        "outcomes": [
+          {
+            "command": "init",
+            "exit": 0,
+            "stdoutTail": "    \"publicationEvery\": [\n          1,\n          3\n        ],\n        \"maxImplementers\": [\n          1,\n          3\n        ]\n      }\n    }\n  },\n  \"commandId\": \"10dd3bf6-1175-4d4c-81a7-4f042a562508\"\n}"
+          },
+          {
+            "command": "start",
+            "exit": 0,
+            "stdoutTail": "served\"\n        }\n      ]\n    }\n  ],\n  \"checkpoints\": [],\n  \"spans\": [],\n  \"completion\": {\n    \"tasks\": [],\n    \"changes\": [],\n    \"phases\": []\n  },\n  \"workReceipts\": [],\n  \"commandId\": \"op-start-1\"\n}"
+          },
+          {
+            "command": "ready",
+            "exit": 0,
+            "stdoutTail": "\n    }\n  ],\n  \"completedTaskRefs\": [],\n  \"satisfiedPrerequisiteIds\": [],\n  \"readyAt\": \"2026-10-08T11:37:41.695Z\",\n  \"candidateId\": \"2c30e6cb-ad79-47c8-a309-f25ce30507f8\",\n  \"commandId\": \"op-ready-1\"\n}"
+          },
+          {
+            "command": "candidate-freeze",
+            "exit": 0,
+            "stdoutTail": "6ccde\",\n  \"manifestPath\": \"/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/mini-qa-operation-rnzQqB/cadence-state/candidates/2c30e6cb-ad79-47c8-a309-f25ce30507f8.json\",\n  \"commandId\": \"op-freeze-1\"\n}"
+          },
+          {
+            "command": "checkpoint:build",
+            "exit": 0,
+            "stdoutTail": "z2qhvx9m6hwt2r0000gn/T/mini-qa-operation-rnzQqB/cadence-state/attempts/d8791bca-f224-47dc-9e3c-f8584819ddde/output.log\",\n  \"artifacts\": [],\n  \"operationToken\": \"ff9f4bd6-41c4-48fe-a64f-81cbf692f866\"\n}"
+          },
+          {
+            "command": "checkpoint:launch",
+            "exit": 0,
+            "stdoutTail": "z2qhvx9m6hwt2r0000gn/T/mini-qa-operation-rnzQqB/cadence-state/attempts/b278e660-dfaa-436b-8017-b169a07b5dcf/output.log\",\n  \"artifacts\": [],\n  \"operationToken\": \"95351394-3e84-401e-889d-b1af7005438d\"\n}"
+          },
+          {
+            "command": "checkpoint:run",
+            "exit": 0,
+            "stdoutTail": "z2qhvx9m6hwt2r0000gn/T/mini-qa-operation-rnzQqB/cadence-state/attempts/092451b4-366c-4670-bf02-1e0965b8a89e/output.log\",\n  \"artifacts\": [],\n  \"operationToken\": \"378be9a2-beb9-47ba-b9f3-179f20bfcd02\"\n}"
+          },
+          {
+            "command": "finish",
+            "exit": 0,
+            "stdoutTail": "licate completion credit.\",\n      \"Parallel work-ahead and delivery intervals are unioned; task counts and overlap alone do not establish increased velocity.\"\n    ]\n  },\n  \"commandId\": \"op-finish-1\"\n}"
+          },
+          {
+            "command": "status",
+            "exit": 0,
+            "stdoutTail": "ons\": [],\n    \"attempts\": [],\n    \"missing\": [],\n    \"installedAcceptance\": [],\n    \"acceptanceIndependent\": true,\n    \"blockedConsumers\": []\n  },\n  \"budgetReason\": null,\n  \"admissionDeadline\": null\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "generated-hook-invocation",
+      "ok": true,
+      "detail": {
+        "entry": "dist/plugins/claude/prometheus-skills-mini/scripts/hook-entry.mjs",
+        "hook": "sessionstart-detect-project-context",
+        "exit": 0,
+        "stdoutTail": ""
+      }
+    },
+    {
+      "name": "secret-detection-controls",
+      "ok": true,
+      "detail": {
+        "gateExit": 0,
+        "gateStdout": "no-hardcoded-secrets: PASS (2789 files scanned, 24 known non-credential occurrences accepted by disposition)",
+        "controlsPass": 6,
+        "controlsFail": 0
+      }
+    }
+  ],
+  "overall": "PASS"
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-08T10:29:00Z",
+  "completedAt": "2026-10-08T10:29:20Z",
+  "argv": [
+    "node",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/scripts/adversarial-review/dispatch-judge.mjs",
+    "--mode",
+    "artifact",
+    "--packet",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/mini-pack-qa-remediation/review/spec/packet-r1.json",
+    "--out",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/mini-pack-qa-remediation/review/spec/findings-r1.json"
+  ],
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "stderr": "[judge] WARN: review independence is degraded: producer-identity-unknown\n[MODEL_ROUTING] phase=adv-review-judge class=frontier model=gpt-6.1-sol producer=kimi-code\n[judge] wrote findings-r1.json\n",
+  "packetSha256": "b30ee0f9e2c56922012fc803f07d153241a85691a4d1b3b0814e4c9d58638499",
+  "packetBytes": 76574,
+  "findingsSha256": "69bd79ab3e280b3d5cf54fa4240005c26f7c33952d66b88b4f19ddd9fef931ff",
+  "findingsWritten": true,
+  "note": "Packet assembled by .scratch/build-spec-review-packet.mjs reusing lib/review/packet-builder builders, because the stock build-review-packet.mjs spec target collects only native-kbd change layouts and this child uses the OpenSpec backend. Producer recorded as kimi-code; exact model id not disclosed to the session."
+}

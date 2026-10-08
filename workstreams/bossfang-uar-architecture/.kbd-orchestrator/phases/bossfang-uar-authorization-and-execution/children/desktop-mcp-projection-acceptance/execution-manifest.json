@@ -1,0 +1,457 @@
+{
+  "artifactType": "kbd_execution_plan",
+  "artifactVersion": 1,
+  "createdAt": "2026-10-07T10:45:54.921Z",
+  "stage": "plan",
+  "authorizedToExecute": false,
+  "phaseId": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+  "changeId": "bauar-05-native-discovery-admission",
+  "assignmentSource": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/plan.md#task-model-assignments",
+  "planInputs": {
+    "miniHead": "7b0b681",
+    "approvedSpec": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/handoffs/spec.handoff.json",
+    "acceptance": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-05-native-discovery-admission/verification.md",
+    "protectedBaseline": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/source-inventory-mcp-approval-fixture-delivery-24.json"
+  },
+  "tasks": [
+    {
+      "id": "1",
+      "title": "1.1 Implement UAR v2 source-derived executionKind, bound authority/receipt equality, consuming native host port and standalone behavior; deliver contract documentation and the cases A1/A2/A3 in verification.md, with runtime verification deferred until task 3.2 after complete production.",
+      "done": false,
+      "status": "pending",
+      "dependsOn": [],
+      "assignmentKey": {
+        "phasePath": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+        "changeId": "bauar-05-native-discovery-admission",
+        "backendTaskId": "1"
+      }
+    },
+    {
+      "id": "2",
+      "title": "1.2 Implement Boss v2 admission, durable single-owner native consumption, strict cross-kind MCP refusal and claimed-only terminal behavior; partition wire/decoder responsibility before exceeding 500 lines; deliver contract documentation and cases A1/A2/A3, verified at task 3.2.",
+      "done": false,
+      "status": "pending",
+      "dependsOn": [],
+      "assignmentKey": {
+        "phasePath": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+        "changeId": "bauar-05-native-discovery-admission",
+        "backendTaskId": "2"
+      }
+    },
+    {
+      "id": "3",
+      "title": "1.3 Wire actual UAR native/BuiltIn dispatch to claim-before-effect and cancellation observation, preserving required sandboxing, durable uncertainty and terminal failures; deliver lifecycle documentation and cases A2/A3, verified at task 3.2.",
+      "done": false,
+      "status": "pending",
+      "dependsOn": [
+        "1"
+      ],
+      "assignmentKey": {
+        "phasePath": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+        "changeId": "bauar-05-native-discovery-admission",
+        "backendTaskId": "3"
+      }
+    },
+    {
+      "id": "4",
+      "title": "1.4 Update every enumerated owned manual protocol author together, including standalone/custom ports, inline revision fixtures, host gate and E2E diagnostic; deliver a complete caller inventory with no v1 fallback or kindless authority, verified by strict compiler and A1 at task 3.2.",
+      "done": false,
+      "status": "pending",
+      "dependsOn": [
+        "1",
+        "2",
+        "3"
+      ],
+      "assignmentKey": {
+        "phasePath": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+        "changeId": "bauar-05-native-discovery-admission",
+        "backendTaskId": "4"
+      }
+    },
+    {
+      "id": "5",
+      "title": "2.1 Implement a finite provider conversation based on received advertised schemas and correlated tool-call/result IDs; deliver fixed safe failure categories and cases A4, verified at task 3.2.",
+      "done": false,
+      "status": "pending",
+      "dependsOn": [
+        "2"
+      ],
+      "assignmentKey": {
+        "phasePath": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+        "changeId": "bauar-05-native-discovery-admission",
+        "backendTaskId": "5"
+      }
+    },
+    {
+      "id": "6",
+      "title": "2.2 Implement actual selected-server eager/deferred fixture catalog preparation, unique discovery query, filler refusal, source-specific revision/approval/preparation/effect counters and original projection assertions; deliver cases A4/A5 without cap, visibility or approval changes, verified at task 3.2.",
+      "done": false,
+      "status": "pending",
+      "dependsOn": [
+        "5"
+      ],
+      "assignmentKey": {
+        "phasePath": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+        "changeId": "bauar-05-native-discovery-admission",
+        "backendTaskId": "6"
+      }
+    },
+    {
+      "id": "7",
+      "title": "3.1 After all production and owned caller wiring in groups 1 and 2 is complete, restore locked isolated prerequisites without changing dependency pins and finish executable real-path acceptance scenario authoring A1–A6 in their owned gate surfaces; then compile the final affected callers, build fresh Boss main bundle and genuine production-feature UAR sidecar with serialized writers, and capture final source/artifact manifests required by A6.",
+      "done": false,
+      "status": "pending",
+      "dependsOn": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "assignmentKey": {
+        "phasePath": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+        "changeId": "bauar-05-native-discovery-admission",
+        "backendTaskId": "7"
+      }
+    },
+    {
+      "id": "8",
+      "title": "3.2 At this complete delivery boundary, run the finished exact host protocol and actual Electron projection scenarios in verification.md once, retain all original negative controls, and deliver finite source-bound receipts; compiler or mock evidence cannot replace either boundary. If a gate fix changes caller or production sources, refresh the affected compiler/build/source binding before rerunning only the failed gate under 3.3.",
+      "done": false,
+      "status": "pending",
+      "dependsOn": [
+        "7"
+      ],
+      "assignmentKey": {
+        "phasePath": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+        "changeId": "bauar-05-native-discovery-admission",
+        "backendTaskId": "8"
+      }
+    },
+    {
+      "id": "9",
+      "title": "3.3 Fix any observed failed gate within scope and rerun only that failed gate; deliver contradictory evidence, precise limitations and acceptance disposition for every case, with no replay, silent scope change or unrelated parent retest.",
+      "done": false,
+      "status": "pending",
+      "dependsOn": [
+        "8"
+      ],
+      "assignmentKey": {
+        "phasePath": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+        "changeId": "bauar-05-native-discovery-admission",
+        "backendTaskId": "9"
+      }
+    },
+    {
+      "id": "10",
+      "title": "3.4 Review the completed production change and actual acceptance evidence using the active team and adversarial workflow, verify product scope and source manifests, and deliver child handoff while retaining all independent parent blockers and unverified deployment claims.",
+      "done": false,
+      "status": "pending",
+      "dependsOn": [
+        "9"
+      ],
+      "assignmentKey": {
+        "phasePath": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+        "changeId": "bauar-05-native-discovery-admission",
+        "backendTaskId": "10"
+      }
+    }
+  ],
+  "repositories": {
+    "boss": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+    "uar": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+    "bossfang": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+    "planning": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture"
+  },
+  "ownership": [
+    {
+      "scope": "U1",
+      "owner": "uar-native-worker",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "files": [
+        "src/uar/runtime/tool_admission/mod.rs",
+        "src/uar/runtime/tool_admission/http.rs",
+        "src/uar/runtime/tool_admission/lifecycle.rs",
+        "src/uar/runtime/tool_admission/standalone.rs"
+      ]
+    },
+    {
+      "scope": "U2",
+      "owner": "uar-native-worker",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "files": [
+        "src/llm/orchestrator.rs"
+      ]
+    },
+    {
+      "scope": "B1",
+      "owner": "boss-runtime",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "files": [
+        "src/main/ai/runtime/uar/UarHostToolAdmission.ts",
+        "src/main/ai/runtime/uar/uarHostClaimRevalidation.ts",
+        "src/main/ai/runtime/uar/UarHostMcpBridge.ts",
+        "src/main/ai/runtime/uar/toolAdmission/wire.ts"
+      ],
+      "newFiles": [
+        "src/main/ai/runtime/uar/toolAdmission/wire.ts"
+      ]
+    },
+    {
+      "scope": "C1",
+      "owner": "uar-native-worker",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "files": [
+        "tests/tool_admission_integration.rs",
+        "tests/bauar_inline_revision.rs"
+      ]
+    },
+    {
+      "scope": "C1",
+      "owner": "boss-runtime",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "files": [
+        "scripts/gates/uar-exact-tool-admission.ts",
+        "scripts/gates/bauar-secret-projection-mcp.ts",
+        "tests/e2e/gates/bauarHostAdmissionDiagnostic.ts"
+      ]
+    },
+    {
+      "scope": "B2/B3",
+      "owner": "boss-runtime",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "files": [
+        "scripts/gates/bauar-secret-projection.ts",
+        "scripts/gates/bauar-secret-projection-mcp.ts",
+        "scripts/gates/bauar-secret-projection-revision.ts",
+        "scripts/gates/bauar-secret-projection-mcp-diagnostic.ts",
+        "scripts/gates/bauar-secret-projection-turn.ts",
+        "scripts/gates/bauar-secret-projection-events.ts",
+        "scripts/gates/bauar-secret-projection-history.ts",
+        "scripts/gates/bauar-secret-projection-lifecycle.ts"
+      ]
+    },
+    {
+      "scope": "V1",
+      "owner": "integration-author-after-production",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "files": [
+        "scripts/gates/uar-exact-tool-admission.ts",
+        "scripts/gates/bauar-secret-projection.ts",
+        "scripts/gates/bauar-native-admission-controls.ts"
+      ],
+      "newFiles": [
+        "scripts/gates/bauar-native-admission-controls.ts"
+      ],
+      "startsOnlyAfter": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "scope": "R1",
+      "owner": "independent-verifier",
+      "cwd": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+      "files": [
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/review"
+      ],
+      "productReadOnly": true
+    }
+  ],
+  "fileOwnershipNote": "C1 and B2/B3 overlapping Boss paths have the same owner. V1 is an explicit later handoff only after all production writers finish; no concurrent second writer.",
+  "commands": [
+    {
+      "id": "C-main",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "executable": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "argv": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.node.json",
+        "--composite",
+        "false"
+      ],
+      "when": "task7 after final scenario authoring"
+    },
+    {
+      "id": "C-e2e",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "executable": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "argv": [
+        "--max-old-space-size=8192",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.e2e.json"
+      ],
+      "when": "task7 if owned E2E caller changed"
+    },
+    {
+      "id": "C-rust-callers",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "executable": "cargo",
+      "argv": [
+        "test",
+        "--no-run",
+        "--offline",
+        "--locked",
+        "-p",
+        "universal-agent-runtime",
+        "--no-default-features",
+        "--features",
+        "server-full",
+        "--test",
+        "tool_admission_integration",
+        "--test",
+        "bauar_inline_revision",
+        "--message-format=json"
+      ],
+      "when": "task7 after all production and final scenario authoring; compile only, no test execution or acceptance claim"
+    },
+    {
+      "id": "B-main",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "executable": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "argv": [
+        "--max-old-space-size=8192",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/run-boss-existing-electron-build.mjs",
+        "app"
+      ],
+      "when": "task7"
+    },
+    {
+      "id": "B-sidecar",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "executable": "cargo",
+      "argv": [
+        "build",
+        "--offline",
+        "--locked",
+        "-p",
+        "universal-agent-runtime",
+        "--no-default-features",
+        "--features",
+        "server-full",
+        "--bin",
+        "uar-sidecar",
+        "--message-format=json"
+      ],
+      "when": "task7; root only; bind actual emitted compiler artifact"
+    },
+    {
+      "id": "G1",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "executable": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "argv": [
+        "--import",
+        "tsx",
+        "scripts/gates/uar-exact-tool-admission.ts",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/host-admission-v2-acceptance.json"
+      ],
+      "env": {
+        "TSX_TSCONFIG_PATH": "tsconfig.node.json"
+      },
+      "when": "task8 only after complete production/scenarios/compilers/builds/manifests"
+    },
+    {
+      "id": "G2",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "executable": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "argv": [
+        "--import",
+        "tsx",
+        "scripts/gates/bauar-secret-projection.ts",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/desktop-projection-v2-acceptance.json"
+      ],
+      "env": {
+        "TSX_TSCONFIG_PATH": "tsconfig.node.json",
+        "THE_BOSS_UAR_SIDECAR_PATH": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/development-uar-payload/uar-sidecar"
+      },
+      "when": "task8 after G1; validate actual staged payload exact path before launch"
+    }
+  ],
+  "payload": {
+    "outputDirectory": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/development-uar-payload",
+    "sourceManifest": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/final-source-manifest.json",
+    "artifactManifest": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/final-artifact-manifest.json",
+    "reuseOldPayloadAsFresh": false,
+    "requiredBuildProfile": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/boss-uar-sidecar-profile-build-03-manifest.json",
+    "resources": "Reuse existing Node staging pattern; copy required model/policy/license resources only with exact hashes; no feature reduction"
+  },
+  "faultControls": [
+    {
+      "id": "FC-HOST-PERSIST",
+      "status": "specified-not-run",
+      "route": "production persistLifecycle callback with gate-owned file snapshot store and selected preclaim/terminal throw"
+    },
+    {
+      "id": "FC-ACK",
+      "status": "specified-not-run",
+      "route": "gate-only actual host HTTP response drop after observed durable native consume"
+    },
+    {
+      "id": "FC-CANCEL",
+      "status": "specified-not-run",
+      "route": "actual ai.stream.abort before approval or while native ack held"
+    },
+    {
+      "id": "FC-RESTART",
+      "status": "specified-not-run",
+      "route": "restart gate-owned Electron/sidecar against same isolated profile and actual durable history"
+    },
+    {
+      "id": "FC-UAR-PERSISTENCE",
+      "status": "unresolved",
+      "blocks": [
+        "A2.UAR-claim-intent-persistence-failure",
+        "A3.UAR-local-terminal-persistence-failure"
+      ],
+      "route": null,
+      "rule": "Establish actual sidecar storage fault route at task7 within approved isolation; if unavailable, stop dependent acceptance cases, do not substitute mocks or add production test switches/services without scope approval."
+    },
+    {
+      "id": "FC-POSTACK-CANCEL",
+      "status": "unresolved",
+      "blocks": [
+        "A3.cancellation-after-acknowledgment-before-native-dispatch"
+      ],
+      "route": null,
+      "rule": "Require deterministic actual UAR after-ack/pre-dispatch interval and real cancellation API; held ack does not cover this case. If unavailable, BLOCKED/unrun; no mocked executor or production debug flag."
+    }
+  ],
+  "prohibited": [
+    "D0 diagnostic retry/reroute",
+    "tests/bauar_session_owner.rs",
+    "src/uar/mcp_server.rs",
+    "shared-service mutation",
+    "dependency/pin upgrades",
+    "new resident daemon",
+    "mock or reduced-feature sidecar",
+    "publication",
+    "parent certification"
+  ],
+  "dispatch": {
+    "implementationNow": false,
+    "mechanism": "collaboration.spawn_agent",
+    "freshContext": "fork_turns=none permits model/effort override; full-history forks inherit and forbid overrides",
+    "resultDirectory": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute",
+    "maxActiveIncludingRoot": 4,
+    "kbdOwnership": "root only",
+    "preserveOthers": true
+  },
+  "teamCoordination": {
+    "bossState": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/teams/boss-core.state.json",
+    "observedRevision": 7,
+    "bossfangState": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/teams/bossfang-stewards.state.json",
+    "observedBossfangRevision": 31,
+    "planMutations": false,
+    "executePrerequisite": "Re-read status/revisions; add bounded pending child tasks through actual manager; link canonical IDs; no rewrite of prior tasks",
+    "uarTeamState": "none found; explicit native scoped worker, no definition install"
+  }
+}

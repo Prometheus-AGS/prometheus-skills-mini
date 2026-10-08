@@ -1,0 +1,81 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "MiniMax-M3",
+  "judge_identity": {
+    "providerId": "minimax",
+    "providerConnectionId": "minimax-direct",
+    "modelId": "MiniMax-M3"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "claim": "The assessment's evidence claims (sources-receipt.json, evidence/source-baseline.json, prior-context.md, copied architectural review) cannot be verified from the provided file tree.",
+      "evidence": "Assessment states: 'Full status snapshots and selected source revisions are in [sources-receipt.json](sources-receipt.json); file digests are in [evidence/source-baseline.json](evidence/source-baseline.json).' and 'The existing Node recall helper reached memory and wrote [prior-context.md](prior-context.md).' and 'The architectural review is copied into this worktree so its untracked original is not the sole handover input.' The file tree only enumerates `.kbd-orchestrator/phases` as a directory without listing its contents; none of the four named evidence artifacts (sources-receipt.json, evidence/source-baseline.json, prior-context.md, or the copied architecture review) are visible. Downstream stages inheriting this assessment will reproduce the assessment's evidence claims with no way to inspect them.",
+      "suggested_fix": "List the phase directory contents in the file tree before review, or include the contents of sources-receipt.json, evidence/source-baseline.json, prior-context.md, and the copied review as packet fields so the assessment's evidence can be inspected independently of the worktree."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "claim": "The gap register does not name a finding for G7's 'logging/model-context limits' or 'service-versus-user identity' requirements, so Analyze has no entry point for those goals.",
+      "evidence": "Goal G7 reads: 'Preserve working local desktop controls and define separately testable remote multi-user deployment requirements, including service-versus-user identity and logging/model-context limits.' The gap register lists F1 through F7, none of which name logging/model-context limits or service-versus-user identity. The 'Acceptance coverage inventory' row 'Credential output / log / prompt handling' covers logging of credentials, not model-context limits; the row 'Bossfang receiving MCP service identity' is present in the inventory but no F-numbered finding prescribes how to test the service-vs-user boundary. Goal Progress G7 is marked PARTIAL with no gap entry to drive that work.",
+      "suggested_fix": "Add a gap-register entry (F8 or a sub-row) for logging/model-context limits and service-versus-user identity with a 'Required disposition in later stages' that names what Analyze must specify and what evidence closes the gap."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "claim": "The assessment does not document whether the assessment stage itself satisfied the blocking constraints whose checks would have been visible in the file tree.",
+      "evidence": "Constraints require checks for `no-shell-or-python-files`, `no-shell-true`, `no-home-or-tmp-literals`, `os-locations-only-via-platform`, `no-zeespec`, `no-console-log-in-lib` etc. against specific pathspecs. The Build Health section claims 'Rule compliance: Node equivalents used for upstream shell/jq lifecycle instructions. No product source/dependency/service edits' but does not show that the constraint checks were actually executed against the worktree. Since the file tree only shows top-level directories, a reviewer cannot verify that the assessment stage did not introduce a violation of `no-console-log-in-lib` (rules/lib/), `no-home-or-tmp-literals`, or `os-locations-only-via-platform`. The assessment also ran 'managed OpenSpec 1.14.1 refresh' and 'the Node dispatcher' for phase:before/assess:before, both of which are state-changing tool runs whose effect on the listed checks is not recorded.",
+      "suggested_fix": "Run the constraint checks against the pathspecs the constraints name and paste the actual command output (or a 'matches: 0' statement tied to a date and the pathspec used) into the Build Health section. Explicitly state whether the OpenSpec refresh and the Node dispatcher modified any path under the constraints' pathspecs."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "The 'Original-state isolation: PASS at recorded checks' claim covers only project-UUID/revision/active-path metadata and does not address file-state changes from tooling.",
+      "evidence": "Assessment states: 'Original project UUID/revision/active path remained unchanged; separate UUID used for new mutations.' This is followed by tool runs that mutate working-tree state: 'managed OpenSpec 1.14.1 refresh completed with latest verification and no authored-state changes' and 'the shipped Node dispatcher was invoked for phase:before and assess:before.' An OpenSpec refresh writes/updates files under the openspec/ tree; a hook dispatcher may also write to .prometheus/ or .kbd-orchestrator/ depending on its configuration. The 'no authored-state changes' qualifier is asserted, not demonstrated, and no hash snapshot of the relevant subtrees is shown for before/after.",
+      "suggested_fix": "Capture hashes (or a `git status`/equivalent) of openspec/, .kbd-orchestrator/, and .prometheus/ before and after the assessment tool runs, and include the diff or hash list in evidence/."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "F6's reproduction step has no scope: no fixture, harness, or environment is named, so Analyze and Plan cannot tell whether the work belongs in a UAR test, Bossfang test, or integration suite.",
+      "evidence": "F6 row reads: 'Reproduce with two principals and one session ID; correct if confirmed, or close with evidence of the enforcing layer. Do not silently omit it because run-status ownership exists.' Nothing in the assessment names the test harness, the fixture that mints two principals, the MCP server whose session ID is shared, or the assertions that would distinguish 'session correctly scoped' from 'session leak confirmed.' The acceptance-inventory row 'MCP session crossover' is similarly terse: 'Principal B cannot use/replay/delete A's session.'",
+      "suggested_fix": "Specify the test environment (which MCP server fixture, which principal-minting code path, which session operation to attempt) and the exact assertion that would close the gap. If the test cannot be scoped yet, state that as an open Analyze question instead of as a closed-loop instruction."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "A current project-state discrepancy is documented as a limitation but is not raised as a finding, gap, or follow-up, leaving the issue invisible to the next stage.",
+      "evidence": "Build Health section: 'the shipped Node dispatcher was invoked for phase:before and assess:before. Its built-in file contains harness event definitions, not matching lifecycle command-array entries, so no lifecycle side-effect commands matched. Required recall was run explicitly. Do not claim a memory stage-writeback hook ran; handoff persistence is local and authoritative.' This is a project-configuration mismatch (hooks are configured to emit harness events, but the lifecycle command-array expects matching entries, so the documented 'automatic memory writeback' capability does not run). It is described but not added to the gap register, the goal progress table, or the open-decisions list.",
+      "suggested_fix": "Either add the hook-configuration mismatch to the gap register with a disposition (fix in a small change vs document the manual-recall requirement as policy) or state explicitly that the assessment is recording the limitation and deferring the fix out of scope."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "The 'Codex/Claude comparison and provider naming' implementation-row is out of scope of the stated goals but is given the same weight as in-scope rows, which can mislead Analyze into treating it as a gap to address.",
+      "evidence": "Goal G2 reads: 'Define and implement one authoritative agent execution loop per Bossfang job attempt, distinguishing job orchestrator, execution harness and model provider; reuse UAR full-run delegation where appropriate.' No goal references provider naming or a Codex/Claude comparison. The Implementation Completeness table nonetheless includes a row: 'Codex/Claude comparison and provider naming | PARTIAL | Real subprocess/SDK harness adapters exist; provider branding alone does not establish execution semantics. Review §4.4.' No F-numbered finding carries this forward, and the goal-progress table does not reference it.",
+      "suggested_fix": "Move the row out of the Implementation Completeness table (or mark it as out-of-scope context from the review) so Analyze does not pick it up as a gap to close."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "assessment.md",
+      "claim": "F1's 'Required disposition' prescribes implementation steps rather than describing the gap, which constrains Analyze before evidence is gathered.",
+      "evidence": "F1 'Required disposition in later stages' reads: 'Compare explicit harness delegation with true inference-only use. Select and specify the authoritative loop; reproduce relevant current mismatch and prove the final execution path. Preserve the normal EndTurn counterevidence.' 'Reproduce relevant current mismatch' and 'prove the final execution path' are Plan/Execute verbs; 'compare explicit harness delegation with true inference-only use' is the actual gap, the rest is implementation guidance. The 'Open decisions for Analyze' list also includes the same question (#1), so the disposition is duplicative and premature.",
+      "suggested_fix": "Reduce F1's disposition to the gap (the loop ownership is not enforced end-to-end) and let Open Decision #1 carry the architectural choice into Analyze."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "assessment.md",
+      "claim": "'The shipping project remained at revision 999' uses an opaque project counter in a row that otherwise carries git SHAs, which obscures the cross-reference.",
+      "evidence": "Evidence and Baseline table: 'Bossfang | 16beef0fcf3053970a901990df4fedbdf86bd87d', 'UAR | a7cb972992d4f83db6585449ea81af0fe4a1c990', 'The Boss | e2ae2ce21245030293c0bea96ed02ae853b820a7', 'Worktree tooling baseline | 6044ecdeb5c8c957646fef422d886a4568212888' — all git SHAs. The body text says 'The shipping project remained at revision 999 and its original active path after this phase was created.' 'Revision 999' does not match any of those formats and the assessment does not name what 'revision 999' counts (phase counter? KBD project state version? something else?).",
+      "suggested_fix": "Replace 'revision 999' with the same SHA-format identifier used for the other rows, or define 'revision N' as a project-level counter in a legend and apply it consistently."
+    }
+  ],
+  "checked_classes": [],
+  "reviewedAt": "2026-10-06T09:53:10.555Z",
+  "adaptation": "Configured critic used as isolated reviewer to avoid GPT-family judge collision; exact producer identity unavailable, canonical distinctness unverified."
+}

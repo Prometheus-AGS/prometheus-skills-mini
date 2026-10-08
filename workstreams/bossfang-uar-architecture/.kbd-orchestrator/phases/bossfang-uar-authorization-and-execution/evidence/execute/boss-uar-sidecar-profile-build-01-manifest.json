@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-06T20:24:32.456Z",
+  "sourceCommandReceipt": "final-gates/boss-uar-sidecar-profile-build-01.json",
+  "compileStatus": "observed-pass",
+  "artifacts": [
+    {
+      "target": "uar-sidecar",
+      "features": [
+        "a2a-transport",
+        "admin-ui",
+        "api-docs",
+        "cedar-governance",
+        "document-intelligence",
+        "local-models",
+        "minimal",
+        "response-quality",
+        "server",
+        "server-full",
+        "surreal-backend",
+        "telemetry",
+        "wasm-runtime"
+      ],
+      "executable": "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/uar-sidecar",
+      "sha256": "cfb1734885daf33f0a1cad139538ad087868094625445455cb755d2c57778e18"
+    }
+  ],
+  "sourceBinding": "current-source-inventory.json",
+  "sourceHead": "8bff32deb870f6363e94687a2e22492f91a34dfd",
+  "sourceDiffSha256": "79a1b06d800f3a3e5f2f5b6700b632fff61ce9d9381103c6a90ea0815a4223cf",
+  "sourceFilesChecked": 105,
+  "sourceHashesUnchanged": true,
+  "scope": "Productionfeature debug development sidecar. No release/package acceptance."
+}

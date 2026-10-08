@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-07T20:48:51.853Z",
+  "method": "Read-only assessment source/evidence integrity check; not a production test or QA gate.",
+  "sourceBindings": [
+    {
+      "file": "lib/platform/paths.mjs",
+      "reviewPacketSha256": "2a381273aec93a26e9b54d398ae1ed90610560a40f2900a739db967bdca4949e",
+      "currentSha256": "2a381273aec93a26e9b54d398ae1ed90610560a40f2900a739db967bdca4949e",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "openspec/specs/platform/paths/spec.md",
+      "reviewPacketSha256": "ab5a576e4616856f4c599e58030473b9b8488f8271762ddef577c8132dd2a619",
+      "currentSha256": "ab5a576e4616856f4c599e58030473b9b8488f8271762ddef577c8132dd2a619",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "lib/kbd/waypoint.mjs",
+      "reviewPacketSha256": "fe06b3c762128660cd7ed02cbcb4a0471b3e250a215c27defb6c652426aaa062",
+      "currentSha256": "fe06b3c762128660cd7ed02cbcb4a0471b3e250a215c27defb6c652426aaa062",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "lib/cadence-adapters/kbd.mjs",
+      "reviewPacketSha256": "624db485e053855ab49916a16ac8fac176c0b6d759a75c07d80f866109f9df35",
+      "currentSha256": "624db485e053855ab49916a16ac8fac176c0b6d759a75c07d80f866109f9df35",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "lib/platform/openspec/state.mjs",
+      "reviewPacketSha256": "80f4650edb06b9ea18fa1ab38bd840cf66a4ac215d3b400f2ff1a0c344de5a61",
+      "currentSha256": "80f4650edb06b9ea18fa1ab38bd840cf66a4ac215d3b400f2ff1a0c344de5a61",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "lib/services/discovery.mjs",
+      "reviewPacketSha256": "e0ef704036b51869e60f2e098ba9c48e4ae7594985fa51a11ad0da445a07e13a",
+      "currentSha256": "e0ef704036b51869e60f2e098ba9c48e4ae7594985fa51a11ad0da445a07e13a",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "lib/kbd/bottleneck-guard.mjs",
+      "reviewPacketSha256": "658a300325b754d5c35a15fd891ebdd34c6ddeee212a9c1adaa2431cf37e0baa",
+      "currentSha256": "658a300325b754d5c35a15fd891ebdd34c6ddeee212a9c1adaa2431cf37e0baa",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "scripts/kbd-bottleneck-detector.mjs",
+      "reviewPacketSha256": "cf1cbdd446dbd7a5f4336136e95519178259f5a070668ee62d51aa9b25beb5f6",
+      "currentSha256": "cf1cbdd446dbd7a5f4336136e95519178259f5a070668ee62d51aa9b25beb5f6",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "skills/kbd-bottleneck-detector/SKILL.md",
+      "reviewPacketSha256": "49e64ddb2539bc9d68285dfa21859bcad73ba9d5d5ea9f07319b1a07e7310e86",
+      "currentSha256": "49e64ddb2539bc9d68285dfa21859bcad73ba9d5d5ea9f07319b1a07e7310e86",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "skills/delivery-cadence/SKILL.md",
+      "reviewPacketSha256": "df0d870490c9957ead9b1a39685caaae742f80f5e6ba798cac77086a45af93b4",
+      "currentSha256": "df0d870490c9957ead9b1a39685caaae742f80f5e6ba798cac77086a45af93b4",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "skills/delivery-cadence/references/profile.md",
+      "reviewPacketSha256": "0b1087c841ee356cae7787d1df5fbc052d73336c5a783e34a21fd6c819c8dc4f",
+      "currentSha256": "0b1087c841ee356cae7787d1df5fbc052d73336c5a783e34a21fd6c819c8dc4f",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "skills/carried-payload.test.mjs",
+      "reviewPacketSha256": "59754926e199e0f4f1ceac4cf3c23e1e218e013f2eab2848a447893cd3c76a14",
+      "currentSha256": "59754926e199e0f4f1ceac4cf3c23e1e218e013f2eab2848a447893cd3c76a14",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "lib/distribution/package-builder.mjs",
+      "reviewPacketSha256": "eb30ef1aa216ef42e57d333ccb045687822d71bbdfb288efd89886f9b1cb536b",
+      "currentSha256": "eb30ef1aa216ef42e57d333ccb045687822d71bbdfb288efd89886f9b1cb536b",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "lib/distribution/package-builder.test.mjs",
+      "reviewPacketSha256": "9e5647b3497094b78f68a5dde8e4c8550994d7a852a1c703df70dd8c26e8f276",
+      "currentSha256": "9e5647b3497094b78f68a5dde8e4c8550994d7a852a1c703df70dd8c26e8f276",
+      "unchangedSinceReviewPacket": true
+    },
+    {
+      "file": "lib/learning/identity.test.mjs",
+      "reviewPacketSha256": "8537be898aab7d0567b356f8cf704d3ab3636687893538b10deeb1a235f33f0d",
+      "currentSha256": "8537be898aab7d0567b356f8cf704d3ab3636687893538b10deeb1a235f33f0d",
+      "unchangedSinceReviewPacket": true
+    }
+  ],
+  "pinBindings": [
+    {
+      "file": "versions.toml",
+      "currentSha256": "93d1695749ccd5349896c52169a9f0a2344f047b332f5471222524d7b92573f2",
+      "unchangedFromBaseline": true
+    },
+    {
+      "file": "package-lock.json",
+      "currentSha256": "f4c8d67d560c007139f71164ad792bd3b0ff3ce88ddedee1c39c5e357b8d5572",
+      "unchangedFromBaseline": true
+    }
+  ],
+  "newChildJsonPatternOccurrences": [],
+  "limitations": [
+    "Does not scan other repositories or certify runtime behavior.",
+    "Review results remain unverified-producer-unknown and BLOCK after two rounds; final producer revisions are not re-vetted."
+  ]
+}

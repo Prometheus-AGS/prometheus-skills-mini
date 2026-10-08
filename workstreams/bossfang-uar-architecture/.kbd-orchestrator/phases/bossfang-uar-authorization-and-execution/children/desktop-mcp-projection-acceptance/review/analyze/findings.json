@@ -1,0 +1,58 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "MiniMax-M3",
+  "judge_identity": {
+    "providerId": "minimax",
+    "providerConnectionId": "minimax-direct",
+    "modelId": "MiniMax-M3"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "claim": "Line-number discrepancy: analysis.md cites UarHostToolAdmission.ts:313 for host finish, but sourceContract JSON lists UarHostToolAdmission.ts:323-325 for what the sourceContract otherwise calls the host finish surface; neither the analysis nor the source contract reconciles the two line anchors.",
+      "evidence": "analysis.md '[host finish](/Users/gqadonis/.claude/worktrees/bauar-boss/src/main/ai/runtime/uar/UarHostToolAdmission.ts:313)' vs sourceContract JSON refs 'UarHostToolAdmission.ts:111-149,208-241,289-292,323-325'.",
+      "file": "analysis.md (cross-checked with sourceContract JSON in inspectable_evidence)"
+    },
+    {
+      "severity": "WARNING",
+      "claim": "Scope-amendment-proposal supplies wire-level details (version2, owning-caller cutover, distinct consuming native-claim operation, executionKind enum runtime-native/host-mcp) that approach 'implemented wire syntax' even though explicitly labeled 'proposed, not implemented'; Spec stage should refine rather than adopt the version2 cutover verbatim.",
+      "evidence": "scopeProposal in inspectable_evidence: 'executionKind enum runtime-native/host-mcp, derived from UAR's resolved ToolSource and bound into prepared authority and receipt equality. Use a strict owned-caller admission wire cutover, proposed version2, with a distinct consuming native-claim operation under that version.' The instruction restricts this review to a bounded feasible proposal, not implemented wire syntax.",
+      "file": "inspectable_evidence.scopeProposal"
+    }
+  ],
+  "checked_classes": [
+    "numerical-invariants",
+    "preparation-approval-accounting",
+    "identity-classified-counts",
+    "scope-amendment-proposal",
+    "source-link-fidelity",
+    "library-candidate-schema",
+    "research-budget-accounting",
+    "release-scope-boundary",
+    "execution-kind-forgery-guard",
+    "claim-finish-bypass-guard",
+    "native-terminal-static-finding",
+    "runtime12-cause-provenance",
+    "exact-approval-id-separation",
+    "sdk-version-revidence",
+    "fixture-handler-target-dispatch",
+    "filler-descriptor-avoidance",
+    "fresh-payload-requirement",
+    "spec-plan-execute-approval-gate",
+    "discoverable-failure-discrimination",
+    "scope-goal-authority-boundary",
+    "documented-vs-implemented-boundary",
+    "d0-diagnostic-exclusion",
+    "producer-unknown-provenance",
+    "selected-server-filtering-stability"
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

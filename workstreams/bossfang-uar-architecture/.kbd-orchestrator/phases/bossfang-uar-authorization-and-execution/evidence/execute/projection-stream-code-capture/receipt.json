@@ -1,0 +1,46 @@
+{
+  "kind": "source-only fixed RUN_ERROR code observation",
+  "files": [
+    {
+      "path": "scripts/gates/bauar-secret-projection.ts",
+      "lines": 480,
+      "sha256": "f78ef2b9ee326bdd8d6f4cbf566c431036806f5ace7846800d67d70cb92d42df",
+      "changedThisTask": false
+    },
+    {
+      "path": "scripts/gates/bauar-secret-projection-revision.ts",
+      "lines": 287,
+      "sha256": "c4ce8de875e949d9351a4e5d7db2e82bc7887869b83b1a0e423ab07ec619f6f0",
+      "changedThisTask": true
+    },
+    {
+      "path": "scripts/gates/bauar-secret-projection-mcp.ts",
+      "lines": 251,
+      "sha256": "3695b1e9e6c8c8579682d1a84a70008261c5ebb72bfc631b64734bf9c33ff125",
+      "changedThisTask": false
+    },
+    {
+      "path": "scripts/gates/bauar-secret-projection-events.ts",
+      "lines": 182,
+      "sha256": "8ed59b1c52cc939616b3639fe51c68895b80b7a0be7af821e1d80b3a7c4094e1",
+      "changedThisTask": false
+    }
+  ],
+  "observed": "Projection05 admitted actual catalog/run requests but returned unclassified stream error before any controlled provider request.",
+  "scope": "Existing private created.stream_url selects original SSE response. TransformStream forwards identical original Uint8Array chunks and preserves status/statusText/headers. Default pipeThrough propagation retains upstream error/downstream cancellation and backpressure; no second request, replay, clone, or background reader.",
+  "retained": "Only fixed source-listed code categories (unknown/empty become constants), HTTP category, frame/error counts, parsing/incomplete flags. No text, messages, URLs, identifiers, or arbitrary codes emitted.",
+  "bound": "256KiB pending parser budget; overflow disables diagnostic observation only, never original byte forwarding.",
+  "sources": [
+    "UAR src/uar/api/adapters.rs:223-247 actual RUN_ERROR code producer",
+    "UAR src/uar/runtime/manager.rs pre-provider fixed error codes and protected admission codes",
+    "Boss src/main/ai/runtime/uar/UarAguiAdapter.ts:291-302 discards code while forwarding error message"
+  ],
+  "preserved": [
+    "All assertions and ordering",
+    "Existing timeouts and awaits",
+    "Revision/canary/model-input constraints",
+    "Production, admission and MCP fixture sources unchanged"
+  ],
+  "reflection": "Installed TSX runner-style export inspection: zero ambient __name calls and zero dynamic imports; no app evaluate or launch.",
+  "execution": "No tests, builds, gates, compiler or formatter executed; root owns runtime evidence."
+}

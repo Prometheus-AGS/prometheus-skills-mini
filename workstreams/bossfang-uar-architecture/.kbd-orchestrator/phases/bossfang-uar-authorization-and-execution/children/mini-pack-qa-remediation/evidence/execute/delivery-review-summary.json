@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "stage": "execute",
+  "time": "2026-10-08T12:40:00Z",
+  "mode": "diff (completed delivery)",
+  "reviewRounds": [
+    {
+      "round": 1,
+      "verdict": "BLOCK",
+      "counts": { "CRITICAL": 4, "WARNING": 1 },
+      "note": "Original r1 packet (111,283 bytes) was superseded by the post-fix rebuild before archival; findings-r1.json retained. Fixed: location binding (file+kind+sha256+line+pointer). Disproven: constraints.md hunk absent (present at byte 91,992), absent-asset marker required (conditional by test mechanics)."
+    },
+    {
+      "round": 2,
+      "verdict": "BLOCK",
+      "counts": { "CRITICAL": 7 },
+      "note": "Fixed: docker Markdown positive control, JSON key-side positive control, explicit JSON parse-error surfacing (later refined to PARSE-NOTE semantics), disposition provenance fields. Disproven again: constraints.md hunk (byte 96,146), marker. Dispositioned: FIFO line attribution (fail-safe direction only — line+pointer+digest+kind must all match, so mis-attribution fails loudly, never silently accepts; 24/24 verified)."
+    },
+    {
+      "round": 3,
+      "verdict": "BLOCK",
+      "counts": { "CRITICAL": 4, "WARNING": 1 },
+      "note": "Fixed: unreadable-file ERROR lines in report with PASS suppressed on errors; verbatim (untrimmed) candidate filename enumeration. Real-tree prose file start-0.json surfaced; PARSE-NOTE semantics adopted (explicit, detection-identical to the replaced gate, fails closed only where JSON structure matters). Disproven third time: constraints.md hunk, marker."
+    },
+    {
+      "round": 4,
+      "verdict": "BLOCK",
+      "counts": { "CRITICAL": 4, "WARNING": 2 },
+      "note": "Fixed: adaptation record now notes source-level changedDocumentation and lists the four regenerated payload documentation copies. Remaining findings dispositioned below."
+    },
+    {
+      "round": "focused-verification",
+      "verdict": "BLOCK",
+      "counts": { "CRITICAL": 1 },
+      "note": "Scoped 1,997-byte packet with the full constraints.md hunk inline. The judge's own finding states the diff 'contains only a constraints.md hunk changing the no-hardcoded-secrets check and note' — directly confirming the hunk it three times claimed absent."
+    }
+  ],
+  "crossModelCheck": "unverified-producer-unknown",
+  "antiTheater": "All findings screens PASS score 0 (strict).",
+  "unresolvedFindings": [
+    {
+      "finding": "constraints.md hunk absent from diff (rounds 1-4)",
+      "disposition": "CONTRADICTED BY EVIDENCE. Hunk verified present by byte offset in packets r1 (91,992) and r2 (96,146); the focused-verification judge explicitly acknowledged it. No code change made."
+    },
+    {
+      "finding": "'one referenced asset is absent' marker required (rounds 1-4)",
+      "disposition": "CONTRADICTED BY EVIDENCE. skills/carried-payload.test.mjs:50-65 makes the two markers independent OR-skips; the absent-asset marker applies only when a referenced asset remains. Zero references to the retired assets remain (grep-verified). npm test: 1,108 pass / 0 fail including all three carried-payload tests by name. Adding the marker would be false documentation. No code change made."
+    },
+    {
+      "finding": "FIFO line attribution for duplicate digests (rounds 2, 4 WARNING)",
+      "disposition": "ACCEPTED RISK, fail-safe direction. Acceptance requires file+kind+sha256+line+pointer to ALL match; a mis-attributed line cannot produce a false accept, only a loud failure. All 24 real occurrences verify against their receipted lines/pointers. No observed mis-attribution (A-2)."
+    },
+    {
+      "finding": "Detector family limited to the two original patterns (round 4 WARNING)",
+      "disposition": "INTENTIONAL. The approved exception preserves the replaced check's exact patterns and boundary; widening the detector family is a separate rule-owner decision, out of scope."
+    }
+  ],
+  "fixesLanded": [
+    "Disposition acceptance bound to file+kind+sha256+line+JSON-pointer (move re-fails; test 7)",
+    "Docker Markdown positive control (test 8); JSON key-side positive control with <key> placeholder (test 9)",
+    "PARSE-NOTE semantics: explicit print, identical detection, fails closed only where JSON structure matters; exit decisions via decideExitCode (tests 10-11)",
+    "Per-disposition provenance arrays bound to the named receipts (test 12...11 in final numbering)",
+    "Unreadable candidates printed as ERROR lines; PASS suppressed on any error (test 13)",
+    "Verbatim candidate filename enumeration — trailing-space filenames scanned exactly (test 14)",
+    "Adaptation record: source-level changedDocumentation clarified; four regenerated payload documentation copies listed"
+  ],
+  "finalCheckerStatus": "node --test lib/secret-scan/scanner.test.mjs: 14 pass / 0 fail. node scripts/check-hardcoded-secrets.mjs: exit 0, 2,797 files, 24 dispositions, 1 explicit PARSE-NOTE (pre-existing parent-phase prose file start-0.json, zero hits).",
+  "limitation": "Review is artifact/diff-level; product acceptance evidence is the 6.4 gate set and 6.3 real operation. Producer model id undisclosed; independence unverified."
+}

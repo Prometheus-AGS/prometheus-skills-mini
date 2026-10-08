@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-07T10:46:27.077Z",
+  "endedAt": "2026-10-07T10:48:04.345Z",
+  "status": "unavailable",
+  "errorCategory": "normalization_or_local_error",
+  "route": "rest-gateway",
+  "timeoutMs": 300000,
+  "attempts": 1,
+  "nativeFallback": {
+    "requestedAt": "2026-10-07T10:49:22.006Z",
+    "taskName": "/root/plan_artifact_review",
+    "model": "gpt-6-astra",
+    "reasoningEffort": "high",
+    "isolation": "fresh fork_turns=none",
+    "inputAdaptation": "file-backed packet pointer and artifact mandate rather than complete inline packet",
+    "crossModelCheck": "unverified-producer-unknown",
+    "productAccess": "not authorized",
+    "status": "pending"
+  }
+}

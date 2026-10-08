@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-08T11:02:00Z",
+  "task": "5.2",
+  "command": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/npm ci --no-bin-links --ignore-scripts --no-audit --no-fund",
+  "cwd": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini",
+  "exitCode": 0,
+  "npmOutput": "added 70 packages in 1s",
+  "hashVerification": {
+    "package.json": {
+      "before": "08d34b06ff04605b6b8712f1ed9b106e653e236493bc96b6f69586352840c5cc",
+      "after": "08d34b06ff04605b6b8712f1ed9b106e653e236493bc96b6f69586352840c5cc",
+      "unchanged": true
+    },
+    "package-lock.json": {
+      "before": "f4c8d67d560c007139f71164ad792bd3b0ff3ce88ddedee1c39c5e357b8d5572",
+      "after": "f4c8d67d560c007139f71164ad792bd3b0ff3ce88ddedee1c39c5e357b8d5572",
+      "unchanged": true
+    }
+  },
+  "binLinks": {
+    "nodeModulesBinExists": false,
+    "note": "No executable links or shims were created; suppression passed as command-line flags only."
+  },
+  "npmConfigUntouched": {
+    "userGlobalBinLinks": "true (default)",
+    "userGlobalIgnoreScripts": "false (default)",
+    "note": "No npm config files written; defaults verified via npm config get."
+  },
+  "topLevelEntries": 53,
+  "postInstallInventory": "the task 5.3 inventory receipt in this directory (10,652 entries, 1,762 directories, 8,890 files, 0 symlinks, 0 errors)"
+}

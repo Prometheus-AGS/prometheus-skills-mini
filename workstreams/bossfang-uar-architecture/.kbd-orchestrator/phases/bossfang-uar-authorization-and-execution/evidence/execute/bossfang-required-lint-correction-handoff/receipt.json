@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:31:16.392Z",
+  "scope": "bossfang-required-lint-correction-scope.json",
+  "files": [
+    {
+      "file": "crates/librefang-storage/src/channel_actions.rs",
+      "sha256": "4a928037af4b2fa051c5b08fa5e2616f313027b74b72b6c0222cddbf29647a31",
+      "bytes": 16523
+    },
+    {
+      "file": "crates/librefang-storage/src/channel_actions/surreal_impl/observers.rs",
+      "sha256": "680dc379603e97bcd9ff77b6587ec95172fa9fcc158376404d1f59c4ec2fb36d",
+      "bytes": 35011
+    },
+    {
+      "file": "crates/librefang-storage/src/channel_routes.rs",
+      "sha256": "bb853ace2079e7cfd805143b718b271103aa3e502eec261cce25a4e0f8acc2ee",
+      "bytes": 30766
+    }
+  ],
+  "sourceStatus": "released",
+  "verification": "failed-only clippy pending; retained harness18 not re-executed",
+  "snapshots": [
+    {
+      "file": "crates__librefang-storage__src__channel_actions.rs",
+      "kind": "source evidence snapshot; not product code"
+    },
+    {
+      "file": "crates__librefang-storage__src__channel_actions__surreal_impl__observers.rs.txt",
+      "kind": "source evidence snapshot; not product code"
+    },
+    {
+      "file": "crates__librefang-storage__src__channel_routes.rs.txt",
+      "kind": "source evidence snapshot; not product code"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{"harnessCompletedCase":"registered-owner-and-explicit-unsupported","completedCaseCount":1}
+{"boardReconciliationCheckpoint":{"streaming":false,"completedCaseCount":1,"retainedAfterA2a":{"executionState":"completed","effectState":"effect_unconfirmed","recoveryState":"available","appliedCursor":23,"attemptRevision":5,"attempt":1},"observedAtDrain":{"admissionState":"admitted","terminalPresent":true,"appliedCursor":23,"attemptRevision":5},"reconciliationCommandSucceeded":true,"boardCompleted":true}}
+{"harnessCompletedCase":"normal-exact-approval-and-reconciliation","completedCaseCount":2}
+{"boardReconciliationCheckpoint":{"streaming":true,"completedCaseCount":2,"retainedAfterA2a":{"executionState":"completed","effectState":"effect_unconfirmed","recoveryState":"available","appliedCursor":21,"attemptRevision":5,"attempt":1},"observedAtDrain":{"admissionState":"admitted","terminalPresent":true,"appliedCursor":21,"attemptRevision":5},"reconciliationCommandSucceeded":true,"boardCompleted":true}}
+{"harnessStage":"incomplete_terminal_start"}
+{"harnessStage":"incomplete_terminal_approved"}
+{"harnessStage":"incomplete_terminal_before_restart"}
+{"harnessStage":"incomplete_terminal_after_restart"}
+{"harnessStage":"incomplete_terminal_finished"}
+{"harnessCompletedCase":"streaming-and-outcome-commit-crash","completedCaseCount":3}
+{"harnessCompletedCase":"exact-denial-no-effect","completedCaseCount":4}
+{"harnessCompletedCase":"three-surface-cancellation-exact-caller-revision","completedCaseCount":5}
+{"harnessCompletedCase":"lost-admission-and-decision-response-no-reenactment","completedCaseCount":6}
+{"harnessCompletedCase":"observation-reconnect-original-run","completedCaseCount":7}
+{"harnessCompletedCase":"provider-admission-before-host-capture-crash","completedCaseCount":8}
+{"harnessCompletedCase":"durable-intent-crash-before-a2a","completedCaseCount":9}
+file:///Users/gqadonis/.claude/worktrees/bauar-bossfang/scripts/integration/bauar-harness-runtime.mjs:33
+  throw new Error(`Timed out: ${label}`);
+        ^
+
+Error: Timed out: actual native TaskPosted model invocation
+    at until (file:///Users/gqadonis/.claude/worktrees/bauar-bossfang/scripts/integration/bauar-harness-runtime.mjs:33:9)
+    at async file:///Users/gqadonis/.claude/worktrees/bauar-bossfang/scripts/integration/bauar-harness-gate.mjs:400:3
+
+Node.js v24.21.0

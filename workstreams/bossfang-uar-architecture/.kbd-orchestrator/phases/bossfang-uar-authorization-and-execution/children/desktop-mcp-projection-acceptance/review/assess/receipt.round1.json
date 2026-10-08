@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-07T00:28:25.537Z",
+  "packetSha256": "60d839239ac292dfc6d044d15c97e347909fe8fdd058ae66cbef4665d112a172",
+  "packetBytes": 48470,
+  "scope": "Assess artifact only; not cumulative product certification",
+  "role": "configured critic",
+  "judgeIdentity": {
+    "providerId": "minimax",
+    "providerConnectionId": "minimax-direct",
+    "modelId": "MiniMax-M3"
+  },
+  "producerCanonicalIdentity": null,
+  "crossModelCheck": "unverified-producer-unknown",
+  "adaptation": "Configured MiniMax-M3 critic through existing dispatcher library; avoids selecting GPT-6 family as reviewer while disclosing unknown canonical producer identity; no raw completion stored.",
+  "completedAt": "2026-10-07T00:31:47.047Z",
+  "status": "completed",
+  "verdict": "BLOCK"
+}

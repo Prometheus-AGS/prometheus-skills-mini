@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-06T21:09:16.070Z",
+  "status": "coordinator-accepted-source-correction; implementation-active",
+  "authorization": "Existing human-approved Execute plus explicit continue-development release-blocker instruction; routine observed integration correction within existing layers, not a new phase handover",
+  "observed": "final-gates/boss-approval-client-runtime-06.json: HTTP408 skill_binding_update PUT agent_skills; followingGETnotreached",
+  "architecture": "Existing persistence/registry/service/runtime boundaries retained; exact existing-row enabled/scoped_config field patch, durable read-throughselection reconciliation, confirmed publication, fixedpartial/unknownerrors. No topology/schema/pin/dependency/service/recovery-profile changes",
+  "owner": "uar_execution; isolated bauar-uar only",
+  "sourcePaths": [
+    "src/uar/persistence/mod.rs",
+    "src/uar/persistence/providers/memory.rs",
+    "src/uar/persistence/providers/postgres.rs",
+    "src/uar/persistence/providers/surreal.rs",
+    "src/uar/runtime/skills/registry.rs",
+    "src/uar/runtime/skills/service.rs",
+    "src/uar/runtime/skills/service/selection.rs",
+    "src/uar/api/skills.rs",
+    "src/uar/runtime/turn/bindings.rs",
+    "src/uar/runtime/manager.rs:3899–3906 only"
+  ],
+  "requirements": [
+    "Preserveexactembeddings and allunmodified/unknownfields",
+    "Governanceguardorder and exactexistingIDmapping retained",
+    "DeferfuturecachedIDs; explicitregisteredscopewins",
+    "No desiredcachepublication beforeconfirmedcomplete; stopignoringwritefailures",
+    "HTTP408/commituncertainty read-reconcile, noautomaticPUTreplay/all-or-nothingclaims",
+    "New responsibilitymodule under500lines; incumbentssurgicalwiring",
+    "No D0/session changes; no originalcheckouts/sharedserviceschanges"
+  ],
+  "verification": "Existing realdesktopgates aftercompletecoherentsource+genuine rebuiltproduction-feature sidecar; actualbackendvectorproofwhereavailable; compile/staticdoesnotcertifyunexercisedbackends",
+  "draft": "skill-selection-metadata-correction-design.md",
+  "primaryGuidance": "skill-metadata-primary-guidance.json",
+  "certification": "Pending; passingidentitygatesnotbroadened absent affectedcode"
+}

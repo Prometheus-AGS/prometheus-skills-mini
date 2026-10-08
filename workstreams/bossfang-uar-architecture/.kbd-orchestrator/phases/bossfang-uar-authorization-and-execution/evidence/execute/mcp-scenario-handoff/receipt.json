@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "status": "source-authored-unverified",
+  "frozenAt": "2026-10-06T17:05:43.080Z",
+  "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "sourceFiles": [
+    {
+      "path": "crates/librefang-api/tests/bauar_mcp_identity.rs",
+      "sha256": "7d206bd1c674f200db3ddb5d18d70d75a537509045ca9a039522860650ac2e8c",
+      "lines": 341,
+      "snapshot": "01-mcp-identity.rs.txt"
+    }
+  ],
+  "minimumCases": 1,
+  "entry": "actual_mcp_identity_admission_effect_attribution_and_preservation",
+  "processPrerequisites": [
+    "LIBREFANG_ALLOW_NO_AUTH=1",
+    "synthetic LIBREFANG_STATE_SECRET supplied only to fixture child",
+    "no API/dashboard credential environment overrides"
+  ],
+  "limits": [
+    "Existing OIDC issuer binding absent",
+    "Configured UAR connection preservation excluded; actual fixture uar=None",
+    "No external deployment certification",
+    "No tests or builds run"
+  ]
+}

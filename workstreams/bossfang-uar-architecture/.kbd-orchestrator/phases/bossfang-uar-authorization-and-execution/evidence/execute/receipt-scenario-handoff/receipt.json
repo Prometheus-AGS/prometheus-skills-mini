@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "status": "source-authored-unverified",
+  "root": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+  "frozenAt": "2026-10-06T16:38:26.452Z",
+  "testsRun": [],
+  "sourceFiles": [
+    {
+      "path": "tests/bauar_receipt_projection.rs",
+      "sha256": "940fa2374f9583deb4803eaf41dc52e6566b59448a80a2918d82e946f31f4c62",
+      "snapshot": "tests_bauar_receipt_projection.rs.txt",
+      "lines": 256
+    },
+    {
+      "path": "tests/support/bauar_receipt_peer.rs",
+      "sha256": "eb61efb5ac086539d45be5de4c4b3b7b65b0ba31fede3aca6c697f1936e62968",
+      "snapshot": "tests_support_bauar_receipt_peer.rs.txt",
+      "lines": 145
+    }
+  ],
+  "notes": "Actual produced receipts via real router/executor/orchestrator/private embedded store public retrieval. No-store real early return; unchanged args; UTF8/opaque/incomplete; replay clone secondary. No D0."
+}

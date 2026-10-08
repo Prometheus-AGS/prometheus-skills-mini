@@ -17,10 +17,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { tempDir } from '../lib/platform/paths.mjs';
 import { HOOK_MODULES } from './hook-entry.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -39,7 +39,7 @@ const FAILURE_MARKERS = [
 const payloadSource = (client) => path.join(ROOT, 'dist', 'plugins', client, PACKAGE);
 
 function makeSandbox(client) {
-  const base = mkdtempSync(path.join(os.tmpdir(), `mini-activation-${client}-`));
+  const base = mkdtempSync(path.join(tempDir(), `mini-activation-${client}-`));
   const payload = path.join(base, 'cache', PACKAGE);
   const home = path.join(base, 'home');
   const project = path.join(base, 'project');

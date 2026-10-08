@@ -1,0 +1,29 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The hardcoded-secret failure inventory is internally inconsistent and will cause downstream remediation to target the wrong number of matches.",
+      "evidence": "The observed inventory says `no-hardcoded-secrets | Twenty historical pattern matches`, but the later classification totals 25: `Five tracked historical review packets contain two command-option-like matches each` (10), `A tracked integration inventory has a provider-token-pattern substring` (1), `docker/AGENTS.md has two command-syntax matches` (2), and `Twelve historical matches in the prior child's evidence files are absent` (12).",
+      "suggested_fix": "Reconcile the secret-match count and enumerate the exact original failed-check locations/match counts so Analyze and Plan can adjudicate every match exactly once."
+    }
+  ],
+  "checked_classes": [],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

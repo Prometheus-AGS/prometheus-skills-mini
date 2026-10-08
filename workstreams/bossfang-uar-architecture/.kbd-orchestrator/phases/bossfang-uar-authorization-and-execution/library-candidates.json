@@ -1,0 +1,406 @@
+{
+  "phase": "bossfang-uar-authorization-and-execution",
+  "generated_at": "2026-10-06T10:13:41.873Z",
+  "research_budget": {
+    "max_queries_per_tier": 8,
+    "max_minutes": 20,
+    "queries_used": {
+      "tier1": 3,
+      "tier2": 6,
+      "tier3": 4,
+      "tier4": 0,
+      "primary_document_opens": 8
+    }
+  },
+  "gaps_addressed": [
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5",
+    "F6",
+    "F7",
+    "G7-A",
+    "G7-B"
+  ],
+  "candidates": [
+    {
+      "id": "cand-001",
+      "name": "Existing UAR full_harness_v1 authority plus Bossfang consumer adapter",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "F1/F5: one executor, admission identity, observation and cancellation",
+      "verdict": "adapt",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/api/full_harness.rs",
+          "claim": "Pinned source reserves owner/workspace/admission identity and advertises process-ephemeral recovery; no replacement provider needed."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/api/full_harness/handlers.rs",
+          "claim": "Shared admission, replay stream, approval ID, revision-checked cancel/detach already exist."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/references/librefang/docs/plans/agent-fabric-convergence/openspec/changes/afc-c05-bossfang-full-run-delegation/tasks.md",
+          "claim": "Existing initiative consumer groups remain pending; link rather than duplicate."
+        }
+      ],
+      "risks": [
+        "No process restart recovery or steer; epoch/retention loss means unknown outcome.",
+        "Integration gate remains pending; exact request digest includes credential material.",
+        "Existing owner/file claims must be reconciled before writes."
+      ],
+      "decision_rationale": "Wrap the existing provider with an explicit execution adapter outside the Bossfang model loop; adapt the consumer, not rebuild UAR execution."
+    },
+    {
+      "id": "cand-002",
+      "name": "jsonwebtoken 11.0.0 with existing UAR verifier",
+      "kind": "library",
+      "repo_url": "https://github.com/Keats/jsonwebtoken",
+      "registry": "crates",
+      "fit_for_gap": "F2/F3: retained cryptography underneath corrected issuer/key/tenant policy",
+      "verdict": "adopt",
+      "license": "MIT",
+      "maintenance": {
+        "last_release": "2026-09-16",
+        "registry_latest": "11.1.0",
+        "selected_existing_version": "11.0.0",
+        "minimum_rust": "1.88.0"
+      },
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/Keats/jsonwebtoken",
+          "claim": "Repository search resolves the existing upstream."
+        },
+        {
+          "tier": 2,
+          "source_url": "https://github.com/Keats/jsonwebtoken/blob/master/README.md",
+          "claim": "Validation supports configured issuer/audience/required claims; pinned source overrides ambiguous latest prose."
+        },
+        {
+          "tier": 3,
+          "source_url": "https://crates.io/api/v1/crates/jsonwebtoken",
+          "claim": "Latest stable 11.1.0, 11.0.0 unyanked; no upgrade proposed."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/security/verifier/mod.rs",
+          "claim": "UAR explicitly supplies nbf flag and inserts required issuer/audience claims when configured."
+        }
+      ],
+      "risks": [
+        "Library defaults do not establish remote application policy.",
+        "JWKS freshness and role attenuation are application responsibilities.",
+        "No vulnerability audit or compile compatibility check performed."
+      ],
+      "decision_rationale": "Retain pinned primitives; build the small policy corrections above them. Adopt means reuse installed dependency, not change its version."
+    },
+    {
+      "id": "cand-003",
+      "name": "rmcp 3.1.2 and current UAR owner/run-scoped MCP integration",
+      "kind": "library",
+      "repo_url": "https://github.com/modelcontextprotocol/rust-sdk",
+      "registry": "crates",
+      "fit_for_gap": "F4/F6: transport reuse, principal-session boundary and resource grants",
+      "verdict": "adopt",
+      "license": "Apache-2.0",
+      "maintenance": {
+        "last_release": "2026-10-05",
+        "registry_latest": "3.5.1",
+        "selected_existing_version": "3.1.2",
+        "latest_minimum_rust": "1.88"
+      },
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/modelcontextprotocol/rust-sdk",
+          "claim": "Official Rust SDK found by repository search."
+        },
+        {
+          "tier": 2,
+          "source_url": "https://docs.rs/rmcp/latest/rmcp/transport/streamable_http_server/session/trait.SessionManager.html",
+          "claim": "Latest SessionManager API uses session identifiers; this is documentation context, not proof of pinned principal enforcement."
+        },
+        {
+          "tier": 3,
+          "source_url": "https://crates.io/api/v1/crates/rmcp",
+          "claim": "Registry reports 3.5.1 latest; no upgrade or security fix inferred."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/mcp_server.rs",
+          "claim": "UAR router uses LocalSessionManager and legacy_session_mode=true; pinned SDK paths inspected in review."
+        }
+      ],
+      "risks": [
+        "Pinned docs failed through web fetch; local 3.1.2 source remains authority.",
+        "Cross-principal session consequence is untested.",
+        "Changing SDK versions alone does not establish application ownership."
+      ],
+      "decision_rationale": "Retain rmcp 3.1.2 and current transport unchanged. Any new owner/session binding requires recorded production-router reproduction under F6-REPRODUCTION; this candidate is not authorization to implement that remediation."
+    },
+    {
+      "id": "cand-004",
+      "name": "oauth2-rs 5.0.0 resource client",
+      "kind": "library",
+      "repo_url": "https://github.com/ramosbugs/oauth2-rs",
+      "registry": "crates",
+      "fit_for_gap": "F4/G7-A: potential host-side resource token acquisition/refresh",
+      "verdict": "reference",
+      "license": "MIT OR Apache-2.0",
+      "maintenance": {
+        "last_release": "2025-01-21",
+        "registry_latest": "5.0.0",
+        "minimum_rust": "1.65",
+        "selected_version": "none"
+      },
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/ramosbugs/oauth2-rs",
+          "claim": "General Rust OAuth client fits more broadly than provider-specific/HTTP-framework search alternatives."
+        },
+        {
+          "tier": 2,
+          "source_url": "https://docs.rs/oauth2/5.0.0/oauth2/",
+          "claim": "PKCE, client credentials, refresh, introspection/revocation and custom HTTP client support; not a complete MCP authorization service."
+        },
+        {
+          "tier": 3,
+          "source_url": "https://crates.io/api/v1/crates/oauth2",
+          "claim": "Latest stable 5.0.0; age alone does not establish abandonment or security."
+        },
+        {
+          "tier": 3,
+          "source_url": "https://crates.io/api/v1/crates/oauth2/5.0.0/dependencies",
+          "claim": "HTTP client dependency compatibility must be checked against existing UAR reqwest boundaries."
+        }
+      ],
+      "risks": [
+        "Production receiver/IdP unspecified; no unconditional adoption.",
+        "Native RFC8693 exchange support not established by fetched examples.",
+        "Does not supply tenant policy, token storage or MCP discovery contract.",
+        "No install/build/advisory audit performed.",
+        "If selected for a Rust host, use existing application reqwest 0.12; never pass reqwest_mcp 0.13.4 as that client. Hosting module remains blocked on receiver inventory."
+      ],
+      "decision_rationale": "Promote to adopt/adapt only when a named receiver requires a supported flow and existing host clients cannot satisfy it; no new daemon."
+    },
+    {
+      "id": "cand-005",
+      "name": "The Boss exact prepared-invocation admission and UAR approval authority",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "F7/G7-B: payload-bound approval, one claim per effect and safe projection",
+      "verdict": "adopt",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/the-boss/src/main/ai/runtime/uar/UarHostToolAdmission.ts",
+          "claim": "Claim-before-effect and unknown-outcome handling are implemented."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/the-boss/scripts/gates/uar-exact-tool-admission.ts",
+          "claim": "Prior research ran this production bridge with fixture effects; no new run or product certification."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/api/full_harness/handlers.rs",
+          "claim": "Full-harness approval forwarding requires approval ID and expected task revision."
+        }
+      ],
+      "risks": [
+        "Legacy root response still requires migration.",
+        "The bridge fixture does not certify all clients.",
+        "Tool-result canaries require separate exposure policy."
+      ],
+      "decision_rationale": "Reuse exact admission, migrate client/root compatibility; do not replace it with a generic login or run-level approval token."
+    },
+    {
+      "id": "cand-006",
+      "name": "Existing true model-provider path with Bossfang-owned loop",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "F1 alternative when UAR is not the requested execution harness",
+      "verdict": "reference",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/references/librefang/crates/librefang-runtime/src/agent_loop/run_streaming.rs",
+          "claim": "Bossfang already owns a model/tool loop in its normal execution path."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/references/librefang/crates/librefang-llm-drivers/src/drivers/uar.rs",
+          "claim": "Current UAR completion route executes a harness and is not this inference-only alternative."
+        }
+      ],
+      "risks": [
+        "Cannot provide UAR execution semantics.",
+        "No actual model-only UAR endpoint has been established by this review."
+      ],
+      "decision_rationale": "A coherent separate product mode using an actual inference provider; do not relabel current UAR endpoint as inference-only."
+    },
+    {
+      "id": "cand-007",
+      "name": "Codex app-server and Claude Agent SDK lifecycle contracts",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "F1/F5: comparison for explicit harness identity, approvals, cancellation and observation",
+      "verdict": "reference",
+      "evidence": [
+        {
+          "tier": 2,
+          "source_url": "https://learn.chatgpt.com/docs/app-server",
+          "claim": "Official thread/turn/item and approval/interrupt contract informs harness distinction."
+        },
+        {
+          "tier": 2,
+          "source_url": "https://code.claude.com/docs/en/agent-sdk/overview",
+          "claim": "SDK owns agent execution loop; local adapter source remains authoritative for actual integration."
+        }
+      ],
+      "risks": [
+        "Documentation comparison is not a reason to rewrite unrelated adapters.",
+        "Current remote docs may differ from installed CLI/SDK versions."
+      ],
+      "decision_rationale": "Reference only execution identity (thread/turn versus task/run), exact approval identity, and interrupt acknowledgement/terminal classification; no new dependency or adapter rewrite."
+    },
+    {
+      "id": "cand-008",
+      "name": "Current nested completion-shaped UAR execution",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "F1/F5: evaluated existing implementation",
+      "verdict": "reject",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/references/librefang/crates/librefang-llm-drivers/src/drivers/uar.rs",
+          "claim": "Calls UAR full-execution completion route and parses completion-shaped events."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/server.rs",
+          "claim": "Route creates RunExecutionRequest; supplied tools/history do not define one outer completion contract."
+        }
+      ],
+      "risks": [
+        "Two reachable loop implementations and unshared attempt/cancel semantics.",
+        "Normal EndTurn is counterevidence to unconditional duplicate writes; failure consequences need reproduction."
+      ],
+      "decision_rationale": "Reject for new UAR-delegated jobs; capability-based migration must not silently fall back to this path."
+    },
+    {
+      "id": "cand-009",
+      "name": "Existing UAR identity policy boundary",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "F2/F3/G7-A common inbound policy independent of downstream receiver inventory",
+      "verdict": "adapt",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/security/verifier/mod.rs",
+          "claim": "Existing verifier implements signature/claim checking; remote required-policy and cache freshness belong here."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/security/api_keys.rs",
+          "claim": "Application-issued key authority requires role attenuation, tenant preservation and owner/admin revoke policy."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/runtime/turn/host/mcp.rs",
+          "claim": "Host identity grant boundary must preserve typed host provenance separate from user-supplied roles."
+        }
+      ],
+      "risks": [
+        "This does not choose an external IdP or implement receiver-side authorization.",
+        "Production module ownership must be agreed before writes."
+      ],
+      "decision_rationale": "Concrete common policy adaptation can be specified without inventing a remote receiver; reuses cand-002 cryptography, no new service."
+    },
+    {
+      "id": "cand-010",
+      "name": "Existing provider/integration secret stores and conditional resource storage adapter",
+      "kind": "pattern",
+      "registry": "none",
+      "fit_for_gap": "G7-B/F4 credential storage authority and its explicit remote gap",
+      "verdict": "reference",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/security/credentials/encryption.rs",
+          "claim": "AES-256-GCM provider-key encryption; not generic MCP refresh-token persistence."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/security/credentials/resolver.rs",
+          "claim": "Provider-specific scoped key lookup; do not reinterpret its schema as a remote token vault."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/prometheus/the-boss/src/main/services/prometheus/integrationConfig.ts",
+          "claim": "Desktop integration secret store uses safeStorage encryption and refuses unavailable/basic_text encryption on write."
+        }
+      ],
+      "risks": [
+        "OS/backend availability and key custody need platform acceptance.",
+        "No remote tenant-aware MCP refresh-token store has been demonstrated."
+      ],
+      "decision_rationale": "Reference current storage building blocks without overstating them; block remote resource-token persistence on REMOTE-RESOURCE-SECRET-STORE selection and acceptance. Storage categories: local OS-backed encrypted storage is reference-only for desktop; existing-backend owner/tenant-scoped encrypted persistence is conditional on custody/schema policy; existing external vault/KMS adapters are deferred until infrastructure is named. No new vault service or vendor library selected."
+    }
+  ],
+  "build_required": [
+    {
+      "need": "F1/F5 Bossfang explicit harness consumer and attempt reconciliation",
+      "why_no_candidate": "Provider already exists (cand-001); product scheduling and identity persistence require repository-specific adapter integration, not another generic framework.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "F2/F3 UAR attenuated key issuance, typed host provenance, tenant/revoke policy and bounded JWKS freshness",
+      "why_no_candidate": "Existing crypto library handles signatures; only the application can define authority and deployment-specific claim/cache policy.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "F6 production-router session crossover reproduction, then conditional remediation only",
+      "why_no_candidate": "Retain cand-003 transport unchanged. Plan must block binding changes until a recorded real-router failure confirms the gap; close with enforcing-layer evidence if denied correctly. A passing same-router two-JWT POST/GET/replay/DELETE matrix with explicit 403/non-disclosing404, no A data/effect/deletion and successful A controls is the alternative closure; identify the denying transport integration layer. Static or JWT-auth-only checks cannot close it.",
+      "capability_gap_id": "F6-REPRODUCTION"
+    },
+    {
+      "need": "F7 exact root-approval client migration",
+      "why_no_candidate": "Existing exact host admission remains; product clients and pending-root decision plumbing require application-specific integration.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "F4/G7-A named receiver credential lifecycle and acceptance contract",
+      "why_no_candidate": "oauth2-rs is conditional; actual receiver issuer/audience/scope/actor requirements are not supplied.",
+      "capability_gap_id": "REMOTE-RECEIVER-INVENTORY"
+    },
+    {
+      "need": "G7-B credential-exposure projection and end-to-end canary acceptance",
+      "why_no_candidate": "Library secret wrappers cannot define policy for product logs, persistence or tool-generated text.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "F5 decide durable restart recovery versus explicit unsupported/unknown outcome",
+      "why_no_candidate": "Current C05 is process-ephemeral. Durable recovery is not selected automatically and requires an explicit scope decision.",
+      "capability_gap_id": "RECOVERY-PROFILE-DECISION"
+    },
+    {
+      "need": "G7-B/F4 authorized host resource-token storage adapter and key custody",
+      "why_no_candidate": "cand-010 covers concrete provider/integration stores only; remote refresh-token schema, tenant scoping, custody and lifecycle are not established.",
+      "capability_gap_id": "REMOTE-RESOURCE-SECRET-STORE"
+    },
+    {
+      "need": "G7-A Bossfang receiving /mcp service-versus-delegated identity classification and attribution",
+      "why_no_candidate": "UAR cand-009 does not own Bossfang inbound auth. Scope librefang-api middleware.rs and routes/network.rs: retain authenticated subject/actor and agent access, expose non-secret service/delegated attribution, test legitimate modes and forged actor/tenant/agent context. No agent header may confer a new user identity.",
+      "capability_gap_id": null
+    }
+  ]
+}

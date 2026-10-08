@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-06T13:12:31.960Z",
+  "parent": {
+    "projectId": "7041aa63-d951-4b19-a59c-b963d65b3b83",
+    "revision": 94,
+    "planRevision": 4,
+    "lifecycle": "running",
+    "taskCounts": {
+      "complete": 4,
+      "pending": 25,
+      "in_progress": 4,
+      "blocked": 1
+    }
+  },
+  "originalKbd": {
+    "projectId": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
+    "revision": 999,
+    "activePath": {
+      "phasePath": [
+        "the-boss-shipping-and-settings",
+        "the-boss-shipping-and-settings::uar-working-agent"
+      ],
+      "phaseId": "the-boss-shipping-and-settings::uar-working-agent",
+      "stageId": null,
+      "changeId": null,
+      "taskId": null,
+      "commit": "d5653d20ebab9a654049d0b2d7948073d5d1b103"
+    },
+    "unchangedRevision": true
+  },
+  "originalCheckouts": [
+    {
+      "id": "uar",
+      "root": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime",
+      "head": "a7cb972992d4f83db6585449ea81af0fe4a1c990",
+      "headMatches": true,
+      "statusMatchesBefore": false,
+      "statusDifference": "Concurrent state differs; no ownership inferred from listing",
+      "statusDelta": {
+        "added": [
+          " m frontend/packages/prometheus-entity-management"
+        ],
+        "removed": [
+          " M frontend/packages/prometheus-entity-management"
+        ]
+      }
+    },
+    {
+      "id": "bossfang",
+      "root": "/Users/gqadonis/Projects/references/librefang",
+      "head": "16beef0fcf3053970a901990df4fedbdf86bd87d",
+      "headMatches": true,
+      "statusMatchesBefore": true,
+      "statusDifference": null
+    },
+    {
+      "id": "boss",
+      "root": "/Users/gqadonis/Projects/prometheus/the-boss",
+      "head": "e2ae2ce21245030293c0bea96ed02ae853b820a7",
+      "headMatches": true,
+      "statusMatchesBefore": true,
+      "statusDifference": null
+    }
+  ],
+  "products": [
+    {
+      "id": "uar",
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "head": "8bff32deb870f6363e94687a2e22492f91a34dfd",
+      "trackedDiff": [
+        "mcp.json"
+      ],
+      "untracked": [
+        "tests/bauar_session_owner.rs",
+        "workstreams/bauar/.kbd-orchestrator/current-waypoint.json",
+        "workstreams/bauar/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/progress.json",
+        "workstreams/bauar/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/tasks.md",
+        "workstreams/bauar/.kbd-orchestrator/position-reminder.txt",
+        "workstreams/bauar/.kbd-orchestrator/position.json",
+        "workstreams/bauar/openspec/changes/uar-bauar-runtime-defaults/design.md",
+        "workstreams/bauar/openspec/changes/uar-bauar-runtime-defaults/proposal.md",
+        "workstreams/bauar/openspec/changes/uar-bauar-runtime-defaults/specs/application-owned-mcp-defaults/spec.md",
+        "workstreams/bauar/openspec/changes/uar-bauar-runtime-defaults/tasks.md"
+      ]
+    },
+    {
+      "id": "bossfang",
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "head": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+      "trackedDiff": [],
+      "untracked": [
+        "workstreams/bauar/.kbd-orchestrator/current-waypoint.json",
+        "workstreams/bauar/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/parent-binding.json",
+        "workstreams/bauar/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/progress.json",
+        "workstreams/bauar/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/tasks.md",
+        "workstreams/bauar/.kbd-orchestrator/position-reminder.txt",
+        "workstreams/bauar/.kbd-orchestrator/position.json",
+        "workstreams/bauar/.kbd-orchestrator/project.json",
+        "workstreams/bauar/.prometheus/project.json",
+        "workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/.openspec.yaml",
+        "workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/design.md",
+        "workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/execution-scope.json",
+        "workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/proposal.md",
+        "workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/specs/job-harness-delegation/spec.md",
+        "workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/tasks.md",
+        "workstreams/bauar/openspec/changes/bossfang-bauar-mcp-attribution/.openspec.yaml",
+        "workstreams/bauar/openspec/changes/bossfang-bauar-mcp-attribution/design.md",
+        "workstreams/bauar/openspec/changes/bossfang-bauar-mcp-attribution/execution-scope.json",
+        "workstreams/bauar/openspec/changes/bossfang-bauar-mcp-attribution/proposal.md",
+        "workstreams/bauar/openspec/changes/bossfang-bauar-mcp-attribution/specs/mcp-request-attribution/spec.md",
+        "workstreams/bauar/openspec/changes/bossfang-bauar-mcp-attribution/tasks.md",
+        "workstreams/bauar/openspec/config.yaml"
+      ]
+    },
+    {
+      "id": "boss",
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "head": "e2ae2ce21245030293c0bea96ed02ae853b820a7",
+      "trackedDiff": [
+        "scripts/gates/uar-exact-tool-admission.ts",
+        "src/main/ai/runtime/uar/UarToolApprovalController.ts",
+        "src/main/ai/runtime/uar/uarApprovalLifecycle.ts",
+        "src/shared/types/prometheusIntegration.ts",
+        "tests/e2e/gates/uarExperienceGate.test.ts",
+        "workstreams/bauar/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/parent-binding.json",
+        "workstreams/bauar/.kbd-orchestrator/project.json",
+        "workstreams/bauar/.prometheus/project.json",
+        "workstreams/bauar/openspec/changes/boss-bauar-approval-client/.openspec.yaml",
+        "workstreams/bauar/openspec/changes/boss-bauar-approval-client/design.md",
+        "workstreams/bauar/openspec/changes/boss-bauar-approval-client/proposal.md",
+        "workstreams/bauar/openspec/changes/boss-bauar-approval-client/specs/uar-exact-approval-client/spec.md",
+        "workstreams/bauar/openspec/changes/boss-bauar-approval-client/tasks.md",
+        "workstreams/bauar/openspec/config.yaml"
+      ],
+      "untracked": [
+        "scripts/gates/bauar-approval-client.ts",
+        "tests/e2e/gates/bauarApprovalClientFixture.ts",
+        "workstreams/bauar/.kbd-orchestrator/current-waypoint.json",
+        "workstreams/bauar/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/progress.json",
+        "workstreams/bauar/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/tasks.md",
+        "workstreams/bauar/.kbd-orchestrator/position-reminder.txt",
+        "workstreams/bauar/.kbd-orchestrator/position.json",
+        "workstreams/bauar/openspec/changes/boss-bauar-secret-projection/.openspec.yaml",
+        "workstreams/bauar/openspec/changes/boss-bauar-secret-projection/design.md",
+        "workstreams/bauar/openspec/changes/boss-bauar-secret-projection/proposal.md",
+        "workstreams/bauar/openspec/changes/boss-bauar-secret-projection/specs/uar-run-secret-projection/spec.md",
+        "workstreams/bauar/openspec/changes/boss-bauar-secret-projection/tasks.md"
+      ]
+    }
+  ],
+  "verification": "Read-only status/head comparison; not a full content snapshot or runtime acceptance."
+}

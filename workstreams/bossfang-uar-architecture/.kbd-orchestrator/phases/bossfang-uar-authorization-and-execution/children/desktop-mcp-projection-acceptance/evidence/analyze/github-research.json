@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "queries": [
+    {
+      "command": "gh search repos typescript-sdk --owner modelcontextprotocol --limit 5 --json nameWithOwner,url,description,updatedAt,license",
+      "status": "local-invalid-field-no-remote-query"
+    },
+    {
+      "command": "gh search repos typescript-sdk --owner modelcontextprotocol --limit 5 --json fullName,url,description,updatedAt,license",
+      "status": "success",
+      "selected": {
+        "fullName": "modelcontextprotocol/typescript-sdk",
+        "url": "https://github.com/modelcontextprotocol/typescript-sdk",
+        "updatedAt": "2026-10-07T05:32:58Z",
+        "license": "other"
+      }
+    },
+    {
+      "command": "gh search repos openai-node --owner openai --limit 5 --json fullName,url,description,updatedAt,license",
+      "status": "success",
+      "selected": {
+        "fullName": "openai/openai-node",
+        "url": "https://github.com/openai/openai-node",
+        "updatedAt": "2026-10-07T05:15:29Z",
+        "license": "Apache-2.0"
+      }
+    }
+  ],
+  "countPolicy": "Count failed local attempts conservatively; 3 attempts,2 remote searches.",
+  "source": "Normalized actual tool outputs in this Analyze turn; no fabricated popularity or health score."
+}

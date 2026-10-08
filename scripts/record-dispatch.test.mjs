@@ -6,9 +6,9 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { tempDir } from '../lib/platform/paths.mjs';
 
 const scriptPath = fileURLToPath(new URL('./record-dispatch.mjs', import.meta.url));
 
@@ -17,7 +17,7 @@ function run(args) {
 }
 
 function tempSession() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'record-dispatch-cli-'));
+  return fs.mkdtempSync(path.join(tempDir(), 'record-dispatch-cli-'));
 }
 
 test('records an input via the CLI and exits 0', () => {

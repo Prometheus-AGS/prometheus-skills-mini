@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "stage": "analyze",
+  "researchStartedAt": "2026-10-06T10:05:00Z",
+  "researchStoppedAt": "2026-10-06T10:14:25.386Z",
+  "mode": "specified-stack",
+  "limits": {
+    "queriesPerTier": 8,
+    "minutes": 20
+  },
+  "queries": {
+    "tier1": {
+      "count": 3,
+      "commands": [
+        "gh search repos rust-sdk org:modelcontextprotocol",
+        "gh search repos jsonwebtoken language:Rust",
+        "gh search repos oauth2 language:Rust"
+      ]
+    },
+    "tier2": {
+      "count": 6,
+      "resolve": [
+        "rmcp",
+        "jsonwebtoken Rust",
+        "oauth2 Rust"
+      ],
+      "selected": [
+        "/websites/rs_rmcp_rmcp",
+        "/keats/jsonwebtoken",
+        "/ramosbugs/oauth2-rs"
+      ],
+      "topics": [
+        "authenticated session ownership",
+        "JWT validation policy",
+        "resource credential lifecycle"
+      ]
+    },
+    "tier3": {
+      "count": 4,
+      "urls": [
+        "https://crates.io/api/v1/crates/rmcp",
+        "https://crates.io/api/v1/crates/jsonwebtoken",
+        "https://crates.io/api/v1/crates/oauth2",
+        "https://crates.io/api/v1/crates/oauth2/5.0.0/dependencies"
+      ]
+    },
+    "tier4": {
+      "count": 0,
+      "reason": "Primary/library sources sufficient for bounded recommendation; no secondary comparison research."
+    },
+    "primary_document_opens": {
+      "count": 8,
+      "successful": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://www.rfc-editor.org/rfc/rfc8693.html",
+        "https://www.rfc-editor.org/rfc/rfc8725.html",
+        "https://docs.rs/oauth2/5.0.0/oauth2/",
+        "https://learn.chatgpt.com/docs/app-server",
+        "https://code.claude.com/docs/en/agent-sdk/overview"
+      ],
+      "unavailable": [
+        "https://docs.rs/rmcp/3.1.2/rmcp/transport/streamable_http_server/session/trait.SessionManager.html",
+        "https://docs.rs/rmcp/3.1.2/rmcp/transport/streamable_http_server/index.html"
+      ]
+    }
+  },
+  "registryObservations": {
+    "rmcp": {
+      "currentPin": "3.1.2",
+      "latest": "3.5.1",
+      "published": "2026-10-05",
+      "license": "Apache-2.0",
+      "rust": "1.88"
+    },
+    "jsonwebtoken": {
+      "currentPin": "11.0.0",
+      "latest": "11.1.0",
+      "published": "2026-09-16",
+      "license": "MIT",
+      "rust": "1.88.0"
+    },
+    "oauth2": {
+      "currentPin": null,
+      "latest": "5.0.0",
+      "published": "2025-01-21",
+      "license": "MIT OR Apache-2.0",
+      "rust": "1.65",
+      "optionalReqwest": "^0.12"
+    }
+  },
+  "limitations": [
+    "No advisory audit, compile test or live deployment certification.",
+    "Context7 latest docs are not pinned SDK proof; local pinned source takes precedence.",
+    "No named production receiver or identity provider supplied yet.",
+    "Full source snippets returned in one combined tool output were truncated; necessary full_harness and handlers code was subsequently read in bounded line ranges.",
+    "No code or dependency changes."
+  ]
+}

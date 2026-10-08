@@ -1,0 +1,32 @@
+{
+  "stage": "execute",
+  "completedAt": "2026-10-08T12:50:00Z",
+  "outputs": [
+    "evidence/execute/5-1-preinstall-inventory.json",
+    "evidence/execute/5-2-clean-install-receipt.json",
+    "evidence/execute/5-3-postinstall-link-inventory.json",
+    "evidence/execute/6-3-real-operation.json",
+    "evidence/execute/6-4-gate-receipts.json",
+    "evidence/execute/6-4-final-link-inventory.json",
+    "evidence/execute/mini-qa-repair-packet.json",
+    "evidence/execute/delivery-review-summary.json",
+    "review/execute/packet-r2.json",
+    "review/execute/packet-r3.json",
+    "review/execute/packet-r4.json",
+    "review/execute/packet-focused.json",
+    "review/execute/findings-r1.json",
+    "review/execute/findings-r2.json",
+    "review/execute/findings-r3.json",
+    "review/execute/findings-r4.json",
+    "review/execute/findings-focused.json"
+  ],
+  "commits": {
+    "checker": "b62e4788337f5058ba8af6bd6aaf1a363355979f",
+    "repair": "3d5fa6c"
+  },
+  "siblingTransfer": "desktop-mcp-projection-acceptance/evidence/execute/mini-pack-qa-remediation-repair-packet-2026-10-08.json",
+  "nextStage": "reflect",
+  "summaryForNext": "All 21 tasks complete. Gates at the completed boundary (macOS): npm test 1,108/0 fail/2 skip; npm run check; spec:validate 40/40; distribution no-drift; all blocking structural constraints PASS incl. Node secret checker (24 finite dispositions, 14/14 controls); final lstat inventory 0 symlinks; real isolated operation PASS. Two local commits: b62e478 (checker, separate) + 3d5fa6c (repair). Completed-delivery review: 4 diff rounds + focused verification over the real gateway; all upheld findings fixed; 2 recurring findings contradicted by evidence (constraints hunk present, marker conditional), 2 warnings dispositioned (fail-safe FIFO, intentional detector family); independence unverified (producer id undisclosed). Packet transferred to sibling; no sibling certification, no Windows claim, no publication. One self-introduced scanner collision class reworded in own receipts (documented). Reflection and child exit remain gated.",
+  "skipped": false,
+  "skipReason": null
+}

@@ -1,0 +1,54 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "kimi-code",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/constraints.md",
+      "claim": "The required constraint update for no-hardcoded-secrets is absent from the diff, so the new Node checker is not wired into the blocking gate.",
+      "evidence": "Acceptance task 4.3 requires correcting exactly the `no-hardcoded-secrets` check expression in `.kbd-orchestrator/constraints.md` to invoke the Node checker, and the constraints packet still shows `check: 'node scripts/check-hardcoded-secrets.mjs'` as the desired state, but the diff contains no hunk for `.kbd-orchestrator/constraints.md` despite the evidence packet listing `M .kbd-orchestrator/constraints.md`.",
+      "suggested_fix": "Include the `.kbd-orchestrator/constraints.md` hunk that changes the no-hardcoded-secrets check to `node scripts/check-hardcoded-secrets.mjs` and updates its stale note."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "skills/delivery-cadence/SKILL.md",
+      "line": 19,
+      "claim": "The carried-payload unavailable-marker requirement is only partially satisfied because the required `one referenced asset is absent` marker is missing.",
+      "evidence": "Acceptance task 1.2 requires documentation to declare unavailable capability with exact carried-payload markers `UNAVAILABLE IN THIS PROJECT` and `one referenced asset is absent` where a reference must remain; the new SKILL.md text contains `UNAVAILABLE IN THIS PROJECT` but not `one referenced asset is absent`.",
+      "suggested_fix": "Add the exact `one referenced asset is absent` marker at the remaining reference site expected by the carried-payload contract."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "skills/delivery-cadence/references/profile.md",
+      "line": 73,
+      "claim": "The rewritten unavailable-capabilities section omits the required carried-payload marker `one referenced asset is absent`.",
+      "evidence": "Acceptance task 1.2 requires exact carried-payload markers `UNAVAILABLE IN THIS PROJECT` and `one referenced asset is absent`; the replacement section contains `UNAVAILABLE IN THIS PROJECT` but no `one referenced asset is absent` text.",
+      "suggested_fix": "Include the exact marker in the unavailable section wherever the removed refresh asset reference is intentionally retained for the carried-payload contract."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "lib/secret-scan/scanner.mjs",
+      "line": 227,
+      "claim": "Scan errors are omitted from the formatted report even though the entry point sends only `formatReport(result)` to stdout for ordinary output.",
+      "evidence": "`scanRepository` records unreadable-file errors in `errors`, and `decideExitCode` returns 2 when `result.errors.length > 0`, but `formatReport` only renders parse notes, violations, and stale dispositions; `scripts/check-hardcoded-secrets.mjs` separately prints errors to stderr, but the pure report used in tests and logs can say PASS if there are no violations/stale dispositions despite scan errors.",
+      "suggested_fix": "Include `result.errors` in `formatReport` findings and make the PASS branch conditional on errors being empty."
+    },
+    {
+      "severity": "WARNING",
+      "file": "lib/secret-scan/scanner.mjs",
+      "line": 77,
+      "claim": "Candidate enumeration trims file names, corrupting valid file paths with leading or trailing spaces.",
+      "evidence": "`enumerateFiles` returns `result.stdout.split('\\n').map((line) => line.trim()).filter(Boolean)`, so a matched file named `\" a.json\"` or `\"a.json \"` is scanned under a different path or skipped; the replaced git-grep scope should preserve actual path bytes.",
+      "suggested_fix": "Do not trim path lines; only remove the final empty line produced by trailing newline."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 2,
+  "time": "2026-10-07T20:31:58.401Z",
+  "argv": [
+    "kbd",
+    "--path",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+    "stage",
+    "enter",
+    "--command-id",
+    "mini-qa-assess-enter-20261007",
+    "--phase",
+    "bossfang-uar-authorization-and-execution::mini-pack-qa-remediation",
+    "--id",
+    "assess",
+    "--title",
+    "Assess mini-pack QA remediation",
+    "--sequence",
+    "1"
+  ],
+  "exitCode": 0,
+  "responseSha256": "dc7c441c348184acb2ecce2f367ba21c5c3f73be34ddf0e8a968d918086c24d8",
+  "revision": 266,
+  "activePath": {
+    "phasePath": [
+      "bossfang-uar-authorization-and-execution",
+      "bossfang-uar-authorization-and-execution::mini-pack-qa-remediation"
+    ],
+    "phaseId": "bossfang-uar-authorization-and-execution::mini-pack-qa-remediation",
+    "stageId": "assess",
+    "changeId": null,
+    "taskId": null,
+    "commit": "7765b14d345c3d759b97e7be116f8919484ccebb"
+  },
+  "committedLocally": true,
+  "minimizedAt": "2026-10-07T20:48:16.655Z",
+  "omittedFields": [
+    "response.state",
+    "response.controlPlane"
+  ],
+  "reason": "Own assessment evidence minimization: redundant full-state body omitted; canonical journal and projections retain authoritative state. No credential or task-key values copied."
+}

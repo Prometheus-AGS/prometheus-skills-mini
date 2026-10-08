@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-08T09:44:28.092Z",
+  "file": "library-candidates.json",
+  "schemaPath": "/Users/gqadonis/.codex/skills/kbd-process-orchestrator/references/schemas/library-candidates.schema.json",
+  "schemaSha256": "3883ee839928a016ffb1f8aa5a1d26760b87512f5a967a1b30b7d936875f007b",
+  "fileSha256": "5717eecc47fdb3880eabea563229c3d66674fd2e131681a9850b788cd2ef8448",
+  "status": "invalid",
+  "errors": [
+    "/build_required/0/capability_gap_id: type",
+    "/build_required/1/capability_gap_id: type",
+    "/build_required/2/capability_gap_id: type"
+  ],
+  "checkedKeywords": [
+    "type",
+    "required",
+    "properties",
+    "additionalProperties",
+    "items",
+    "enum",
+    "minimum",
+    "maximum",
+    "format:date-time"
+  ],
+  "limitation": "Direct artifact validation for keywords used by this schema, not a general JSON Schema implementation or a production QA gate"
+}

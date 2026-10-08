@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "parentPhase": "bossfang-uar-authorization-and-execution",
+  "childPhase": "mini-pack-qa-remediation",
+  "authorizationSource": "Operator invoked kbd-new-child: fix mini-pack qa failures",
+  "stageStops": true,
+  "authorizedStages": [
+    "assess",
+    "analyze",
+    "spec",
+    "plan",
+    "execute"
+  ],
+  "pendingApprovalFor": "reflect",
+  "productChangesAuthorized": true,
+  "scopeIntent": "Repair all observed mini-pack QA failures under a separately approved Plan; supersedes the lack of planning scope in the sibling repair proposal, not the stage gates.",
+  "restrictions": [
+    "No product changes during Assess or Analyze",
+    "No dependency pin or shared-service changes",
+    "No publication or installed changes",
+    "No Boss/UAR/Bossfang source edits",
+    "Preserve sibling task10 and parent certification",
+    "No D0 diagnostic retry/reroute",
+    "No silent constraint loosening or historical evidence rewrite"
+  ],
+  "lastOperatorApproval": {
+    "stage": "spec",
+    "source": "User replied Approved to the immediately preceding Spec handover and narrow Node secret-checker exception question on 2026-10-08",
+    "recordedAt": "2026-10-08T09:48:42.675Z"
+  },
+  "narrowSecretCheckerException": {
+    "authorized": true,
+    "scope": "Replace only the mini no-hardcoded-secrets content-check command with a Node checker preserving its scan boundary, finite hash-bound non-credential dispositions and positive credential detection evidence. Separate reviewed commit required.",
+    "source": "Same explicit operator reply; actual constraint expression changes remain deferred to approved Execute"
+  }
+}

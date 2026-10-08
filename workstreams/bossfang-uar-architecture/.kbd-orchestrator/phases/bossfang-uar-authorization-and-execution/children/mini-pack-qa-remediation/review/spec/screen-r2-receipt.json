@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "argv": [
+    "node",
+    "scripts/adversarial-review/check-findings-sycophancy.mjs",
+    "--findings",
+    "review/spec/findings-r2.json",
+    "--counter-key",
+    "adv-review-spec-r2"
+  ],
+  "exitCode": 0,
+  "stdout": "[adv-gate] PASS (score=0, strict=strict)",
+  "screen": "sycophancy",
+  "score": 0,
+  "verdict": "PASS"
+}

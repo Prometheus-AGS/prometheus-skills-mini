@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-08T11:00:00Z",
+  "task": "5.1",
+  "subject": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/node_modules",
+  "inputHashes": {
+    "package.json": "08d34b06ff04605b6b8712f1ed9b106e653e236493bc96b6f69586352840c5cc",
+    "package-lock.json": "f4c8d67d560c007139f71164ad792bd3b0ff3ce88ddedee1c39c5e357b8d5572"
+  },
+  "inventory": {
+    "topLevelEntries": 53,
+    "localOnlyNotInLockfile": [],
+    "hasNpmPackageLockRecord": true,
+    "binSymlinks": [
+      "node_modules/.bin/node-which",
+      "node_modules/.bin/openspec",
+      "node_modules/.bin/yaml"
+    ]
+  },
+  "nonReproducibleContent": "none — every top-level entry resolves to the lockfile tree; nothing local-only to preserve",
+  "rollbackDisposition": "Rollback = restore from the unchanged lockfile: package.json/package-lock.json hashes above must be unchanged after the install; any post-install tree can be reproduced by re-running the same locked clean install. No other rollback material required.",
+  "isolation": "This isolated worktree only; no global npm configuration, pins, or other checkouts touched."
+}

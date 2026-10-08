@@ -1,0 +1,125 @@
+{
+  "phase": "bossfang-uar-authorization-and-execution::mini-pack-qa-remediation",
+  "generated_at": "2026-10-08T09:39:01.776Z",
+  "research_budget": {
+    "max_queries_per_tier": 8,
+    "max_minutes": 20,
+    "queries_used": {
+      "tier1": 4,
+      "tier2": 7,
+      "tier3": 1,
+      "tier4": 0
+    }
+  },
+  "gaps_addressed": [
+    "tests-pass",
+    "no-shell-or-python-files",
+    "no-home-or-tmp-literals",
+    "os-locations-only-via-platform",
+    "no-zeespec",
+    "no-hardcoded-secrets",
+    "no-console-log-in-lib",
+    "no-symlinks"
+  ],
+  "candidates": [
+    {
+      "id": "cand-001",
+      "name": "Existing mini platform locations and copy-only distribution",
+      "kind": "pattern",
+      "repo_url": "https://github.com/Prometheus-AGS/prometheus-skills-mini",
+      "registry": "none",
+      "verdict": "adapt",
+      "fit_for_gap": "Location acquisition, compatibility preservation and complete generated output closure",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/7765b14d345c3d759b97e7be116f8919484ccebb/lib/platform/paths.mjs",
+          "claim": "Inspected working adapter exports injectable home/temp roots and public helpers; source evidence hashes bind actual working bytes separately from this commit link."
+        },
+        {
+          "tier": 1,
+          "source_url": "https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/7765b14d345c3d759b97e7be116f8919484ccebb/lib/distribution/package-builder.mjs",
+          "claim": "Inspected builder copies both harness source trees and refuses symlinks."
+        }
+      ],
+      "risks": [
+        "Explicit-input semantics and dirty generated output ownership must be preserved."
+      ],
+      "decision_rationale": "Existing capability meets the assessed gaps; adapt callers and source payload, not architecture."
+    },
+    {
+      "id": "cand-002",
+      "name": "npm locked clean install with executable links disabled",
+      "kind": "pattern",
+      "repo_url": "https://github.com/npm/cli",
+      "registry": "npm",
+      "verdict": "adopt",
+      "fit_for_gap": "Three ignored dependency executable links; reproducible isolated prerequisite installation",
+      "license": "Artistic-2.0",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/npm/cli",
+          "claim": "Tier-1 repository search and repository metadata identified official maintained npm CLI."
+        },
+        {
+          "tier": 2,
+          "source_url": "https://github.com/npm/cli/blob/v11.16.0/workspaces/config/lib/definitions/definitions.js",
+          "claim": "Versioned definition documents bin-links=false suppressing package executable symlinks and Windows shims."
+        },
+        {
+          "tier": 2,
+          "source_url": "https://github.com/npm/cli/blob/v11.16.0/docs/lib/content/commands/npm-ci.md",
+          "claim": "Frozen clean install preserves package/lock inputs and replaces existing dependencies."
+        },
+        {
+          "tier": 3,
+          "source_url": "https://www.npmjs.com/package/npm/v/11.16.0",
+          "claim": "Read-only npm registry query returned version 11.16.0, Artistic-2.0, and engines ^20.17.0 || >=22.9.0."
+        }
+      ],
+      "risks": [
+        "Not proof against all dependency-created links.",
+        "Clean install replaces dependencies; reserve surface and preserve rollback first.",
+        "No install or pin upgrade authorized in Analyze."
+      ],
+      "decision_rationale": "Reuse existing prerequisite mechanism after approved Plan; do not introduce a link-removal daemon or new package."
+    },
+    {
+      "id": "cand-003",
+      "name": "Merged Cadence nested-source reconciliation repair",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "reference",
+      "fit_for_gap": "Avoid duplicating already completed adjacent Cadence work",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/Prometheus-AGS/prometheus-skills-mini/pull/46",
+          "claim": "Merged repair at ba1f5885d08598e2bbd39de652ff0800d8c13d94 addresses source reconciliation and still lists two shell payloads."
+        }
+      ],
+      "risks": [
+        "No identified matching full mini QA receipt; operator may mean another session."
+      ],
+      "decision_rationale": "Preserve completed adjacent work; do not infer all QA failures solved or merge wholesale."
+    }
+  ],
+  "build_required": [
+    {
+      "need": "Mini payload/documentation adaptation, path caller compliance, legacy token compatibility, stale-text and output-fixture corrections",
+      "why_no_candidate": "These are existing repository contract mismatches; additional libraries cannot replace their semantics.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "Conditional scoped Node secret-check correction with hash-bound dispositions, rule-owner command-policy approval, and positive detection proof",
+      "why_no_candidate": "Observed matches are repository-specific historical guidance and identifier collisions. Generic scanner adoption would change detection scope and dependencies. The mandated git-grep content-check policy requires explicit rule-owner approval before a Node implementation; the false-positive exception alone is not claimed as authority.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "Dated adaptation provenance, isolated prerequisite rollback and source-bound completed-delivery evidence",
+      "why_no_candidate": "Ownership and acceptance remain local to this child; external tooling cannot certify them.",
+      "capability_gap_id": null
+    }
+  ]
+}

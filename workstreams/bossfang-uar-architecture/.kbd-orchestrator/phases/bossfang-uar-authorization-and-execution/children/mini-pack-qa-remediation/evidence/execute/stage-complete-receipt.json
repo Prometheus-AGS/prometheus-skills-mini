@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-08T12:51:00Z",
+  "argv": [
+    "prometheus",
+    "kbd",
+    "--path",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+    "stage",
+    "transition",
+    "--command-id",
+    "mini-qa-execute-complete-20261008",
+    "--phase",
+    "bossfang-uar-authorization-and-execution::mini-pack-qa-remediation",
+    "--id",
+    "execute",
+    "--status",
+    "complete"
+  ],
+  "exitCode": 0,
+  "revision": 275,
+  "requiredArtifacts": {
+    "gateReceipts": "evidence/execute/6-4-gate-receipts.json",
+    "realOperation": "evidence/execute/6-3-real-operation.json",
+    "finalLinkInventory": "evidence/execute/6-4-final-link-inventory.json",
+    "packet": "evidence/execute/mini-qa-repair-packet.json",
+    "reviewSummary": "evidence/execute/delivery-review-summary.json",
+    "handoff": "handoffs/execute.handoff.json"
+  },
+  "stderr": ""
+}

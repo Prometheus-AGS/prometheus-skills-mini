@@ -1,0 +1,36 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "analysis.md",
+      "line": 0,
+      "claim": "The analysis recommends removing installed-refresh shell assets but leaves existing mini documentation that still instructs agents to use and configure shell refresh procedures, so the next plan may not cover all source documentation that causes the compatibility failure.",
+      "evidence": "analysis.md says: \"Remove the unsupported refresh assets from the mini source and explain that installed/service refresh is unavailable in this mini profile\" and identifies only \"the Cadence skill entry, its profile page, and the two installed-refresh shell assets\" as affected. But source evidence for skills/delivery-cadence/references/profile.md still contains an entire \"## Skill-pack refresh procedure\" section with shell-specific instructions including \"`scripts/refresh-skill-pack.sh` is a ready-made checkpoint procedure\", a JSON example using `\"command\":\"bash\"`, and references to \"examples/refresh-skill-pack-shim.sh\".",
+      "suggested_fix": "Explicitly include the refresh-procedure reference page cleanup/removal in the analysis recommendation, including removal or replacement of bash/shim examples and any shell-only installed-refresh instructions."
+    },
+    {
+      "severity": "WARNING",
+      "file": "analysis.md",
+      "line": 0,
+      "claim": "The proposed waypoint expansion semantics conflict with the current source evidence by requiring omitted HOME to use the platform helper while preserving missing-home behavior.",
+      "evidence": "analysis.md says: \"For omitted environment input, acquire the default home through the platform helper; supplied environment values remain authoritative\" and also says \"Preserve ... the observed missing-home behavior.\" Current source evidence for lib/kbd/waypoint.mjs implements `expandKbdPath(input, env = process.env)` as `out.split('${HOME}').join(env.HOME ?? '')` and `out.split('$HOME').join(env.HOME ?? '')`, so an omitted or missing HOME expands to the empty string, not to `homeDir()`.",
+      "suggested_fix": "State the exact intended compatibility contract for `expandKbdPath`: distinguish default omitted `env` from supplied empty/missing `HOME`, and identify the tests/fixtures that prove legacy missing-home behavior is preserved."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

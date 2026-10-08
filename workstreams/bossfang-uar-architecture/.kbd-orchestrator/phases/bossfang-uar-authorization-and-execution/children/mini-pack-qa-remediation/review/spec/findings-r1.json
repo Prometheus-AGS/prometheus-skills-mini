@@ -1,0 +1,62 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "kimi-code",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "proposal.md",
+      "claim": "The spec authorizes changing the `no-hardcoded-secrets` constraint to scan `docker/` Markdown even though the project constraints explicitly define the current scan scope as excluding Markdown.",
+      "evidence": "constraints.md says `no-hardcoded-secrets` has check: `git grep --no-index --exclude-standard -n -E -e \"--(user|pass)=\" -e \"sk-[A-Za-z0-9_-]{20,}\" -- \"docker/*\" \"*.mjs\" \"*.json\" \"*.toml\" \"*.yaml\" \"*.yml\"` and note: `Markdown is excluded on purpose: the docs quote the source pack''s root/root as the thing not to do.` The spec instead says: `Replace the no-hardcoded-secrets git-grep content check with a Node checker ... same scan boundary (including docker/ Markdown)` and `Original scan boundary is preserved ... explicitly including docker/ Markdown`.",
+      "suggested_fix": "Either keep Markdown out of the Node checker to preserve the actual approved scan boundary, or obtain and cite explicit operator/rule-owner authorization to expand the boundary to Markdown before specifying it."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "tasks.md",
+      "claim": "Task 6.3 requires running every structural constraint even though one blocking structural constraint has no portable check and is manual-only, making the acceptance ambiguous and not directly executable.",
+      "evidence": "constraints.md defines `no-symlinks` with note: `No portable one-line check exists without a forbidden tool. Manual until scripts/doctor.mjs lands ...`. The tasks require: `Run the required gates once at the completed boundary: ... and every structural constraint including the Node secret checker and the whole-descendant link inventory` without specifying how manual-only constraints like `no-symlinks`, `exactly-two-services`, and `reference-repo-untouched` are evidenced.",
+      "suggested_fix": "Spell out which structural constraints are command-checked versus manually reviewed, and define required receipts for each manual constraint."
+    },
+    {
+      "severity": "WARNING",
+      "file": "tasks.md",
+      "claim": "The dependency clean-install task omits the exact cross-platform npm command and flags needed to satisfy the no-symlinks goal.",
+      "evidence": "The goal says: `Close the literal no-symlinks verification gap without silently weakening constraints or deleting dependencies.` The task only says: `Run the locked clean install with executable links and lifecycle scripts disabled in this isolated worktree only`, while constraints require commands to be cross-shell and avoid ambiguous shell behavior; no exact `npm ci` invocation, env handling, or config scope is specified.",
+      "suggested_fix": "Specify the exact npm command(s) and config mechanism, e.g. local project-scoped npm config or command flags, and include verification that no global/user npm config changed."
+    },
+    {
+      "severity": "WARNING",
+      "file": "design.md",
+      "claim": "The plan says all production edits finish before any gate runs, but individual tasks require targeted tests/checks before later production work and before group 6.",
+      "evidence": "design.md states: `All production edits (groups 1–5 of tasks.md) complete before any gate runs. Then, at the completed child boundary...`. tasks.md earlier requires checks inside production groups, e.g. `1.2 ... verify skills/carried-payload.test.mjs passes`, `2.1 ... verify lib/platform/paths.test.mjs still passes`, and `2.2 ... verify the no-home-or-tmp-literals check reports zero matches`.",
+      "suggested_fix": "Distinguish pre-boundary targeted developer probes from final gates, or move these verifications into group 6 if the no-gates-before-completion rule is strict."
+    },
+    {
+      "severity": "WARNING",
+      "file": "tasks.md",
+      "claim": "The adaptation provenance task requires final hashes before the payload regeneration task that produces the final payloads.",
+      "evidence": "Task 1.3 says: `Add a dated mini adaptation record ... naming ... final actual hashes ... verify ... the final hashes are filled in after group 6 regeneration`, while task 6.1 later says: `regenerate both harness distributions from the finished source`.",
+      "suggested_fix": "Split the provenance record into an initial draft and a post-regeneration update, or move final hash completion after task 6.1."
+    },
+    {
+      "severity": "WARNING",
+      "file": "design.md",
+      "claim": "The spec relies on Analyze adjudication receipts for the finite secret disposition store, but the packet only lists Analyze outputs and does not include the receipts or their exact paths.",
+      "evidence": "design.md says dispositions are `derived from the Analyze receipts` and tasks.md says `from the Analyze adjudication receipts`; prior_handoffs list Analyze outputs only as `analysis.md`, `library-candidates.json`, `decision-log.md`, `evidence/analyze/review-summary.json`, and `evidence/analyze/candidate-validation-02.json`, with no named adjudication receipt paths.",
+      "suggested_fix": "Name the exact adjudication receipt files and required fields/digests, or add a task to produce/validate the disposition source before implementing the checker."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

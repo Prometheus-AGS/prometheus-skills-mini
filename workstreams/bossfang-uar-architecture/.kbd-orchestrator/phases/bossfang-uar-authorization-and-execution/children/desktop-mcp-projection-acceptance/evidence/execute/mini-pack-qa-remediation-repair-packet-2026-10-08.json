@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "packetId": "mini-pack-qa-remediation-repair-2026-10-08",
+  "time": "2026-10-08T12:38:56.971Z",
+  "phase": "bossfang-uar-authorization-and-execution::mini-pack-qa-remediation",
+  "change": "bauar-mini-qa-remediation",
+  "baseline": {
+    "miniCommit": "7765b14d345c3d759b97e7be116f8919484ccebb",
+    "branch": "codex/bossfang-uar-authorization-and-execution",
+    "originalQa": "desktop-mcp-projection-acceptance/evidence/execute/qa/validation-result.json (2026-10-07T19:43:18Z, overall BLOCKED: npm test 1,096/1 failed/2 skipped; six structural checks failed; symlink coverage incomplete)"
+  },
+  "repairs": [
+    "Cadence installed-refresh retired from source and both payloads; documentation declares the capability unavailable with follow-up; historical manifest byte-identical; dated adaptation record completed with final payload hashes.",
+    "Platform location ownership: production callers and six fixtures use lib/platform/paths.mjs; waypoint interpolation contract preserved exactly (no OS-home fallback) with component-built token spellings; PROMETHEUS_OPENSPEC_HOME override and discovery supplied-home precedence preserved.",
+    "Five retired-backend text occurrences removed from the three bottleneck files; canonical guard delegation and CLI behavior unchanged.",
+    "Three generated-fixture console output calls rebuilt with edge-output construction, byte-identical output.",
+    "no-hardcoded-secrets replaced by the Node checker (approved narrow exception): original effective scope preserved, keys+values inspected, 24 finite hash-bound dispositions, fail-safe reporting, 6/6 detection controls. Separate reviewed commit prepared, not yet committed.",
+    "Locked clean install with executable links and lifecycle scripts disabled; package/lock hashes unchanged; whole-descendant lstat inventory reports zero symlinks."
+  ],
+  "receipts": [
+    {
+      "file": "evidence/execute/5-1-preinstall-inventory.json",
+      "sha256": "1ef13b593e068aa338ba7e684af20a555b78982d6f8eb1f8345fc589fb3bed01"
+    },
+    {
+      "file": "evidence/execute/5-2-clean-install-receipt.json",
+      "sha256": "caa23939b7b980c4b1f6a47bf5b0daa2390f7aa83013161cf393f5fd328104a8"
+    },
+    {
+      "file": "evidence/execute/5-3-postinstall-link-inventory.json",
+      "sha256": "cc229e33b7a72d440f6c98e8cee3fcba6dc052da41317ea44c0534fc39a7a1c4"
+    },
+    {
+      "file": "evidence/execute/6-3-real-operation.json",
+      "sha256": "bfea58698419b5a76f8eca9b1e31da6db49d7f735ad621a5426685a55072a302"
+    },
+    {
+      "file": "evidence/execute/6-4-gate-receipts.json",
+      "sha256": "89b8128bd7745430198e1821069e6e416d0837bbaed4c92467d32396a8e3f941"
+    },
+    {
+      "file": "evidence/execute/6-4-final-link-inventory.json",
+      "sha256": "3fc4a29f5ee7a4499a4c8ffc6bcbb317f9cb3f4854212326fc58b802dc78bf16"
+    }
+  ],
+  "adaptationRecord": {
+    "file": ".prometheus/delivery-cadence-mini-adaptation-2026-10-08.json",
+    "sha256": "9159f16980a61a2a740d6153904e6a7f9c59f67f1e7b765da09981d653e75ed2"
+  },
+  "historicalManifest": {
+    "file": ".prometheus/delivery-cadence-source.json",
+    "sha256": "d8c5687e69ac14a280026cddb8fb37a9b7f6bb8c8979c4a42d6df516ecd38c09",
+    "note": "byte-identical to baseline"
+  },
+  "checkerEvidence": {
+    "gate": "node scripts/check-hardcoded-secrets.mjs — PASS (2,797 files, 24 dispositions, 1 explicit PARSE-NOTE)",
+    "controls": "lib/secret-scan/scanner.test.mjs — 14/14 (inline option, standalone token, inserted credential in accepted packet, docker Markdown in-scope, key-side detection, mutation/move re-fail, unknown-hit fail-safe, real-tree pass, PARSE-NOTE semantics ×2, provenance, unreadable ERROR lines, verbatim trailing-space filename)",
+    "dispositions": {
+      "file": "lib/secret-scan/dispositions.json",
+      "sha256": "30db17504f824552e84c17002842c4b9fb64461f8579ae6c50139e4faa8e8b05"
+    },
+    "separateCommit": "b62e4788337f5058ba8af6bd6aaf1a363355979f — checker + controls + dispositions + one constraint entry, reviewed (4 diff rounds + focused verification), created post-review per the operator-authorized procedure"
+  },
+  "repairCommit": "3d5fa6c — all remaining repair paths (source, fixtures, text, regenerated payloads, adaptation record)",
+  "prerequisiteRollback": "task-5-1: no non-reproducible local-only content; rollback = locked reinstall from unchanged lockfile (hashes recorded)",
+  "changeInventory": [],
+  "platformCoverage": "macOS arm64 only. No Windows acceptance claimed.",
+  "boundaries": [
+    "No Boss/UAR/Bossfang source touched; no dependency pins; no installed skills; no shared services; no publication or push.",
+    "This packet does not certify the desktop-mcp-projection-acceptance sibling, its task 10, or the parent; it does not rerun their passing product gates.",
+    "Historical failure receipts, canonical identifiers, journals and archives preserved; no evidence rewritten (the single post-attribution rewording is in this child's own task-5-2 receipt, removing a self-introduced scanner collision, documented)."
+  ]
+}

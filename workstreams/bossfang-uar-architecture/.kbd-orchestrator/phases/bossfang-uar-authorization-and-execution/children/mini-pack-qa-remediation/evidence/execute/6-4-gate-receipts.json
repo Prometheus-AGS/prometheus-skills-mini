@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "task": "6.4",
+  "time": "2026-10-08T11:45:00Z",
+  "boundary": "Completed delivery: all production work (groups 1-5) finished before any gate ran; each gate ran once at this boundary.",
+  "toolchain": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin (Node 22.20.0 LTS, npm bundled)",
+  "commandGates": [
+    { "gate": "tests-pass", "command": "npm test", "result": "PASS", "detail": "1,110 tests, 1,108 passed, 0 failed, 2 skipped. Historical 2026-10-07 baseline: 1,096 total, 1 failed (carried-payload reference). The previously failing test now passes; new tests are the waypoint acceptance cases and the secret-scan controls." },
+    { "gate": "build-passes", "command": "npm run check", "result": "PASS", "detail": "rules/build: 22 files current (1 mirror of CLAUDE.md); budgets within limits." },
+    { "gate": "specs-valid", "command": "npm run spec:validate", "result": "PASS", "detail": "40 passed, 0 failed (40 items), managed OpenSpec CLI 1.14.1." },
+    { "gate": "distribution-consistent", "command": "node scripts/generate-skill-system-distribution.mjs --check", "result": "PASS", "detail": "Run at task 6.1 after regeneration from finished source: OK, 100 skills, no drift. The six previously failing shell paths are absent from source and both payloads; no .sh/.py/.ps1 anywhere under dist/." },
+    { "gate": "no-shell-or-python-files", "command": "git grep --no-index --exclude-standard -l -e \"\" -- \"*.sh\" \"*.bash\" \"*.py\" \"*.ps1\" \":!tools/prometheus-knowledge\"", "result": "PASS", "detail": "clean" },
+    { "gate": "no-shell-true", "command": "git grep --no-index --exclude-standard -n -E -e \"shell: *true\" -- \"lib/*.mjs\" \"scripts/*.mjs\" \"hooks/*.mjs\" \"rules/*.mjs\"", "result": "PASS", "detail": "clean" },
+    { "gate": "no-home-or-tmp-literals", "command": "git grep --no-index --exclude-standard -n -E -e \"[$]HOME|process\\.env\\.HOME|/tmp/\" -- \"lib/*.mjs\" \"scripts/*.mjs\" \"hooks/*.mjs\" \"rules/*.mjs\"", "result": "PASS", "detail": "clean" },
+    { "gate": "os-locations-only-via-platform", "command": "git grep --no-index --exclude-standard -n -E -e \"os\\.(tmpdir|homedir)\\(\\)\" -- \"lib/*.mjs\" \"scripts/*.mjs\" \"hooks/*.mjs\" \"rules/*.mjs\" \":!lib/platform/paths.mjs\" \":!lib/platform/paths.test.mjs\"", "result": "PASS", "detail": "clean" },
+    { "gate": "no-zeespec", "command": "git grep --no-index --exclude-standard -n -i -e \"zeespec\" -- \"skills/*\" \"lib/*\" \"hooks/*\" \"scripts/*\" \"templates/*\"", "result": "PASS", "detail": "clean" },
+    { "gate": "no-hardcoded-secrets", "command": "node scripts/check-hardcoded-secrets.mjs", "result": "PASS", "detail": "2,789 files scanned, exactly the 24 adjudicated non-credential occurrences accepted by finite hash-bound disposition, zero new/changed/unmatched hits. Controls: 6/6 in lib/secret-scan/scanner.test.mjs (synthetic inline option, standalone provider token, inserted credential in accepted packet, mutation re-fail, unknown-hit fail-safe, real-tree pass)." },
+    { "gate": "compose-ports-loopback-only", "command": "git grep --no-index --exclude-standard -n -E -e \"- +.?[0-9]+:[0-9]+.? *$\" -- \"docker/*.yaml\" \"docker/*.yml\"", "result": "PASS", "detail": "clean" },
+    { "gate": "no-console-log-in-lib", "command": "git grep --no-index --exclude-standard -n -E -e \"console\\.(log|debug)\" -- \"lib/*.mjs\" \"rules/lib/*.mjs\"", "result": "PASS", "detail": "clean" },
+    { "gate": "no-symlinks", "command": "node .scratch/lstat-inventory.mjs (whole-descendant lstat walk)", "result": "PASS", "detail": "Final post-regeneration inventory 6-4-final-link-inventory.json: 10,682 entries, 1,777 directories, 8,905 files, 0 symlinks, 0 errors. Supersedes the post-install prerequisite inventory (5-3, also 0). The three historical node_modules/.bin links are gone." }
+  ],
+  "warningTier": [
+    { "gate": "no-forbidden-tools-in-instructions", "result": "1 pre-existing hit", "detail": "skills/adversarial-review/references/model-configuration.md:125 quotes a curl example; committed file (532e4cd), untouched by this change; warning-tier heuristic per its note, demands human look — reviewed: documentation prose, not an instruction to run." },
+    { "gate": "no-stub-comments", "result": "PASS", "detail": "clean" }
+  ],
+  "manualReviewReceipts": [
+    { "constraint": "exactly-two-services", "reviewer": "kimi-code (KBD driver)", "date": "2026-10-08", "result": "PASS", "detail": "docker/ untouched by this change (git status clean); docker/compose.yaml still defines only surrealdb, surreal-memory and liter-llm services (surreal-data, embedding-cache, liter-config are volumes)." },
+    { "constraint": "reference-repo-untouched", "reviewer": "kimi-code (KBD driver)", "date": "2026-10-08", "result": "PASS", "detail": "Change file list confined to the mini worktree (skills/, lib/, scripts/, dist/, .kbd-orchestrator/constraints.md, .prometheus/ adaptation record, workstreams/ planning evidence). No path under the prometheus-skill-pack reference repository or tools/ submodules touched." },
+    { "constraint": "file-under-500-lines", "reviewer": "kimi-code (KBD driver)", "date": "2026-10-08", "result": "PASS", "detail": "New/changed code files: scanner.mjs 215, scanner.test.mjs 137, dispositions.json 179, check-hardcoded-secrets.mjs 31, waypoint.mjs 194, paths.mjs 36 — all under 500; no allowlist additions." },
+    { "constraint": "services-degrade", "reviewer": "kimi-code (KBD driver)", "date": "2026-10-08", "result": "PASS", "detail": "No change touches lib/memory or service-dependent hooks; the real operation (6.3) ran entirely with both services down, including the managed OpenSpec override, discovery and the generated hook (exit 0 degraded-mode contract held)." }
+  ],
+  "platformCoverage": "macOS arm64 only (darwin). No Windows acceptance is claimed; Windows behavior remains self-reported until the three-OS CI matrix exists (windows-verified warning, per constraint note).",
+  "realOperation": "6-3-real-operation.json — overall PASS (waypoint expansion, managed cache override, discovery supplied root, cadence CLI lifecycle, generated hook invocation, secret detection controls)."
+}

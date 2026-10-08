@@ -1,0 +1,67 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "kimi-code",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "skills/delivery-cadence/SKILL.md",
+      "line": 19,
+      "claim": "The unavailable delivery-cadence documentation omits the required carried-payload marker `one referenced asset is absent`.",
+      "evidence": "Acceptance criterion 1.2 requires rewriting SKILL.md/profile.md to declare the capability unavailable with the exact carried-payload markers `UNAVAILABLE IN THIS PROJECT`; `one referenced asset is absent` where a reference must remain; the added SKILL.md line contains `UNAVAILABLE IN THIS PROJECT` but not `one referenced asset is absent`.",
+      "suggested_fix": "Add the required carried-payload marker or provide the remaining asset reference in the documented form expected by the carried-payload contract."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "skills/delivery-cadence/references/profile.md",
+      "line": 73,
+      "claim": "The unavailable capabilities section omits the required carried-payload marker `one referenced asset is absent`.",
+      "evidence": "Acceptance criterion 1.2 requires the refresh documentation to use the exact carried-payload markers including `one referenced asset is absent` where a reference must remain; the replacement section contains `UNAVAILABLE IN THIS PROJECT` but no `one referenced asset is absent` marker.",
+      "suggested_fix": "Include the expected marker in the unavailable capability section if the carried-payload contract requires it for absent retired assets."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/constraints.md",
+      "claim": "The required `no-hardcoded-secrets` constraint update is absent from the diff.",
+      "evidence": "Task 4.3 requires correcting exactly the `no-hardcoded-secrets` check expression in `.kbd-orchestrator/constraints.md` to invoke the Node checker, but the diff contains no hunk for `.kbd-orchestrator/constraints.md`; only the user-provided evidence digest claims such a hunk exists.",
+      "suggested_fix": "Add the `.kbd-orchestrator/constraints.md` hunk changing the check to `node scripts/check-hardcoded-secrets.mjs` and correcting the stale note."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".prometheus/delivery-cadence-mini-adaptation-2026-10-08.json",
+      "line": 22,
+      "claim": "The adaptation record's changedDocumentation list omits the dist payload documentation copies changed by this diff.",
+      "evidence": "The adaptation record lists only `skills/delivery-cadence/SKILL.md` and `skills/delivery-cadence/references/profile.md`, while the diff also changes `dist/plugins/claude/prometheus-skills-mini/skills/delivery-cadence/SKILL.md`, `dist/plugins/claude/prometheus-skills-mini/skills/delivery-cadence/references/profile.md`, `dist/plugins/codex/prometheus-skills-mini/skills/delivery-cadence/SKILL.md`, and `dist/plugins/codex/prometheus-skills-mini/skills/delivery-cadence/references/profile.md`; acceptance requires the record to name changed documentation and final hashes auditable by a reviewer.",
+      "suggested_fix": "Either include the changed dist documentation paths in the provenance record or clarify the field is source-only and add a separate field for regenerated payload documentation."
+    },
+    {
+      "severity": "WARNING",
+      "file": "lib/secret-scan/scanner.mjs",
+      "line": 100,
+      "claim": "The secret scanner misclassifies duplicate JSON key/value digests because it matches parsed subjects to the first unused line with the same digest rather than the subject's actual source location.",
+      "evidence": "`scanText` builds line candidates by digest only, then `walkJson` uses `candidates.find((entry) => !entry.used && entry.digest === digest)` to assign a line to each parsed key/value hit; with duplicate credential-shaped substrings in multiple JSON locations, a parsed hit can consume a different location's line, making location-bound dispositions unreliable.",
+      "suggested_fix": "Use a JSON parser that preserves token locations, or treat parsed key/value hits without line binding and use pointer+digest for structured location matching."
+    },
+    {
+      "severity": "WARNING",
+      "file": "lib/secret-scan/scanner.mjs",
+      "line": 35,
+      "claim": "The provider-token detector only recognizes `sk-` tokens and can miss other provider keys despite the criterion requiring provider keys generally.",
+      "evidence": "Acceptance and constraint text describe no inline database credentials or provider keys; `DETECTORS` contains only `/--(user|pass)=/g` and `/sk-[A-Za-z0-9_-]{20,}/g`, so common provider key shapes not beginning with `sk-` are not detected.",
+      "suggested_fix": "Either constrain the spec to the exact intended token family or add detector patterns for all provider-key formats covered by the security boundary."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

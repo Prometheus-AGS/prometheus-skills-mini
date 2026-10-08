@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-07T20:45:54.505Z",
+  "completedAt": "2026-10-07T20:46:02.393Z",
+  "argv": [
+    "node",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/scripts/adversarial-review/dispatch-judge.mjs",
+    "--mode",
+    "artifact",
+    "--packet",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/mini-pack-qa-remediation/review/assess/packet-r2.json",
+    "--out",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/mini-pack-qa-remediation/review/assess/findings-r2.json"
+  ],
+  "exitCode": 0,
+  "error": null,
+  "stderr": "[judge] WARN: review independence is degraded: producer-identity-unknown\n[judge] WARN: PRODUCER_UNKNOWN — packet carries no producer_model, so the\n[judge]       judge!=producer check cannot be enforced for this review.\n[MODEL_ROUTING] phase=adv-review-judge class=frontier model=gpt-6.1-sol producer=unknown\n[judge] wrote /Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/mini-pack-qa-remediation/review/assess/findings-r2.json\n",
+  "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "packetSha256": "0db76e2d7f91bc3ba8fc4f8dc60b93f099569ebefd68162a521352b86bb51043",
+  "findingsWritten": true
+}

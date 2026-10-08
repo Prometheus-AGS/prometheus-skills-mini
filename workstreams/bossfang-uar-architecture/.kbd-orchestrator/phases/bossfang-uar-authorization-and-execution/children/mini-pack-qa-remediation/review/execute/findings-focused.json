@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "kimi-code",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/constraints.md",
+      "claim": "The diff only updates constraints.md and does not verify or report the two disputed findings as required by the acceptance criteria.",
+      "evidence": "Acceptance criteria require: “verify each against the evidence below and report CONTRADICTED-BY-EVIDENCE or UPHELD per finding, with the specific evidence you relied on.” The provided diff contains only a constraints.md hunk changing the no-hardcoded-secrets check and note; it includes no verification report for Finding A or Finding B.",
+      "suggested_fix": "Add the required verification output/report that explicitly marks Finding A and Finding B as CONTRADICTED-BY-EVIDENCE or UPHELD with cited evidence."
+    }
+  ]
+}

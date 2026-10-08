@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "status": "source-only-not-runtime-proof",
+  "file": "/Users/gqadonis/.claude/worktrees/bauar-uar/tests/support/bauar_identity_peer.rs",
+  "lines": 289,
+  "sha256": "11e284eabfce06c30bde2fa3b0b2f9206b8f6d3625d3a2b540e900555edf930e",
+  "observedFailure": "Six authorization cases lose the standalone child during request delivery; prior diagnostics do not identify its fatal cause.",
+  "correction": "Report fixed fatal-marker booleans from private capture without emitting raw logs or credentials.",
+  "scope": "Six failed identity cases only; exclude previously passing rotation, startup and support cases. No D0 diagnostic or conditional session correction.",
+  "productionChanges": false,
+  "causeConfirmed": false
+}

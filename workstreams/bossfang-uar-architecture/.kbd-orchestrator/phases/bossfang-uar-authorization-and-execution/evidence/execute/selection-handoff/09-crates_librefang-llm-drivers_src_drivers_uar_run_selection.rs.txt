@@ -1,0 +1,118 @@
+//! Selected admission preflight keeps the exact private transport in memory
+//! until durable reservation wins. It neither retains nor submits by itself.
+
+use super::*;
+
+/// Opaque, non-serializable preflight result. Credentials remain private and
+/// cannot be reconstructed from the durable receipt. Deliberately not Debug.
+pub struct PendingUarAdmission {
+    pub(super) projection: UarDelegatedRunProjection,
+    pub(super) transport: Transport,
+}
+
+impl PendingUarAdmission {
+    pub fn projection(&self) -> &UarDelegatedRunProjection {
+        &self.projection
+    }
+}
+
+impl UarRunClient {
+    /// Verify the selected C04 service binding and construct the correlation
+    /// record that must be persisted before the admission request is sent.
+    pub async fn prepare_selected_projection(
+        &self,
+        admission: &UarRunAdmission,
+        prepared: &PreparedAdmission,
+        verified_principal: &str,
+    ) -> Result<PendingUarAdmission, UarRunClientError> {
+        let transport = self.transport(verified_principal).await?;
+        validate_service_placement(
+            &prepared.body,
+            &transport.binding,
+            &admission.target_binding_id,
+            prepared.definition_mode,
+        )?;
+        let descriptor = self
+            .runtime_descriptor(&transport, &admission.workspace_id)
+            .await?;
+        descriptor.validate()?;
+        let unsupported_semantics = (!descriptor.steer_supported)
+            .then(|| "steer".to_string())
+            .into_iter()
+            .collect();
+        let projection = UarDelegatedRunProjection {
+            boss_task_id: admission.boss_task_id.clone(),
+            verified_principal: verified_principal.to_string(),
+            delegation_id: admission.delegation_id.clone(),
+            admission_key: admission.admission_key.clone(),
+            request_digest: prepared.request_digest.clone(),
+            target_binding_id: admission.target_binding_id.clone(),
+            definition_mode: prepared.definition_mode,
+            workspace_id: admission.workspace_id.clone(),
+            selected_instance_id: transport.binding.instance_id.clone(),
+            effective_binding: transport.binding.clone(),
+            definition: admission.definition.clone(),
+            definition_diagnostics: admission.definition_diagnostics.clone(),
+            remote_diagnostics: Vec::new(),
+            uar_task_id: None,
+            uar_thread_id: None,
+            uar_root_run_id: None,
+            uar_run_id: None,
+            admission_state: "pending".to_string(),
+            execution_state: "submitted".to_string(),
+            cancellation_state: "none".to_string(),
+            effect_state: "not_dispatched".to_string(),
+            recovery_state: "available".to_string(),
+            boss_projection_retention: UarProjectionRetention::ProcessEphemeral,
+            revision: 0,
+            cursor: 0,
+            runtime_epoch: Some(descriptor.runtime_epoch),
+            retention: descriptor.retention.into(),
+            cancellation: UarRunCancellation::default(),
+            detached: false,
+            unsupported_semantics,
+            expires_at: None,
+            created_at: None,
+            terminal_at: None,
+            links: Map::new(),
+        };
+        Ok(PendingUarAdmission { projection, transport })
+    }
+
+    /// Caller must hold a successfully committed Created reservation for this
+    /// exact preflight. Existing reservations must only resolve/lookup. An
+    /// occupied retained slot refuses; only explicit refresh may replace it.
+    pub async fn admit_selected(
+        &self,
+        admission: &UarRunAdmission,
+        prepared: &PreparedAdmission,
+        pending: PendingUarAdmission,
+        committed: &UarDelegatedRunProjection,
+    ) -> Result<UarDelegatedRunProjection, UarRunClientError> {
+        let expected = &pending.projection;
+        if admission.boss_task_id != expected.boss_task_id
+            || admission.admission_key != expected.admission_key
+            || admission.delegation_id != expected.delegation_id
+            || admission.workspace_id != expected.workspace_id
+            || admission.target_binding_id != expected.target_binding_id
+            || admission.definition != expected.definition
+            || committed.boss_task_id != expected.boss_task_id
+            || committed.verified_principal != expected.verified_principal
+            || committed.workspace_id != expected.workspace_id
+            || committed.delegation_id != expected.delegation_id
+            || committed.admission_key != expected.admission_key
+            || committed.request_digest != expected.request_digest
+            || prepared.request_digest != expected.request_digest
+            || committed.runtime_epoch != expected.runtime_epoch
+            || committed.definition != expected.definition
+            || committed.target_binding_id != expected.target_binding_id
+        {
+            return Err(UarRunClientError::InvalidAdmission(
+                "selected reservation differs from private preflight".into(),
+            ));
+        }
+        ensure_same_binding(committed, &pending.transport.binding)?;
+        self.retain_selected_connection(committed, pending.transport).await?;
+        self.admit(admission, prepared, committed).await
+    }
+}

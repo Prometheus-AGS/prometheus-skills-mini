@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "completed": [
+    "registered-owner-and-explicit-unsupported",
+    "normal-exact-approval-and-reconciliation",
+    "streaming-and-outcome-commit-crash",
+    "exact-denial-no-effect",
+    "three-surface-cancellation-exact-caller-revision",
+    "lost-admission-and-decision-response-no-reenactment",
+    "observation-reconnect-original-run",
+    "provider-admission-before-host-capture-crash",
+    "durable-intent-crash-before-a2a",
+    "actual-pending-and-stale-sweep-preserves-selected-intent",
+    "enabled-wake-native-and-selected-cas-winners",
+    "provider-epoch-restart-remains-unknown",
+    "native-legacy-and-ephemeral-kernel-contract"
+  ],
+  "executedCases": 18,
+  "effects": [
+    "BAUAR_NORMAL",
+    "BAUAR_STREAM",
+    "BAUAR_PARTIAL_TERMINAL",
+    "BAUAR_LOST",
+    "BAUAR_RECONNECT",
+    "BAUAR_SELECTED_RACE"
+  ],
+  "realModelCalls": 36,
+  "modelRequestClasses": {
+    "task": 29,
+    "auxiliary": 5,
+    "continuation": 2,
+    "unknown": 0
+  },
+  "primaryAssigneeWake": false,
+  "primaryBackgroundSweep": false,
+  "raceAssigneeWake": true,
+  "raceTaskBoardSweep": true,
+  "limitation": "Manual selected admission and native automatic wake profiles only. Cron/deferred producers without JobAttemptRef remain native; automatic UAR cron/job selection is unsupported."
+}

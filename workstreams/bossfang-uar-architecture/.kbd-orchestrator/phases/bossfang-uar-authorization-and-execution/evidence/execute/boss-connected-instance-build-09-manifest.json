@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T23:18:35.386Z",
+  "sourceBinding": "source-inventory-connected-instance-delivery-19.json",
+  "sourceHashesBound": {
+    "name": "boss",
+    "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+    "head": "e2ae2ce21245030293c0bea96ed02ae853b820a7",
+    "diffSha256": "f398dd498fdd7c0b29bdaeb3f6a662ee6e6246059d98dde34b8f38e8378e3182",
+    "files": [
+      {
+        "file": "scripts/gates/bauar-approval-client.ts",
+        "sha256": "3253f8c5f7cbade71559b5031a550e094c7235bb7611265d0ac37bd794492295",
+        "bytes": 1796
+      },
+      {
+        "file": "scripts/gates/bauar-secret-projection-events.ts",
+        "sha256": "8ed59b1c52cc939616b3639fe51c68895b80b7a0be7af821e1d80b3a7c4094e1",
+        "bytes": 9839
+      },
+      {
+        "file": "scripts/gates/bauar-secret-projection-mcp.ts",
+        "sha256": "3695b1e9e6c8c8579682d1a84a70008261c5ebb72bfc631b64734bf9c33ff125",
+        "bytes": 13479
+      },
+      {
+        "file": "scripts/gates/bauar-secret-projection-revision.ts",
+        "sha256": "c4ce8de875e949d9351a4e5d7db2e82bc7887869b83b1a0e423ab07ec619f6f0",
+        "bytes": 14775
+      },
+      {
+        "file": "scripts/gates/bauar-secret-projection.ts",
+        "sha256": "f78ef2b9ee326bdd8d6f4cbf566c431036806f5ace7846800d67d70cb92d42df",
+        "bytes": 26825
+      },
+      {
+        "file": "scripts/gates/uar-exact-tool-admission.ts",
+        "sha256": "eba2c5bc4bdda9fef443349ce553a0b73d474a77964b140c49cea2cb10d51c58",
+        "bytes": 16908
+      },
+      {
+        "file": "src/main/ai/mcp/createMcpBridgeServer.ts",
+        "sha256": "4f5a53804d8e8e6854e985b50c287232001d0c7fb8eabe92311108c7b8c2e430",
+        "bytes": 12671
+      },
+      {
+        "file": "src/main/ai/mcp/McpRuntimeService.ts",
+        "sha256": "843f4bea1fcc0053eea07255791facc19f01cbe35132e7c5650e8695dee6a728",
+        "bytes": 56627
+      },
+      {
+        "file": "src/main/ai/mcp/types.ts",
+        "sha256": "3de64bb560736a60a729f42911c774acf4a58177a823a47ed565f3f9ae7e1d0b",
+        "bytes": 2046
+      },
+      {
+        "file": "src/main/ai/runtime/agentMcpServers.ts",
+        "sha256": "8a38641eb9a57ce2fe38815c2268780513fce4e8dfb54719675b67bd91ce4a4d",
+        "bytes": 8246
+      },
+      {
+        "file": "src/main/ai/runtime/uar/UarAguiAdapter.ts",
+        "sha256": "d233bc2074337d8d84142c45232d4c41bf8d0a10c7a25a197832fc81ce0f178b",
+        "bytes": 16909
+      },
+      {
+        "file": "src/main/ai/runtime/uar/uarApprovalLifecycle.ts",
+        "sha256": "0392afd1f308aafd972482a7e1ab653d859abf0df63cbfc95162cc4882d2b8ad",
+        "bytes": 5711
+      },
+      {
+        "file": "src/main/ai/runtime/uar/UarCatalogAdministrationAdapter.ts",
+        "sha256": "c2dbf92de831d3ec9571370ab93b4fa82049636e936fd457add2fddb01a15e40",
+        "bytes": 15823
+      },
+      {
+        "file": "src/main/ai/runtime/uar/UarHostMcpBridge.ts",
+        "sha256": "f084d4c7801098183982df7ac455fe78243aaa365f9a9f517322ad17948fc9f9",
+        "bytes": 7727
+      },
+      {
+        "file": "src/main/ai/runtime/uar/uarProjectedMcpTransport.ts",
+        "sha256": "b1a6789dd2b31860b8589e40ae584974da8853b56cbf95b4cd0639b041d6d33a",
+        "bytes": 2484
+      },
+      {
+        "file": "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
+        "sha256": "5b0e002e326761eb9ea59f71bbc072bb86a57b995f0dd5ff68fc791e0109df3e",
+        "bytes": 28202
+      },
+      {
+        "file": "src/main/ai/runtime/uar/uarSecretProjection.ts",
+        "sha256": "26f7468574dc8e6d3162188607ebb0bb5ef622422aeebd30a7892b3399d15ffd",
+        "bytes": 4587
+      },
+      {
+        "file": "src/main/ai/runtime/uar/uarStartupDiagnostic.ts",
+        "sha256": "c8ecba9d88dc7bc9a7995c8656bb58d707df87f74b22202e19462be5afade7bb",
+        "bytes": 3327
+      },
+      {
+        "file": "src/main/ai/runtime/uar/UarToolApprovalController.ts",
+        "sha256": "74bec6dbd5b054cc7b1a5b5372393d1d51e8445e4b46b6f54c93739ddadf187c",
+        "bytes": 6558
+      },
+      {
+        "file": "src/shared/types/prometheusIntegration.ts",
+        "sha256": "8f8ec9888df045f4af385c207c7894bddb7b7471f71b35f4d5f25dd6398617f7",
+        "bytes": 27566
+      },
+      {
+        "file": "tests/e2e/gates/bauarApprovalClientFixture.ts",
+        "sha256": "3eca018f068e3f970aeca48876c16a36b0c3a85e4765771621bde731305a2081",
+        "bytes": 16054
+      },
+      {
+        "file": "tests/e2e/gates/uarExperienceGate.test.ts",
+        "sha256": "46820ee01ea4a14918e142565201060ab19e4ec8d56df64bf3ef61fe0f1049e6",
+        "bytes": 26068
+      },
+      {
+        "file": "src/main/ai/runtime/uar/UarSidecarService.ts",
+        "role": "additional actual startup/build context",
+        "sha256": "847283ac6633807249f5f42b03312a0209c969f0016ceb592157e37828d5aa0e",
+        "bytes": 18611
+      },
+      {
+        "file": "tests/e2e/gates/support/uarExperienceProvider.ts",
+        "role": "completed provider diagnostic fixture",
+        "sha256": "148ab03162fda398e4b54b0edd6964219205a71cdf918c5d523720010ed4a6d4",
+        "bytes": 7659
+      },
+      {
+        "file": "src/main/ai/runtime/uar/UarHostToolAdmission.ts",
+        "sha256": "3df14c27411e3fba114a682a1de7038eb66f8072ff51602af9c54315964e40b9",
+        "bytes": 18900
+      },
+      {
+        "file": "src/main/ai/runtime/uar/uarHostClaimRevalidation.ts",
+        "sha256": "1eb8c3c3ed50dcd362a0fff7e2571d6f0a8418f43bc526a44be0002e7ab7d92f",
+        "bytes": 2546
+      },
+      {
+        "file": "tests/e2e/gates/bauarHostAdmissionDiagnostic.ts",
+        "sha256": "4821812697701522da0570a97a8873a9edf9035b1063d8f081f2d1ab143018c6",
+        "bytes": 11791
+      },
+      {
+        "file": "src/main/ai/runtime/uar/uarToolNames.ts",
+        "sha256": "d762396a1084904fe58d771403412abd448e8147b1d148a76196c6dd8e02025d",
+        "bytes": 711
+      }
+    ],
+    "diffExclusions": [
+      "workstreams",
+      "tests/bauar_session_owner.rs",
+      "tests/e2e/gates/artifacts"
+    ],
+    "exclusionNote": "Generated Playwright screenshots/traces/results are runtime evidence, excluded from source inventory; no credential values copied."
+  },
+  "sourceFilesChecked": 28,
+  "receipts": [
+    {
+      "schemaVersion": 1,
+      "label": "boss-typecheck-node-11",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "tsconfig.node.json",
+        "--composite",
+        "false"
+      ],
+      "startedAt": "2026-10-06T23:16:04.961Z",
+      "finishedAt": "2026-10-06T23:16:39.960Z",
+      "exitCode": 0,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-typecheck-node-11.log",
+      "result": "command-completed-not-yet-case-certified",
+      "buildEnvironment": {}
+    },
+    {
+      "schemaVersion": 1,
+      "label": "boss-electron-current-build-09",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+      "args": [
+        "--max-old-space-size=8192",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/run-boss-existing-electron-build.mjs",
+        "app"
+      ],
+      "startedAt": "2026-10-06T23:17:15.968Z",
+      "finishedAt": "2026-10-06T23:18:09.990Z",
+      "exitCode": 0,
+      "signal": null,
+      "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-electron-current-build-09.log",
+      "result": "command-completed-not-yet-case-certified",
+      "buildEnvironment": {}
+    }
+  ],
+  "retainedUnchangedFixtureTypes": "final-gates/boss-typecheck-e2e-09.json",
+  "mainBundle": {
+    "file": "/Users/gqadonis/.claude/worktrees/bauar-boss/out/main/main.js",
+    "sha256": "433238c8e7b0ec11b9ea0e4d7337451cb854dbaf953c616309d60cfe79efb0ed"
+  },
+  "sidecarPayload": "development-uar-payload-03/payload-manifest.json",
+  "scope": "Actual current display-projection source/bundle; genuine protected debug sidecar, no installer/release certification"
+}

@@ -1,0 +1,66 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "MiniMax-M3",
+  "judge_identity": {
+    "providerId": "minimax",
+    "providerConnectionId": "minimax-direct",
+    "modelId": "MiniMax-M3"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "bauar-01-identity-boundaries/specs/uar-principal-authority/spec.md",
+      "claim": "The 'Attenuated API-key authority' requirement asserts subset inclusion against 'delegable roles' and 'service's delegation allowlist' that are never defined in proposal, design or spec, making the requirement untestable.",
+      "evidence": "Requirement: 'Their roles MUST be a subset of the caller's delegable roles and the service's delegation allowlist.' Scenario 'Ordinary caller requests reserved authority' uses 'host-session or otherwise nondelegable role' without enumerating which roles are delegable. Design Decision 2 references 'a configured delegation allowlist' and 'nondelegable role' without defining either term or naming a configuration source.",
+      "suggested_fix": "Add a sub-requirement that names (a) which concrete role identifiers are reserved/non-delegable (host, installation, administrative, etc.), (b) where the delegation allowlist is configured (config field name, schema location), and (c) the observable a Plan test can assert against the persisted key record."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "bauar-04-resource-credential-lifecycle/specs/mcp-resource-authority/spec.md",
+      "claim": "The 'Forged tenant argument' scenario hinges on 'verified delegated authority' that is never defined in proposal, design or spec, leaving the cross-tenant rejection path untestable.",
+      "evidence": "Scenario: 'WHEN tool arguments or headers name another tenant without verified delegated authority - THEN the receiver denies cross-tenant access and emits no foreign data or effect.' Neither 'verified delegated authority', the verification mechanism (verified tenant delegation claim? introspection response? signed assertion?), nor the producing party is named. The 'Resource-specific acquisition' requirement says 'token exchange is used only if its authorization server supports the required delegation contract' but does not define the contract.",
+      "suggested_fix": "Define 'verified delegated authority' as a concrete type (e.g., a verified tenant delegation claim carried in the resource token, a signed assertion from the named authorization server, or an explicit scoped grant record) and add an observable artifact the receiver can check independently of UAR grant admission."
+    },
+    {
+      "severity": "WARNING",
+      "file": "bauar-03-harness-delegation/specs/job-harness-delegation/spec.md",
+      "claim": "The 'Stream interrupted after an effect' scenario requires deduplication 'by stable identity/cursor' but neither term is defined in proposal, design or spec.",
+      "evidence": "Scenario: 'reconnection observes the same execution, deduplicates presentation by stable identity/cursor and creates no new model request, run or invocation.' Design Decision 4 says 'Deduplicate presentation by event identity/cursor; never translate internal executed tool events into Bossfang tool proposals' but does not commit to a specific field set, storage location or comparator. Plan cannot author a deduplication fixture without knowing the deduplication key.",
+      "suggested_fix": "Name the deduplication key (e.g., task ID + run ID + event sequence number, or a persisted attempt record identifier) and where the seen-event set lives (in-memory per attempt, persisted attempt record) so a fixture can reproduce a duplicate presentation and assert suppression."
+    },
+    {
+      "severity": "WARNING",
+      "file": "bauar-02-execution-authorization/specs/execution-bound-authorization/spec.md",
+      "claim": "The F6 'Hypothesis is disproved' closure requires 'the evidence identifies the denying production layer' but no operational definition of a 'denying production layer' is given; the prior Analyze review flagged this exact gap and it is not closed.",
+      "evidence": "Scenario: 'the evidence identifies the denying production layer and no speculative binding rewrite is performed.' Design Decision 5: 'If existing code denies the complete matrix, name its enforcing layer and close F6 without edits.' Prior Analyze review (WARNING): 'F6 closure alternative enforcing-layer evidence lacks an observable acceptance criterion that Plan can sequence against' — same gap persists. Without a named middleware, log line, HTTP response class, or session-isolation property, Plan cannot author the disproof fixture.",
+      "suggested_fix": "Enumerate the operational signals that count as 'denying production layer' (e.g., UAR /mcp/uar JWT middleware rejecting before session routing, axum extractor denying, or a documented 403/non-disclosing-404 code path) and require the disproof fixture to record the specific code path that produced the denial."
+    },
+    {
+      "severity": "WARNING",
+      "file": "bauar-01-identity-boundaries/specs/uar-principal-authority/spec.md",
+      "claim": "The 'Bounded signing-key freshness' requirement is silent on the design's 'monotonic age from last successful complete refresh' time source and 'never reset age on failure' semantics, leaving freshness partially specified.",
+      "evidence": "Design Decision 4: 'Use monotonic age from last successful complete refresh, atomically replace key set, remove absent keys and never reset age on failure.' Spec scenarios 'Removed or replaced key' and 'Refresh storm or outage' imply a time source but the requirement body does not state it. Without 'monotonic age' or equivalent, the spec permits wall-clock or non-monotonic implementations the design explicitly rejects.",
+      "suggested_fix": "Add 'SHALL use monotonic age from the last successful complete refresh and SHALL NOT reset age on a failed fetch' to the requirement body, or otherwise bind the time source and reset behavior."
+    },
+    {
+      "severity": "WARNING",
+      "file": "bauar-03-harness-delegation/specs/job-harness-delegation/spec.md",
+      "claim": "The 'Submission acknowledgement is lost' scenario requires reconciliation under 'the same authority and epoch' but the spec does not name the field set that constitutes 'the same authority', leaving the 'Frozen receipt' / 'Changed payload' scenarios only partially distinguishable.",
+      "evidence": "Scenario: 'Bossfang reconciles the existing admission under the same authority and epoch before any further action.' Design Decision 3: 'reconciliation by admission is preferred after a lost response' and 'Never persist plaintext to reconstruct a retry; changed credential material conflicts.' The spec introduces 'authority' as an undefined term (presumably owner+workspace+admission, but not stated) and does not say which fields form the conflict-detection key for the 'Changed payload' 409/admission_digest_conflict scenario.",
+      "suggested_fix": "Name the reconciliation/conflict key (e.g., owner + workspace + admission ID + runtime epoch) and state explicitly that a change to any of those fields yields 409/admission_digest_conflict, distinguishing it from the 'Frozen receipt' return."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "bauar-04-resource-credential-lifecycle/specs/mcp-resource-authority/spec.md",
+      "claim": "The 'Bossfang inbound identity is classified' requirement names the three modes (trusted-local operator, service, delegated-user) but does not enumerate the concrete non-secret attribution fields, response headers, or log lines that identify each mode, leaving the 'correct mode' assertion subjective.",
+      "evidence": "Scenario: 'their non-secret attribution identifies the correct mode and authority; forged actor/tenant or unauthorized agent context is denied with no effect.' Design Decision 5: 'Add a non-secret attribution record at authentication/request context, not prompt instructions' but does not name what the record contains. The prior Analyze critical finding asked for 'an observable (e.g., distinct request-attribution field) Plan can assert against'; the spec names the modes but not the attribution artifact.",
+      "suggested_fix": "List the concrete attribution artifacts (e.g., distinct request context fields, response header values, or structured log fields) that identify service, delegated-user and trusted-local modes, and add a fixture assertion for each that a forged or unauthorized context is denied with the named artifact unchanged."
+    }
+  ],
+  "reviewedAt": "2026-10-06T11:04:10.059Z",
+  "adaptation": "Node native HTTP; first attempt truncated and rejected; retry packet omits redundant analysis background but includes complete current artifact set."
+}

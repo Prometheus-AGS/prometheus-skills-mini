@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "kind": "primary-source compatibility check, not runtime evidence",
+  "time": "2026-10-06T17:03:02.161Z",
+  "implementedProtocol": "2024-11-05",
+  "sourceAnchor": "crates/librefang-runtime/src/mcp_server.rs:13",
+  "schema": "https://raw.githubusercontent.com/modelcontextprotocol/specification/main/schema/2024-11-05/schema.ts",
+  "schemaObservation": "Result lines38–44 permits optional _meta dictionary; JSONRPCResponse result inherits Result. Attribution extension does not require protocol upgrade.",
+  "authorization": "https://modelcontextprotocol.io/specification/2024-11-05/basic",
+  "authorizationObservation": "Authentication/authorization is outside 2024-11-05 core; its custom strategy is not certification of the later OAuth profile.",
+  "context7Adaptation": "Historical query returned current 2026-07-28 snippets; discarded for historical compatibility. Earlier 2025-11-25 metadata namespace guidance used only as later recommendation.",
+  "resultMetaKey": "ai.bossfang/mcp-attribution"
+}

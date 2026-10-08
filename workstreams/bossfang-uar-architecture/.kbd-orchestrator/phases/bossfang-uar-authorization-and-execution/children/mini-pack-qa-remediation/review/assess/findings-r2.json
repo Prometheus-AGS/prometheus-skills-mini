@@ -1,0 +1,44 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment understates the secret-pattern current occurrence count by claiming 13 individual matches while its own prose says there are 24 current raw pattern occurrences.",
+      "evidence": "Observation evidence `secret-count-reconciliation-v2.json` states `\"currentIndividualPatternMatches\": 13` and also `\"currentRawPatternOccurrences\": 24`; the assessment prose states: \"Current targeted inspection has **18 matching lines and 24 individual raw pattern occurrences**\". Downstream analysis/plan needs a single correct count unit and label for the failed secret check.",
+      "suggested_fix": "Use one terminology set consistently: matching output lines, raw pattern occurrences, parsed key occurrences, and parsed value occurrences; correct the receipt/prose mismatch or explicitly explain why `currentIndividualPatternMatches` excludes key-only matches while `currentRawPatternOccurrences` equals 24."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment says no `prior-context.md` exists for this child, but the packet's cited-path resolver reports `prior-context.md` exists with multiple matches, making the statement unsupported without a scoped path.",
+      "evidence": "Assessment: \"No hook-produced `prior-context.md` exists for this child.\" Packet `cited_paths`: `EXISTS   prior-context.md  -> 7 matches (.kbd-orchestrator/phases/agent-team-creator/prior-context.md, .kbd-orchestrator/phases/hook-entry-node-only/prior-context.md, ...)`.",
+      "suggested_fix": "State the exact child-relative path checked and that no prior-context file exists at that path, rather than an unqualified filename claim."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "line": 0,
+      "claim": "The assessment references `lib/platform/openspec/state.mjs` and `lib/services/discovery.mjs` as platform-location violations, but the packet file tree does not show `lib/platform/openspec` or the individual `state.mjs`/`discovery.mjs` paths, so the claims are not supported by file-tree evidence alone.",
+      "evidence": "Assessment examples include `[managed OpenSpec state].../lib/platform/openspec/state.mjs` and `[service discovery].../lib/services/discovery.mjs`; the file tree lists `./lib/platform` and `./lib/services` but not `./lib/platform/openspec` or specific files under these directories. These files appear only in `source_evidence`, not the file tree.",
+      "suggested_fix": "Tie these findings directly to the included source-evidence entries and avoid implying file-tree support, or include the specific paths in the file inventory used by the assessment."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

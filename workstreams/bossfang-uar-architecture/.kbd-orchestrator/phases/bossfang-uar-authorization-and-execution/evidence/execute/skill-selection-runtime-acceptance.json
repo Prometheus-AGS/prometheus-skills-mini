@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T21:58:02.190Z",
+  "status": "observed-pass",
+  "receipt": "final-gates/uar-selection-runtime-01.json",
+  "compilerManifest": "uar-selection-compile-12-manifest.json",
+  "sourceBinding": "source-inventory-metadata-delivery-02.json",
+  "primaryCases": 1,
+  "physicalCases": 4,
+  "caseAccounting": "One primary orchestrator plus seed/api/inspect child helpers; helpers not additional primary cases",
+  "scope": "Actual HTTP selection, explicit false vs cached IDs, deferred unknown ID, confirmed durable metadata read-through, toggle, missing row conflict/no upsert, exact non-selection stored values including vectors and unknown field preservation",
+  "limitations": [
+    "Private SurrealKV only; no external SurrealDB/PostgreSQL/memory runtime certification",
+    "Value equality, not storage engine page bytes",
+    "No uncertain-write or filesystem partial fault injection"
+  ],
+  "environment": {
+    "RUST_MIN_STACK": "33554432"
+  },
+  "runtimeLogSha256": "534a37c029cc34113157de4969b9e73402666ea44a9fab7a41c03a543550b121",
+  "runtimeLogBytes": 716
+}

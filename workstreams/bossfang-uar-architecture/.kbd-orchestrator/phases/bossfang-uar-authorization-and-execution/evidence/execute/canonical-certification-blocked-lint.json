@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T21:51:11.177Z",
+  "commandId": "bauar-certification-blocked-required-lint-20261006",
+  "revision": 181,
+  "completion": {
+    "implementation": {
+      "completed": 0,
+      "total": 4,
+      "status": "blocked",
+      "summary": null,
+      "blockers": []
+    },
+    "evidence": {
+      "completed": 0,
+      "total": 0,
+      "status": "pending",
+      "summary": null,
+      "blockers": []
+    },
+    "certification": {
+      "completed": 0,
+      "total": 0,
+      "status": "blocked",
+      "summary": "Required BF clippy gate failed on unchanged baseline; global UAR formatting also failed/unwaived and excluded D0 unresolved. No phase certification or Reflect handover. Independent approved Execute continues.",
+      "blockers": [
+        "bauar-required-bossfang-clippy"
+      ]
+    },
+    "publication": {
+      "completed": 0,
+      "total": 0,
+      "status": "pending",
+      "summary": null,
+      "blockers": []
+    }
+  },
+  "committedLocally": true,
+  "scope": "isolated parent only; same0/0 certification counts retained, Execute active"
+}

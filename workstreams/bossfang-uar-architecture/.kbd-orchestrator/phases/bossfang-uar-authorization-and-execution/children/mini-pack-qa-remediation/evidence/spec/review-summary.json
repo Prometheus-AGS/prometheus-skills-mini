@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-08T10:45:00Z",
+  "stage": "spec",
+  "reviewRounds": [
+    {
+      "round": 1,
+      "verdict": "BLOCK",
+      "counts": {
+        "CRITICAL": 2,
+        "WARNING": 4
+      },
+      "findingsSha256": "69bd79ab3e280b3d5cf54fa4240005c26f7c33952d66b88b4f19ddd9fef931ff",
+      "antiTheater": "Actual Node-native screen returned PASS score 0"
+    },
+    {
+      "round": 2,
+      "verdict": "BLOCK",
+      "counts": {
+        "CRITICAL": 2,
+        "WARNING": 3
+      },
+      "findingsSha256": "35ce347f934e42da8f8354920d35cebf6b2a5b7ccaf8f958ddba19c6f30c25be",
+      "antiTheater": "Actual Node-native screen returned PASS score 0"
+    }
+  ],
+  "crossModelCheck": "unverified-producer-unknown",
+  "producerNote": "Producer recorded as kimi-code; exact model id is not disclosed to the session, so judge-distinctness rests on model-family knowledge (judge gpt-6.1-sol via rest-gateway http://localhost:4000/v1), not a verified id.",
+  "packetNote": "Stock build-review-packet.mjs spec target collects only native-kbd change layouts; packets were assembled by .scratch/build-spec-review-packet.mjs reusing lib/review/packet-builder builders over the OpenSpec artifact set. Round-2 packet used a 60000-byte field cap; truncation.any_truncated=false.",
+  "finalProducerClarificationsAfterRound2": true,
+  "thirdReviewRun": false,
+  "implementationGateRun": false,
+  "round1Dispositions": [
+    "CRITICAL docker-Markdown scope: clarified that the replaced command's effective docker/* scope already matched docker Markdown (original failure record includes docker/AGENTS.md); the stale note is corrected in the same commit; no boundary expansion.",
+    "CRITICAL manual-only constraints: tasks 6.4 now enumerates command-checked constraints vs dated reviewer-identified manual-review receipts.",
+    "WARNING exact npm invocation: tasks 5.2 now names npm ci --no-bin-links --ignore-scripts --no-audit --no-fund with flags-only suppression and global-config verification.",
+    "WARNING batch rule: design D6 and tasks preamble reworded — production-group verifications are deliverable-artifact assertions; all gate execution consolidates at the completed boundary.",
+    "WARNING provenance ordering: task 1.3 drafts the adaptation record; new task 6.2 completes final hashes after regeneration."
+  ],
+  "round2DispositionsUnresolved": [
+    "CRITICAL authorization evidence: statically resolved by quoting approval-policy.json narrowSecretCheckerException verbatim in design.md D4 and proposal.md, tying it to the constraint clause's three legs (demonstrated false positive, rule-owner authorization, positive detection proof). Not re-vetted — no third round permitted.",
+    "CRITICAL commit policy: task 4.3 statically reworded to prepare the separate reviewed commit contents and leave commit creation to the operator-authorized post-review commit procedure. Not re-vetted.",
+    "WARNING inventory ordering: tasks 5.3/6.4 statically split — post-install prerequisite inventory and a final post-regeneration inventory as the no-symlinks receipt. Not re-vetted.",
+    "WARNING signing wording: 'signed manual-review receipt' replaced with 'dated, reviewer-identified manual-review receipt'. Not re-vetted.",
+    "WARNING approval-policy.json not in packet: approval text is now quoted inside the artifacts themselves, so any future packet carries it. Not re-vetted."
+  ],
+  "limitation": "Round 2 remains an immutable BLOCK report; the five dispositions above are static producer revisions, not a third reviewed verdict. Artifact review is not completed-delivery QA. Strict openspec validate passes after the revisions."
+}

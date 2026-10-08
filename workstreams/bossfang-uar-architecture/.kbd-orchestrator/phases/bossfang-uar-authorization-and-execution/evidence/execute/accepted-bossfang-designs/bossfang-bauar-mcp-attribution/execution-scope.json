@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "status": "proposed-awaiting-driver-acceptance",
+  "sourceBaseline": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+  "productRoot": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "parentChange": "bauar-04-resource-credential-lifecycle",
+  "childChange": "bossfang-bauar-mcp-attribution",
+  "runtimeRegistrationComplete": false,
+  "taskMap": [
+    {
+      "childOrdinal": "1.1",
+      "parentBackendId": 2,
+      "childBackendId": null
+    },
+    {
+      "childOrdinal": "1.2",
+      "parentBackendId": 2,
+      "childBackendId": null
+    },
+    {
+      "childOrdinal": "1.3",
+      "parentBackendId": 2,
+      "childBackendId": null
+    },
+    {
+      "childOrdinal": "2.1",
+      "parentBackendId": 9,
+      "childBackendId": null
+    },
+    {
+      "childOrdinal": "2.2",
+      "parentBackendId": 10,
+      "childBackendId": null
+    }
+  ],
+  "claims": [
+    {
+      "id": "F-MCP",
+      "owner": "bossfang-feature-steward",
+      "paths": [
+        "crates/librefang-api/src/middleware.rs",
+        "crates/librefang-api/src/routes/network.rs",
+        "crates/librefang-api/src/mcp_attribution.rs",
+        "crates/librefang-api/src/lib.rs",
+        "crates/librefang-api/src/oauth.rs",
+        "crates/librefang-api/tests/bauar_mcp_identity.rs",
+        "crates/librefang-api/src/server.rs"
+      ],
+      "networkFunctionSlices": [
+        "mcp_http",
+        "mcp_identity_error"
+      ],
+      "serverSlice": "Immutable MCP deployment-context wiring from actual listen_addr and existing external_auth_proxy; no config mutation"
+    }
+  ],
+  "prerequisites": [
+    "03 F-RETRY child2.4 / parent03/7 immutable A2A checkpoint releases network.rs",
+    "driver product-root execution binding",
+    "accepted exact role extension"
+  ],
+  "excluded": [
+    "new remote receiver/IdP/custody integration",
+    "application configuration deletion",
+    "new remote defaults"
+  ],
+  "securityBoundary": "Remote multi-user /mcp denies unauthenticated requests even under broad allow_no_auth; trusted locality comes only from server deployment/transport context.",
+  "delegatedProfile": "unsupported-no-accepted-verified-tenant-actor-mapping",
+  "defaultRemovalOwner": "Separate driver parent04/7: /Users/gqadonis/.claude/worktrees/bauar-uar/mcp.json"
+}

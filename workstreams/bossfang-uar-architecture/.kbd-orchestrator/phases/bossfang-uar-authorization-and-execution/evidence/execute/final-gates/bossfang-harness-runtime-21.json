@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "label": "bossfang-harness-runtime-21",
+  "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "command": "/opt/homebrew/opt/node@24/bin/node",
+  "args": [
+    "scripts/integration/bauar-harness-gate.mjs",
+    "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_host-c60280c0df75470d",
+    "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42/debug/deps/bauar_harness_delegation-e2fc39e9970d11a7",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/target/debug/universal-agent-runtime",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar"
+  ],
+  "startedAt": "2026-10-06T20:45:26.893Z",
+  "finishedAt": "2026-10-06T20:48:20.559Z",
+  "exitCode": 1,
+  "signal": null,
+  "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-harness-runtime-21.log",
+  "result": "failed",
+  "buildEnvironment": {}
+}

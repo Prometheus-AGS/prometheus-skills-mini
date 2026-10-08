@@ -1,0 +1,3561 @@
+//! MemorySubstrate: unified implementation of the `Memory` trait.
+//!
+//! Composes the structured store, semantic store, knowledge store,
+//! session store, and consolidation engine behind a single async API.
+
+pub mod task_dispatch;
+
+use crate::channel_binding_store::ChannelBindingStore;
+use crate::chunker;
+use crate::consolidation::ConsolidationEngine;
+use crate::knowledge::KnowledgeStore;
+use crate::migration::run_migrations;
+use crate::roster_store::RosterStore;
+use crate::semantic::SemanticStore;
+use crate::session::{Session, SessionStore};
+use crate::structured::StructuredStore;
+use crate::usage::UsageStore;
+use crate::workflow_store::WorkflowStore;
+
+use async_trait::async_trait;
+use librefang_types::agent::{AgentEntry, AgentId, SessionId};
+use librefang_types::config::ChunkConfig;
+use librefang_types::error::{LibreFangError, LibreFangResult};
+use librefang_types::memory::{
+    ConsolidationReport, Entity, ExportFormat, GraphMatch, GraphPattern, ImportReport, Memory,
+    MemoryFilter, MemoryFragment, MemoryId, MemorySource, Relation,
+};
+use r2d2::Pool;
+use r2d2_sqlite::SqliteConnectionManager;
+use rusqlite::Connection;
+use std::collections::HashMap;
+use std::path::Path;
+use std::sync::Arc;
+use std::time::Duration;
+
+/// The `[queue]` depth caps applied to an enqueue, resolved from `KernelConfig` by the caller.
+///
+/// Passed in rather than read from a config the substrate holds, because the count and the INSERT have to happen inside one write transaction and only this layer has the connection.
+/// Every field is `0 = unlimited`, matching the config's own contract.
+///
+/// The caps were declared, documented and echoed by the config API for the whole of their life without a single enforcement site (#8219), so an operator who set them got a queue that still grew without bound.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct TaskQueueCaps {
+    /// `[queue] max_depth_per_agent` — pending tasks assigned to one agent.
+    pub max_depth_per_agent: u32,
+    /// `[queue] max_depth_global` — pending tasks across every agent and the unassigned pool.
+    pub max_depth_global: u32,
+}
+
+impl TaskQueueCaps {
+    /// Both caps off. The shipped default, and what a caller with no config to consult passes.
+    pub const UNLIMITED: Self = Self {
+        max_depth_per_agent: 0,
+        max_depth_global: 0,
+    };
+}
+
+impl From<&librefang_types::config::QueueConfig> for TaskQueueCaps {
+    fn from(cfg: &librefang_types::config::QueueConfig) -> Self {
+        Self {
+            max_depth_per_agent: cfg.max_depth_per_agent,
+            max_depth_global: cfg.max_depth_global,
+        }
+    }
+}
+
+/// The unified memory substrate. Implements the `Memory` trait by delegating
+/// to specialized stores backed by a shared SQLite connection pool.
+pub struct MemorySubstrate {
+    pool: Pool<SqliteConnectionManager>,
+    structured: StructuredStore,
+    semantic: SemanticStore,
+    knowledge: KnowledgeStore,
+    sessions: SessionStore,
+    consolidation: ConsolidationEngine,
+    usage: UsageStore,
+    roster: RosterStore,
+    channel_bindings: ChannelBindingStore,
+    workflow_store: WorkflowStore,
+    chunk_config: ChunkConfig,
+    /// Upper bound, in characters, on the text of a single episodic memory row written by the agent loop's per-turn writer (#7911).
+    /// Zero disables the cap.
+    ///
+    /// Held here rather than threaded through `LoopOptions` because the runtime's per-turn writer already holds the substrate, and `[memory]` is restart-required in `build_reload_plan` — so a value read once at boot cannot go stale relative to the config on disk.
+    max_episodic_chars: usize,
+}
+
+/// Fallback episodic character cap for substrates constructed without a kernel config — every `open_in_memory*` test helper and any embedder that never calls [`MemorySubstrate::set_max_episodic_chars`].
+///
+/// Matches `MemoryConfig::default().max_episodic_chars` so a test store and a default-configured daemon agree.
+pub const DEFAULT_MAX_EPISODIC_CHARS: usize = 8_000;
+
+/// Canonical PRAGMA set applied to every SqliteConnectionManager
+/// connection on first checkout. Extracted as a `pub(crate)` const
+/// so any future "second pool" on the same DB inherits the full
+/// set — most importantly `foreign_keys=ON`, which is **per-
+/// connection** in SQLite (not per-database), so an independent
+/// pool that omits it silently bypasses every FK declared by the
+/// migrations.
+///
+/// Audit: prompt-store-second-pool-no-fk. The `PromptStore` pool
+/// used to set only journal_mode / busy_timeout / cache_size /
+/// mmap_size; writes through that pool silently bypassed the FKs
+/// declared by `migrate_v13` on `prompt_experiments` /
+/// `experiment_variants` / `experiment_metrics`. Reusing this
+/// const closes that door for every current and future caller.
+///
+/// Field-by-field:
+///   - `journal_mode=WAL` — multi-reader concurrency.
+///   - `busy_timeout=5000` — writers wait 5s for the reserved lock
+///     instead of failing fast.
+///   - `cache_size=-2000` — caps per-connection page cache at
+///     ~2 MiB (so total ceiling is `pool_size × 2 MiB`).
+///   - `mmap_size=0` — disables mmap'd reads (kept for parity
+///     with the pre-pool config).
+///   - `foreign_keys=ON` — enforces the schema FKs every
+///     migration since v1 relies on.
+///   - `synchronous=NORMAL` — WAL-default durability/perf
+///     tradeoff.
+pub(crate) const DEFAULT_CONNECTION_PRAGMAS: &str = "PRAGMA journal_mode=WAL; \
+     PRAGMA busy_timeout=5000; \
+     PRAGMA cache_size=-2000; \
+     PRAGMA mmap_size=0; \
+     PRAGMA foreign_keys=ON; \
+     PRAGMA synchronous=NORMAL;";
+
+/// Default pool size when callers do not pass an explicit value.
+///
+/// Mirrors `default_memory_pool_size` in `librefang-types::config` so that
+/// callers constructing a substrate without a full `MemoryConfig` (tests,
+/// the `open` shortcut, ad-hoc tools) still land on a value consistent with
+/// what `config.toml: [memory] pool_size` defaults to.
+pub const DEFAULT_POOL_SIZE: u32 = 8;
+
+/// Tighten the on-disk SQLite database files to owner-only (`0o600`)
+/// permissions. Targets `db_path`, the matching `-wal`, and the
+/// matching `-shm` siblings. Files that don't exist yet (typical for
+/// `-wal` / `-shm` on first boot before any write) are silently
+/// skipped — they'll be created with the umask, and the next call to
+/// this helper at write time tightens them.
+///
+/// Audit: sqlite-file-permissions. Without this, the DB files inherit
+/// the process umask (typically `0644`), so every other process under
+/// the same UID can read raw user prompts, LLM replies, audit
+/// entries, OAuth nonces, TOTP codes, and paired-device api_key
+/// hashes from `~/.librefang/librefang.db`.
+///
+/// Non-Unix is a no-op (Windows permissions follow a different model
+/// and don't have a meaningful 0o600 equivalent at the file level).
+pub fn restrict_db_file_permissions(db_path: &Path) {
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        let perm = std::fs::Permissions::from_mode(0o600);
+        let parent = db_path.parent();
+        let stem = db_path.file_name().and_then(|s| s.to_str()).unwrap_or("");
+        // SQLite uses `<db>-wal` and `<db>-shm` for WAL journaling.
+        // They appear lazily — the first write spawns both, so on a
+        // fresh boot they don't yet exist and ENOENT is the expected
+        // outcome (we just want to make sure they're 0600 once they
+        // do show up).
+        let targets: Vec<std::path::PathBuf> = match parent {
+            Some(p) if !stem.is_empty() => vec![
+                db_path.to_path_buf(),
+                p.join(format!("{stem}-wal")),
+                p.join(format!("{stem}-shm")),
+            ],
+            _ => vec![db_path.to_path_buf()],
+        };
+        for path in targets {
+            match std::fs::set_permissions(&path, perm.clone()) {
+                Ok(_) => {}
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
+                    // -wal / -shm not yet materialised — fine, the
+                    // next caller will tighten them.
+                }
+                Err(e) => {
+                    tracing::warn!(
+                        path = %path.display(),
+                        error = %e,
+                        "failed to tighten SQLite file permissions to 0o600 — \
+                         file may be world-readable until next boot"
+                    );
+                }
+            }
+        }
+    }
+    #[cfg(not(unix))]
+    {
+        let _ = db_path;
+    }
+}
+
+impl MemorySubstrate {
+    /// Open or create a memory substrate at the given database path.
+    pub fn open(db_path: &Path, decay_rate: f32) -> LibreFangResult<Self> {
+        Self::open_with_chunking(db_path, decay_rate, ChunkConfig::default())
+    }
+
+    /// Open or create a memory substrate with explicit chunking configuration.
+    ///
+    /// Uses [`DEFAULT_POOL_SIZE`] for the underlying r2d2 pool; production
+    /// callers that need to honour `config.toml: [memory] pool_size` should
+    /// use [`Self::open_with_pool_size`] instead.
+    pub fn open_with_chunking(
+        db_path: &Path,
+        decay_rate: f32,
+        chunk_config: ChunkConfig,
+    ) -> LibreFangResult<Self> {
+        Self::open_with_pool_size(db_path, decay_rate, chunk_config, DEFAULT_POOL_SIZE)
+    }
+
+    /// Open or create a memory substrate with explicit chunking configuration
+    /// **and** pool sizing.
+    ///
+    /// `pool_size` is the maximum number of pooled SQLite connections; values
+    /// of 0 are clamped up to 1 (r2d2 panics on `max_size = 0`). The kernel
+    /// boot path passes `config.memory.pool_size` so operators can tune for
+    /// their concurrency profile (#3378 follow-up).
+    pub fn open_with_pool_size(
+        db_path: &Path,
+        decay_rate: f32,
+        chunk_config: ChunkConfig,
+        pool_size: u32,
+    ) -> LibreFangResult<Self> {
+        // PRAGMAs run on every pooled connection's first checkout. The set
+        // mirrors the pre-pool single-connection init: WAL journal for
+        // multi-reader concurrency; 5 s busy_timeout so writers wait for the
+        // reserved lock instead of failing fast; cache_size=-2000 caps the
+        // per-connection page cache at 2 MiB (so total page cache ceiling is
+        // `pool_size * 2 MiB`); mmap_size=0 disables mmap'd reads (kept for
+        // parity with the pre-pool config — flipping this is a separate
+        // decision); foreign_keys=ON enforces the schema FKs the migrations
+        // rely on; synchronous=NORMAL is the WAL-default durability/perf
+        // tradeoff.
+        let manager = SqliteConnectionManager::file(db_path)
+            .with_init(|c| c.execute_batch(DEFAULT_CONNECTION_PRAGMAS));
+        // Clamp to >= 1: r2d2 panics on `max_size = 0`, and a deserialised
+        // `pool_size = 0` (operator typo) should fail soft, not crash boot.
+        let max_size = pool_size.max(1);
+        let pool = Pool::builder()
+            .max_size(max_size)
+            .idle_timeout(Some(Duration::from_secs(30)))
+            .max_lifetime(Some(Duration::from_secs(3600)))
+            .build(manager)
+            .map_err(LibreFangError::memory)?;
+        // Run migrations with a dedicated connection before any concurrent requests.
+        {
+            let migration_conn = pool.get().map_err(LibreFangError::memory)?;
+            run_migrations(&migration_conn).map_err(LibreFangError::memory)?;
+        }
+
+        // Audit: sqlite-file-permissions. SqliteConnectionManager
+        // creates `librefang.db`, `-wal` and `-shm` with the
+        // process umask (typically 0644), making them readable by
+        // every other process under the same UID on shared hosts
+        // (CI runners, multi-user dev boxes). The DB contains raw
+        // user prompts, LLM replies, audit_entries, OAuth nonces,
+        // TOTP codes, paired-device api_key hashes — every secret
+        // we ask operators to consider sensitive. Tighten to 0600
+        // immediately after migrations so the window between
+        // creation and chmod is closed before any other process
+        // can read. Non-Unix is a no-op.
+        restrict_db_file_permissions(db_path);
+
+        let sessions = SessionStore::new(pool.clone());
+        // Repair any sessions/sessions_fts drift left over from #3451
+        // before save_session became transactional.
+        sessions.reconcile_fts_index();
+
+        Ok(Self {
+            pool: pool.clone(),
+            structured: StructuredStore::new(pool.clone()),
+            semantic: SemanticStore::new(pool.clone()),
+            knowledge: KnowledgeStore::new(pool.clone()),
+            sessions,
+            usage: UsageStore::new(pool.clone()),
+            roster: RosterStore::new(pool.clone()),
+            channel_bindings: ChannelBindingStore::new(pool.clone()),
+            workflow_store: WorkflowStore::new(pool.clone()),
+            consolidation: ConsolidationEngine::new(pool, decay_rate),
+            chunk_config,
+            max_episodic_chars: DEFAULT_MAX_EPISODIC_CHARS,
+        })
+    }
+
+    /// Create an in-memory substrate (for testing).
+    pub fn open_in_memory(decay_rate: f32) -> LibreFangResult<Self> {
+        Self::open_in_memory_with_chunking(decay_rate, ChunkConfig::default())
+    }
+
+    /// Create an in-memory substrate with explicit chunking configuration.
+    pub fn open_in_memory_with_chunking(
+        decay_rate: f32,
+        chunk_config: ChunkConfig,
+    ) -> LibreFangResult<Self> {
+        let manager = SqliteConnectionManager::memory()
+            .with_init(|c| c.execute_batch("PRAGMA foreign_keys=ON; PRAGMA synchronous=NORMAL;"));
+        // in-memory DB: each connection is a separate database, so max_size must be 1.
+        let pool = Pool::builder()
+            .max_size(1)
+            .build(manager)
+            .map_err(LibreFangError::memory)?;
+        {
+            let migration_conn = pool.get().map_err(LibreFangError::memory)?;
+            run_migrations(&migration_conn).map_err(LibreFangError::memory)?;
+        }
+
+        Ok(Self {
+            pool: pool.clone(),
+            structured: StructuredStore::new(pool.clone()),
+            semantic: SemanticStore::new(pool.clone()),
+            knowledge: KnowledgeStore::new(pool.clone()),
+            sessions: SessionStore::new(pool.clone()),
+            usage: UsageStore::new(pool.clone()),
+            roster: RosterStore::new(pool.clone()),
+            channel_bindings: ChannelBindingStore::new(pool.clone()),
+            workflow_store: WorkflowStore::new(pool.clone()),
+            consolidation: ConsolidationEngine::new(pool, decay_rate),
+            chunk_config,
+            max_episodic_chars: DEFAULT_MAX_EPISODIC_CHARS,
+        })
+    }
+
+    /// Get a reference to the usage store.
+    pub fn usage(&self) -> &UsageStore {
+        &self.usage
+    }
+
+    /// Get a reference to the knowledge graph store.
+    pub fn knowledge(&self) -> &KnowledgeStore {
+        &self.knowledge
+    }
+
+    /// Get a reference to the group roster store.
+    pub fn roster(&self) -> &RosterStore {
+        &self.roster
+    }
+
+    /// Get a reference to the channel-instance binding store (#5671).
+    pub fn channel_bindings(&self) -> &ChannelBindingStore {
+        &self.channel_bindings
+    }
+
+    /// Get a reference to the workflow run store.
+    pub fn workflow_store(&self) -> &WorkflowStore {
+        &self.workflow_store
+    }
+
+    /// Force a WAL checkpoint on the shared connection pool.
+    ///
+    /// Flushes any pending WAL frames to the main database file. Called
+    /// during kernel shutdown to ensure all workflow state transitions
+    /// (and other pending writes) are durable on disk.
+    pub fn wal_checkpoint(&self) {
+        if let Err(e) = self.workflow_store.wal_checkpoint() {
+            tracing::warn!("WAL checkpoint failed: {e}");
+        }
+    }
+
+    /// Attach an external vector store backend to the semantic store.
+    ///
+    /// When set, [`SemanticStore::recall_with_embedding`] will delegate vector
+    /// similarity search to this backend instead of doing in-process cosine
+    /// similarity over SQLite BLOBs.
+    pub fn set_vector_store(&mut self, store: Arc<dyn librefang_types::memory::VectorStore>) {
+        self.semantic.set_vector_store(store);
+    }
+
+    /// Clone the inner [`SemanticStore`] for use in blocking tasks.
+    ///
+    /// This is the bridge used by the [`crate::backend::SemanticBackend`]
+    /// implementation to satisfy the `spawn_blocking` pattern without holding a
+    /// reference into `self`.
+    pub fn semantic_store_clone(&self) -> crate::semantic::SemanticStore {
+        self.semantic.clone()
+    }
+
+    /// Push the configured `duplicate_threshold` down to the background
+    /// [`ConsolidationEngine`] (H5).
+    ///
+    /// Takes `&self` because the hot-reload path
+    /// (`config_reload_ops.rs::HotAction::UpdateProactiveMemory`) holds
+    /// only `Arc<MemorySubstrate>` and cannot get a `&mut` borrow. The
+    /// underlying field uses an atomic, so concurrent reads on the merge
+    /// loop see the new value on the next pair comparison.
+    pub fn set_consolidation_duplicate_threshold(&self, threshold: f32) {
+        self.consolidation.set_duplicate_threshold(threshold);
+    }
+
+    /// Set the per-row character cap the runtime applies to episodic memory writes (#7911).
+    /// Called once from the kernel boot path with `[memory] max_episodic_chars`.
+    pub fn set_max_episodic_chars(&mut self, max_chars: usize) {
+        self.max_episodic_chars = max_chars;
+    }
+
+    /// The per-row character cap for episodic memory writes.
+    /// Zero means "no cap" and restores the pre-#7911 behaviour of storing whatever the turn produced, including an inlined attachment.
+    pub fn max_episodic_chars(&self) -> usize {
+        self.max_episodic_chars
+    }
+
+    /// Record the embedding model the daemon resolved at boot, in
+    /// `provider/model` form (#7912).
+    ///
+    /// New vectors are stamped with it, and a recall skips scoring any
+    /// candidate whose stored vector carries a *different* stamp — cosine
+    /// between two embedding spaces is a number, not a similarity.
+    ///
+    /// Takes `&self` because the kernel resolves the effective model long after
+    /// the substrate is behind an `Arc`: auto-detection can substitute a
+    /// provider default for the configured string, so the value is not known
+    /// when the substrate is opened.
+    pub fn set_embedding_model(&self, model: &str) {
+        self.semantic.set_active_embedding_model(model);
+    }
+
+    /// The embedding model new vectors are stamped with, if any.
+    pub fn embedding_model(&self) -> Option<std::sync::Arc<str>> {
+        self.semantic.active_embedding_model()
+    }
+
+    /// Count live stored vectors by the model that produced them (#7912).
+    ///
+    /// Rows written before the v51 stamp are reported under
+    /// [`crate::semantic::UNSTAMPED_EMBEDDING_MODEL`].
+    pub fn embedding_model_census(
+        &self,
+    ) -> LibreFangResult<std::collections::BTreeMap<String, i64>> {
+        self.semantic.embedding_model_census()
+    }
+
+    /// Get a clone of the connection pool (for constructing stores from outside).
+    pub fn pool(&self) -> Pool<SqliteConnectionManager> {
+        self.pool.clone()
+    }
+
+    /// Run time-based memory decay, deleting stale memories based on scope TTL.
+    ///
+    /// - USER scope: never decays
+    /// - SESSION scope: decays after `session_ttl_days` of no access
+    /// - AGENT scope: decays after `agent_ttl_days` of no access
+    /// - EPISODIC scope: decays after `episodic_ttl_days` of no access (#7911)
+    ///
+    /// Returns the number of memories deleted.
+    pub fn run_decay(
+        &self,
+        config: &librefang_types::config::MemoryDecayConfig,
+    ) -> LibreFangResult<usize> {
+        crate::decay::run_decay(&self.pool, config)
+    }
+
+    /// Hard-delete soft-deleted memories whose `deleted_at` is older than
+    /// `older_than_days` days. Reclaims embedding BLOBs that would otherwise
+    /// stay forever in soft-deleted rows (#3467).
+    pub fn prune_soft_deleted_memories(&self, older_than_days: u64) -> LibreFangResult<usize> {
+        crate::decay::prune_soft_deleted_memories(&self.pool, older_than_days)
+    }
+
+    /// Save an agent entry to persistent storage.
+    pub fn save_agent(&self, entry: &AgentEntry) -> LibreFangResult<()> {
+        self.structured.save_agent(entry)
+    }
+
+    /// Load an agent entry from persistent storage.
+    pub fn load_agent(&self, agent_id: AgentId) -> LibreFangResult<Option<AgentEntry>> {
+        self.structured.load_agent(agent_id)
+    }
+
+    /// Remove an agent and cascade-delete every agent-scoped row in a
+    /// single transaction.
+    ///
+    /// Pre-fix (#3501) sessions and structured rows were deleted in
+    /// independent locks/transactions: a failure between the two would
+    /// orphan whichever side had not run yet. Now all DELETEs — including
+    /// `sessions_fts` — share one `unchecked_transaction` so a partial
+    /// cascade rolls back to the pre-call state.
+    ///
+    /// `sessions_fts` cannot be left outside the rollback path: it stores
+    /// session content (`snippet(...)` returns it on any FTS hit) and
+    /// `search_sessions` reads from it without joining the `sessions`
+    /// table. A `sessions` row removed without its FTS twin would leave
+    /// the deleted agent's content searchable, which is a privacy
+    /// regression rather than a recoverable hygiene issue.
+    pub fn remove_agent(&self, agent_id: AgentId) -> LibreFangResult<()> {
+        let conn = self.pool.get().map_err(LibreFangError::memory)?;
+        remove_agent_inner(&conn, agent_id)
+    }
+
+    /// Load all agent entries from persistent storage.
+    pub fn load_all_agents(&self) -> LibreFangResult<Vec<AgentEntry>> {
+        self.structured.load_all_agents()
+    }
+
+    /// List all saved agents.
+    pub fn list_agents(&self) -> LibreFangResult<Vec<(String, String, String)>> {
+        self.structured.list_agents()
+    }
+
+    /// Synchronous get from the structured store (for kernel handle use).
+    pub fn structured_get(
+        &self,
+        agent_id: AgentId,
+        key: &str,
+    ) -> LibreFangResult<Option<serde_json::Value>> {
+        self.structured.get(agent_id, key)
+    }
+
+    /// List all KV pairs for an agent.
+    pub fn list_kv(&self, agent_id: AgentId) -> LibreFangResult<Vec<(String, serde_json::Value)>> {
+        self.structured.list_kv(agent_id)
+    }
+
+    /// List only keys for an agent (without values).
+    pub fn list_keys(&self, agent_id: AgentId) -> LibreFangResult<Vec<String>> {
+        self.structured.list_keys(agent_id)
+    }
+
+    /// Delete a KV entry for an agent.
+    pub fn structured_delete(&self, agent_id: AgentId, key: &str) -> LibreFangResult<()> {
+        self.structured.delete(agent_id, key)
+    }
+
+    /// Synchronous set in the structured store (for kernel handle use).
+    pub fn structured_set(
+        &self,
+        agent_id: AgentId,
+        key: &str,
+        value: serde_json::Value,
+    ) -> LibreFangResult<()> {
+        self.structured.set(agent_id, key, value)
+    }
+
+    /// Atomic read-modify-write of a single KV key under a `BEGIN IMMEDIATE`
+    /// write transaction (#5138). Serializes concurrent mutators of the same
+    /// shared key (goals array, peer KV) so no writer's update is lost to a
+    /// last-writer-wins race. See [`StructuredStore::modify`].
+    pub fn structured_modify<T>(
+        &self,
+        agent_id: AgentId,
+        key: &str,
+        f: impl FnOnce(Option<serde_json::Value>) -> LibreFangResult<(serde_json::Value, T)>,
+    ) -> LibreFangResult<T> {
+        self.structured.modify(agent_id, key, f)
+    }
+
+    /// Set a value and atomically report whether the key already existed
+    /// (#5138). The existence check and write share one transaction so
+    /// `memory_store` can publish `Created` vs `Updated` from the committed
+    /// transition rather than a racy pre-read.
+    pub fn structured_set_returning_existed(
+        &self,
+        agent_id: AgentId,
+        key: &str,
+        value: serde_json::Value,
+    ) -> LibreFangResult<bool> {
+        self.structured.set_returning_existed(agent_id, key, value)
+    }
+
+    /// Get a session by ID.
+    pub fn get_session(&self, session_id: SessionId) -> LibreFangResult<Option<Session>> {
+        self.sessions.get_session(session_id)
+    }
+
+    /// Get a session by ID along with its `created_at` timestamp.
+    pub fn get_session_with_created_at(
+        &self,
+        session_id: SessionId,
+    ) -> LibreFangResult<Option<(Session, String)>> {
+        self.sessions.get_session_with_created_at(session_id)
+    }
+
+    /// Save a session.
+    pub fn save_session(&self, session: &Session) -> LibreFangResult<()> {
+        self.sessions.save_session(session)
+    }
+
+    /// Save a session asynchronously on a blocking worker thread.
+    pub async fn save_session_async(&self, session: &Session) -> LibreFangResult<()> {
+        let sessions = self.sessions.clone();
+        let session = session.clone();
+        tokio::task::spawn_blocking(move || sessions.save_session(&session))
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Create a new empty session for an agent.
+    pub fn create_session(&self, agent_id: AgentId) -> LibreFangResult<Session> {
+        self.sessions.create_session(agent_id)
+    }
+
+    /// List all sessions with metadata.
+    pub fn list_sessions(&self) -> LibreFangResult<Vec<serde_json::Value>> {
+        self.sessions.list_sessions()
+    }
+
+    /// Paginated session listing — pushes LIMIT/OFFSET into SQLite (#3485).
+    pub fn list_sessions_paginated(
+        &self,
+        limit: Option<usize>,
+        offset: usize,
+    ) -> LibreFangResult<Vec<serde_json::Value>> {
+        self.sessions.list_sessions_paginated(limit, offset)
+    }
+
+    /// Cost / token totals for one session — the single-session form of the aggregate the paginated listing computes per row (#6611).
+    pub fn session_usage_totals(
+        &self,
+        session_id: SessionId,
+    ) -> LibreFangResult<crate::session::SessionUsageTotals> {
+        self.sessions.session_usage_totals(session_id)
+    }
+
+    /// Total number of sessions stored.
+    pub fn count_sessions(&self) -> LibreFangResult<usize> {
+        self.sessions.count_sessions()
+    }
+
+    /// 24-hour KPI rollup for an individual agent — see
+    /// [`crate::session::SessionStore::agent_stats_24h`].
+    pub fn agent_stats_24h(
+        &self,
+        agent_id: &str,
+    ) -> LibreFangResult<crate::session::AgentStats24h> {
+        self.sessions.agent_stats_24h(agent_id)
+    }
+
+    /// Bulk `(sessions_24h, cost_24h)` per agent. See
+    /// [`crate::session::SessionStore::agents_stats_24h_bulk`].
+    pub fn agents_stats_24h_bulk(
+        &self,
+    ) -> LibreFangResult<std::collections::HashMap<String, (u64, f64)>> {
+        self.sessions.agents_stats_24h_bulk()
+    }
+
+    /// Delete a session by ID, cascading to every descendant session.
+    /// Returns every id actually removed. See
+    /// [`crate::session::SessionStore::delete_session`].
+    pub fn delete_session(&self, session_id: SessionId) -> LibreFangResult<Vec<SessionId>> {
+        self.sessions.delete_session(session_id)
+    }
+
+    /// Delete exactly one session by ID — no cascade. See
+    /// [`crate::session::SessionStore::delete_session_only`].
+    pub fn delete_session_only(&self, session_id: SessionId) -> LibreFangResult<()> {
+        self.sessions.delete_session_only(session_id)
+    }
+
+    /// Return all session IDs belonging to an agent.
+    pub fn get_agent_session_ids(&self, agent_id: AgentId) -> LibreFangResult<Vec<SessionId>> {
+        self.sessions.get_agent_session_ids(agent_id)
+    }
+
+    /// Delete all sessions belonging to an agent.
+    pub fn delete_agent_sessions(&self, agent_id: AgentId) -> LibreFangResult<()> {
+        self.sessions.delete_agent_sessions(agent_id)
+    }
+
+    /// Count an agent's sessions touched after the given Unix-millis timestamp.
+    /// See [`SessionStore::count_agent_sessions_touched_since`] for semantics.
+    pub fn count_agent_sessions_touched_since(
+        &self,
+        agent_id: AgentId,
+        since_ms: u64,
+        exclude_session: Option<SessionId>,
+    ) -> LibreFangResult<u32> {
+        self.sessions
+            .count_agent_sessions_touched_since(agent_id, since_ms, exclude_session)
+    }
+
+    /// List an agent's session IDs touched after the given timestamp, newest
+    /// first, capped at `limit`. See
+    /// [`SessionStore::list_agent_sessions_touched_since`] for semantics.
+    pub fn list_agent_sessions_touched_since(
+        &self,
+        agent_id: AgentId,
+        since_ms: u64,
+        limit: u32,
+        exclude_session: Option<SessionId>,
+    ) -> LibreFangResult<Vec<String>> {
+        self.sessions
+            .list_agent_sessions_touched_since(agent_id, since_ms, limit, exclude_session)
+    }
+
+    /// Delete the canonical (cross-channel) session for an agent.
+    pub fn delete_canonical_session(&self, agent_id: AgentId) -> LibreFangResult<()> {
+        self.sessions.delete_canonical_session(agent_id)
+    }
+
+    /// Set or clear a session label.
+    pub fn set_session_label(
+        &self,
+        session_id: SessionId,
+        label: Option<&str>,
+    ) -> LibreFangResult<()> {
+        self.sessions.set_session_label(session_id, label)
+    }
+
+    /// Set (or clear) the per-session model override (#4898).
+    pub fn set_session_model_override(
+        &self,
+        session_id: SessionId,
+        model_override: Option<&str>,
+    ) -> LibreFangResult<()> {
+        self.sessions
+            .set_session_model_override(session_id, model_override)
+    }
+
+    /// Find a session by label for a given agent.
+    pub fn find_session_by_label(
+        &self,
+        agent_id: AgentId,
+        label: &str,
+    ) -> LibreFangResult<Option<Session>> {
+        self.sessions.find_session_by_label(agent_id, label)
+    }
+
+    /// List all sessions for a specific agent.
+    pub fn list_agent_sessions(
+        &self,
+        agent_id: AgentId,
+    ) -> LibreFangResult<Vec<serde_json::Value>> {
+        self.sessions.list_agent_sessions(agent_id)
+    }
+
+    /// Create a new session with an optional label.
+    pub fn create_session_with_label(
+        &self,
+        agent_id: AgentId,
+        label: Option<&str>,
+    ) -> LibreFangResult<Session> {
+        self.sessions.create_session_with_label(agent_id, label)
+    }
+
+    /// Delete sessions older than `retention_days`. Returns count deleted.
+    pub fn cleanup_expired_sessions(&self, retention_days: u32) -> LibreFangResult<u64> {
+        self.sessions.cleanup_expired_sessions(retention_days)
+    }
+
+    /// For each agent, keep only the newest `max_per_agent` sessions. Returns count deleted.
+    pub fn cleanup_excess_sessions(&self, max_per_agent: u32) -> LibreFangResult<u64> {
+        self.sessions.cleanup_excess_sessions(max_per_agent)
+    }
+
+    /// Delete sessions whose agent_id is not in the provided live set. Returns count deleted.
+    pub fn cleanup_orphan_sessions(&self, live_agent_ids: &[AgentId]) -> LibreFangResult<u64> {
+        self.sessions.cleanup_orphan_sessions(live_agent_ids)
+    }
+
+    /// Run WAL checkpoint then VACUUM if any rows were actually deleted.
+    ///
+    /// VACUUM rewrites the entire DB file and can take several seconds on
+    /// large databases, so it is only worth running when something was
+    /// genuinely removed. Callers should pass the total pruned row count
+    /// returned by the cleanup_* methods; this function is a no-op when
+    /// `pruned_count == 0`.
+    ///
+    /// VACUUM cannot run inside a transaction, so this method acquires the
+    /// connection lock directly and calls `execute_batch`. Errors are logged
+    /// as warnings rather than propagated — a failed VACUUM is not fatal.
+    pub fn vacuum_if_shrank(&self, pruned_count: usize) -> LibreFangResult<()> {
+        if pruned_count == 0 {
+            return Ok(());
+        }
+        let conn = self.pool.get().map_err(LibreFangError::memory)?;
+        vacuum_inner(&conn, pruned_count);
+        Ok(())
+    }
+
+    /// Full-text search across session content using FTS5.
+    pub fn search_sessions(
+        &self,
+        query: &str,
+        agent_id: Option<&AgentId>,
+    ) -> LibreFangResult<Vec<crate::session::SessionSearchResult>> {
+        self.sessions.search_sessions(query, agent_id)
+    }
+
+    /// Full-text search with SQL-side pagination (#3691).
+    ///
+    /// Prefer this over `search_sessions` for any caller exposed to the
+    /// network: untrusted clients must not be able to ask the substrate
+    /// for an unbounded result set.
+    pub fn search_sessions_paginated(
+        &self,
+        query: &str,
+        agent_id: Option<&AgentId>,
+        limit: Option<usize>,
+        offset: usize,
+    ) -> LibreFangResult<Vec<crate::session::SessionSearchResult>> {
+        self.sessions
+            .search_sessions_paginated(query, agent_id, limit, offset)
+    }
+
+    /// Load canonical session context for cross-channel memory.
+    ///
+    /// Returns the compacted summary (if any) and recent messages from the
+    /// agent's persistent canonical session.
+    pub fn canonical_context(
+        &self,
+        agent_id: AgentId,
+        session_id: Option<SessionId>,
+        window_size: Option<usize>,
+    ) -> LibreFangResult<(Option<String>, Vec<librefang_types::message::Message>)> {
+        self.sessions
+            .canonical_context(agent_id, session_id, window_size)
+    }
+
+    /// Return the agent's compacted summary **only if it is owned by
+    /// `session_id`** (#6225).
+    ///
+    /// The canonical compaction summary is agent-scoped and outlives any
+    /// single session, so it must not be surfaced on a session whose own
+    /// history was never compacted (e.g. a freshly created session that just
+    /// became the agent's active one). The summary is returned when its
+    /// recorded owning session matches `session_id`, and `None` otherwise —
+    /// including legacy rows with no recorded owner.
+    pub fn compacted_summary_for_session(
+        &self,
+        agent_id: AgentId,
+        session_id: SessionId,
+    ) -> LibreFangResult<Option<String>> {
+        let canonical = self.sessions.load_canonical(agent_id)?;
+        Ok(match canonical.compacted_summary_session_id {
+            Some(owner) if owner == session_id => canonical.compacted_summary,
+            _ => None,
+        })
+    }
+
+    /// Store an LLM-generated summary, replacing older messages with the kept subset.
+    ///
+    /// Used by the compactor to replace text-truncation compaction with an
+    /// LLM-generated summary of older conversation history.
+    pub fn store_llm_summary(
+        &self,
+        agent_id: AgentId,
+        summary: &str,
+        kept_messages: Vec<librefang_types::message::Message>,
+        owning_session_id: Option<SessionId>,
+    ) -> LibreFangResult<()> {
+        self.sessions
+            .store_llm_summary(agent_id, summary, kept_messages, owning_session_id)
+    }
+
+    /// Write a human-readable JSONL mirror of a session to disk.
+    ///
+    /// Best-effort — errors are returned but should be logged,
+    /// never affecting the primary SQLite store.
+    pub fn write_jsonl_mirror(
+        &self,
+        session: &Session,
+        sessions_dir: &Path,
+    ) -> Result<(), std::io::Error> {
+        self.sessions.write_jsonl_mirror(session, sessions_dir)
+    }
+
+    /// Append messages to the agent's canonical session for cross-channel persistence.
+    pub fn append_canonical(
+        &self,
+        agent_id: AgentId,
+        messages: &[librefang_types::message::Message],
+        compaction_threshold: Option<usize>,
+        session_id: Option<SessionId>,
+    ) -> LibreFangResult<()> {
+        self.sessions
+            .append_canonical(agent_id, messages, compaction_threshold, session_id)?;
+        Ok(())
+    }
+
+    // -----------------------------------------------------------------
+    // Paired devices persistence
+    // -----------------------------------------------------------------
+
+    /// Load all paired devices from the database.
+    pub fn load_paired_devices(&self) -> LibreFangResult<Vec<serde_json::Value>> {
+        let conn = self
+            .pool
+            .get()
+            .map_err(|e| LibreFangError::memory_msg(e.to_string()))?;
+        let mut stmt = conn.prepare(
+            "SELECT device_id, display_name, platform, paired_at, last_seen, push_token, api_key_hash FROM paired_devices"
+        ).map_err(LibreFangError::memory)?;
+        let rows = stmt
+            .query_map([], |row| {
+                Ok(serde_json::json!({
+                    "device_id": row.get::<_, String>(0)?,
+                    "display_name": row.get::<_, String>(1)?,
+                    "platform": row.get::<_, String>(2)?,
+                    "paired_at": row.get::<_, String>(3)?,
+                    "last_seen": row.get::<_, String>(4)?,
+                    "push_token": row.get::<_, Option<String>>(5)?,
+                    "api_key_hash": row.get::<_, String>(6)?,
+                }))
+            })
+            .map_err(LibreFangError::memory)?;
+        let mut devices = Vec::new();
+        for row in rows {
+            devices.push(row.map_err(LibreFangError::memory)?);
+        }
+        Ok(devices)
+    }
+
+    /// Save a paired device to the database (insert or replace).
+    #[allow(clippy::too_many_arguments)]
+    pub fn save_paired_device(
+        &self,
+        device_id: &str,
+        display_name: &str,
+        platform: &str,
+        paired_at: &str,
+        last_seen: &str,
+        push_token: Option<&str>,
+        api_key_hash: &str,
+    ) -> LibreFangResult<()> {
+        let conn = self
+            .pool
+            .get()
+            .map_err(|e| LibreFangError::memory_msg(e.to_string()))?;
+        conn.execute(
+            "INSERT OR REPLACE INTO paired_devices (device_id, display_name, platform, paired_at, last_seen, push_token, api_key_hash) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
+            rusqlite::params![device_id, display_name, platform, paired_at, last_seen, push_token, api_key_hash],
+        ).map_err(LibreFangError::memory)?;
+        Ok(())
+    }
+
+    /// Remove a paired device from the database.
+    pub fn remove_paired_device(&self, device_id: &str) -> LibreFangResult<()> {
+        let conn = self
+            .pool
+            .get()
+            .map_err(|e| LibreFangError::memory_msg(e.to_string()))?;
+        conn.execute(
+            "DELETE FROM paired_devices WHERE device_id = ?1",
+            rusqlite::params![device_id],
+        )
+        .map_err(LibreFangError::memory)?;
+        Ok(())
+    }
+
+    // -----------------------------------------------------------------
+    // Embedding-aware memory operations
+    // -----------------------------------------------------------------
+
+    /// Store a memory with an embedding vector.
+    ///
+    /// When chunking is enabled and the content exceeds `max_chunk_size`,
+    /// the text is split into overlapping chunks. Each chunk is stored as a
+    /// separate memory entry with `parent_id` and `chunk_index` in its
+    /// metadata. The returned `MemoryId` belongs to the first chunk (the
+    /// logical parent).
+    #[allow(clippy::too_many_arguments)]
+    pub fn remember_with_embedding(
+        &self,
+        agent_id: AgentId,
+        content: &str,
+        source: MemorySource,
+        scope: &str,
+        metadata: HashMap<String, serde_json::Value>,
+        embedding: Option<&[f32]>,
+        peer_id: Option<&str>,
+    ) -> LibreFangResult<MemoryId> {
+        Self::store_with_chunking(
+            &self.semantic,
+            &self.chunk_config,
+            agent_id,
+            content,
+            source,
+            scope,
+            metadata,
+            embedding,
+            peer_id,
+        )
+    }
+
+    /// Shared chunking + storing logic used by both sync and async paths.
+    #[allow(clippy::too_many_arguments)]
+    fn store_with_chunking(
+        semantic: &SemanticStore,
+        chunk_config: &ChunkConfig,
+        agent_id: AgentId,
+        content: &str,
+        source: MemorySource,
+        scope: &str,
+        metadata: HashMap<String, serde_json::Value>,
+        embedding: Option<&[f32]>,
+        peer_id: Option<&str>,
+    ) -> LibreFangResult<MemoryId> {
+        let should_chunk =
+            chunk_config.enabled && content.chars().count() > chunk_config.max_chunk_size;
+
+        if !should_chunk {
+            return semantic.remember_with_embedding_and_peer(
+                agent_id,
+                content,
+                source,
+                scope,
+                metadata,
+                embedding,
+                None,
+                None,
+                Default::default(),
+                peer_id,
+            );
+        }
+
+        let chunks =
+            chunker::chunk_text(content, chunk_config.max_chunk_size, chunk_config.overlap);
+
+        // chunk_text returns [] when max_chunk_size == 0 (or content is
+        // empty, though the should_chunk guard above excludes that case).
+        // Without this check the .expect() at the end of the loop panics.
+        if chunks.is_empty() {
+            return Err(LibreFangError::Internal(format!(
+                "chunker produced no chunks (content_len={}, max_chunk_size={})",
+                content.chars().count(),
+                chunk_config.max_chunk_size,
+            )));
+        }
+
+        // Store the first chunk and use its ID as the parent_id for siblings.
+        let mut parent_id: Option<MemoryId> = None;
+        let total_chunks = chunks.len();
+
+        for (idx, chunk) in chunks.iter().enumerate() {
+            let mut chunk_meta = metadata.clone();
+            chunk_meta.insert(
+                "chunk_index".to_string(),
+                serde_json::Value::Number(serde_json::Number::from(idx)),
+            );
+            chunk_meta.insert(
+                "total_chunks".to_string(),
+                serde_json::Value::Number(serde_json::Number::from(total_chunks)),
+            );
+
+            if let Some(pid) = &parent_id {
+                chunk_meta.insert(
+                    "parent_id".to_string(),
+                    serde_json::Value::String(pid.0.to_string()),
+                );
+            }
+
+            // Pass None for chunk embeddings — the original embedding was
+            // computed for the full text and is meaningless for individual
+            // chunks.  Let the embedding pipeline compute per-chunk embeddings
+            // later.
+            let id = semantic.remember_with_embedding_and_peer(
+                agent_id,
+                chunk,
+                source.clone(),
+                scope,
+                chunk_meta,
+                None,
+                None,
+                None,
+                Default::default(),
+                peer_id,
+            )?;
+
+            if parent_id.is_none() {
+                parent_id = Some(id);
+            }
+        }
+
+        Ok(parent_id.expect("chunks is non-empty"))
+    }
+
+    /// Recall memories using vector similarity when a query embedding is provided.
+    pub fn recall_with_embedding(
+        &self,
+        query: &str,
+        limit: usize,
+        filter: Option<MemoryFilter>,
+        query_embedding: Option<&[f32]>,
+    ) -> LibreFangResult<Vec<MemoryFragment>> {
+        self.semantic
+            .recall_with_embedding(query, limit, filter, query_embedding)
+    }
+
+    /// Update the embedding for an existing memory.
+    pub fn update_embedding(&self, id: MemoryId, embedding: &[f32]) -> LibreFangResult<()> {
+        self.semantic.update_embedding(id, embedding)
+    }
+
+    /// Async wrapper for `recall_with_embedding` — runs in a blocking thread.
+    pub async fn recall_with_embedding_async(
+        &self,
+        query: &str,
+        limit: usize,
+        filter: Option<MemoryFilter>,
+        query_embedding: Option<&[f32]>,
+    ) -> LibreFangResult<Vec<MemoryFragment>> {
+        let store = self.semantic.clone();
+        let query = query.to_string();
+        let embedding_owned = query_embedding.map(|e| e.to_vec());
+        tokio::task::spawn_blocking(move || {
+            store.recall_with_embedding(&query, limit, filter, embedding_owned.as_deref())
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Async wrapper for `remember_with_embedding` — runs in a blocking thread.
+    ///
+    /// Applies chunking when enabled and the content exceeds `max_chunk_size`.
+    #[allow(clippy::too_many_arguments)]
+    pub async fn remember_with_embedding_async(
+        &self,
+        agent_id: AgentId,
+        content: &str,
+        source: MemorySource,
+        scope: &str,
+        metadata: HashMap<String, serde_json::Value>,
+        embedding: Option<&[f32]>,
+        peer_id: Option<&str>,
+    ) -> LibreFangResult<MemoryId> {
+        let store = self.semantic.clone();
+        let content = content.to_string();
+        let scope = scope.to_string();
+        let embedding_owned = embedding.map(|e| e.to_vec());
+        let chunk_config = self.chunk_config.clone();
+        let peer_id_owned = peer_id.map(String::from);
+        tokio::task::spawn_blocking(move || {
+            Self::store_with_chunking(
+                &store,
+                &chunk_config,
+                agent_id,
+                &content,
+                source,
+                &scope,
+                metadata,
+                embedding_owned.as_deref(),
+                peer_id_owned.as_deref(),
+            )
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    // -----------------------------------------------------------------
+    // Task queue operations
+    // -----------------------------------------------------------------
+
+    /// Post a new task to the shared queue, subject to `caps`. Returns the task ID.
+    ///
+    /// Returns [`LibreFangError::QuotaExceeded`] — HTTP 429 — when a non-zero cap is already reached, which is what makes `[queue] max_depth_per_agent` / `max_depth_global` mean anything (#8219).
+    /// Before that the two knobs were declared, documented as "New tasks are rejected when full", echoed back by `GET /api/queue/status`, and read by nothing: an agent looping on the `task_post` tool filled the table for the life of the install.
+    ///
+    /// The counts and the INSERT run in one `IMMEDIATE` transaction.
+    /// Counting outside it would let two concurrent posts against a cap of N both read N-1 and both insert, which is the failure a depth cap exists to prevent and the one a loop reaches first.
+    pub async fn task_post(
+        &self,
+        title: &str,
+        description: &str,
+        assigned_to: Option<&str>,
+        created_by: Option<&str>,
+        caps: TaskQueueCaps,
+    ) -> LibreFangResult<String> {
+        let conn = self.pool.clone();
+        let title = title.to_string();
+        let description = description.to_string();
+        let assigned_to = assigned_to.unwrap_or("").to_string();
+        let created_by = created_by.unwrap_or("").to_string();
+
+        tokio::task::spawn_blocking(move || {
+            let id = uuid::Uuid::new_v4().to_string();
+            let now = chrono::Utc::now().to_rfc3339();
+            let mut db = conn.get().map_err(LibreFangError::memory)?;
+            let tx = db
+                .transaction_with_behavior(rusqlite::TransactionBehavior::Immediate)
+                .map_err(LibreFangError::memory)?;
+
+            if caps.max_depth_global > 0 {
+                let depth: i64 = tx
+                    .query_row(
+                        "SELECT COUNT(*) FROM task_queue WHERE status = 'pending'",
+                        [],
+                        |row| row.get(0),
+                    )
+                    .map_err(LibreFangError::memory)?;
+                if depth >= i64::from(caps.max_depth_global) {
+                    return Err(LibreFangError::QuotaExceeded(format!(
+                        "task queue is full: {depth} pending tasks, [queue] max_depth_global = {}",
+                        caps.max_depth_global
+                    )));
+                }
+            }
+
+            // An unassigned task belongs to the shared pool, not to an agent: `assigned_to` is stored as `''` for it, so counting those under the per-agent cap would put every unassigned task in one bucket keyed on the empty string and reject the pool at the limit meant for a single agent.
+            if caps.max_depth_per_agent > 0 && !assigned_to.is_empty() {
+                let depth: i64 = tx
+                    .query_row(
+                        "SELECT COUNT(*) FROM task_queue WHERE status = 'pending' AND assigned_to = ?1",
+                        rusqlite::params![assigned_to],
+                        |row| row.get(0),
+                    )
+                    .map_err(LibreFangError::memory)?;
+                if depth >= i64::from(caps.max_depth_per_agent) {
+                    return Err(LibreFangError::QuotaExceeded(format!(
+                        "queue for '{assigned_to}' is full: {depth} pending tasks, [queue] max_depth_per_agent = {}",
+                        caps.max_depth_per_agent
+                    )));
+                }
+            }
+
+            tx.execute(
+                "INSERT INTO task_queue (id, agent_id, task_type, payload, status, priority, created_at, title, description, assigned_to, created_by)
+                 VALUES (?1, ?2, ?3, ?4, 'pending', 0, ?5, ?6, ?7, ?8, ?9)",
+                rusqlite::params![id, &created_by, &title, b"", now, title, description, assigned_to, created_by],
+            )
+            .map_err(LibreFangError::memory)?;
+            tx.commit().map_err(LibreFangError::memory)?;
+            Ok(id)
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Claim the next pending task (optionally for a specific assignee). Returns task JSON or None.
+    ///
+    /// `agent_id` must be the canonical UUID. `agent_name` is the human-readable
+    /// name for the same agent; tasks posted with a name (rather than UUID) in
+    /// `assigned_to` are also matched so that name-based assignments are never
+    /// silently dropped (fixes issue #2841).
+    pub async fn task_claim(
+        &self,
+        agent_id: &str,
+        agent_name: Option<&str>,
+    ) -> LibreFangResult<Option<serde_json::Value>> {
+        // Claiming also persists native classification. A selected or unknown
+        // payload is never returned, even after another caller resets status.
+        self.claim_native_jobs(None, agent_id, agent_name).await?
+            .into_iter().next().map(|job| serde_json::to_value(job)
+                .map_err(|_| LibreFangError::Internal("claimed task encoding failed".into())))
+            .transpose()
+    }
+
+    /// Mark a task as completed with a result string.
+    pub async fn task_complete(&self, task_id: &str, result: &str) -> LibreFangResult<()> {
+        let conn = self.pool.clone();
+        let task_id = task_id.to_string();
+        let result = result.to_string();
+
+        tokio::task::spawn_blocking(move || {
+            let now_chrono = chrono::Utc::now();
+            let now = now_chrono.to_rfc3339();
+            let now_unix = now_chrono.timestamp();
+            let db = conn.get().map_err(LibreFangError::memory)?;
+            let payload = task_dispatch::native_payload(&db, &task_id)?
+                .ok_or_else(|| LibreFangError::InvalidInput("task requires its original harness control".into()))?;
+            // `finished_at` is the unix-epoch column the retention sweep reads (#3466).
+            let rows = db.execute(
+                "UPDATE task_queue SET status = 'completed', result = ?2, completed_at = ?3, finished_at = ?4, claimed_at = NULL WHERE id = ?1 AND status = 'in_progress' AND payload = ?5",
+                rusqlite::params![task_id, result, now, now_unix, payload],
+            ).map_err(LibreFangError::memory)?;
+            if rows == 0 {
+                return Err(LibreFangError::Internal(format!("Task not active: {task_id}")));
+            }
+            Ok(())
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Delete a task by ID. Returns true if a row was deleted.
+    pub async fn task_delete(&self, task_id: &str) -> LibreFangResult<bool> {
+        let conn = self.pool.clone();
+        let task_id = task_id.to_string();
+
+        tokio::task::spawn_blocking(move || {
+            let db = conn.get().map_err(LibreFangError::memory)?;
+            let Some(payload) = task_dispatch::native_payload(&db, &task_id)? else { return Ok(false); };
+            let rows = db
+                .execute(
+                    "DELETE FROM task_queue WHERE id = ?1 AND payload = ?2",
+                    rusqlite::params![task_id, payload],
+                )
+                .map_err(LibreFangError::memory)?;
+            Ok(rows > 0)
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Retry a failed or completed task by resetting it to pending.
+    /// Only resets tasks with status 'completed' or 'failed' — in_progress
+    /// tasks are excluded to prevent duplicate execution.
+    pub async fn task_retry(&self, task_id: &str) -> LibreFangResult<bool> {
+        let conn = self.pool.clone();
+        let task_id = task_id.to_string();
+
+        tokio::task::spawn_blocking(move || {
+            let db = conn.get().map_err(LibreFangError::memory)?;
+            let Some((payload, native)) = task_dispatch::native_mutation_payload(&db, &task_id)? else { return Ok(false); };
+            let rows = db
+                .execute(
+                    "UPDATE task_queue \
+                     SET status = 'pending', result = NULL, completed_at = NULL, \
+                         finished_at = NULL, claimed_at = NULL, payload = ?3 \
+                     WHERE id = ?1 AND status IN ('completed', 'failed') AND payload = ?2",
+                    rusqlite::params![task_id, payload, native],
+                )
+                .map_err(LibreFangError::memory)?;
+            Ok(rows > 0)
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Count of `task_queue` rows per status, as `(status, count)` pairs.
+    ///
+    /// The summary endpoint used to derive these from [`Self::task_list`] with no filter, which materialises every row in the table and builds one `serde_json::Value` per row in order to answer with four integers.
+    /// `task_list` has no `LIMIT` and `task_prune_finished` only deletes terminal rows, so that cost grows with the table for the life of the install (#8219) — and `GET /api/tasks/status`, the endpoint that paid it, is what the dashboard polls.
+    ///
+    /// Returns the raw pairs rather than a struct with four named fields so a status the caller does not recognise still reaches it: the previous code logged a WARN naming the unknown status and the task it came from, and a fixed shape would have silently dropped that.
+    pub async fn task_status_counts(&self) -> LibreFangResult<Vec<(String, u64)>> {
+        let conn = self.pool.clone();
+        tokio::task::spawn_blocking(move || {
+            let db = conn.get().map_err(LibreFangError::memory)?;
+            let mut stmt = db
+                .prepare("SELECT status, COUNT(*) FROM task_queue GROUP BY status")
+                .map_err(LibreFangError::memory)?;
+            let rows = stmt
+                .query_map([], |row| {
+                    Ok((row.get::<_, String>(0)?, row.get::<_, i64>(1)? as u64))
+                })
+                .map_err(LibreFangError::memory)?;
+            let mut counts = Vec::new();
+            for row in rows {
+                counts.push(row.map_err(LibreFangError::memory)?);
+            }
+            Ok(counts)
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// List tasks, optionally filtered by status, with no bound on the result size.
+    ///
+    /// Prefer [`Self::task_list_page`] anywhere a caller has a page size: this materialises one `serde_json::Value` per row in the table, and only terminal rows are ever pruned.
+    pub async fn task_list(&self, status: Option<&str>) -> LibreFangResult<Vec<serde_json::Value>> {
+        self.task_list_page(status, None, None, None)
+            .await
+            .map(|(tasks, _total)| tasks)
+    }
+
+    /// List one page of tasks and the number of rows the filters match, bounded in SQL.
+    ///
+    /// Every argument is a filter or a window the statement carries, because doing any of it in Rust means materialising the rows first — the API's `?limit=` used to truncate a fully built `Vec`, so a request for ten tasks allocated one JSON object per row in the table and threw all but ten away (#8219), and `?assigned_to=` still retained over that same `Vec`.
+    ///
+    /// `total` is the count matching `status` / `assigned_to` *before* the window, so a paging client can tell how many more there are; it is a `COUNT(*)`, not the page's length.
+    /// `offset` without `limit` uses SQLite's `LIMIT -1`, so a caller can skip without also having to cap.
+    pub async fn task_list_page(
+        &self,
+        status: Option<&str>,
+        assigned_to: Option<&str>,
+        limit: Option<u32>,
+        offset: Option<u32>,
+    ) -> LibreFangResult<(Vec<serde_json::Value>, u64)> {
+        let conn = self.pool.clone();
+        let status = status.map(|s| s.to_string());
+        let assigned_to = assigned_to.map(|s| s.to_string());
+
+        tokio::task::spawn_blocking(move || {
+            let db = conn.get().map_err(LibreFangError::memory)?;
+
+            let mut clauses: Vec<&str> = Vec::new();
+            let mut params: Vec<Box<dyn rusqlite::types::ToSql>> = Vec::new();
+            if let Some(s) = &status {
+                params.push(Box::new(s.clone()));
+                clauses.push("status = ?");
+            }
+            if let Some(a) = &assigned_to {
+                params.push(Box::new(a.clone()));
+                clauses.push("assigned_to = ?");
+            }
+            let where_sql = if clauses.is_empty() {
+                String::new()
+            } else {
+                format!(" WHERE {}", clauses.join(" AND "))
+            };
+            let params_refs: Vec<&dyn rusqlite::types::ToSql> =
+                params.iter().map(|p| p.as_ref()).collect();
+
+            let total: i64 = db
+                .query_row(
+                    &format!("SELECT COUNT(*) FROM task_queue{where_sql}"),
+                    params_refs.as_slice(),
+                    |row| row.get(0),
+                )
+                .map_err(LibreFangError::memory)?;
+
+            // `LIMIT -1` is SQLite's "no limit", which is what lets an offset-only request stay a single statement shape.
+            let window = match (limit, offset) {
+                (None, None) => String::new(),
+                (limit, offset) => format!(
+                    " LIMIT {} OFFSET {}",
+                    limit.map(i64::from).unwrap_or(-1),
+                    offset.unwrap_or(0)
+                ),
+            };
+            let sql = format!(
+                "SELECT id, title, description, status, assigned_to, created_by, created_at, completed_at, result, claimed_at FROM task_queue{where_sql} ORDER BY created_at DESC{window}"
+            );
+
+            let mut stmt = db.prepare(&sql).map_err(LibreFangError::memory)?;
+            let rows = stmt.query_map(params_refs.as_slice(), |row| {
+                Ok(serde_json::json!({
+                    "id": row.get::<_, String>(0)?,
+                    "title": row.get::<_, String>(1).unwrap_or_default(),
+                    "description": row.get::<_, String>(2).unwrap_or_default(),
+                    "status": row.get::<_, String>(3)?,
+                    "assigned_to": row.get::<_, String>(4).unwrap_or_default(),
+                    "created_by": row.get::<_, String>(5).unwrap_or_default(),
+                    "created_at": row.get::<_, String>(6).unwrap_or_default(),
+                    "completed_at": row.get::<_, Option<String>>(7).unwrap_or(None),
+                    "result": row.get::<_, Option<String>>(8).unwrap_or(None),
+                    "claimed_at": row.get::<_, Option<String>>(9).unwrap_or(None),
+                }))
+            }).map_err(LibreFangError::memory)?;
+
+            let mut tasks = Vec::new();
+            for row in rows {
+                tasks.push(row.map_err(LibreFangError::memory)?);
+            }
+            Ok((tasks, total as u64))
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Reset `in_progress` tasks whose worker stalled without calling
+    /// `task_complete` — fixes issue #2923. A task is considered stuck when
+    /// `claimed_at` is older than `ttl_secs` seconds from now.
+    ///
+    /// When `max_retries > 0`: tasks that have already been reset that many
+    /// times are marked `failed` instead of pending, preventing infinite retry
+    /// loops. Pass `0` to disable the cap (current default behaviour).
+    ///
+    /// Returns the list of reset task IDs so the caller can log / emit events.
+    pub async fn task_reset_stuck(
+        &self,
+        ttl_secs: u64,
+        max_retries: u32,
+    ) -> LibreFangResult<Vec<String>> {
+        let conn = self.pool.clone();
+
+        tokio::task::spawn_blocking(move || {
+            let db = conn.get().map_err(LibreFangError::memory)?;
+
+            let cutoff = chrono::Utc::now()
+                - chrono::Duration::from_std(std::time::Duration::from_secs(ttl_secs))
+                    .unwrap_or_else(|_| chrono::Duration::seconds(0));
+            let cutoff_str = cutoff.to_rfc3339();
+
+            let mut stmt = db
+                .prepare(
+                    "SELECT id, COALESCE(retry_count, 0) FROM task_queue \
+                     WHERE status = 'in_progress' \
+                       AND claimed_at IS NOT NULL \
+                       AND claimed_at < ?1",
+                )
+                .map_err(LibreFangError::memory)?;
+
+            let stuck: Vec<(String, u32)> = stmt
+                .query_map(rusqlite::params![cutoff_str], |row| {
+                    Ok((row.get::<_, String>(0)?, row.get::<_, u32>(1)?))
+                })
+                .map_err(LibreFangError::memory)?
+                .collect::<rusqlite::Result<Vec<_>>>()
+                .map_err(LibreFangError::memory)?;
+
+            if stuck.is_empty() {
+                return Ok(Vec::new());
+            }
+
+            let mut reset_ids = Vec::new();
+            for (id, retries) in &stuck {
+                let Some((payload, native)) = task_dispatch::native_mutation_payload(&db, id)? else { continue; };
+                let changed;
+                let exhausted = max_retries > 0 && *retries >= max_retries;
+                if exhausted {
+                    let now_unix = chrono::Utc::now().timestamp();
+                    changed = db.execute(
+                        "UPDATE task_queue \
+                         SET status = 'failed', assigned_to = '', claimed_at = NULL, \
+                             finished_at = ?2, payload = ?5, \
+                             retry_count = retry_count + 1 \
+                         WHERE id = ?1 AND status = 'in_progress' AND payload = ?3 AND claimed_at < ?4",
+                        rusqlite::params![id, now_unix, payload, cutoff_str, native],
+                    )
+                    .map_err(LibreFangError::memory)?;
+                } else {
+                    changed = db.execute(
+                        "UPDATE task_queue \
+                         SET status = 'pending', assigned_to = '', claimed_at = NULL, payload = ?4, \
+                             retry_count = retry_count + 1 \
+                         WHERE id = ?1 AND status = 'in_progress' AND payload = ?2 AND claimed_at < ?3",
+                        rusqlite::params![id, payload, cutoff_str, native],
+                    )
+                    .map_err(LibreFangError::memory)?;
+                }
+                if changed == 1 { reset_ids.push(id.clone()); }
+            }
+            Ok(reset_ids)
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Get a single task by ID.
+    pub async fn task_get(&self, task_id: &str) -> LibreFangResult<Option<serde_json::Value>> {
+        let conn = self.pool.clone();
+        let task_id = task_id.to_string();
+
+        tokio::task::spawn_blocking(move || {
+            let db = conn.get().map_err(LibreFangError::memory)?;
+            let mut stmt = db
+                .prepare(
+                    "SELECT id, title, description, status, assigned_to, created_by, \
+                     created_at, completed_at, result, claimed_at, \
+                     COALESCE(retry_count, 0) \
+                     FROM task_queue WHERE id = ?1",
+                )
+                .map_err(LibreFangError::memory)?;
+            let mut rows = stmt
+                .query_map(rusqlite::params![task_id], |row| {
+                    Ok(serde_json::json!({
+                        "id":           row.get::<_, String>(0)?,
+                        "title":        row.get::<_, String>(1).unwrap_or_default(),
+                        "description":  row.get::<_, String>(2).unwrap_or_default(),
+                        "status":       row.get::<_, String>(3)?,
+                        "assigned_to":  row.get::<_, String>(4).unwrap_or_default(),
+                        "created_by":   row.get::<_, String>(5).unwrap_or_default(),
+                        "created_at":   row.get::<_, String>(6).unwrap_or_default(),
+                        "completed_at": row.get::<_, Option<String>>(7).unwrap_or(None),
+                        "result":       row.get::<_, Option<String>>(8).unwrap_or(None),
+                        "claimed_at":   row.get::<_, Option<String>>(9).unwrap_or(None),
+                        "retry_count":  row.get::<_, u32>(10).unwrap_or(0),
+                    }))
+                })
+                .map_err(LibreFangError::memory)?;
+            match rows.next() {
+                Some(Ok(v)) => Ok(Some(v)),
+                Some(Err(e)) => Err(LibreFangError::memory(e)),
+                None => Ok(None),
+            }
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Update a task's status to `pending` (reset) or `cancelled`.
+    ///
+    /// Only `failed` tasks can be reset to `pending`; an `in_progress` task
+    /// remains claimed so a second worker cannot execute it concurrently.
+    /// Any non-terminal task can be cancelled.
+    /// Returns `false` when the task was not found or the transition is invalid.
+    pub async fn task_update_status(
+        &self,
+        task_id: &str,
+        new_status: &str,
+    ) -> LibreFangResult<bool> {
+        let conn = self.pool.clone();
+        let task_id = task_id.to_string();
+        let new_status = new_status.to_string();
+
+        tokio::task::spawn_blocking(move || {
+            let db = conn.get().map_err(LibreFangError::memory)?;
+            let Some((payload, native)) = task_dispatch::native_mutation_payload(&db, &task_id)? else { return Ok(false); };
+            let now_unix = chrono::Utc::now().timestamp();
+            let rows = match new_status.as_str() {
+                // Reset to pending: clear `finished_at` so a previous
+                // `failed` stamp (line 985) doesn't make the row look
+                // immediately prune-eligible if it later fails again
+                // before the timestamp is refreshed (#3466).
+                "pending" => db.execute(
+                    "UPDATE task_queue \
+                     SET status = 'pending', claimed_at = NULL, assigned_to = '', \
+                         finished_at = NULL, payload = ?3 \
+                     WHERE id = ?1 AND status = 'failed' AND payload = ?2",
+                    rusqlite::params![task_id, payload, native],
+                ),
+                // Cancellation is a terminal transition like complete/fail,
+                // so it MUST stamp `finished_at` — otherwise the retention
+                // sweep's `finished_at IS NOT NULL` filter excludes
+                // cancelled rows forever and `task_queue` grows unbounded
+                // for any agent that uses cancel (#3466).
+                "cancelled" => db.execute(
+                    "UPDATE task_queue \
+                     SET status = 'cancelled', finished_at = ?2 \
+                     WHERE id = ?1 AND status NOT IN ('completed', 'cancelled') AND payload = ?3",
+                    rusqlite::params![task_id, now_unix, payload],
+                ),
+                _ => {
+                    return Err(LibreFangError::InvalidInput(format!(
+                        "Invalid status '{new_status}': only 'pending' and 'cancelled' are allowed"
+                    )))
+                }
+            }
+            .map_err(LibreFangError::memory)?;
+            Ok(rows > 0)
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Expire `pending` tasks created more than `ttl_secs` ago (`[queue] task_ttl_secs`), returning the number expired. A `ttl_secs` of `0` disables expiry and is a no-op.
+    ///
+    /// The row is moved to `cancelled` with a `finished_at` stamp and a `result` naming the TTL, not deleted.
+    /// Deleting would make a task an operator queued and has not yet staffed vanish with no record, which is a worse answer than the unbounded growth #8219 is about; `cancelled` is the terminal status the dashboard, the status counts and `task_prune_finished` already understand, so reclamation happens on the existing `task_queue_retention_days` horizon and the operator can see what happened in between.
+    ///
+    /// `created_at` is RFC 3339 text written by `Utc::now().to_rfc3339()` at every insert site, so the fixed-offset strings compare lexically in the order they compare chronologically.
+    pub async fn task_expire_stale(&self, ttl_secs: u64) -> LibreFangResult<usize> {
+        if ttl_secs == 0 {
+            return Ok(0);
+        }
+        let conn = self.pool.clone();
+        tokio::task::spawn_blocking(move || {
+            let db = conn.get().map_err(LibreFangError::memory)?;
+            let now = chrono::Utc::now();
+            let cutoff = (now - chrono::Duration::seconds(ttl_secs as i64)).to_rfc3339();
+            let reason =
+                format!("expired: unclaimed for more than [queue] task_ttl_secs ({ttl_secs}s)");
+            let eligible = task_dispatch::native_rows(&db,
+                "status = 'pending' AND created_at < ?1", &[&cutoff])?;
+            let mut rows = 0;
+            for (id, payload) in eligible {
+                rows += db.execute("UPDATE task_queue SET status = 'cancelled', finished_at = ?1, result = ?2
+                    WHERE id = ?3 AND status = 'pending' AND created_at < ?4 AND payload = ?5",
+                    rusqlite::params![now.timestamp(), reason, id, cutoff, payload]).map_err(LibreFangError::memory)?;
+            }
+            Ok(rows)
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Hard-delete `completed` / `failed` / `cancelled` rows whose
+    /// `finished_at` is older than `older_than_days` days. Bounds the
+    /// growth of `task_queue` so the queue table doesn't accumulate
+    /// every job since the daemon was first installed (#3466).
+    ///
+    /// Rows with `finished_at IS NULL` (legacy completions written
+    /// before migration v29) are ignored — they'll be picked up the
+    /// next time their status changes, or operators can backfill with
+    /// `UPDATE task_queue SET finished_at = strftime('%s','now') WHERE
+    /// status IN ('completed','failed','cancelled') AND finished_at IS NULL`.
+    pub async fn task_prune_finished(&self, older_than_days: u64) -> LibreFangResult<usize> {
+        if older_than_days == 0 {
+            return Ok(0);
+        }
+        let conn = self.pool.clone();
+        tokio::task::spawn_blocking(move || {
+            let db = conn.get().map_err(LibreFangError::memory)?;
+            let cutoff = chrono::Utc::now().timestamp() - (older_than_days as i64) * 86_400;
+            let eligible = task_dispatch::native_rows(&db,
+                "status IN ('completed', 'failed', 'cancelled') AND finished_at IS NOT NULL AND finished_at < ?1", &[&cutoff])?;
+            let mut rows = 0;
+            for (id, payload) in eligible {
+                rows += db.execute("DELETE FROM task_queue WHERE id = ?1
+                    AND status IN ('completed', 'failed', 'cancelled') AND finished_at < ?2 AND payload = ?3",
+                    rusqlite::params![id, cutoff, payload]).map_err(LibreFangError::memory)?;
+            }
+            Ok(rows)
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    // -----------------------------------------------------------------
+    // Async wrappers for sync substrate methods invoked from tokio tasks.
+    //
+    // Each wrapper here moves SQLite I/O onto
+    // tokio's blocking thread pool (#3378). Without it, slow INSERTs
+    // (FTS5 tokenization, transactional cascades, large UPDATE plans) would
+    // park whichever tokio worker thread was running the future, stalling
+    // every other future scheduled on that worker until the blocking I/O
+    // completed. The underlying sync methods are kept verbatim — they are
+    // still used by tests, migrations, and other non-async paths.
+    // -----------------------------------------------------------------
+
+    /// Async wrapper for [`Self::save_agent`].
+    pub async fn save_agent_async(&self, entry: &AgentEntry) -> LibreFangResult<()> {
+        let store = self.structured.clone();
+        let entry = entry.clone();
+        tokio::task::spawn_blocking(move || store.save_agent(&entry))
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Async wrapper for [`Self::load_all_agents`].
+    pub async fn load_all_agents_async(&self) -> LibreFangResult<Vec<AgentEntry>> {
+        let store = self.structured.clone();
+        tokio::task::spawn_blocking(move || store.load_all_agents())
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Async wrapper for [`Self::remove_agent`]. Body is shared via
+    /// [`remove_agent_inner`] so a future change to the agent-deletion
+    /// strategy (e.g. adding a new per-agent table) only has to land in
+    /// one place — the sync method and this wrapper both delegate.
+    pub async fn remove_agent_async(&self, agent_id: AgentId) -> LibreFangResult<()> {
+        let conn = self.pool.clone();
+        tokio::task::spawn_blocking(move || {
+            let conn = conn.get().map_err(LibreFangError::memory)?;
+            remove_agent_inner(&conn, agent_id)
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Async wrapper for [`Self::structured_get`].
+    ///
+    /// No in-tree caller yet — staged for #3378 part 2 (kernel-side
+    /// migration of the remaining sync substrate calls). Keep alongside
+    /// the other `_async` wrappers so a future dead-code sweep doesn't
+    /// remove it before its caller lands.
+    pub async fn structured_get_async(
+        &self,
+        agent_id: AgentId,
+        key: &str,
+    ) -> LibreFangResult<Option<serde_json::Value>> {
+        let store = self.structured.clone();
+        let key = key.to_string();
+        tokio::task::spawn_blocking(move || store.get(agent_id, &key))
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Async wrapper for [`Self::get_session`].
+    pub async fn get_session_async(
+        &self,
+        session_id: SessionId,
+    ) -> LibreFangResult<Option<Session>> {
+        let store = self.sessions.clone();
+        tokio::task::spawn_blocking(move || store.get_session(session_id))
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Async wrapper for [`Self::get_agent_session_ids`].
+    ///
+    /// No in-tree caller yet — staged for #3378 part 2 (kernel-side
+    /// migration of the remaining sync substrate calls). Keep alongside
+    /// the other `_async` wrappers so a future dead-code sweep doesn't
+    /// remove it before its caller lands.
+    pub async fn get_agent_session_ids_async(
+        &self,
+        agent_id: AgentId,
+    ) -> LibreFangResult<Vec<SessionId>> {
+        let store = self.sessions.clone();
+        tokio::task::spawn_blocking(move || store.get_agent_session_ids(agent_id))
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Async wrapper for [`Self::delete_canonical_session`].
+    ///
+    /// No in-tree caller yet — staged for #3378 part 2 (kernel-side
+    /// migration of the remaining sync substrate calls). Keep alongside
+    /// the other `_async` wrappers so a future dead-code sweep doesn't
+    /// remove it before its caller lands.
+    pub async fn delete_canonical_session_async(&self, agent_id: AgentId) -> LibreFangResult<()> {
+        let store = self.sessions.clone();
+        tokio::task::spawn_blocking(move || store.delete_canonical_session(agent_id))
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Async wrapper for [`Self::append_canonical`].
+    pub async fn append_canonical_async(
+        &self,
+        agent_id: AgentId,
+        messages: &[librefang_types::message::Message],
+        compaction_threshold: Option<usize>,
+        session_id: Option<SessionId>,
+    ) -> LibreFangResult<()> {
+        let store = self.sessions.clone();
+        let messages = messages.to_vec();
+        tokio::task::spawn_blocking(move || {
+            store.append_canonical(agent_id, &messages, compaction_threshold, session_id)?;
+            Ok(())
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    /// Async wrapper for [`Self::vacuum_if_shrank`]. VACUUM rewrites the
+    /// whole DB file and can take seconds — keeping it on the blocking
+    /// pool is even more important than for the small CRUD wrappers above.
+    /// Body is shared via [`vacuum_inner`] so the sync path and this
+    /// wrapper stay in lockstep.
+    pub async fn vacuum_if_shrank_async(&self, pruned_count: usize) -> LibreFangResult<()> {
+        if pruned_count == 0 {
+            return Ok(());
+        }
+        let conn = self.pool.clone();
+        tokio::task::spawn_blocking(move || -> LibreFangResult<()> {
+            let conn = conn.get().map_err(LibreFangError::memory)?;
+            vacuum_inner(&conn, pruned_count);
+            Ok(())
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+}
+
+/// Shared body for [`MemorySubstrate::remove_agent`] and its async sibling.
+/// Both helpers share their canonical DELETE list with the standalone
+/// `*_agent` methods on the individual stores so a new agent-scoped table
+/// only has to be added in one place.
+///
+/// The caller passes in an already-acquired `PooledConnection`; this
+/// function only owns the transaction lifecycle.
+fn remove_agent_inner(conn: &Connection, agent_id: AgentId) -> LibreFangResult<()> {
+    let id = agent_id.0.to_string();
+    let tx = conn
+        .unchecked_transaction()
+        .map_err(LibreFangError::memory)?;
+    crate::session::execute_session_agent_deletes(&tx, &id)?;
+    crate::structured::execute_structured_agent_deletes(&tx, &id)?;
+    // An ephemeral worker's run record is owned by the agent that spawned it (#7752).
+    // Deleting the parent takes its workers with it in this same transaction — "retention follows the parent, no orphans by construction" is the entire claim `ephemeral_runs` makes.
+    crate::ephemeral_run_store::execute_ephemeral_run_agent_deletes(&tx, &id)?;
+    tx.commit().map_err(LibreFangError::memory)?;
+    Ok(())
+}
+
+/// Shared body for [`MemorySubstrate::vacuum_if_shrank`] and its async
+/// sibling. Errors are logged as warnings rather than propagated — a
+/// failed VACUUM is not fatal.
+///
+/// Caller is responsible for the `pruned_count == 0` short-circuit and
+/// for passing an already-acquired `PooledConnection`.
+fn vacuum_inner(conn: &Connection, pruned_count: usize) {
+    // Flush WAL frames to the main DB file first so VACUUM has less work.
+    if let Err(e) = conn.execute_batch("PRAGMA wal_checkpoint(TRUNCATE);") {
+        tracing::warn!(error = %e, "WAL checkpoint before VACUUM failed; continuing");
+    }
+    tracing::info!(pruned_count, "Running VACUUM after session prune");
+    if let Err(e) = conn.execute_batch("VACUUM;") {
+        tracing::warn!(error = %e, "VACUUM after session prune failed");
+    }
+}
+
+#[async_trait]
+impl Memory for MemorySubstrate {
+    async fn get(
+        &self,
+        agent_id: AgentId,
+        key: &str,
+    ) -> LibreFangResult<Option<serde_json::Value>> {
+        let store = self.structured.clone();
+        let key = key.to_string();
+        tokio::task::spawn_blocking(move || store.get(agent_id, &key))
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    async fn set(
+        &self,
+        agent_id: AgentId,
+        key: &str,
+        value: serde_json::Value,
+    ) -> LibreFangResult<()> {
+        let store = self.structured.clone();
+        let key = key.to_string();
+        tokio::task::spawn_blocking(move || store.set(agent_id, &key, value))
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    async fn delete(&self, agent_id: AgentId, key: &str) -> LibreFangResult<()> {
+        let store = self.structured.clone();
+        let key = key.to_string();
+        tokio::task::spawn_blocking(move || store.delete(agent_id, &key))
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    async fn remember(
+        &self,
+        agent_id: AgentId,
+        content: &str,
+        source: MemorySource,
+        scope: &str,
+        metadata: HashMap<String, serde_json::Value>,
+        peer_id: Option<&str>,
+    ) -> LibreFangResult<MemoryId> {
+        // Delegate to remember_with_embedding (no embedding) which handles chunking.
+        self.remember_with_embedding_async(
+            agent_id, content, source, scope, metadata, None, peer_id,
+        )
+        .await
+    }
+
+    async fn recall(
+        &self,
+        query: &str,
+        limit: usize,
+        filter: Option<MemoryFilter>,
+    ) -> LibreFangResult<Vec<MemoryFragment>> {
+        let store = self.semantic.clone();
+        let query = query.to_string();
+        tokio::task::spawn_blocking(move || store.recall(&query, limit, filter))
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    async fn forget(&self, id: MemoryId) -> LibreFangResult<()> {
+        let store = self.semantic.clone();
+        tokio::task::spawn_blocking(move || store.forget(id))
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    async fn add_entity(
+        &self,
+        entity: Entity,
+        agent_id: &str,
+        peer_id: Option<&str>,
+    ) -> LibreFangResult<String> {
+        let store = self.knowledge.clone();
+        // Own the id before the move into the blocking closure ('static).
+        // The caller's agent id scopes the row so agent-scoped reads / delete see it; an empty caller id keeps the historical shared/unscoped write.
+        let agent = agent_id.to_string();
+        let peer = peer_id.map(str::to_string);
+        tokio::task::spawn_blocking(move || store.add_entity(entity, &agent, peer.as_deref()))
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    async fn add_relation(
+        &self,
+        relation: Relation,
+        agent_id: &str,
+        peer_id: Option<&str>,
+    ) -> LibreFangResult<String> {
+        let store = self.knowledge.clone();
+        let agent = agent_id.to_string();
+        let peer = peer_id.map(str::to_string);
+        tokio::task::spawn_blocking(move || store.add_relation(relation, &agent, peer.as_deref()))
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    async fn query_graph(
+        &self,
+        pattern: GraphPattern,
+        peer_id: Option<&str>,
+    ) -> LibreFangResult<Vec<GraphMatch>> {
+        let store = self.knowledge.clone();
+        let peer = peer_id.map(str::to_string);
+        tokio::task::spawn_blocking(move || {
+            store.query_graph_scoped(pattern, None, peer.as_deref())
+        })
+        .await
+        .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    async fn consolidate(&self) -> LibreFangResult<ConsolidationReport> {
+        let engine = self.consolidation.clone();
+        tokio::task::spawn_blocking(move || engine.consolidate())
+            .await
+            .map_err(|e| LibreFangError::Internal(e.to_string()))?
+    }
+
+    async fn export(&self, format: ExportFormat) -> LibreFangResult<Vec<u8>> {
+        let _ = format;
+        Ok(Vec::new())
+    }
+
+    async fn import(&self, _data: &[u8], _format: ExportFormat) -> LibreFangResult<ImportReport> {
+        Ok(ImportReport {
+            entities_imported: 0,
+            relations_imported: 0,
+            memories_imported: 0,
+            errors: vec!["Import not yet implemented in Phase 1".to_string()],
+        })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// #8219: the aggregate must agree with what listing every row would have counted.
+    ///
+    /// The endpoint's four integers are the contract, not the query that produces them, so this compares the new `GROUP BY` against the old list-and-tally on the same store — including a status the summary handler does not recognise, which has to survive as its own bucket rather than being folded away.
+    #[tokio::test]
+    async fn task_status_counts_agrees_with_listing_every_row() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+
+        for (title, assignee) in [("a", "agent-1"), ("b", "agent-1"), ("c", "agent-2")] {
+            substrate
+                .task_post(
+                    title,
+                    "body",
+                    Some(assignee),
+                    Some("boss"),
+                    TaskQueueCaps::UNLIMITED,
+                )
+                .await
+                .expect("post");
+        }
+        // Drive one row out of `pending` through the normal path, and put another
+        // into a status the handler has no arm for.
+        let claimed = substrate
+            .task_claim("agent-1", None)
+            .await
+            .expect("claim")
+            .expect("a pending task to claim");
+        substrate
+            .task_complete(claimed["id"].as_str().unwrap(), "done")
+            .await
+            .expect("complete");
+        {
+            let db = substrate.pool.get().unwrap();
+            db.execute(
+                "UPDATE task_queue SET status = 'wedged' WHERE title = 'c'",
+                [],
+            )
+            .unwrap();
+        }
+
+        let mut from_aggregate = substrate.task_status_counts().await.expect("counts");
+        from_aggregate.sort();
+
+        let mut from_listing: Vec<(String, u64)> = {
+            let mut tally: std::collections::BTreeMap<String, u64> = Default::default();
+            for task in substrate.task_list(None).await.expect("list") {
+                *tally
+                    .entry(task["status"].as_str().unwrap_or("").to_string())
+                    .or_insert(0) += 1;
+            }
+            tally.into_iter().collect()
+        };
+        from_listing.sort();
+
+        assert_eq!(from_aggregate, from_listing);
+        assert_eq!(
+            from_aggregate,
+            vec![
+                ("completed".to_string(), 1),
+                ("pending".to_string(), 1),
+                ("wedged".to_string(), 1),
+            ],
+            "an unrecognised status must arrive as its own bucket — the handler warns on it, \
+             and a shape that dropped it would lose both the warning and the total"
+        );
+    }
+
+    /// #7911: the cap the runtime reads and the cap an operator configures must be the same number.
+    /// They live in different crates — the substrate's fallback exists for test stores and for any embedder that never calls the setter — so nothing but this assertion stops them drifting apart, and a drift would silently give the daemon a different budget than the one in `config.toml`'s documented default.
+    #[test]
+    fn substrate_episodic_cap_default_matches_the_configured_default() {
+        assert_eq!(
+            DEFAULT_MAX_EPISODIC_CHARS,
+            librefang_types::config::MemoryConfig::default().max_episodic_chars
+        );
+    }
+
+    /// The kernel pushes `[memory] max_episodic_chars` in at boot, and the runtime's per-turn writer reads it back off the substrate it already holds.
+    /// A regression that dropped the setter would leave every deployment silently on the compiled fallback.
+    #[test]
+    fn substrate_episodic_cap_round_trips_through_the_boot_setter() {
+        let mut substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        assert_eq!(substrate.max_episodic_chars(), DEFAULT_MAX_EPISODIC_CHARS);
+        substrate.set_max_episodic_chars(1234);
+        assert_eq!(substrate.max_episodic_chars(), 1234);
+        // Zero is the documented "no cap" value and must survive as zero rather than being coerced back to the default.
+        substrate.set_max_episodic_chars(0);
+        assert_eq!(substrate.max_episodic_chars(), 0);
+    }
+
+    #[tokio::test]
+    async fn test_substrate_kv() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let agent_id = AgentId::new();
+        substrate
+            .set(agent_id, "key", serde_json::json!("value"))
+            .await
+            .unwrap();
+        let val = substrate.get(agent_id, "key").await.unwrap();
+        assert_eq!(val, Some(serde_json::json!("value")));
+    }
+
+    /// Regression: a knowledge entity/relation written THROUGH THE SUBSTRATE (the MCP `knowledge_add_*` tool path) must be scoped to the caller's agent.
+    /// The substrate previously hardcoded `agent_id = ""`, so the row was invisible to the agent-scoped relations read (`query_graph_scoped(.., Some(agent), ..)`) and un-deletable by `delete_by_agent`, and split-brained from proactively-extracted triples (which are written under the real agent id).
+    #[tokio::test]
+    async fn knowledge_add_scopes_the_row_to_the_caller_agent() {
+        use librefang_types::memory::{Entity, EntityType, GraphPattern, Relation, RelationType};
+
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let mk = |id: &str, name: &str, t: EntityType| Entity {
+            id: id.to_string(),
+            entity_type: t,
+            name: name.to_string(),
+            properties: HashMap::new(),
+            created_at: chrono::Utc::now(),
+            updated_at: chrono::Utc::now(),
+        };
+
+        // Write via the `Memory` trait (exactly as the MCP tool path does),
+        // threading a real caller agent id.
+        substrate
+            .add_entity(mk("alice", "Alice", EntityType::Person), "agent-x", None)
+            .await
+            .unwrap();
+        substrate
+            .add_entity(
+                mk("acme", "Acme", EntityType::Organization),
+                "agent-x",
+                None,
+            )
+            .await
+            .unwrap();
+        substrate
+            .add_relation(
+                Relation {
+                    source: "alice".to_string(),
+                    relation: RelationType::WorksAt,
+                    target: "acme".to_string(),
+                    properties: HashMap::new(),
+                    confidence: 1.0,
+                    created_at: chrono::Utc::now(),
+                },
+                "agent-x",
+                None,
+            )
+            .await
+            .unwrap();
+
+        let pattern = || GraphPattern {
+            source: None,
+            relation: Some(RelationType::WorksAt),
+            target: None,
+            max_depth: 1,
+        };
+
+        // The owning agent's scoped read sees it — this was EMPTY when the
+        // substrate wrote the row under `agent_id = ""`.
+        let mine = substrate
+            .knowledge()
+            .query_graph_scoped(pattern(), Some("agent-x"), None)
+            .unwrap();
+        assert_eq!(mine.len(), 1, "the caller agent must see its own knowledge");
+
+        // A different agent's scoped read does not.
+        let other = substrate
+            .knowledge()
+            .query_graph_scoped(pattern(), Some("other-agent"), None)
+            .unwrap();
+        assert!(
+            other.is_empty(),
+            "another agent must not see another's knowledge"
+        );
+    }
+
+    #[tokio::test]
+    async fn test_substrate_remember_recall() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let agent_id = AgentId::new();
+        substrate
+            .remember(
+                agent_id,
+                "Rust is a great language",
+                MemorySource::Conversation,
+                "episodic",
+                HashMap::new(),
+                None,
+            )
+            .await
+            .unwrap();
+        let results = substrate.recall("Rust", 10, None).await.unwrap();
+        assert_eq!(results.len(), 1);
+    }
+
+    #[tokio::test]
+    async fn test_task_post_and_list() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let id = substrate
+            .task_post(
+                "Review code",
+                "Check the auth module for issues",
+                Some("auditor"),
+                Some("orchestrator"),
+                TaskQueueCaps::UNLIMITED,
+            )
+            .await
+            .unwrap();
+        assert!(!id.is_empty());
+
+        let tasks = substrate.task_list(Some("pending")).await.unwrap();
+        assert_eq!(tasks.len(), 1);
+        assert_eq!(tasks[0]["title"], "Review code");
+        assert_eq!(tasks[0]["assigned_to"], "auditor");
+        assert_eq!(tasks[0]["status"], "pending");
+    }
+
+    #[tokio::test]
+    async fn test_task_claim_and_complete() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let task_id = substrate
+            .task_post(
+                "Audit endpoint",
+                "Security audit the /api/login endpoint",
+                Some("auditor"),
+                None,
+                TaskQueueCaps::UNLIMITED,
+            )
+            .await
+            .unwrap();
+
+        // Claim the task (name stored in assigned_to; pass matching name param)
+        let claimed = substrate
+            .task_claim("auditor", Some("auditor"))
+            .await
+            .unwrap();
+        assert!(claimed.is_some());
+        let claimed = claimed.unwrap();
+        assert_eq!(claimed["id"], task_id);
+        assert_eq!(claimed["status"], "in_progress");
+
+        // Complete the task
+        substrate
+            .task_complete(&task_id, "No vulnerabilities found")
+            .await
+            .unwrap();
+
+        // Verify it shows as completed
+        let tasks = substrate.task_list(Some("completed")).await.unwrap();
+        assert_eq!(tasks.len(), 1);
+        assert_eq!(tasks[0]["result"], "No vulnerabilities found");
+    }
+
+    #[tokio::test]
+    async fn test_task_claim_empty() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let claimed = substrate.task_claim("nobody", None).await.unwrap();
+        assert!(claimed.is_none());
+    }
+
+    /// A single pending task fired at by many concurrent claimants must be
+    /// claimed exactly once (issue #5961). The pre-fix `task_claim` SELECTed a
+    /// pending row then UPDATEd it filtered only by `id`; two claimants could
+    /// both SELECT the same row under SQLite's snapshot and both UPDATE by id,
+    /// so both returned `Ok(Some(task))` — the same task claimed twice. The fix
+    /// gates the UPDATE on `status = 'pending'` (atomic compare-and-swap) and
+    /// returns `Ok(None)` when 0 rows change, so only one claimant wins.
+    ///
+    /// File-backed DB so WAL + multi-connection pool exercise real concurrent
+    /// writers; `open_in_memory` is max_size=1 and serialises on its single
+    /// connection, hiding the race. `busy_timeout=5000` (DEFAULT_CONNECTION_PRAGMAS)
+    /// makes a writer wait for the reserved lock instead of failing fast.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 8)]
+    async fn test_task_claim_is_single_winner_under_concurrency() {
+        use std::sync::Arc as StdArc;
+
+        let dir = tempfile::tempdir().expect("tempdir");
+        let db_path = dir.path().join("task_claim_race.db");
+        let substrate = StdArc::new(MemorySubstrate::open(&db_path, 0.1).unwrap());
+
+        // Exactly one pending task assigned to "worker".
+        substrate
+            .task_post(
+                "Race target",
+                "Claim me exactly once",
+                Some("worker"),
+                None,
+                TaskQueueCaps::UNLIMITED,
+            )
+            .await
+            .unwrap();
+
+        // Fire several concurrent claimants at the same agent and await all.
+        let handles: Vec<_> = (0..8)
+            .map(|_| {
+                let s = StdArc::clone(&substrate);
+                tokio::spawn(async move { s.task_claim("worker", Some("worker")).await })
+            })
+            .collect();
+
+        let mut claimed_count = 0;
+        let mut none_count = 0;
+        for h in handles {
+            match h.await.expect("join task").expect("task_claim Ok") {
+                Some(_) => claimed_count += 1,
+                None => none_count += 1,
+            }
+        }
+
+        assert_eq!(
+            claimed_count, 1,
+            "exactly one claimant must win the single pending task, but {} won (#5961)",
+            claimed_count,
+        );
+        assert_eq!(
+            none_count, 7,
+            "all losing claimants must observe Ok(None), but {} did (#5961)",
+            none_count,
+        );
+    }
+
+    /// With as many pending tasks as concurrent claimants, every claimant must
+    /// walk past any lost compare-and-swap race and claim a *distinct* task —
+    /// none should spuriously return `Ok(None)` while claimable work remains
+    /// (issue #5961 review follow-up). Before the bounded retry loop, `task_claim`
+    /// tried the single queue head once and returned `Ok(None)` on a lost CAS, so
+    /// under contention a claimant could come back empty even though other pending
+    /// tasks were free. The loop now re-SELECTs the next pending task after a lost
+    /// race, so N claimants drain N pending tasks one-to-one.
+    ///
+    /// File-backed DB (WAL + multi-connection pool) for real concurrent writers,
+    /// same rationale as `test_task_claim_is_single_winner_under_concurrency`.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 8)]
+    async fn test_task_claim_concurrent_claimants_each_get_distinct_task() {
+        use std::collections::HashSet;
+        use std::sync::Arc as StdArc;
+
+        let dir = tempfile::tempdir().expect("tempdir");
+        let db_path = dir.path().join("task_claim_distinct.db");
+        let substrate = StdArc::new(MemorySubstrate::open(&db_path, 0.1).unwrap());
+
+        // As many pending tasks as claimants, all assignable to "worker".
+        const N: usize = 8;
+        for i in 0..N {
+            substrate
+                .task_post(
+                    &format!("task-{i}"),
+                    "claim me",
+                    Some("worker"),
+                    None,
+                    TaskQueueCaps::UNLIMITED,
+                )
+                .await
+                .unwrap();
+        }
+
+        // Fire N concurrent claimants; each must claim one distinct task.
+        let handles: Vec<_> = (0..N)
+            .map(|_| {
+                let s = StdArc::clone(&substrate);
+                tokio::spawn(async move { s.task_claim("worker", Some("worker")).await })
+            })
+            .collect();
+
+        let mut ids = HashSet::new();
+        let mut none_count = 0;
+        for h in handles {
+            match h.await.expect("join task").expect("task_claim Ok") {
+                Some(task) => {
+                    let id = task["id"]
+                        .as_str()
+                        .expect("claimed task has id")
+                        .to_string();
+                    assert!(
+                        ids.insert(id),
+                        "the same task was claimed by two claimants (#5961)"
+                    );
+                }
+                None => none_count += 1,
+            }
+        }
+
+        assert_eq!(
+            ids.len(),
+            N,
+            "all {N} pending tasks must be claimed distinctly, got {} (#5961)",
+            ids.len(),
+        );
+        assert_eq!(
+            none_count, 0,
+            "no claimant should return None while claimable tasks remain, but {} did (#5961)",
+            none_count,
+        );
+    }
+
+    /// Tasks posted with an agent *name* in assigned_to must be claimable when
+    /// the claimer passes the corresponding UUID + name (issue #2841).
+    #[tokio::test]
+    async fn test_task_claim_by_name_when_posted_with_name() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        // External actor posts task using agent name (not UUID)
+        let task_id = substrate
+            .task_post(
+                "Analyse logs",
+                "Check for anomalies",
+                Some("researcher"),
+                None,
+                TaskQueueCaps::UNLIMITED,
+            )
+            .await
+            .unwrap();
+
+        let fake_uuid = "4c549884-2aa1-4860-a5bb-f0aa35a1bf7e";
+
+        // Claim with UUID only — should NOT match name-stored task
+        let not_claimed = substrate.task_claim(fake_uuid, None).await.unwrap();
+        assert!(
+            not_claimed.is_none(),
+            "UUID-only claim should not match name-assigned task"
+        );
+
+        // Claim with UUID + matching name — should match
+        let claimed = substrate
+            .task_claim(fake_uuid, Some("researcher"))
+            .await
+            .unwrap();
+        assert!(
+            claimed.is_some(),
+            "UUID+name claim must match name-assigned task"
+        );
+        let claimed = claimed.unwrap();
+        assert_eq!(claimed["id"], task_id);
+        assert_eq!(claimed["status"], "in_progress");
+        // assigned_to should be normalised to the claimer's UUID after claim
+        assert_eq!(claimed["assigned_to"], fake_uuid);
+    }
+
+    /// Stuck `in_progress` tasks (worker LLM stalled, no `task_complete` call)
+    /// must be automatically reset to `pending` once `claimed_at` is older than
+    /// the configured TTL (issue #2923 / #2926).
+    #[tokio::test]
+    async fn test_task_reset_stuck_expires_in_progress() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let task_id = substrate
+            .task_post(
+                "Long task",
+                "Takes forever",
+                Some("worker"),
+                None,
+                TaskQueueCaps::UNLIMITED,
+            )
+            .await
+            .unwrap();
+
+        // Worker claims the task.
+        let claimed = substrate
+            .task_claim("worker", Some("worker"))
+            .await
+            .unwrap();
+        assert!(claimed.is_some());
+        assert_eq!(claimed.as_ref().unwrap()["status"], "in_progress");
+
+        // Simulate the worker stalling: back-date `claimed_at` to 5 minutes ago
+        // so a TTL of 60 s trips and a TTL of 3600 s does not.
+        {
+            let conn = substrate.pool.get().unwrap();
+            let five_min_ago = (chrono::Utc::now() - chrono::Duration::minutes(5)).to_rfc3339();
+            conn.execute(
+                "UPDATE task_queue SET claimed_at = ?1 WHERE id = ?2",
+                rusqlite::params![five_min_ago, task_id],
+            )
+            .unwrap();
+        }
+
+        // With a 1 hour TTL, nothing should be reset (not stuck yet).
+        let reset = substrate.task_reset_stuck(3600, 0).await.unwrap();
+        assert!(
+            reset.is_empty(),
+            "TTL larger than stall should not reset any task"
+        );
+        let still_in_progress = substrate.task_list(Some("in_progress")).await.unwrap();
+        assert_eq!(still_in_progress.len(), 1);
+
+        // With a 60 s TTL, the stuck task should be flipped back to pending.
+        let reset = substrate.task_reset_stuck(60, 0).await.unwrap();
+        assert_eq!(reset, vec![task_id.clone()]);
+
+        let pending = substrate.task_list(Some("pending")).await.unwrap();
+        assert_eq!(pending.len(), 1);
+        assert_eq!(pending[0]["id"], task_id);
+        assert_eq!(pending[0]["assigned_to"], "");
+        assert!(
+            pending[0]["claimed_at"].is_null(),
+            "claimed_at must be cleared on auto-reset"
+        );
+        let in_progress = substrate.task_list(Some("in_progress")).await.unwrap();
+        assert!(in_progress.is_empty());
+
+        // Second sweep is a no-op — stuck task is already pending.
+        let reset_again = substrate.task_reset_stuck(60, 0).await.unwrap();
+        assert!(reset_again.is_empty());
+    }
+
+    #[tokio::test]
+    async fn task_reset_stuck_surfaces_corrupt_retry_count() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let task_id = substrate
+            .task_post(
+                "Corrupt task",
+                "Must not be skipped",
+                Some("worker"),
+                None,
+                TaskQueueCaps::UNLIMITED,
+            )
+            .await
+            .unwrap();
+        substrate
+            .task_claim("worker", Some("worker"))
+            .await
+            .unwrap()
+            .expect("task claimed");
+
+        {
+            let conn = substrate.pool.get().unwrap();
+            let old_claim = (chrono::Utc::now() - chrono::Duration::minutes(5)).to_rfc3339();
+            conn.execute(
+                "UPDATE task_queue SET claimed_at = ?1, retry_count = 'invalid' WHERE id = ?2",
+                rusqlite::params![old_claim, task_id],
+            )
+            .unwrap();
+        }
+
+        let error = substrate
+            .task_reset_stuck(60, 3)
+            .await
+            .expect_err("corrupt retry_count must fail the reset sweep");
+        assert!(error.to_string().contains("retry_count") || error.to_string().contains("column"));
+
+        let conn = substrate.pool.get().unwrap();
+        let status: String = conn
+            .query_row(
+                "SELECT status FROM task_queue WHERE id = ?1",
+                rusqlite::params![task_id],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(status, "in_progress");
+    }
+
+    #[tokio::test]
+    async fn test_chunking_short_text_passthrough() {
+        let config = ChunkConfig {
+            enabled: true,
+            max_chunk_size: 1500,
+            overlap: 200,
+        };
+        let substrate = MemorySubstrate::open_in_memory_with_chunking(0.1, config).unwrap();
+        let agent_id = AgentId::new();
+        // Short text should be stored as a single memory.
+        substrate
+            .remember(
+                agent_id,
+                "Short text",
+                MemorySource::Conversation,
+                "episodic",
+                HashMap::new(),
+                None,
+            )
+            .await
+            .unwrap();
+        let results = substrate.recall("Short", 10, None).await.unwrap();
+        assert_eq!(results.len(), 1);
+        assert!(results[0].content.contains("Short text"));
+    }
+
+    #[tokio::test]
+    async fn test_chunking_long_text_splits() {
+        let config = ChunkConfig {
+            enabled: true,
+            max_chunk_size: 100,
+            overlap: 20,
+        };
+        let substrate = MemorySubstrate::open_in_memory_with_chunking(0.1, config).unwrap();
+        let agent_id = AgentId::new();
+
+        // Create text that exceeds max_chunk_size.
+        let long_text = "The quick brown fox jumps over the lazy dog. ".repeat(10);
+        assert!(long_text.len() > 100);
+
+        substrate
+            .remember(
+                agent_id,
+                &long_text,
+                MemorySource::Conversation,
+                "episodic",
+                HashMap::new(),
+                None,
+            )
+            .await
+            .unwrap();
+
+        // Should have stored multiple chunks.
+        let results = substrate.recall("fox", 20, None).await.unwrap();
+        assert!(
+            results.len() > 1,
+            "expected multiple chunks, got {}",
+            results.len()
+        );
+
+        // Each chunk should have chunk_index metadata.
+        for result in &results {
+            assert!(
+                result.metadata.contains_key("chunk_index"),
+                "chunk should have chunk_index metadata"
+            );
+            assert!(
+                result.metadata.contains_key("total_chunks"),
+                "chunk should have total_chunks metadata"
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn test_chunking_does_not_share_embedding_across_chunks() {
+        let config = ChunkConfig {
+            enabled: true,
+            max_chunk_size: 100,
+            overlap: 20,
+        };
+        let substrate = MemorySubstrate::open_in_memory_with_chunking(0.1, config).unwrap();
+        let agent_id = AgentId::new();
+        let embedding = vec![0.1, 0.2, 0.3];
+        let long_text = "The quick brown fox jumps over the lazy dog. ".repeat(10);
+
+        substrate
+            .remember_with_embedding_async(
+                agent_id,
+                &long_text,
+                MemorySource::Conversation,
+                "episodic",
+                HashMap::new(),
+                Some(&embedding),
+                None,
+            )
+            .await
+            .unwrap();
+
+        // Recall without embedding (FTS) so we can inspect all stored chunks.
+        let results = substrate.recall("fox", 20, None).await.unwrap();
+
+        assert!(results.len() > 1, "expected multiple chunks");
+        // Chunks should NOT carry the original full-text embedding.
+        assert!(
+            results.iter().all(|result| result.embedding.is_none()),
+            "chunks should not have the original full-text embedding"
+        );
+    }
+
+    #[tokio::test]
+    async fn test_chunking_disabled_stores_as_single() {
+        let config = ChunkConfig {
+            enabled: false,
+            max_chunk_size: 100,
+            overlap: 20,
+        };
+        let substrate = MemorySubstrate::open_in_memory_with_chunking(0.1, config).unwrap();
+        let agent_id = AgentId::new();
+
+        let long_text = "The quick brown fox jumps over the lazy dog. ".repeat(10);
+        substrate
+            .remember(
+                agent_id,
+                &long_text,
+                MemorySource::Conversation,
+                "episodic",
+                HashMap::new(),
+                None,
+            )
+            .await
+            .unwrap();
+
+        // With chunking disabled, should store as one entry.
+        let results = substrate.recall("fox", 20, None).await.unwrap();
+        assert_eq!(results.len(), 1);
+    }
+
+    /// `task_complete` must stamp `finished_at` so the retention sweep can
+    /// hard-delete the row later (#3466).
+    #[tokio::test]
+    async fn test_task_complete_stamps_finished_at() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let task_id = substrate
+            .task_post("t", "d", Some("worker"), None, TaskQueueCaps::UNLIMITED)
+            .await
+            .unwrap();
+        let _ = substrate
+            .task_claim("worker", Some("worker"))
+            .await
+            .unwrap();
+        substrate.task_complete(&task_id, "ok").await.unwrap();
+
+        let conn = substrate.pool.get().unwrap();
+        let finished_at: Option<i64> = conn
+            .query_row(
+                "SELECT finished_at FROM task_queue WHERE id = ?1",
+                rusqlite::params![&task_id],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert!(
+            finished_at.is_some(),
+            "task_complete must stamp finished_at"
+        );
+    }
+
+    #[tokio::test]
+    async fn test_task_complete_cannot_revive_cancelled_claim() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let task_id = substrate
+            .task_post("t", "d", Some("worker"), None, TaskQueueCaps::UNLIMITED)
+            .await
+            .unwrap();
+        substrate
+            .task_claim("worker", Some("worker"))
+            .await
+            .unwrap();
+        substrate
+            .task_update_status(&task_id, "cancelled")
+            .await
+            .unwrap();
+
+        assert!(substrate
+            .task_complete(&task_id, "late result")
+            .await
+            .is_err());
+        let task = substrate.task_get(&task_id).await.unwrap().unwrap();
+        assert_eq!(task["status"], "cancelled");
+        assert_ne!(task["result"], "late result");
+    }
+
+    #[tokio::test]
+    async fn test_task_prune_finished_respects_age_and_status() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let now_unix = chrono::Utc::now().timestamp();
+        let old_unix = now_unix - 30 * 86_400; // 30 days ago
+        let recent_unix = now_unix - 86_400; // 1 day ago
+
+        // Insert directly to control finished_at precisely.
+        {
+            let conn = substrate.pool.get().unwrap();
+            conn.execute(
+                "INSERT INTO task_queue (id, agent_id, task_type, payload, status, created_at, completed_at, finished_at) \
+                 VALUES ('old-done', 'a', 't', x'00', 'completed', ?1, ?1, ?2)",
+                rusqlite::params![chrono::Utc::now().to_rfc3339(), old_unix],
+            )
+            .unwrap();
+            conn.execute(
+                "INSERT INTO task_queue (id, agent_id, task_type, payload, status, created_at, completed_at, finished_at) \
+                 VALUES ('old-failed', 'a', 't', x'00', 'failed', ?1, NULL, ?2)",
+                rusqlite::params![chrono::Utc::now().to_rfc3339(), old_unix],
+            )
+            .unwrap();
+            conn.execute(
+                "INSERT INTO task_queue (id, agent_id, task_type, payload, status, created_at, completed_at, finished_at) \
+                 VALUES ('recent-done', 'a', 't', x'00', 'completed', ?1, ?1, ?2)",
+                rusqlite::params![chrono::Utc::now().to_rfc3339(), recent_unix],
+            )
+            .unwrap();
+            // Pending row must NEVER be pruned regardless of age.
+            conn.execute(
+                "INSERT INTO task_queue (id, agent_id, task_type, payload, status, created_at) \
+                 VALUES ('pending-old', 'a', 't', x'00', 'pending', ?1)",
+                rusqlite::params![chrono::Utc::now().to_rfc3339()],
+            )
+            .unwrap();
+        }
+
+        let pruned = substrate.task_prune_finished(7).await.unwrap();
+        assert_eq!(pruned, 2, "the two 30-day-old terminal rows should go");
+
+        let conn = substrate.pool.get().unwrap();
+        let count: i64 = conn
+            .query_row("SELECT COUNT(*) FROM task_queue", [], |row| row.get(0))
+            .unwrap();
+        assert_eq!(count, 2, "recent-done + pending-old remain");
+    }
+
+    #[tokio::test]
+    async fn test_task_prune_finished_zero_disabled() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let pruned = substrate.task_prune_finished(0).await.unwrap();
+        assert_eq!(pruned, 0);
+    }
+
+    /// `task_update_status("cancelled")` must stamp `finished_at`,
+    /// otherwise cancelled rows are excluded from the retention sweep
+    /// forever (sweep filters by `finished_at IS NOT NULL`) and the
+    /// queue table grows unbounded for any agent that uses cancel
+    /// (#3466).
+    #[tokio::test]
+    async fn test_task_cancel_stamps_finished_at() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let task_id = substrate
+            .task_post("t", "d", Some("worker"), None, TaskQueueCaps::UNLIMITED)
+            .await
+            .unwrap();
+
+        let changed = substrate
+            .task_update_status(&task_id, "cancelled")
+            .await
+            .unwrap();
+        assert!(changed, "cancellation of a pending task must update");
+
+        let conn = substrate.pool.get().unwrap();
+        let (status, finished_at): (String, Option<i64>) = conn
+            .query_row(
+                "SELECT status, finished_at FROM task_queue WHERE id = ?1",
+                rusqlite::params![&task_id],
+                |row| Ok((row.get(0)?, row.get(1)?)),
+            )
+            .unwrap();
+        assert_eq!(status, "cancelled");
+        assert!(
+            finished_at.is_some(),
+            "task_update_status('cancelled') must stamp finished_at so the \
+             retention sweep can hard-delete the row later"
+        );
+    }
+
+    /// Reset-to-pending must clear `finished_at`. Otherwise a row that
+    /// was failed once and reset would carry a stale `finished_at`, and
+    /// the next failure could leave it eligible for prune sooner than
+    /// the configured retention window if the new fail path's stamp
+    /// got skipped for any reason.
+    #[tokio::test]
+    async fn test_task_reset_to_pending_clears_finished_at() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let task_id = substrate
+            .task_post("t", "d", Some("worker"), None, TaskQueueCaps::UNLIMITED)
+            .await
+            .unwrap();
+
+        // Force a `failed` row with a stale `finished_at` directly.
+        {
+            let conn = substrate.pool.get().unwrap();
+            conn.execute(
+                "UPDATE task_queue SET status = 'failed', finished_at = ?2 WHERE id = ?1",
+                rusqlite::params![&task_id, chrono::Utc::now().timestamp() - 86_400],
+            )
+            .unwrap();
+        }
+
+        let changed = substrate
+            .task_update_status(&task_id, "pending")
+            .await
+            .unwrap();
+        assert!(changed);
+
+        let conn = substrate.pool.get().unwrap();
+        let (status, finished_at): (String, Option<i64>) = conn
+            .query_row(
+                "SELECT status, finished_at FROM task_queue WHERE id = ?1",
+                rusqlite::params![&task_id],
+                |row| Ok((row.get(0)?, row.get(1)?)),
+            )
+            .unwrap();
+        assert_eq!(status, "pending");
+        assert!(
+            finished_at.is_none(),
+            "reset to pending must clear finished_at"
+        );
+    }
+
+    #[tokio::test]
+    async fn test_task_reset_rejects_in_progress_to_prevent_duplicate_execution() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let task_id = substrate
+            .task_post("t", "d", Some("worker"), None, TaskQueueCaps::UNLIMITED)
+            .await
+            .unwrap();
+        {
+            let conn = substrate.pool.get().unwrap();
+            conn.execute(
+                "UPDATE task_queue SET status = 'in_progress', claimed_at = ?2 WHERE id = ?1",
+                rusqlite::params![&task_id, chrono::Utc::now().timestamp()],
+            )
+            .unwrap();
+        }
+
+        let changed = substrate
+            .task_update_status(&task_id, "pending")
+            .await
+            .unwrap();
+
+        assert!(!changed, "an active claim must not be re-queued");
+        let conn = substrate.pool.get().unwrap();
+        let (status, claimed_at): (String, Option<String>) = conn
+            .query_row(
+                "SELECT status, claimed_at FROM task_queue WHERE id = ?1",
+                rusqlite::params![&task_id],
+                |row| Ok((row.get(0)?, row.get(1)?)),
+            )
+            .unwrap();
+        assert_eq!(status, "in_progress");
+        assert!(
+            claimed_at.is_some(),
+            "the active claim timestamp must remain"
+        );
+    }
+
+    /// #3501: `remove_agent` cascade-deletes sessions, memories, and the
+    /// agent row in a single transaction. Pre-fix the cascade ran across
+    /// multiple independent locks: a partial failure between the two
+    /// could orphan sessions whose agent had already been removed.
+    #[tokio::test]
+    async fn test_remove_agent_cascades_sessions_and_memories() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let agent_id = AgentId::new();
+
+        // Seed: a session and a memory under this agent.
+        let session = substrate.create_session(agent_id).unwrap();
+        substrate
+            .remember(
+                agent_id,
+                "remember me",
+                MemorySource::Conversation,
+                "episodic",
+                HashMap::new(),
+                None,
+            )
+            .await
+            .unwrap();
+
+        // Sanity: both rows exist.
+        assert!(substrate.get_session(session.id).unwrap().is_some());
+        let pre_count: i64 = substrate
+            .pool
+            .get()
+            .unwrap()
+            .query_row(
+                "SELECT COUNT(*) FROM memories WHERE agent_id = ?1 AND deleted = 0",
+                rusqlite::params![agent_id.0.to_string()],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(pre_count, 1);
+
+        substrate.remove_agent(agent_id).unwrap();
+
+        // Sessions, memories, and the agent row must all be gone.
+        let conn = substrate.pool.get().unwrap();
+        let session_count: i64 = conn
+            .query_row(
+                "SELECT COUNT(*) FROM sessions WHERE agent_id = ?1",
+                rusqlite::params![agent_id.0.to_string()],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(session_count, 0, "sessions must cascade-delete");
+
+        let memory_count: i64 = conn
+            .query_row(
+                "SELECT COUNT(*) FROM memories WHERE agent_id = ?1",
+                rusqlite::params![agent_id.0.to_string()],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(memory_count, 0, "memories must cascade-delete");
+    }
+
+    /// `remove_agent` must also wipe the `sessions_fts` index inside the
+    /// cascade transaction. `search_sessions` reads FTS rows directly
+    /// (no JOIN to `sessions`), so an orphan FTS row would let the
+    /// removed agent's session content remain full-text searchable —
+    /// a privacy regression, not a hygiene issue.
+    #[tokio::test]
+    async fn test_remove_agent_clears_sessions_fts() {
+        use librefang_types::message::Message;
+
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let agent_id = AgentId::new();
+
+        // Seed a session whose content lands in the FTS index.
+        let mut session = substrate.create_session(agent_id).unwrap();
+        let needle = "removalprivacynonceabc123";
+        session.messages.push(Message::user(needle));
+        substrate.save_session(&session).unwrap();
+
+        // Sanity: FTS sees it.
+        let pre = substrate.search_sessions(needle, Some(&agent_id)).unwrap();
+        assert!(!pre.is_empty(), "FTS must index the seeded content");
+
+        substrate.remove_agent(agent_id).unwrap();
+
+        // After remove_agent, the FTS row must be gone. If it survived
+        // outside the tx, search_sessions would still surface a snippet
+        // of the deleted agent's content.
+        let post = substrate.search_sessions(needle, Some(&agent_id)).unwrap();
+        assert!(
+            post.is_empty(),
+            "sessions_fts must be cleared inside remove_agent's tx"
+        );
+
+        // Also assert at the row level — search_sessions could in principle
+        // filter by JOIN in the future; the underlying table must be empty.
+        let conn = substrate.pool.get().unwrap();
+        let fts_count: i64 = conn
+            .query_row(
+                "SELECT COUNT(*) FROM sessions_fts WHERE agent_id = ?1",
+                rusqlite::params![agent_id.0.to_string()],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(fts_count, 0, "sessions_fts must cascade-delete");
+    }
+
+    /// #3378: the r2d2 pool + WAL journal mode allow multiple readers to
+    /// run concurrently without blocking each other. This test acquires 4
+    /// pool connections simultaneously, each holding the connection for a
+    /// fixed 50 ms window. If the pool serialised callers (old
+    /// Mutex<Connection> behaviour), the batch would take ≥ 200 ms;
+    /// with a pool size of 8 and WAL readers don't block each other, so
+    /// multiple tasks can hold pooled connections simultaneously.
+    #[tokio::test]
+    async fn pool_enables_concurrent_reads() {
+        use std::sync::atomic::{AtomicUsize, Ordering::SeqCst};
+        use std::sync::Arc as StdArc;
+        use std::time::Duration;
+
+        // File-backed DB so WAL journal_mode is active; in-memory pools
+        // are max_size=1 and cannot exercise multi-reader concurrency.
+        let dir = tempfile::tempdir().expect("tempdir");
+        let db_path = dir.path().join("concurrent_reads.db");
+        let substrate = StdArc::new(MemorySubstrate::open(&db_path, 0.1).unwrap());
+
+        // Seed one agent so reads hit real SQL rows.
+        let entry = AgentEntry {
+            id: AgentId::new(),
+            name: "reader-seed".to_string(),
+            session_id: SessionId::new(),
+            ..Default::default()
+        };
+        substrate.save_agent_async(&entry).await.unwrap();
+
+        // Ordering-based proof: track how many tasks hold a pooled
+        // connection simultaneously. If the pool serialises (old
+        // Mutex<Connection> behaviour), max_concurrent stays at 1.
+        // With a real pool and WAL readers, multiple tasks overlap and
+        // max_concurrent reaches >= 2.
+        let in_flight = StdArc::new(AtomicUsize::new(0));
+        let max_concurrent = StdArc::new(AtomicUsize::new(0));
+
+        let hold = Duration::from_millis(50);
+        let pool = substrate.pool();
+        let handles: Vec<_> = (0..4)
+            .map(|_| {
+                let p = pool.clone();
+                let in_flight = StdArc::clone(&in_flight);
+                let max_concurrent = StdArc::clone(&max_concurrent);
+                tokio::task::spawn_blocking(move || {
+                    let conn = p.get().expect("pool get");
+                    // Record entry into the concurrent hold window.
+                    let current = in_flight.fetch_add(1, SeqCst) + 1;
+                    // Update the observed maximum atomically.
+                    let mut prev = max_concurrent.load(SeqCst);
+                    while current > prev {
+                        match max_concurrent.compare_exchange_weak(prev, current, SeqCst, SeqCst) {
+                            Ok(_) => break,
+                            Err(actual) => prev = actual,
+                        }
+                    }
+                    // Real read inside the held connection.
+                    let _count: i64 = conn
+                        .query_row("SELECT COUNT(*) FROM agents", [], |r| r.get(0))
+                        .unwrap_or(0);
+                    std::thread::sleep(hold);
+                    in_flight.fetch_sub(1, SeqCst);
+                })
+            })
+            .collect();
+        for h in handles {
+            h.await.unwrap();
+        }
+
+        let observed = max_concurrent.load(SeqCst);
+        assert!(
+            observed >= 2,
+            "expected >= 2 tasks to hold pooled connections concurrently, \
+             but max_concurrent = {}. Pool concurrency or WAL may be broken (#3378)",
+            observed,
+        );
+    }
+
+    /// #3378: each `_async` substrate wrapper must offload its
+    /// connection pool acquisition to tokio's blocking
+    /// pool. This test holds the connection mutex from a non-tokio OS
+    /// thread, then drives a wrapper from a `current_thread` runtime.
+    /// If the wrapper took the lock on the runtime worker (the pre-fix
+    /// kernel pattern), the spawned task would block for the full hold
+    /// time AND a concurrently-scheduled tokio future on the same
+    /// runtime would never make progress — the runtime has only one
+    /// worker thread, the test thread itself. Putting the lock behind
+    /// `spawn_blocking` lets the worker pump other futures while the
+    /// DB I/O runs on a dedicated thread.
+    ///
+    /// The proof is **ordering**, not wall-clock: a tokio task captures
+    /// `tick_at` after a short sleep, the blocker thread captures
+    /// `released_at` immediately after dropping the lock guard, and we
+    /// assert `tick_at < released_at`. In the correct (offloaded) case
+    /// the tick fires *during* the lock hold, so it wins. In the broken
+    /// case the runtime is parked until the lock is released, so the
+    /// blocker captures `released_at` before the runtime can resume the
+    /// tick task. No timing threshold — the test stays decisive even
+    /// under heavy CI jitter (Windows / llvm-cov).
+    #[test]
+    fn async_wrappers_do_not_park_current_thread_runtime() {
+        use std::sync::Mutex as StdMutex;
+        use std::time::Instant;
+
+        let runtime = tokio::runtime::Builder::new_current_thread()
+            .enable_all()
+            .build()
+            .unwrap();
+
+        runtime.block_on(async {
+            let substrate = Arc::new(MemorySubstrate::open_in_memory(0.1).unwrap());
+            let entry = AgentEntry {
+                id: AgentId::new(),
+                name: "starvation-test".to_string(),
+                session_id: SessionId::new(),
+                ..Default::default()
+            };
+
+            // Round-trip through save_agent_async + load_all_agents_async
+            // first to confirm the wrappers persist correctly before we
+            // assert on scheduling behaviour.
+            substrate.save_agent_async(&entry).await.unwrap();
+            let loaded = substrate.load_all_agents_async().await.unwrap();
+            assert_eq!(loaded.len(), 1);
+            assert_eq!(loaded[0].name, "starvation-test");
+
+            // Both timestamps are captured under their own mutex so the
+            // assertion can read them after both threads have settled.
+            let tick_at: Arc<StdMutex<Option<Instant>>> = Arc::new(StdMutex::new(None));
+            let released_at: Arc<StdMutex<Option<Instant>>> = Arc::new(StdMutex::new(None));
+
+            // Saturate the connection pool from outside tokio. The
+            // 100 ms hold is well above any plausible scheduler jitter
+            // (Windows / coverage runners ~50 ms) so the in-hold tick
+            // window is unambiguous.
+            let pool = substrate.pool.clone();
+            let blocker_holds = Arc::new(std::sync::Barrier::new(2));
+            let blocker_holds_inner = Arc::clone(&blocker_holds);
+            let released_at_for_blocker = Arc::clone(&released_at);
+            let blocker = std::thread::spawn(move || {
+                // Acquire the sole connection from the max_size=1 pool,
+                // blocking any concurrent pool.get() for the hold duration.
+                let g = pool.get().expect("pool get");
+                blocker_holds_inner.wait();
+                std::thread::sleep(std::time::Duration::from_millis(100));
+                drop(g);
+                // Capture the release timestamp the instant the guard
+                // is gone, before any runtime worker can resume.
+                *released_at_for_blocker.lock().unwrap() = Some(Instant::now());
+            });
+            blocker_holds.wait();
+
+            // While the mutex is held, kick off a wrapper that wants
+            // it. With spawn_blocking it parks on the blocking pool,
+            // not the runtime. The runtime stays free to drive the
+            // tick task below.
+            let s = Arc::clone(&substrate);
+            let mut entry2 = entry.clone();
+            entry2.id = AgentId::new();
+            entry2.name = "starvation-test-2".to_string();
+            let pending = tokio::spawn(async move { s.save_agent_async(&entry2).await });
+
+            // Tick task: sleeps for a fraction of the blocker hold,
+            // then stamps `tick_at`. In the correct case this stamp
+            // lands during the hold (tick_at < released_at). In the
+            // broken case the runtime is parked, the sleep can't tick
+            // until the worker is free, and `tick_at` lands after
+            // `released_at`.
+            let tick_at_for_task = Arc::clone(&tick_at);
+            let ticker = tokio::spawn(async move {
+                tokio::time::sleep(std::time::Duration::from_millis(20)).await;
+                *tick_at_for_task.lock().unwrap() = Some(Instant::now());
+            });
+
+            ticker.await.unwrap();
+            pending.await.unwrap().unwrap();
+            blocker.join().unwrap();
+
+            let tick = tick_at.lock().unwrap().expect("tick task ran");
+            let released = released_at.lock().unwrap().expect("blocker ran");
+            assert!(
+                tick < released,
+                "runtime parked on the connection mutex (#3378): \
+                 tick task ({tick:?}) fired after blocker released \
+                 the lock ({released:?}), meaning the worker was \
+                 stuck in std::sync::Mutex::lock instead of being \
+                 driven by spawn_blocking"
+            );
+        });
+    }
+
+    /// Audit: sqlite-file-permissions. After `open_with_pool_size`
+    /// returns, `librefang.db` must be 0o600 — every other process
+    /// under the same UID can otherwise read raw user prompts, LLM
+    /// replies, audit entries, OAuth nonces, TOTP codes, and
+    /// paired-device api_key hashes on shared hosts. Skip on
+    /// non-Unix where the permission model is different.
+    #[cfg(unix)]
+    #[test]
+    fn open_with_pool_size_tightens_db_file_to_0o600() {
+        use std::os::unix::fs::PermissionsExt;
+        let tmp = tempfile::tempdir().unwrap();
+        let db_path = tmp.path().join("test.db");
+
+        let _substrate =
+            MemorySubstrate::open_with_pool_size(&db_path, 0.0, ChunkConfig::default(), 1)
+                .expect("substrate open");
+
+        let mode = std::fs::metadata(&db_path)
+            .expect("db exists after open")
+            .permissions()
+            .mode()
+            & 0o777;
+        assert_eq!(
+            mode, 0o600,
+            "librefang.db must be owner-only after substrate open — got {mode:o}"
+        );
+    }
+
+    /// Even if the WAL / SHM siblings appear after the first write,
+    /// the helper handles their NotFound case at boot time without
+    /// erroring. This test forces the WAL into existence via a real
+    /// write, then re-runs `restrict_db_file_permissions` and
+    /// asserts both siblings end up 0o600.
+    #[cfg(unix)]
+    #[test]
+    fn restrict_db_file_permissions_covers_wal_and_shm_when_present() {
+        use std::os::unix::fs::PermissionsExt;
+        let tmp = tempfile::tempdir().unwrap();
+        let db_path = tmp.path().join("test.db");
+
+        let substrate =
+            MemorySubstrate::open_with_pool_size(&db_path, 0.0, ChunkConfig::default(), 1)
+                .expect("substrate open");
+
+        // Forcibly trigger a WAL flush by creating a session — that
+        // makes `-wal` / `-shm` appear so the helper has something to
+        // chmod on the second call.
+        let _session = substrate
+            .sessions
+            .create_session(librefang_types::agent::AgentId::new())
+            .unwrap();
+
+        // The post-write WAL files might have been created at 0o644
+        // (depends on SQLite's umask handling). Re-tighten.
+        restrict_db_file_permissions(&db_path);
+
+        for sibling in ["test.db-wal", "test.db-shm"] {
+            let path = tmp.path().join(sibling);
+            if let Ok(meta) = std::fs::metadata(&path) {
+                let mode = meta.permissions().mode() & 0o777;
+                assert_eq!(
+                    mode, 0o600,
+                    "{sibling} must be owner-only after restrict_db_file_permissions — got {mode:o}"
+                );
+            }
+        }
+    }
+
+    // -----------------------------------------------------------------
+    // `[queue]` backpressure (#8219)
+    //
+    // The three knobs were declared, documented as enforced and echoed by the config API for their whole life with no enforcement site.
+    // These tests are written against the SQL rather than through the kernel because the caps have to hold under concurrency, which only the statement shape decides.
+    // -----------------------------------------------------------------
+
+    /// `max_depth_global` refuses the post that would exceed it, and refuses it as a quota rather than an internal fault.
+    #[tokio::test]
+    async fn global_depth_cap_refuses_the_post_that_would_exceed_it() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let caps = TaskQueueCaps {
+            max_depth_per_agent: 0,
+            max_depth_global: 2,
+        };
+
+        for i in 0..2 {
+            substrate
+                .task_post(&format!("t{i}"), "d", None, None, caps)
+                .await
+                .unwrap_or_else(|e| panic!("post {i} should be accepted: {e}"));
+        }
+
+        let err = substrate
+            .task_post("over", "d", None, None, caps)
+            .await
+            .expect_err("the third post exceeds the cap");
+        assert!(
+            matches!(err, LibreFangError::QuotaExceeded(_)),
+            "a full queue is the caller's answer, not a kernel fault: {err:?}"
+        );
+        assert_eq!(substrate.task_list(Some("pending")).await.unwrap().len(), 2);
+    }
+
+    /// The per-agent cap counts only the assignee's own pending rows, so one agent filling its share leaves another's alone.
+    #[tokio::test]
+    async fn per_agent_depth_cap_counts_only_that_agent() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let caps = TaskQueueCaps {
+            max_depth_per_agent: 1,
+            max_depth_global: 0,
+        };
+
+        substrate
+            .task_post("alice-1", "d", Some("alice"), None, caps)
+            .await
+            .unwrap();
+        let err = substrate
+            .task_post("alice-2", "d", Some("alice"), None, caps)
+            .await
+            .expect_err("alice is at her cap");
+        assert!(matches!(err, LibreFangError::QuotaExceeded(_)), "{err:?}");
+
+        substrate
+            .task_post("bob-1", "d", Some("bob"), None, caps)
+            .await
+            .expect("bob's own queue is empty");
+    }
+
+    /// An unassigned task is in the shared pool, and `assigned_to` is stored as `''` for it — counting those under the per-agent cap would cap the whole pool at one agent's limit.
+    #[tokio::test]
+    async fn per_agent_depth_cap_skips_the_unassigned_pool() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let caps = TaskQueueCaps {
+            max_depth_per_agent: 1,
+            max_depth_global: 0,
+        };
+
+        for i in 0..5 {
+            substrate
+                .task_post(&format!("pool-{i}"), "d", None, None, caps)
+                .await
+                .unwrap_or_else(|e| panic!("unassigned post {i}: {e}"));
+        }
+        assert_eq!(substrate.task_list(Some("pending")).await.unwrap().len(), 5);
+    }
+
+    /// Only `pending` rows count towards a cap: a task that has been claimed or finished has left the queue, and counting it would make the cap unreachable after enough traffic.
+    #[tokio::test]
+    async fn a_claimed_task_no_longer_counts_towards_the_cap() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let caps = TaskQueueCaps {
+            max_depth_per_agent: 0,
+            max_depth_global: 1,
+        };
+
+        substrate
+            .task_post("first", "d", Some("worker"), None, caps)
+            .await
+            .unwrap();
+        substrate
+            .task_post("second", "d", Some("worker"), None, caps)
+            .await
+            .expect_err("the queue is full while the first is pending");
+
+        substrate
+            .task_claim("worker", Some("worker"))
+            .await
+            .unwrap()
+            .expect("a pending task to claim");
+
+        substrate
+            .task_post("second", "d", Some("worker"), None, caps)
+            .await
+            .expect("the claimed task has left the pending set");
+    }
+
+    /// Concurrent posts against a cap of N must not both land.
+    ///
+    /// Counting outside the write transaction is the obvious way to write this check and the wrong one: two posts would each read N-1 and each insert. An agent looping on the `task_post` tool — the case #8219 is about — reaches that race immediately.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+    async fn concurrent_posts_cannot_both_win_the_last_slot() {
+        let substrate = std::sync::Arc::new(MemorySubstrate::open_in_memory(0.1).unwrap());
+        let caps = TaskQueueCaps {
+            max_depth_per_agent: 0,
+            max_depth_global: 1,
+        };
+
+        let mut handles = Vec::new();
+        for i in 0..8 {
+            let substrate = std::sync::Arc::clone(&substrate);
+            handles.push(tokio::spawn(async move {
+                substrate
+                    .task_post(&format!("racer-{i}"), "d", None, None, caps)
+                    .await
+                    .is_ok()
+            }));
+        }
+        let mut accepted = 0;
+        for handle in handles {
+            if handle.await.unwrap() {
+                accepted += 1;
+            }
+        }
+
+        assert_eq!(accepted, 1, "exactly one post may take the single slot");
+        assert_eq!(substrate.task_list(Some("pending")).await.unwrap().len(), 1);
+    }
+
+    /// `0` means unlimited, which is the shipped default and the contract every other `0` in `[queue]` already has.
+    #[tokio::test]
+    async fn a_zero_cap_does_not_limit_anything() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        for i in 0..30 {
+            substrate
+                .task_post(
+                    &format!("t{i}"),
+                    "d",
+                    Some("worker"),
+                    None,
+                    TaskQueueCaps::UNLIMITED,
+                )
+                .await
+                .unwrap_or_else(|e| panic!("post {i} with no cap: {e}"));
+        }
+        assert_eq!(
+            substrate.task_list(Some("pending")).await.unwrap().len(),
+            30
+        );
+    }
+
+    /// `task_expire_stale` cancels an unclaimed task rather than deleting it, stamps `finished_at`, and records why.
+    ///
+    /// The stamp is not decoration: `task_prune_finished` filters on `finished_at IS NOT NULL`, so an expiry that skipped it would move the row to a terminal status that the retention sweep then refuses to reclaim forever — trading one unbounded-growth bug for another.
+    #[tokio::test]
+    async fn ttl_expiry_cancels_the_row_and_leaves_it_prunable() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        let id = substrate
+            .task_post("unclaimed", "d", None, None, TaskQueueCaps::UNLIMITED)
+            .await
+            .unwrap();
+
+        assert_eq!(
+            substrate.task_expire_stale(3600).await.unwrap(),
+            0,
+            "a task posted a moment ago is not stale"
+        );
+
+        tokio::time::sleep(std::time::Duration::from_millis(1100)).await;
+        assert_eq!(substrate.task_expire_stale(1).await.unwrap(), 1);
+
+        let task = substrate.task_get(&id).await.unwrap().expect("row kept");
+        assert_eq!(task["status"], "cancelled", "expired, not deleted");
+        assert!(
+            task["result"]
+                .as_str()
+                .unwrap_or_default()
+                .contains("task_ttl_secs"),
+            "the row must say why: {task}"
+        );
+        assert_eq!(
+            substrate.task_prune_finished(0).await.unwrap(),
+            0,
+            "retention of 0 days still disables pruning"
+        );
+    }
+
+    /// A TTL of `0` disables expiry.
+    #[tokio::test]
+    async fn a_zero_ttl_expires_nothing() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        substrate
+            .task_post("keep", "d", None, None, TaskQueueCaps::UNLIMITED)
+            .await
+            .unwrap();
+        tokio::time::sleep(std::time::Duration::from_millis(20)).await;
+        assert_eq!(substrate.task_expire_stale(0).await.unwrap(), 0);
+        assert_eq!(substrate.task_list(Some("pending")).await.unwrap().len(), 1);
+    }
+
+    /// The TTL is about work nobody picked up. A claimed task is in flight, and `task_reset_stuck` is the separate mechanism for a worker that stalled after claiming — cancelling here would kill running work.
+    #[tokio::test]
+    async fn ttl_expiry_leaves_an_in_progress_task_alone() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        substrate
+            .task_post(
+                "claim me",
+                "d",
+                Some("worker"),
+                None,
+                TaskQueueCaps::UNLIMITED,
+            )
+            .await
+            .unwrap();
+        substrate
+            .task_claim("worker", Some("worker"))
+            .await
+            .unwrap()
+            .expect("claimable");
+
+        tokio::time::sleep(std::time::Duration::from_millis(1100)).await;
+        assert_eq!(
+            substrate.task_expire_stale(1).await.unwrap(),
+            0,
+            "an in-progress task is not an unclaimed one"
+        );
+    }
+
+    /// `task_list_page` windows in SQL and still reports the full match count, because a paging client needs both.
+    #[tokio::test]
+    async fn task_list_page_windows_in_sql_and_reports_the_match_count() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        for i in 0..7 {
+            substrate
+                .task_post(&format!("t{i}"), "d", None, None, TaskQueueCaps::UNLIMITED)
+                .await
+                .unwrap();
+        }
+
+        let (page, total) = substrate
+            .task_list_page(None, None, Some(3), None)
+            .await
+            .unwrap();
+        assert_eq!(page.len(), 3);
+        assert_eq!(total, 7, "total is the match count, not the page length");
+
+        let (all, _) = substrate
+            .task_list_page(None, None, None, None)
+            .await
+            .unwrap();
+        let all_ids: Vec<&str> = all.iter().map(|t| t["id"].as_str().unwrap()).collect();
+        let (second, _) = substrate
+            .task_list_page(None, None, Some(3), Some(3))
+            .await
+            .unwrap();
+        let second_ids: Vec<&str> = second.iter().map(|t| t["id"].as_str().unwrap()).collect();
+        assert_eq!(
+            second_ids,
+            all_ids[3..6].to_vec(),
+            "offset must walk the same ordering the unpaged list returns"
+        );
+    }
+
+    /// The assignee filter is a `WHERE` clause, so both the page and the count follow it.
+    #[tokio::test]
+    async fn task_list_page_filters_by_assignee_in_sql() {
+        let substrate = MemorySubstrate::open_in_memory(0.1).unwrap();
+        for i in 0..3 {
+            substrate
+                .task_post(
+                    &format!("a{i}"),
+                    "d",
+                    Some("alice"),
+                    None,
+                    TaskQueueCaps::UNLIMITED,
+                )
+                .await
+                .unwrap();
+        }
+        substrate
+            .task_post("b0", "d", Some("bob"), None, TaskQueueCaps::UNLIMITED)
+            .await
+            .unwrap();
+
+        let (page, total) = substrate
+            .task_list_page(Some("pending"), Some("alice"), None, None)
+            .await
+            .unwrap();
+        assert_eq!(page.len(), 3);
+        assert_eq!(total, 3, "the count must follow the filter too");
+        assert!(page.iter().all(|t| t["assigned_to"] == "alice"));
+    }
+}

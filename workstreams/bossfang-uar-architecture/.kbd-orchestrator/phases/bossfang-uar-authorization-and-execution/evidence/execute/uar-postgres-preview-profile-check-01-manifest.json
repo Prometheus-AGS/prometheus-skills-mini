@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:10:20.766Z",
+  "status": "actual compiler command PASS; no database runtime certification",
+  "receipt": "final-gates/uar-postgres-preview-profile-check-01.json",
+  "sourceBinding": "source-inventory-fixed-diagnostic-delivery-04.json",
+  "sourceHead": "8bff32deb870f6363e94687a2e22492f91a34dfd",
+  "sourceFilesChecked": 114,
+  "sourceHashesUnchanged": true,
+  "features": [
+    "minimal",
+    "postgres-backend"
+  ],
+  "defaultFeatures": false,
+  "limits": [
+    "No PostgreSQL server or service started",
+    "Runtime dynamic SQL not exercised; no query macro metadata/database",
+    "No test-probes/default/server-full release claim",
+    "Offline locked existing dependencies only; no config/pin changes"
+  ]
+}

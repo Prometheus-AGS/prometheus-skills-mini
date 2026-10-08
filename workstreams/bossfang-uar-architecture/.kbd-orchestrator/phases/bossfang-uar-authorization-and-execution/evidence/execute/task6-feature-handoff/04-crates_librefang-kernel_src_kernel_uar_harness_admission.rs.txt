@@ -1,0 +1,246 @@
+//! Admission authority for selected durable jobs. Only a committed Created
+//! reservation permits POST; Existing always observes the original execution.
+
+use super::{JobDispatchError, SelectedUarJob};
+use librefang_memory::task_dispatch::{SelectedClaim, SelectedJobIntent};
+use crate::kernel::{subsystems::mesh::MeshSubsystemApi, LibreFangKernel};
+use librefang_llm_drivers::drivers::uar_run::{UarRunClientError, UarRunControl};
+use librefang_runtime::a2a::{A2aTask, A2aTaskStatus, A2aTaskStore};
+use librefang_types::{
+    agent::AgentId,
+    uar_run::{UarDelegatedRunProjection, UarJobAttemptReservation,
+        UarReservationDisposition, UarReservedJobAttempt},
+};
+
+pub(super) async fn dispatch(
+    kernel: &LibreFangKernel,
+    agent_id: AgentId,
+    selected: SelectedUarJob,
+) -> Result<UarDelegatedRunProjection, JobDispatchError> {
+    validate_identity(&selected)?;
+    let task = kernel.memory.substrate.task_get(&selected.job.job_id).await
+        .map_err(|_| JobDispatchError::StorageUnknown)?
+        .ok_or(JobDispatchError::IdentityConflict)?;
+    let expected_assignee = task["assigned_to"].as_str().unwrap_or("").to_string();
+    if expected_assignee != agent_id.to_string() { return Err(JobDispatchError::IdentityConflict); }
+    let intent = SelectedJobIntent { job: selected.job.clone(),
+        local_task_id: selected.admission.boss_task_id.clone(),
+        initiating_owner: selected.verified_subject.clone(),
+        workspace_id: selected.admission.workspace_id.clone(), expected_assignee };
+    // The enduring intent wins against native CAS BEFORE descriptor preflight.
+    let claim = kernel.memory.substrate.task_claim_selected_intent(intent.clone()).await
+        .map_err(|_| JobDispatchError::StorageUnknown)?;
+    let projection = dispatch_to_store(kernel.a2a_tasks(), agent_id, selected, claim).await?;
+    // Separate idempotent reconciliation; a crash here leaves the original
+    // private receipt intact for the next sweep, never a replacement admission.
+    kernel.reconcile_selected_job(intent).await.map_err(|_| JobDispatchError::StorageUnknown)?;
+    Ok(projection)
+}
+
+pub(super) async fn dispatch_to_store(
+    store: &A2aTaskStore, agent_id: AgentId, selected: SelectedUarJob, claim: SelectedClaim,
+) -> Result<UarDelegatedRunProjection, JobDispatchError> {
+    validate_identity(&selected)?;
+    match claim {
+        SelectedClaim::Created | SelectedClaim::Existing => {}
+        SelectedClaim::Conflict | SelectedClaim::NotFound => return Err(JobDispatchError::IdentityConflict),
+        SelectedClaim::Unknown => return Err(JobDispatchError::StorageUnknown),
+    }
+    // Read durable authority before consulting current connection/configuration.
+    // A missing retained row is an error, not an absent reservation.
+    if let Some(existing) = store.get_uar_job_attempt(
+        &selected.verified_subject, selected.verified_tenant.as_deref(),
+        &selected.admission.workspace_id, &selected.job,
+    ).map_err(storage_error)? {
+        validate_existing(&selected, &existing)?;
+        // Do not prepare, persist or POST refreshed input/credentials. This is
+        // reconciliation, not an assertion that a changed body is an exact retry.
+        return reconcile(store, &selected.control, existing).await;
+    }
+    if claim != SelectedClaim::Created { return Err(JobDispatchError::StorageUnknown); }
+    if selected.requires_durable_restart_recovery {
+        return Err(JobDispatchError::RestartRecoveryUnsupported);
+    }
+    let prepared = UarRunControl::prepare(&selected.admission)
+        .map_err(|_| JobDispatchError::PreparationFailed)?;
+    // Descriptor and binding reads have no admission effect. No native loop is
+    // entered if preparation, required capability checks or persistence fail.
+    let preflight = selected.control.prepare_selected_projection(
+        &selected.admission, &prepared, &selected.verified_subject,
+    ).await.map_err(|_| JobDispatchError::PreparationFailed)?;
+    let mut pending = preflight.projection().clone();
+    validate_capabilities(&selected, &pending)?;
+    strip_untyped_presentation(&mut pending);
+    let reservation = UarJobAttemptReservation {
+        job: selected.job.clone(),
+        verified_subject: selected.verified_subject.clone(),
+        verified_tenant: selected.verified_tenant.clone(),
+        workspace_id: pending.workspace_id.clone(),
+        boss_task_id: pending.boss_task_id.clone(),
+        harness: "uar".into(),
+        admission_id: pending.admission_key.clone(),
+        runtime_epoch: pending.runtime_epoch.clone()
+            .filter(|value| !value.trim().is_empty())
+            .ok_or(JobDispatchError::PreparationFailed)?,
+        request_digest: prepared.request_digest.clone(),
+        definition: pending.definition.clone(),
+        credential_ref: pending.effective_binding.credential_ref.clone(),
+        credential_revision: selected.credential_revision.clone(),
+        required_capabilities: selected.required_capabilities.clone(),
+    };
+    let task = A2aTask {
+        id: pending.boss_task_id.clone(),
+        session_id: None,
+        status: A2aTaskStatus::Submitted.into(),
+        // Input/history can contain secrets. Non-executable presentation is
+        // supplied later by the typed observation mapper, not copied from RPC.
+        messages: Vec::new(),
+        artifacts: Vec::new(),
+        agent_id: Some(agent_id.to_string()),
+        caller_a2a_agent_id: Some(selected.verified_subject.clone()),
+    };
+    let reserved = store.reserve_uar_job_attempt(reservation, task, pending)
+        .map_err(storage_error)?;
+    if reserved.disposition == UarReservationDisposition::Existing {
+        return reconcile(store, &selected.control, reserved).await;
+    }
+    // This is the only admission call. Dropping this future after reservation
+    // (including before POST) leaves an original unresolved attempt to reconcile.
+    let projection = match selected.control.admit_selected(
+        &selected.admission, &prepared, preflight, &reserved.projection,
+    ).await {
+        Ok(mut receipt) => {
+            // Admission acknowledgement is not proof that no effect occurred.
+            if receipt.admission_state != "refused" {
+                receipt.effect_state = "effect_unconfirmed".into();
+            }
+            receipt
+        }
+        Err(error) => unknown_projection(reserved.projection.clone(), &error),
+    };
+    persist(store, &reserved.reservation, projection)
+}
+
+fn validate_identity(selected: &SelectedUarJob) -> Result<(), JobDispatchError> {
+    if selected.job.selected_task_id().as_deref() != Some(selected.admission.boss_task_id.as_str())
+        || selected.verified_subject.trim().is_empty()
+        || selected.verified_subject == "anonymous"
+        || selected.verified_tenant.as_ref().is_some_and(|value| value.trim().is_empty())
+        || selected.job.job_id.trim().is_empty()
+        || selected.admission.boss_task_id.trim().is_empty()
+        || selected.admission.workspace_id.trim().is_empty()
+        || selected.admission.admission_key.trim().is_empty()
+        || selected.admission.delegation_id.trim().is_empty()
+    {
+        return Err(JobDispatchError::InvalidIdentity);
+    }
+    Ok(())
+}
+
+fn validate_existing(
+    selected: &SelectedUarJob, original: &UarReservedJobAttempt,
+) -> Result<(), JobDispatchError> {
+    let saved = &original.projection;
+    if saved.boss_task_id != selected.admission.boss_task_id
+        || saved.admission_key != selected.admission.admission_key
+        || saved.delegation_id != selected.admission.delegation_id
+        || saved.target_binding_id != selected.admission.target_binding_id
+        || saved.definition != selected.admission.definition
+    {
+        return Err(JobDispatchError::IdentityConflict);
+    }
+    Ok(())
+}
+
+fn validate_capabilities(
+    selected: &SelectedUarJob, pending: &UarDelegatedRunProjection,
+) -> Result<(), JobDispatchError> {
+    if selected.requires_steer && pending.unsupported_semantics.iter().any(|v| v == "steer") {
+        return Err(JobDispatchError::SteerUnsupported);
+    }
+    for (index, capability) in selected.required_capabilities.iter().enumerate() {
+        if !pending.effective_binding.capabilities.contains(capability) {
+            return Err(JobDispatchError::CapabilityMissing(index));
+        }
+    }
+    Ok(())
+}
+
+async fn reconcile(
+    store: &A2aTaskStore, control: &UarRunControl, original: UarReservedJobAttempt,
+) -> Result<UarDelegatedRunProjection, JobDispatchError> {
+    if original.projection.admission_state == "refused" {
+        return Ok(original.projection);
+    }
+    let observed = if original.projection.uar_task_id.is_some() {
+        control.lookup(&original.projection).await
+    } else {
+        control.resolve(&original.projection).await
+    };
+    let projection = match observed {
+        Ok(receipt) => receipt,
+        Err(error) => unknown_projection(original.projection.clone(), &error),
+    };
+    persist(store, &original.reservation, projection)
+}
+
+fn unknown_projection(
+    mut original: UarDelegatedRunProjection, error: &UarRunClientError,
+) -> UarDelegatedRunProjection {
+    let state = match error {
+        UarRunClientError::RecoveryUnsupported { .. } =>
+            "recovery_unsupported",
+        UarRunClientError::ConnectionReattachmentRequired =>
+            "outcome_unknown",
+        _ if error.refusal().is_some_and(|refusal| refusal.code == "retention_expired") =>
+            "expired",
+        _ => "outcome_unknown",
+    };
+    if original.uar_task_id.is_none() {
+        original.admission_state = "unresolved".into();
+    }
+    original.recovery_state = state.into();
+    original.effect_state = "effect_unconfirmed".into();
+    original
+}
+
+fn strip_untyped_presentation(projection: &mut UarDelegatedRunProjection) {
+    // No verified sanitizer/provenance is available for these arbitrary values.
+    // They are unavailable in selected history until the mapping/observation
+    // owner supplies the approved typed secret-excluded presentation contract.
+    projection.definition_diagnostics.clear();
+    projection.remote_diagnostics.clear();
+    projection.links.clear();
+}
+
+fn persist(
+    store: &A2aTaskStore, reservation: &UarJobAttemptReservation,
+    mut projection: UarDelegatedRunProjection,
+) -> Result<UarDelegatedRunProjection, JobDispatchError> {
+    // Only fixed codes produced here survive; never persist provider diagnostics.
+    let local_code = match projection.recovery_state.as_str() {
+        "recovery_unsupported" => Some("uar_runtime_epoch_lost"),
+        "outcome_unknown" => Some("uar_attempt_outcome_unknown"),
+        "expired" => Some("uar_retention_expired"),
+        _ => None,
+    };
+    strip_untyped_presentation(&mut projection);
+    if let Some(code) = local_code {
+        projection.remote_diagnostics.push(serde_json::json!({"code": code}));
+    }
+    store.put_uar_delegation(projection).map_err(storage_error)?;
+    // Read back the transaction's projection: receipt cursors must not pretend
+    // that presentation events were applied by this admission-only boundary.
+    store.get_uar_job_attempt(
+        &reservation.verified_subject, reservation.verified_tenant.as_deref(),
+        &reservation.workspace_id, &reservation.job,
+    ).map_err(storage_error)?.map(|saved| saved.projection)
+        .ok_or(JobDispatchError::StorageUnknown)
+}
+
+fn storage_error(code: String) -> JobDispatchError {
+    match code.as_str() {
+        "uar_attempt_identity_conflict" => JobDispatchError::IdentityConflict,
+        _ => JobDispatchError::StorageUnknown,
+    }
+}

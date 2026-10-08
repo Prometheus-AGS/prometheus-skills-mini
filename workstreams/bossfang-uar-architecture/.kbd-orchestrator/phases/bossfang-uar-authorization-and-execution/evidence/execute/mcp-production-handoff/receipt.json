@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "task": "bossfang-bauar-mcp-attribution/source",
+  "role": "bossfang-feature-steward",
+  "status": "source-authored-unverified",
+  "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/",
+  "baseline": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+  "previousNetworkCheckpoint": "e6a3292 task7-views-handoff/receipt.json",
+  "sourceFiles": [
+    {
+      "path": "crates/librefang-api/src/mcp_attribution.rs",
+      "sha256": "f0fdf67dfd6f182031cfb4b680bca1313b6446420be6781f7bc7f2a9e579510e",
+      "lines": 94,
+      "snapshot": "01-crates_librefang-api_src_mcp_attribution.rs.txt"
+    },
+    {
+      "path": "crates/librefang-api/src/middleware.rs",
+      "sha256": "c667697651582b64e32175464b05dd39e96c7c8e5695f977052859fdef84e083",
+      "lines": 5419,
+      "snapshot": "02-crates_librefang-api_src_middleware.rs.txt"
+    },
+    {
+      "path": "crates/librefang-api/src/routes/network.rs",
+      "sha256": "3f079a2095e8f20b7c7fb512652666553e8071cd924c30dd71ebefa245d93cab",
+      "lines": 2612,
+      "snapshot": "03-crates_librefang-api_src_routes_network.rs.txt"
+    },
+    {
+      "path": "crates/librefang-api/src/lib.rs",
+      "sha256": "62cba813e8bb6404136b4faaad8f40dae30055e2b0e6e8de2d1a1879523bd9ef",
+      "lines": 279,
+      "snapshot": "04-crates_librefang-api_src_lib.rs.txt"
+    },
+    {
+      "path": "crates/librefang-api/src/server.rs",
+      "sha256": "cc910d166979671657ff3c0592e14ef7db59e657a4659aaeb3bdff0fadaeb372",
+      "lines": 4684,
+      "snapshot": "05-crates_librefang-api_src_server.rs.txt"
+    },
+    {
+      "path": "crates/librefang-api/src/oauth.rs",
+      "sha256": "311f44e8b5c370624ac32fa56693e6fe2e2fc4a6098a0ed11d2e2c02d289ecac",
+      "lines": 3274,
+      "snapshot": "06-crates_librefang-api_src_oauth.rs.txt"
+    }
+  ],
+  "networkNonMcpPreservation": {
+    "byteIdentical": true,
+    "sha256": "847d29b77aeee5f7637c4074afa20c4e6d5275ee8680b1bbd596cd25e25b317f"
+  },
+  "testsRun": [],
+  "independentFixtureOwner": "uar_resource_continue, NEW crates/librefang-api/tests/bauar_mcp_identity.rs",
+  "claimsReleased": true,
+  "policyRevision": "bossfang.mcp-inbound-policy/1",
+  "resultMetaKey": "ai.bossfang/mcp-attribution",
+  "modeStrings": [
+    "trusted_local",
+    "service",
+    "authenticated_user"
+  ],
+  "sourceStrings": [
+    "local_transport",
+    "master_api_key",
+    "user_api_key",
+    "dashboard_session",
+    "oidc"
+  ],
+  "limitations": [
+    "No compilation, tests, formatter, build, lint, service, dependency or gate execution.",
+    "Existing OIDC verifier does not bind iss; subject/provider provenance is not issuer-validation certification.",
+    "No delegated-user tenant/actor mapping, IdP installation or remote deployment certification.",
+    "Legacy derived dashboard token is service authority/source dashboard_session, not a registered user.",
+    "Admin/Owner existing all-agent permissions remain; no cross-owner Admin-denial promise.",
+    "Audit remains existing best-effort audit persistence, not a new transaction/authorization dependency."
+  ],
+  "createdAt": "2026-10-06T16:58:47.914Z",
+  "frozenAt": "2026-10-06T17:03:02.159Z"
+}

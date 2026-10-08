@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:26:03.883Z",
+  "scope": "Owned fixture only",
+  "source": {
+    "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+    "file": "crates/librefang-kernel/tests/bauar_harness_delegation.rs",
+    "sha256": "99b4ed2c0c43e3f02828b2631f5373f588c8f11c7153cb015c34362f307336dd",
+    "lines": 165
+  },
+  "observed": "H27 exited 101 at legacy_call after 3 completed kernel cases and 12 named Node cases",
+  "cause": {
+    "classification": "source-backed configuration conflict; exact H27 runtime error not captured",
+    "producer": "fixture previously assigns api_key_env=BAUAR_MODEL_KEY to every provider",
+    "consumer": "UarDriver validates supervised key against inherited UAR_LLM__API_KEY or LLM_API_KEY; neither is passed to the private child",
+    "refusalSource": "crates/librefang-llm-drivers/src/drivers/uar.rs:1189"
+  },
+  "correction": "Only provider uar omits per-agent key override; supervised UAR configuration, credentials, bearer, admission, native dispatch and original response assertion unchanged",
+  "verification": "compile16 active; no PASS claim",
+  "excluded": [
+    "production driver change",
+    "secrets",
+    "D0",
+    "shared services",
+    "assertion relaxation"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "kind": "source-only fixed stream taxonomy",
+  "observed": "runtime04 registration stream assertion failed after successful catalog write and run admission; stream error unclassified.",
+  "finding": "runRevisionMatches false was initial value before finishCapture inspection, not a compared revision mismatch. Catalog snapshot comparison passed. Revision semantics and all comparison assertions remain unchanged.",
+  "change": "Exact source message/prefix classification only plus controlled provider request count/reached boolean. No raw error, content, canary, IDs, bodies, or URLs emitted.",
+  "sources": {
+    "boss": [
+      "src/main/ai/runtime/uar/UarAguiAdapter.ts:87,116,122,124,127,220,229,291-302,430,436",
+      "src/main/ai/runtime/uar/UarRuntimeConnection.ts:274,516-525"
+    ],
+    "uar": [
+      "src/uar/runtime/manager.rs:3916,4651,4691",
+      "src/uar/api/routes.rs:751",
+      "src/uar/domain/artifact.rs:58-81,93-105"
+    ]
+  },
+  "files": [
+    {
+      "path": "scripts/gates/bauar-secret-projection.ts",
+      "sha256": "f78ef2b9ee326bdd8d6f4cbf566c431036806f5ace7846800d67d70cb92d42df",
+      "lines": 480,
+      "snapshot": "source/bauar-secret-projection.ts",
+      "changedThisTask": true
+    },
+    {
+      "path": "scripts/gates/bauar-secret-projection-revision.ts",
+      "sha256": "31b13e9f1d0e555a95908a9609c45ffeed5bc84d818ee5aff3b46c0b9376dbc7",
+      "lines": 218,
+      "snapshot": "source/bauar-secret-projection-revision.ts",
+      "changedThisTask": false
+    },
+    {
+      "path": "scripts/gates/bauar-secret-projection-mcp.ts",
+      "sha256": "3695b1e9e6c8c8579682d1a84a70008261c5ebb72bfc631b64734bf9c33ff125",
+      "lines": 251,
+      "snapshot": "source/bauar-secret-projection-mcp.ts",
+      "changedThisTask": false
+    },
+    {
+      "path": "scripts/gates/bauar-secret-projection-events.ts",
+      "sha256": "8ed59b1c52cc939616b3639fe51c68895b80b7a0be7af821e1d80b3a7c4094e1",
+      "lines": 182,
+      "snapshot": "source/bauar-secret-projection-events.ts",
+      "changedThisTask": false
+    }
+  ],
+  "preserved": [
+    "All assertions and their order",
+    "Revision and generation pairing",
+    "Provider, canary and model input constraints",
+    "All timeouts and waits",
+    "No production source changes"
+  ],
+  "limitations": "Unknown errors remain unclassified; provider request count does not prove successful model completion. Root owns runtime acceptance.",
+  "executed": []
+}

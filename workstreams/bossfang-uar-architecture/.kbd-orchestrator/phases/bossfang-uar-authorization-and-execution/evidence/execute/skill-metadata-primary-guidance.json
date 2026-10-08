@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-06T21:06:01.469Z",
+  "provider": "Context7",
+  "resolve": {
+    "libraryName": "SurrealDB",
+    "selected": "/surrealdb/docs.surrealdb.com",
+    "reputation": "High",
+    "score": 83.08
+  },
+  "query": "Existing-record UPDATESET only enablement metadata; preserve unspecifiedfields and embeddings; distinguishUPSERT/CONTENT",
+  "primarySources": [
+    "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/reference/query-language/statements/update.mdx",
+    "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/reference/rust/methods/update.mdx",
+    "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/learn/querying/surrealql/sample-queries.mdx"
+  ],
+  "findings": [
+    "UPDATE SET or MERGE changes selectedfields",
+    "CONTENT replacement canremoveunspecifiedfields",
+    "UPSERT additionally createsabsentrecords"
+  ],
+  "versionLimit": "Official docs main unversioned; exactSDK3.3APIrequiresinspectedpinnedlocalsource",
+  "verification": "Guidance only; not backendruntimeacceptance"
+}

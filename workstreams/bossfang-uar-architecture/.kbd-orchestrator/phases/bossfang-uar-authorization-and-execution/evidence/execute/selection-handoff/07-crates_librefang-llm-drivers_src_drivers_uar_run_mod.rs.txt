@@ -1,0 +1,432 @@
+//! UAR full-harness delegation client.
+//!
+//! This is intentionally not an `LlmDriver`: UAR owns the complete delegated
+//! execution loop. BossFang sends control requests and retains correlation
+//! only. All provider wire structs live here so protocol revisions stay out of
+//! the kernel and public API types.
+
+use std::time::Duration;
+
+use librefang_types::{
+    config::UarEffectiveBinding,
+    uar_run::{
+        UarDefinitionMode, UarDelegatedRunProjection, UarProjectionRetention, UarRunAdmission,
+        UarRunCancellation, UarRunRefusal, UarSteerOutcome,
+    },
+};
+use reqwest::{Method, StatusCode};
+use serde_json::{Map, Value};
+use zeroize::Zeroizing;
+
+mod binding;
+mod canonical;
+mod diagnostic;
+mod http;
+mod observation;
+mod retained;
+mod selection;
+pub use selection::PendingUarAdmission;
+mod wire;
+
+use binding::{ensure_same_binding, require_task_id, validate_service_placement};
+use canonical::canonical_digest;
+use wire::WireReceipt;
+
+#[derive(Debug, thiserror::Error)]
+pub enum UarRunClientError {
+    #[error("{0}")]
+    Binding(String),
+    #[error("original UAR connection requires private credential reattachment; run cannot move or replay")]
+    ConnectionReattachmentRequired,
+    #[error("UAR full-run {operation} failed: {message}")]
+    Remote {
+        operation: &'static str,
+        status: StatusCode,
+        message: String,
+        refusal: Option<UarRunRefusal>,
+    },
+    #[error("UAR full-run {operation} transport failed: {message}")]
+    Transport {
+        operation: &'static str,
+        message: String,
+        outcome_uncertain: bool,
+    },
+    #[error("UAR full-run {operation} returned an invalid response: {message}")]
+    InvalidResponse {
+        operation: &'static str,
+        message: String,
+    },
+    #[error("invalid full-run admission: {0}")]
+    InvalidAdmission(String),
+    #[error("UAR full-run recovery is unsupported after runtime epoch changed from '{previous_epoch}' to '{current_epoch}'")]
+    RecoveryUnsupported {
+        previous_epoch: String,
+        current_epoch: String,
+    },
+}
+
+impl UarRunClientError {
+    #[must_use]
+    pub fn outcome_uncertain(&self) -> bool {
+        matches!(
+            self,
+            Self::Transport {
+                outcome_uncertain: true,
+                ..
+            }
+        )
+    }
+
+    #[must_use]
+    pub fn refusal(&self) -> Option<&UarRunRefusal> {
+        match self {
+            Self::Remote { refusal, .. } => refusal.as_ref(),
+            _ => None,
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct PreparedAdmission {
+    pub request_digest: String,
+    definition_mode: UarDefinitionMode,
+    body: Value,
+}
+
+#[derive(Clone)]
+struct Transport {
+    base: String,
+    credential: Option<Zeroizing<String>>,
+    binding: UarEffectiveBinding,
+}
+
+/// Dedicated control client for a UAR-owned complete run.
+pub struct UarRunClient {
+    client: reqwest::Client,
+    request_timeout: Duration,
+    retained_connections:
+        tokio::sync::RwLock<std::collections::HashMap<String, retained::RetainedConnection>>,
+}
+
+/// App-owned control authority shared by every BossFang surface that projects
+/// a UAR-owned complete run.
+pub type UarRunControl = UarRunClient;
+
+impl Default for UarRunClient {
+    fn default() -> Self {
+        Self::new(Duration::from_secs(120))
+    }
+}
+
+impl UarRunClient {
+    #[must_use]
+    pub fn new(request_timeout: Duration) -> Self {
+        let client = reqwest::Client::builder()
+            .redirect(reqwest::redirect::Policy::none())
+            .connect_timeout(Duration::from_secs(5))
+            .build()
+            .unwrap_or_else(|_| reqwest::Client::new());
+        Self {
+            client,
+            request_timeout,
+            retained_connections: tokio::sync::RwLock::new(std::collections::HashMap::new()),
+        }
+    }
+
+    /// Create the exact stable admission body and digest before any network
+    /// effect. The opaque native run fields are flattened without renaming.
+    pub fn prepare(admission: &UarRunAdmission) -> Result<PreparedAdmission, UarRunClientError> {
+        if admission.admission_key.trim().is_empty()
+            || admission.delegation_id.trim().is_empty()
+            || admission.target_binding_id.trim().is_empty()
+            || admission.workspace_id.trim().is_empty()
+        {
+            return Err(UarRunClientError::InvalidAdmission(
+                "delegation, admission, target binding and workspace identities are required"
+                    .to_string(),
+            ));
+        }
+        for reserved in ["admission_id", "native_task_id"] {
+            if admission.run.contains_key(reserved) {
+                return Err(UarRunClientError::InvalidAdmission(format!(
+                    "run payload cannot override reserved field '{reserved}'"
+                )));
+            }
+        }
+
+        let mut body = admission.run.clone();
+        body.insert(
+            "admission_id".into(),
+            Value::String(admission.admission_key.clone()),
+        );
+        body.insert(
+            "native_task_id".into(),
+            Value::String(admission.boss_task_id.clone()),
+        );
+        if body
+            .get("deployment_binding_id")
+            .and_then(Value::as_str)
+            .is_some_and(|value| value != admission.target_binding_id)
+        {
+            return Err(UarRunClientError::InvalidAdmission(
+                "run deployment_binding_id does not match the selected definition binding"
+                    .to_string(),
+            ));
+        }
+        body.entry("deployment_binding_id")
+            .or_insert_with(|| Value::String(admission.target_binding_id.clone()));
+
+        let digest = canonical_digest(&Value::Object(body.clone()));
+        Ok(PreparedAdmission {
+            request_digest: digest,
+            definition_mode: UarDefinitionMode::Bound,
+            body: Value::Object(body),
+        })
+    }
+
+    /// Convert a typed UAR retention/recovery refusal into a durable BossFang
+    /// posture. The caller persists this projection and never resubmits it.
+    #[must_use]
+    pub fn recovery_projection(
+        projection: &UarDelegatedRunProjection,
+        error: &UarRunClientError,
+    ) -> Option<UarDelegatedRunProjection> {
+        let (recovery_state, diagnostic) = match error {
+            UarRunClientError::RecoveryUnsupported {
+                previous_epoch,
+                current_epoch,
+            } => (
+                "recovery_unsupported",
+                serde_json::json!({
+                    "code": "recovery_unsupported",
+                    "message": "the process-ephemeral UAR runtime epoch changed",
+                    "previousRuntimeEpoch": previous_epoch,
+                    "currentRuntimeEpoch": current_epoch
+                }),
+            ),
+            _ => {
+                let refusal = error.refusal()?;
+                let state = match refusal.code.as_str() {
+                    "retention_expired" => "expired",
+                    "recovery_unsupported" | "task_unresolved" => "recovery_unsupported",
+                    _ => return None,
+                };
+                (
+                    state,
+                    serde_json::to_value(refusal).unwrap_or_else(
+                        |_| serde_json::json!({"code": state, "message": error.to_string()}),
+                    ),
+                )
+            }
+        };
+        let mut recovered = projection.clone();
+        recovered.recovery_state = recovery_state.to_string();
+        recovered.remote_diagnostics.push(diagnostic);
+        Some(recovered)
+    }
+
+    /// Legacy/manual preflight preserves its existing connection retention.
+    /// Selected durable jobs use prepare_selected_projection and install only
+    /// after a committed Created reservation.
+    pub async fn prepare_projection(
+        &self,
+        admission: &UarRunAdmission,
+        prepared: &PreparedAdmission,
+        verified_principal: &str,
+    ) -> Result<UarDelegatedRunProjection, UarRunClientError> {
+        let pending = self.prepare_selected_projection(admission, prepared, verified_principal).await?;
+        self.retain_connection(admission, verified_principal, pending.transport).await;
+        Ok(pending.projection)
+    }
+
+    pub async fn admit(
+        &self,
+        admission: &UarRunAdmission,
+        prepared: &PreparedAdmission,
+        pending: &UarDelegatedRunProjection,
+    ) -> Result<UarDelegatedRunProjection, UarRunClientError> {
+        let transport = self.original_transport(pending).await?;
+        ensure_same_binding(pending, &transport.binding)?;
+        self.ensure_runtime_epoch(&transport, pending).await?;
+        let receipt: WireReceipt = self
+            .receipt(
+                &transport,
+                Method::POST,
+                "tasks",
+                Some(&prepared.body),
+                "admission",
+                true,
+                &admission.workspace_id,
+                true,
+            )
+            .await?;
+        receipt.into_projection(
+            admission,
+            prepared,
+            transport.binding,
+            &pending.verified_principal,
+        )
+    }
+
+    pub async fn resolve(
+        &self,
+        projection: &UarDelegatedRunProjection,
+    ) -> Result<UarDelegatedRunProjection, UarRunClientError> {
+        let transport = self.original_transport(projection).await?;
+        ensure_same_binding(projection, &transport.binding)?;
+        self.ensure_runtime_epoch(&transport, projection).await?;
+        let receipt: WireReceipt = self
+            .json(
+                &transport,
+                Method::GET,
+                &format!("admissions/{}", projection.admission_key),
+                None,
+                "admission reconciliation",
+                false,
+                &projection.workspace_id,
+            )
+            .await?;
+        receipt.merge_projection(projection, transport.binding)
+    }
+
+    pub async fn lookup(
+        &self,
+        projection: &UarDelegatedRunProjection,
+    ) -> Result<UarDelegatedRunProjection, UarRunClientError> {
+        let task_id = require_task_id(projection)?;
+        self.receipt_request(
+            projection,
+            Method::GET,
+            &format!("tasks/{task_id}"),
+            None,
+            "lookup",
+            false,
+        )
+        .await
+    }
+
+    pub async fn approve(
+        &self,
+        projection: &UarDelegatedRunProjection,
+        approval_id: &str,
+        approved: bool,
+    ) -> Result<UarDelegatedRunProjection, UarRunClientError> {
+        let current = self.lookup(projection).await?;
+        let task_id = require_task_id(&current)?;
+        let body = serde_json::json!({
+            "expected_revision": current.revision,
+            "approval_id": approval_id,
+            "approved": approved
+        });
+        self.receipt_request(
+            &current,
+            Method::POST,
+            &format!("tasks/{task_id}/tool-approval"),
+            Some(&body),
+            "tool approval",
+            true,
+        )
+        .await
+    }
+
+    pub async fn cancel(
+        &self,
+        projection: &UarDelegatedRunProjection,
+    ) -> Result<UarDelegatedRunProjection, UarRunClientError> {
+        self.mutate(projection, "cancel", serde_json::json!({}), "cancellation")
+            .await
+    }
+
+    pub async fn detach(
+        &self,
+        projection: &UarDelegatedRunProjection,
+        observer_id: &str,
+    ) -> Result<UarDelegatedRunProjection, UarRunClientError> {
+        self.mutate(
+            projection,
+            "detach",
+            serde_json::json!({"observer_id": observer_id}),
+            "observer detach",
+        )
+        .await
+    }
+
+    pub async fn steer(
+        &self,
+        projection: &UarDelegatedRunProjection,
+        input: &str,
+    ) -> Result<UarSteerOutcome, UarRunClientError> {
+        match self
+            .mutate(
+                projection,
+                "steer",
+                serde_json::json!({"input": input}),
+                "steering",
+            )
+            .await
+        {
+            Ok(projection) => Ok(UarSteerOutcome::Accepted { projection }),
+            Err(error)
+                if error
+                    .refusal()
+                    .is_some_and(|item| item.code == "capability_unsupported") =>
+            {
+                let refusal = error.refusal().expect("checked above");
+                Ok(UarSteerOutcome::Unsupported {
+                    code: refusal.code.clone(),
+                    message: refusal.message.clone(),
+                })
+            }
+            Err(error) => Err(error),
+        }
+    }
+
+    async fn mutate(
+        &self,
+        projection: &UarDelegatedRunProjection,
+        operation_path: &str,
+        mut body: Value,
+        operation: &'static str,
+    ) -> Result<UarDelegatedRunProjection, UarRunClientError> {
+        let current = self.lookup(projection).await?;
+        let task_id = require_task_id(&current)?;
+        body.as_object_mut()
+            .expect("mutation body is always an object")
+            .insert("expected_revision".into(), Value::from(current.revision));
+        self.receipt_request(
+            &current,
+            Method::POST,
+            &format!("tasks/{task_id}/{operation_path}"),
+            Some(&body),
+            operation,
+            true,
+        )
+        .await
+    }
+
+    async fn receipt_request(
+        &self,
+        projection: &UarDelegatedRunProjection,
+        method: Method,
+        suffix: &str,
+        body: Option<&Value>,
+        operation: &'static str,
+        uncertain_on_transport: bool,
+    ) -> Result<UarDelegatedRunProjection, UarRunClientError> {
+        let transport = self.original_transport(projection).await?;
+        ensure_same_binding(projection, &transport.binding)?;
+        self.ensure_runtime_epoch(&transport, projection).await?;
+        let receipt: WireReceipt = self
+            .json(
+                &transport,
+                method,
+                suffix,
+                body,
+                operation,
+                uncertain_on_transport,
+                &projection.workspace_id,
+            )
+            .await?;
+        receipt.merge_projection(projection, transport.binding)
+    }
+}

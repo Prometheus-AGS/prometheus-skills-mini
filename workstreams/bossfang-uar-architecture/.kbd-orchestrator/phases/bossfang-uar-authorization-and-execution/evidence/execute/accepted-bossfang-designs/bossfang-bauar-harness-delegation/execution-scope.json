@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "status": "proposed-design-awaiting-driver-acceptance",
+  "productRoot": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "sourceBaseline": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+  "parentChange": "bauar-03-harness-delegation",
+  "childChange": "bossfang-bauar-harness-delegation",
+  "childProjectUuid": "aade093e-a167-429e-a35b-d652b15b1c9c",
+  "runtimeRegistrationComplete": false,
+  "taskMap": [
+    {
+      "parentBackendId": 1,
+      "childOrdinal": "1.1",
+      "childBackendId": null,
+      "claimGroups": []
+    },
+    {
+      "parentBackendId": 2,
+      "childOrdinal": "1.2",
+      "childBackendId": null,
+      "claimGroups": [
+        "F-STORAGE"
+      ]
+    },
+    {
+      "parentBackendId": 3,
+      "childOrdinal": "1.3",
+      "childBackendId": null,
+      "claimGroups": [
+        "F-HARNESS-SELECTION"
+      ]
+    },
+    {
+      "parentBackendId": 4,
+      "childOrdinal": "2.1",
+      "childBackendId": null,
+      "claimGroups": [
+        "F-HARNESS-SELECTION"
+      ]
+    },
+    {
+      "parentBackendId": 5,
+      "childOrdinal": "2.2",
+      "childBackendId": null,
+      "claimGroups": [
+        "F-HARNESS-CONTROL"
+      ]
+    },
+    {
+      "parentBackendId": 6,
+      "childOrdinal": "2.3",
+      "childBackendId": null,
+      "claimGroups": [
+        "F-SCHEMA-SCHEDULING",
+        "F-RETRY"
+      ]
+    },
+    {
+      "parentBackendId": 7,
+      "childOrdinal": "2.4",
+      "childBackendId": null,
+      "claimGroups": [
+        "F-RETRY"
+      ]
+    },
+    {
+      "parentBackendId": 8,
+      "childOrdinal": "3.1",
+      "childBackendId": null,
+      "claimGroups": [
+        "F-TEST"
+      ]
+    },
+    {
+      "parentBackendId": 9,
+      "childOrdinal": "3.2",
+      "childBackendId": null,
+      "claimGroups": [
+        "F-TEST"
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "F-STORAGE",
+      "owner": "surrealdb-schema-engineer then serial bossfang-feature-steward",
+      "paths": [
+        "crates/librefang-types/src/uar_run.rs",
+        "crates/librefang-runtime/src/a2a.rs",
+        "crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
+        "crates/librefang-api/src/routes/uar_delegation/storage.rs"
+      ]
+    },
+    {
+      "id": "F-HARNESS-SELECTION",
+      "owner": "bossfang-feature-steward",
+      "paths": [
+        "crates/librefang-kernel/src/kernel/mod.rs",
+        "crates/librefang-kernel/src/kernel/agent_execution.rs",
+        "crates/librefang-kernel/src/kernel/messaging.rs",
+        "crates/librefang-kernel/src/kernel/ephemeral_spawn.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
+        "crates/librefang-types/src/uar_run.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/canonical.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/wire.rs",
+        "crates/librefang-api/src/routes/uar_delegation.rs"
+      ]
+    },
+    {
+      "id": "F-HARNESS-CONTROL",
+      "owner": "bossfang-feature-steward",
+      "paths": [
+        "crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/approval.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/observation.rs",
+        "crates/librefang-api/src/routes/uar_delegation.rs",
+        "crates/librefang-api/src/routes/uar_delegation/observation.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/observation.rs",
+        "crates/librefang-types/src/uar_run.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/mod.rs"
+      ]
+    },
+    {
+      "id": "F-SCHEMA-SCHEDULING",
+      "owner": "surrealdb-schema-engineer",
+      "paths": [
+        "crates/librefang-memory/src/substrate.rs"
+      ],
+      "slice": "Concrete excluded-job reset API and native compatibility only; no migration or attempt persistence"
+    },
+    {
+      "id": "F-RETRY",
+      "owner": "bossfang-feature-steward",
+      "paths": [
+        "crates/librefang-kernel/src/kernel/handles/task_queue.rs",
+        "crates/librefang-kernel/src/kernel/accessors.rs",
+        "crates/librefang-kernel/src/kernel/cron_tick.rs",
+        "crates/librefang-kernel/src/kernel/triggers_and_workflow.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/lifecycle.rs",
+        "crates/librefang-api/src/routes/task_queue.rs",
+        "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
+        "crates/librefang-api/src/routes/uar.rs",
+        "crates/librefang-api/src/routes/network.rs",
+        "crates/librefang-kernel/src/kernel/mod.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/mod.rs"
+      ],
+      "functionSlices": {
+        "crates/librefang-kernel/src/kernel/mod.rs": [
+          "wake_agent_after_approval"
+        ],
+        "crates/librefang-kernel/src/kernel/uar_harness/mod.rs": [
+          "lifecycle module and export wiring"
+        ]
+      }
+    },
+    {
+      "id": "F-TEST",
+      "owner": "bossfang-feature-steward",
+      "paths": [
+        "crates/librefang-kernel/tests/bauar_harness_delegation.rs",
+        "crates/librefang-kernel/tests/kernel_handle_contract_task.rs",
+        "crates/librefang-api/tests/task_board_assignee_wake_test.rs",
+        "scripts/integration/bauar-harness-gate.mjs"
+      ]
+    }
+  ],
+  "serialOrder": [
+    "F-STORAGE",
+    "F-HARNESS-SELECTION",
+    "F-HARNESS-CONTROL",
+    "F-SCHEMA-SCHEDULING",
+    "F-RETRY",
+    "F-TEST"
+  ],
+  "notes": [
+    "Child backend IDs must come from runtime registration, not ordinal inference.",
+    "network.rs transfers to04 only after03 immutable checkpoint.",
+    "No numbered memory/Surreal migration allocated.",
+    "Nested planning root does not itself grant product writes."
+  ],
+  "handoffs": [
+    {
+      "from": "F-STORAGE",
+      "to": "F-HARNESS-SELECTION",
+      "checkpoint": "child1.2 / parent03/2: versioned private A2A relation and atomic event/cursor/outcome API"
+    },
+    {
+      "from": "F-HARNESS-SELECTION",
+      "to": "F-HARNESS-CONTROL",
+      "checkpoint": "child2.1 / parent03/4: uar_harness/mod.rs module/export wiring and shared client/types"
+    },
+    {
+      "from": "F-SCHEMA-SCHEDULING",
+      "to": "F-RETRY",
+      "checkpoint": "child2.3 / parent03/6 pre-step: accepted substrate exclusion interface, native behavior and immutable source checkpoint; no substrate write claim transferred"
+    },
+    {
+      "from": "F-HARNESS-SELECTION",
+      "to": "F-RETRY",
+      "checkpoint": "kernel/mod.rs wake_agent_after_approval slice after selection complete"
+    },
+    {
+      "from": "F-HARNESS-CONTROL",
+      "to": "F-RETRY",
+      "checkpoint": "uar_harness/mod.rs lifecycle declaration/exports after observation wiring complete"
+    },
+    {
+      "from": "F-RETRY",
+      "to": "F-MCP",
+      "checkpoint": "child2.4 / parent03/7 immutable A2A checkpoint: network.rs release"
+    }
+  ]
+}

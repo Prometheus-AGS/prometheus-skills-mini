@@ -1,0 +1,183 @@
+gyp info it worked if it ends with ok
+gyp info using node-gyp@12.4.0
+gyp info using node@24.14.1 | darwin | arm64
+gyp info find Python using Python version 3.11.3 found at "/Users/gqadonis/.pyenv/versions/3.11.3/bin/python3"
+gyp info spawn /Users/gqadonis/.pyenv/versions/3.11.3/bin/python3
+gyp info spawn args [
+gyp info spawn args '/Users/gqadonis/.claude/worktrees/bauar-boss/node_modules/.pnpm/node-gyp@12.4.0/node_modules/node-gyp/gyp/gyp_main.py',
+gyp info spawn args 'binding.gyp',
+gyp info spawn args '-f',
+gyp info spawn args 'make',
+gyp info spawn args '-I',
+gyp info spawn args '/private/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/bauar-sqlite-abi-149-gf98Eg/better-sqlite3/build/config.gypi',
+gyp info spawn args '-I',
+gyp info spawn args '/Users/gqadonis/.claude/worktrees/bauar-boss/node_modules/.pnpm/node-gyp@12.4.0/node_modules/node-gyp/addon.gypi',
+gyp info spawn args '-I',
+gyp info spawn args '/Users/gqadonis/.electron-gyp/44.2.0/include/node/common.gypi',
+gyp info spawn args '-Dlibrary=shared_library',
+gyp info spawn args '-Dvisibility=default',
+gyp info spawn args '-Dnode_root_dir=/Users/gqadonis/.electron-gyp/44.2.0',
+gyp info spawn args '-Dnode_gyp_dir=/Users/gqadonis/.claude/worktrees/bauar-boss/node_modules/.pnpm/node-gyp@12.4.0/node_modules/node-gyp',
+gyp info spawn args '-Dnode_lib_file=/Users/gqadonis/.electron-gyp/44.2.0/$(Configuration)/node.lib',
+gyp info spawn args '-Dmodule_root_dir=/private/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/bauar-sqlite-abi-149-gf98Eg/better-sqlite3',
+gyp info spawn args '-Dnode_engine=v8',
+gyp info spawn args '--depth=.',
+gyp info spawn args '--no-parallel',
+gyp info spawn args '--generator-output',
+gyp info spawn args 'build',
+gyp info spawn args '-Goutput_dir=.'
+gyp info spawn args ]
+gyp info spawn make
+gyp info spawn args [ 'BUILDTYPE=Release', '-C', 'build' ]
+  TOUCH 4292fa9a667d77b27488aa109b010a85bce8e4e7a1c7aa0370cea902395c3866.intermediate
+  ACTION deps_sqlite3_gyp_locate_sqlite3_target_copy_builtin_sqlite3 4292fa9a667d77b27488aa109b010a85bce8e4e7a1c7aa0370cea902395c3866.intermediate
+  TOUCH Release/obj.target/deps/locate_sqlite3.stamp
+  CC(target) Release/obj.target/sqlite3/gen/sqlite3/sqlite3.o
+  LIBTOOL-STATIC Release/sqlite3.a
+  CXX(target) Release/obj.target/better_sqlite3/src/better_sqlite3.o
+In file included from ../src/better_sqlite3.cpp:1:
+In file included from /Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/climits:43:
+In file included from /Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__config:15:
+/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__configuration/availability.h:204:4: warning: "The selected platform is no longer supported by libc++." [-W#warnings]
+  204 | #  warning "The selected platform is no longer supported by libc++."
+      |    ^
+In file included from ../src/better_sqlite3.cpp:11:
+In file included from /Users/gqadonis/.electron-gyp/44.2.0/include/node/node.h:80:
+In file included from /Users/gqadonis/.electron-gyp/44.2.0/include/node/v8.h:33:
+In file included from /Users/gqadonis/.electron-gyp/44.2.0/include/node/v8-function.h:15:
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8-template.h:775:12: warning: cast from 'NamedPropertySetterCallback' (aka 'Intercepted (*)(Local<Name>, Local<Value>, const PropertyCallbackInfo<void> &)') to 'NamedPropertySetterCallbackV2' (aka 'Intercepted (*)(Local<Name>, Local<Value>, const PropertyCallbackInfo<Boolean> &)') converts to incompatible function type [-Wcast-function-type-mismatch]
+  775 |     return NamedPropertySetterCallbackV2(value);
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8-template.h:788:12: warning: cast from 'NamedPropertyDefinerCallback' (aka 'Intercepted (*)(Local<Name>, const PropertyDescriptor &, const PropertyCallbackInfo<void> &)') to 'NamedPropertyDefinerCallbackV2' (aka 'Intercepted (*)(Local<Name>, const PropertyDescriptor &, const PropertyCallbackInfo<Boolean> &)') converts to incompatible function type [-Wcast-function-type-mismatch]
+  788 |     return NamedPropertyDefinerCallbackV2(value);
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8-template.h:906:12: warning: cast from 'IndexedPropertySetterCallbackV2' (aka 'v8::Intercepted (*)(unsigned int, Local<Value>, const PropertyCallbackInfo<void> &)') to 'IndexedPropertySetterCallback' (aka 'v8::Intercepted (*)(unsigned int, Local<Value>, const PropertyCallbackInfo<Boolean> &)') converts to incompatible function type [-Wcast-function-type-mismatch]
+  906 |     return IndexedPropertySetterCallback(value);
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8-template.h:919:12: warning: cast from 'IndexedPropertyDefinerCallbackV2' (aka 'v8::Intercepted (*)(unsigned int, const v8::PropertyDescriptor &, const PropertyCallbackInfo<void> &)') to 'IndexedPropertyDefinerCallback' (aka 'v8::Intercepted (*)(unsigned int, const v8::PropertyDescriptor &, const PropertyCallbackInfo<Boolean> &)') converts to incompatible function type [-Wcast-function-type-mismatch]
+  919 |     return IndexedPropertyDefinerCallback(value);
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../src/better_sqlite3.cpp:26:
+../src/util/data.cpp:149:4: warning: 'GetPrototypeV2' is deprecated: Use GetPrototype(). [-Wdeprecated-declarations]
+  149 |                         GET_PROTOTYPE(v8::Object::New(isolate)),
+      |                         ^
+../src/util/macros.cpp:9:36: note: expanded from macro 'GET_PROTOTYPE'
+    9 | #define GET_PROTOTYPE(obj) ((obj)->GetPrototypeV2())
+      |                                    ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8-object.h:498:3: note: 'GetPrototypeV2' has been explicitly marked deprecated here
+  498 |   V8_DEPRECATED("Use GetPrototype().")
+      |   ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8config.h:614:35: note: expanded from macro 'V8_DEPRECATED'
+  614 | # define V8_DEPRECATED(message) [[deprecated(message)]]
+      |                                   ^
+In file included from ../src/better_sqlite3.cpp:28:
+../src/util/row-builder.cpp:36:4: warning: 'GetPrototypeV2' is deprecated: Use GetPrototype(). [-Wdeprecated-declarations]
+   36 |                         GET_PROTOTYPE(v8::Object::New(isolate)),
+      |                         ^
+../src/util/macros.cpp:9:36: note: expanded from macro 'GET_PROTOTYPE'
+    9 | #define GET_PROTOTYPE(obj) ((obj)->GetPrototypeV2())
+      |                                    ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8-object.h:498:3: note: 'GetPrototypeV2' has been explicitly marked deprecated here
+  498 |   V8_DEPRECATED("Use GetPrototype().")
+      |   ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8config.h:614:35: note: expanded from macro 'V8_DEPRECATED'
+  614 | # define V8_DEPRECATED(message) [[deprecated(message)]]
+      |                                   ^
+In file included from ../src/better_sqlite3.cpp:41:
+../src/util/binder.cpp:36:32: warning: 'GetPrototypeV2' is deprecated: Use GetPrototype(). [-Wdeprecated-declarations]
+   36 |                 v8::Local<v8::Value> proto = GET_PROTOTYPE(obj);
+      |                                              ^
+../src/util/macros.cpp:9:36: note: expanded from macro 'GET_PROTOTYPE'
+    9 | #define GET_PROTOTYPE(obj) ((obj)->GetPrototypeV2())
+      |                                    ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8-object.h:498:3: note: 'GetPrototypeV2' has been explicitly marked deprecated here
+  498 |   V8_DEPRECATED("Use GetPrototype().")
+      |   ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8config.h:614:35: note: expanded from macro 'V8_DEPRECATED'
+  614 | # define V8_DEPRECATED(message) [[deprecated(message)]]
+      |                                   ^
+In file included from ../src/better_sqlite3.cpp:41:
+../src/util/binder.cpp:39:36: warning: 'GetPrototypeV2' is deprecated: Use GetPrototype(). [-Wdeprecated-declarations]
+   39 |                 v8::Local<v8::Value> baseProto = GET_PROTOTYPE(v8::Object::New(isolate));
+      |                                                  ^
+../src/util/macros.cpp:9:36: note: expanded from macro 'GET_PROTOTYPE'
+    9 | #define GET_PROTOTYPE(obj) ((obj)->GetPrototypeV2())
+      |                                    ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8-object.h:498:3: note: 'GetPrototypeV2' has been explicitly marked deprecated here
+  498 |   V8_DEPRECATED("Use GetPrototype().")
+      |   ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8config.h:614:35: note: expanded from macro 'V8_DEPRECATED'
+  614 | # define V8_DEPRECATED(message) [[deprecated(message)]]
+      |                                   ^
+In file included from ../src/better_sqlite3.cpp:44:
+../src/objects/statement.cpp:366:5: warning: 'GetPrototypeV2' is deprecated: Use GetPrototype(). [-Wdeprecated-declarations]
+  366 |                                 GET_PROTOTYPE(v8::Object::New(isolate)),
+      |                                 ^
+../src/util/macros.cpp:9:36: note: expanded from macro 'GET_PROTOTYPE'
+    9 | #define GET_PROTOTYPE(obj) ((obj)->GetPrototypeV2())
+      |                                    ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8-object.h:498:3: note: 'GetPrototypeV2' has been explicitly marked deprecated here
+  498 |   V8_DEPRECATED("Use GetPrototype().")
+      |   ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8config.h:614:35: note: expanded from macro 'V8_DEPRECATED'
+  614 | # define V8_DEPRECATED(message) [[deprecated(message)]]
+      |                                   ^
+In file included from ../src/better_sqlite3.cpp:44:
+../src/objects/statement.cpp:381:38: warning: 'HolderV2' is deprecated: Use Holder(). [-Wdeprecated-declarations]
+  381 |         Statement* stmt = Unwrap<Statement>(PROPERTY_HOLDER(info));
+      |                                             ^
+../src/util/macros.cpp:22:38: note: expanded from macro 'PROPERTY_HOLDER'
+   22 | #define PROPERTY_HOLDER(info) (info).HolderV2()
+      |                                      ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8-function-callback.h:247:3: note: 'HolderV2' has been explicitly marked deprecated here
+  247 |   V8_DEPRECATED("Use Holder().")
+      |   ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8config.h:614:35: note: expanded from macro 'V8_DEPRECATED'
+  614 | # define V8_DEPRECATED(message) [[deprecated(message)]]
+      |                                   ^
+In file included from ../src/better_sqlite3.cpp:45:
+../src/objects/database.cpp:411:45: warning: 'HolderV2' is deprecated: Use Holder(). [-Wdeprecated-declarations]
+  411 |         info.GetReturnValue().Set(Unwrap<Database>(PROPERTY_HOLDER(info))->open);
+      |                                                    ^
+../src/util/macros.cpp:22:38: note: expanded from macro 'PROPERTY_HOLDER'
+   22 | #define PROPERTY_HOLDER(info) (info).HolderV2()
+      |                                      ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8-function-callback.h:247:3: note: 'HolderV2' has been explicitly marked deprecated here
+  247 |   V8_DEPRECATED("Use Holder().")
+      |   ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8config.h:614:35: note: expanded from macro 'V8_DEPRECATED'
+  614 | # define V8_DEPRECATED(message) [[deprecated(message)]]
+      |                                   ^
+In file included from ../src/better_sqlite3.cpp:45:
+../src/objects/database.cpp:415:34: warning: 'HolderV2' is deprecated: Use Holder(). [-Wdeprecated-declarations]
+  415 |         Database* db = Unwrap<Database>(PROPERTY_HOLDER(info));
+      |                                         ^
+../src/util/macros.cpp:22:38: note: expanded from macro 'PROPERTY_HOLDER'
+   22 | #define PROPERTY_HOLDER(info) (info).HolderV2()
+      |                                      ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8-function-callback.h:247:3: note: 'HolderV2' has been explicitly marked deprecated here
+  247 |   V8_DEPRECATED("Use Holder().")
+      |   ^
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/v8config.h:614:35: note: expanded from macro 'V8_DEPRECATED'
+  614 | # define V8_DEPRECATED(message) [[deprecated(message)]]
+      |                                   ^
+../src/better_sqlite3.cpp:48:1: warning: cast from 'void (*)(v8::Local<v8::Object>, v8::Local<v8::Value>, v8::Local<v8::Context>)' to 'node::addon_context_register_func' (aka 'void (*)(v8::Local<v8::Object>, v8::Local<v8::Value>, v8::Local<v8::Context>, void *)') converts to incompatible function type [-Wcast-function-type-mismatch]
+   48 | NODE_MODULE_INIT(/* exports, context */) {
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/node.h:1441:3: note: expanded from macro 'NODE_MODULE_INIT'
+ 1441 |   NODE_MODULE_CONTEXT_AWARE(NODE_GYP_MODULE_NAME,                     \
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 1442 |                             NODE_MODULE_INITIALIZER)                  \
+      |                             ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/node.h:1410:3: note: expanded from macro 'NODE_MODULE_CONTEXT_AWARE'
+ 1410 |   NODE_MODULE_CONTEXT_AWARE_X(modname, regfunc, NULL, 0)
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/gqadonis/.electron-gyp/44.2.0/include/node/node.h:1392:7: note: expanded from macro 'NODE_MODULE_CONTEXT_AWARE_X'
+ 1392 |       (node::addon_context_register_func) (regfunc),                  \
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14 warnings generated.
+  SOLINK_MODULE(target) Release/better_sqlite3.node
+  CC(target) Release/obj.target/test_extension/deps/test_extension.o
+  SOLINK_MODULE(target) Release/test_extension.node
+rm 4292fa9a667d77b27488aa109b010a85bce8e4e7a1c7aa0370cea902395c3866.intermediate
+gyp info ok 

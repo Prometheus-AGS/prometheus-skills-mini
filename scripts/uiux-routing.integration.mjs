@@ -1,17 +1,17 @@
 // Completed-phase integration: real CLI processes, project files and shipped helpers.
 import fs from 'node:fs';
 import path from 'node:path';
-import os from 'node:os';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { tempDir } from '../lib/platform/paths.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ui = path.join(root, 'skills/prometheus-ui-ux/scripts/cli.mjs');
 const creator = path.join(root, 'skills/agent-team-creator/scripts/cli.mjs');
 const bootstrap = path.join(root, 'scripts/prometheus-context-bootstrap.mjs');
-const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'uiux phase Ω '));
+const temporary = fs.mkdtempSync(path.join(tempDir(), 'uiux phase Ω '));
 const results = [];
 const only = process.env.UIUX_CASE;
 function write(file, content) { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, typeof content === 'string' ? content : JSON.stringify(content)); }

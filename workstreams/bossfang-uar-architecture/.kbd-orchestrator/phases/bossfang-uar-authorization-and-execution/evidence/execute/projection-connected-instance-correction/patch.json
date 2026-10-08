@@ -1,0 +1,15 @@
+{
+  "path": "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
+  "expectedBeforeSha256": "772c22ddb96a8f8ff021aecc1cffa6f52cf7170e616e3f34c46412966eedf006",
+  "expectedAfterSha256": "5b0e002e326761eb9ea59f71bbc072bb86a57b995f0dd5ff68fc791e0109df3e",
+  "edits": [
+    {
+      "before": "          connected_instance: assignment.connectedInstance,",
+      "after": "          connected_instance: projection.text(assignment.connectedInstance),"
+    },
+    {
+      "before": "    // Preserve catalog source provenance; UAR normalizes this inline snapshot's",
+      "after": "    const assignment = artifact.extensions['the-boss.model-assignment']\n    if (assignment && typeof assignment === 'object' && 'connected_instance' in assignment &&\n      typeof assignment.connected_instance === 'string') {\n      assignment.connected_instance = projection.text(assignment.connected_instance)\n    }\n    // Preserve catalog source provenance; UAR normalizes this inline snapshot's"
+    }
+  ]
+}

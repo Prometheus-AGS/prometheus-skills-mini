@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-06T20:40:59.470Z",
+  "trigger": "HARNESS20 host alive;2authenticated parsed native requests rejected by model_label",
+  "sourceEvidence": [
+    "agent_execution.rs1165 and prompt.rs942–948 append exact current-time user envelope",
+    "prompt_builder.rs615–619 appends current-time after actual task",
+    "uar_harness/lifecycle.rs64–69 native claim input contains original claimed task title"
+  ],
+  "scope": "Peer-only skip one exact appended clock envelope; preceding actual user still requires fixture label, no old-history search; tool result follows actual task index",
+  "files": [
+    {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "file": "scripts/integration/bauar-harness-peer.mjs",
+      "sha256": "983718269109ec047757cd8c84ac9e1d7ab3cb97fd44aaaff6e32dbeef16fa90",
+      "lines": 210,
+      "frozen": "scripts_integration_bauar-harness-peer.mjs.txt"
+    }
+  ],
+  "verification": "Runtime pending; unchanged production and compiled binaries"
+}

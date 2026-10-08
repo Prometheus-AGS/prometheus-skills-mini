@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "status": "source_authored_unverified",
+  "owner": "bossfang-feature-steward / F-HARNESS-SELECTION",
+  "parentTask": "bauar-03/3",
+  "childTask": "bossfang-bauar-harness-delegation/3",
+  "sourceBaseline": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+  "coordinatorStorageAcceptance": "64409f0",
+  "authored": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-kernel/src/kernel/mod.rs",
+      "sha256": "7a5f65d6bae203eec642e29cbf5ad83d58c78893093854402260d276d2ccb572",
+      "lines": 2487,
+      "snapshot": "01-crates_librefang-kernel_src_kernel_mod.rs.txt"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-kernel/src/kernel/messaging.rs",
+      "sha256": "03fb46db6d89904c57d3115348ca06bbfb38a1317ff78b0de274119b1b86b72f",
+      "lines": 3756,
+      "snapshot": "02-crates_librefang-kernel_src_kernel_messaging.rs.txt"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-kernel/src/kernel/ephemeral_spawn.rs",
+      "sha256": "f43f23cd3d5fd11b7d0fbf850614e793c01a561c9533f743e1ac057a54be0346",
+      "lines": 1022,
+      "snapshot": "03-crates_librefang-kernel_src_kernel_ephemeral_spawn.rs.txt"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+      "sha256": "3c53505c63b03829cc9c3a642ded96f0ec40be8f542b291c38bfdbff0ba879cb",
+      "lines": 96,
+      "snapshot": "04-crates_librefang-kernel_src_kernel_uar_harness_mod.rs.txt"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
+      "sha256": "bc7368c332f385acebf7f117ecbd84d7831365dc1dc3b4da965f2fa271335769",
+      "lines": 221,
+      "snapshot": "05-crates_librefang-kernel_src_kernel_uar_harness_admission.rs.txt"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs",
+      "sha256": "0b411abe427f55fca6e235e1c2994e058a860b56097b2a7aea1521a374e9407b",
+      "lines": 106,
+      "snapshot": "06-crates_librefang-kernel_src_kernel_uar_harness_admission_tests.rs.txt"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+      "sha256": "91f5cf0d2e4b4f3d54460cc292d4d336acc336e2dce4fc21c050e75118359a65",
+      "lines": 432,
+      "snapshot": "07-crates_librefang-llm-drivers_src_drivers_uar_run_mod.rs.txt"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/retained.rs",
+      "sha256": "babb7c294f18bccc5d912c60cd2d6a077c93de6d0fca851b2af1132a9d21eb4e",
+      "lines": 146,
+      "snapshot": "08-crates_librefang-llm-drivers_src_drivers_uar_run_retained.rs.txt"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/selection.rs",
+      "sha256": "76ce78b3947b0e68a0cfc6c1507723ce849b84c327d750a6d0db35a490872365",
+      "lines": 118,
+      "snapshot": "09-crates_librefang-llm-drivers_src_drivers_uar_run_selection.rs.txt"
+    }
+  ],
+  "consumedStorageReadOnly": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-types/src/uar_run.rs",
+      "sha256": "d7263d263dc7ecf63aa2c4250c04cfcc6f04094ce27e0d14bd7b64e500747c3a",
+      "lines": 321
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-runtime/src/a2a.rs",
+      "sha256": "92aff70118ad30093e410b5532d78f4f896163de673cb18877ae3c7578ab3f2e",
+      "lines": 2156
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
+      "sha256": "c35dd9b908f5157cf317bd0eedffb7d5c6fefd2581c2e4ab6522b1d62e4a8ae2",
+      "lines": 368
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-api/src/routes/uar_delegation/storage.rs",
+      "sha256": "3a8315eae672d635b0ea1f45529d70e47cf4edef5ffa9954b1116b51731d5e3b",
+      "lines": 106
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-runtime/src/a2a/uar_delegation_store_tests.rs",
+      "sha256": "734a8b789146c3a442da92d09e5b4c71662fc290514820265e5f66d7f4cb3bf3",
+      "lines": 192
+    }
+  ],
+  "checksRun": [],
+  "deferred": [
+    "compiler/build/lint/tests/services/full-stack gate",
+    "task4 verified mapping and legacy selected-ID protection",
+    "task5 strict provider checkpoint and observation",
+    "task6 retry/wake integration"
+  ],
+  "additionalClaimsAccepted": [
+    "crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs",
+    "crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+    "crates/librefang-llm-drivers/src/drivers/uar_run/retained.rs",
+    "crates/librefang-llm-drivers/src/drivers/uar_run/selection.rs"
+  ],
+  "checkpointAt": "2026-10-06T15:07:39.077Z"
+}

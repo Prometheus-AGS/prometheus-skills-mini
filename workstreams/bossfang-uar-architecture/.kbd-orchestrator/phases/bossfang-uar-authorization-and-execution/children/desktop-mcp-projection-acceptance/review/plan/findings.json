@@ -1,0 +1,31 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-6-astra",
+  "isolation_mode": "harness-native",
+  "producer_model": "unknown",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "execution-manifest.json",
+      "claim": "The declared compiler commands do not cover the Rust test callers that task 4 explicitly changes.",
+      "evidence": "C1 owns tests/tool_admission_integration.rs and tests/bauar_inline_revision.rs, and task 4 requires verification by a strict compiler; the only declared Cargo command is build with --bin uar-sidecar, which does not compile those integration-test targets.",
+      "suggested_fix": "Add a task-7 compile-only command for both owned Rust integration-test targets, preserving locked dependencies and required features, after all production and scenario authoring is complete."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 87,
+      "claim": "The cancellation controls omit the required interval after claim acknowledgment and before native dispatch.",
+      "evidence": "The specification requires preventing dispatch when cancellation becomes observable 'including after claim acknowledgment'; the plan specifies ai.stream.abort 'before approval and while acknowledgment held', and FC-CANCEL repeats only those two timings.",
+      "suggested_fix": "Add an explicit post-acknowledgment/pre-dispatch case with a deterministic real-path control and zero-dispatch oracle; if that interval cannot be controlled within scope, record that specific case as BLOCKED/unrun rather than treating the held-acknowledgment case as its coverage."
+    }
+  ],
+  "checked_classes": [],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

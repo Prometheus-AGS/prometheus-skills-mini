@@ -1,0 +1,175 @@
+// Private controlled model/MCP and transparent transport faults for the HARNESS gate.
+// No UAR event, admission, approval or execution receipt is synthesized here.
+import http from 'node:http';
+import { randomUUID } from 'node:crypto';
+import { appendFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+
+async function listen(server) {
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  return `http://127.0.0.1:${server.address().port}`;
+}
+async function body(req) {
+  const parts = [];
+  for await (const part of req) parts.push(part);
+  return JSON.parse(Buffer.concat(parts).toString() || '{}');
+}
+function json(res, status, value) {
+  res.writeHead(status, { 'content-type': 'application/json' });
+  res.end(JSON.stringify(value));
+}
+function close(server) {
+  server.closeAllConnections();
+  return new Promise(resolve => server.close(resolve));
+}
+
+export async function startPeer({ effectFile, mcpCredential, modelCredential }) {
+  const effects = [], modelCalls = [], failures = [];
+  const server = http.createServer(async (req, res) => {
+    try {
+      if (req.url === '/mcp' && req.method === 'POST') {
+        assert.equal(req.headers.authorization, mcpCredential, 'MCP executable auth changed');
+        const call = await body(req);
+        if (call.id === undefined) { res.writeHead(202).end(); return; }
+        let result;
+        if (call.method === 'initialize') {
+          res.setHeader('mcp-session-id', 'bauar-private-peer');
+          result = { protocolVersion: call.params.protocolVersion, capabilities: { tools: {} },
+            serverInfo: { name: 'bauar-private-effect', version: '1.0.0' } };
+        } else if (call.method === 'tools/list') {
+          result = { tools: [{ name: 'effect', description: 'Append one safe fixture marker.',
+            annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false },
+            inputSchema: { type: 'object', properties: { label: { type: 'string' } },
+              required: ['label'], additionalProperties: false } }] };
+        } else if (call.method === 'tools/call') {
+          assert.equal(call.params.name, 'effect');
+          const label = call.params.arguments.label;
+          assert.match(label, /^BAUAR_[A-Z0-9_]+$/);
+          // This is the real tool effect. Record before returning the tool result.
+          await appendFile(effectFile, `${JSON.stringify({ label })}\n`, { mode: 0o600 });
+          effects.push(label);
+          result = { content: [{ type: 'text', text: `effect recorded: ${label}` }], isError: false };
+        } else if (call.method === 'ping') result = {};
+        else throw new Error('Unexpected MCP method');
+        json(res, 200, { jsonrpc: '2.0', id: call.id, result });
+        return;
+      }
+      if (req.url === '/mcp') { res.writeHead(req.method === 'DELETE' ? 200 : 405).end(); return; }
+      if (req.url === '/v1/models') {
+        json(res, 200, { object: 'list', data: [{ id: 'gpt-5.4-mini', object: 'model', owned_by: 'fixture' }] });
+        return;
+      }
+      assert.equal(req.url, '/v1/chat/completions', 'Unexpected model endpoint');
+      assert.equal(req.headers.authorization, `Bearer ${modelCredential}`, 'Model auth changed');
+      const request = await body(req);
+      const lastUser = request.messages.findLastIndex(message => message.role === 'user');
+      const input = JSON.stringify(request.messages[lastUser]?.content ?? '');
+      const label = input.match(/BAUAR_[A-Z0-9_]+/)?.[0];
+      assert.ok(label, 'Model request must retain the actual fixture task input');
+      const native = label.startsWith('BAUAR_NATIVE') || label.startsWith('BAUAR_LEGACY');
+      const hasResult = request.messages.slice(lastUser + 1).some(message => message.role === 'tool');
+      const tool = request.tools?.find(item => item.function?.name === 'fixture__effect');
+      modelCalls.push({ label, hasResult, native, toolsPresent: Boolean(tool) });
+      const invoke = !native && !hasResult;
+      if (invoke) assert.ok(tool, 'Real provider did not advertise the bound MCP tool');
+      const id = `chatcmpl-${randomUUID()}`, callId = `call-${randomUUID()}`;
+      const message = invoke
+        ? { role: 'assistant', content: null, tool_calls: [{ id: callId, type: 'function',
+          function: { name: tool.function.name, arguments: JSON.stringify({ label }) } }] }
+        : { role: 'assistant', content: `${label} done` };
+      const reason = invoke ? 'tool_calls' : 'stop';
+      const usage = { prompt_tokens: 10, completion_tokens: 5, total_tokens: 15 };
+      if (!request.stream) {
+        json(res, 200, { id, object: 'chat.completion', model: request.model,
+          choices: [{ index: 0, message, finish_reason: reason }], usage });
+      } else {
+        res.writeHead(200, { 'content-type': 'text/event-stream', 'cache-control': 'no-cache' });
+        const delta = invoke ? { role: 'assistant', tool_calls: message.tool_calls.map(call => ({ index: 0, ...call })) } : message;
+        for (const choice of [{ index: 0, delta, finish_reason: null },
+          { index: 0, delta: {}, finish_reason: reason }]) {
+          res.write(`data: ${JSON.stringify({ id, object: 'chat.completion.chunk', model: request.model, choices: [choice], usage })}\n\n`);
+        }
+        res.end('data: [DONE]\n\n');
+      }
+    } catch (error) {
+      failures.push(error.message);
+      if (!res.headersSent) json(res, 500, { error: 'private_fixture_contract_failed' });
+      else res.destroy();
+    }
+  });
+  return { base: await listen(server), effects, modelCalls, failures, close: () => close(server) };
+}
+
+export async function startFaultProxy() {
+  let target, fault;
+  const observations = [], streams = new Set();
+  const server = http.createServer((req, res) => {
+    if (!target) { res.writeHead(503).end(); return; }
+    const pathname = new URL(req.url, target).pathname;
+    const selected = pathname.startsWith('/api/uar/full-harness/v1/');
+    const item = { method: req.method, path: pathname, forwarded: false, completed: false, dropped: false };
+    if (selected) observations.push(item);
+    const selectedFault = fault && fault.method === req.method && fault.path.test(pathname) ? fault : undefined;
+    if (selectedFault) fault = undefined;
+    const upstream = http.request(new URL(req.url, target), { method: req.method, headers: req.headers }, response => {
+      item.forwarded = true;
+      item.status = response.statusCode;
+      if (selectedFault) {
+        if (selectedFault.pause) {
+          const chunks = [];
+          response.on('data', chunk => chunks.push(chunk));
+          response.on('end', () => {
+            selectedFault.observed = true;
+            selectedFault.release = () => {
+              res.writeHead(response.statusCode, response.headers);
+              res.end(Buffer.concat(chunks));
+              item.completed = true;
+            };
+          });
+          return;
+        }
+        // Consume the actual provider response before losing its delivery. No
+        // response bytes, authority or content are substituted or persisted.
+        response.resume();
+        response.on('end', () => {
+          item.completed = true;
+          item.dropped = true;
+          selectedFault.observed = true;
+          if (selectedFault.hold) selectedFault.release = () => res.destroy();
+          else res.destroy();
+        });
+      } else {
+        res.writeHead(response.statusCode, response.headers);
+        response.pipe(res);
+        response.on('end', () => { item.completed = true; });
+        if (pathname.endsWith('/stream')) {
+          const connection = { response, res };
+          streams.add(connection);
+          res.on('close', () => { streams.delete(connection); response.destroy(); });
+        }
+      }
+    });
+    upstream.on('error', () => res.destroy());
+    req.pipe(upstream);
+  });
+  return {
+    base: await listen(server), observations,
+    setTarget: base => { target = base; },
+    get activeStreams() { return streams.size; },
+    pauseNext(method, path) {
+      assert.equal(fault, undefined);
+      fault = { method, path, pause: true, observed: false };
+      return fault;
+    },
+    loseNext(method, path, hold = false) {
+      assert.equal(fault, undefined, 'Only one explicit transport fault at a time');
+      fault = { method, path, hold, observed: false };
+      return fault;
+    },
+    disconnectStreams() {
+      assert.ok(streams.size > 0, 'Reconnect case requires a real active provider stream');
+      for (const { response, res } of streams) { response.destroy(); res.destroy(); }
+    },
+    close: () => close(server),
+  };
+}

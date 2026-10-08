@@ -1,0 +1,473 @@
+{
+  "schemaVersion": 1,
+  "parentProjectId": "7041aa63-d951-4b19-a59c-b963d65b3b83",
+  "acceptedAt": "2026-10-06T12:43:10.597Z",
+  "authority": "User Execute approval plus scope amendment; exact driver-owned source extensions to repository-bindings.json; no original worktree writes.",
+  "repositories": {
+    "uar": {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "childRoot": "/Users/gqadonis/.claude/worktrees/bauar-uar/workstreams/bauar",
+      "projectId": "06d6112e-346a-4417-8296-3b0ba3dba220",
+      "base": "a7cb972992d4f83db6585449ea81af0fe4a1c990",
+      "owner": "/root/uar_execution",
+      "acceptedDesigns": [
+        "uar-bauar-identity-boundaries",
+        "uar-bauar-execution-authorization",
+        "uar-bauar-runtime-defaults"
+      ],
+      "claims": "Exact paths in those child design.md files and enumerated UserContext constructor paths in evidence/execute/uar-prerequisites.md; conditional session correction remains gated by D0.",
+      "taskMap": {
+        "bauar-01-identity-boundaries": {
+          "1": "uar-bauar-identity-boundaries/1",
+          "2": "uar-bauar-identity-boundaries/2",
+          "3": "uar-bauar-identity-boundaries/3",
+          "4": "uar-bauar-identity-boundaries/4",
+          "5": "uar-bauar-identity-boundaries/5",
+          "6": "uar-bauar-identity-boundaries/6",
+          "7": "uar-bauar-identity-boundaries/7"
+        },
+        "bauar-02-execution-authorization": {
+          "2": "uar-bauar-execution-authorization/2",
+          "3": "uar-bauar-execution-authorization/3 (UAR helper slice)",
+          "5": "uar-bauar-execution-authorization/1",
+          "6": "uar-bauar-execution-authorization/4",
+          "7": "uar-bauar-execution-authorization/5",
+          "8": "uar-bauar-execution-authorization/6"
+        }
+      },
+      "additionalDefaultsClaim": {
+        "path": "mcp.json",
+        "owner": "/root",
+        "childChange": "uar-bauar-runtime-defaults",
+        "task": "1",
+        "parentTask": "bauar-04-resource-credential-lifecycle/7",
+        "scheduling": "Independent config-only exception in execute-scope-amendment.md; no D0 work"
+      },
+      "identityInventory": "Only InMemoryApiKeyStorage, no database migration; typed HTTP/gRPC/body workspace paths enumerated.",
+      "model": "gpt-6-astra/high",
+      "constructorExtensions": [
+        {
+          "task": "uar-bauar-identity-boundaries/2",
+          "paths": [
+            "tests/settings_persistence.rs",
+            "tests/a2a_thread_service.rs"
+          ],
+          "scope": "SecurityConfig constructor fields only; no unrelated test changes"
+        }
+      ],
+      "jwksParallelClaim": {
+        "task": "uar-bauar-identity-boundaries/6",
+        "owner": "/root/jwks_implementation",
+        "paths": [
+          "src/uar/security/verifier/jwks_cache.rs"
+        ],
+        "integrationOwner": "/root/uar_execution",
+        "handoff": "New module authoring only; verifier/mod.rs wiring serial after identity-task2; source/test acceptance remains deferred",
+        "scenarioIntegrationExtensions": [
+          "src/uar/security/verifier/test_support.rs",
+          "src/uar/security/verifier/tests.rs"
+        ],
+        "currentOwner": "/root/uar_execution serial integration after cache worker handoff"
+      },
+      "identityTask3Begun": {
+        "parentRevision": 105,
+        "childRevision": 46,
+        "scope": "Versioned key identity and role attenuation; existing exact constructors in prerequisite receipt accepted for mechanical field propagation, no new host authority"
+      },
+      "identityTask3ModuleExtensions": [
+        "src/uar/security/api_keys/policy.rs",
+        "src/uar/security/api_keys/tests.rs"
+      ],
+      "identityTask4Proof": {
+        "type": "VerifiedIdentity, claims.rs",
+        "source": "Configured verified JWT or validated retained API key; no untrusted serde construction",
+        "constructorPaths": "Exact UserContext paths enumerated in evidence/execute/uar-prerequisites.md and already accepted binding; synthetic/admin contexts None",
+        "scope": "Mechanical propagation plus actual key policy/callers; no host proof"
+      },
+      "resourceChild": {
+        "change": "uar-bauar-resource-boundary",
+        "status": "R1/R2 authoring active; R3 capture and R4 exact claims accepted, finite projector/canonical receipt claims pending contract",
+        "taskMap": {
+          "1": "parent04/8 configuration/source prerequisite",
+          "2": "parent04/1 grants",
+          "3": "parent04/3 stdio",
+          "4": "parent04/4 UAR projection",
+          "5": "parent04/9 and8 acceptance",
+          "6": "parent04/10 V2"
+        },
+        "acceptedSlices": {
+          "R1": {
+            "paths": [
+              "src/uar/runtime/turn/host/mcp.rs",
+              "src/uar/runtime/turn/host/mod.rs",
+              "src/mcp/runtime.rs",
+              "tests/bauar_resource_grants.rs",
+              "tests/support/bauar_resource_peer.rs"
+            ],
+            "scope": "Retain actual grant/policy checks and author actual receiver/router/selected config source scenarios. No gratuitous grant rewrite; capture contributions later R3."
+          },
+          "R2": {
+            "paths": [
+              "src/mcp/stdio_process.rs",
+              "src/mcp/registry.rs",
+              "tests/bauar_stdio_boundary.rs",
+              "tests/fixtures/bauar_mcp_stdio.mjs"
+            ],
+            "scope": "Null raw child stderr at active launch paths; preserve direct-child env/supervision/unsupported sandbox semantics and author exact scenarios. Unreachable stdio_client excluded."
+          },
+          "R3Capture": {
+            "owner": "/root/uar_execution",
+            "paths": [
+              "src/uar/security/middleware.rs",
+              "src/uar/security/sidecar_guard.rs",
+              "src/uar/security/mod.rs",
+              "src/uar/security/credential_capture.rs",
+              "src/uar/runtime/turn/request.rs",
+              "src/uar/runtime/turn/bindings.rs",
+              "src/uar/runtime/thread/kernel.rs",
+              "src/uar/runtime/manager.rs",
+              "src/llm/orchestrator.rs",
+              "src/uar/api/routes.rs",
+              "src/uar/api/full_harness/handlers.rs",
+              "src/server.rs",
+              "src/uar/api/openai/routes.rs",
+              "src/uar/api/acp/routes.rs",
+              "src/uar/api/acp/handler.rs",
+              "src/uar/api/a2a/handler.rs",
+              "src/uar/api/a2a/grpc.rs",
+              "src/uar/api/a2a/thread_service.rs",
+              "src/uar/runtime/actor/messages.rs",
+              "src/uar/runtime/actor/system.rs",
+              "src/uar/runtime/actor/agent_actor.rs",
+              "src/uar/runtime/thread/actor_host.rs"
+            ],
+            "contract": "evidence/execute/uar-projection-capture-contract.md",
+            "scope": "Redaction-only accepted ingress contribution; once-resolved actual provider ClientConfig before same constructor, explicit constructor-owned/opaque unknown-corpus limits; root snapshot to children. No authority/session-manager changes. Manager, bindings and orchestrator exclusive capture owner until handover.",
+            "supportedProfile": "Explicit configured/request/captured nonempty client keys and captured host resources; preserve empty-key constructor-owned and opaque driver behavior but document incomplete corpus and static UAR early failures; no universal DLP or dependency-internal guarantee."
+          },
+          "R4": {
+            "owner": "/root/uar_execution",
+            "paths": [
+              "src/uar/api/routes.rs",
+              "tests/bauar_inline_revision.rs"
+            ],
+            "scope": "Normalize already validated inline artifact with existing provider catalog metadata before revision/tool admission consumers. No global ToolAdmissionContext API change; provider-derived revision authoritative."
+          },
+          "R3Projection": {
+            "owner": "/root/uar_resource",
+            "paths": [
+              "src/uar/persistence/agent_threads.rs",
+              "src/uar/runtime/turn/host/secret_projection.rs",
+              "src/uar/runtime/turn/host/secret_stream.rs",
+              "src/uar/runtime/turn/host/receipt_projection.rs",
+              "src/uar/runtime/turn/host/event_projection.rs",
+              "src/uar/runtime/turn/host/mod.rs",
+              "src/uar/runtime/turn/host/mcp.rs",
+              "src/mcp/runtime.rs",
+              "src/llm/orchestrator.rs",
+              "src/uar/runtime/manager.rs",
+              "src/llm/anthropic_driver.rs",
+              "tests/bauar_secret_projection.rs",
+              "tests/support/bauar_secret_provider.rs",
+              "src/uar/runtime/world_state/runtime.rs"
+            ],
+            "contract": "evidence/execute/uar-resource-authoring.md proposal accepted",
+            "scope": "Finite longest-match copy projection of raw/JSON/percent/base64 variants; independent bounded stream tails and terminal flush; actual destination secret-ref header values before transport connect; typed event/model/persistence consumers. Shared manager/orchestrator ONLY after capture-owner release.",
+            "canonicalReceipt": "Optional serde-default secret_projection(version1,redacted,omitted_raw_segments) absent for legacy; participates in replay equality/version validation. Project before no-store return/acquire/save; UTF8 raw verified then reconstructed exact new hash/length; opaque/unavailable raw omitted explicitly, preserve source acquisition incompleteness. Complete means represented projected view, never lossless original.",
+            "scheduling": "May begin independent new projector modules, host/mod delegation preserving APIs, receipt metadata, destination capture and static native warning now; manager/orchestrator blocked until capture handover.",
+            "retentionOrdering": "Private run-local staging until same once-resolved provider corpus, original shared session authority unchanged; content-free active shell; bounded publication max4MiB/1000events, static staging failures. Publish projected content via existing semantics, no stale whole-state overwrite. Known captured variants in executable retained snapshot -> static SECRET_IN_EXECUTABLE_ARTIFACT, never mutate artifact authority/revision. Inspect actual early awaited approvals before withholding control events.",
+            "worldState": "Project copied update messages before record_world_state, preserve baseline/control state and original shared session authority; detached staging baseline restored through existing API, no stale overwrite or session-manager correction.",
+            "preRoutingLimit": "Project existing captured auth/host/MCP input copies at manager RAG/classifier seams. Generation credentials resolved later cannot cover earlier external routing calls; constructor-owned or opaque routing credentials remain unknown. Do not repeat or resolve all providers, disable routing, or claim universal containment.",
+            "receiptFixture": {
+              "owner": "/root/uar_resource_continue",
+              "paths": [
+                "tests/bauar_receipt_projection.rs",
+                "tests/support/bauar_receipt_peer.rs"
+              ],
+              "scope": "Actual in-process router/RunManager/Liter HTTP/NativeSkill/canonical preservation into same private embedded SurrealKV store; retrieve through PersistenceLayer public read API. No-store actual early return. Produced receipt primary; replay clone secondary. No public HTTP retrieval route claimed. Source only, no D0 or shared service.",
+              "status": "proposal accepted source authoring"
+            }
+          },
+          "Cursor": {
+            "owner": "/root/uar_execution",
+            "paths": [
+              "src/uar/api/sse.rs",
+              "src/uar/api/full_harness.rs",
+              "src/uar/api/full_harness/types.rs",
+              "src/uar/api/full_harness/handlers.rs",
+              "tests/bauar_full_harness_cursor.rs"
+            ],
+            "scope": "Existing full_harness stream only emits nonexecutable uar.cursor(id/request_id) when AGUI projection suppresses an internal source event; global default SSE behavior unchanged. Add descriptor event_cursor_profile=contiguous_cursor_frames_v1. Selected consumer requires this observed profile before reservation; old manual descriptor validation remains compatible."
+          }
+        },
+        "owner": "/root/uar_resource"
+      },
+      "hostProofTask5": {
+        "pathExtension": "src/uar/runtime/turn/host/mcp_tests.rs",
+        "config": "security.trusted_host_principals defaultempty; exact enforced issuer/subject/tenant + operator host_id; existing trusted_hosts policy still applies",
+        "credentialKind": "Signed uar_credential_kind=issuer for privileged configured JWT; api_key for exchange; missing/unknown unclassified user/owner only. Direct/exchanged keys cannot gain host or cross-owner admin authority",
+        "launch": "Actual SidecarGuard token/Host/Origin marker is separate from roles and tenant identity",
+        "migration": "Reissue privileged issuer credentials before opting in; no IdP selected or new service"
+      },
+      "exactApprovalExtensions": {
+        "paths": [
+          "src/embedded.rs",
+          "tests/a2a_thread_service.rs",
+          "tests/tool_call_protocol.rs",
+          "src/uar/runtime/thread/approval_tests.rs",
+          "tests/support/approval_events.rs",
+          "tests/run_retention/sessions.rs"
+        ],
+        "scope": "Only originating-ID migration and cohesive strict broker/SSE helper source scenarios. actor messages needs no edit; full-harness handlers read-only. No execution or D0 work."
+      },
+      "approvalSourceHandoff": "evidence/execute/exact-approval-authoring.md",
+      "providerSourceHandoff": {
+        "receipt": "evidence/execute/uar-provider-handoff.json",
+        "manifestSha256": "880a1ff8f5765375fd87b75cd09d7f82255e040af9429a06b0a7cc6f45703a1d",
+        "status": "Source contract only; six full-harness files match C05; source mutable and acceptance pending"
+      },
+      "identityFixture": {
+        "paths": [
+          "tests/bauar_identity_boundary.rs",
+          "tests/support/bauar_identity_peer.rs"
+        ],
+        "scope": "Real standalone startup/router/JWKS/key scenarios, source authoring only; reuse existing launch helper. No D0 or production hook. Legacy records secondary storage evidence only."
+      }
+    },
+    "boss": {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "childRoot": "/Users/gqadonis/.claude/worktrees/bauar-boss/workstreams/bauar",
+      "projectId": "1778473f-37c3-4dff-af17-e967c84499e2",
+      "base": "e2ae2ce21245030293c0bea96ed02ae853b820a7",
+      "owner": "/root/boss_execution",
+      "acceptedDesigns": [
+        "boss-bauar-approval-client",
+        "boss-bauar-secret-projection"
+      ],
+      "claims": [
+        "src/main/ai/runtime/uar/UarToolApprovalController.ts",
+        "src/main/ai/runtime/uar/uarApprovalLifecycle.ts",
+        "src/shared/types/prometheusIntegration.ts",
+        "scripts/gates/bauar-approval-client.ts",
+        "scripts/gates/uar-exact-tool-admission.ts",
+        "tests/e2e/gates/uarExperienceGate.test.ts",
+        "tests/e2e/gates/bauarApprovalClientFixture.ts"
+      ],
+      "taskMap": {
+        "bauar-02-execution-authorization": {
+          "1": "boss-bauar-approval-client/1",
+          "3": [
+            "boss-bauar-approval-client/2",
+            "boss-bauar-approval-client/3"
+          ],
+          "4": "boss-bauar-approval-client/4",
+          "7": "boss-bauar-approval-client/5",
+          "8": "boss-bauar-approval-client/6"
+        },
+        "bauar-04-resource-credential-lifecycle": {
+          "4": [
+            "boss-bauar-secret-projection/1",
+            "boss-bauar-secret-projection/2",
+            "boss-bauar-secret-projection/3"
+          ],
+          "9": "boss-bauar-secret-projection/4",
+          "10": "boss-bauar-secret-projection/5"
+        }
+      },
+      "model": "gpt-6-astra/high",
+      "secretProjectionClaims": [
+        "src/main/ai/runtime/uar/uarSecretProjection.ts",
+        "src/main/ai/runtime/uar/uarProjectedMcpTransport.ts",
+        "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
+        "src/main/ai/runtime/uar/UarHostMcpBridge.ts",
+        "src/main/ai/runtime/uar/UarAguiAdapter.ts",
+        "src/main/ai/runtime/uar/UarToolApprovalController.ts",
+        "src/main/ai/runtime/agentMcpServers.ts",
+        "src/main/ai/mcp/createMcpBridgeServer.ts",
+        "src/main/ai/mcp/McpRuntimeService.ts",
+        "src/main/ai/mcp/types.ts",
+        "scripts/gates/bauar-secret-projection.ts",
+        "scripts/gates/bauar-secret-projection-mcp.ts",
+        "scripts/gates/bauar-secret-projection-events.ts"
+      ],
+      "task2FixtureExtension": {
+        "path": "scripts/gates/bauar-secret-projection-mcp.ts",
+        "scope": "Real SDK/MCP server and claim orchestration scenarios, no execution; keep new gate modules <=500 lines"
+      },
+      "eventsFixtureScope": "Controlled projection-only canaries through real run/SSE/Electron; no fabricated execution or approval authority acceptance",
+      "systemPromptContract": "Captured finite projection applies before catalog upsert/source hash and to per-run inline artifact, mutually exclusive with agent_id. Gate-owned synthetic If-Match race source scenario accepted; arbitrary JS/Rust float canonicalization remains explicitly unverified; no unprojected fallback.",
+      "projectionHandoff": "evidence/execute/boss-projection-handoff/receipt.json",
+      "projectionSourceComplete": {
+        "childRevision": 42,
+        "scope": "All three source tasks complete, acceptance remains pending"
+      },
+      "revisionSourceFollowup": {
+        "paths": [
+          "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
+          "scripts/gates/bauar-secret-projection.ts",
+          "scripts/gates/bauar-secret-projection-revision.ts"
+        ],
+        "scope": "Stop treating client per-run artifactDigest as provider-authoritative revision. Provider R4 normalizes inline artifact. Consume actual run inspection agent_revision for comparison/paired admission source scenarios; source-link/source conflict hashes remain client-local. Add cohesive new gate support only by exact requested claim.",
+        "status": "allocated source followup before final gate; child source3 historical handoff remains superseded for this slice",
+        "providerReceipt": "evidence/execute/uar-capture-authoring.md R4",
+        "fixture": "Cohesive catalog/run race and passive actual IncomingMessage /prepare observer; delegate original emit unchanged, scope exact bridge URL from actual captured run, no request/auth/effect mutation or fabricated body. Compare actual prepare catalogRevision and executingRunId against actual run inspection; restore observer in finally. Do not retain raw credential or prepare argument bodies in evidence.",
+        "childTask": "boss-bauar-secret-projection/6"
+      }
+    },
+    "bossfang": {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "childRoot": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar",
+      "projectId": "aade093e-a167-429e-a35b-d652b15b1c9c",
+      "base": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+      "owner": "/root/bossfang_execution",
+      "status": "Corrected material design native planning review PASS; full provider/approval handover remains pending before control integration",
+      "baselineNote": "Existing integrated consumer dependency checkpoint; 16beef ancestor279commits,1239changedfiles. Only isolated branch advanced; no original branch changed. Review new feature delta againstbac, no broad historical certification.",
+      "model": "gpt-6-astra/high",
+      "acceptedDesigns": [
+        "bossfang-bauar-harness-delegation",
+        "bossfang-bauar-mcp-attribution"
+      ],
+      "initialClaims": [
+        "crates/librefang-types/src/uar_run.rs",
+        "crates/librefang-runtime/src/a2a.rs",
+        "crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
+        "crates/librefang-api/src/routes/uar_delegation/storage.rs",
+        "crates/librefang-runtime/src/a2a/uar_delegation_store_tests.rs"
+      ],
+      "initialOwner": "/root/bossfang_execution in storage/schema role; explicit serial handover to feature stewardship",
+      "taskMap": {
+        "bauar-03-harness-delegation": "bossfang-bauar-harness-delegation numeric1 through9 in registered order; storage2 independent, final provider/strict-control checkpoint prerequisite remains open",
+        "bauar-04-resource-credential-lifecycle": "bossfang-bauar-mcp-attribution task1 prerequisite,2-3 implementation after network checkpoint,4 V1,5 V2"
+      },
+      "storageHandoff": "evidence/execute/storage-handoff-final/receipt.json",
+      "storageLayoutCorrection": "New storage-specific scenarios in their cohesive <=500-line test module; old A2A scenarios untouched. Re-snapshot after owner handoff; initial snapshot is pre-correction.",
+      "selectionClaims": [
+        "crates/librefang-kernel/src/kernel/mod.rs",
+        "crates/librefang-kernel/src/kernel/agent_execution.rs",
+        "crates/librefang-kernel/src/kernel/messaging.rs",
+        "crates/librefang-kernel/src/kernel/ephemeral_spawn.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
+        "crates/librefang-types/src/uar_run.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/canonical.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/wire.rs",
+        "crates/librefang-api/src/routes/uar_delegation.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/retained.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/selection.rs",
+        "crates/librefang-api/src/routes/uar_delegation/job_mapping.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/mapping.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/mapping_tests.rs",
+        "crates/librefang-kernel/src/kernel_api.rs"
+      ],
+      "selectionScheduling": "Storage source handoff64409f0 permits selected-dispatch/input mapping authoring against existing provider contract; final provider/control checkpoint remains open",
+      "selectionContract": "Existing AppState Arc<UarRunControl> is explicitly passed into typed kernel selected seams; Native and Delegated results stay distinct. New admission source scenarios authorized, unexecuted.",
+      "reservationContract": "Opaque private PendingUarAdmission separates read-only descriptor preflight from credential retention. Only durable Created winner installs exact prepared transport if vacant and admits; Existing never prepares/installs; installation conflict is unknown requiring reconciliation.",
+      "selectionHandoff": "evidence/execute/selection-handoff/receipt.json",
+      "mappingContract": "Authenticated non-synthetic registered initiating Owner and authorized real stored task/assignedagent; remote app service authority separate. Delegated-user/tenant mapping unsupported. Stable selected namespace from storedjob+attempt1, tagged retained slots reject legacy replacement; explicit refresh preserves tag; no retry_count replacement.",
+      "controlClaims": [
+        "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/observation.rs",
+        "crates/librefang-types/src/uar_run.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/approval.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/observation.rs",
+        "crates/librefang-api/src/routes/uar_delegation.rs",
+        "crates/librefang-api/src/routes/uar_delegation/observation.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/selection.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/retained.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/canonical.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/presentation.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/presentation_tests.rs",
+        "crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
+        "crates/librefang-llm-drivers/src/drivers/uar_run/wire.rs",
+        "scripts/integration/afc-c05-gate.mjs",
+        "crates/librefang-api/src/routes/uar_delegation/connections.rs"
+      ],
+      "mappingHandoff": "evidence/execute/mapping-handoff/receipt.json",
+      "controlContract": "Capture original local service bearer and supplied resource values privately without re-resolution; finite content projection before persistence. Raw complete frame and decoded event max1MiB; selected per-event presentation max1000parts and4MiB aggregate UTF8, explicit newly selected policy. Oversize/malformed/gap unknown with no cursor advance or execution replay. Provider-owned secret projection prerequisite remains separate. Strict original approval identity/revision, owner/attempt controls; no synthetic root override of selected owner.",
+      "groupContract": "Private bounded stream carry; safe frontier groups <=4MiB decoded, individual frame/event<=1MiB; typed projected events/cursor/final outcome one SQLite transaction; no advance on incomplete or invalid group. Original single-event API remains wrapper.",
+      "task6Schema": {
+        "owner": "surrealdb-schema-engineer",
+        "paths": [
+          "crates/librefang-memory/src/substrate.rs",
+          "crates/librefang-memory/src/substrate/task_dispatch.rs",
+          "crates/librefang-memory/src/substrate/task_dispatch_tests.rs",
+          "crates/librefang-memory/src/lib.rs"
+        ],
+        "contract": "evidence/execute/task6-dispatch-intent-contract.md",
+        "handoff": "Immutable schema API source required before feature wiring",
+        "status": "accepted source allocation; gates pending",
+        "export": "Surgical pub reexport substrate::task_dispatch typed APIs only; no unrelated wiring"
+      },
+      "task6Feature": {
+        "owner": "bossfang-feature-steward",
+        "handoff": "evidence/execute/task6-schema-handoff/receipt.json",
+        "paths": [
+          "crates/librefang-kernel/src/kernel/mod.rs",
+          "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+          "crates/librefang-kernel/src/kernel/handles/task_queue.rs",
+          "crates/librefang-kernel/src/kernel/accessors.rs",
+          "crates/librefang-kernel/src/kernel/cron_tick.rs",
+          "crates/librefang-kernel/src/kernel/triggers_and_workflow.rs",
+          "crates/librefang-kernel/src/kernel/uar_harness/lifecycle.rs",
+          "crates/librefang-api/src/routes/task_queue.rs",
+          "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
+          "crates/librefang-api/src/routes/uar.rs",
+          "crates/librefang-api/src/routes/network.rs",
+          "crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
+          "crates/librefang-api/src/routes/uar_delegation/job_mapping.rs",
+          "crates/librefang-kernel/src/kernel_api.rs",
+          "crates/librefang-kernel/src/kernel/uar_harness/lifecycle_tests.rs",
+          "crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs"
+        ],
+        "scope": "Task6 only; shared existing modules surgical. Native exact-list claim before prompt; selected intent before preflight; Existing absent A2A unknown. No schema writes. Request exact trait/test extension before any additional path.",
+        "contract": "evidence/execute/task6-dispatch-intent-contract.md",
+        "extension": "Object-safe read_job_dispatch_intent and reconcile_selected_jobs forwards; fixed-unavailable defaults; actual admission scenario signature migration and cohesive lifecycle scenarios only."
+      },
+      "harnessFixture": {
+        "owner": "/root/boss_execution as separate source scenario author, bossfang-feature-steward responsibility",
+        "paths": [
+          "crates/librefang-api/tests/bauar_harness_host.rs",
+          "scripts/integration/bauar-harness-runtime.mjs",
+          "scripts/integration/bauar-harness-peer.mjs",
+          "scripts/integration/bauar-harness-gate.mjs",
+          "crates/librefang-kernel/tests/bauar_harness_delegation.rs"
+        ],
+        "scope": "Source only under active lifecycle authoring, future03/8 execution pending. Private real LibreFangKernel/server router test-host port0; current standalone UAR process; real registered Owner and independent verified service JWT; public real config/catalog/binding seeding; real private persistence. Controlled model/MCP and exact byte fault proxy. No new shared daemon, fake UAR receipt or D0.",
+        "handoff": "Full fixture source required before final delivery gates; production writer remains separate exact paths.",
+        "model": "gpt-6-astra/high"
+      },
+      "task7Feature": {
+        "owner": "bossfang-feature-steward",
+        "paths": [
+          "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
+          "crates/librefang-api/src/routes/uar.rs",
+          "crates/librefang-api/src/routes/network.rs",
+          "crates/librefang-api/src/routes/uar/delegated_view.rs",
+          "crates/librefang-api/src/routes/uar/delegated_view_tests.rs",
+          "crates/librefang-types/src/uar_run.rs",
+          "crates/librefang-llm-drivers/src/drivers/uar_run/presentation.rs",
+          "crates/librefang-llm-drivers/src/drivers/uar_run/presentation_tests.rs",
+          "crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+          "crates/librefang-api/src/routes/uar_delegation.rs"
+        ],
+        "scope": "Existing unified root JSON-RPC and network A2A selected lookup/cancel exact original owner/attempt/revision; nonexecuted history and only actual provider-attributed usage. Request additional cohesive projection/type/source scenarios before writes. Immutable network checkpoint release before MCP.",
+        "sourceCheckpoint": "evidence/execute/task6-feature-handoff/receipt.json coordinator4e75fe0",
+        "canonical": {
+          "parentRevisionBegun": 157,
+          "childRevisionBegun": 48,
+          "teamRevision": 27,
+          "teamTask": "delegated-product-views",
+          "teamTaskRevision": 1
+        },
+        "extension": "Typed SelectedTaskView cohesive helper/tests; additive optional exact observed Usage part from actual provider agui.done.data.usage, persisted through existing atomic group/cursor. No estimated cost, fabricated totals or defaultzero; absent/invalid unavailable. Exact selected cancel owner guard beforecontrol. Netline-reducing uar.rs helper wiring.",
+        "cancel": "Add cancel_selected original projection/callerExpectedRevision direct original retained connection receipt request, no lookup/revision substitution. Selected rootJSONRPC/REST cancel require expectedRevision; native/manual compatibility preserved. Existing module surgical only.",
+        "selectedCancelSurface": "Existing /api/uar/delegations/{task_id}/cancel selected-only migration: optional bodyexpectedRevision requiredselected, originalstoredowner required, cancel_selected exactrevision; manual unchanged. Closes reachable selected revision bypass across all3surfaces."
+      }
+    }
+  },
+  "scope": "Nested OpenSpec scopes planning artifacts; exact product claims above explicitly bound to task driver under authorized cross-repository scope. No broad source-root write grant. No production work until its dependency/task begins.",
+  "taskTitleLimitation": "Canonical runtime rejected re-registration of existing task5 (already exists); historical canonical titles are immutable. Current OpenSpec04 scope amendment and numeric task identity mapping govern revised exits; no historical event is rewritten."
+}

@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:31:16.392Z",
+  "kind": "Immutable complete three-file required lint correction binding; previous harness receipt retains its original source",
+  "records": [
+    {
+      "name": "bossfang",
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "head": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+      "diffSha256": "818e89ad32038e57aa4354bf87cc2d1cab1f59cb5a5c6afcad03647ed03111f2",
+      "files": [
+        {
+          "file": "crates/librefang-api/Cargo.toml",
+          "sha256": "5e8df57e1cc76fb967a27b1d2a3648371fbf4d907119c63d4de91bb6dec41ad0",
+          "bytes": 7953
+        },
+        {
+          "file": "crates/librefang-api/src/lib.rs",
+          "sha256": "62cba813e8bb6404136b4faaad8f40dae30055e2b0e6e8de2d1a1879523bd9ef",
+          "bytes": 9774
+        },
+        {
+          "file": "crates/librefang-api/src/mcp_attribution.rs",
+          "sha256": "f0fdf67dfd6f182031cfb4b680bca1313b6446420be6781f7bc7f2a9e579510e",
+          "bytes": 4407
+        },
+        {
+          "file": "crates/librefang-api/src/middleware.rs",
+          "sha256": "c667697651582b64e32175464b05dd39e96c7c8e5695f977052859fdef84e083",
+          "bytes": 261889
+        },
+        {
+          "file": "crates/librefang-api/src/oauth.rs",
+          "sha256": "311f44e8b5c370624ac32fa56693e6fe2e2fc4a6098a0ed11d2e2c02d289ecac",
+          "bytes": 135305
+        },
+        {
+          "file": "crates/librefang-api/src/routes/network.rs",
+          "sha256": "3f079a2095e8f20b7c7fb512652666553e8071cd924c30dd71ebefa245d93cab",
+          "bytes": 103549
+        },
+        {
+          "file": "crates/librefang-api/src/routes/task_queue.rs",
+          "sha256": "a301ab34939d99e98198e5c43c08ff2499d61e729021a3f8d4dde773d1107e7f",
+          "bytes": 18055
+        },
+        {
+          "file": "crates/librefang-api/src/routes/uar_delegation.rs",
+          "sha256": "8793233ed1a7edc0089bcc1ac13c34418e0f1857900ff07cfacc56af22682b1f",
+          "bytes": 19830
+        },
+        {
+          "file": "crates/librefang-api/src/routes/uar_delegation/connections.rs",
+          "sha256": "47d62d54ce4d891ab6c5c9f108ff44745eea18f4fd7ea6974f762d8010711961",
+          "bytes": 5943
+        },
+        {
+          "file": "crates/librefang-api/src/routes/uar_delegation/job_mapping.rs",
+          "sha256": "4a817a8874a2f2241f169fe15a74e197f402f327738aea89bc82d1ecda85a087",
+          "bytes": 7569
+        },
+        {
+          "file": "crates/librefang-api/src/routes/uar_delegation/observation.rs",
+          "sha256": "a004240d7e7aa5d4088a47850f478289caa8e7ec6c610ad0c1d941a2a2ebb51c",
+          "bytes": 5744
+        },
+        {
+          "file": "crates/librefang-api/src/routes/uar_delegation/storage.rs",
+          "sha256": "3a8315eae672d635b0ea1f45529d70e47cf4edef5ffa9954b1116b51731d5e3b",
+          "bytes": 3447
+        },
+        {
+          "file": "crates/librefang-api/src/routes/uar.rs",
+          "sha256": "1302acf0fb8c45272a444133801b1f09929f1f1d3fec907564261d70adf0fc33",
+          "bytes": 18344
+        },
+        {
+          "file": "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
+          "sha256": "8777351f2f1695e7b292298e7f8767194e9fcbadc636abbf81698e5e4b5b73f4",
+          "bytes": 9389
+        },
+        {
+          "file": "crates/librefang-api/src/routes/uar/delegated_view_tests.rs",
+          "sha256": "65c1d5128f24bbb7a4c8acd323ce04633a13aa5a3eef7ff451f3fb8651b681f0",
+          "bytes": 4667
+        },
+        {
+          "file": "crates/librefang-api/src/routes/uar/delegated_view.rs",
+          "sha256": "db71c4a71479069e30ae2496494ba228f00376f39393878238acc49cfa6bbd59",
+          "bytes": 5870
+        },
+        {
+          "file": "crates/librefang-api/src/server.rs",
+          "sha256": "cc910d166979671657ff3c0592e14ef7db59e657a4659aaeb3bdff0fadaeb372",
+          "bytes": 221707
+        },
+        {
+          "file": "crates/librefang-api/tests/bauar_harness_host.rs",
+          "sha256": "16cb6df5b9f9924d3fc6ac7046029145b87652681809f9e85ff5ffbe1f184d1d",
+          "bytes": 9315
+        },
+        {
+          "file": "crates/librefang-api/tests/bauar_mcp_identity.rs",
+          "sha256": "58cd94344f4809ace97654df422ce6821577377f2b84b388d7673583c871a73a",
+          "bytes": 26361
+        },
+        {
+          "file": "crates/librefang-kernel/Cargo.toml",
+          "sha256": "17028deeeb59c65642652704ce203521eeb681e519847b1bdd9f822294090ef9",
+          "bytes": 5377
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel_api.rs",
+          "sha256": "4848f9eb7ee28a4756a5da4d5d825e1a671ea95a95c5aaf95eac0ee76cdf7783",
+          "bytes": 86959
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/ephemeral_spawn.rs",
+          "sha256": "f43f23cd3d5fd11b7d0fbf850614e793c01a561c9533f743e1ac057a54be0346",
+          "bytes": 52957
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/handles/task_queue.rs",
+          "sha256": "c8b7d96a5478a54ffa3e4b8715c67ed42e9daa835d4c0a892b4444ae28bd3845",
+          "bytes": 10305
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/messaging.rs",
+          "sha256": "03fb46db6d89904c57d3115348ca06bbfb38a1317ff78b0de274119b1b86b72f",
+          "bytes": 187382
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/mod.rs",
+          "sha256": "7a5f65d6bae203eec642e29cbf5ad83d58c78893093854402260d276d2ccb572",
+          "bytes": 109742
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/triggers_and_workflow.rs",
+          "sha256": "ccfe4d2a8778ebdb813e44e46e920c272327632309123d286a85fd0331dd5053",
+          "bytes": 107171
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs",
+          "sha256": "747e2424d2c6247b67aee42f176508983adca0fcc608bbe9262fca44212a5db8",
+          "bytes": 6367
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
+          "sha256": "0bb62e66b555dd934fcaa20004a6a5100e715ac59cfa6e18cad9e069cd581922",
+          "bytes": 11577
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/uar_harness/lifecycle_tests.rs",
+          "sha256": "a584765c209b26a8c049369185f1b4bef852c7723418083df79600c83248e95d",
+          "bytes": 5161
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/uar_harness/lifecycle.rs",
+          "sha256": "23fc0312d05e44e1d3e643e47436dc33d48cfdda1ba496061b6cdbddf7685f64",
+          "bytes": 4354
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/uar_harness/mapping_tests.rs",
+          "sha256": "85e8c6ea2f09325c384bb21fed9fa333d931530a88022639983f3c6427f102d2",
+          "bytes": 4220
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/uar_harness/mapping.rs",
+          "sha256": "7d510ffb684c79e8f67e973287e373ccbeaa753f6129f31294f33f35fc3f6bc1",
+          "bytes": 12810
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+          "sha256": "bb563b2a359bdc0bc90efc932d973578da5b838a8534d441ee5de0f30d4936fe",
+          "bytes": 4251
+        },
+        {
+          "file": "crates/librefang-kernel/src/kernel/uar_harness/observation.rs",
+          "sha256": "10673b4eac85f8c75a2f891bb30f9705cc0f57089c700b15f7f40906467854b5",
+          "bytes": 4900
+        },
+        {
+          "file": "crates/librefang-kernel/tests/bauar_harness_delegation.rs",
+          "sha256": "99b4ed2c0c43e3f02828b2631f5373f588c8f11c7153cb015c34362f307336dd",
+          "bytes": 9386
+        },
+        {
+          "file": "crates/librefang-llm-drivers/src/drivers/uar_run/approval.rs",
+          "sha256": "d9970cf53ff44e97e8c81d2bd8e5f55ea9b517d74afd5eb236e217994afb494b",
+          "bytes": 1176
+        },
+        {
+          "file": "crates/librefang-llm-drivers/src/drivers/uar_run/canonical.rs",
+          "sha256": "d5a56d76cf4d7a23ba18425cfa8f743db4309ef279f919b42b533265dc0ff17e",
+          "bytes": 4935
+        },
+        {
+          "file": "crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+          "sha256": "4f30483a93ee6927591935fb4a13b9e07b93352f192c26a8be1ad6c6449c1927",
+          "bytes": 14182
+        },
+        {
+          "file": "crates/librefang-llm-drivers/src/drivers/uar_run/observation.rs",
+          "sha256": "c4f724cf1dbc7509343c687b88fbddbfa90b2fe0ac2a258d98fab22a512fe418",
+          "bytes": 6009
+        },
+        {
+          "file": "crates/librefang-llm-drivers/src/drivers/uar_run/presentation_tests.rs",
+          "sha256": "b9129b2748db1b97d2fe0f80a456bcd986169691bc2bce7038907f5aecc5e3b6",
+          "bytes": 5028
+        },
+        {
+          "file": "crates/librefang-llm-drivers/src/drivers/uar_run/presentation.rs",
+          "sha256": "c04f6b31bb9f5cb269edcc8d1bc2cb70216d72da59580b6eff8cd1fcd8f272a0",
+          "bytes": 12393
+        },
+        {
+          "file": "crates/librefang-llm-drivers/src/drivers/uar_run/retained.rs",
+          "sha256": "69456722d5a3577d49ad4c7f8974adc1a237eb5e001c8de4c829f2e8d266d21d",
+          "bytes": 7867
+        },
+        {
+          "file": "crates/librefang-llm-drivers/src/drivers/uar_run/selection.rs",
+          "sha256": "30c950a9594c16362c45e242ba3584a3e2aef58f919b0839ca4e06ba2aa9eb34",
+          "bytes": 5977
+        },
+        {
+          "file": "crates/librefang-llm-drivers/src/drivers/uar_run/wire.rs",
+          "sha256": "32caef2cf299f2f086dd46bf122c8ddb49c6eef9c72c21bb358eef24db95a568",
+          "bytes": 13086
+        },
+        {
+          "file": "crates/librefang-memory/src/lib.rs",
+          "sha256": "11dcd40df8fa588b580b6a9ebdaab8f76fe66828cb226936760ce8a7f79512fd",
+          "bytes": 4361
+        },
+        {
+          "file": "crates/librefang-memory/src/substrate.rs",
+          "sha256": "85d62519b26c78035109ebefa0ba57a93c83e991310a4e2aae68339859a5f354",
+          "bytes": 148695
+        },
+        {
+          "file": "crates/librefang-memory/src/substrate/task_dispatch_tests.rs",
+          "sha256": "562bfe445f4fec214ff2f7ca847497387067b7cc4d9362f40d3e0e9d26a6339e",
+          "bytes": 11046
+        },
+        {
+          "file": "crates/librefang-memory/src/substrate/task_dispatch.rs",
+          "sha256": "816f64ff517ec66ae8124213286b7fd8ad3cb7ed1826ac271c44cfbb4adb1dfe",
+          "bytes": 17822
+        },
+        {
+          "file": "crates/librefang-runtime/src/a2a.rs",
+          "sha256": "92aff70118ad30093e410b5532d78f4f896163de673cb18877ae3c7578ab3f2e",
+          "bytes": 84849
+        },
+        {
+          "file": "crates/librefang-runtime/src/a2a/uar_delegation_store_tests.rs",
+          "sha256": "734a8b789146c3a442da92d09e5b4c71662fc290514820265e5f66d7f4cb3bf3",
+          "bytes": 11754
+        },
+        {
+          "file": "crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
+          "sha256": "ea7d8c41e4b902dfcd5c1f9c84b40671316709d6bbaf69d6cdebaa39dde651f6",
+          "bytes": 25066
+        },
+        {
+          "file": "crates/librefang-testing/Cargo.toml",
+          "sha256": "3e35326228bca497fee85ab5939662d3aa2dc9ee03ee0e1296c2c108db9e12c8",
+          "bytes": 1352
+        },
+        {
+          "file": "crates/librefang-testing/src/test_app.rs",
+          "sha256": "b0562170b3c3dec560b10f21d3004b356b0b162bacd4d00045b7a7dca94732b6",
+          "bytes": 18933
+        },
+        {
+          "file": "crates/librefang-types/src/uar_run.rs",
+          "sha256": "f1ff656e2850160dd0f2267835f4b1556d67fbd07f8c72ce8166cd9e3a108d3f",
+          "bytes": 13047
+        },
+        {
+          "file": "scripts/integration/afc-c05-gate.mjs",
+          "sha256": "5a4133e5e3094fad85813705d08b5dc0695fa777d02ce322438993fe77b9708e",
+          "bytes": 28451
+        },
+        {
+          "file": "scripts/integration/bauar-harness-gate.mjs",
+          "sha256": "32db682d3fdfec4daf6c36b65276522066fe33e3e35c342782218c796e2ae047",
+          "bytes": 30880
+        },
+        {
+          "file": "scripts/integration/bauar-harness-native.mjs",
+          "sha256": "cad2ad9307fb5856907a9fa6faeb5de98e0a317fd4a5b24ffdeb8995bcdcc137",
+          "bytes": 11447
+        },
+        {
+          "file": "scripts/integration/bauar-harness-peer.mjs",
+          "sha256": "3d6c21811fec39ef25e939a9d4b80a1b44eb34775b227b37e3c53ae5d476d201",
+          "bytes": 19846
+        },
+        {
+          "file": "scripts/integration/bauar-harness-runtime.mjs",
+          "sha256": "2f4faba41b92de2728cd451b61023b55a8e554086d4b09cc1e460214f505f9cb",
+          "bytes": 15033
+        },
+        {
+          "file": "scripts/integration/bauar-harness-kernel-stage.mjs",
+          "sha256": "94f1c848d75bc2eaa880502ec03cb6b3abb2c1d0a73b2a00ada38ee186c30e38",
+          "bytes": 2432
+        },
+        {
+          "file": "crates/librefang-storage/src/channel_actions.rs",
+          "sha256": "4a928037af4b2fa051c5b08fa5e2616f313027b74b72b6c0222cddbf29647a31",
+          "bytes": 16523
+        },
+        {
+          "file": "crates/librefang-storage/src/channel_actions/surreal_impl/observers.rs",
+          "sha256": "680dc379603e97bcd9ff77b6587ec95172fa9fcc158376404d1f59c4ec2fb36d",
+          "bytes": 35011
+        },
+        {
+          "file": "crates/librefang-storage/src/channel_routes.rs",
+          "sha256": "bb853ace2079e7cfd805143b718b271103aa3e502eec261cce25a4e0f8acc2ee",
+          "bytes": 30766
+        }
+      ],
+      "diffExclusions": [
+        "workstreams",
+        "tests/bauar_session_owner.rs"
+      ],
+      "exclusionNote": "D0 diagnostic source not read or hashed in this refresh"
+    }
+  ],
+  "priorBinding": "source-inventory-fixed-diagnostic-delivery-04.json",
+  "corrections": [
+    "Completed metadata-only production+real scenario source handoff",
+    "Desktop returned-agent selection assertion",
+    "Wire-proven native continuation fixture + kernel documented test-stack floor",
+    "Observed E0277 manager String-return capture uses existing terminal error cleanup",
+    "Readiness07 fixed JSON/schema/truncation diagnostic counters only",
+    {
+      "time": "2026-10-06T22:02:29.586Z",
+      "description": "Frozen fixture-only exact approval counters/native physical markers; added actual Boss startup service and provider fixture hash context; complete diff hashes refreshed excluding D0/source session correction"
+    },
+    {
+      "time": "2026-10-06T22:18:57.245Z",
+      "description": "Complete Boss host protocol/revision/claim/caller source boundary; current fixed BF kernel stage fixture included; no D0 reads"
+    }
+  ]
+}

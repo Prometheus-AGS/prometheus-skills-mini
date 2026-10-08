@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T23:15:50.023Z",
+  "kind": "Nine authored approval scenarios, mixed exact source-bound retained groups",
+  "primaryScenarios": 9,
+  "passedCurrent": [
+    "approve",
+    "deny",
+    "reconnect",
+    "edited",
+    "cancel",
+    "unavailable"
+  ],
+  "retained": [
+    "missing",
+    "empty",
+    "whitespace"
+  ],
+  "currentReceipt": {
+    "schemaVersion": 1,
+    "label": "boss-approval-client-runtime-15",
+    "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+    "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+    "args": [
+      "--import",
+      "tsx",
+      "scripts/gates/bauar-approval-client.ts"
+    ],
+    "startedAt": "2026-10-06T23:04:07.599Z",
+    "finishedAt": "2026-10-06T23:14:13.260Z",
+    "exitCode": 0,
+    "signal": null,
+    "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-approval-client-runtime-15.log",
+    "result": "command-completed-not-yet-case-certified",
+    "buildEnvironment": {}
+  },
+  "currentLogSha256": "45cf6d0c80e172d9c723b2ecb80ddf6806100ea945bb9976d13868ed59c6fa5b",
+  "currentSource": "source-inventory-name-and-stream-delivery-18.json",
+  "currentBuild": "boss-provider-name-build-08-manifest.json",
+  "retainedReceipt": {
+    "schemaVersion": 1,
+    "label": "boss-approval-client-runtime-11",
+    "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+    "command": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+    "args": [
+      "--import",
+      "tsx",
+      "scripts/gates/bauar-approval-client.ts"
+    ],
+    "startedAt": "2026-10-06T22:20:49.211Z",
+    "finishedAt": "2026-10-06T22:26:40.063Z",
+    "exitCode": 1,
+    "signal": null,
+    "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/boss-approval-client-runtime-11.log",
+    "result": "failed",
+    "buildEnvironment": {}
+  },
+  "retainedLimit": "Runtime11 failed later validapprove; exactly3 earlier completed malformed-ID cases retained, not a full runtime11 PASS. Those paths do not reach consuming dispatch and were not rerun.",
+  "retainedLogSha256": "ec58ce83f45eba3ffa64fc246fff691df89efd915ce3c4280c2069f5cf6516ee",
+  "checkpoints": [
+    {
+      "scenario": "approve",
+      "observerIncomplete": false,
+      "toolsCalls": 1,
+      "revalidationRequests": 1,
+      "revalidationRejected": 0,
+      "toolsCallRejections": [],
+      "terminalConflicts": [],
+      "dispatchBindings": [
+        {
+          "correlated": true,
+          "versionMatches": true,
+          "runtimeEpochMatches": true,
+          "hostEpochMatches": true,
+          "authorityRevisionMatches": true,
+          "invocationIdMatches": true,
+          "mountedServerMatches": true,
+          "nativeToolMatches": true,
+          "providerNameMatchesBossLegacy": true,
+          "providerNameMatchesUarCanonical": true,
+          "argumentDigestMatches": true
+        }
+      ]
+    },
+    {
+      "scenario": "deny",
+      "observerIncomplete": false,
+      "toolsCalls": 0,
+      "revalidationRequests": 0,
+      "revalidationRejected": 0,
+      "toolsCallRejections": [],
+      "terminalConflicts": [],
+      "dispatchBindings": []
+    },
+    {
+      "scenario": "reconnect",
+      "observerIncomplete": false,
+      "toolsCalls": 1,
+      "revalidationRequests": 1,
+      "revalidationRejected": 0,
+      "toolsCallRejections": [],
+      "terminalConflicts": [],
+      "dispatchBindings": [
+        {
+          "correlated": true,
+          "versionMatches": true,
+          "runtimeEpochMatches": true,
+          "hostEpochMatches": true,
+          "authorityRevisionMatches": true,
+          "invocationIdMatches": true,
+          "mountedServerMatches": true,
+          "nativeToolMatches": true,
+          "providerNameMatchesBossLegacy": false,
+          "providerNameMatchesUarCanonical": true,
+          "argumentDigestMatches": true
+        }
+      ]
+    },
+    {
+      "scenario": "edited",
+      "observerIncomplete": false,
+      "toolsCalls": 0,
+      "revalidationRequests": 0,
+      "revalidationRejected": 0,
+      "toolsCallRejections": [],
+      "terminalConflicts": [],
+      "dispatchBindings": []
+    },
+    {
+      "scenario": "cancel",
+      "observerIncomplete": false,
+      "toolsCalls": 0,
+      "revalidationRequests": 0,
+      "revalidationRejected": 0,
+      "toolsCallRejections": [],
+      "terminalConflicts": [],
+      "dispatchBindings": []
+    }
+  ],
+  "affectedPrefixCase": "reconnect",
+  "proof": "Original positive filesystem assertion and model continuation completed; one consuming tools/call and one non-consuming revalidation, exact canonical identity without legacy name match",
+  "limits": [
+    "Genuine development sidecar and Electron IPC, not signed package",
+    "No external legacy approval client compatibility; strict owned client cutover",
+    "No D0 session-owner or remote receiver certification",
+    "Later display-metadata correction is not covered by these earlier source inputs"
+  ]
+}

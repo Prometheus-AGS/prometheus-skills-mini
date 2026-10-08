@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-06T12:03:36.923Z",
+  "initialScriptRuntime": "Node v26.5.0 (shell default)",
+  "requiredRuntime": "Node LTS",
+  "resolvedRuntime": "v24.21.0",
+  "resolvedPath": "/opt/homebrew/Cellar/node@24/24.21.0/bin/node",
+  "impact": "Plan-only orchestration and artifact validation initially ran on non-LTS shell default. No product source/config/service changes or product gates. Final artifact checks use already installed Node24 LTS. In-flight isolated review transport was Node26; its response is artifact evidence, not product execution certification.",
+  "configurationChanged": false
+}

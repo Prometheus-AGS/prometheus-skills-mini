@@ -1,0 +1,28 @@
+{"harnessCompletedCase":"registered-owner-and-explicit-unsupported","completedCaseCount":1}
+{"boardReconciliationCheckpoint":{"streaming":false,"completedCaseCount":1,"retainedAfterA2a":{"executionState":"completed","effectState":"effect_unconfirmed","recoveryState":"available","appliedCursor":23,"attemptRevision":5,"attempt":1},"observedAtDrain":{"admissionState":"admitted","terminalPresent":true,"appliedCursor":23,"attemptRevision":5},"reconciliationCommandSucceeded":true,"boardCompleted":true}}
+{"harnessCompletedCase":"normal-exact-approval-and-reconciliation","completedCaseCount":2}
+{"boardReconciliationCheckpoint":{"streaming":true,"completedCaseCount":2,"retainedAfterA2a":{"executionState":"completed","effectState":"effect_unconfirmed","recoveryState":"available","appliedCursor":21,"attemptRevision":5,"attempt":1},"observedAtDrain":{"admissionState":"admitted","terminalPresent":true,"appliedCursor":21,"attemptRevision":5},"reconciliationCommandSucceeded":true,"boardCompleted":true}}
+{"harnessStage":"incomplete_terminal_start"}
+{"harnessStage":"incomplete_terminal_approved"}
+{"harnessStage":"incomplete_terminal_before_restart"}
+{"harnessStage":"incomplete_terminal_after_restart"}
+{"harnessStage":"incomplete_terminal_finished"}
+{"harnessCompletedCase":"streaming-and-outcome-commit-crash","completedCaseCount":3}
+{"harnessCompletedCase":"exact-denial-no-effect","completedCaseCount":4}
+{"harnessCompletedCase":"three-surface-cancellation-exact-caller-revision","completedCaseCount":5}
+{"harnessCompletedCase":"lost-admission-and-decision-response-no-reenactment","completedCaseCount":6}
+{"harnessCompletedCase":"observation-reconnect-original-run","completedCaseCount":7}
+{"harnessCompletedCase":"provider-admission-before-host-capture-crash","completedCaseCount":8}
+{"harnessCompletedCase":"durable-intent-crash-before-a2a","completedCaseCount":9}
+{"nativePendingCheckpoint":{"stage":"native_pending_sweep","host":{"exitCode":null,"signal":null,"running":true,"spawnError":false,"stderrClassified":true,"stackOverflow":false,"rustPanic":false,"allocationFailure":false},"rows":{"originalNative":{"boardReadSucceeded":true,"status":"pending","retryCount":1,"assignedPresent":false,"assignedToExpectedAgent":false,"claimedAtPresent":false,"intent":"native","intentReadSucceeded":true},"pendingNative":{"boardReadSucceeded":true,"status":"pending","retryCount":1,"assignedPresent":false,"assignedToExpectedAgent":false,"claimedAtPresent":false,"intent":"native","intentReadSucceeded":true},"selected":{"boardReadSucceeded":true,"status":"in_progress","retryCount":0,"assignedPresent":true,"assignedToExpectedAgent":true,"claimedAtPresent":true,"intent":"selected","intentReadSucceeded":true}},"activeSessionCount":0,"activeSessionsAllRunning":true,"agentState":"Running","modelTraffic":{"requests":3,"authorized":3,"parsed":3,"labeled":1,"nativeLabeled":1,"clockTailSkipped":1},"modelFailures":{"model_endpoint":0,"model_auth":0,"model_body":0,"model_label":2,"model_tools":0,"model_response":0},"modelInputShapes":[{"markerCount":2,"nativeRacePresent":true,"nativePendingPresent":true,"selectedRacePresent":false,"chosenNativeRace":true,"chosenNativePending":false},{"markerCount":0,"nativeRacePresent":false,"nativePendingPresent":false,"selectedRacePresent":false,"chosenNativeRace":false,"chosenNativePending":false},{"markerCount":0,"nativeRacePresent":false,"nativePendingPresent":false,"selectedRacePresent":false,"chosenNativeRace":false,"chosenNativePending":false}]}}
+{"harnessFailureCheckpoint":{"stage":"native_compatibility","cancellationSurface":null,"cancellationStep":null,"lastCompletedCase":"durable-intent-crash-before-a2a","completedCaseCount":9,"host":{"exitCode":null,"signal":null,"running":true,"spawnError":false,"stderrClassified":true,"stackOverflow":false,"rustPanic":false,"allocationFailure":false},"provider":{"exitCode":null,"signal":null,"running":true,"spawnError":false,"stderrClassified":false,"stackOverflow":false,"rustPanic":false,"allocationFailure":false},"kernel":{"exitCode":null,"signal":null,"running":false,"spawnError":false,"stderrClassified":false,"stackOverflow":false,"rustPanic":false,"allocationFailure":false}}}
+file:///Users/gqadonis/.claude/worktrees/bauar-bossfang/scripts/integration/bauar-harness-runtime.mjs:33
+  throw new Error(`Timed out: ${label}`);
+        ^
+
+Error: Timed out: real pending sweep invokes native model
+    at until (file:///Users/gqadonis/.claude/worktrees/bauar-bossfang/scripts/integration/bauar-harness-runtime.mjs:33:9)
+    at async nativeCompatibilityGate (file:///Users/gqadonis/.claude/worktrees/bauar-bossfang/scripts/integration/bauar-harness-native.mjs:75:5)
+    at async file:///Users/gqadonis/.claude/worktrees/bauar-bossfang/scripts/integration/bauar-harness-gate.mjs:409:3
+
+Node.js v24.21.0

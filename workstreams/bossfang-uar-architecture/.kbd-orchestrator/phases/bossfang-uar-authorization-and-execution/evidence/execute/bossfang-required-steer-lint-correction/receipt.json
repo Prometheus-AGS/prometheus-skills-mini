@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T22:35:41.481Z",
+  "observation": "clippy02 UarSteerOutcome::Accepted1064bytes vsUnsupported48",
+  "baseline": "Enum/projection unchanged acceptedbac04cb; per-worker source attribution",
+  "files": [
+    {
+      "file": "crates/librefang-types/src/uar_run.rs",
+      "sha256": "e01937663ffaadf088ec041642312a9ea325b2b24afe05e5f0a5558a93792878",
+      "bytes": 13052
+    },
+    {
+      "file": "crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+      "sha256": "afa74efb0d304d14c6761712f77e5cd892a928c1777e9a4939987439b5b917d4",
+      "bytes": 14233
+    },
+    {
+      "file": "crates/librefang-api/src/routes/uar_delegation.rs",
+      "sha256": "52db7cd0f6d53f524554ce425a77ecc2b89c08c15241b2a27564dc60cfcb7b83",
+      "bytes": 19872
+    }
+  ],
+  "scope": "Box Accepted projection,2constructors andbyvaluepersistence deref only",
+  "impact": "Public Rust field Box changes; Serde tagged JSON source shape unchanged, no runtime serialization certification.1allocationperAccepted; no authority/effect/persistence semantics change",
+  "sourceStatus": "released",
+  "verification": "failed-only clippy03 pending",
+  "sourceBinding": "source-inventory-required-lint-delivery-10.json"
+}

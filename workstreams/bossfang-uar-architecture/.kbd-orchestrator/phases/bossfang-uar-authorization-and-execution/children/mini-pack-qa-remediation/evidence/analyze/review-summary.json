@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-08T09:45:36.161Z",
+  "reviewRounds": [
+    {
+      "round": 1,
+      "verdict": "BLOCK",
+      "counts": {
+        "CRITICAL": 2
+      },
+      "findingsSha256": "b54c685250fa3af794de53689822f0592038d23df7d7fec412bca44f6f5c962a",
+      "antiTheater": "Actual Node-native screen returned PASS score 0"
+    },
+    {
+      "round": 2,
+      "verdict": "PASS",
+      "counts": {
+        "WARNING": 2
+      },
+      "findingsSha256": "91dc4d2e1f6f2fbeeff7cbd6f1df594247a9227affab7b481c54646b3f10fdbe",
+      "antiTheater": "Actual Node-native screen returned PASS score 0"
+    }
+  ],
+  "crossModelCheck": "unverified-producer-unknown",
+  "finalProducerClarificationsAfterRound2": true,
+  "thirdReviewRun": false,
+  "implementationGateRun": false
+}

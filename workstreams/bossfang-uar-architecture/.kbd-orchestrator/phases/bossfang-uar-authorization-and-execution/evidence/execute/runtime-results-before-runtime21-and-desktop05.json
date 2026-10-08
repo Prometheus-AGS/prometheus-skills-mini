@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T19:48:10.433Z",
+  "phaseCertification": "incomplete",
+  "passed": [
+    {
+      "label": "uar-cursor-runtime-02",
+      "primaryCases": 2,
+      "physicalCases": 2,
+      "environment": {
+        "RUST_MIN_STACK": "33554432"
+      },
+      "priorFailure": "uar-cursor-runtime-01 SIGABRT stack overflow",
+      "scope": "contiguous cursor/reconnect and explicit retained-history gap",
+      "status": "observed-pass",
+      "receipt": "final-gates/uar-cursor-runtime-02.json",
+      "sourceBinding": "source-inventory-before-compile-corrections.json",
+      "compilerManifest": "uar-compile-01-manifest.json"
+    },
+    {
+      "label": "uar-stdio-runtime-01",
+      "primaryCases": 1,
+      "physicalCases": 2,
+      "environment": {
+        "RUST_MIN_STACK": "33554432"
+      },
+      "scope": "outer scenario executes child helper with genuine environment snapshot/approval/cancel/kill-reap/configured connector/sandbox boundary; root helper no-op excluded",
+      "status": "observed-pass",
+      "receipt": "final-gates/uar-stdio-runtime-01.json",
+      "sourceBinding": "source-inventory-before-compile-corrections.json",
+      "compilerManifest": "uar-compile-01-manifest.json"
+    },
+    {
+      "label": "uar-inline-runtime-02",
+      "status": "observed-pass",
+      "primaryCases": 1,
+      "physicalCases": 1,
+      "scope": "provider-normalized executing catalog revision",
+      "receipt": "final-gates/uar-inline-runtime-02.json",
+      "compilerManifest": "uar-compile-03-manifest.json",
+      "sourceCorrections": [
+        "governed-workspace-correction-handoff/receipt.json",
+        "receipt-status-correction-handoff/receipt.json"
+      ]
+    },
+    {
+      "label": "uar-receipt-runtime-02",
+      "status": "observed-pass",
+      "primaryCases": 3,
+      "physicalCases": 3,
+      "scope": "real native canonical receipt acquisition/embedded storage/no-store/incomplete/replay",
+      "receipt": "final-gates/uar-receipt-runtime-02.json",
+      "compilerManifest": "uar-compile-03-manifest.json",
+      "sourceCorrections": [
+        "governed-workspace-correction-handoff/receipt.json",
+        "receipt-status-correction-handoff/receipt.json"
+      ]
+    },
+    {
+      "label": "uar-grants-runtime-01",
+      "status": "observed-pass",
+      "primaryCases": 1,
+      "physicalCases": 1,
+      "scope": "owner/run/destination/revision/lease/action binding",
+      "receipt": "final-gates/uar-grants-runtime-01.json",
+      "compilerManifest": "uar-compile-03-manifest.json",
+      "sourceCorrections": [
+        "governed-workspace-correction-handoff/receipt.json",
+        "receipt-status-correction-handoff/receipt.json"
+      ]
+    },
+    {
+      "label": "uar-identity-runtime-02",
+      "caseName": "real_jwks_rotation_cooldown_failed_refresh_hard_age_and_recovery",
+      "status": "observed-case-pass-inside-failed-target",
+      "primaryCases": 1,
+      "physicalCases": 1,
+      "scope": "real signed JWKS rotation, cooldown, failed refresh, hard maximum age, recovery",
+      "receipt": "final-gates/uar-identity-runtime-02.json",
+      "compilerManifest": "uar-compile-03-manifest.json",
+      "sourceCorrections": [
+        "governed-workspace-correction-handoff/receipt.json"
+      ],
+      "remainingTargetCases": "six failed cases; incomplete-remote startup passed original attempt; no rerun of successful rotation"
+    },
+    {
+      "label": "uar-secret-runtime-05",
+      "status": "observed-pass",
+      "primaryCases": 1,
+      "physicalCases": 1,
+      "scope": "actual provider/MCP/embedding/stream/liveargs/retained same-owner session/world-state/executable-secret rejection",
+      "receipt": "final-gates/uar-secret-runtime-05.json",
+      "sourceCorrections": [
+        "governed-workspace-correction-handoff/receipt.json",
+        "secret-terminal-correction-handoff/receipt.json"
+      ],
+      "limitation": "Earlier knowledge-response decode and second-turn terminal failures lacked reason codes; their intermittent causes are unresolved, not claimed fixed by diagnostics. No stress/reliability certification."
+    },
+    {
+      "label": "uar-identity-runtime-01",
+      "caseName": "incomplete_remote_policy_is_rejected_at_actual_startup",
+      "primaryCases": 1,
+      "physicalCases": 1,
+      "status": "observed-case-pass-inside-failed-target",
+      "scope": "Actual standalone startup rejects incomplete remote policy",
+      "receipt": "final-gates/uar-identity-runtime-01.json",
+      "limitation": "Other target cases failed; imported support unit cases excluded from primary evidence"
+    },
+    {
+      "label": "uar-identity-runtime-06",
+      "status": "observed-pass",
+      "primaryCases": 6,
+      "physicalCases": 6,
+      "scope": "Local invalid/positive admission; key issuance/exchange/TTL/revoke; owner/tenant/admin metadata; total JWKS budget; remote claims/workspace/direct key; typed host provenance and scope attenuation",
+      "receipt": "final-gates/uar-identity-runtime-06.json",
+      "compilerManifest": "uar-identity-compile-09-manifest.json",
+      "sourceCorrections": [
+        "identity-localization-correction-handoff/receipt.json",
+        "accepted-run-future-correction-handoff/receipt.json"
+      ],
+      "environment": {
+        "testThreadRustMinStack": "33554432",
+        "childProcessStack": "unchanged default; launch helper clears parent environment"
+      },
+      "priorFailure": "First valid run admission crashed with stack overflow; eight earlier rejection requests returned401",
+      "limitation": "Synthetic issuer/keys/private receiver, no external deployment certification"
+    },
+    {
+      "label": "bossfang-mcp-runtime-07",
+      "status": "observed-pass",
+      "primaryCases": 1,
+      "physicalCases": 1,
+      "scope": "Actual private router MCP trust/authn/RBAC/attribution; original pending approvalboundagent/tool/args; filesystemeffects; wrongaud/signature/reservedoverrides/malformedagentdenial; audit/config/legacycontextpreservation; DEBUGknowncredentialcanaryexclusion",
+      "receipt": "final-gates/bossfang-mcp-runtime-07.json",
+      "compilerManifest": "bossfang-mcp-compile-10-manifest.json",
+      "sourceCorrections": [
+        "mcp-workspace-fixture-correction.json",
+        "mcp-original-approval-lifecycle-correction.json",
+        "mcp-model-env-reference-correction.json"
+      ],
+      "environment": {
+        "modelCredential": "synthetic declared fixture constant in dedicatedchildenv; never printed",
+        "testThreadRustMinStack": "33554432"
+      },
+      "limitation": "ExistingOIDCissuer/tenantdelegation unsupported; no configured UARpreservation or externalreceiver/IdP conformance certification"
+    }
+  ],
+  "failed": [
+    "boss-typecheck-node-01",
+    "uar-compile-01",
+    "uar-cursor-runtime-01",
+    "uar-identity-runtime-01",
+    "uar-inline-runtime-01",
+    "uar-receipt-runtime-01",
+    "uar-secret-runtime-01",
+    "bossfang-api-compile-01",
+    "uar-secret-runtime-02",
+    "bossfang-api-compile-02",
+    "bossfang-mcp-runtime-01",
+    "uar-secret-runtime-03",
+    "uar-identity-runtime-02",
+    "uar-secret-runtime-04",
+    "uar-identity-runtime-03",
+    "bossfang-kernel-compile-01",
+    "uar-identity-runtime-04",
+    "uar-identity-runtime-05",
+    "bossfang-kernel-compile-02",
+    "uar-format-check-01",
+    "bossfang-matrix-compile-03",
+    "bossfang-mcp-runtime-02",
+    "uar-owned-format-compile-10",
+    "bossfang-harness-runtime-01",
+    "bossfang-mcp-runtime-03",
+    "bossfang-harness-runtime-02",
+    "bossfang-harness-runtime-03",
+    "bossfang-mcp-runtime-04",
+    "bossfang-mcp-runtime-05",
+    "bossfang-harness-runtime-04",
+    "bossfang-harness-runtime-05",
+    "bossfang-mcp-runtime-06",
+    "boss-dsh-current-build-01",
+    "bossfang-harness-runtime-06",
+    "boss-dsh-current-build-02",
+    "bossfang-harness-runtime-07",
+    "bossfang-harness-runtime-08",
+    "bossfang-harness-runtime-09",
+    "boss-typecheck-web-01",
+    "bossfang-harness-runtime-10",
+    "boss-approval-client-runtime-01",
+    "bossfang-harness-runtime-11",
+    "bossfang-harness-runtime-12",
+    "boss-approval-client-runtime-02"
+  ],
+  "incidentalSupportTests": "Identity and inline first attempts included imported support unit tests; these are excluded from primary evidence and subsequent scoped retries. This initial overscope is an A-9 deviation.",
+  "primaryCasesPassed": 18,
+  "currentCompileCorrection": "All selected targets emitted current executable via compile10/11 and Bossfang04/05; pure formatting/module movement did not justify rerunning previously passing runtime cases",
+  "receiptCount": 85
+}

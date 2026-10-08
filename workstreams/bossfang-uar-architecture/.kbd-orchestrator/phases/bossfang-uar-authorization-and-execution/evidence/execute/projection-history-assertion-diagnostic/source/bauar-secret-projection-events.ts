@@ -1,0 +1,182 @@
+import assert from 'node:assert/strict'
+
+import type { ElectronApplication } from '@playwright/test'
+
+export type ProjectionEventCase = 'split' | 'partial' | 'reconnect' | 'interrupted' | 'cancel' | 'snapshot' | 'run-error' | 'approval' | 'approval-error'
+type EventCapture = {
+  streams: number
+  changed: number
+  text: number
+  reasoning: number
+  snapshot: number
+  runErrors: number
+  contentIds: string[]
+  approvals: Array<{ id: string; runId: string; toolCallId: string }>
+  decisions: Array<{ id: string; approved: boolean }>
+}
+
+/** Alter human content only on actual UAR events; retain every control ID, type and sequence. */
+export async function installEventProjectionFixture(
+  app: ElectronApplication, canary: string, scenario: ProjectionEventCase
+): Promise<void> {
+  await app.evaluate((_, input) => {
+    const original = globalThis.fetch
+    const capture: EventCapture = { streams: 0, changed: 0, text: 0, reasoning: 0, snapshot: 0, runErrors: 0, contentIds: [], approvals: [], decisions: [] }
+    const rewrites = new Map<string, string>()
+    const counts = new Map<string, number>()
+    ;(globalThis as any).__bauarProjectionEvents = { capture, restore() { globalThis.fetch = original } }
+    globalThis.fetch = async (request, init) => {
+      const url = new URL(request instanceof Request ? request.url : String(request))
+      const scoped = ['127.0.0.1', 'localhost', '[::1]'].includes(url.hostname) && url.pathname.startsWith('/api/uar/runs/')
+      if (scoped && url.pathname.endsWith('/tool-approval') && init?.method === 'POST') {
+        const body = JSON.parse(String(init.body))
+        capture.decisions.push({ id: body.approval_id, approved: body.approved })
+        if (input.scenario === 'approval-error') {
+          return new Response(`${'x'.repeat(990)}${input.canary} diagnostic tail`, { status: 502 })
+        }
+      }
+      let response = await original(request, init)
+      if (!scoped || !response.body || !response.headers.get('content-type')?.includes('text/event-stream')) return response
+      if (input.scenario === 'snapshot') {
+        await response.arrayBuffer()
+        response = await original(request, init)
+        if (!response.body) throw new Error('Actual snapshot stream returned no body')
+      }
+      capture.streams += 1
+      const streamOrdinal = capture.streams
+      const decoder = new TextDecoder()
+      const encoder = new TextEncoder()
+      let pending = ''
+      let terminated = false
+      const frames = { rewrite(frame: string): { frame: string; text: boolean } {
+        let isText = false
+        const lines = frame.split('\n').map((line) => {
+          if (!line.startsWith('data:')) return line
+          const event = JSON.parse(line.slice(5))
+          if (event.type === 'TEXT_MESSAGE_CONTENT' || event.type === 'REASONING_MESSAGE_CONTENT') {
+            isText = event.type === 'TEXT_MESSAGE_CONTENT'
+            const key = `${event.type}:${event.messageId}`
+            if (!rewrites.has(event.eventId)) {
+              const ordinal = (counts.get(key) ?? 0) + 1
+              counts.set(key, ordinal)
+              const half = Math.floor(input.canary.length / 2)
+              const partial = ['partial', 'cancel', 'interrupted'].includes(input.scenario)
+              const value = input.scenario === 'snapshot' ? '' : ordinal === 1
+                ? `Before ${input.canary.slice(0, half)}`
+                : ordinal === 2 && !partial ? `${input.canary.slice(half)} after.` : ''
+              rewrites.set(event.eventId, value)
+              if (isText) capture.text += 1
+              else capture.reasoning += 1
+              if (typeof event.messageId === 'string') capture.contentIds.push(event.messageId)
+            }
+            event.delta = rewrites.get(event.eventId)
+            capture.changed += 1
+          } else if (event.type === 'MESSAGES_SNAPSHOT' && input.scenario === 'snapshot') {
+            for (const message of event.messages ?? []) {
+              if (message.role === 'assistant' && typeof message.content === 'string') {
+                message.content = `Before ${input.canary} after.`
+                capture.snapshot += 1
+              }
+            }
+          } else if (event.type === 'CUSTOM' && event.name === 'uar.tool.approval_required') {
+            const value = event.value
+            if (typeof value?.approvalId !== 'string' || typeof value.toolCallId !== 'string') {
+              throw new Error('Projection fixture requires an actual exact-ID approval event')
+            }
+            capture.approvals.push({ id: value.approvalId, runId: event.runId, toolCallId: value.toolCallId })
+            value.arguments = { operation: `Read ${input.canary}`, server: `Server ${input.canary}`,
+              target: `${'x'.repeat(500)}${input.canary}`, detailsAvailable: true }
+            capture.changed += 1
+          } else if (event.type === 'TOOL_CALL_RESULT') {
+            event.content = JSON.stringify({ readable: `Tool result ${input.canary}`, benign: 'kept' })
+            capture.changed += 1
+          } else if (event.type === 'RUN_ERROR' && typeof event.message === 'string') {
+            event.message = `Run diagnostic ${input.canary}`
+            capture.runErrors += 1
+            capture.changed += 1
+          }
+          return `data: ${JSON.stringify(event)}`
+        })
+        return { frame: lines.join('\n'), text: isText }
+      } }
+      const body = response.body.pipeThrough(new TransformStream<Uint8Array, Uint8Array>({
+        async transform(chunk, controller) {
+          if (terminated) return
+          pending += decoder.decode(chunk, { stream: true }).replaceAll('\r\n', '\n')
+          let boundary: number
+          while ((boundary = pending.indexOf('\n\n')) >= 0) {
+            const transformed = frames.rewrite(pending.slice(0, boundary))
+            pending = pending.slice(boundary + 2)
+            controller.enqueue(encoder.encode(`${transformed.frame}\n\n`))
+            if (!transformed.text) continue
+            if (input.scenario === 'interrupted' || (input.scenario === 'reconnect' && streamOrdinal === 1)) {
+              terminated = true
+              controller.terminate()
+              return
+            }
+            if (input.scenario === 'cancel') {
+              await new Promise<void>((_, reject) => {
+                const cancellation = { abort() { reject(new Error('Projection fixture stream cancelled')) } }
+                if (init?.signal?.aborted) cancellation.abort()
+                else init?.signal?.addEventListener('abort', cancellation.abort, { once: true })
+              })
+            }
+          }
+        },
+        flush(controller) {
+          if (terminated) return
+          pending += decoder.decode()
+          if (pending.trim()) controller.enqueue(encoder.encode(frames.rewrite(pending).frame))
+        }
+      }), { signal: init?.signal ?? undefined })
+      return new Response(body, { status: response.status, headers: response.headers })
+    }
+  }, { canary, scenario })
+}
+
+export async function finishEventProjectionFixture(app: ElectronApplication): Promise<EventCapture> {
+  return app.evaluate(() => {
+    const state = (globalThis as any).__bauarProjectionEvents
+    state.restore()
+    delete (globalThis as any).__bauarProjectionEvents
+    return state.capture as EventCapture
+  })
+}
+
+export function assertProjectedEvents(
+  scenario: ProjectionEventCase, canary: string, chunks: string, storedAssistantData: unknown, capture: EventCapture
+) {
+  const events = JSON.parse(chunks) as Array<Record<string, any>>
+  const ordinary = events.map((event) => {
+    const content = { ...event }
+    for (const field of ['id', 'toolCallId', 'approvalId', 'toolName']) delete content[field]
+    return content
+  })
+  assert.equal(JSON.stringify(ordinary).includes(canary), false)
+  assert.equal(JSON.stringify(storedAssistantData).includes(canary), false)
+  assert.equal(JSON.stringify(ordinary).includes(canary.slice(0, 10)), false)
+  assert.equal(JSON.stringify(storedAssistantData).includes(canary.slice(0, 10)), false)
+  const text = events.filter((event) => event.type === 'text-delta').map((event) => event.delta).join('')
+  assert.equal(text.includes(canary.slice(0, Math.floor(canary.length / 2))), false)
+  if (!['approval-error', 'run-error', 'cancel'].includes(scenario)) assert(text.includes('<redacted>'))
+  if (['split', 'reconnect', 'snapshot', 'approval'].includes(scenario)) assert.equal(text, 'Before <redacted> after.')
+  if (scenario === 'partial') assert.equal(text, 'Before <redacted>')
+  if (scenario === 'split') {
+    assert(capture.text >= 2 && capture.reasoning >= 2)
+    const reasoning = events.filter((event) => event.type === 'reasoning-delta').map((event) => event.delta).join('')
+    assert.equal(reasoning, 'Before <redacted> after.')
+  }
+  if (scenario === 'reconnect' || scenario === 'interrupted') assert.equal(capture.streams, 2)
+  if (scenario === 'snapshot') assert(capture.snapshot > 0)
+  if (scenario === 'run-error') assert(capture.runErrors > 0)
+  for (const event of events.filter((entry) => entry.type === 'text-start' || entry.type === 'reasoning-start')) {
+    assert(capture.contentIds.some((id) => event.id.startsWith(`${id}:`)) || scenario === 'snapshot')
+  }
+  for (const approval of capture.approvals) {
+    assert(events.some((event) => event.type === 'tool-approval-request' &&
+      event.approvalId === `uar:${approval.runId}:${approval.id}` && event.toolCallId === `uar:${approval.runId}:${approval.toolCallId}`))
+    assert(capture.decisions.some((decision) => decision.id === approval.id && decision.approved))
+  }
+  return { scenario, humanContentProjected: true, persistenceObserved: true, controlCorrelationPreserved: true,
+    controlledFixture: 'human content on actual UAR events; no manufactured execution or approval authority' }
+}

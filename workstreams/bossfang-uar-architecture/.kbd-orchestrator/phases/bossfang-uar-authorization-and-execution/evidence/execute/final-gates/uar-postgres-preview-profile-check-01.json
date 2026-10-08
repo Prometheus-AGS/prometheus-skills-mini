@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "label": "uar-postgres-preview-profile-check-01",
+  "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+  "command": "cargo",
+  "args": [
+    "check",
+    "--offline",
+    "--locked",
+    "-p",
+    "universal-agent-runtime",
+    "--lib",
+    "--no-default-features",
+    "--features",
+    "minimal,postgres-backend"
+  ],
+  "startedAt": "2026-10-06T21:59:02.430Z",
+  "finishedAt": "2026-10-06T22:05:18.011Z",
+  "exitCode": 0,
+  "signal": null,
+  "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-postgres-preview-profile-check-01.log",
+  "result": "command-completed-not-yet-case-certified",
+  "buildEnvironment": {}
+}

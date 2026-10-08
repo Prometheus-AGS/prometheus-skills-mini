@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-06T23:30:26.920Z",
+  "status": "authored_frozen_not_executed",
+  "sourceRoot": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "script": {
+    "path": "scripts/integration/bauar-postlint-gate.mjs",
+    "sha256": "07a011cd12d7f71e0a55a1bc8848a48ffdbb0aaae5bcbb96633fa6275099f8fe",
+    "bytes": 17268,
+    "lines": 262
+  },
+  "snapshot": "bauar-postlint-gate.mjs",
+  "immutableDeclaration": "Byte-exact authored scenario snapshot, exclusively created without replacing existing evidence. Source remains frozen for coordinator compilation and execution.",
+  "references": [
+    {
+      "path": "scripts/integration/bauar-harness-gate.mjs",
+      "sha256": "32db682d3fdfec4daf6c36b65276522066fe33e3e35c342782218c796e2ae047",
+      "bytes": 30880,
+      "lines": 483
+    },
+    {
+      "path": "scripts/integration/bauar-harness-peer.mjs",
+      "sha256": "3d6c21811fec39ef25e939a9d4b80a1b44eb34775b227b37e3c53ae5d476d201",
+      "bytes": 19846,
+      "lines": 326
+    },
+    {
+      "path": "scripts/integration/bauar-harness-runtime.mjs",
+      "sha256": "2f4faba41b92de2728cd451b61023b55a8e554086d4b09cc1e460214f505f9cb",
+      "bytes": 15033,
+      "lines": 256
+    },
+    {
+      "path": "crates/librefang-api/tests/bauar_harness_host.rs",
+      "sha256": "16cb6df5b9f9924d3fc6ac7046029145b87652681809f9e85ff5ffbe1f184d1d",
+      "bytes": 9315,
+      "lines": 164
+    },
+    {
+      "path": "crates/librefang-memory/src/substrate/task_dispatch.rs",
+      "sha256": "2e0af44e725bb805df5b3891dd98b9682f1f56d2fe866d3aa696360a4d9c25f4",
+      "bytes": 17847,
+      "lines": 294
+    },
+    {
+      "path": "crates/librefang-kernel/src/kernel/uar_harness/lifecycle.rs",
+      "sha256": "23fc0312d05e44e1d3e643e47436dc33d48cfdda1ba496061b6cdbddf7685f64",
+      "bytes": 4354,
+      "lines": 71
+    },
+    {
+      "path": "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
+      "sha256": "a37225c1c0ec8b50ba9d06ba27ca68c48bc75f66ea2b11c3e469429f868b6436",
+      "bytes": 9406,
+      "lines": 222
+    }
+  ],
+  "coverage": [
+    {
+      "case": "nullable-checkpoint-restart-no-readmission",
+      "description": "Actual stored job and accepted private host ClaimIntent command commit production SQLite intent; read-only node:sqlite checks checkpoint null, restart preserves bytes-as-JSON and admission remains unknown without provider POST or effect.",
+      "h28Source": "scripts/integration/bauar-harness-gate.mjs:398-407"
+    },
+    {
+      "case": "exact-refusals-and-object-checkpoint-restart",
+      "description": "One actual UAR-bound job and real private model/tool effect: wrong/stale/missing/duplicate approvals preserve original projection; one approved effect; replay retains original task; terminal history and REST/RPC views agree after host restart; real reconciliation persists object checkpoint; another restart and reconciliation preserve exact typed JSON and board state without new provider admission or observation.",
+      "h28Source": "scripts/integration/bauar-harness-gate.mjs:166-273",
+      "scopeNote": "Reuses exact approval, no-readmission, terminal correlation, history and reconciliation assertions. Does not rerun the separate streaming/incomplete-history or full usage matrix."
+    },
+    {
+      "case": "root-get-cancel-original-parameter-errors",
+      "description": "Actual root router tasks/get and tasks/cancel each receive missing params and wrong-typed id; preserve JSON-RPC ID, -32602 error and absent result; no added admission/effect."
+    },
+    {
+      "case": "enabled-connections-and-openapi-descriptors",
+      "description": "Actual Owner GET connections, unauthenticated refusal, and served OpenAPI presence of all three moved path descriptors. Schema inspection only; refresh and diagnostic routes are not invoked."
+    }
+  ],
+  "omissions": [
+    "No fabricated Accepted steer success: actual provider declares and enforces unsupported steer.",
+    "No feature-disabled runtime profile: existing real host requires uar-driver and surreal-backend.",
+    "No refresh/diagnostic invocation; no D0 or session-owner diagnostic.",
+    "No new sidecar editing/channel dispatch/MCP auth scenario; relevant lint proofs remain source plus root-owned required checks.",
+    "No full H28 rerun and no relabeling of H28 binaries or historical receipts."
+  ],
+  "prerequisites": {
+    "production": "Root reports required clippy07 and CLI02 passed; all production remains frozen. This receipt independently certifies neither gate.",
+    "compile": {
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+      "environment": {
+        "SKIP_DASHBOARD_BUILD": "1",
+        "CARGO_TARGET_DIR": "Use the existing coordinator-owned isolated target directory; exactly one writer."
+      },
+      "command": "cargo",
+      "args": [
+        "test",
+        "--offline",
+        "--locked",
+        "-p",
+        "librefang-kernel",
+        "-p",
+        "librefang-api",
+        "--features",
+        "librefang-kernel/uar-driver,librefang-api/uar-driver",
+        "--test",
+        "bauar_harness_host",
+        "--no-run",
+        "--message-format=json"
+      ],
+      "basis": "Existing actual host compilation command from final-gates/bossfang-host-compile-08.json. Coordinator must select the current compiler-artifact executable for bauar_harness_host, not reuse its historical binary."
+    },
+    "run": {
+      "command": "/opt/homebrew/opt/node@24/bin/node",
+      "args": [
+        "/Users/gqadonis/.claude/worktrees/bauar-bossfang/scripts/integration/bauar-postlint-gate.mjs",
+        "<CURRENT_COMPILED_API_HOST_TEST_BINARY>",
+        "<ACCEPTED_STANDALONE_UAR_BINARY>",
+        "/Users/gqadonis/.claude/worktrees/bauar-uar"
+      ],
+      "externalEnvironment": "No caller-supplied fixture secrets required; runner creates isolated synthetic credentials.",
+      "hostArgs": [
+        "--exact",
+        "bauar_private_host",
+        "--nocapture"
+      ],
+      "hostEnvironment": {
+        "RUST_MIN_STACK": "16777216",
+        "BAUAR_HOST_ROOT": "new private temporary boss directory",
+        "BAUAR_HOST_CONFIG": "private config.json",
+        "BAUAR_UAR_BEARER": "private providerFixture bearer",
+        "BAUAR_MODEL_KEY": "private model credential"
+      },
+      "runtimeResources": "Existing providerFixture, startPeer and startFaultProxy only; real standalone UAR, current production router/kernel, private model/MCP controlled effect, embedded stores, and Node24 builtin read-only SQLite. No installs, shared services, external providers, or dependency changes."
+    }
+  },
+  "resultContract": {
+    "expectedCases": 4,
+    "expectedRealEffects": 1,
+    "expectedProviderAdmissions": 1,
+    "receipt": "Fresh private temporary root/receipt.json, emitted only after all assertions complete.",
+    "failureOutput": "Fixed stage/count/child process classifications only; no raw assertions, prompts, IDs, response objects or credentials."
+  },
+  "workerExecution": {
+    "tests": false,
+    "syntaxChecks": false,
+    "builds": false,
+    "gates": false,
+    "services": false,
+    "productionEdits": false,
+    "existingFixtureEdits": false,
+    "dependencies": false
+  }
+}

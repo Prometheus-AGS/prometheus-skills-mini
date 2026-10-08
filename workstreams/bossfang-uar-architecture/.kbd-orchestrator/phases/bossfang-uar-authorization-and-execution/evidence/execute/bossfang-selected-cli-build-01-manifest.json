@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T21:41:42.888Z",
+  "receipt": "final-gates/bossfang-selected-cli-build-01.json",
+  "scope": "Actual selected CLI debug build; dashboard skipped, no package/release acceptance",
+  "sourceBinding": "source-inventory-metadata-delivery-02.json",
+  "sourceHead": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+  "sourceFilesChecked": 59,
+  "sourceHashesUnchanged": true,
+  "artifacts": [
+    {
+      "target": "bossfang",
+      "features": [
+        "default",
+        "surreal-backend",
+        "telemetry",
+        "uar-driver"
+      ],
+      "executable": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/target/debug/bossfang",
+      "sha256": "d1a0249ab5093b28dcf71308ea5d7b25d2f5d4137be85baff67be4d3dabf720a"
+    }
+  ]
+}

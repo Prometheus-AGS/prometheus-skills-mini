@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "label": "uar-identity-runtime-04",
+  "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+  "command": "/Users/gqadonis/.cargo-build/66/54349220c24881/debug/deps/bauar_identity_boundary-2be66c641df1f49b",
+  "args": [
+    "--test-threads=1",
+    "--skip",
+    "sidecar_process::",
+    "--skip",
+    "stub_llm::",
+    "--skip",
+    "incomplete_remote_policy_is_rejected_at_actual_startup",
+    "--skip",
+    "real_jwks_rotation_cooldown_failed_refresh_hard_age_and_recovery"
+  ],
+  "startedAt": "2026-10-06T18:24:28.602Z",
+  "finishedAt": "2026-10-06T18:25:11.356Z",
+  "exitCode": 101,
+  "signal": null,
+  "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-identity-runtime-04.log",
+  "result": "failed",
+  "buildEnvironment": {
+    "RUST_MIN_STACK": "33554432"
+  }
+}

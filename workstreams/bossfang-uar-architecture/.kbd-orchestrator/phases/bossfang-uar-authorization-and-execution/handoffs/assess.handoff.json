@@ -1,0 +1,17 @@
+{
+  "stage": "assess",
+  "completedAt": "2026-10-06T10:00:41.040Z",
+  "outputs": [
+    "assessment.md",
+    "sources-receipt.json",
+    "evidence/source-baseline.json",
+    "evidence/assessment-scope-check.json",
+    "review/assess/findings.json",
+    "review/assess/sycophancy.final.json",
+    "approval-policy.json"
+  ],
+  "nextStage": "analyze",
+  "summaryForNext": "Assessment complete for all F1–F7, G7 identity/exposure requirements and acceptance scenarios; final independent review PASS (0 critical/0 warning/2 suggestions), producer identity comparison unverified. Carry forward original ignored-metadata evidence limits, F6 fixture choice, out-of-scope hook writeback and comparator-only scope; no product build/deployment certification or architecture choice approved. STOP: explicit user approval is required before Analyze; retain Spec and all later stage stops.",
+  "skipped": false,
+  "skipReason": null
+}

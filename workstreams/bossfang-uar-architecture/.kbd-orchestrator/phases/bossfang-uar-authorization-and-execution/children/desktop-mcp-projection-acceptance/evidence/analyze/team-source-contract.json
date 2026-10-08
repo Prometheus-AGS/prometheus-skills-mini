@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-07T07:30:48.035Z",
+  "reviewers": [
+    "boss_execution",
+    "uar_execution"
+  ],
+  "mode": "read-only-static-analysis",
+  "productMutations": false,
+  "builds": false,
+  "tests": false,
+  "runtime12CauseProven": false,
+  "findings": {
+    "selectedServerFilteringBeforeExposure": true,
+    "nativeSearchHostPreparation": true,
+    "nativeSearchAskApproval": true,
+    "nativeSearchResourceCredential": false,
+    "nativeSearchHostClaimTransitionMissing": true,
+    "expectedDeferredTotalPreparations": 2,
+    "expectedDeferredExactApprovalDecisions": 2,
+    "expectedTargetPreparations": 1,
+    "expectedTargetEffects": 1,
+    "trustedExecutionKindInCurrentPreparedContract": false,
+    "chatCorrelationIdsPreserved": true
+  },
+  "refs": [
+    "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates/bauar-secret-projection.ts:133-147",
+    "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates/bauar-secret-projection-mcp.ts:24",
+    "/Users/gqadonis/.claude/worktrees/bauar-boss/tests/e2e/gates/uarExperienceGate.test.ts:290-322",
+    "/Users/gqadonis/.claude/worktrees/bauar-boss/src/main/ai/runtime/uar/UarHostToolAdmission.ts:111-149,208-241,289-292,323-325",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/src/mcp/projection.rs:186-189,257-261,293-298,421-425",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/src/uar/runtime/manager.rs:5035-5048,5256-5257,5587-5589,5634-5644",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/src/llm/orchestrator.rs:474-484,495,542-547,575-581,2783-2800,2828",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/src/uar/runtime/tool_admission/lifecycle.rs:392-453",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/src/uar/runtime/tool_admission/mod.rs:186-205,318-349,732-738,868-873",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/src/llm/orchestrator.rs:2355,2828",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/src/llm/liter_driver.rs:962",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/vendor/git/liter-llm/crates/liter-llm/src/types/common.rs:280,382,1088",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/src/uar/runtime/skills/activation.rs:275"
+  ],
+  "recommendation": "Strict UAR-resolved execution kind bound to original invocation authority; consuming native claim before local dispatch, preserve separate MCP receiver consuming claim and claimed-only terminal. Exact contract/version/caller cutover and cleanup require Spec/Plan.",
+  "uncertainty": "No new runtime reproduction; historical runtime12 branch unavailable.",
+  "hashes": [
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates/bauar-secret-projection.ts",
+      "sha256": "490c0fd2569971a9e2f002ef551041ac3c07995be071bd00bcacc3dad2e3beaf"
+    },
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates/bauar-secret-projection-mcp.ts",
+      "sha256": "3695b1e9e6c8c8579682d1a84a70008261c5ebb72bfc631b64734bf9c33ff125"
+    },
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-boss/tests/e2e/gates/uarExperienceGate.test.ts",
+      "sha256": "46820ee01ea4a14918e142565201060ab19e4ec8d56df64bf3ef61fe0f1049e6"
+    },
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-boss/src/main/ai/runtime/uar/UarHostToolAdmission.ts",
+      "sha256": "3df14c27411e3fba114a682a1de7038eb66f8072ff51602af9c54315964e40b9"
+    },
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-uar/src/mcp/projection.rs",
+      "sha256": "485dc311705c1e0da8d635fcc3fd9be6ce4fc0e715b814b72c4258abfc4005f6"
+    },
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-uar/src/uar/runtime/manager.rs",
+      "sha256": "a786f4830611f92b0c718c474ae392efda8eb89ccf1fb4ca59e0947a1db40d17"
+    },
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-uar/src/llm/orchestrator.rs",
+      "sha256": "dc5a76e4e39e96a26bc9100bd7a0971ef027f825918ca3366537d27631de4021"
+    },
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-uar/src/uar/runtime/tool_admission/lifecycle.rs",
+      "sha256": "dacdb79a64a7268962e21b64bf349fb1ef4a875a01f6040b86d220af4dc079cb"
+    },
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-uar/src/uar/runtime/tool_admission/mod.rs",
+      "sha256": "bf2f0c71a8ef508d54f0f188a57d40d4a5e712cf5c700f0f353ca3be2331a2f4"
+    },
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-uar/src/llm/liter_driver.rs",
+      "sha256": "ee25a3547a774694225f183af5ad2047f8aae523e2c9e0742c8e6a430d9d837f"
+    },
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-uar/vendor/git/liter-llm/crates/liter-llm/src/types/common.rs",
+      "sha256": "a8978f8845004a5cc3ee2b454f3227fae21c6f1d87ea835d3091d81d1ee99129"
+    },
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-uar/src/uar/runtime/skills/activation.rs",
+      "sha256": "200ec6b19c47ced13bdb2042b4c16278b8d7699a6ae503443484d75d580a0515"
+    }
+  ]
+}

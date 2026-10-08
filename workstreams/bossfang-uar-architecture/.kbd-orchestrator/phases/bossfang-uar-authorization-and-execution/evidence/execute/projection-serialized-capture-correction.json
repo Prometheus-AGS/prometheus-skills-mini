@@ -1,0 +1,49 @@
+{
+  "kind": "source-only serialized fixture correction",
+  "files": [
+    {
+      "path": "scripts/gates/bauar-secret-projection.ts",
+      "lines": 459,
+      "sha256": "924e28f9dd16f4eb8d4946fd45236bde4ea5398714cb4abe34d70936a7c1f0a2"
+    },
+    {
+      "path": "scripts/gates/bauar-secret-projection-revision.ts",
+      "lines": 218,
+      "sha256": "31b13e9f1d0e555a95908a9609c45ffeed5bc84d818ee5aff3b46c0b9376dbc7"
+    }
+  ],
+  "observed": "Parent observed electronApplication.evaluate TypeError: A dynamic import callback was not specified in the same builtin import pattern; projection03 failed capture_install.",
+  "correction": [
+    "Use actual process.getBuiltinModule(node:http), preserving IncomingMessage capture.",
+    "Replace nested named arrows with object methods; no global shim or loader replacement.",
+    "Add exact fixed dynamic-import and missing-name-helper categories; retain unclassified for other errors."
+  ],
+  "transformInspection": {
+    "runtime": "Node24.21.0",
+    "tsx": "4.21.0",
+    "actualStyle": "--import tsx/dist/loader.mjs, import helper module and inspect exported installCapture.toString only",
+    "before": {
+      "ambientHelperCalls": 5,
+      "labels": [
+        "ordered",
+        "statusCategory",
+        "inspect",
+        "diagnostic",
+        "restore"
+      ]
+    },
+    "after": {
+      "ambientHelperCalls": 0,
+      "dynamicImport": false,
+      "builtinLoader": true
+    },
+    "limitation": "Public tsImport inspection followed another native-TS path and is not evidence for runner-style serialization."
+  },
+  "excluded": "No evaluate call, app launch, compiler/build, test, gate, production edit, or policy change.",
+  "remaining": "MCP sink has a separate external await import(input.otelUrl); no builtin replacement authorized there. Reported to parent without changing loading semantics.",
+  "sources": [
+    "installed tsx/dist/index-7AaEi15b.mjs keepNames:true",
+    "Context7 /privatenumber/tsx keepNames configuration and serialization limits",
+    "Parent verified Node24 process.getBuiltinModule official API and installed @types/node declaration"
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-06T22:50:01.969Z",
+  "status": "source_frozen_dynamic_verification_pending",
+  "scope": "Observed required Clippy05 driver lint correction only",
+  "failureEvidence": "../final-gates/bossfang-owned-libraries-clippy-05.log",
+  "sourceRoot": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "files": [
+    {
+      "source": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+      "snapshot": "uar_run-mod.rs",
+      "sha256": "6c77fd436d484986cc51e42ad8ff14e099abc493d363b49b4296066687ad5eb5",
+      "bytes": 14240,
+      "lines": 423,
+      "changedLines": [
+        48,
+        85
+      ],
+      "snapshotDeclaration": "Immutable byte-for-byte source evidence snapshot; not added to a build target.",
+      "baseline": {
+        "commit": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+        "sourceSha256": "b55e4071298cd9c7259e93e00bb01f89a9e89ec733c2519fadb13e15926ae251",
+        "originalExpressionsPresent": [
+          {
+            "originalSourceExpression": "refusal: Option<UarRunRefusal>,",
+            "occurrences": 1
+          },
+          {
+            "originalSourceExpression": "Self::Remote { refusal, .. } => refusal.as_ref(),",
+            "occurrences": 1
+          }
+        ]
+      }
+    },
+    {
+      "source": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/http.rs",
+      "snapshot": "uar_run-http.rs",
+      "sha256": "61ca787f5471ac736081d0c325c5306a9b0594968c8c6b0a3ee681d284903b4e",
+      "bytes": 8734,
+      "lines": 265,
+      "changedLines": [
+        89,
+        168,
+        245
+      ],
+      "snapshotDeclaration": "Immutable byte-for-byte source evidence snapshot; not added to a build target.",
+      "baseline": {
+        "commit": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+        "sourceSha256": "27bd4082424215dc5e51f159372adc5423c547486dd6b5689972f5cf4d3beffc",
+        "originalExpressionsPresent": [
+          {
+            "originalSourceExpression": "            message,\n            refusal,",
+            "occurrences": 2
+          },
+          {
+            "originalSourceExpression": "reqwest::Url::parse(&base)",
+            "occurrences": 1
+          }
+        ]
+      }
+    },
+    {
+      "source": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/retained.rs",
+      "snapshot": "uar_run-retained.rs",
+      "sha256": "069ce86d115fc6b6e4ba03839711208443173668ab49587d1f6ea4ff55a5fe6a",
+      "bytes": 7859,
+      "lines": 180,
+      "changedLines": [
+        90
+      ],
+      "snapshotDeclaration": "Immutable byte-for-byte source evidence snapshot; not added to a build target.",
+      "baseline": {
+        "commit": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+        "sourceSha256": "0205be2d8b751c92c9aef22ac43f4d9b97ee0f9e787d27cbd0f6696712058d96",
+        "originalExpressionsPresent": [
+          {
+            "originalSourceExpression": ".ok_or_else(|| UarRunClientError::ConnectionReattachmentRequired)?;",
+            "occurrences": 1
+          }
+        ]
+      }
+    },
+    {
+      "source": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/crates/librefang-llm-drivers/src/drivers/uar.rs",
+      "snapshot": "uar.rs.txt",
+      "sha256": "2901c1bb5525f8dd38668c018f8a9356eb9a9e12c394d245c6c756d5dfaa5bfe",
+      "bytes": 89528,
+      "lines": 2374,
+      "changedLines": [
+        1490,
+        1491,
+        1492
+      ],
+      "snapshotDeclaration": "Plain-text immutable original source evidence; byte-for-byte copy of the corrected incumbent source, not an executable module or a new implementation. Existing 2374-line source retained without splitting or reformatting.",
+      "baseline": {
+        "commit": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+        "sourceSha256": "a562436aa9cb962b52625f5f69feafc8b68e99d5f0c15d670caf8cce0036daa7",
+        "originalExpressionsPresent": [
+          {
+            "originalSourceExpression": "            !text.is_empty()\n                && !(text.starts_with(\"[Current date/time: \") && text.ends_with(']'))\n                && !text.starts_with(\"[Previous conversation context]\\n\")",
+            "occurrences": 1
+          }
+        ]
+      }
+    }
+  ],
+  "changes": [
+    "Remote.refusal: Option<UarRunRefusal> becomes Option<Box<UarRunRefusal>>; both HTTP constructors map present refusals with Box::new; refusal() keeps Option<&UarRunRefusal> using as_deref().",
+    "validate_base passes base instead of &base; all endpoint validation predicates are unchanged.",
+    "original_transport uses ok_or with the same constant ConnectionReattachmentRequired error; owner/workspace and binding validation remain unchanged.",
+    "build_uar_request uses De Morgan equivalence preserving empty/date/context checks and their evaluation order."
+  ],
+  "publicRustImpact": {
+    "changed": "UarRunClientError::Remote.refusal payload type; direct external Rust construction requires boxing present refusals.",
+    "unchanged": [
+      "refusal() accessor signature",
+      "Result error type and variant names",
+      "existing in-repository API matches via dereference field access"
+    ],
+    "allocation": "One allocation for each present remote refusal; none for absent refusal."
+  },
+  "semanticAssessment": {
+    "basis": "Source inspection only",
+    "wire": "No wire/serde structs, HTTP status/message extraction, refusal identifiers, or request/response schemas changed.",
+    "authority": "No transport, original identity, binding, endpoint, or refusal checks removed or weakened.",
+    "dynamic": "Compiler, lint and runtime behavior remain unverified for this correction until coordinator reruns the failed gate."
+  },
+  "baselineAttribution": "Every corrected original expression was present in accepted dependency checkpoint bac04cb6b2c144520e28234ad77f00d4cf0f5b23; files also contain phase edits preserved intact.",
+  "workerActions": {
+    "sourceChangesThisEvidenceTask": false,
+    "tests": false,
+    "builds": false,
+    "gates": false,
+    "formatter": false,
+    "dependencyChanges": false
+  },
+  "immutability": "Created exclusively without overwriting existing artifacts. Snapshot hashes equal frozen production-source hashes. Evidence is read-only by workflow convention; no permissions or source changes performed."
+}

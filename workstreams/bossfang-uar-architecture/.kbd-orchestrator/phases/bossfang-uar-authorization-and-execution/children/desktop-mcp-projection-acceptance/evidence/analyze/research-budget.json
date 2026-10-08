@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-07T07:17:52.063Z",
+  "stoppedAt": "2026-10-07T07:28:09.000Z",
+  "durationMinutes": 10.282,
+  "mode": "stack-specified",
+  "maxQueriesPerTier": 8,
+  "maxMinutes": 20,
+  "attempts": {
+    "tier1": 3,
+    "tier2": 6,
+    "tier3": 1,
+    "tier4": 3
+  },
+  "tier1RemoteSearches": 2,
+  "tier4Reason": "Context7 lacked Chat result correlation and returned SDK split-package APIs; official guide and exact pinned source checked.",
+  "dependenciesAdded": 0,
+  "pinCorrection": "Actual declared SDK1.27.1; exploratory1.9.0 assumption withdrawn before selection.",
+  "newStackDecision": false
+}

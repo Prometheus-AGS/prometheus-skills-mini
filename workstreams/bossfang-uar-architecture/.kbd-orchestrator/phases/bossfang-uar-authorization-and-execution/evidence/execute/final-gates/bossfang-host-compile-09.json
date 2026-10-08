@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "label": "bossfang-host-compile-09",
+  "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "command": "cargo",
+  "args": [
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "librefang-kernel",
+    "-p",
+    "librefang-api",
+    "--features",
+    "librefang-kernel/uar-driver,librefang-api/uar-driver",
+    "--test",
+    "bauar_harness_host",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "startedAt": "2026-10-06T23:31:32.254Z",
+  "finishedAt": "2026-10-06T23:33:58.432Z",
+  "exitCode": 0,
+  "signal": null,
+  "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-host-compile-09.log",
+  "result": "command-completed-not-yet-case-certified",
+  "buildEnvironment": {
+    "SKIP_DASHBOARD_BUILD": "1"
+  }
+}

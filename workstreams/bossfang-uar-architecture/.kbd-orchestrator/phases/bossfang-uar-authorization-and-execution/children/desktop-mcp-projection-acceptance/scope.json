@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-07T00:25:10.224Z",
+  "parentPhase": "bossfang-uar-authorization-and-execution",
+  "childPhase": "desktop-mcp-projection-acceptance",
+  "parentStage": "execute",
+  "observedFailure": "evidence/execute/boss-secret-projection-runtime-12-observation.json",
+  "owningChange": "bauar-04-resource-credential-lifecycle",
+  "ownedResponsibility": "Specify bounded native execution claim/terminal authority and controlled provider discovery; exact file ownership before Execute.",
+  "potentialWriteRoots": [
+    "/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/src/uar/runtime/tool_admission",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/src/llm/orchestrator.rs",
+    "/Users/gqadonis/.claude/worktrees/bauar-boss/src/main/ai/runtime/uar",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/tests/tool_admission_integration.rs",
+    "/Users/gqadonis/.claude/worktrees/bauar-uar/tests/bauar_inline_revision.rs",
+    "/Users/gqadonis/.claude/worktrees/bauar-boss/tests/e2e/gates/bauarHostAdmissionDiagnostic.ts"
+  ],
+  "productChangesAuthorizedInThisStage": false,
+  "stageStops": true,
+  "excludedDiagnostic": "D0 automatic-review-rejected session-owner diagnostic",
+  "amendedAt": "2026-10-07T07:44:50.667Z",
+  "amendmentSource": "Operator approved Spec handover and scope-amendment-proposal.md",
+  "stage": "plan",
+  "specChange": "bauar-05-native-discovery-admission",
+  "proposedTaskIds": [
+    "1.1",
+    "1.2",
+    "1.3",
+    "1.4",
+    "2.1",
+    "2.2",
+    "3.1",
+    "3.2",
+    "3.3",
+    "3.4"
+  ],
+  "exactExecutionOwnershipManifest": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/execution-manifest.json",
+  "planAssignmentSource": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/plan.md#task-model-assignments",
+  "backendTaskIds": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10"
+  ],
+  "plannedFaultPrerequisites": [
+    "FC-UAR-PERSISTENCE",
+    "FC-POSTACK-CANCEL"
+  ],
+  "plannedProductDocumentation": "child/OpenSpec artifacts only; additional product doc path requires scope amendment"
+}

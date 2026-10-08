@@ -1,0 +1,106 @@
+//! Authored source scenarios only. Full router/store/effect acceptance is a
+//! later completed-delivery gate; these are not integration evidence.
+use super::*;
+use super::super::canonical::{parse_sse_events, take_complete_sse_frames, MAX_OBSERVATION_BYTES};
+
+#[test]
+fn projects_finite_original_values_and_supported_encodings() {
+    let mut secrets = CapturedSecrets::default();
+    secrets.add("old-bearer/+=");
+    let encoded = general_purpose::STANDARD.encode("old-bearer/+=");
+    let source = format!("old-bearer/+= old-bearer%2F%2B%3D {encoded}");
+    assert_eq!(secrets.project(&source), "[REDACTED] [REDACTED] [REDACTED]");
+    // A later global selection is not read or substituted into this dictionary.
+    assert_eq!(secrets.project("new-config-token"), "new-config-token");
+}
+
+#[test]
+fn carries_split_bearer_until_group_is_safe() {
+    let mut secrets = CapturedSecrets::default();
+    secrets.add("secret-token");
+    let mut carry = Zeroizing::new(String::new());
+    let first = secrets.delta("before sec", &mut carry);
+    assert_eq!(first, "before ");
+    assert_eq!(carry.as_str(), "sec");
+    let second = secrets.delta("ret-to", &mut carry);
+    assert!(second.is_empty());
+    let third = secrets.delta("ken after", &mut carry);
+    assert_eq!(third, "[REDACTED] after");
+    assert!(carry.is_empty());
+    assert!(!format!("{first}{second}{third}").contains("secret-token"));
+    // Only this entire group may commit. Failure before its third frame must
+    // leave its original durable cursor for replay, not persist the prefix.
+}
+
+#[test]
+fn ordinary_prefix_finishes_on_next_delta_or_terminal_flush() {
+    let mut secrets = CapturedSecrets::default();
+    secrets.add("secret-token");
+    let mut carry = Zeroizing::new(String::new());
+    assert_eq!(secrets.delta("a sec", &mut carry), "a ");
+    assert_eq!(secrets.delta("tion", &mut carry), "section");
+    assert!(carry.is_empty());
+    assert_eq!(secrets.delta("sec", &mut carry), "");
+    assert_eq!(secrets.project(carry.as_str()), "sec");
+}
+
+#[test]
+fn copied_projection_preserves_executable_source_and_json_variant() {
+    let mut secrets = CapturedSecrets::default();
+    secrets.add("private\"value");
+    let original = serde_json::json!({"arguments_json":"private\"value"});
+    let before = original.clone();
+    assert_eq!(secrets.project("private\"value"), "[REDACTED]");
+    let encoded = serde_json::to_string("private\"value").unwrap();
+    assert_eq!(secrets.project(&encoded[1..encoded.len()-1]), "[REDACTED]");
+    assert_eq!(original, before);
+}
+
+#[test]
+fn rejects_complete_oversize_frame_and_malformed_or_missing_cursor() {
+    let mut frame = vec![b'x'; MAX_OBSERVATION_BYTES];
+    frame.extend_from_slice(b"\n\n");
+    assert!(take_complete_sse_frames(&mut frame).is_err());
+    assert!(parse_sse_events("task", 1, "event: agui.done\ndata: {}\n\n").is_err());
+    assert!(parse_sse_events("task", 1, "id: 1\nevent: agui.done\ndata: invalid\n\n").is_err());
+    let events = parse_sse_events("task", 7,
+        "id: 1\nevent: uar.cursor\ndata: {\"request_id\":\"run\"}\n\n").unwrap();
+    assert_eq!(events[0].cursor, 1);
+    assert_eq!(events[0].revision, 7);
+}
+
+#[test]
+fn bounded_typed_parts_are_not_a_sanitization_proof() {
+    let part = UarPresentationPart::Message {
+        speaker: UarPresentationSpeaker::Assistant,
+        text: UarSecretExcludedText::from_secret_excluded_text("a".into()),
+    };
+    assert!(validate_parts(&vec![part.clone(); MAX_PRESENTATION_PARTS]).is_ok());
+    assert!(validate_parts(&vec![part; MAX_PRESENTATION_PARTS + 1]).is_err());
+    let oversized = UarPresentationPart::Message {
+        speaker: UarPresentationSpeaker::Assistant,
+        text: UarSecretExcludedText::from_secret_excluded_text("x".repeat(MAX_PRESENTATION_BYTES + 1)),
+    };
+    assert!(validate_parts(&[oversized]).is_err());
+}
+
+#[test]
+fn provider_usage_keeps_only_observed_values_and_projects_model() {
+    let mut secrets = CapturedSecrets::default(); secrets.add("model-secret");
+    let source = serde_json::json!({"usage": {"input_tokens": 0, "output_tokens": 7,
+        "total_tokens": null, "cost_usd_estimate": 0.12, "model": "model-secret"}});
+    let original = source.clone();
+    let part = observed_usage(&source, &secrets).unwrap();
+    let UarPresentationPart::Usage { input_tokens, output_tokens, total_tokens, model } = &part else { panic!("usage"); };
+    assert_eq!(*input_tokens, Some(0)); assert_eq!(*output_tokens, Some(7));
+    assert_eq!(*total_tokens, None); assert_eq!(model.as_ref().unwrap().as_str(), "[REDACTED]");
+    assert!(!serde_json::to_string(&part).unwrap().contains("cost"));
+    assert_eq!(source, original);
+}
+
+#[test]
+fn missing_invalid_usage_never_becomes_zero_or_derived_total() {
+    let secrets = CapturedSecrets::default();
+    assert!(observed_usage(&serde_json::json!({}), &secrets).is_none());
+    assert!(observed_usage(&serde_json::json!({"usage":{"input_tokens":-1,"output_tokens":"3", "total_tokens":1.5, "cost_usd_estimate":0.1}}), &secrets).is_none());
+}

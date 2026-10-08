@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "scope": "Source contract reconciliation; not full resource or deployment certification",
+  "canonicalRevision": 177,
+  "parentTasks": ["bauar-04-resource-credential-lifecycle/7", "bauar-04-resource-credential-lifecycle/8"],
+  "operatorChoices": ["No external MCP receiver or identity provider selected", "Application owns credential acquisition and custody", "Remove runtime defaults"],
+  "observedEvidence": ["uar-grants-runtime-01", "uar-stdio-runtime-01", "uar-receipt-runtime-02", "uar-secret-runtime-05"],
+  "sourceContracts": ["Explicit application credentials", "Run-bound transports and grants", "Exact governed side effects", "Empty preset catalog with explicit workspace configuration retained"],
+  "limitations": ["Bossfang inbound MCP matrix pending", "External deployment not selected", "Electron gates unavailable pending pinned build payload restoration", "Identity runtime matrix incomplete", "D0 diagnostic rejected by automatic approval review"],
+  "canonicalLabels": "Original task titles are historical; plan revision 5 and amended task summaries govern scope. Existing task IDs are retained.",
+  "certified": false
+}

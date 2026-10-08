@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-06T19:44:56.803Z",
+  "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "trigger": "HARNESS12 streaming host restart: complete terminal history downgraded to reconciliation_required; board remains in_progress",
+  "scope": "Original durable fully applied terminal observation only; no UAR execution recovery, new admission, credentials reattachment, or effect certainty",
+  "files": [
+    {
+      "file": "crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
+      "sha256": "ea7d8c41e4b902dfcd5c1f9c84b40671316709d6bbaf69d6cdebaa39dde651f6",
+      "bytes": 25066,
+      "lines": 454,
+      "frozen": "crates_librefang-runtime_src_a2a_uar_delegation_store.rs.txt"
+    },
+    {
+      "file": "crates/librefang-kernel/src/kernel/uar_harness/observation.rs",
+      "sha256": "94a4cfd36249bd20c555b99f284796203e6205599273266458dcc49af9f95b6a",
+      "bytes": 4178,
+      "lines": 79,
+      "frozen": "crates_librefang-kernel_src_kernel_uar_harness_observation.rs.txt"
+    },
+    {
+      "file": "scripts/integration/bauar-harness-gate.mjs",
+      "sha256": "47c9589cd466efacb542d9926188dc6526f58b38399400188fd2049f64892d52",
+      "bytes": 31398,
+      "lines": 490,
+      "frozen": "scripts_integration_bauar-harness-gate.mjs.txt"
+    }
+  ],
+  "verification": "source frozen; compilation/runtime pending"
+}

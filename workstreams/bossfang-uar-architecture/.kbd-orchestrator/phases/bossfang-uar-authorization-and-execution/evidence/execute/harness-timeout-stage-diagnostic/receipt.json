@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-06T19:51:06.460Z",
+  "trigger": "HARNESS13 exact TimeoutError after two successful complete-terminal checkpoints",
+  "scope": "safe fixed stage/method/route enums; unchanged request timeout, error identity, assertions and product",
+  "files": [
+    {
+      "file": "scripts/integration/bauar-harness-gate.mjs",
+      "sha256": "f056aedbde6f2435a7dcf209ac8386a7cb4056613fc04aa95ee00162e4c828f1",
+      "lines": 495,
+      "frozen": "scripts_integration_bauar-harness-gate.mjs.txt"
+    },
+    {
+      "file": "scripts/integration/bauar-harness-runtime.mjs",
+      "sha256": "a9e56e489859867ab3d4ab34c22d5b28521e0802f816a2455b41b1a91341fbc3",
+      "lines": 235,
+      "frozen": "scripts_integration_bauar-harness-runtime.mjs.txt"
+    }
+  ],
+  "verification": "No recompile needed; runtime pending"
+}

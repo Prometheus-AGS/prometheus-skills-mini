@@ -1,0 +1,36 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "analysis.md",
+      "line": 0,
+      "claim": "The analysis recommends an unsupported checker rewrite that violates the project constraint allowing check-expression edits only to fix demonstrated false positives, not to replace a git-grep check with a new Node checker.",
+      "evidence": "Constraints state `.kbd-orchestrator/constraints.md — a check: expression` is permitted only to fix a demonstrated false positive, and command policy defines checks as `git grep --no-index --exclude-standard`; analysis recommends: \"Recommended correction: retain the original full scan boundary and detection intent, but use a Node checker with reviewed, finite, hash-bound dispositions\" and \"The checker change belongs in its own commit and tasks\".",
+      "suggested_fix": "Frame the secret remediation as data/source cleanup or a minimal authorized check-expression correction consistent with the existing `git grep` policy, or require explicit operator/rule-owner authorization for introducing a Node checker."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "analysis.md",
+      "line": 0,
+      "claim": "The recommended clean install depends on npm 11.16.0, whose engine requirement is incompatible with the observed Node 22.20.0 LTS runtime.",
+      "evidence": "Analysis says: \"Subsequent Node inspections explicitly used the observed Node 22.20.0 LTS executable\" and \"The ambient npm version probe returned 11.16.0; read-only registry metadata reports its Node requirement as ^20.17.0 or >=22.9.0\"; Node 22.20.0 is below npm 11.16.0's stated >=22.9.0 requirement.",
+      "suggested_fix": "Use an npm version compatible with Node 22.20.0, or make Node/runtime upgrade authorization explicit before adopting npm 11.16.0."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

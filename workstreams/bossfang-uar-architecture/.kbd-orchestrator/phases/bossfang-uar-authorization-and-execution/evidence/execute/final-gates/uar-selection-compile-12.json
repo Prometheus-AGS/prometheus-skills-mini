@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "label": "uar-selection-compile-12",
+  "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+  "command": "cargo",
+  "args": [
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "universal-agent-runtime",
+    "--no-default-features",
+    "--features",
+    "server-full,test-probes",
+    "--test",
+    "bauar_skill_selection",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "startedAt": "2026-10-06T21:40:21.261Z",
+  "finishedAt": "2026-10-06T21:51:49.361Z",
+  "exitCode": 0,
+  "signal": null,
+  "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/uar-selection-compile-12.log",
+  "result": "command-completed-not-yet-case-certified",
+  "buildEnvironment": {}
+}

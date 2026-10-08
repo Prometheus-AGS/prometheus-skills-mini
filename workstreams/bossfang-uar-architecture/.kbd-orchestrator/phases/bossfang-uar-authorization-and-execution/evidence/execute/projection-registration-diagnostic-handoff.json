@@ -1,0 +1,44 @@
+{
+  "kind": "source-only fixture diagnostic",
+  "observedFailure": "Projection runtime02 registration_run failed after approximately 18 seconds; underlying cause remains unknown.",
+  "files": [
+    {
+      "path": "scripts/gates/bauar-secret-projection.ts",
+      "sha256": "8c61d31f09df9bb249f60f6a576636429383bfe3c74aaa7c4ebc91a101cc97b0",
+      "lines": 455
+    },
+    {
+      "path": "scripts/gates/bauar-secret-projection-revision.ts",
+      "sha256": "fadfff693388d59169d07469091b0f36d1158e1d6c8cf558abfbd0dbf95c92ea",
+      "lines": 214
+    }
+  ],
+  "contract": {
+    "operations": [
+      "capture_install",
+      "run_turn",
+      "stream_assertion",
+      "capture_inspection",
+      "assertions",
+      "original_agent_read",
+      "original_agent_assertion"
+    ],
+    "streamErrorPresent": "null before a completed runTurn result, otherwise Boolean(error)",
+    "reason": "Fixed source-literal categories only; unclassified is not a cause attribution.",
+    "capture": "Only HTTP status categories, capture/catalog-write/inspection counts, and revision-match booleans. A snapshot survives finishCapture cleanup, including an inspection failure.",
+    "excluded": "No messages, bodies, credentials, canaries, URLs, IDs, revisions or raw errors are emitted."
+  },
+  "sourceReferences": [
+    "src/main/ai/runtime/uar/UarRuntimeConnection.ts:232,235,260,572,582,604,712-714",
+    "scripts/gates/bauar-secret-projection.ts: runTurn stream-open rejection",
+    "scripts/gates/bauar-secret-projection-revision.ts: actual run inspection rejection"
+  ],
+  "preserved": [
+    "All assertions and timeouts",
+    "Actual HTTP calls and response behavior",
+    "Capture cleanup and success receipt shape",
+    "No production source or approval fixture changes"
+  ],
+  "executed": [],
+  "acceptance": "No build, typecheck, runtime or gate executed; root owns failed-gate rerun."
+}

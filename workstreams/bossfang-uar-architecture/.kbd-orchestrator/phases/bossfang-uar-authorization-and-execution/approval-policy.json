@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "source": "user instruction 2026-10-06",
+  "phase": "bossfang-uar-authorization-and-execution",
+  "sequence": [
+    "assess",
+    "analyze",
+    "spec",
+    "plan",
+    "execute",
+    "reflect"
+  ],
+  "requireExplicitHandoverApproval": true,
+  "skipAllowed": false,
+  "authorizedStages": [
+    "assess",
+    "analyze",
+    "spec",
+    "plan"
+  ],
+  "pendingApprovalFor": "execute",
+  "approvals": [
+    {
+      "stage": "analyze",
+      "at": "2026-10-06T10:06:01.766Z",
+      "source": "User message: yes, go to analyze"
+    },
+    {
+      "stage": "spec",
+      "at": "2026-10-06T10:42:41.808Z",
+      "source": "User message: Approved for handover, in response to explicit Spec handover question; deployment/recovery choices remain open."
+    },
+    {
+      "stage": "plan",
+      "at": "2026-10-06T11:52:02.286Z",
+      "source": "User Approved in response to explicit handover to Plan. Authorizes Plan only; unresolved deployment/recovery choices unchanged."
+    }
+  ]
+}

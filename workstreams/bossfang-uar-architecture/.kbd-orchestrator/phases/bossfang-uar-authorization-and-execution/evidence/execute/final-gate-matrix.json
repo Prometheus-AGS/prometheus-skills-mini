@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 1,
+  "status": "eligible-cumulative-gates-started",
+  "scope": "Isolated selected phase delivery; no original release gate closure",
+  "createdAt": "2026-10-06T16:31:30.815Z",
+  "gateOrder": [
+    "All eligible selected production and scenario source handoffs",
+    "One cumulative production-path acceptance matrix; serialized writer per build dir",
+    "Required applicable local checks/package",
+    "Deterministic artifacts QA then independent cumulative diff review"
+  ],
+  "uar": {
+    "root": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+    "features": [
+      "server-full",
+      "test-probes"
+    ],
+    "targets": [
+      {
+        "name": "bauar_identity_boundary",
+        "minimumCases": 8
+      },
+      {
+        "name": "bauar_full_harness_cursor",
+        "minimumCases": 2
+      },
+      {
+        "name": "bauar_inline_revision",
+        "minimumCases": 1
+      },
+      {
+        "name": "bauar_resource_grants",
+        "minimumCases": 1
+      },
+      {
+        "name": "bauar_secret_projection",
+        "minimumCases": 2,
+        "primaryCaseCount": 1
+      },
+      {
+        "name": "bauar_stdio_boundary",
+        "minimumCases": 2,
+        "primaryCaseCount": 1,
+        "caseAccounting": "Two physical tests; root helper returns without fixture env. Outer primary spawns helper with actual env and runs snapshot/approval/cancel/kill-reap/configured-connector/sandbox lifecycle. Count primary execution separately."
+      },
+      {
+        "name": "bauar_receipt_projection",
+        "minimumCases": 3,
+        "status": "source-handoff"
+      },
+      {
+        "name": "bauar_skill_selection",
+        "minimumCases": 1,
+        "status": "observed-pass"
+      }
+    ],
+    "requiredEvidence": [
+      "Actual executed nonzero case counts",
+      "Exact product HEAD/diff/per-file hashes",
+      "Controlled owner/run/approval/epoch/cursor/effect correlation",
+      "No raw credential values"
+    ],
+    "blockedExcluded": "D0 session-owner diagnostic/fixture and conditional correction. Never run test --all-targets or broad suite that reroutes it.",
+    "limits": [
+      "test-probes is test-only never release build",
+      "Actual external receiver/IdP not selected",
+      "Synthetic model responses make actual production execution deterministic; no external model certification"
+    ],
+    "targetDir": "/Users/gqadonis/.claude/worktrees/bauar-uar/target",
+    "compileSelection": "Only named integration targets; no libtests, --all-targets, D0 fixture or session-owner diagnostic",
+    "observedBlocker": "All8identity scenarios passed; server-full no-default profile check passed; owned formatting passed. Required global formatter remains failed/unwaived and excluded D0 unresolved.",
+    "identityEvidence": {
+      "primaryCasesPassed": 8,
+      "receipts": [
+        "final-gates/uar-identity-runtime-01.json",
+        "final-gates/uar-identity-runtime-02.json",
+        "final-gates/uar-identity-runtime-06.json"
+      ],
+      "externalDeploymentCertified": false
+    },
+    "buildProfileEvidence": {
+      "status": "observed-command-pass",
+      "receipt": "final-gates/uar-server-profile-check-01.json",
+      "scope": "cargo check no-default-features server-full main binary; no runtime or package certification"
+    },
+    "metadataSelection": {
+      "status": "sidecar03, named compile12 and actual private KV scenario PASS; desktop08 returned exact selected skill before approval failure",
+      "scopeAcceptance": "skill-metadata-correction-scope-acceptance.json",
+      "design": "skill-selection-metadata-correction-design.md",
+      "observedPutFailure": "final-gates/boss-approval-client-runtime-06.json",
+      "priorSidecarReflectsCorrection": false,
+      "handoff": "skill-selection-source-handoff.json",
+      "freeze": "source-inventory-metadata-delivery-02.json",
+      "newFileFormatting": "final-gates/uar-selection-format-check-01.json",
+      "compilerBlocker": "skill-selection-observed-compiler-blocker.json",
+      "managerCorrection": "skill-selection-manager-correction.json",
+      "activeBuild": "final-gates/boss-uar-sidecar-profile-build-03.json",
+      "compilerManifest": "boss-uar-sidecar-profile-build-03-manifest.json",
+      "namedCompile": "final-gates/uar-selection-compile-12.json",
+      "namedCompileManifest": "uar-selection-compile-12-manifest.json",
+      "runtimeAcceptance": "skill-selection-runtime-acceptance.json",
+      "runtimeReceipt": "final-gates/uar-selection-runtime-01.json"
+    },
+    "postgresPreviewCheck": {
+      "status": "actual compiler PASS; runtime untested",
+      "receipt": "final-gates/uar-postgres-preview-profile-check-01.json",
+      "manifest": "uar-postgres-preview-profile-check-01-manifest.json"
+    }
+  },
+  "boss": {
+    "root": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+    "node": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
+    "gates": [
+      "scripts/gates/bauar-approval-client.ts",
+      "scripts/gates/bauar-secret-projection.ts"
+    ],
+    "packaging": "Applicable actual Electron/current-source package required; old cached app not acceptance",
+    "prerequisiteStatus": "Actual source app/utility builds and4typechecks retained PASS; exact isolated SQLiteABI149 repaired; genuine no-test-probes server-full sidecar build PASS and complete11fileprivatepayload staged",
+    "prerequisiteReceipt": "evidence/execute/boss-package-resolution-prerequisite.json",
+    "prerequisiteReceipts": [
+      "pinned-native-existing-inventory.json",
+      "pinned-typescript-existing-inventory.json",
+      "boss-existing-native-build-adaptation.json"
+    ],
+    "buildReceipts": [
+      "final-gates/boss-dsh-current-build-03.json",
+      "final-gates/boss-sdk-current-build-01.json",
+      "final-gates/boss-aicore-current-build-01.json",
+      "final-gates/boss-electron-current-build-01.json",
+      "final-gates/boss-electron-utility-build-01.json",
+      "final-gates/boss-electron-current-build-02.json",
+      "final-gates/boss-electron-current-build-03.json",
+      "final-gates/boss-electron-current-build-04.json",
+      "final-gates/boss-electron-current-build-05.json",
+      "final-gates/boss-electron-current-build-07.json",
+      "final-gates/boss-electron-current-build-08.json"
+    ],
+    "typecheckReceipts": [
+      "final-gates/boss-typecheck-node-02.json",
+      "final-gates/boss-typecheck-web-02.json",
+      "final-gates/boss-typecheck-e2e-01.json",
+      "final-gates/boss-typecheck-aicore-01.json",
+      "final-gates/boss-typecheck-node-03.json",
+      "final-gates/boss-typecheck-node-04.json",
+      "final-gates/boss-typecheck-e2e-02.json",
+      "final-gates/boss-typecheck-node-05.json",
+      "final-gates/boss-typecheck-e2e-03.json",
+      "final-gates/boss-typecheck-e2e-04.json",
+      "final-gates/boss-typecheck-node-08.json",
+      "final-gates/boss-typecheck-e2e-07.json",
+      "final-gates/boss-typecheck-node-10.json",
+      "final-gates/boss-typecheck-e2e-09.json"
+    ],
+    "runtimeStatus": "9 PASS source-grouped:6actualruntime15 +3retainedruntime11 malformed IDs",
+    "nativeSqlite": {
+      "status": "observed-isolated-abi149-build-and-publication",
+      "buildReceipt": "final-gates/boss-sqlite-electron-abi-build-01.json",
+      "publicationReceipt": "sqlite-electron-abi-publication.json",
+      "originalUnchanged": true,
+      "adaptation": "Node orchestrates existing native compiler; upstream node-gyp invokes its own Python/gyp backend. No authored Python or shell script; this is a documented Node-only toolchain limitation."
+    },
+    "packagedAcceptanceInventory": {
+      "status": "read-only-existing-contract-inventory; not executed",
+      "currentBossExternalCurrentUar": "Existing runtime override can be used with a complete private payload in a packaged app; behavior remains unverified",
+      "bundledCurrentUar": "No supported dirty-current-source staging; existing local preparer and independent after-pack check bind the clean local pin; canonical packaging binds existing release source. Requires legitimate packaging contract/pin handover, not weakening validation."
+    },
+    "sidecarProfile": {
+      "status": "observed-build-pass-development-only-metadata-correction",
+      "receipt": "final-gates/boss-uar-sidecar-profile-build-03.json",
+      "compilerManifest": "boss-uar-sidecar-profile-build-03-manifest.json",
+      "features": "server-full; no test-probes/defaults",
+      "payloadManifestSha256": "979288782ad68fcbd20e91c64689c7989300b1588c8c89c980c93548886c3e47",
+      "executableSha256": "4e7c440d5baa0140d909becdb1440c73611e013b48f963507f65374170abf736",
+      "resourceFileCount": 11,
+      "releaseCertified": false
+    },
+    "startupDiagnostic": "desktop-startup-milestone-diagnostic/receipt.json",
+    "skillStageDiagnostic": "desktop-skill-update-stage-diagnostic/receipt.json",
+    "startupClassificationDiagnostic": "desktop-startup-json-classification/receipt.json",
+    "hostProtocolCorrection": {
+      "receipt": "host-admission-protocol-correction-handoff/receipt.json",
+      "sourceStatus": "complete",
+      "build": "final-gates/boss-electron-current-build-06.json",
+      "node": "final-gates/boss-typecheck-node-06.json",
+      "e2e": "final-gates/boss-typecheck-e2e-05.json",
+      "runtime": "desktop11 active; 3 observed cases; full acceptance pending"
+    },
+    "projectionStatus": {
+      "status": "fixed-diagnostics-node14-active",
+      "lastFailure": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/boss-secret-projection-runtime-09-observation.json",
+      "diagnostic": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/projection-mcp-assertion-diagnostic/receipt.json",
+      "sourceBinding": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/source-inventory-mcp-diagnostic-delivery-22.json",
+      "primaryPass": false
+    },
+    "approvalAcceptance": "boss-approval-runtime-15-acceptance.json"
+  },
+  "bossfang": {
+    "root": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+    "harness": "Frozen 5-source actual-kernel/real-UAR private-process matrix",
+    "mcp": {
+      "target": "bauar_mcp_identity",
+      "minimumCases": 1,
+      "features": [
+        "uar-driver",
+        "surreal-backend"
+      ],
+      "profile": "one coordinated actual router/effect/auth/audit/config matrix; OIDC issuer and configured UAR preservation excluded",
+      "status": "observed-pass",
+      "receipt": "final-gates/bossfang-mcp-runtime-07.json"
+    },
+    "flags": {
+      "SKIP_DASHBOARD_BUILD": "1"
+    },
+    "target": "Private isolated target, one writer",
+    "limits": [
+      "No new/shared daemon",
+      "No cargo build/run live-daemon workflow",
+      "Python branding checker unavailable under Node-only rule; no port/install"
+    ],
+    "targetDir": "/tmp/librefang-target-bauar-delivery-001",
+    "observedBlocker": "HARNESS26 passed12 named Node cases then classified Rust panic exit101 in separate kernel contract. Exact assertion unknown; fixed private stage diagnostic source active, no full PASS",
+    "terminalObservationCorrection": "harness-terminal-proof-correction-handoff/receipt.json",
+    "timeoutDiagnostic": "harness-rpc-operation-diagnostic/receipt.json",
+    "a2aSnapshotCorrection": "harness-a2a-available-observation-correction/receipt.json",
+    "latestCompile": "final-gates/bossfang-a2a-observation-compile-14.json",
+    "diagnosticOnlyReceipts": [
+      "final-gates/bossfang-harness-runtime-18.json",
+      "final-gates/bossfang-harness-runtime-23.json"
+    ],
+    "diagnosticSource": "harness-native-process-diagnostic-final/receipt.json",
+    "fixtureStackCorrection": "desktop-schema-and-host-stack-correction/receipt.json",
+    "nativePeerCorrection": "harness-native-clock-envelope-correction/receipt.json",
+    "selectedCliBuild": "final-gates/bossfang-selected-cli-build-01.json",
+    "nativeContinuationDiagnostic": "harness-native-continuation-diagnostic/receipt.json",
+    "selectedCliStatus": "02 PASS currentpostlint debug source69; no runtime/package cert",
+    "selectedCliManifest": "bossfang-selected-cli-build-02-manifest.json",
+    "activeClippy": "07 PASS, exact source69 manifest retained",
+    "clippyBaselineAttribution": "bossfang-clippy-baseline-attribution-01.json",
+    "auxiliaryModelCorrection": "harness-memory-auxiliary-correction/receipt.json",
+    "kernelStageDiagnostic": {
+      "receipt": "harness-kernel-stage-diagnostic/receipt.json",
+      "compile": "bossfang-kernel-stage-compile-15-manifest.json",
+      "observed": "H27 failed legacy_call after 3 kernel cases; 12 Node cases reached",
+      "correction": "bossfang-legacy-fixture-correction/receipt.json",
+      "compile16": "active",
+      "fullAcceptance": "pending"
+    },
+    "harnessAcceptance": {
+      "status": "observed-pass",
+      "primaryCases": 18,
+      "receipt": "final-gates/bossfang-harness-runtime-28.json",
+      "acceptance": "bossfang-harness-runtime-28-acceptance.json",
+      "sourceBinding": "source-inventory-projection-and-legacy-delivery-08.json"
+    },
+    "postlint": {
+      "status": "four-real-path-cases-pass",
+      "compileManifest": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/bossfang-postlint-host-compile-09-manifest.json",
+      "acceptance": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/bossfang-postlint-runtime-01-acceptance.json",
+      "sourceBinding": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/source-inventory-cold-history-postlint-delivery-21.json",
+      "primaryCases": 4,
+      "packageCertified": false
+    }
+  },
+  "certification": {
+    "D0": "blocked automatic approval review; no eligible receipt or permitted signed waiver supplied",
+    "finalExecute": "Open until every required task/gate resolved; source handoff is not PASS",
+    "reflect": "Requires later human handover after Execute completion",
+    "requiredLint": "Failed/unwaived; canonical blocker and blocked certification rev181; no unrelated storage cleanup",
+    "canonicalReceipt": "canonical-certification-blocked-lint.json"
+  },
+  "deliveryCheckpoint": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/execute-source-readiness.json",
+  "startedAt": "2026-10-06T17:07:49.498Z",
+  "commands": [
+    "final-gates/uar-compile-01.json",
+    "final-gates/bossfang-api-compile-01.json"
+  ],
+  "observedIntermediateBuildDirs": {
+    "uar": "/Users/gqadonis/.cargo-build/66/54349220c24881",
+    "bossfang": "/Users/gqadonis/.cargo-build/ac/bc2af224a6da42",
+    "evidence": "Actual cargo compiler-artifact filenames, observed 2026-10-06; directories distinct, existing machine build/cache configuration inherited"
+  },
+  "updatedAt": "2026-10-06T23:35:43.248Z",
+  "observedRuntimeResults": "partial-runtime-results.json",
+  "formatting": {
+    "receipt": "final-gates/uar-format-check-01.json",
+    "status": "global-failed-unwaived; owned-scope-passed",
+    "emittedPathLabels": 135,
+    "uniquePathAttribution": "pending; duplicate includes/vendor paths present",
+    "uniqueFiles": 132,
+    "attribution": "uar-format-triage-01.json:51 untouched baseline,55 edited incumbents,23 new,2 vendor,1 excluded D0 metadata only",
+    "ownedScope": "32 new/helper files; max452lines",
+    "ownedCheck": "final-gates/uar-owned-format-check-02.json",
+    "pathFixCheck": "final-gates/uar-identity-module-format-03.json"
+  },
+  "processLimits": [
+    "Observed source-hook ordering gap retained in selected-cli-boundary-ordering.json",
+    "Shared OpenSpec stale owner ESRCH; lock retained by rename, no product/config/service/KBD mutation"
+  ],
+  "canonicalCheckpoint": {
+    "revision": 185,
+    "execute": "in_progress",
+    "certification": "blocked",
+    "lintBlocker": "cleared actual07 PASS"
+  }
+}

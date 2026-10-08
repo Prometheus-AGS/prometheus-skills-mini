@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-06T12:08:35.790Z",
+  "classification": "static source only; not reproduced runtime behavior",
+  "sources": [
+    {
+      "file": "/Users/gqadonis/Projects/references/librefang/crates/librefang-api/src/routes/uar.rs",
+      "sha256": "8f611feac6776973201955cb4afc1b87ca63af58a102f04594cecd127d8e4e41"
+    },
+    {
+      "file": "/Users/gqadonis/Projects/references/librefang/crates/librefang-api/src/routes/network.rs",
+      "sha256": "661fe3e578cc2fba961318c0705d9d5eab2c24670d25db74896efbc29c161a98"
+    },
+    {
+      "file": "/Users/gqadonis/Projects/references/librefang/crates/librefang-kernel/src/kernel/triggers_and_workflow.rs",
+      "sha256": "0e6b6eac79f5c02bf2c45851450479ee5076b92072482fc02dc76c1ef22b0a7f"
+    },
+    {
+      "file": "/Users/gqadonis/Projects/references/librefang/crates/librefang-kernel/src/kernel/accessors.rs",
+      "sha256": "673a57174ddcd2adada56928a98aa31be7f029efbff98b69edec07c8dd073066"
+    }
+  ],
+  "observations": [
+    "routes/uar.rs 400,422,438,456,474-477 use TASK_STORE for message/get/cancel; cancel updates local status.",
+    "routes/network.rs 483,500,546,573 use kernel.a2a_tasks for send/get/cancel; kernel send_message dispatch occurs at 488.",
+    "kernel/accessors.rs 831 invokes reconcile_pending_task_wakes, which reads pending tasks at triggers_and_workflow.rs 799 and dispatches trigger matches at 959."
+  ],
+  "scope": "C05.3 existing delegated task lookup/cancel and F5 retry/resumption obligations; no native A2A rewrite or new unconditional vulnerability claim."
+}

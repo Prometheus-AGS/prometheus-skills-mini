@@ -1,0 +1,55 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "kimi-code",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "skills/delivery-cadence/SKILL.md",
+      "line": 19,
+      "claim": "The unavailable refresh documentation omits the required carried-payload marker `one referenced asset is absent`.",
+      "evidence": "Acceptance criterion 1.2 requires declaring the capability unavailable with exact carried-payload markers `UNAVAILABLE IN THIS PROJECT` and `one referenced asset is absent`; the replacement text in `skills/delivery-cadence/SKILL.md` contains `UNAVAILABLE IN THIS PROJECT` but not `one referenced asset is absent`.",
+      "suggested_fix": "Add the exact marker `one referenced asset is absent` wherever the carried-payload reference must remain, and mirror the fix in regenerated dist payloads."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "skills/delivery-cadence/references/profile.md",
+      "line": 73,
+      "claim": "The rewritten refresh section omits the required carried-payload marker `one referenced asset is absent`.",
+      "evidence": "Acceptance criterion 1.2 requires exact carried-payload markers `UNAVAILABLE IN THIS PROJECT` and `one referenced asset is absent`; the new `## Unavailable capabilities` paragraph includes `UNAVAILABLE IN THIS PROJECT` but not `one referenced asset is absent`.",
+      "suggested_fix": "Include the exact marker `one referenced asset is absent` in the unavailable-capability documentation where the absent refresh asset is described, and regenerate both harness distributions."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/constraints.md",
+      "line": 0,
+      "claim": "The diff does not apply the required `no-hardcoded-secrets` constraint correction to `.kbd-orchestrator/constraints.md`.",
+      "evidence": "Acceptance criterion 4.3 requires correcting exactly the `no-hardcoded-secrets` check expression in `.kbd-orchestrator/constraints.md`; the diff contains new `lib/secret-scan/*` and `scripts/check-hardcoded-secrets.mjs`, but no diff hunk for `.kbd-orchestrator/constraints.md` despite the evidence inventory claiming it was modified.",
+      "suggested_fix": "Add the `.kbd-orchestrator/constraints.md` hunk changing the check to `node scripts/check-hardcoded-secrets.mjs` and updating the stale note."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "lib/secret-scan/scanner.mjs",
+      "line": 133,
+      "claim": "Dispositions are not bound to the required location, so moving an accepted secret-shaped occurrence within the same file still passes.",
+      "evidence": "The spec requires each disposition to be bound to `file, field-or-line, the receipt's per-occurrence sha256 and class`; `adjudicate` matches only `entry.file === hit.file && entry.kind === hit.kind && entry.sha256 === hit.digest`, while `line` is documented as informational and no JSON pointer/field is stored or compared.",
+      "suggested_fix": "Store and compare the receipted location (line for text hits and JSON pointer/field for parsed key/value hits) in `dispositions.json` and `adjudicate`."
+    },
+    {
+      "severity": "WARNING",
+      "file": "lib/platform/openspec/state.mjs",
+      "line": 8,
+      "claim": "The default OpenSpec cache path changed from `.prometheus/openspec` under the home directory to whatever `stateDir('openspec')` returns, without evidence that this preserves the prior default.",
+      "evidence": "Acceptance criterion 2.3 says `lib/platform/openspec/state.mjs` should use a `homeDir default` while preserving override precedence; the old code used `path.join(os.homedir(), '.prometheus', 'openspec')`, but the new code uses `stateDir('openspec')`.",
+      "suggested_fix": "Use the platform helper in a way that preserves the exact old default, e.g. `path.join(homeDir(), '.prometheus', 'openspec')`, unless `stateDir('openspec')` is proven to be identical in the diff."
+    }
+  ]
+}

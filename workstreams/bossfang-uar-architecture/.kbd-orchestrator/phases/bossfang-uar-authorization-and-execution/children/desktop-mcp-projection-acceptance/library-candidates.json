@@ -1,0 +1,149 @@
+{
+  "phase": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+  "generated_at": "2026-10-07T07:25:53.274Z",
+  "research_budget": {
+    "max_queries_per_tier": 8,
+    "max_minutes": 20,
+    "queries_used": {
+      "tier1": 3,
+      "tier2": 6,
+      "tier3": 1,
+      "tier4": 3
+    }
+  },
+  "gaps_addressed": [
+    "F1-eager-only-provider",
+    "F2-discovery-result-misclassification",
+    "F3-failed-attempt-cause-unobserved",
+    "F4-complete-desktop-acceptance",
+    "F5-native-host-terminal-contract"
+  ],
+  "candidates": [
+    {
+      "id": "cand-001",
+      "name": "Existing controlled Chat Completions provider and UAR native discovery",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "adapt",
+      "fit_for_gap": "F1/F2: return discovery and target proposals as distinct model responses; correlate their actual call IDs and reply IDs.",
+      "evidence": [
+        {
+          "tier": 2,
+          "source_url": "https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create",
+          "claim": "Official API documents assistant tool_calls; Context7 retrieval did not establish tool-result correlation."
+        },
+        {
+          "tier": 4,
+          "source_url": "https://developers.openai.com/api/docs/guides/function-calling",
+          "claim": "Official Chat example pairs tool results by tool_call_id and sends continuation history. Local UAR serialization must independently confirm this contract."
+        }
+      ],
+      "risks": [
+        "Historical runtime12 initial advertisement and provider branch were not recorded; specific cause remains unknown.",
+        "Source-only feasibility does not constitute desktop runtime acceptance."
+      ],
+      "decision_rationale": "Keep UAR the single authoritative harness. Adapt the acceptance provider rather than adopt a second runtime or new dependency."
+    },
+    {
+      "id": "cand-002",
+      "name": "Pinned MCP TypeScript SDK 1.27.1 and existing local fixture",
+      "kind": "library",
+      "repo_url": "https://github.com/modelcontextprotocol/typescript-sdk",
+      "registry": "npm",
+      "license": "MIT",
+      "verdict": "reference",
+      "fit_for_gap": "F4: deterministic ordinary tools/list catalog profiles and strict target-name tools/call dispatch within the already used fixture.",
+      "maintenance": {
+        "last_release": "2026-02-24T21:56:51.019Z"
+      },
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/modelcontextprotocol/typescript-sdk",
+          "claim": "GitHub search found the official repository; repository update time is not package publication time."
+        },
+        {
+          "tier": 2,
+          "source_url": "https://github.com/modelcontextprotocol/typescript-sdk/blob/main/docs/advanced/low-level-server.md",
+          "claim": "Context7 returned current split-package APIs; they are reference only, not pinned 1.27.1 implementation instructions."
+        },
+        {
+          "tier": 3,
+          "source_url": "https://www.npmjs.com/package/@modelcontextprotocol/sdk/v/1.27.1",
+          "claim": "npm view confirmed declared pinned version1.27.1, MIT license, official repository and publication timestamp without installation."
+        },
+        {
+          "tier": 4,
+          "source_url": "https://github.com/modelcontextprotocol/typescript-sdk/blob/v1.27.1/src/server/mcp.ts",
+          "claim": "Exact version source link resolves; existing original Boss installation at1.27.1 provides reference-only descriptor/name dispatch evidence."
+        }
+      ],
+      "risks": [
+        "Isolated Boss node_modules is absent; original installation is not acceptance evidence for this worktree.",
+        "Current SDK documentation uses different package imports; no upgrade or port is selected."
+      ],
+      "decision_rationale": "Keep existing dependency pin and imports. Use the current fixture's low-level handler surface; add no library."
+    },
+    {
+      "id": "cand-003",
+      "name": "OpenAI official Node SDK and generic autonomous tool runner",
+      "kind": "library",
+      "repo_url": "https://github.com/openai/openai-node",
+      "registry": "npm",
+      "license": "Apache-2.0",
+      "verdict": "reference",
+      "fit_for_gap": "F2: understand message correlation; no need to install a client SDK in an HTTP model-response fixture.",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/openai/openai-node",
+          "claim": "GitHub search identified the official repository and Apache-2.0 license."
+        },
+        {
+          "tier": 4,
+          "source_url": "https://developers.openai.com/api/docs/guides/function-calling",
+          "claim": "The documented tool-call/result message shape is sufficient guidance; executing tools remains the application's responsibility."
+        }
+      ],
+      "risks": [
+        "Adopting an autonomous runner inside the fixture would create a second tool-execution owner and bypass existing host evidence."
+      ],
+      "decision_rationale": "Reference message shape only; reject runtime/tool-runner adoption and SDK dependency addition."
+    },
+    {
+      "id": "cand-004",
+      "name": "Force eager target exposure or weaken positive assertions",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "reject",
+      "fit_for_gap": "F1/F4 alternative: avoid discovery by changing production exposure or skipping actual target effects.",
+      "evidence": [
+        {
+          "tier": 2,
+          "claim": "Inspected local exposure.rs79–128 and orchestrator1754–1786 define eligible deferred visibility and next-step selection; these are local source contracts, not external protocol requirements."
+        }
+      ],
+      "risks": [
+        "Would remove the observed acceptance coverage requirement and conceal discovery continuation failure."
+      ],
+      "decision_rationale": "Use fixture catalog profiles under normal selected-server policy; preserve cap32, approval ask and actual original effect/redaction assertions."
+    }
+  ],
+  "build_required": [
+    {
+      "need": "Fixture-only correlated discovery continuation and finite branch counters",
+      "why_no_candidate": "The application-specific acceptance provider already exists; general SDK runners would replace the required UAR ownership rather than satisfy it.",
+      "capability_gap_id": "F1/F2/F3"
+    },
+    {
+      "need": "Deterministic eager/deferred catalogs and completed real-path desktop gate",
+      "why_no_candidate": "Only the existing application catalog, captured run and credential-echoing mounted receiver can establish this integration's authority and side effects.",
+      "capability_gap_id": "F4"
+    },
+    {
+      "need": "Bound native execution claim before local dispatch and terminal receipt",
+      "why_no_candidate": "Existing Boss host requires claimed terminal state but only its MCP receiver moves an admission to claimed. Generic SDK runners or permissive finish would bypass this actual authorization boundary.",
+      "capability_gap_id": "F5-native-host-terminal-contract"
+    }
+  ]
+}

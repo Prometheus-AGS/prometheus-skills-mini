@@ -1,0 +1,117 @@
+//! Memory subsystem for the LibreFang Agent Operating System.
+//!
+//! ## Storage backends
+//!
+//! Two backend families are available, selected at compile time via Cargo features:
+//!
+//! ### SurrealDB (default — `surreal-backend` feature)
+//!
+//! All production-grade backends use SurrealDB 3.0 with HNSW vector indexes,
+//! BM25 full-text search, and parameterised SurrealQL queries.  The concrete
+//! types are:
+//!
+//! | Backend | Type |
+//! |---|---|
+//! | Semantic / vector search | [`SurrealSemanticBackend`] (HNSW v5 + BM25 hybrid) |
+//! | Agent registry | `SurrealMemoryBackend` |
+//! | Sessions | `SurrealSessionBackend` |
+//! | Key-value store | `SurrealKvBackend` |
+//! | Task queue | `SurrealTaskBackend` |
+//! | Proactive memory | `SurrealProactiveMemoryBackend` |
+//! | Prompt management | `SurrealPromptStore` |
+//! | Device pairing | `SurrealDeviceStore` |
+//! | Usage metering | `SurrealUsageStore` |
+//! | Knowledge graph | `SurrealKnowledgeBackend` |
+//!
+//! ### SQLite (upstream compatibility — `sqlite-backend` feature)
+//!
+//! [`MemorySubstrate`] provides the legacy monolithic SQLite implementation.
+//! All backend traits are implemented for it so existing code continues to
+//! compile unchanged when only the `sqlite-backend` feature is active.
+//!
+//! ## Proactive Memory (mem0-style API)
+//!
+//! - `ProactiveMemory`: Unified API (search, add, get, list)
+//! - `ProactiveMemoryHooks`: Auto-memorize and auto-retrieve hooks
+//! - `ProactiveMemoryStore`: Implementation on top of MemorySubstrate
+
+pub mod agent_tables;
+pub mod channel_binding_store;
+pub mod chunker;
+pub mod consolidation;
+pub mod decay;
+pub mod ephemeral_run_store;
+pub mod goal_run_store;
+pub mod http_vector_store;
+pub mod idempotency;
+pub mod knowledge;
+pub mod mcp_config_store;
+pub mod migration;
+pub mod namespace_acl;
+pub mod passkey_store;
+pub mod proactive;
+pub mod prompt;
+pub mod roster_store;
+pub mod semantic;
+pub mod session;
+pub mod structured;
+pub mod template_version_store;
+pub mod usage;
+pub mod workflow_store;
+
+mod backend;
+pub mod backends;
+mod session_store;
+mod substrate;
+pub use backend::{
+    DeviceBackend, KnowledgeBackend, KvBackend, MemoryBackend, ProactiveMemoryBackend,
+    PromptBackend, SemanticBackend, SessionBackend, TaskBackend, UsageBackend,
+};
+#[cfg(feature = "surreal-backend")]
+pub use backends::open_shared_memory_storage;
+#[cfg(feature = "surreal-backend")]
+pub use backends::SurrealDeviceStore;
+#[cfg(feature = "surreal-backend")]
+pub use backends::SurrealKnowledgeBackend;
+#[cfg(feature = "surreal-backend")]
+pub use backends::SurrealKvBackend;
+#[cfg(feature = "surreal-backend")]
+pub use backends::SurrealMemoryBackend;
+#[cfg(feature = "surreal-backend")]
+pub use backends::SurrealProactiveMemoryBackend;
+#[cfg(feature = "surreal-backend")]
+pub use backends::SurrealPromptStore;
+#[cfg(feature = "surreal-backend")]
+pub use backends::SurrealSemanticBackend;
+#[cfg(feature = "surreal-backend")]
+pub use backends::SurrealSessionBackend;
+#[cfg(feature = "surreal-backend")]
+pub use backends::SurrealTaskBackend;
+#[cfg(feature = "surreal-backend")]
+pub use backends::SurrealUsageStore;
+pub use channel_binding_store::ChannelBindingStore;
+pub use ephemeral_run_store::{EphemeralRunRollup, EphemeralRunRow, EphemeralRunStore};
+pub use goal_run_store::{GoalRunRow, GoalRunStore};
+pub use mcp_config_store::McpConfigStore;
+pub use passkey_store::{PasskeyRecord, PasskeyStore, PasskeyStoreError, SqlitePasskeyStore};
+pub use session_store::SessionStore;
+pub use substrate::{MemorySubstrate, TaskQueueCaps};
+pub use substrate::task_dispatch;
+pub use template_version_store::{TemplateVersionRow, TemplateVersionStore};
+pub use workflow_store::{WorkflowRunRow, WorkflowStore};
+
+// Re-export types for convenience
+pub use librefang_types::memory::{
+    ExtractionResult, MemoryAction, MemoryAddResult, MemoryFilter, MemoryFragment, MemoryId,
+    MemoryItem, MemoryLevel, MemorySource, ProactiveMemory, ProactiveMemoryConfig,
+    ProactiveMemoryHooks, RelationTriple, VectorSearchResult, VectorStore,
+};
+
+// Re-export proactive memory store
+pub use namespace_acl::{MemoryNamespaceGuard, NamespaceGate};
+pub use proactive::{MemoryExportItem, MemoryStats, ProactiveMemoryStore};
+pub use prompt::PromptStore;
+
+// Re-export vector store implementations
+pub use http_vector_store::HttpVectorStore;
+pub use semantic::SqliteVectorStore;

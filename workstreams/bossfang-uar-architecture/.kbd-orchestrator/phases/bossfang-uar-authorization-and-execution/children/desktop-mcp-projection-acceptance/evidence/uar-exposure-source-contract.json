@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-07T00:27:47.389Z",
+  "source": "Read-only uar_execution team code review",
+  "eagerMcpCap": 32,
+  "discoveryResultsCap": 8,
+  "queryUnicodeCap": 512,
+  "initialVisibility": "Frozen per step; eligible descriptors outside eager cap deferred",
+  "searchContract": "search_tools({query}) selects deferred authorized descriptors for next step; never tool execution",
+  "refs": [
+    "src/mcp/exposure.rs:9,79-128,139-192",
+    "src/uar/runtime/native_skills/search_tools.rs:47-55,83-92",
+    "src/llm/orchestrator.rs:1572,1754-1786"
+  ],
+  "hashes": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-uar/src/mcp/exposure.rs",
+      "sha256": "39820217a83ff97472f2828f83de26ce8a09b12043b1cd927c8ec46a86c62c36"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-uar/src/uar/runtime/native_skills/search_tools.rs",
+      "sha256": "29753bf07b131960667e9fe1d3ae2610bd6fcb9f97fd7f57a7e5769b814f5b97"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-uar/src/llm/orchestrator.rs",
+      "sha256": "dc5a76e4e39e96a26bc9100bd7a0971ef027f825918ca3366537d27631de4021"
+    }
+  ],
+  "runtime12CauseProven": false,
+  "mutations": false,
+  "builds": false,
+  "tests": false
+}

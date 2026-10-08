@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-06T17:05:43.082Z",
+  "status": "eligible-production-and-scenario-source-complete",
+  "phase": "bossfang-uar-authorization-and-execution",
+  "sourceExits": [
+    "identity",
+    "strict approval owned callers",
+    "full-harness lifecycle and views",
+    "resource grants/stdio/projection",
+    "empty defaults",
+    "MCP authentication attribution"
+  ],
+  "sourceSnapshots": [
+    "identity-scenario-handoff",
+    "projection-handoff",
+    "receipt-scenario-handoff",
+    "boss-revision-handoff",
+    "task6-schema-handoff",
+    "task6-feature-handoff",
+    "task7-views-handoff",
+    "harness-fixture-handoff",
+    "mcp-production-handoff",
+    "mcp-scenario-handoff"
+  ],
+  "ineligibleException": "D0 rejected and conditional correction unchanged, no retry; excluded from gate selection",
+  "testsRun": [],
+  "gates": "Eligible cumulative final acceptance may begin. No certification implied."
+}

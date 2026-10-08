@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "label": "bossfang-owned-libraries-clippy-03",
+  "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "command": "cargo",
+  "args": [
+    "clippy",
+    "--offline",
+    "--locked",
+    "-p",
+    "librefang-api",
+    "-p",
+    "librefang-kernel",
+    "-p",
+    "librefang-runtime",
+    "-p",
+    "librefang-memory",
+    "-p",
+    "librefang-types",
+    "-p",
+    "librefang-llm-drivers",
+    "--lib",
+    "--features",
+    "librefang-api/uar-driver",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "startedAt": "2026-10-06T22:35:41.689Z",
+  "finishedAt": "2026-10-06T22:36:17.019Z",
+  "exitCode": 101,
+  "signal": null,
+  "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-owned-libraries-clippy-03.log",
+  "result": "failed",
+  "buildEnvironment": {
+    "SKIP_DASHBOARD_BUILD": "1"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "label": "bossfang-kernel-stage-compile-15",
+  "cwd": "/Users/gqadonis/.claude/worktrees/bauar-bossfang",
+  "command": "cargo",
+  "args": [
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "librefang-kernel",
+    "--features",
+    "librefang-kernel/uar-driver",
+    "--test",
+    "bauar_harness_delegation",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "startedAt": "2026-10-06T22:13:24.401Z",
+  "finishedAt": "2026-10-06T22:16:06.470Z",
+  "exitCode": 0,
+  "signal": null,
+  "log": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/final-gates/bossfang-kernel-stage-compile-15.log",
+  "result": "command-completed-not-yet-case-certified",
+  "buildEnvironment": {
+    "SKIP_DASHBOARD_BUILD": "1"
+  }
+}

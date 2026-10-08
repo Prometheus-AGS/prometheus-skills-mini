@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-08T10:36:00Z",
+  "completedAt": "2026-10-08T10:36:28Z",
+  "argv": [
+    "node",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/scripts/adversarial-review/dispatch-judge.mjs",
+    "--mode",
+    "artifact",
+    "--packet",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/mini-pack-qa-remediation/review/spec/packet-r2.json",
+    "--out",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/mini-pack-qa-remediation/review/spec/findings-r2.json"
+  ],
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "stderr": "[judge] WARN: review independence is degraded: producer-identity-unknown\n[MODEL_ROUTING] phase=adv-review-judge class=frontier model=gpt-6.1-sol producer=kimi-code\n[judge] wrote findings-r2.json\n",
+  "packetSha256": "3791c2a9e0504a51f3d3af2a94fa1fcb28ca5353c7ca1d5326b4fd209f931c57",
+  "packetBytes": 82568,
+  "findingsSha256": "35ce347f934e42da8f8354920d35cebf6b2a5b7ccaf8f958ddba19c6f30c25be",
+  "findingsWritten": true,
+  "note": "Round 2 (final permitted). Packet rebuilt after round-1 revisions with an unchanged assembler and a 60000-byte field cap so no field was truncated."
+}

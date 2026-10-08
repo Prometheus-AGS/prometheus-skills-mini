@@ -1,0 +1,127 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "MiniMax-M3",
+  "judge_identity": {
+    "providerId": "minimax",
+    "providerConnectionId": "minimax-direct",
+    "modelId": "MiniMax-M3"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "claim": "Scope expansion: the native host lifecycle contract work adds a production-path correction beyond the 'smallest justified correction to the controlled provider fixture or production path' framed in goals.md",
+      "evidence": "analysis.md 'Effective Ask also requires an approval for the native read-only search' and 'Spec must define a native execution claim bound to the same prepared invocation' introduce a contract correction to the Boss host (UarHostToolAdmission.ts) and the UAR orchestrator (orchestrator.rs 474–581). The analysis explicitly states 'Because the native lifecycle correction changes product behavior, Plan must include its actual native admission/approval/claim/finish integration and a freshly built affected desktop payload' — this is a production rebuild scope. goals.md Goal 2 says 'smallest justified correction' and the exclusions list 'release/package bypass' among other things. The expansion is acknowledged but not formally reconciled against the goal framing, and the analyze defers the contract specifics entirely to Spec ('Spec must define the wire/caller cutover and failed-claim cleanup').",
+      "file": "analysis.md"
+    },
+    {
+      "severity": "WARNING",
+      "claim": "'No scored stack contest or stack-recommendation artifact is required'",
+      "evidence": "analysis.md contains the sentence verbatim. The same stage produces library-candidates.json with adopt/adapt/reference/reject verdicts for four candidates — the schema is literally titled 'KBD Analyze stage — library candidates' and the description says it is 'The machine contract the Spec and Plan stages read: which existing libraries/frameworks/skeletons fit each assessment gap, with adopt/adapt/reference/reject verdicts'. The artifact is required by the kbd-analyze skill, not optional. The analysis rhetoric dismisses a thing the same analysis emits.",
+      "file": "analysis.md"
+    },
+    {
+      "severity": "WARNING",
+      "claim": "Numerical invariants 'cap32, result limit8, 32 distinct eligible descriptors that sort before read_projection'",
+      "evidence": "analysis.md asserts 'Keep the cap32, result limit8, Hidden behavior and next-step promotion unchanged' and 'the same selected server advertises32 distinct eligible descriptors that sort before read_projection, plus the target'. Neither value is cited to a specific source line in the provided excerpts; only the goals.md abstract 'Preserve existing authorization, discovery limits' is invoked. The source contract receipt is referenced but not reproduced in this packet, so the supporting evidence for the specific numbers cannot be inspected.",
+      "file": "analysis.md"
+    },
+    {
+      "severity": "WARNING",
+      "claim": "Distinction between 'isolated Boss worktree' and 'original Boss installation' is undefined",
+      "evidence": "inspectable_evidence.scope sets `isolatedBossNodeModulesPresent: false` for the /Users/gqadonis/.claude/worktrees/bauar-boss root, and analysis.md says 'The isolated Boss node_modules directory is absent. Restore its existing locked dependency installation in Execute before any required compiler/runtime gate; do not use the original checkout's installation as source-bound acceptance.' Meanwhile cand-002 evidence[3] claims 'existing original Boss installation at1.27.1 provides reference-only descriptor/name dispatch evidence' and analysis.md states 'npm metadata confirms1.27.1, MIT, and publication2026-02-24'. The analysis never names where that 'existing original Boss installation' lives, leaving it ambiguous whether the reference dispatch evidence comes from a different machine, a different path, or a deleted checkout.",
+      "file": "analysis.md, library-candidates.json"
+    },
+    {
+      "severity": "WARNING",
+      "claim": "Native claim contract is named as a gap but the feasible contract is not specified",
+      "evidence": "analysis.md 'Recommend a strict UAR-resolved execution kind bound into invocation authority and receipt equality, plus a distinct consuming native claim after existing revalidation and before execute_native.' The recommendation lists principles but defers ID format, persistence key, ordering vs. revalidate, cleanup-on-claim-failure behavior, and the wire/caller cutover to Spec. The source contract flags `trustedExecutionKindInCurrentPreparedContract: false`, but the analyze does not enumerate a default that Spec can adopt or reject — it only enumerates what Spec must decide. This widens the Spec scope without bounding it.",
+      "file": "analysis.md"
+    },
+    {
+      "severity": "WARNING",
+      "claim": "Acceptance scope widens from 'rerun the failed real desktop projection gate' to also include 'freshly built affected desktop payload'",
+      "evidence": "analysis.md: 'Plan must include its actual native admission/approval/claim/finish integration and a freshly built affected desktop payload, plus the unchanged MCP rejection/claim-before-effect oracle. The older bundle cannot certify the changed host contract.' goals.md Goal 3 is 'Complete the failed projection gate once after the complete correction, rerunning only failures as needed; bind results to exact sources, native payload and desktop bundle.' The goal's 'native payload' phrasing is ambiguous in isolation, but the goal exclusions list 'no original shipping-checkout changes, release/package bypass', and the analyze does not request a goal amendment before introducing a fresh desktop payload requirement.",
+      "file": "analysis.md"
+    },
+    {
+      "severity": "SUGGESTION",
+      "claim": "Provider branch citation range is narrower than the relevant block",
+      "evidence": "analysis.md cites 'provider branches at133–147'. The source excerpt '133' through '156' includes lines 149–156 that emit two benign reasoning deltas plus the stop chunk — these are part of the same request handler. The narrower range omits the benign-reasoning emission, which is the same code path that the gate's reasoning_content tolerance relies on. The citation should either cover 133–156 or be split into the tool-mode branch (133–148) and the benign-reasoning emission (149–156) so the static finding's scope matches the code.",
+      "file": "analysis.md"
+    },
+    {
+      "severity": "SUGGESTION",
+      "claim": "Typo 'not216' in inventory summary",
+      "evidence": "analysis.md: 'These are existing uncommitted implementation surfaces, not216 child changes.' The 'not' and '216' are concatenated. Should read 'not 216 child changes' or 'not two-one-six child changes' or 'no 2/16 child changes'.",
+      "file": "analysis.md"
+    },
+    {
+      "severity": "SUGGESTION",
+      "claim": "Filler-handler behavior cited to fixture line 24 but excerpt not provided",
+      "evidence": "analysis.md: 'The current generic tools/call handler does not distinguish request.params.name, so adding descriptors alone would corrupt the effect oracle.' cites [MCP fixture](/Users/gqadonis/.claude/worktrees/bauar-boss/scripts/gates/bauar-secret-projection-mcp.ts:24) but the inspectable_evidence.sourceContract.refs only list the file path without an included excerpt, unlike the four other cited files. The reviewer cannot verify the claim without re-opening the file or trusting it.",
+      "file": "analysis.md"
+    },
+    {
+      "severity": "SUGGESTION",
+      "claim": "Eager vs deferred preparation/approval counts are stated but not traced to specific code paths",
+      "evidence": "sourceContract has `expectedDeferredTotalPreparations: 2`, `expectedDeferredExactApprovalDecisions: 2`, `expectedTargetPreparations: 1`, `expectedTargetEffects: 1`, `trustedExecutionKindInCurrentPreparedContract: false`. analysis.md restates the two-preparation expansion but does not map each preparation to a specific orchestrator call site (e.g., prepare_host vs. claim vs. finish in orchestrator.rs 474–581) or to which UarHostToolAdmission.ts method each one drives. Without that mapping, Spec cannot verify the counter placement.",
+      "file": "analysis.md, inspectable_evidence.sourceContract"
+    },
+    {
+      "severity": "SUGGESTION",
+      "claim": "cand-001 evidence[0] claim is a methodology note, not a substantive finding",
+      "evidence": "library-candidates.json cand-001 evidence[0] is tier 2, source_url 'https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create', claim 'Official API documents assistant tool_calls; Context7 retrieval did not establish tool-result correlation.' The negative half ('Context7 retrieval did not establish...') belongs to a methodology/budget entry, not the cand-001 evidence; the positive half is thin. This is consistent with the schema (tier+claim are the only required fields) but the citation strength is low.",
+      "file": "library-candidates.json"
+    },
+    {
+      "severity": "SUGGESTION",
+      "claim": "cand-002 evidence[0] is a methodology note rather than a substantive finding",
+      "evidence": "library-candidates.json cand-002 evidence[0] is tier 1, source_url the main GitHub repo, claim 'GitHub search found the official repository; repository update time is not package publication time.' The second sentence is a methodology reminder, not a library-property finding. The substantive tier 1 evidence (license, current version on main) is absent; the version claim is made at tier 3 (npm) and tier 4 (exact tag).",
+      "file": "library-candidates.json"
+    },
+    {
+      "severity": "SUGGESTION",
+      "claim": "cand-004 evidence has no source_url",
+      "evidence": "library-candidates.json cand-004 evidence[0] has tier 2, claim referencing 'local exposure.rs79–128 and orchestrator1754–1786', but no source_url. The schema allows this (only tier+claim are required), but the only path to verify is the source contract receipt. The cross-reference to source contract paths is implicit, not explicit.",
+      "file": "library-candidates.json"
+    },
+    {
+      "severity": "SUGGESTION",
+      "claim": "Scope check: library-candidates.json is valid against the in-packet schema",
+      "evidence": "All four candidates declare only schema-listed properties; verdicts are in the allowed enum; kinds in the allowed enum; registries in the allowed enum; evidence items have tier (1–4) and claim; build_required items have need+why_no_candidate. The research_budget block has only the three schema-listed properties. No top-level additional properties. The schema itself is JSON Schema 2020-12 draft.",
+      "file": "library-candidates.json"
+    },
+    {
+      "severity": "SUGGESTION",
+      "claim": "Inspectable evidence 'budget' object has many properties that match no defined schema in this packet",
+      "evidence": "inspectable_evidence.budget has startedAt, stoppedAt, durationMinutes, mode, attempts, tier1RemoteSearches, tier4Reason, dependenciesAdded, pinCorrection, newStackDecision. None of these is defined by the library-candidates schema. They are consistent with the assess/scope/source-contract style but no schema is included in the packet. If a separate budget schema exists, this is fine; if not, this is an undocumented extension.",
+      "file": "inspectable_evidence.budget"
+    }
+  ],
+  "checked_classes": [
+    "[object Object]",
+    "[object Object]",
+    "[object Object]",
+    "[object Object]",
+    "[object Object]",
+    "[object Object]",
+    "[object Object]",
+    "[object Object]",
+    "[object Object]",
+    "[object Object]",
+    "[object Object]",
+    "[object Object]",
+    "[object Object]",
+    "[object Object]",
+    "[object Object]"
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

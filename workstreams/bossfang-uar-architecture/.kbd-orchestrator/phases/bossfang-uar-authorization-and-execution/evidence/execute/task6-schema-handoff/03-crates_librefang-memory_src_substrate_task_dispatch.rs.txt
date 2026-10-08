@@ -1,0 +1,294 @@
+//! Persistent collaboration-job harness authority in the existing payload BLOB.
+//! No input/credentials are stored here. SQLite claims do not make A2A writes
+//! atomic; callers reconcile the original private attempt across the two stores.
+use super::MemorySubstrate;
+use librefang_types::{error::{LibreFangError, LibreFangResult}, uar_run::{
+    JobAttemptRef, UarJobAttemptReservation, UarDelegatedRunProjection,
+}};
+use rusqlite::{Connection, OptionalExtension, TransactionBehavior, params};
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct SelectedJobIntent {
+    pub job: JobAttemptRef,
+    pub local_task_id: String,
+    /// Verified local initiating owner; not a remote subject assertion.
+    pub initiating_owner: String,
+    pub workspace_id: String,
+    pub expected_assignee: String,
+}
+
+impl SelectedJobIntent {
+    fn valid(&self) -> bool {
+        self.job.selected_task_id().as_deref() == Some(self.local_task_id.as_str())
+            && !self.initiating_owner.trim().is_empty() && self.initiating_owner != "anonymous"
+            && !self.workspace_id.trim().is_empty() && !self.expected_assignee.trim().is_empty()
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct NativeJobIntent { pub job_id: String, pub original_assignee: String }
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum JobDispatchState {
+    /// Only a pending row with empty legacy payload may acquire a harness.
+    Unclaimed,
+    Native(NativeJobIntent),
+    Selected(SelectedJobIntent),
+    /// Unsupported nonempty payload is never silently recategorized as native.
+    Unknown,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SelectedClaim { Created, Existing, Conflict, Unknown, NotFound }
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SelectedReconcile { Applied, Unchanged, Conflict, Unknown, NotFound }
+
+/// The exact rows newly claimed before one targeted native prompt. Existing
+/// reservations return no rows. These jobs are ALREADY claimed: do not prompt
+/// another unrestricted task_claim to discover the work.
+#[derive(Debug, Clone, Serialize)]
+pub struct ClaimedNativeJob {
+    pub id: String, pub title: String, pub description: String, pub assigned_to: String,
+    pub created_by: String, pub created_at: String, pub claimed_at: String,
+    pub status: &'static str,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct StoredIntent { tag: String, version: u8, intent: Harness }
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(tag = "harness", rename_all = "snake_case", deny_unknown_fields)]
+enum Harness {
+    Native { original: NativeJobIntent },
+    Uar { original: SelectedJobIntent, checkpoint: Option<Checkpoint> },
+}
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct Checkpoint { binding: UarJobAttemptReservation, epoch: String, task: String, run: String, revision: u64, status: String }
+
+fn decode(payload: &[u8], job: &str) -> Option<Harness> {
+    let value: StoredIntent = serde_json::from_slice(payload).ok()?;
+    if value.tag != "bossfang_job_dispatch" || value.version != 1 { return None; }
+    match &value.intent {
+        Harness::Native { original } if original.job_id == job && !job.is_empty() => {}
+        Harness::Uar { original, .. } if original.job.job_id == job && original.valid() => {}
+        _ => return None,
+    }
+    Some(value.intent)
+}
+fn encode(intent: Harness) -> LibreFangResult<Vec<u8>> {
+    serde_json::to_vec(&StoredIntent { tag: "bossfang_job_dispatch".into(), version: 1, intent })
+        .map_err(|_| LibreFangError::Internal("job dispatch encoding failed".into()))
+}
+fn native(payload: &[u8], job: &str) -> bool {
+    payload.is_empty() || matches!(decode(payload, job), Some(Harness::Native { .. }))
+}
+
+/// A typed read plus byte-exact UPDATE/DELETE predicate closes selection races
+/// without evaluating untrusted/unsupported JSON in SQL. Native policy stays
+/// with the caller's existing status/TTL predicate.
+pub(super) fn native_payload(db: &Connection, job: &str) -> LibreFangResult<Option<Vec<u8>>> {
+    let payload: Option<Vec<u8>> = db.query_row("SELECT payload FROM task_queue WHERE id = ?1",
+        [job], |row| row.get(0)).optional().map_err(LibreFangError::memory)?;
+    Ok(payload.filter(|bytes| native(bytes, job)))
+}
+/// Resetting legacy native work must persist its native classification before
+/// making it pending; otherwise a later selection could cross harnesses.
+pub(super) fn native_mutation_payload(db: &Connection, job: &str) -> LibreFangResult<Option<(Vec<u8>, Vec<u8>)>> {
+    let Some(prior) = native_payload(db, job)? else { return Ok(None); };
+    let next = if prior.is_empty() {
+        let assignee = db.query_row("SELECT assigned_to FROM task_queue WHERE id = ?1", [job],
+            |row| row.get::<_, String>(0)).optional().map_err(LibreFangError::memory)?;
+        let Some(assignee) = assignee else { return Ok(None); };
+        encode(Harness::Native { original: NativeJobIntent { job_id: job.into(), original_assignee: assignee } })?
+    } else { prior.clone() };
+    Ok(Some((prior, next)))
+}
+pub(super) fn native_rows(
+    db: &Connection, predicate: &str, values: &[&dyn rusqlite::ToSql],
+) -> LibreFangResult<Vec<(String, Vec<u8>)>> {
+    let mut stmt = db.prepare(&format!("SELECT id, payload FROM task_queue WHERE {predicate}"))
+        .map_err(LibreFangError::memory)?;
+    let rows = stmt.query_map(values, |row| Ok((row.get::<_, String>(0)?, row.get::<_, Vec<u8>>(1)?)))
+        .map_err(LibreFangError::memory)?;
+    let mut result = Vec::new();
+    for row in rows {
+        let (id, payload) = row.map_err(LibreFangError::memory)?;
+        if native(&payload, &id) { result.push((id, payload)); }
+    }
+    Ok(result)
+}
+
+fn claim_native(db: &Connection, job: &str, agent: &str, name: &str) -> LibreFangResult<Option<ClaimedNativeJob>> {
+    let row = db.query_row(
+        "SELECT title, description, created_by, created_at, payload FROM task_queue
+         WHERE id = ?1 AND status = 'pending' AND (assigned_to = ?2 OR assigned_to = ?3 OR assigned_to = '')",
+        params![job, agent, name], |row| Ok((row.get::<_, String>(0)?, row.get::<_, String>(1)?,
+            row.get::<_, String>(2)?, row.get::<_, String>(3)?, row.get::<_, Vec<u8>>(4)?)))
+        .optional().map_err(LibreFangError::memory)?;
+    let Some((title, description, created_by, created_at, payload)) = row else { return Ok(None); };
+    if !native(&payload, job) { return Ok(None); }
+    let intent = if payload.is_empty() {
+        encode(Harness::Native { original: NativeJobIntent { job_id: job.into(), original_assignee: agent.into() } })?
+    } else { payload.clone() };
+    let claimed_at = chrono::Utc::now().to_rfc3339();
+    let changed = db.execute("UPDATE task_queue SET status = 'in_progress', assigned_to = ?2,
+        claimed_at = ?3, payload = ?4 WHERE id = ?1 AND status = 'pending' AND payload = ?5",
+        params![job, agent, claimed_at, intent, payload]).map_err(LibreFangError::memory)?;
+    Ok((changed == 1).then(|| ClaimedNativeJob { id: job.into(), title, description,
+        assigned_to: agent.into(), created_by, created_at, claimed_at, status: "in_progress" }))
+}
+
+impl MemorySubstrate {
+    /// Verified selection producer supplies metadata from the actual stored
+    /// job and app binding. Created authorizes preflight, not execution replay.
+    pub async fn task_claim_selected_intent(&self, intent: SelectedJobIntent) -> LibreFangResult<SelectedClaim> {
+        if !intent.valid() { return Err(LibreFangError::InvalidInput("invalid selected job intent".into())); }
+        let pool = self.pool.clone();
+        tokio::task::spawn_blocking(move || {
+            let mut db = pool.get().map_err(LibreFangError::memory)?;
+            let tx = db.transaction_with_behavior(TransactionBehavior::Immediate).map_err(LibreFangError::memory)?;
+            let row = tx.query_row("SELECT status, assigned_to, payload FROM task_queue WHERE id = ?1",
+                [&intent.job.job_id], |row| Ok((row.get::<_, String>(0)?, row.get::<_, String>(1)?, row.get::<_, Vec<u8>>(2)?)))
+                .optional().map_err(LibreFangError::memory)?;
+            let Some((status, assignee, payload)) = row else { return Ok(SelectedClaim::NotFound); };
+            if !payload.is_empty() {
+                return Ok(match decode(&payload, &intent.job.job_id) {
+                    Some(Harness::Uar { original, .. }) if original == intent => SelectedClaim::Existing,
+                    Some(_) => SelectedClaim::Conflict,
+                    None => SelectedClaim::Unknown,
+                });
+            }
+            if status != "pending" || assignee != intent.expected_assignee { return Ok(SelectedClaim::Conflict); }
+            let payload = encode(Harness::Uar { original: intent.clone(), checkpoint: None })?;
+            let changed = tx.execute("UPDATE task_queue SET payload = ?2, status = 'in_progress', claimed_at = ?3
+                WHERE id = ?1 AND status = 'pending' AND length(payload) = 0 AND assigned_to = ?4",
+                params![intent.job.job_id, payload, chrono::Utc::now().to_rfc3339(), intent.expected_assignee])
+                .map_err(LibreFangError::memory)?;
+            if changed != 1 { return Ok(SelectedClaim::Conflict); }
+            tx.commit().map_err(LibreFangError::memory)?;
+            Ok(SelectedClaim::Created)
+        }).await.map_err(|_| LibreFangError::Internal("selected claim interrupted".into()))?
+    }
+
+    pub async fn task_read_dispatch_intent(&self, job: &str) -> LibreFangResult<Option<JobDispatchState>> {
+        let pool = self.pool.clone(); let job = job.to_owned();
+        tokio::task::spawn_blocking(move || {
+            let db = pool.get().map_err(LibreFangError::memory)?;
+            let row = db.query_row("SELECT status, assigned_to, payload FROM task_queue WHERE id = ?1", [&job],
+                |row| Ok((row.get::<_, String>(0)?, row.get::<_, String>(1)?, row.get::<_, Vec<u8>>(2)?)))
+                .optional().map_err(LibreFangError::memory)?;
+            Ok(row.map(|(status, assignee, bytes)| {
+                if bytes.is_empty() {
+                    if status == "pending" { JobDispatchState::Unclaimed }
+                    else { JobDispatchState::Native(NativeJobIntent { job_id: job.clone(), original_assignee: assignee }) }
+                } else { match decode(&bytes, &job) {
+                    Some(Harness::Native { original }) => JobDispatchState::Native(original),
+                    Some(Harness::Uar { original, .. }) => JobDispatchState::Selected(original),
+                    None => JobDispatchState::Unknown,
+                }}
+            }))
+        }).await.map_err(|_| LibreFangError::Internal("dispatch intent read interrupted".into()))?
+    }
+
+    /// Only newly claimed exact rows permit ONE targeted model wake. A repeated
+    /// call returns no already-in-progress jobs; reset/retry remains native.
+    pub async fn task_claim_native_wake(
+        &self, jobs: &[String], agent: &str, agent_name: Option<&str>,
+    ) -> LibreFangResult<Vec<ClaimedNativeJob>> {
+        self.claim_native_jobs(Some(jobs.to_vec()), agent, agent_name).await
+    }
+
+    pub(super) async fn claim_native_jobs(
+        &self, exact: Option<Vec<String>>, agent: &str, name: Option<&str>,
+    ) -> LibreFangResult<Vec<ClaimedNativeJob>> {
+        if agent.trim().is_empty() { return Err(LibreFangError::InvalidInput("native claimant required".into())); }
+        let pool = self.pool.clone(); let agent = agent.to_owned(); let name = name.unwrap_or("").to_owned();
+        tokio::task::spawn_blocking(move || {
+            let mut db = pool.get().map_err(LibreFangError::memory)?;
+            let tx = db.transaction_with_behavior(TransactionBehavior::Immediate).map_err(LibreFangError::memory)?;
+            let single = exact.is_none();
+            let jobs = match exact { Some(jobs) => jobs, None => {
+                let mut stmt = tx.prepare("SELECT id FROM task_queue WHERE status = 'pending'
+                    AND (assigned_to = ?1 OR assigned_to = ?2 OR assigned_to = '') ORDER BY priority DESC, created_at ASC")
+                    .map_err(LibreFangError::memory)?;
+                let rows = stmt.query_map(params![agent, name], |row| row.get::<_, String>(0)).map_err(LibreFangError::memory)?;
+                rows.collect::<rusqlite::Result<Vec<_>>>().map_err(LibreFangError::memory)?
+            }};
+            let mut claimed = Vec::new();
+            for job in jobs {
+                if let Some(row) = claim_native(&tx, &job, &agent, &name)? {
+                    claimed.push(row);
+                    if single { break; }
+                }
+            }
+            tx.commit().map_err(LibreFangError::memory)?;
+            Ok(claimed)
+        }).await.map_err(|_| LibreFangError::Internal("native claim interrupted".into()))?
+    }
+
+    /// Caller must load these from the ORIGINAL durable A2A relation. Public
+    /// structs do not authenticate themselves. This compares the relation and
+    /// preserves its first observed epoch/run; it never resolves new config.
+    pub async fn task_reconcile_selected_outcome(
+        &self, intent: SelectedJobIntent, reservation: UarJobAttemptReservation,
+        projection: UarDelegatedRunProjection,
+    ) -> LibreFangResult<SelectedReconcile> {
+        if reservation.job != intent.job || reservation.boss_task_id != intent.local_task_id
+            || reservation.verified_subject != intent.initiating_owner || reservation.workspace_id != intent.workspace_id
+            || reservation.harness != "uar" || reservation.verified_tenant.is_some()
+            || projection.boss_task_id != reservation.boss_task_id || projection.verified_principal != reservation.verified_subject
+            || projection.workspace_id != reservation.workspace_id || projection.admission_key != reservation.admission_id
+            || projection.request_digest != reservation.request_digest || projection.definition != reservation.definition
+            || projection.effective_binding.credential_ref != reservation.credential_ref {
+            return Ok(SelectedReconcile::Conflict);
+        }
+        if reservation.runtime_epoch.is_empty() || projection.runtime_epoch.as_deref() != Some(reservation.runtime_epoch.as_str())
+            || matches!(projection.recovery_state.as_str(), "reconciliation_required" | "recovery_unsupported" | "expired") {
+            return Ok(SelectedReconcile::Unknown);
+        }
+        let (Some(task), Some(run)) = (projection.uar_task_id, projection.uar_run_id) else { return Ok(SelectedReconcile::Unknown); };
+        if task.is_empty() || run.is_empty() { return Ok(SelectedReconcile::Unknown); }
+        let status = match projection.execution_state.as_str() {
+            "completed" => "completed", "failed" | "rejected" => "failed", "cancelled" => "cancelled",
+            "submitted" | "working" | "running" | "approval_required" | "approval-required" | "input_required" => "in_progress",
+            _ => return Ok(SelectedReconcile::Unknown),
+        };
+        let next = Checkpoint { epoch: reservation.runtime_epoch.clone(), binding: reservation, task, run, revision: projection.revision, status: status.into() };
+        let pool = self.pool.clone();
+        tokio::task::spawn_blocking(move || {
+            let mut db = pool.get().map_err(LibreFangError::memory)?;
+            let tx = db.transaction_with_behavior(TransactionBehavior::Immediate).map_err(LibreFangError::memory)?;
+            let bytes: Option<Vec<u8>> = tx.query_row("SELECT payload FROM task_queue WHERE id = ?1", [&intent.job.job_id],
+                |row| row.get(0)).optional().map_err(LibreFangError::memory)?;
+            let Some(bytes) = bytes else { return Ok(SelectedReconcile::NotFound); };
+            let Some(Harness::Uar { original, checkpoint }) = decode(&bytes, &intent.job.job_id) else { return Ok(SelectedReconcile::Unknown); };
+            if original != intent { return Ok(SelectedReconcile::Conflict); }
+            if let Some(prior) = checkpoint {
+                if prior.binding != next.binding || prior.epoch != next.epoch || prior.task != next.task || prior.run != next.run { return Ok(SelectedReconcile::Conflict); }
+                if prior == next || prior.revision > next.revision { return Ok(SelectedReconcile::Unchanged); }
+                if (prior.revision == next.revision || prior.status != "in_progress") && prior.status != next.status {
+                    return Ok(SelectedReconcile::Conflict);
+                }
+            }
+            let terminal = next.status != "in_progress";
+            let payload = encode(Harness::Uar { original, checkpoint: Some(next.clone()) })?;
+            let now = chrono::Utc::now();
+            let changed = tx.execute("UPDATE task_queue SET payload = ?2, status = ?3, result = ?4,
+                finished_at = ?5, completed_at = ?6, claimed_at = CASE WHEN ?7 THEN NULL ELSE claimed_at END
+                WHERE id = ?1 AND payload = ?8", params![intent.job.job_id, payload, next.status,
+                    format!("selected_uar_{}", next.status), terminal.then(|| now.timestamp()),
+                    (next.status == "completed").then(|| now.to_rfc3339()), terminal, bytes]).map_err(LibreFangError::memory)?;
+            if changed != 1 { return Ok(SelectedReconcile::Unknown); }
+            tx.commit().map_err(LibreFangError::memory)?;
+            Ok(SelectedReconcile::Applied)
+        }).await.map_err(|_| LibreFangError::Internal("selected outcome reconciliation interrupted".into()))?
+    }
+}
+
+#[cfg(test)]
+#[path = "task_dispatch_tests.rs"]
+mod tests;

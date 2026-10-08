@@ -5,6 +5,8 @@ sidebar_label: Overview
 
 # Agent teams
 
+Use the [canonical team handbook](https://prometheus-ags.github.io/prometheus-skill-system/docs/guide/agent-teams) for the shared lifecycle and native boundaries, and the [mini request reference](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/docs/agent-teams.md#task-lifecycle-request-sequence) for runnable JSON examples with mini's script paths. This page explains mini's entry points and prerequisites; it does not claim live harness or service acceptance.
+
 Start with what you want to finish, not a team size. `agent-team-creator` asks about the outcome,
 scope, deliverables, budget, and need for independent review, then proposes a small editable
 team. One implementer is enough for an isolated change. Add a reviewer or specialist only
@@ -23,6 +25,23 @@ specialist, marketer, or product manager. The guided flow offers a single-agent 
 and reasons for each proposed role. Suggested skill names are discovery leads, not installation
 claims. Assign disjoint write ownership before parallel edits.
 
+## Work at the right level
+
+| Level | What to do |
+| --- | --- |
+| User | State the outcome, authorized scope and constraints. |
+| Project | Preserve the selected team, project instructions and canonical task identities. |
+| Lead | Assign owners and disjoint paths, coordinate dependencies and native dispatch, then reconcile results. |
+| Role | Work within the assignment; return artifacts, evidence, blockers and remaining work. |
+| Harness | Apply its own session, permission, model and delegation controls. |
+| Other project | Have its intake owner accept scope and return a destination task reference. |
+| Service operator | Manage optional endpoints and datasets through their owning installation. |
+
+Lead is a responsibility, not a mandatory extra role. One agent can coordinate
+and implement a small task. For parallel work, supply each worker the absolute
+checkout, owned and protected paths, inputs and expected outputs. See the
+[responsibility guide](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/docs/agent-teams.md#responsibilities-at-every-level).
+
 ## Choose the right skill
 
 | Skill | Responsibility |
@@ -33,8 +52,8 @@ claims. Assign disjoint write ownership before parallel edits.
 | `agent-team-handoff` | Fresh-context packets and explicit destination acceptance |
 
 The four skills share the creator's compiled `.mjs` runtime. It runs on **Node.js >=22** with
-no repository-root runtime dependencies or install step. Source is **TypeScript 7.0.2**; full
-and mini ship the same source and compiled runtime. Copy the whole creator payload when using
+no repository-root runtime dependencies or install step. Source is **TypeScript 7.0.2**.
+Full and mini share the local lifecycle, but card/intake and current memory adapters differ. Copy the whole creator payload when using
 it outside the repository. Native harnesses remain separate tools.
 
 ## Try guided selection
@@ -162,51 +181,115 @@ discovery does not authorize mutation or activation.
 See the [native contract reference](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/skills/agent-team-creator/references/native-harnesses.md)
 for exact formats, primary sources, and supported plugin alternatives.
 
-## Budget and model choice
+## Assign and start bounded work
 
-`low`, `medium`, and `hard` are declared tiers, not inferred rankings. Policy applies in team,
-role, selected-skill, and task order; scalar overrides replace prior values and capabilities
-accumulate. A policy can require tool use and explicit USD-per-million-token input/output
-ceilings. Unknown prices cannot satisfy a ceiling; rate ceilings are not a total spending cap.
+The project discovery manifest `.agent-team/<id>/team.json`, routing record and
+mutable `.agent-teams/<id>.json` ledger are separate schema-version-1 records.
+Import a reviewed portable manifest through `init` or `install-project`;
+there is no universal native-agent import command. UAR draft.2 definitions
+are a separate provider-owned immutable profile.
 
-Discovery reads configured OpenAI-compatible, UAR, or BossFang interfaces and preserves
-provenance. The liter-llm schema-version-1 catalog adapter keeps per-token units explicit.
-Discovery does not prove successful inference, and stale catalog prices do not guarantee
-current rates. Unsupported native per-role model overrides are reported rather than assumed.
+Read `status`, then use `task` with `add` to assign a pending task to an existing
+role. `start` records running status only after task dependencies complete.
+Use `block` with a reason when work cannot continue; restart after resolving it.
+Evidence and explicit remaining work can accompany supported transitions. There
+is no generic `update` action. `cancel` requires a reason; `complete` requires a
+running task, evidence and no remaining work. Both terminal states stay in history.
 
-## Durable tasks and accepted handoffs
+Role dependencies do not automatically become task dependencies. Assign disjoint
+write paths and a separate review task/findings path. Keep review dormant until
+all production work in the phase is complete. Dispatch native workers separately;
+ledger assignment does not launch them and cancellation does not stop them.
 
-Task mutations require current state and task revisions plus the current owner. Dependencies
-must complete before start/completion; complete and cancelled tasks are terminal. Local
-exclusive locks and atomic file replacement coordinate cooperating writers on one filesystem.
-They are not authentication, distributed leases, or Cedar policy enforcement. Do not use NFS
-or shared multi-machine writes; crashed locks require verified manual recovery.
+Local `reassign` is administrative and immediate. A context-bearing handoff needs
+explicit destination acceptance. UAR's draft.2 `taskAcceptance` policy is a third
+boundary: coordinator mode permits an empty workflow list, while operator mode
+requires workflow references. It adds no local `task-accept` command or execution guarantee.
+Read the [direct coordinator acceptance contract](https://prometheus-ags.github.io/prometheus-skill-system/docs/guide/agent-teams#uar-direct-coordinator-acceptance)
+before using that schema; `uar-activate` still refuses activation.
 
-A handoff includes context, evidence, remaining work, memory references, and actual Git
-HEAD/branch/dirty information. Unknown values remain unknown, and a snapshot does not copy
-untracked work. Creation does not transfer ownership. The targeted destination explicitly
-accepts; the ownership change and receipt commit together. A stale/reassigned/cancelled task
-cannot be reclaimed by an old packet. A repeated acceptance is idempotent only while the
-accepted task is unchanged and the caller supplies the current state revision.
+Follow the [mini lifecycle request sequence](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/docs/agent-teams.md#task-lifecycle-request-sequence)
+for exact state/task revisions, canonical identity fields and recovery.
 
-The destination opens a fresh native context. Source credentials, sessions, approvals, and
-sandbox permissions do not transfer. Stop source edits and make artifacts reachable before
-the destination starts work. See the [task/handoff request reference](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/skills/agent-team-creator/references/task-handoff.md)
-for exact JSON examples and recovery steps.
+## Model policy budget and native controls
 
-KBD-linked completion uses a real canonical CLI and verifies project/run/phase/change/task
-identity. Local task events do not fabricate KBD boundaries or trigger arbitrary Karpathy
-hooks. Canonical KBD and local team state are separate stores; interruptions may need status
-checks and reconciliation rather than blind retries.
+Use the [canonical model handbook](https://prometheus-ags.github.io/prometheus-skill-system/docs/guide/agent-teams#choose-a-model-for-the-task)
+and [mini executable model requests](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/docs/agent-teams.md#model-discovery-selection-and-persistence)
+for discovery, effective policy and persistence. Record concrete canonical
+assignments through [task model assignments](/docs/kbd/task-model-assignments).
 
-## Optional memory and honest validation
+KBD chooses task fit first within owner policy; the helper filters declared
+constraints then sorts eligible models by known price sum. Team → role → ordered
+skill → task layers override scalars and accumulate capabilities. Unknown prices
+cannot satisfy ceilings; stale rates do not guarantee a whole-task budget.
+Reasoning effort/context/fallback are native/plan requirements, not portable
+policy fields. Selection/export does not switch a worker or prove inference.
 
-Shared memory uses a local outbox and explicit provenance/scope. Configured remote publication
-can fail without losing the queued entry; uncertain outcomes require reconciliation before
-retry. Memory is optional, and `pk` remains the sole knowledge-bundle writer. No new resident
-service is added beyond mini's existing surreal-memory and liter-llm integrations. Local
-team operations work without them; remote publication and live discovery need their endpoints.
+Current native controls differ: Codex model/effort depends on exposed role/tool
+settings; Claude alias/provider settings can change the observed model; OpenCode
+uses configured provider/model variants; Kimi ignores model frontmatter and
+DeepSeek export has no per-member model control. Record the actual route and
+leave missing controls unresolved. liter-llm supplies inference, not a worker.
+No automatic fallback is implemented. Different-family KBD QA needs actual
+producer/critic identity evidence, not another same-family alias or effort.
 
-Source-linked exports do not certify native CLI acceptance, service authentication, or Windows
-execution. Those require separate live evidence. Project installation writes native definitions
-and discovery instructions; it does not launch, activate or authorize native execution.
+## Communicate and accept a handoff
+
+Use an authorized native message for questions, progress, blockers or decisions.
+Name the task and recipient, include reachable artifacts and state the requested
+action. Mini has no generic messaging CLI or background inbox; messages do not
+mutate its ledger. Use a context handoff when another owner or harness must
+continue work, and coordinate stopping the source worker explicitly.
+
+Use the [two-role mini request sequence](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/docs/agent-teams.md#two-role-handoff-request-sequence)
+from team creation to dependent review task, Codex-to-Claude context transfer,
+destination acceptance, start and actual completion evidence. Current revisions
+and the generated packet ID are required; source task changes make a packet
+stale. Native dispatch, reachable artifacts and stopping source work remain
+separate actions. Messages, administrative reassignment and acceptance receipts
+do not complete tasks or transfer native permissions.
+
+Mini does not ship full's team-card/discovery/request/intake commands. Use an
+explicitly authorized native/file/issue channel for another project, name source
+and target repository/project/team/role, and retain correlation plus owner
+acknowledgement. The destination triages and creates its own local/canonical
+assignment. A request or issue is not accepted work, and local handoff does not
+transfer a task's ownership between repositories. Read the
+[canonical communication and intake boundaries](https://prometheus-ags.github.io/prometheus-skill-system/docs/guide/agent-teams#communicate-within-the-team)
+and [mini cross-project procedure](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/docs/agent-teams.md#coordinate-with-another-project).
+
+## Scoped memory and delivery limits
+
+Mini's Node-only Claude SubagentStart recalls its role-local `MEMORY.md` and
+digest files under an 8,000-character untrusted fence. It does not ship full's
+Python writer, scoped remote role recall, Codex digest SessionStart or Cortex
+feeder. Read the [canonical memory tiers](https://prometheus-ags.github.io/prometheus-skill-system/docs/guide/memory-tiers)
+for the full pipeline and [mini's actual memory contract](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/docs/agent-teams.md#optional-shared-memory-and-verification-limits)
+for its reduced delivery and outbox.
+
+Keep private lesson text out of shared parent forks and portable handoffs;
+review digest metadata too. Scope labels are routing data, not proof of server
+access control. Memory references convey no authorization. Optional remote
+outbox publication needs an explicit endpoint/mapping and durable receipts;
+uncertain results require reconciliation before retry. Mini's corrected outbox source normalizes canonical memory routing, derives
+scopes and requires an explicit/selected project identity. Missing identity queues
+without network I/O; legacy attempted receipts need deliberate reconciliation.
+Compiled regeneration and actual service acceptance remain deferred. Source examples do not certify installed delivery.
+
+Mini adds no resident services beyond optional surreal-memory and liter-llm.
+Local handoffs work without them. Export/install prepare definitions and discovery;
+they do not launch workers, activate teams or grant native permissions.
+
+## Troubleshooting and ownership
+
+For ambiguous teams, revision conflicts, blocked dependencies, stale packets,
+unavailable model controls and queued memory, follow the
+[ownership troubleshooting table](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/docs/agent-teams.md#troubleshoot-the-ownership-boundary).
+Read current project and task records before retrying an operation. A stopped
+native worker, cancelled task, accepted handoff and completed task are separate
+states and must be reconciled explicitly.
+
+Use [services and recovery](/docs/services/docker-services) for service owners
+and [the full/mini comparison](/docs/reference/comparison-with-full-pack) before
+following a full-pack procedure. Full's Rust/native tools and shared-memory
+pipeline are not installed by copying mini skills.

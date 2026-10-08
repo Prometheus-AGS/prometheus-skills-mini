@@ -14,13 +14,17 @@ const check = process.argv.includes('--check');
 
 try {
   const contract = readSkillSystem(sourceRoot);
-  const { skills, drift } = generateDistribution(sourceRoot, contract, { check });
+  const { skills, drift, modeVerification } = generateDistribution(sourceRoot, contract, { check });
+  const comparison = modeVerification.supported ? 'bytes and POSIX modes' : 'bytes and entry kinds';
+  if (!modeVerification.supported) {
+    console.error(`POSIX mode verification unavailable: ${modeVerification.reason}.`);
+  }
   if (check) {
     if (drift.length > 0) {
-      console.error(`Generated output is stale:\n${drift.map((entry) => `  - ${entry}`).join('\n')}`);
+      console.error(`Generated output is stale (${comparison}):\n${drift.map((entry) => `  - ${entry}`).join('\n')}`);
       process.exitCode = 1;
     } else {
-      console.log(`OK: ${skills.length} skill(s), no drift.`);
+      console.log(`OK: ${skills.length} skill(s), no drift in ${comparison}.`);
     }
   } else {
     console.log(`Generated ${skills.length} skill(s) for Claude and Codex.`);

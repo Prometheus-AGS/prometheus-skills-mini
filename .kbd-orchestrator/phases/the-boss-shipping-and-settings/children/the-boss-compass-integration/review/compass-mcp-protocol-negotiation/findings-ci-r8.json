@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "Spec violations — the scoped diff only updates the stale affected-query integration expectation, matching the acceptance note that production behavior already emits `NO EXACT MATCH` for absent targets.",
+    "Correctness — the assertion still exercises the same absent-target path and preserves a diagnostic containment check; no logic path is removed beyond the obsolete expected substring.",
+    "Regressions — no production code or public behavior is changed, and the test continues to assert that absent affected-query resolution emits an error diagnostic.",
+    "Security — the diff modifies only a test assertion string and introduces no new input handling, network, credential, path, subprocess, or serialization boundary.",
+    "Constraint breaches — the diff introduces no unsafe code, unwrap/expect/panic usage, dependencies, generated artifacts, product-boundary references, or nondeterministic data structures.",
+    "Silent failure — the assertion remains an active `assert!` on the result of `format_affected`, so the absent-target diagnostic is not swallowed or skipped."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

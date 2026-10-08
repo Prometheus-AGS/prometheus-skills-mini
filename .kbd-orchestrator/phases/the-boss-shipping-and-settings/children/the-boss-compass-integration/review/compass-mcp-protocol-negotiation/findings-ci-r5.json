@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "Spec violations — the incremental diff only refreshes five MCP golden fixtures from maxCandidates 20 to 64, matching the stated Golden fixture correction that upstream CodeQueryLimits::default().max_candidates was raised to 64.",
+    "Correctness — the changed JSON preserves all existing schema, operation, result, node, edge, path, diagnostic, and truncation fields; only limits.maxCandidates changes consistently in each fixture.",
+    "Regressions — no production code or public behavior is changed by this packet, and the fixture update aligns existing tests with the stated current default rather than removing coverage.",
+    "Security — the diff contains only test fixture JSON and introduces no credentials, network endpoints, paths, auth changes, subprocesses, or parsing logic.",
+    "Constraint breaches — no unsafe code, unwrap/expect/panic, dependencies, generated product data, Graphify references, shell construction, or machine-specific paths are introduced.",
+    "Silent failure — the diff does not add error handling, fallback behavior, defaults in code, or swallowed-result paths; it only updates expected serialized limits in fixtures."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

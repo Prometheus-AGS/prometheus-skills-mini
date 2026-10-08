@@ -5,7 +5,7 @@ sidebar_label: npm scripts
 
 # npm scripts
 
-`package.json`'s full script surface, read directly from the source:
+Selected root scripts from `package.json`; inspect the file for the complete current list:
 
 ```json
 {
@@ -22,7 +22,7 @@ sidebar_label: npm scripts
     "generate:commands": "node scripts/generate-commands.mjs"
   },
   "devDependencies": {
-    "@fission-ai/openspec": "1.10.0"
+    "@fission-ai/openspec": "1.14.0"
   }
 }
 ```
@@ -33,7 +33,7 @@ schema library in the runtime path.
 
 | Script | What it does |
 |---|---|
-| `npm test` | Runs the entire `node:test` suite (1,000+ tests as of the KBD/adversarial-review/ideation-mindmap/distribution port). |
+| `npm test` | Runs the legacy `node:test` suite. Unit-inclusive results are not current acceptance evidence; select the applicable real integration entry points. |
 | `npm run check` | Runs `rules/build.mjs --check`, which fails on drift between `rules/src/` and the generated `CLAUDE.md`/`AGENTS.md`/`.claude/rules/`/`.cursor/rules/`/`docs/skill-routing.md`, or a Layer-0 budget breach. |
 | `npm run coverage` | Runs `scripts/coverage-report.mjs`, which merges `node --test --experimental-test-coverage`'s in-process report with `NODE_V8_COVERAGE` profiles from child processes — needed because tests that exercise `rules/build.mjs` via `execFileSync` are otherwise invisible to the default reporter. |
 | `npm run context:bootstrap` / `context:check` | Installs or verifies the layered Prometheus agent context (`prometheus-context-bootstrap` skill) in a target project. |
@@ -41,11 +41,8 @@ schema library in the runtime path.
 | `npm run build:distribution` / `check:distribution` | Generates (or checks for drift in) the plugin packages and marketplace listings — see [Installation](/docs/getting-started/installation). |
 | `npm run generate:commands` | Generates Claude Code slash-command files from `SKILL.md` frontmatter. |
 
-## CI
+## Local validation and publication
 
-`.github/workflows/ci.yml` runs a 3-OS × 2-Node matrix (`windows-latest`, `ubuntu-latest`,
-`macos-latest` × Node 22, 24). The Windows legs deliberately check out with
-`core.autocrlf=true` — the default most likely to break the rules build and its parsers — so the
-CRLF-tolerance claims in this documentation are exercised, not assumed. Each job runs, in order:
-`npm ci`, `node --test`, `node rules/build.mjs --check`, `npm run coverage`, and
-`node scripts/spec-validate.mjs`.
+Finish all planned production changes in the phase before authoring or running tests, checks, generation, formatters or review. Run the applicable integration batch on the local development machine, through the real production entry point and collaborators, and record exact commands and results. Legacy coverage or unit totals do not certify a release.
+
+Hosted test workflows must not serve as a development loop or acceptance evidence. GitHub remains a source/review host. Deterministic documentation sync and Pages packaging/deployment are separate allowed automation boundaries; neither may run tests, lint, doctors or certification.

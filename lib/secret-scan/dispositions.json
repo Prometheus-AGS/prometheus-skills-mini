@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "description": "Finite store of the known non-credential occurrences accepted by the no-hardcoded-secrets check. Acceptance requires an exact match on ALL of file + kind + sha256 of the exact regex match substring + location: the line number, and for parsed JSON key/value hits the JSON pointer. Pointers are templates — a secret-shaped property-name segment is stored as the stable placeholder \"<key>\" so no raw key is ever written here; text hits carry a null pointer. Moving an occurrence within the same file fails. A disposition not observed in the tree is stale and also fails. Matched values are never stored here — only their digests. Every entry names in \"source\" the adjudication receipt(s) it derives from, resolved relative to the mini-pack-qa-remediation phase of the bossfang-uar-architecture planning workstream.",
+  "description": "Finite store of the known non-credential occurrences accepted by the no-hardcoded-secrets check. Acceptance requires an exact match on ALL of file + kind + sha256 of the exact regex match substring + location: the line number, and for parsed JSON key/value hits the JSON pointer. Pointers are templates — a secret-shaped property-name segment is stored as the stable placeholder \"<key>\" so no raw key is ever written here; text hits carry a null pointer. Moving an occurrence within the same file fails. A disposition not observed in the tree is stale and also fails. Matched values are never stored here — only their digests. Every entry names in \"source\" the adjudication receipt(s) it derives from, resolved relative to the mini-pack-qa-remediation phase of the bossfang-uar-architecture planning workstream. Re-adjudication 2026-10-08: docker/AGENTS.md entries re-bound from line 28 to line 35 after the merged main doc rewrite; occurrence digests unchanged; still 24 finite dispositions.",
   "classes": {
     "prohibition-example-option": "The forbidden inline-credential spelling, quoted in documentation as the thing not to do.",
     "identifier-embedded-token-substring": "A provider-shaped substring embedded inside a longer identifier that is not a credential.",
@@ -14,7 +14,11 @@
       "pointer": "/external_evidence/content",
       "sha256": "d831c8c3f2e145295cda69a97293fb09596de6367a2444adb5003804a162b1eb",
       "class": "prohibition-example-option",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-context-dispositions.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-context-dispositions.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/analyze/packet-r1.json",
@@ -23,7 +27,11 @@
       "pointer": "/external_evidence/content",
       "sha256": "dbbdb43feb91f770f3e6db4b9f1289a32fa8e5cb7a64ed66821850261aa80780",
       "class": "prohibition-example-option",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-context-dispositions.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-context-dispositions.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/analyze/packet.json",
@@ -32,7 +40,11 @@
       "pointer": "/external_evidence/content",
       "sha256": "d831c8c3f2e145295cda69a97293fb09596de6367a2444adb5003804a162b1eb",
       "class": "prohibition-example-option",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-context-dispositions.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-context-dispositions.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/analyze/packet.json",
@@ -41,7 +53,11 @@
       "pointer": "/external_evidence/content",
       "sha256": "dbbdb43feb91f770f3e6db4b9f1289a32fa8e5cb7a64ed66821850261aa80780",
       "class": "prohibition-example-option",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-context-dispositions.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-context-dispositions.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/assess/packet.json",
@@ -50,7 +66,11 @@
       "pointer": "/external_evidence/content",
       "sha256": "d831c8c3f2e145295cda69a97293fb09596de6367a2444adb5003804a162b1eb",
       "class": "prohibition-example-option",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-context-dispositions.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-context-dispositions.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/assess/packet.json",
@@ -59,7 +79,11 @@
       "pointer": "/external_evidence/content",
       "sha256": "dbbdb43feb91f770f3e6db4b9f1289a32fa8e5cb7a64ed66821850261aa80780",
       "class": "prohibition-example-option",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-context-dispositions.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-context-dispositions.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/spec/packet-r1.json",
@@ -68,7 +92,11 @@
       "pointer": "/external_evidence/evidence_file",
       "sha256": "d831c8c3f2e145295cda69a97293fb09596de6367a2444adb5003804a162b1eb",
       "class": "prohibition-example-option",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-context-dispositions.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-context-dispositions.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/spec/packet-r1.json",
@@ -77,7 +105,11 @@
       "pointer": "/external_evidence/evidence_file",
       "sha256": "dbbdb43feb91f770f3e6db4b9f1289a32fa8e5cb7a64ed66821850261aa80780",
       "class": "prohibition-example-option",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-context-dispositions.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-context-dispositions.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/spec/packet.json",
@@ -86,7 +118,11 @@
       "pointer": "/external_evidence/evidence_file",
       "sha256": "d831c8c3f2e145295cda69a97293fb09596de6367a2444adb5003804a162b1eb",
       "class": "prohibition-example-option",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-context-dispositions.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-context-dispositions.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": ".kbd-orchestrator/phases/karpathy-logs-node/children/the-boss-integration-prep/review/spec/packet.json",
@@ -95,25 +131,39 @@
       "pointer": "/external_evidence/evidence_file",
       "sha256": "dbbdb43feb91f770f3e6db4b9f1289a32fa8e5cb7a64ed66821850261aa80780",
       "class": "prohibition-example-option",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-context-dispositions.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-context-dispositions.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": "docker/AGENTS.md",
       "kind": "text",
-      "line": 28,
+      "line": 35,
       "pointer": null,
       "sha256": "d831c8c3f2e145295cda69a97293fb09596de6367a2444adb5003804a162b1eb",
       "class": "prohibition-example-option",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-context-dispositions.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-context-dispositions.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ],
+      "readjudicated": "2026-10-08: main relocated the two guidance occurrences (doc rewrite 15ae505); same digests, kind and class; location re-bound"
     },
     {
       "file": "docker/AGENTS.md",
       "kind": "text",
-      "line": 28,
+      "line": 35,
       "pointer": null,
       "sha256": "dbbdb43feb91f770f3e6db4b9f1289a32fa8e5cb7a64ed66821850261aa80780",
       "class": "prohibition-example-option",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-context-dispositions.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-context-dispositions.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ],
+      "readjudicated": "2026-10-08: main relocated the two guidance occurrences (doc rewrite 15ae505); same digests, kind and class; location re-bound"
     },
     {
       "file": ".kbd-orchestrator/phases/the-boss-shipping-and-settings/children/uar-working-agent/children/integration-administration/children/unified-tool-approval-authority/research/consolidation/inventory.json",
@@ -122,7 +172,11 @@
       "pointer": "/repositories/0/branches",
       "sha256": "456034a83d71ad39f426c395f017a8c5a448a66f0a0b7c3049f076c65afa94fa",
       "class": "identifier-embedded-token-substring",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-context-dispositions.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-context-dispositions.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": "workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/bauar05-catalog-trace-scope-canonical-record.json",
@@ -131,7 +185,13 @@
       "pointer": "/state/commandRevisions/<key>",
       "sha256": "f5de79415cc45c39b05c43434f515f1c47ea68e51486dcdb3d3d18784040c3a8",
       "class": "command-revision-bookkeeping-key",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-key-dispositions.json", "evidence/analyze/secret-key-structure.json", "evidence/spec/identifier-key-context.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-key-dispositions.json",
+        "evidence/analyze/secret-key-structure.json",
+        "evidence/spec/identifier-key-context.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": "workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/bauar05-postack-control-scope-canonical-record.json",
@@ -140,7 +200,13 @@
       "pointer": "/state/commandRevisions/<key>",
       "sha256": "f5de79415cc45c39b05c43434f515f1c47ea68e51486dcdb3d3d18784040c3a8",
       "class": "command-revision-bookkeeping-key",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-key-dispositions.json", "evidence/analyze/secret-key-structure.json", "evidence/spec/identifier-key-context.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-key-dispositions.json",
+        "evidence/analyze/secret-key-structure.json",
+        "evidence/spec/identifier-key-context.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": "workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/dispatch-state.full.json",
@@ -149,7 +215,13 @@
       "pointer": "/commandRevisions/<key>",
       "sha256": "f5de79415cc45c39b05c43434f515f1c47ea68e51486dcdb3d3d18784040c3a8",
       "class": "command-revision-bookkeeping-key",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-key-dispositions.json", "evidence/analyze/secret-key-structure.json", "evidence/spec/identifier-key-context.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-key-dispositions.json",
+        "evidence/analyze/secret-key-structure.json",
+        "evidence/spec/identifier-key-context.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": "workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/entry-state.full.json",
@@ -158,7 +230,13 @@
       "pointer": "/commandRevisions/<key>",
       "sha256": "f5de79415cc45c39b05c43434f515f1c47ea68e51486dcdb3d3d18784040c3a8",
       "class": "command-revision-bookkeeping-key",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-key-dispositions.json", "evidence/analyze/secret-key-structure.json", "evidence/spec/identifier-key-context.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-key-dispositions.json",
+        "evidence/analyze/secret-key-structure.json",
+        "evidence/spec/identifier-key-context.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": "workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/registration-blocker-record.json",
@@ -167,7 +245,13 @@
       "pointer": "/state/commandRevisions/<key>",
       "sha256": "f5de79415cc45c39b05c43434f515f1c47ea68e51486dcdb3d3d18784040c3a8",
       "class": "command-revision-bookkeeping-key",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-key-dispositions.json", "evidence/analyze/secret-key-structure.json", "evidence/spec/identifier-key-context.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-key-dispositions.json",
+        "evidence/analyze/secret-key-structure.json",
+        "evidence/spec/identifier-key-context.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": "workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/stage-entry.full.json",
@@ -176,7 +260,13 @@
       "pointer": "/state/commandRevisions/<key>",
       "sha256": "f5de79415cc45c39b05c43434f515f1c47ea68e51486dcdb3d3d18784040c3a8",
       "class": "command-revision-bookkeeping-key",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-key-dispositions.json", "evidence/analyze/secret-key-structure.json", "evidence/spec/identifier-key-context.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-key-dispositions.json",
+        "evidence/analyze/secret-key-structure.json",
+        "evidence/spec/identifier-key-context.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": "workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/plan/complete.full.json",
@@ -185,7 +275,13 @@
       "pointer": "/state/commandRevisions/<key>",
       "sha256": "f5de79415cc45c39b05c43434f515f1c47ea68e51486dcdb3d3d18784040c3a8",
       "class": "command-revision-bookkeeping-key",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-key-dispositions.json", "evidence/analyze/secret-key-structure.json", "evidence/spec/identifier-key-context.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-key-dispositions.json",
+        "evidence/analyze/secret-key-structure.json",
+        "evidence/spec/identifier-key-context.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": "workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/plan/status-after-register.full.json",
@@ -194,7 +290,13 @@
       "pointer": "/commandRevisions/<key>",
       "sha256": "f5de79415cc45c39b05c43434f515f1c47ea68e51486dcdb3d3d18784040c3a8",
       "class": "command-revision-bookkeeping-key",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-key-dispositions.json", "evidence/analyze/secret-key-structure.json", "evidence/spec/identifier-key-context.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-key-dispositions.json",
+        "evidence/analyze/secret-key-structure.json",
+        "evidence/spec/identifier-key-context.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": "workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/plan/status-final.full.json",
@@ -203,7 +305,13 @@
       "pointer": "/commandRevisions/<key>",
       "sha256": "f5de79415cc45c39b05c43434f515f1c47ea68e51486dcdb3d3d18784040c3a8",
       "class": "command-revision-bookkeeping-key",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-key-dispositions.json", "evidence/analyze/secret-key-structure.json", "evidence/spec/identifier-key-context.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-key-dispositions.json",
+        "evidence/analyze/secret-key-structure.json",
+        "evidence/spec/identifier-key-context.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": "workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/plan/task-register-10.full.json",
@@ -212,7 +320,13 @@
       "pointer": "/state/commandRevisions/<key>",
       "sha256": "f5de79415cc45c39b05c43434f515f1c47ea68e51486dcdb3d3d18784040c3a8",
       "class": "command-revision-bookkeeping-key",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-key-dispositions.json", "evidence/analyze/secret-key-structure.json", "evidence/spec/identifier-key-context.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-key-dispositions.json",
+        "evidence/analyze/secret-key-structure.json",
+        "evidence/spec/identifier-key-context.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     },
     {
       "file": "workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/reflect/runtime-status.json",
@@ -221,7 +335,13 @@
       "pointer": "/commandRevisions/<key>",
       "sha256": "f5de79415cc45c39b05c43434f515f1c47ea68e51486dcdb3d3d18784040c3a8",
       "class": "command-revision-bookkeeping-key",
-      "source": ["evidence/analyze/secret-syntax-adjudication.json", "evidence/analyze/secret-key-dispositions.json", "evidence/analyze/secret-key-structure.json", "evidence/spec/identifier-key-context.json", "evidence/assess/secret-count-reconciliation-v3.json"]
+      "source": [
+        "evidence/analyze/secret-syntax-adjudication.json",
+        "evidence/analyze/secret-key-dispositions.json",
+        "evidence/analyze/secret-key-structure.json",
+        "evidence/spec/identifier-key-context.json",
+        "evidence/assess/secret-count-reconciliation-v3.json"
+      ]
     }
   ]
 }

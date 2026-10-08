@@ -1,0 +1,31 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/compass-query/src/surreal.rs",
+      "line": 139,
+      "claim": "Fallback natural queries can be converted into an empty Surreal search instead of searching the user's question.",
+      "evidence": "The new code derives `primary` with `plan.operands().first().cloned().unwrap_or_default()` and routes `NaturalQueryIntent::Search | NaturalQueryIntent::Fallback` to `self.search(SearchRequest { query: primary, ... })`; when the fallback plan has no operand, the query string becomes `\"\"` rather than `request.question`.",
+      "suggested_fix": "For `NaturalQueryIntent::Fallback`, search with `request.question` or return a typed planning error when no searchable operand exists; avoid `unwrap_or_default` for required operation inputs."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/compass-query/src/code_query.rs",
+      "line": 2490,
+      "claim": "The Surreal owner-relationship enrichment ignores the caller's remaining limit as a hard cap for backend work.",
+      "evidence": "The added branch computes `owner_limit = limit.saturating_sub(edges.len()).max(RELATIONSHIP_SELF_CHECK_MIN_IMPORTERS)` before calling `self.backend.matching_bounded(...)`, so even when `edges.len() >= limit` or `limit` is below the self-check minimum it still issues per-owner bounded queries above the requested remaining limit.",
+      "suggested_fix": "Skip enrichment backend reads once the requested result/work budget is exhausted, or separate a documented small self-check probe budget from the public result limit and report truncation distinctly."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

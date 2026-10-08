@@ -1,0 +1,136 @@
+- generic [active] [ref=e1]:
+  - paragraph [ref=e2]:
+    - img "The Boss logo" [ref=e3]
+  - heading "The Boss" [level=1] [ref=e4]
+  - paragraph [ref=e5]: An AI desktop workspace for conversations, agents, tools, and project work.
+  - paragraph [ref=e6]:
+    - link "Website" [ref=e7] [cursor=pointer]:
+      - /url: https://the-boss.know-me.tools
+    - text: ·
+    - link "Downloads" [ref=e8] [cursor=pointer]:
+      - /url: https://github.com/Prometheus-AGS/the-boss/releases
+    - text: ·
+    - link "Documentation" [ref=e9] [cursor=pointer]:
+      - /url: ./docs/README.md
+    - text: ·
+    - link "Development" [ref=e10] [cursor=pointer]:
+      - /url: ./docs/contrib/development.md
+    - text: ·
+    - link "Issues" [ref=e11] [cursor=pointer]:
+      - /url: https://github.com/Prometheus-AGS/the-boss/issues
+  - paragraph [ref=e12]:
+    - text: The Boss is the Know Me Tools desktop workspace built on
+    - link "Cherry Studio" [ref=e13] [cursor=pointer]:
+      - /url: https://github.com/CherryHQ/cherry-studio
+    - text: . It brings multi-provider AI conversations, agent sessions, workspace tools, knowledge and document workflows together with Prometheus integration. This repository owns The Boss source, documentation, and release workflow.
+  - heading "Get The Boss" [level=2] [ref=e14]
+  - paragraph [ref=e15]:
+    - text: Download the installer for your platform and architecture from
+    - link "The Boss releases" [ref=e16] [cursor=pointer]:
+      - /url: https://github.com/Prometheus-AGS/the-boss/releases
+    - text: . Read that release's notes and platform records for its available installers, UAR profile, signing status, and acceptance evidence. Source support for a platform does not establish that a tested installer is available for it.
+  - paragraph [ref=e17]:
+    - text: The documentation on
+    - code [ref=e18]: main
+    - text: describes current source. The UI/UX catalog and team-routing adoption described below were merged after the existing 2.2.2 release; that merge does
+    - strong [ref=e19]: not
+    - text: establish that the 2.2.2 installers contain them. Use the
+    - link "release runbook" [ref=e20] [cursor=pointer]:
+      - /url: docs/contrib/the-boss-release.md
+    - text: for packaging and installed acceptance.
+  - heading "Workspace capabilities" [level=2] [ref=e21]
+  - list [ref=e22]:
+    - listitem [ref=e23]: Conversations and assistants across cloud and local model providers.
+    - listitem [ref=e24]: Agent sessions with workspace context, MCP tools, skills, and approval boundaries.
+    - listitem [ref=e25]: Knowledge, document, code, and Markdown workflows.
+    - listitem [ref=e26]: Prometheus settings for packaged skills, workspace indexing, tools, and optional services.
+    - listitem [ref=e27]: Shared renderer components, semantic design tokens, and light/dark themes.
+  - paragraph [ref=e28]:
+    - text: Provider access and optional integrations require their own configuration. See the
+    - link "documentation index" [ref=e29] [cursor=pointer]:
+      - /url: docs/README.md
+    - text: for architecture and operational contracts.
+  - heading "UI/UX skills and project teams" [level=2] [ref=e30]
+  - paragraph [ref=e31]:
+    - text: The current source distributes
+    - strong [ref=e32]: 97 mini skills
+    - text: ", including"
+    - strong [ref=e33]: 40 portable UI/UX catalog entries
+    - text: ", through"
+    - code [ref=e34]: resources/skills/
+    - text: . The shared
+    - code [ref=e35]: prometheus-ui-ux
+    - text: router selects project context, focused Pro Max guidance, craft, and platform instructions.
+    - code [ref=e36]: prometheus-ui-review
+    - text: defines independent review at a completed UI phase; it does not automatically launch a browser or certify an application.
+  - paragraph [ref=e37]:
+    - text: The existing ten-role
+    - link "boss-core team" [ref=e38] [cursor=pointer]:
+      - /url: .agent-team/boss-core/README.md
+    - text: is adopted through the project routing record. UI work goes to
+    - code [ref=e39]: boss-ux
+    - text: and
+    - code [ref=e40]: boss-renderer
+    - text: ; completed UI acceptance goes to
+    - code [ref=e41]: boss-verifier
+    - text: . Existing tokens, Electron workflows, permissions, and ownership remain authoritative.
+  - paragraph [ref=e42]:
+    - text: Read
+    - link "UI/UX routing and team adoption" [ref=e43] [cursor=pointer]:
+      - /url: docs/contrib/ui-ux-routing.md
+    - text: for commands, prerequisites, installation boundaries, deferred engine support, and evidence limits.
+  - heading "Develop and contribute" [level=2] [ref=e44]
+  - paragraph [ref=e45]:
+    - text: Use the Node version in
+    - link ".node-version" [ref=e46] [cursor=pointer]:
+      - /url: .node-version
+    - text: ", the engine range and pnpm pin in"
+    - link "package.json" [ref=e47] [cursor=pointer]:
+      - /url: package.json
+    - text: ", and the"
+    - link "development guide" [ref=e48] [cursor=pointer]:
+      - /url: docs/contrib/development.md
+    - text: . Start with
+    - link "CONTRIBUTING.md" [ref=e49] [cursor=pointer]:
+      - /url: CONTRIBUTING.md
+    - text: and the repository instructions in
+    - link "CLAUDE.md" [ref=e50] [cursor=pointer]:
+      - /url: CLAUDE.md
+    - text: . Active development targets this repository's
+    - code [ref=e51]: main
+    - text: branch.
+  - list [ref=e52]:
+    - listitem [ref=e53]:
+      - link "Documentation index" [ref=e54] [cursor=pointer]:
+        - /url: docs/README.md
+    - listitem [ref=e55]:
+      - link "UI/UX routing and team adoption" [ref=e56] [cursor=pointer]:
+        - /url: docs/contrib/ui-ux-routing.md
+    - listitem [ref=e57]:
+      - link "Design system" [ref=e58] [cursor=pointer]:
+        - /url: DESIGN.md
+    - listitem [ref=e59]:
+      - link "The Boss release workflow" [ref=e60] [cursor=pointer]:
+        - /url: docs/contrib/the-boss-release.md
+    - listitem [ref=e61]:
+      - link "Upstream merge policy" [ref=e62] [cursor=pointer]:
+        - /url: docs/contrib/upstream-merges.md
+  - paragraph [ref=e63]:
+    - text: Documentation lives in this repository as Markdown. The index is generated from document headings and frontmatter with
+    - code [ref=e64]: pnpm docs:index
+    - text: ; the completed documentation gate is
+    - code [ref=e65]: pnpm docs:check
+    - text: .
+  - heading "Attribution and license" [level=2] [ref=e66]
+  - paragraph [ref=e67]:
+    - text: The Boss is derived from
+    - link "Cherry Studio" [ref=e68] [cursor=pointer]:
+      - /url: https://github.com/CherryHQ/cherry-studio
+    - text: . Upstream contributors, copyright notices, and license obligations remain applicable. See
+    - link "LICENSE" [ref=e69] [cursor=pointer]:
+      - /url: LICENSE
+    - text: for the GNU Affero General Public License v3.0.
+  - paragraph [ref=e70]:
+    - text: The Boss name and logo identify this fork. Existing
+    - code [ref=e71]: "@cherrystudio/*"
+    - text: package names, Cherry-operated services, and historical migration identifiers are technical contracts; their presence does not redirect this project's downloads, documentation, or support to upstream.

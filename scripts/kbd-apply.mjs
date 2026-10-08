@@ -1,10 +1,12 @@
 // Port of kbd-apply.sh (prometheus-skill-pack, 602 lines) — the KBD-owned spec-apply driver.
 //
-// Wraps a spec backend (openspec today; native-kbd as the always-available fallback; speckit
-// detection only — see lib/kbd/spec-backend.mjs's header for why the speckit adapter itself is
-// out of scope) and drives it ONE task at a time so KBD stays the source of truth: every task
-// boundary fires the KBD hooks, emits a plain-text position signal, and syncs progress.json +
-// the waypoint.
+// Wraps a spec backend — all three engines with full parity: openspec (the DEFAULT engine),
+// speckit (GitHub Spec Kit, pure filesystem markdown parsing; the `specify` CLI is never
+// invoked), and native-kbd (the always-available fallback) — and drives it ONE task at a time so
+// KBD stays the source of truth: every task boundary fires the KBD hooks, emits a plain-text
+// position signal, and syncs progress.json + the waypoint. Dispatch goes through the
+// `specEngines` registry in lib/kbd/spec-backend.mjs (extensible: a new engine is one adapter
+// entry plus its detection evidence, not a dispatch rewrite here).
 //
 // HARD INVARIANT, preserved exactly: this driver never invokes a backend's "implement
 // everything" command (bare `/opsx:apply`, `/speckit.implement`). It calls the backend per task.
@@ -29,11 +31,7 @@ import { isBottleneckActive, evaluateBottleneck, bottleneckSignalText } from '..
 import { hooksFire } from '../lib/kbd/hooks.mjs';
 import { kbdCurrentNodeDir } from '../lib/kbd/waypoint.mjs';
 import { runHookCommand } from '../lib/kbd/hook-command.mjs';
-import {
-  detectBackend,
-  nkList, nkProgress, nkMarkDone, nkVerify, nkArchive,
-  osList, osProgress, osMarkDone, osVerify, osArchive,
-} from '../lib/kbd/spec-backend.mjs';
+import { detectBackend, specEngines } from '../lib/kbd/spec-backend.mjs';
 
 const SELF = 'kbd-apply';
 function die(message) {
@@ -48,49 +46,25 @@ const WP = path.join('.kbd-orchestrator', 'current-waypoint.json');
 const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? '.';
 
 // ---- backend dispatch -------------------------------------------------------
+//
+// Every op resolves its backend from the change id it was given (detectBackend), then dispatches
+// through the `specEngines` registry — so openspec, speckit and native-kbd all six ops are one
+// table lookup, and a future engine needs no edit here. Unknown backend ('') is a hard error:
+// speckit verify/archive used to be no-ops in the bash source, but this port implements them for
+// real, so there is no silent-pass branch left to fall into.
 
-function bList(root, change) {
+function engineFor(root, change) {
   const backend = detectBackend({ root, change });
-  if (backend === 'openspec') return osList(root, change);
-  if (backend === 'native-kbd') return nkList(root, change);
-  if (backend === 'speckit') die('speckit adapter is not implemented in this port (detection only)');
-  die(`no spec backend detected (cwd=${path.resolve(root)})`);
-  return [];
+  const engine = specEngines[backend];
+  if (!engine) die(`no spec backend detected (cwd=${path.resolve(root)})`);
+  return engine;
 }
 
-function bProgress(root, change) {
-  const backend = detectBackend({ root, change });
-  if (backend === 'openspec') return osProgress(root, change);
-  if (backend === 'native-kbd') return nkProgress(root, change);
-  if (backend === 'speckit') die('speckit adapter is not implemented in this port (detection only)');
-  die('no spec backend detected');
-  return { total: 0, complete: 0, remaining: 0 };
-}
-
-function bMarkDone(root, change, id) {
-  const backend = detectBackend({ root, change });
-  if (backend === 'openspec') return osMarkDone(root, change, id);
-  if (backend === 'native-kbd') return nkMarkDone(root, change, id);
-  if (backend === 'speckit') die('speckit adapter is not implemented in this port (detection only)');
-  die('no spec backend detected');
-  return undefined;
-}
-
-/** speckit's `/speckit.analyze` is model-driven with no CLI gate — matches the source's b_verify. */
-function bVerify(root, change) {
-  const backend = detectBackend({ root, change });
-  if (backend === 'openspec') return osVerify(root, change);
-  if (backend === 'native-kbd') return nkVerify(root, change);
-  return true;
-}
-
-/** speckit has no archive step — matches the source's b_archive. */
-function bArchive(root, change) {
-  const backend = detectBackend({ root, change });
-  if (backend === 'openspec') return osArchive(root, change);
-  if (backend === 'native-kbd') return nkArchive(root, change);
-  return undefined;
-}
+const bList = (root, change) => engineFor(root, change).list(root, change);
+const bProgress = (root, change) => engineFor(root, change).progress(root, change);
+const bMarkDone = (root, change, id) => engineFor(root, change).markDone(root, change, id);
+const bVerify = (root, change) => engineFor(root, change).verify(root, change);
+const bArchive = (root, change) => engineFor(root, change).archive(root, change);
 
 function bRemainingTitles(root, change) {
   try {

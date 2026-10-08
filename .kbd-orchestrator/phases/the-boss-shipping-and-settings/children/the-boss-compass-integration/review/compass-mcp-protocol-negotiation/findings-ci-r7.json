@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "Spec violations — acceptance criteria explicitly identify this commit as the final affected-query diagnostic correction from stale `No unique node match` to production `NO EXACT MATCH`, and the diff only updates that expectation.",
+    "Correctness — the single changed assertion remains a substring check on the same `format_affected(&graph, \"absent\", &[\"calls\".to_owned()], 1)` call, with no logic or control-flow change.",
+    "Regressions — no production code or fixture contract is changed; only one integration-test diagnostic expectation is updated.",
+    "Security — the diff does not add or modify input handling, network, filesystem, subprocess, credential, or authorization behavior.",
+    "Constraint breaches — the diff introduces no unsafe code, unwrap/expect/panic, dependencies, generated assets, product-boundary references, shell construction, or nondeterministic data structures.",
+    "Silent failure — the assertion still requires the formatted absent-target diagnostic to contain the expected marker and does not swallow errors or weaken the test to unconditional success."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/compass-query/src/surreal.rs",
+      "line": 141,
+      "claim": "The Surreal natural-query behavior change is not accompanied by any integration-test change in this diff, violating the repository regression-test requirement.",
+      "evidence": "Constraint `regression-test-present` says behavior changes require full integration coverage at the lowest public boundary; this diff changes `SurrealQueryEngine::query_natural` routing in `crates/compass-query/src/surreal.rs` and owner-level Surreal relationship enrichment in `crates/compass-query/src/code_query.rs`, but the packet diff contains only those two production files and no `tests` or integration fixture updates.",
+      "suggested_fix": "Add or update the lowest-boundary integration coverage for Surreal natural ask parity and bounded/diagnostic behavior in the same change, or include the existing integration fixture changes that prove this new behavior."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

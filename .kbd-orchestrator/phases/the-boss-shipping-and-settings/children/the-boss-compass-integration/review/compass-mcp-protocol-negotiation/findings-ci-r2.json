@@ -1,0 +1,23 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".github/workflows/compass-ci.yml",
+      "line": 306,
+      "claim": "The release matrix now builds the Windows `surreal-remote` release surface without installing the MSVC SurrealDB build prerequisites that the workflow itself says are required.",
+      "evidence": "The diff adds `cargo build --release --locked -p compass-cli --bin compass --features surreal-remote --target ${{ matrix.target }}` to the native release matrix before the Windows installer step, while the separate Windows SurrealDB job comments that `surrealdb-core hard-enables jsonwebtoken/aws-lc-rs, so aws-lc-sys is built for every SurrealDB feature and needs CMake plus NASM on MSVC` and installs NASM only in that other job.",
+      "suggested_fix": "Install the same MSVC prerequisites, including NASM on Windows, in the release matrix before building with `--features surreal-remote`, or move the Windows release build to a job that already provisions them."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

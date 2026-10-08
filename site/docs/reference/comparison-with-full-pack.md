@@ -5,8 +5,7 @@ sidebar_label: Comparison
 
 # Comparison with `prometheus-skill-pack`
 
-The current mini distribution contains **97 skills**, including **40 portable UI/UX entries**
-from a shared 41-entry catalog. Selected React/Vercel and mobile UI guidance is now included;
+The generated [catalog](/docs/catalog) supplies the current mini inventory, including portable UI/UX entries from the shared catalog. Selected React/Vercel and mobile UI guidance is now included;
 the broader entity-management, DevOps and testing families remain outside this port.
 
 ## UI/UX and project teams
@@ -45,9 +44,9 @@ results from the current documentation change or certify the later UI/team imple
 | Plugin/marketplace distribution (`lib/distribution/`, `skill-system.json`) | **Ported**, 61 tests. Claude Code + Codex packages, both marketplaces, the slash-command generator. Copy-mode throughout, never symlink. |
 | Artifact refinement (`lib/refiner/`, 20 skills) | **Ported.** See [Artifact Refinement](/docs/artifact-refinement/overview). |
 | OpenSpec integration (12 skills × 4 harnesses) | **Ported and the default planning backend.** |
-| Platform primitives (`lib/platform/`) | **Ported and CI-verified on Windows** (`platform-foundation` phase): atomic write, lock, CRLF-tolerant text, shell-free spawn. |
+| Platform primitives (`lib/platform/`) | **Ported and historically reported against hosted Windows runs** (`platform-foundation` phase): atomic write, lock, CRLF-tolerant text, shell-free spawn. |
 | Docker services (`docker/compose.yaml`, `docker/compose.build.yaml`, `scripts/services.mjs`) | **Ported.** Three containers (SurrealDB, surreal-memory, liter-llm), loopback-bound, env-file secrets, named volumes, memory limits, digest-pinned SurrealDB image. This was listed as a future roadmap item in earlier documentation; it now exists on disk. |
-| Doctor (`lib/doctor/`, `skills/doctor/`) | **Ported.** Runtime, KBD position, services, optional tools, home-directory skill copies, and the install-scope rule, in that report order. |
+| Doctor (`lib/doctor/`, `skills/doctor/`) | **Ported.** Runtime, KBD position, services, optional tools, home-directory skill copies, and the install-scope rule, with order and registered IDs defined by the current registry. |
 | Context bootstrap (`lib/context-bootstrap/`) | **Ported.** |
 
 ## What is a deliberate exclusion (not a gap)
@@ -56,10 +55,9 @@ These are excluded by explicit constraint, not because porting them was deferred
 
 | Excluded | Why |
 |---|---|
-| ZeeSpec | `openspec/config.yaml` binding constraint: OpenSpec is the default; no ZeeSpec anywhere. |
 | Python anywhere | Hard constraint (C4 in the original port analysis). Every Python call site in the source pack (record-progress.py, state-* scripts' `python3` invocations) was translated to Node stdlib (`JSON.parse`/`stringify`, `crypto.randomUUID()`, `toISOString()`). |
 | Shell scripts (`.sh`) | Hard constraint. Hooks use exec-form Node commands exclusively. |
-| Symlink-based installs | This pack's installer and distribution generator are copy-mode only — the full pack symlinks 11 of 13 install targets, which needs Developer Mode or elevation on Windows. |
+| Symlink-based installs | This pack's installer and distribution generator are copy-mode only — the full pack declares fourteen targets, with copy delivery for Codex and MiniMax and symlink delivery for the other twelve, which needs Developer Mode or elevation on Windows. |
 | The Rust execution substrate (`prometheus-exec`, `substrate/*`, the research daemon, the surface bridge) | Unix-socket daemons and sandbox machinery with no Windows-native design; explicitly out of scope for this pack's process-focused architecture. |
 | `prometheus-knowledge`'s HTTP companion (`pk-cherry`) and its learning-worker timer daemon | This pack replaced the timer/worker model with durable receipts flushed opportunistically at SessionStart — see [Karpathy Progress Memory](/docs/karpathy/progress-memory). |
 | Entity-management, DevOps/GitOps and BDD/Cucumber families | Deliberately outside this port. Selected React/Vercel UI guidance is now included through the UI catalog; that does not add the full entity-development family. |
@@ -79,7 +77,7 @@ boundary-scoped records, distinct from the deliberate exclusions:
   `lib/review/sycophancy-binary.mjs`/`sycophancy-gate.mjs` are ported and active; a project-wide
   `sycophancy-correction` MCP server integration is a separate, still-optional item.
 - **Windows runtime verification for the Phase C batch.** `platform-foundation`'s Windows claims are
-  CI-verified on `windows-latest`. The later KBD/adversarial-review/ideation-mindmap/distribution
+  reported against historical hosted Windows runs; that record is not current local release evidence. The later KBD/adversarial-review/ideation-mindmap/distribution
   work (1,000+ tests) ran on macOS only as of the port commit — Windows verification for that batch
   is recorded as still owed, not assumed passing.
   See [Windows Constraints](/docs/platform/windows-constraints).
@@ -100,7 +98,7 @@ boundary-scoped records, distinct from the deliberate exclusions:
 
 ## Skill count
 
-This pack ships **97 distributed skill directories** under `skills/`,
+This pack distributes its manifest-selected directories under `skills/`,
 versus the full pack's much larger multi-hundred-skill catalog spanning many domains this pack does
 not attempt to cover (entity development, DevOps/GitOps, BDD testing, Feynman learning,
 broad multi-language guidance, native-agent generation, and more). See the

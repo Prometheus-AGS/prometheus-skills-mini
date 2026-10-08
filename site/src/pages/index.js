@@ -11,12 +11,12 @@ const CAPABILITIES = [
   },
   {
     title: 'Adversarial Review',
-    body: 'Cross-model judge dispatch over the liter-llm gateway, with a producer/judge isolation guarantee, a sycophancy anti-theater gate, and an OKF decision log.',
+    body: 'Cross-model judge dispatch over the liter-llm gateway, with explicit producer and judge evidence, a sycophancy anti-theater gate, and an OKF decision log.',
     href: '/docs/review/adversarial-review',
   },
   {
     title: 'Ideation Mindmap',
-    body: 'Structurally-verified independent-dispatch ideation via surreal-memory, so branch generation cannot collapse toward agreement.',
+    body: 'Structurally-verified independent-dispatch ideation via surreal-memory, with independent-dispatch records for later assessment.',
     href: '/docs/ideation/ideation-mindmap',
   },
   {
@@ -47,8 +47,9 @@ export default function Home() {
           <h1 className={styles.heroTitle}>Prometheus Skills Mini</h1>
           <p className={styles.heroTagline}>
             A Windows-native, scaled-down port of prometheus-skill-pack: the KBD development
-            process, driven by 50 skills, with OpenSpec as the spec backend — no WSL, no Git
-            Bash, no Python, running the same on Windows, macOS, and Linux.
+            process, driven by the generated skills catalog, with OpenSpec as the spec backend.
+            The pack runtime uses Node without WSL, Git Bash or Python; harnesses and services
+            have their own platform requirements.
           </p>
           <div className={styles.buttons}>
             <Link className="button button--primary button--lg" to="/docs/intro">
@@ -76,12 +77,11 @@ export default function Home() {
               <li>Windows without WSL for anything the pack runs.</li>
               <li>Node.js LTS (&gt;=22) is the only script runtime.</li>
               <li>No shell scripts, no Python, anywhere.</li>
-              <li>OpenSpec native and default; no ZeeSpec.</li>
+              <li>OpenSpec native and default.</li>
               <li>
-                Exactly two resident services, Docker-managed on Windows: surreal-memory and the
-                liter-llm gateway.
+                Optional surreal-memory and liter-llm services, with a Windows-oriented Docker stack.
               </li>
-              <li>Fits in 16&nbsp;GB RAM.</li>
+              <li>Record actual platform and resource evidence before claiming installed acceptance.</li>
             </ul>
           </section>
         </div>

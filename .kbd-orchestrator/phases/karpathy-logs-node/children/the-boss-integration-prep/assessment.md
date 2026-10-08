@@ -55,7 +55,7 @@ SPEC GAP SUMMARY
 BUILD HEALTH
 
 - build check: **PASS** — `node --test`: 367 tests, 365 pass, 0 fail, 2 skipped (Windows-only PATHEXT and a POSIX-permissions case; both explicit `skip` reasons); `node rules/build.mjs --check`: 21 files current; `npx --no-install openspec validate --all --no-interactive`: 12/12 (includes the unregistered `analyze-rust-tools-windows-portability`).
-- known violations: **NONE** — the nine blocking `git grep` gates in `.kbd-orchestrator/constraints.md` (no `.sh/.py/.ps1`, no `shell: true`, no `$HOME`/`/tmp`, no `os.homedir()` outside `lib/platform/paths.mjs`, no ZeeSpec, no secret literals, no compose host binds, no `console.log` in `lib/`) all exit 1 (clean), plus both warning gates.
+- known violations: **NONE** — the nine blocking `git grep` gates in `.kbd-orchestrator/constraints.md` (no `.sh/.py/.ps1`, no `shell: true`, no `$HOME`/`/tmp`, no `os.homedir()` outside `lib/platform/paths.mjs`, no spec-gate, no secret literals, no compose host binds, no `console.log` in `lib/`) all exit 1 (clean), plus both warning gates.
 - test coverage: **FULL** for what exists (every `lib/` module has a co-located test; `npm run coverage` enforces a threshold in CI); **NONE** for the eight goals of this child, since none of them exists yet.
 
 CONSTRAINT CHECK

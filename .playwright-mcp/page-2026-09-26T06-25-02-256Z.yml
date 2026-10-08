@@ -1,0 +1,463 @@
+- generic [ref=f2e2]:
+  - region "Skip to main content":
+    - link "Skip to main content" [ref=f2e3] [cursor=pointer]:
+      - /url: "#__docusaurus_skipToContent_fallback"
+  - navigation "Main" [ref=f2e4]:
+    - generic [ref=f2e5]:
+      - generic [ref=f2e6]:
+        - link "Prometheus Skill Pack home Prometheus Skill Pack" [ref=f2e7] [cursor=pointer]:
+          - /url: /prometheus-skill-system/
+          - img "Prometheus Skill Pack home" [ref=f2e9]
+          - generic [ref=f2e10]: Prometheus Skill Pack
+        - link "Guide" [ref=f2e11] [cursor=pointer]:
+          - /url: /prometheus-skill-system/docs/guide/quick-start
+        - link "Dynamic Operations" [ref=f2e12] [cursor=pointer]:
+          - /url: /prometheus-skill-system/docs/execution/overview-and-use-cases
+        - button "Core" [ref=f2e14] [cursor=pointer]
+        - button "Learn" [ref=f2e16] [cursor=pointer]
+        - button "Platforms" [ref=f2e18] [cursor=pointer]
+        - link "Skills Catalog" [ref=f2e19] [cursor=pointer]:
+          - /url: /prometheus-skill-system/docs/catalog/architecture
+      - generic [ref=f2e20]:
+        - link [ref=f2e21] [cursor=pointer]:
+          - /url: https://github.com/Prometheus-AGS/prometheus-skill-system
+          - text: GitHub
+          - img "(opens in new tab)" [ref=f2e22]
+        - button "Switch between dark and light mode (currently light mode)" [ref=f2e25] [cursor=pointer]
+        - generic [ref=f2e29]:
+          - textbox "Search" [ref=f2e30]
+          - generic:
+            - generic: ⌘
+            - generic: K
+  - generic [ref=f2e33]:
+    - complementary [ref=f2e34]:
+      - navigation "Docs sidebar" [ref=f2e37]:
+        - list [ref=f2e38]:
+          - listitem [ref=f2e39]:
+            - link "Quick Start" [ref=f2e40] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/quick-start
+          - listitem [ref=f2e42]:
+            - link "01 · Introduction" [ref=f2e43] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/introduction
+          - listitem [ref=f2e45]:
+            - link "02 · Metaprompting, PMPO, and KBD" [ref=f2e46] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/metaprompting-pmpo-kbd
+          - listitem [ref=f2e48]:
+            - link "03 · Loop Architecture" [ref=f2e49] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/loop-architecture
+          - listitem [ref=f2e51]:
+            - link "04 · The Four-Layer Pipeline" [ref=f2e52] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/four-layer-pipeline
+          - listitem [ref=f2e54]:
+            - link "05 · The MCP Server Substrate" [ref=f2e55] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/mcp-substrate
+          - listitem [ref=f2e57]:
+            - link "06 · Deterministic Memory and Learning" [ref=f2e58] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/memory-and-learning
+          - listitem [ref=f2e60]:
+            - link "07 · Sycophancy Correction" [ref=f2e61] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/sycophancy-correction
+          - listitem [ref=f2e63]:
+            - link "08 · Skills Overview" [ref=f2e64] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/skills-overview
+          - listitem [ref=f2e66]:
+            - link "09 · Process & Orchestration Skills" [ref=f2e67] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/process-skills
+          - listitem [ref=f2e69]:
+            - link "10 · Language & Domain Skills" [ref=f2e70] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/language-skills
+          - listitem [ref=f2e72]:
+            - link "10 · Learn Domain Skills" [ref=f2e73] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/learn-skills
+          - listitem [ref=f2e75]:
+            - link "11 · The Artifact Refiner" [ref=f2e76] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/artifact-refiner
+          - listitem [ref=f2e78]:
+            - link "12 · The Agent Creator (native-agent)" [ref=f2e79] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/native-agent-generator
+          - listitem [ref=f2e81]:
+            - link "13 · Tools Reference" [ref=f2e82] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/tools-reference
+          - listitem [ref=f2e84]:
+            - link "14 · The Rust Toolchain & Dynamic Generation" [ref=f2e85] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/rust-toolchain
+          - listitem [ref=f2e87]:
+            - link "15 · Hooks & Lifecycle" [ref=f2e88] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/hooks-and-lifecycle
+          - listitem [ref=f2e90]:
+            - link "16 · CLI & Scripts Reference" [ref=f2e91] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/cli-and-scripts
+          - listitem [ref=f2e93]:
+            - link "17 · Platform Support" [ref=f2e94] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/platform-support
+          - listitem [ref=f2e96]:
+            - link "18 · Plugins and Immutable Distribution" [ref=f2e97] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/plugins-and-marketplace
+          - listitem [ref=f2e99]:
+            - link "19 · Installation" [ref=f2e100] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/installation
+          - listitem [ref=f2e102]:
+            - link "20 · Updating" [ref=f2e103] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/updating
+          - listitem [ref=f2e105]:
+            - link "21 · Contributing" [ref=f2e106] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/contributing
+          - listitem [ref=f2e108]:
+            - link "22 · Advantages & Impact" [ref=f2e109] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/advantages-and-impact
+          - listitem [ref=f2e111]:
+            - link "23 · Glossary & Sources" [ref=f2e112] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/glossary
+          - listitem [ref=f2e114]:
+            - link "Agent teams" [ref=f2e115] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/agent-teams
+          - listitem [ref=f2e117]:
+            - link "UI/UX routing" [ref=f2e118] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/ui-ux-routing
+          - listitem [ref=f2e120]:
+            - link "09a · Adversarial Review & Model Configuration" [ref=f2e121] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/09a-adversarial-review
+          - listitem [ref=f2e123]:
+            - link "09b · liter-llm — The Model Gateway" [ref=f2e124] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/09b-liter-llm
+          - listitem [ref=f2e126]:
+            - link "12a · The Skill Creator (pmpo-skill-creator)" [ref=f2e127] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/12a-pmpo-skill-creator
+          - listitem [ref=f2e129]:
+            - link "14a · forge-rs & the Template Runtimes" [ref=f2e130] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/14a-forge-rs
+          - listitem [ref=f2e132]:
+            - link "16a · cowork" [ref=f2e133] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/16a-cowork
+          - listitem [ref=f2e135]:
+            - link "22a · Self-Extending Agents" [ref=f2e136] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/22a-self-extending-agents
+          - listitem [ref=f2e138]:
+            - link "Prometheus Skill Pack — Official Product Documentation" [ref=f2e139] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/
+    - main [ref=f2e141]:
+      - generic [ref=f2e143]:
+        - generic [ref=f2e145]:
+          - article [ref=f2e146]:
+            - navigation "Breadcrumbs" [ref=f2e147]:
+              - list [ref=f2e148]:
+                - listitem [ref=f2e149]:
+                  - link "Home page" [ref=f2e150] [cursor=pointer]:
+                    - /url: /prometheus-skill-system/
+                - listitem [ref=f2e153]:
+                  - generic [ref=f2e154]: UI/UX routing
+            - generic [ref=f2e155]:
+              - heading "UI/UX routing" [level=1] [ref=f2e157]
+              - paragraph [ref=f2e158]:
+                - text: Use
+                - code [ref=f2e159]: prometheus-ui-ux
+                - text: when work changes rendered UI, interaction, styles, tokens, motion or on-screen copy. Describe the affected application and whether you are creating, redesigning, refining or reviewing it. The router returns context to read and a small set of relevant skills. Backend-only work uses the selected project team without loading UI guidance.
+              - paragraph [ref=f2e160]:
+                - text: The canonical UI catalog contains
+                - strong [ref=f2e161]: 41 entries
+                - text: . The portable project installer and mini pack carry
+                - strong [ref=f2e162]: "40"
+                - text: ; full distribution also includes the optional native Impeccable integration. The full pack's generated distribution index currently lists
+                - strong [ref=f2e163]: 215 skills
+                - text: "across all domains. These are different inventories: the site catalog currently enumerates 194 source manifests excluding imported submodules, while the distribution index enumerates 215 packaged skills. See the"
+                - link "generated catalog" [ref=f2e164] [cursor=pointer]:
+                  - /url: /prometheus-skill-system/docs/catalog/ui-ux
+                - text: and
+                - link "distribution index" [ref=f2e165] [cursor=pointer]:
+                  - /url: https://github.com/Prometheus-AGS/prometheus-skill-system/blob/main/SKILLS.md
+                - text: .
+              - heading [level=2] [ref=f2e166]:
+                - text: Add UI guidance to a project
+                - link "Direct link to Add UI guidance to a project" [ref=f2e167] [cursor=pointer]:
+                  - /url: "#add-ui-guidance-to-a-project"
+                  - text: "#"
+              - paragraph [ref=f2e168]: Run these commands from the full pack checkout, replacing the project path with an existing authorized directory. For installed skills, use the actual skill directory reported by your harness. Node.js 22 or newer runs the shipped helpers without a TypeScript installation or network service.
+              - generic [ref=f2e170]:
+                - code [ref=f2e172]:
+                  - generic [ref=f2e173]: node skills/ui-ux/prometheus-ui-ux/scripts/cli.mjs install --project "/path/to/project" --dry-run
+                  - generic [ref=f2e174]: node skills/ui-ux/prometheus-ui-ux/scripts/cli.mjs install --project "/path/to/project"
+                  - generic [ref=f2e175]: node skills/ui-ux/prometheus-ui-ux/scripts/cli.mjs install --project "/path/to/project" --check
+                - generic [ref=f2e176]:
+                  - button "Toggle word wrap" [ref=f2e177] [cursor=pointer]
+                  - button "Copy code to clipboard" [ref=f2e180] [cursor=pointer]
+              - paragraph [ref=f2e186]:
+                - text: The installer copies portable skills into
+                - code [ref=f2e187]: .agents/skills
+                - text: and
+                - code [ref=f2e188]: .claude/skills
+                - text: ", installs a protocol if none exists, and adds managed pointers to both instruction entrypoints. It preserves project protocol overrides, unrelated prose and in-project linked entrypoints. It checks marker pairs and path containment before writing and retains recovery records for changed instructions. Malformed markers or escaping links must be resolved before installation; repeatedly forcing a bootstrap is not a repair procedure."
+              - paragraph [ref=f2e189]:
+                - text: Full-pack context bootstrap, including legacy and v4 layouts, and the existing UI rules injector call this same helper. Use the direct Node commands above when only UI routing is needed. Broader bootstrap has its own shell/tool prerequisites and changes beyond UI routing. In projects whose instruction files are generated, add the routing instructions to
+                - code [ref=f2e190]: rules/src/routing.md
+                - text: before regenerating; do not rely on an edit to generated output. Exact
+                - link "bootstrap and injector examples" [ref=f2e191] [cursor=pointer]:
+                  - /url: https://github.com/Prometheus-AGS/prometheus-skill-system/blob/main/docs/reference/ui-ux-routing.md
+                - text: are in the command reference.
+              - heading [level=2] [ref=f2e192]:
+                - text: Preserve the project's design decisions
+                - link "Direct link to Preserve the project's design decisions" [ref=f2e193] [cursor=pointer]:
+                  - /url: "#preserve-the-projects-design-decisions"
+                  - text: "#"
+              - paragraph [ref=f2e194]:
+                - text: Read the project override
+                - code [ref=f2e195]: .agents/UI_UX_PROTOCOL.md
+                - text: when present, otherwise the bundled protocol. Load
+                - code [ref=f2e196]: PRODUCT.md
+                - text: ","
+                - code [ref=f2e197]: DESIGN.md
+                - text: ","
+                - code [ref=f2e198]: .impeccable.md
+                - text: ", the affected application's surface brief, existing components and tokens before choosing direction. A missing design document does not turn an existing application into a blank canvas."
+              - paragraph [ref=f2e199]:
+                - text: Pro Max supplies focused domain and stack recommendations. Its TypeScript 7 source ships as Node ESM with pinned data; the full and mini portable helpers use identical bytes. Ordinary refinement and review use focused search. Generate a complete design system only when establishing or explicitly replacing direction. Persisted Pro Max output stays under
+                - code [ref=f2e200]: design-system/<project>/
+                - text: ; Stitch uses
+                - code [ref=f2e201]: DESIGN.stitch.md
+                - text: . Neither overrides approved
+                - code [ref=f2e202]: DESIGN.md
+                - text: or incumbent tokens.
+              - paragraph [ref=f2e203]:
+                - text: Full-only Impeccable engine execution requires an explicitly configured, preinstalled
+                - code [ref=f2e204]: IMPECCABLE_BIN
+                - text: . The launcher never downloads an engine. When unavailable, read project context directly and continue with permitted guidance. Mini uses
+                - code [ref=f2e205]: prometheus-impeccable-core
+                - text: ", an explicitly bounded context and craft adaptation. It does not provide native detector hooks, engine heuristics or live-browser parity. The proposed Node engine port remains deferred."
+              - heading [level=2] [ref=f2e206]:
+                - text: Route a task
+                - link "Direct link to Route a task" [ref=f2e207] [cursor=pointer]:
+                  - /url: "#route-a-task"
+                  - text: "#"
+              - paragraph [ref=f2e208]:
+                - text: Save this request as
+                - code [ref=f2e209]: ui-request.json
+                - text: ", using your actual affected paths and model:"
+              - generic [ref=f2e211]:
+                - code [ref=f2e213]:
+                  - generic [ref=f2e214]: "{"
+                  - generic [ref=f2e215]: "\"project\": \"/path/to/project\","
+                  - generic [ref=f2e216]: "\"affected\": [\"apps/web/src/Settings.tsx\"],"
+                  - generic [ref=f2e217]: "\"operation\": \"refine\","
+                  - generic [ref=f2e218]: "\"surface\": \"app\","
+                  - generic [ref=f2e219]: "\"model\": \"gpt-6\","
+                  - generic [ref=f2e220]: "\"focus\": \"accessibility\","
+                  - generic [ref=f2e221]: "\"ui\": true"
+                  - generic [ref=f2e222]: "}"
+                - button "Copy code to clipboard" [ref=f2e224] [cursor=pointer]
+              - generic [ref=f2e231]:
+                - code [ref=f2e233]:
+                  - generic [ref=f2e234]: node skills/ui-ux/prometheus-ui-ux/scripts/cli.mjs route --input ui-request.json
+                - generic [ref=f2e235]:
+                  - button "Toggle word wrap" [ref=f2e236] [cursor=pointer]
+                  - button "Copy code to clipboard" [ref=f2e239] [cursor=pointer]
+              - paragraph [ref=f2e245]: Use returned context paths first, then load the selected skills in order. Missing skills are reported gaps, not authorization to install dependencies. The model value is the actual model identifier; a Codex harness name does not establish that the model is GPT.
+              - table [ref=f2e246]:
+                - rowgroup [ref=f2e247]:
+                  - row [ref=f2e248]:
+                    - columnheader "Operation" [ref=f2e249]
+                    - columnheader "Direction guidance" [ref=f2e250]
+                - rowgroup [ref=f2e251]:
+                  - row [ref=f2e252]:
+                    - cell [ref=f2e253]:
+                      - code [ref=f2e254]: new
+                    - cell [ref=f2e255]:
+                      - code [ref=f2e256]: gpt-taste
+                      - text: for actual GPT-family models; otherwise
+                      - code [ref=f2e257]: design-taste-frontend
+                      - text: .
+                  - row [ref=f2e258]:
+                    - cell [ref=f2e259]:
+                      - code [ref=f2e260]: redesign
+                    - cell [ref=f2e261]:
+                      - code [ref=f2e262]: redesign-existing-projects
+                      - text: after explicit redesign authorization.
+                  - row [ref=f2e263]:
+                    - cell [ref=f2e264]:
+                      - code [ref=f2e265]: refine
+                    - cell "Preserve identity; no taste implementation or overlay. This is the default." [ref=f2e266]
+                  - row [ref=f2e267]:
+                    - cell [ref=f2e268]:
+                      - code [ref=f2e269]: review
+                    - cell [ref=f2e270]:
+                      - text: Objective scope and evidence review through
+                      - code [ref=f2e271]: prometheus-ui-review
+                      - text: ; no taste. Reviewer, verifier and auditor roles force this route.
+              - paragraph [ref=f2e272]:
+                - text: "New work and redesign allow at most one direction implementation and one explicitly chosen overlay. Experimental/v1 taste identities remain distinct. Craft selection is narrow: layout →"
+                - code [ref=f2e273]: better-layout
+                - text: ; typography →
+                - code [ref=f2e274]: better-typography
+                - text: ; color →
+                - code [ref=f2e275]: better-colors
+                - text: ; copy →
+                - code [ref=f2e276]: better-writing
+                - text: ; accessibility →
+                - code [ref=f2e277]: better-accessibility
+                - text: ; motion →
+                - code [ref=f2e278]: better-ui
+                - text: ; broad work →
+                - code [ref=f2e279]: better-interface
+                - text: .
+              - paragraph [ref=f2e280]: Surface modes are Persuade for marketing, Operate for apps, Read for documentation and Experience for showcases. They provide starting ranges for variance, motion and density; existing design decisions and reduced-motion requirements win.
+              - paragraph [ref=f2e281]: Platform selection reads the nearest affected application's manifests, including nested applications. React/Vercel guidance applies to relevant components; Expo must match its declared SDK. Flutter, SwiftUI and Android retain their actual toolchain prerequisites and project versions. Tauri and Electron use the project's existing workflow. Portable guidance does not mean an unsupported host can build or profile native applications.
+              - paragraph [ref=f2e282]:
+                - text: Upstream
+                - code [ref=f2e283]: interface-review
+                - text: ","
+                - code [ref=f2e284]: break
+                - text: ","
+                - code [ref=f2e285]: variant
+                - text: and
+                - code [ref=f2e286]: explain-interface
+                - text: remain user-only. Automatic review uses the Prometheus reviewer and eligible craft guidance. Reading a user-only skill's source is not an invocation workaround.
+              - heading [level=2] [ref=f2e287]:
+                - text: Adopt the project team
+                - link "Direct link to Adopt the project team" [ref=f2e288] [cursor=pointer]:
+                  - /url: "#adopt-the-project-team"
+                  - text: "#"
+              - paragraph [ref=f2e289]: "The UI installer and project-team installer are separate operations. For an existing team, run:"
+              - generic [ref=f2e291]:
+                - code [ref=f2e293]:
+                  - generic [ref=f2e294]: node skills/process/agent-team-creator/scripts/cli.mjs install-project --project "/path/to/project" --dry-run
+                  - generic [ref=f2e295]: node skills/process/agent-team-creator/scripts/cli.mjs install-project --project "/path/to/project"
+                  - generic [ref=f2e296]: node skills/process/agent-team-creator/scripts/cli.mjs install-project --project "/path/to/project" --check
+                - generic [ref=f2e297]:
+                  - button "Toggle word wrap" [ref=f2e298] [cursor=pointer]
+                  - button "Copy code to clipboard" [ref=f2e301] [cursor=pointer]
+              - paragraph [ref=f2e307]:
+                - text: An existing selection in
+                - code [ref=f2e308]: .agent-team/project-routing.json
+                - text: wins. Without one, a sole
+                - code [ref=f2e309]: .agent-team/<id>/team.json
+                - text: is adopted. Multiple candidates require an explicit
+                - code [ref=f2e310]: "--team <id>"
+                - text: selection; a stale selection is an error. The installed pointer makes relevant selected roles the default for
+                - strong [ref=f2e311]: all code tasks
+                - text: . UI roles receive conditional routing; backend tasks stay free of UI guidance.
+              - paragraph [ref=f2e312]:
+                - text: Creator
+                - code [ref=f2e313]: export
+                - text: stages a proposal into a new directory.
+                - code [ref=f2e314]: install-project
+                - text: installs discovery instructions, the routing record and missing native definitions. Normal project-team creation finishes with installation after inspection. Existing native files, permissions, model settings, concurrency and ownership are preserved; differences are reported for a deliberate merge. Neither command starts a team or activates a service registration.
+              - paragraph [ref=f2e315]:
+                - text: Use native delegation only when the active harness exposes it. Otherwise follow the selected role instructions sequentially and disclose that limitation. Builder-context review is not independent review. Zed receives the pointer in its first effective existing instruction file as well as the standard entrypoints; external ACP agents retain their own configuration. Zed's parallel-thread UI does not establish a delegation API. See
+                - link "agent teams" [ref=f2e316] [cursor=pointer]:
+                  - /url: /prometheus-skill-system/docs/guide/agent-teams
+                - text: for creation and handoff.
+              - heading [level=2] [ref=f2e317]:
+                - text: Finish the phase, then collect evidence
+                - link "Direct link to Finish the phase, then collect evidence" [ref=f2e318] [cursor=pointer]:
+                  - /url: "#finish-the-phase-then-collect-evidence"
+                  - text: "#"
+              - paragraph [ref=f2e319]:
+                - text: Complete the entire authorized production phase before verification. Change the request operation to
+                - code [ref=f2e320]: review
+                - text: "and run:"
+              - generic [ref=f2e322]:
+                - code [ref=f2e324]:
+                  - generic [ref=f2e325]: node skills/ui-ux/prometheus-ui-ux/scripts/cli.mjs phase-boundary --input ui-request.json
+                - generic [ref=f2e326]:
+                  - button "Toggle word wrap" [ref=f2e327] [cursor=pointer]
+                  - button "Copy code to clipboard" [ref=f2e330] [cursor=pointer]
+              - paragraph [ref=f2e336]:
+                - text: The response is
+                - code [ref=f2e337]: "status: \"evidence-required\""
+                - text: and
+                - code [ref=f2e338]: "executed: false"
+                - text: . It supplies routing, a checklist and a Node hook descriptor. It accepts no evidence fields, captures no screenshots, launches no browser and cannot certify PASS. Exit 0 means the request was processed. Wire it to an existing completed-phase runner, never a per-edit event.
+              - paragraph [ref=f2e339]: Collect applicable device widths, theme states, real-content captures, keyboard focus and reduced-motion evidence with available platform tools. Obtain independent read-only review in a separate context, then use one batched correction and confirmation cycle. Record reviewer identity, evidence paths, unresolved findings and platform gaps. Missing independent review stays unverified; unresolved blockers stay blocking.
+              - heading [level=2] [ref=f2e340]:
+                - text: What the existing evidence establishes
+                - link "Direct link to What the existing evidence establishes" [ref=f2e341] [cursor=pointer]:
+                  - /url: "#what-the-existing-evidence-establishes"
+                  - text: "#"
+              - paragraph [ref=f2e342]:
+                - text: The
+                - link "delivery record" [ref=f2e343] [cursor=pointer]:
+                  - /url: https://github.com/Prometheus-AGS/prometheus-skill-system/blob/main/docs/research/ui-ux-routing/DELIVERY.md
+                - text: separates shipped implementation from acceptance gaps. Recorded local evidence includes macOS and offline Linux Node 22 bootstrap/creator/routing scenarios, full bootstrap/injector coverage, pinned Pro Max comparisons, distribution checks and a separate skill-contract judge. These are prior implementation receipts, not new certification by this guide.
+              - paragraph [ref=f2e344]: Native Windows execution, live invocation of every supported harness and a full installed Electron application run remain unverified. The native engine port is deferred. Catalog author review is self-review, and skill-contract review does not complete the ten-stage research review/export pipeline. Release certification remains open. No hosted CI result is used as validation evidence.
+            - link "Edit this page" [ref=f2e348] [cursor=pointer]:
+              - /url: https://github.com/Prometheus-AGS/prometheus-skill-system/edit/main/docs/guide/../docs/guide/25-ui-ux-routing.md
+          - navigation "Docs pages" [ref=f2e353]:
+            - link "Previous « Agent teams" [ref=f2e354] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/agent-teams
+              - generic [ref=f2e355]: Previous
+              - generic [ref=f2e356]: « Agent teams
+            - link "Next 09a · Adversarial Review & Model Configuration »" [ref=f2e357] [cursor=pointer]:
+              - /url: /prometheus-skill-system/docs/guide/09a-adversarial-review
+              - generic [ref=f2e358]: Next
+              - generic [ref=f2e359]: 09a · Adversarial Review & Model Configuration »
+        - list [ref=f2e362]:
+          - listitem [ref=f2e363]:
+            - link "Add UI guidance to a project" [ref=f2e364] [cursor=pointer]:
+              - /url: "#add-ui-guidance-to-a-project"
+          - listitem [ref=f2e365]:
+            - link "Preserve the project's design decisions" [ref=f2e366] [cursor=pointer]:
+              - /url: "#preserve-the-projects-design-decisions"
+          - listitem [ref=f2e367]:
+            - link "Route a task" [ref=f2e368] [cursor=pointer]:
+              - /url: "#route-a-task"
+          - listitem [ref=f2e369]:
+            - link "Adopt the project team" [ref=f2e370] [cursor=pointer]:
+              - /url: "#adopt-the-project-team"
+          - listitem [ref=f2e371]:
+            - link "Finish the phase, then collect evidence" [ref=f2e372] [cursor=pointer]:
+              - /url: "#finish-the-phase-then-collect-evidence"
+          - listitem [ref=f2e373]:
+            - link "What the existing evidence establishes" [ref=f2e374] [cursor=pointer]:
+              - /url: "#what-the-existing-evidence-establishes"
+  - contentinfo [ref=f2e375]:
+    - generic [ref=f2e376]:
+      - generic [ref=f2e377]:
+        - generic [ref=f2e378]:
+          - generic [ref=f2e379]: Core
+          - list [ref=f2e380]:
+            - listitem [ref=f2e381]:
+              - link "Dynamic Operations" [ref=f2e382] [cursor=pointer]:
+                - /url: /prometheus-skill-system/docs/execution/overview-and-use-cases
+            - listitem [ref=f2e383]:
+              - link "Agent Context" [ref=f2e384] [cursor=pointer]:
+                - /url: /prometheus-skill-system/docs/agent-context/overview
+            - listitem [ref=f2e385]:
+              - link "Memory" [ref=f2e386] [cursor=pointer]:
+                - /url: /prometheus-skill-system/docs/memory/overview
+            - listitem [ref=f2e387]:
+              - link "Knowledge & Learning" [ref=f2e388] [cursor=pointer]:
+                - /url: /prometheus-skill-system/docs/knowledge-learning/snapshots-and-context
+            - listitem [ref=f2e389]:
+              - link "Operations" [ref=f2e390] [cursor=pointer]:
+                - /url: /prometheus-skill-system/docs/operations/installation-and-upgrades
+        - generic [ref=f2e391]:
+          - generic [ref=f2e392]: Learn
+          - list [ref=f2e393]:
+            - listitem [ref=f2e394]:
+              - link "Learn Domain" [ref=f2e395] [cursor=pointer]:
+                - /url: /prometheus-skill-system/docs/learn/overview
+            - listitem [ref=f2e396]:
+              - link "Skills Catalog" [ref=f2e397] [cursor=pointer]:
+                - /url: /prometheus-skill-system/docs/catalog/
+            - listitem [ref=f2e398]:
+              - link "Numbered Guide" [ref=f2e399] [cursor=pointer]:
+                - /url: /prometheus-skill-system/docs/guide/introduction
+        - generic [ref=f2e400]:
+          - generic [ref=f2e401]: Platforms
+          - list [ref=f2e402]:
+            - listitem [ref=f2e403]:
+              - link "Sovereign Sync" [ref=f2e404] [cursor=pointer]:
+                - /url: /prometheus-skill-system/docs/sovereign-sync/overview
+            - listitem [ref=f2e405]:
+              - link "Mobile" [ref=f2e406] [cursor=pointer]:
+                - /url: /prometheus-skill-system/docs/mobile/overview
+            - listitem [ref=f2e407]:
+              - link "Substrate" [ref=f2e408] [cursor=pointer]:
+                - /url: /prometheus-skill-system/docs/substrate/
+        - generic [ref=f2e409]:
+          - generic [ref=f2e410]: More
+          - list [ref=f2e411]:
+            - listitem [ref=f2e412]:
+              - link [ref=f2e413] [cursor=pointer]:
+                - /url: https://github.com/Prometheus-AGS/prometheus-skill-system
+                - text: GitHub
+                - img "(opens in new tab)" [ref=f2e414]
+      - generic [ref=f2e416]: Copyright © 2026 Prometheus AGS. MIT License.

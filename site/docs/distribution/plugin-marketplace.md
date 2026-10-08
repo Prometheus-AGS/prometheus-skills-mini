@@ -7,7 +7,7 @@ sidebar_label: Overview
 
 `lib/distribution/` and the `skill-system.json` manifest at the repo root generate installable
 plugin packages and marketplace listings for Claude Code and Codex, purely from the real `skills/`
-tree (97 distributed skill directories) — copy-mode throughout, never symlink.
+manifest-selected skill tree — copy-mode throughout, never symlink.
 
 ## `lib/distribution/` modules
 
@@ -67,19 +67,29 @@ The same `${CLAUDE_PLUGIN_ROOT}` targets ship in both packages; `skill-system-di
 checks that every file the Codex `hooks.json` references is present with matching bytes.
 
 Codex runs plugin hooks only in a trusted project with `[features] hooks = true`, after a one-time
-trust prompt. To check firing without touching your real Codex home, use a scratch `CODEX_HOME`
-and `HOME`, then:
+trust prompt. For local integration, use a disposable `CODEX_HOME` and home, register the real generated package through the installed CLI's supported marketplace commands, and explicitly grant hook trust for that scratch project. Follow the installed Codex version's help for trust controls. Do not bypass trust or write to a real home as a documentation smoke check. Record packaged hook stderr and the actual source/generation identity after all phase production is complete.
 
-```bash
-codex plugin marketplace add <repo>
-codex plugin add prometheus-skills-mini@prometheus-skills-mini
-codex exec --skip-git-repo-check --dangerously-bypass-hook-trust "echo hi" </dev/null
-# stderr shows two `hook: SessionStart Completed` lines
-```
+## Hook activation and plugin source failures
+
+Payload and registered-source failures occur at different boundaries. A missing shared loader dependency can affect many hooks; a missing per-hook dependency has a narrower effect. Source registration can fail before any hook starts.
+
+- **A payload that does not activate.** A hook module that imports a file the payload does not ship fails in
+  Node's loader. `scripts/payload-activation.test.mjs` copies each built payload (Claude and Codex) to a temp
+  directory with an empty `HOME` and runs every hook its `hooks.json` declares. It reads stderr, not the exit
+  status, because `hook-entry.mjs` exits 0 on a degraded hook by design. Since 1.11.2 a missing file *inside the
+  plugin root* is the one load failure that is loud: one `HOOK_RUNTIME_ERROR` line with code
+  `PAYLOAD_INCOMPLETE`, the missing path and the remedy, and exit 1. A missing optional package or a throwing
+  hook stays a quiet degradation (exit 0).
+- **A removed plugin directory.** A marketplace registered as a `directory` is read in place. If it is a worktree
+  on a feature branch, merging and removing the branch deletes the plugin directory, and the harness refuses every
+  hook before any of them runs. `node scripts/doctor.mjs` reports it as `mini-plugin-source`: **fail** when the
+  registered source is missing, **warn** on a topic branch, not a git checkout, an unreadable registry or an
+  unexaminable path. After fixing the registration, reload plugins or restart the session: a running session keeps
+  the path it loaded. Only the Claude Code registration is inspected; Codex registrations are not.
 
 ## Copy-mode vs symlink-mode
 
-The full pack symlinks 11 of its 13 install targets. This pack's own constitution forbids symlinks
+The full pack declares fourteen targets: Codex and MiniMax use copies, and the other twelve use symlinks. This pack's own constitution forbids symlinks
 outright — a real, repo-wide rule, not specific to distribution — because creating a symlink on
 Windows needs Developer Mode or elevation, exactly the kind of privileged setup step this pack
 exists to avoid requiring. `lib/distribution/package-builder.mjs`'s copy-then-atomic-swap pattern is
@@ -94,8 +104,7 @@ the one deliberate divergence from the full pack's own generator that this repo'
 
 Distribution makes skill payloads available. Project adoption also needs managed instructions,
 the UI protocol and an active-team record. Follow [UI/UX routing and adoption](/docs/ui-ux/overview)
-for bootstrap or separate UI/creator commands. The current inventory includes 40 portable UI
-entries from the shared 41-entry catalog. Local helpers run directly with Node 22+ and bundled
+for bootstrap or separate UI/creator commands. The generated catalog records the portable UI entries. Local helpers run directly with Node 22+ and bundled
 assets; they need neither optional service. The full-pack anti-shadowing constraint still applies.
 
 Proposal-only creator `export` does not install a project team; normal project creation finishes

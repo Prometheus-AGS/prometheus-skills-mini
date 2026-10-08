@@ -50,8 +50,7 @@ shim.
 ## Text and line endings
 
 - `.gitattributes`: `* text=auto eol=lf`; every parser must tolerate CRLF anyway.
-  `lib/platform/text.mjs` is the only module in the repository allowed to read a text file directly
-  — normalizing CRLF once here means no downstream parser has to think about it. Lone CR and mixed
+  `lib/platform/text.mjs` provides CRLF normalization for its callers. Inspect each parser and caller before claiming repository-wide normalization. Lone CR and mixed
   endings are deliberately unhandled: neither has been observed, and inventing behavior for them
   would be guesswork.
 - Case-insensitive filesystem: no two files differing only by case.
@@ -66,14 +65,12 @@ shim.
 
 ## Testing
 
-- `node:test`, run in CI on `windows-latest`, `ubuntu-latest`, `macos-latest`. The full pack's
-  `bats` tests do not come across.
+- Complete all phase production first, then run real integration gates locally on the relevant platform. Legacy `node:test` suites may remain but unit results and hosted workflows are not current acceptance evidence. The full pack's `bats` suite is not the mini runtime.
 
 ## What's independently verified vs. self-reported
 
 The `platform-foundation` phase's Windows claims (atomic write, locking, CRLF handling, shell-free
-CLI spawning, a `core.autocrlf=true` checkout surviving) are backed by real CI runs on
-`windows-latest` — not reasoned from macOS behavior. The later KBD/adversarial-review/ideation-
+CLI spawning, a `core.autocrlf=true` checkout surviving) were recorded against historical hosted Windows runs. That record describes its original commit only and is not current release evidence under the local-only policy. The later KBD/adversarial-review/ideation-
 mindmap/distribution port (1,000+ tests) ran on macOS only as of that commit; Windows verification
 for that batch is still owed, and this documentation states that plainly rather than implying
 otherwise.

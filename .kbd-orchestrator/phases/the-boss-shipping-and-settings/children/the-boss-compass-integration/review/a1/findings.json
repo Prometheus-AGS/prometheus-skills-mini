@@ -1,0 +1,50 @@
+{
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "crates/compass-mcp/src/lib.rs",
+      "line": 556,
+      "claim": "initialize() records the client's *requested* protocol version in peer info before negotiation, so when rmcp negotiates an unknown requested version down to a supported legacy fallback, the stored peer info permanently disagrees with the negotiated InitializeResult the client received.",
+      "evidence": "The hunk runs `context.peer.set_peer_info(request.clone());` and only then `self.negotiate_initialize(&request)`. The constraints themselves state rmcp 3.4.0 'initialize fallback to a supported legacy revision when an unknown version is requested' — i.e., for an unknown request version the result's protocolVersion differs from request.protocol_version, but peer info was already fixed to the request. The new conformance test only asserts `peer.protocol_version == version` for versions that negotiate exactly, so this divergence is unexercised. Any rmcp-internal or future behavior keyed off `peer_info().protocol_version` (e.g., response framing or version validation on the session) will act on a version the client never agreed to.",
+      "suggested_fix": "Negotiate first, then set peer info from the negotiated result (e.g., call `negotiate_initialize`, and on success set peer info with `request` rewritten to the result's `protocol_version`), or only set peer info when the requested version is in SUPPORTED_PROTOCOL_VERSIONS."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/compass-mcp/src/transport.rs",
+      "line": 245,
+      "claim": "Enabling legacy session mode gives every initialize POST new persistent session state with no configured bound, so session creation is rate-limited only by the 300-second idle expiry, not by any capacity cap.",
+      "evidence": "The router now builds `Arc::new(LocalSessionManager::default())` and `StreamableHttpServerConfig::default().with_legacy_session_mode(true)`; nothing in the diff configures a maximum session count, and COMPATIBILITY.md documents only 'closes inactive sessions after five minutes'. COMPATIBILITY.md also confirms initialize needs no protocol header and the gate performs no per-client throttling; on deployments run without `--api-key` (an explicitly supported configuration — 'no auth (set --api-key to require one)'), any client that can reach the port can accumulate sessions at request rate for the full 300s idle window, a memory/DoS vector that did not exist while `with_legacy_session_mode(false)` was set at HEAD.",
+      "suggested_fix": "Configure a bounded session capacity on the session manager if rmcp exposes one; otherwise document the exposure in COMPATIBILITY.md and note that unauthenticated/wildcard deployments inherit session-flooding risk."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/compass-mcp/tests/http_protocol_conformance.rs",
+      "line": 21,
+      "claim": "The test reserves an ephemeral port with a temporary bind, drops the listener, and then has serve_http rebind it, leaving a real TOCTOU race that will flake under parallel test load.",
+      "evidence": "`let reservation = std::net::TcpListener::bind(\"127.0.0.1:0\")?; ... drop(reservation); let server = ServerTask(tokio::spawn(serve_http(options)));` — between `drop(reservation)` and serve_http's `TcpListener::bind`, any other process or parallel test can claim the port, failing the test with a bind error unrelated to the code under test.",
+      "suggested_fix": "Have serve_http (or a test-only variant) accept a pre-bound `tokio::net::TcpListener`, or retry the reserve-drop-bind cycle on bind failure."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "COMPATIBILITY.md",
+      "line": 325,
+      "claim": "The documented negotiation contract is silent on what happens when initialize requests a version outside the four supported revisions, even though the implementation intentionally negotiates such requests down to a supported legacy revision.",
+      "evidence": "COMPATIBILITY.md says only 'Clients using the three 2025 revisions begin with `initialize`; Compass returns the negotiated revision,' while the constraints state rmcp's documented 'initialize fallback to a supported legacy revision when an unknown version is requested' is intended behavior. Operators reading COMPATIBILITY.md cannot predict the server's answer to, e.g., `protocolVersion: \"2024-11-05\"` or a future revision.",
+      "suggested_fix": "Add one sentence to the MCP transport compatibility section stating that initialize requests naming an unsupported revision are negotiated to a supported legacy revision per the rmcp SDK contract."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/compass-mcp/tests/protocol_conformance.rs",
+      "line": 135,
+      "claim": "No test exercises the unknown-version negotiation fallback, so the intended rmcp downgrade behavior — and the exact fallback revision a client receives — is locked in by nothing.",
+      "evidence": "`stdio_accepts_initialize_for_every_pre_discovery_revision` iterates only V_2025_11_25/V_2025_06_18/V_2025_03_26 with exact-echo assertions, `stdio_refuses_initialize_for_the_discovery_revision` covers only 2026-07-28, and the new HTTP test covers the three legacy versions plus malformed headers; the constraints call the unknown-version fallback 'intended' but no test asserts what InitializeResult.protocolVersion an unknown request yields.",
+      "suggested_fix": "Add a conformance case that initializes with an unrecognized version string and asserts the negotiated fallback revision returned by rmcp."
+    }
+  ],
+  "mode": "diff",
+  "producer_model": "GPT-6",
+  "judge_model": "k3",
+  "cross_model_check": "verified-distinct",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "verdict": "PASS"
+}

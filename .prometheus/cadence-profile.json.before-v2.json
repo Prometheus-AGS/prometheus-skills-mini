@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "name": "agent-fabric-convergence-two-hour-delivery",
+  "mode": "kbd",
+  "iterationMinutes": 120,
+  "reviewEvery": 0,
+  "publication": {
+    "mode": "every",
+    "every": 2,
+    "platforms": [
+      "darwin-arm64",
+      "darwin-x64",
+      "win32-x64",
+      "win32-arm64"
+    ],
+    "websiteUrl": "https://the-boss.know-me.tools",
+    "procedure": {
+      "repository": "Prometheus-AGS/the-boss",
+      "workflow": "the-boss-release.yml",
+      "profile": "uar-enabled",
+      "sourcePolicy": "Freeze and push current release source before dispatch; derive version from that source.",
+      "requiredInputs": [
+        "release_version",
+        "release_profile",
+        "platforms",
+        "uar_win32_x64_record_url",
+        "uar_win32_arm64_record_url",
+        "uar_darwin_arm64_record_url",
+        "uar_darwin_x64_record_url"
+      ],
+      "platforms": "darwin-arm64,darwin-x64,win32-x64,win32-arm64",
+      "landingRepository": "Know-Me-Tools/boss-landing-spot",
+      "completion": "All four platform bytes published on GitHub Releases; metadata committed/pushed; landing deployed; publication-receipt.mjs confirms exact live URLs and bytes. Never record dispatch as complete."
+    }
+  },
+  "budgets": {
+    "maxIterations": null,
+    "maxRunMinutes": null
+  },
+  "binding": {
+    "project": "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-c06/librefang/docs/plans/agent-fabric-convergence",
+    "phase": "agent-fabric-convergence",
+    "taskOwner": "kbd-apply",
+    "bossRepository": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-d01-build",
+    "approval": "Operator requested 120-minute autonomous increments, local Mac build each and all Mac/Windows through website every second successful delivery on 2026-09-28."
+  },
+  "checkpoints": [
+    {
+      "id": "mac-arm64-build",
+      "kind": "build",
+      "command": "pnpm",
+      "args": [
+        "build:mac:arm64"
+      ],
+      "cwd": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-d01-build",
+      "required": true,
+      "timeoutMs": 14400000
+    },
+    {
+      "id": "mac-functional-launch",
+      "kind": "run",
+      "command": "/Users/gqadonis/.nvm/versions/node/v22.20.0/bin/node",
+      "args": [
+        "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack/skills/process/delivery-cadence/scripts/boss-launch.mjs",
+        "--repository",
+        "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-d01-build",
+        "--scenario",
+        "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack/skills/process/delivery-cadence/assets/boss-provider-setup.mjs",
+        "--require-scenario",
+        "--receipt",
+        "/Users/gqadonis/Projects/prometheus/worktrees/agent-fabric-c06/librefang/docs/plans/agent-fabric-convergence/.prometheus/cadence/artifacts/mac-functional-launch.json"
+      ],
+      "cwd": "/Users/gqadonis/Projects/prometheus/worktrees/the-boss-d01-build",
+      "required": true,
+      "timeoutMs": 120000
+    }
+  ],
+  "team": {
+    "maxImplementers": 3,
+    "maxBuildWriters": 1
+  },
+  "optimization": {
+    "mode": "automatic",
+    "minimumSamples": 3,
+    "bounds": {
+      "iterationMinutes": [
+        120,
+        120
+      ],
+      "publicationEvery": [
+        2,
+        2
+      ],
+      "maxImplementers": [
+        1,
+        3
+      ]
+    }
+  },
+  "operationalPolicy": {
+    "boundary": "Build the complete increment and run its actual function. No test suites. Repair all errors before next iteration.",
+    "baselineFunction": "Fresh onboarding opens provider administration; this does not prove inference.",
+    "perIncrementFunction": "The executing owner must also operate the newly completed feature and record its behavior in the delivery receipt before finish.",
+    "compassMinutes": 60,
+    "publicationPublisherLimit": 1
+  }
+}

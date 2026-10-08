@@ -1,0 +1,400 @@
+diff --git a/crates/compass-core/src/build_state.rs b/crates/compass-core/src/build_state.rs
+index 6a289592..0c4c06a8 100644
+--- a/crates/compass-core/src/build_state.rs
++++ b/crates/compass-core/src/build_state.rs
+@@ -361,6 +361,8 @@ mod tests {
+             code_only: true,
+             program_analysis: false,
+             graph_storage: "json".to_owned(),
++            surreal_engine: None,
++            surreal_path: None,
+             inference_level: legacy_default_inference_level(),
+             max_source_bytes: default_max_source_bytes(),
+             document_processing_identity: default_document_processing_identity(),
+@@ -404,6 +406,8 @@ mod tests {
+             code_only: false,
+             program_analysis: true,
+             graph_storage: "json".to_owned(),
++            surreal_engine: None,
++            surreal_path: None,
+             inference_level: legacy_default_inference_level(),
+             max_source_bytes: default_max_source_bytes(),
+             document_processing_identity: default_document_processing_identity(),
+diff --git a/crates/compass-mcp/src/lib.rs b/crates/compass-mcp/src/lib.rs
+index 8b888119..7d8b1b66 100644
+--- a/crates/compass-mcp/src/lib.rs
++++ b/crates/compass-mcp/src/lib.rs
+@@ -8,12 +8,34 @@ pub use transport::{
+     serve_stdio_configured_with_engine,
+ };
+ 
+-/// MCP protocol version accepted by the native Compass transports.
++/// Newest MCP protocol version the native Compass transports speak.
++///
++/// `2026-07-28` (SEP-2243) replaces `initialize` with `server/discover` and carries the method
++/// on an `Mcp-Method` header. It remains the preferred revision and the one reported first.
+ pub const SUPPORTED_PROTOCOL_VERSION: &str = "2026-07-28";
+ 
+-/// Return whether the native transports accept the supplied MCP protocol.
++/// Every MCP protocol revision the native transports accept, newest first.
++///
++/// Serving `2026-07-28` alone left this server unreachable by every shipping client: the
++/// TypeScript SDK tops out at `2025-11-25` and implements no `server/discover`, so its
++/// `initialize` was refused and no session could be established. `rmcp` already implements
++/// these revisions, so accepting them restores interoperability without new protocol work.
++pub const SUPPORTED_PROTOCOL_VERSIONS: &[&str] =
++    &["2026-07-28", "2025-11-25", "2025-06-18", "2025-03-26"];
++
++/// Whether `version` names a protocol revision these transports implement.
+ #[must_use]
+ pub fn supports_protocol(version: &str) -> bool {
++    SUPPORTED_PROTOCOL_VERSIONS.contains(&version)
++}
++
++/// Whether `version` is a revision that replaced `initialize` with `server/discover`.
++///
++/// The `Mcp-Method` header and the absence of `initialize` are SEP-2243 conventions, introduced
++/// in `2026-07-28`. Enforcing either against an older client would reject a request that is
++/// valid for the revision that client negotiated.
++#[must_use]
++pub fn protocol_uses_discovery(version: &str) -> bool {
+     version == SUPPORTED_PROTOCOL_VERSION
+ }
+ 
+@@ -524,20 +546,43 @@ impl CompassMcp {
+ }
+ 
+ impl ServerHandler for CompassMcp {
++    /// `initialize` for every revision that still defines it.
++    ///
++    /// `2026-07-28` replaced `initialize` with `server/discover` (SEP-2243), so a client naming it
++    /// is refused here exactly as the HTTP gate refuses it. That keeps stdio and HTTP consistent.
++    /// Every older revision negotiates the way rmcp's default handler does: record the peer and
++    /// echo the requested version when supported. Refusing all of them was what made this server
++    /// unreachable by every shipping client.
+     fn initialize(
+         &self,
+-        _request: InitializeRequestParams,
+-        _context: RequestContext<RoleServer>,
++        request: InitializeRequestParams,
++        context: RequestContext<RoleServer>,
+     ) -> impl Future<Output = Result<InitializeResult, ErrorData>> + Send + '_ {
+-        std::future::ready(Err(ErrorData::new(
+-            ErrorCode::METHOD_NOT_FOUND,
+-            "initialize is not available in MCP 2026-07-28; use server/discover",
+-            None,
+-        )))
++        if protocol_uses_discovery(request.protocol_version.as_str()) {
++            return std::future::ready(Err(ErrorData::new(
++                ErrorCode::METHOD_NOT_FOUND,
++                "initialize is not available in MCP 2026-07-28; use server/discover",
++                None,
++            )));
++        }
++        context.peer.set_peer_info(request.clone());
++        let mut info = self.get_info();
++        if self
++            .supported_protocol_versions()
++            .contains(&request.protocol_version)
++        {
++            info.protocol_version = request.protocol_version;
++        }
++        std::future::ready(Ok(info))
+     }
+ 
+     fn supported_protocol_versions(&self) -> Cow<'static, [ProtocolVersion]> {
+-        Cow::Borrowed(&[ProtocolVersion::V_2026_07_28])
++        Cow::Borrowed(&[
++            ProtocolVersion::V_2026_07_28,
++            ProtocolVersion::V_2025_11_25,
++            ProtocolVersion::V_2025_06_18,
++            ProtocolVersion::V_2025_03_26,
++        ])
+     }
+ 
+     fn get_info(&self) -> ServerInfo {
+diff --git a/crates/compass-mcp/src/transport.rs b/crates/compass-mcp/src/transport.rs
+index 3338c60c..62c22b85 100644
+--- a/crates/compass-mcp/src/transport.rs
++++ b/crates/compass-mcp/src/transport.rs
+@@ -16,7 +16,13 @@ use tokio::io::{AsyncBufReadExt, AsyncReadExt, AsyncWriteExt, BufReader};
+ use tokio_util::sync::CancellationToken;
+ use tower_http::limit::RequestBodyLimitLayer;
+ 
+-use crate::{AgentGraphMcpConfig, CompassMcp, SUPPORTED_PROTOCOL_VERSION, supports_protocol};
++use crate::{
++    AgentGraphMcpConfig, CompassMcp, SUPPORTED_PROTOCOL_VERSIONS, protocol_uses_discovery,
++    supports_protocol,
++};
++
++/// Revision a request without an `MCP-Protocol-Version` header is taken to speak.
++const LEGACY_DEFAULT_PROTOCOL_VERSION: &str = "2025-03-26";
+ 
+ const MAX_HTTP_REQUEST_BYTES: usize = 16 * 1024 * 1024;
+ const MAX_HTTP_RESPONSE_BYTES: usize = 64 * 1024 * 1024;
+@@ -228,8 +234,14 @@ fn build_http_router(
+     } else {
+         allowed_hosts(&options.host, options.port)
+     };
++    // Legacy sessions apply only to revisions before `2026-07-28`; rmcp serves `2026-07-28`
++    // statelessly regardless (SEP-2567). With them off, an older client got no
++    // `Mcp-Session-Id` and was routed statelessly, where the metadata requirement below
++    // rejects its ordinary requests, since pre-`2026-07-28` clients attach no per-request
++    // metadata. On, older clients get a session and `2026-07-28` clients keep the strict
++    // stateless path.
+     let mut config = StreamableHttpServerConfig::default()
+-        .with_legacy_session_mode(false)
++        .with_legacy_session_mode(true)
+         .with_stateless_protocol_metadata_required(true)
+         .with_json_response(options.json_response)
+         .with_max_request_body_bytes(MAX_HTTP_REQUEST_BYTES)
+@@ -309,11 +321,17 @@ async fn http_gate(State(gate): State<HttpGate>, mut request: Request, next: Nex
+         normalize_header(&mut request, "mcp-protocol-version");
+         normalize_header(&mut request, "mcp-method");
+         normalize_header(&mut request, "mcp-name");
+-        let protocol_version = request
+-            .headers()
+-            .get("mcp-protocol-version")
+-            .and_then(|value| value.to_str().ok())
+-            .map(str::to_owned);
++        // An absent header means `2025-03-26`, the rule rmcp's own validator applies
++        // (`streamable_http_server/tower.rs`). Clients send no header on the `initialize` POST,
++        // since the version travels in the body until negotiation completes, so treating
++        // absence as unsupported would refuse every client's first request.
++        let protocol_version = Some(
++            request
++                .headers()
++                .get("mcp-protocol-version")
++                .and_then(|value| value.to_str().ok())
++                .map_or_else(|| LEGACY_DEFAULT_PROTOCOL_VERSION.to_owned(), str::to_owned),
++        );
+         if !protocol_version.as_deref().is_some_and(supports_protocol) {
+             let requested = protocol_version.map_or(serde_json::Value::Null, Into::into);
+             return protocol_gate_error(
+@@ -322,36 +340,44 @@ async fn http_gate(State(gate): State<HttpGate>, mut request: Request, next: Nex
+                 -32022,
+                 "Unsupported protocol version",
+                 Some(serde_json::json!({
+-                    "supported": [SUPPORTED_PROTOCOL_VERSION],
++                    "supported": SUPPORTED_PROTOCOL_VERSIONS,
+                     "requested": requested,
+                 })),
+             )
+             .await;
+         }
+-        let method = request
+-            .headers()
+-            .get("mcp-method")
+-            .and_then(|value| value.to_str().ok())
+-            .map(str::to_owned);
+-        if method.is_none() {
+-            return protocol_gate_error(
+-                request,
+-                StatusCode::BAD_REQUEST,
+-                -32020,
+-                "missing required Mcp-Method header",
+-                None,
+-            )
+-            .await;
+-        }
+-        if method.as_deref() == Some("initialize") {
+-            return protocol_gate_error(
+-                request,
+-                StatusCode::NOT_FOUND,
+-                -32601,
+-                "initialize is not available on stateless HTTP; use server/discover",
+-                None,
+-            )
+-            .await;
++        // The `Mcp-Method` header and the absence of `initialize` are SEP-2243 conventions that
++        // arrived with `2026-07-28`. A client on an earlier revision sends neither, and holding
++        // it to them would reject a request that is valid for the version it negotiated.
++        let uses_discovery = protocol_version
++            .as_deref()
++            .is_some_and(protocol_uses_discovery);
++        if uses_discovery {
++            let method = request
++                .headers()
++                .get("mcp-method")
++                .and_then(|value| value.to_str().ok())
++                .map(str::to_owned);
++            if method.is_none() {
++                return protocol_gate_error(
++                    request,
++                    StatusCode::BAD_REQUEST,
++                    -32020,
++                    "missing required Mcp-Method header",
++                    None,
++                )
++                .await;
++            }
++            if method.as_deref() == Some("initialize") {
++                return protocol_gate_error(
++                    request,
++                    StatusCode::NOT_FOUND,
++                    -32601,
++                    "initialize is not available in MCP 2026-07-28; use server/discover",
++                    None,
++                )
++                .await;
++            }
+         }
+     }
+     let method = request.method().clone();
+@@ -723,7 +749,10 @@ mod tests {
+             .body(Body::from("{\"plain\":true}"))?;
+         let plain = sse_response_to_json(plain).await;
+         assert_eq!(plain.status(), StatusCode::ACCEPTED);
+-        assert_eq!(to_bytes(plain.into_body(), 1024).await?, "{\"plain\":true}");
++        assert_eq!(
++            axum::body::to_bytes(plain.into_body(), 1024).await?,
++            "{\"plain\":true}"
++        );
+ 
+         let sse = Response::builder()
+             .header(header::CONTENT_TYPE, "text/event-stream; charset=utf-8")
+@@ -738,7 +767,7 @@ mod tests {
+         );
+         assert!(!converted.headers().contains_key(header::CONTENT_LENGTH));
+         assert_eq!(
+-            to_bytes(converted.into_body(), 1024).await?,
++            axum::body::to_bytes(converted.into_body(), 1024).await?,
+             "{\"jsonrpc\":\"2.0\",\"id\":1}"
+         );
+ 
+@@ -747,7 +776,7 @@ mod tests {
+             .body(Body::from("event: ping\ndata: invalid\n\n"))?;
+         let invalid = sse_response_to_json(invalid).await;
+         assert_eq!(
+-            to_bytes(invalid.into_body(), 1024).await?,
++            axum::body::to_bytes(invalid.into_body(), 1024).await?,
+             "event: ping\ndata: invalid\n\n"
+         );
+         Ok(())
+@@ -813,13 +842,18 @@ mod tests {
+         )
+         .await?;
+         assert!(initialized.starts_with("HTTP/1.1 200 OK"));
++        // A fresh `initialize` on the legacy-session path is always framed as SSE by rmcp
++        // itself (`serve_negotiated_request_directly` is the only branch `json_response`
++        // reaches, and a first request with no `Mcp-Session-Id` never takes it) — `json_response`
++        // has no effect here. Only the *subsequent* request on an established session honours it,
++        // asserted below via `listed`.
+         assert!(
+             initialized
+                 .to_lowercase()
+-                .contains("content-type: application/json")
++                .contains("content-type: text/event-stream")
+         );
+         let session = header_value(&initialized, "mcp-session-id").ok_or("missing session id")?;
+-        let payload: Value = serde_json::from_str(response_body(&initialized))?;
++        let payload: Value = sse_data_json(response_body(&initialized))?;
+         assert_eq!(payload["result"]["serverInfo"]["name"], "compass");
+ 
+         let listed = request(
+@@ -971,6 +1005,16 @@ mod tests {
+         response.split_once("\r\n\r\n").map_or("", |(_, body)| body)
+     }
+ 
++    /// Parse the first `data:` line out of an SSE body and deserialize it. The legacy-session
++    /// `initialize` response is exactly one such event, per rmcp's own framing.
++    fn sse_data_json(body: &str) -> Result<Value, Box<dyn std::error::Error>> {
++        let data = body
++            .lines()
++            .find_map(|line| line.strip_prefix("data:"))
++            .ok_or("no SSE data line in response body")?;
++        Ok(serde_json::from_str(data.trim())?)
++    }
++
+     fn header_value(response: &str, name: &str) -> Option<String> {
+         response
+             .lines()
+diff --git a/crates/compass-mcp/tests/protocol_conformance.rs b/crates/compass-mcp/tests/protocol_conformance.rs
+index 2092716e..0a741e9f 100644
+--- a/crates/compass-mcp/tests/protocol_conformance.rs
++++ b/crates/compass-mcp/tests/protocol_conformance.rs
+@@ -129,8 +129,55 @@ async fn stdio_conformance_discovers_lists_invokes_reads_and_closes() -> Result<
+     Ok(())
+ }
+ 
++/// Every revision that still negotiates through `initialize` must be accepted.
++///
++/// Refusing `initialize` outright made Compass unreachable by every shipping client: the
++/// TypeScript SDK tops out at `2025-11-25` and implements no `server/discover`. The server must
++/// echo the revision the client asked for, since a strict client rejects one it did not request.
+ #[tokio::test]
+-async fn stdio_rejects_a_legacy_initialize_lifecycle() -> Result<(), Box<dyn Error>> {
++async fn stdio_accepts_initialize_for_every_pre_discovery_revision() -> Result<(), Box<dyn Error>> {
++    for version in [
++        ProtocolVersion::V_2025_11_25,
++        ProtocolVersion::V_2025_06_18,
++        ProtocolVersion::V_2025_03_26,
++    ] {
++        let (server_transport, client_transport) = tokio::io::duplex(16 * 1024);
++        let server_task = tokio::spawn(async move {
++            let running = CompassMcp::new("missing.json")
++                .serve(server_transport)
++                .await
++                .map_err(|error| error.to_string())?;
++            running.waiting().await.map_err(|error| error.to_string())
++        });
++        let client_info = ClientInfo::new(
++            ClientCapabilities::default(),
++            Implementation::new("initialize-conformance-client", env!("CARGO_PKG_VERSION")),
++        )
++        .with_protocol_version(version.clone());
++        let client = client_info
++            .serve_with_lifecycle(client_transport, ClientLifecycleMode::Initialize)
++            .await
++            .map_err(|error| format!("initialize refused for {version}: {error}"))?;
++
++        let peer = client.peer_info().ok_or("missing MCP peer information")?;
++        assert_eq!(
++            peer.protocol_version, version,
++            "server did not echo the negotiated revision"
++        );
++        // A handshake alone proves little; a real request must work on the negotiated session.
++        client.list_tools(None).await?;
++
++        client.cancel().await?;
++        server_task.await?.map_err(std::io::Error::other)?;
++    }
++    Ok(())
++}
++
++/// `2026-07-28` replaced `initialize` with `server/discover` (SEP-2243), so a client naming it
++/// through `initialize` is refused. Without this test, deleting the override would silently
++/// fall back to rmcp's default, which accepts every version it knows.
++#[tokio::test]
++async fn stdio_refuses_initialize_for_the_discovery_revision() -> Result<(), Box<dyn Error>> {
+     let (server_transport, client_transport) = tokio::io::duplex(16 * 1024);
+     let server_task = tokio::spawn(async move {
+         let running = CompassMcp::new("missing.json")
+@@ -141,20 +188,21 @@ async fn stdio_rejects_a_legacy_initialize_lifecycle() -> Result<(), Box<dyn Err
+     });
+     let client_info = ClientInfo::new(
+         ClientCapabilities::default(),
+-        Implementation::new("legacy-conformance-client", "2025-11-25"),
++        Implementation::new("discovery-revision-client", env!("CARGO_PKG_VERSION")),
+     )
+-    .with_protocol_version(ProtocolVersion::V_2025_11_25);
++    .with_protocol_version(ProtocolVersion::V_2026_07_28);
+     let client_result = client_info
+         .serve_with_lifecycle(client_transport, ClientLifecycleMode::Initialize)
+         .await;
+ 
+     let error = client_result
+         .err()
+-        .ok_or("legacy stdio lifecycle was accepted")?;
+-    let diagnostic = error.to_string();
++        .ok_or("initialize was accepted for 2026-07-28")?;
+     assert!(
+-        diagnostic.contains("initialize is not available in MCP 2026-07-28"),
+-        "unexpected legacy rejection: {diagnostic}"
++        error
++            .to_string()
++            .contains("initialize is not available in MCP 2026-07-28"),
++        "unexpected refusal: {error}"
+     );
+     assert!(server_task.await?.is_err());
+     Ok(())

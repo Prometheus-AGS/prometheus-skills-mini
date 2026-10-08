@@ -6,8 +6,7 @@ sidebar_label: Overview
 # OpenSpec Integration
 
 OpenSpec is this pack's spec backend and planning system by binding constraint
-(`openspec/config.yaml`), not merely a preference. **There is no ZeeSpec** — no `.zeespec/` gate is
-read anywhere in this repository, and none may be reintroduced.
+(`openspec/config.yaml`), not merely a preference.
 
 ## What `openspec init` created
 

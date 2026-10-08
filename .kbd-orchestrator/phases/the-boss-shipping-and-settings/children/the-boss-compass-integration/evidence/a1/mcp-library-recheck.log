@@ -1,0 +1,35 @@
+warning: compass-tree-sitter-language-pack@1.13.1: Downloading parser sources from https://github.com/xberg-io/tree-sitter-language-pack/releases/download/v1.13.1/parser-sources-1.13.1.tar.zst
+   Compiling compass-mcp v0.3.28 (/private/tmp/compass-fix/crates/compass-mcp)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 03s
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/c1/3966e3c7c7d63a/debug/deps/compass_mcp-b9d1363e97cce8c1)
+
+running 26 tests
+test tests::python_rounding_is_bankers_rounding ... ok
+test tests::query_log_records_are_bounded_and_drop_oversized_responses ... ok
+test tests::resource_reader_reports_typed_transport_oversize ... ok
+test tests::review_tool_contract_is_strict_and_validates_before_repository_access ... ok
+test tests::review_tool_envelope_preserves_the_canonical_report_without_projection ... ok
+test tests::multigraph_neighbors_are_reported_once_like_networkx ... ok
+test tests::project_path_fails_closed_on_a_malformed_snapshot_pointer ... ok
+test tests::project_path_routes_and_default_does_not_leak ... ok
+test transport::tests::api_keys_compare_without_early_exit ... ok
+test transport::tests::bearer_scheme_is_case_insensitive_and_token_is_trimmed ... ok
+test tests::unknown_tool_does_not_require_a_default_graph ... ok
+test tests::graph_store_cache_reload_missing_graph_and_pure_helpers_are_total ... ok
+test tests::tool_and_resource_contract_is_complete ... ok
+test tests::empty_graph_reverse_paths_ambiguity_and_document_failures_are_total ... ok
+test transport::tests::local_bind_hosts_match_python_security_policy ... ok
+test transport::tests::only_the_closed_agent_mutation_tool_requires_write_capability ... ok
+test transport::tests::router_configuration_covers_wildcard_stateless_and_empty_credentials ... ok
+test transport::tests::sse_conversion_preserves_non_sse_and_recovers_json_payloads ... ok
+test transport::tests::http_configuration_rejects_bad_mounts_and_unbindable_hosts ... ok
+test transport::tests::http_agent_writes_require_distinct_read_and_write_credentials ... ok
+test transport::tests::http_gate_requires_write_capability_only_for_agent_mutation ... ok
+test transport::tests::local_http_transport_rejects_untrusted_host ... ok
+test transport::tests::legacy_session_transport_enforces_auth_and_lists_tools ... ok
+test tests::every_local_tool_and_resource_handles_success_missing_and_filter_shapes ... ok
+test tests::default_public_graph_tracks_snapshot_changes_and_fails_closed ... ok
+test tests::invocation_errors_preserve_json_rpc_taxonomy ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.24s
+

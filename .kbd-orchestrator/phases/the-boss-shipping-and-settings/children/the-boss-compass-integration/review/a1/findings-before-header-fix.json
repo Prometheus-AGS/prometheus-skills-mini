@@ -1,0 +1,50 @@
+{
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "crates/compass-mcp/src/lib.rs",
+      "line": 549,
+      "claim": "The stdio initialize path refuses only the discovery revision and delegates every other version string to rmcp's negotiate_initialize without a supports_protocol check, so whether unlisted revisions (e.g. 2024-11-05) are rejected on stdio depends on undocumented SDK negotiation behavior while the HTTP gate explicitly rejects them with -32022.",
+      "evidence": "lib.rs hunk: `if protocol_uses_discovery(request.protocol_version.as_str()) { ... refused ... } context.peer.set_peer_info(request.clone()); std::future::ready(self.negotiate_initialize(&request))` — there is no `supports_protocol(...)` guard, unlike transport.rs http_gate which rejects any header version not in SUPPORTED_PROTOCOL_VERSIONS (-32022). If rmcp's helper negotiates to a fallback revision instead of erroring, stdio accepts clients that HTTP rejects.",
+      "suggested_fix": "Either reject `!supports_protocol(request.protocol_version.as_str())` explicitly in initialize before calling negotiate_initialize, or add a conformance test pinning rmcp 3.4.0's negotiation behavior for an unlisted revision so the parity with the HTTP gate is verified."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/compass-mcp/src/transport.rs",
+      "line": 324,
+      "claim": "A malformed (non-ASCII or empty) `mcp-protocol-version` header is silently removed by normalize_header and then defaulted to 2025-03-26, silently downgrading the request to the legacy lifecycle instead of rejecting it as before this change.",
+      "evidence": "transport.rs: `normalize_header` removes the header when `value.to_str().ok()` is None or the trimmed value is empty; the new `map_or_else(|| LEGACY_DEFAULT_PROTOCOL_VERSION.to_owned(), str::to_owned)` then treats absence as 2025-03-26 and passes the supports_protocol check. Prior to this diff, an absent/invalid header failed the `is_some_and(supports_protocol)` check and was rejected with -32022. The spec's absence-default rule justifies the missing-header case, not the present-but-unparseable case.",
+      "suggested_fix": "Distinguish 'header absent' (default to 2025-03-26 per spec) from 'header present but invalid' (reject with -32022) by checking raw header presence before normalization, or have normalize_header report the invalid case."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/compass-mcp/src/lib.rs",
+      "line": 562,
+      "claim": "`context.peer.set_peer_info(request.clone())` runs before negotiate_initialize, so on negotiation failure the peer info records a client that never completed initialization, and on success it may duplicate peer-info assignment the negotiation helper already performs.",
+      "evidence": "lib.rs hunk: `context.peer.set_peer_info(request.clone()); std::future::ready(self.negotiate_initialize(&request))` — peer state is mutated unconditionally before the negotiation result is known.",
+      "suggested_fix": "Set peer info only after a successful negotiate_initialize result, or confirm rmcp 3.4.0's helper requires pre-set peer info and document that ordering requirement."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/compass-mcp/src/transport.rs",
+      "line": 340,
+      "claim": "The `serde_json::Value::Null` fallback for the `requested` field in the -32022 error is dead code because `protocol_version` is now always `Some(...)` after the legacy default was introduced.",
+      "evidence": "transport.rs hunk: `let protocol_version = Some(...map_or_else(...));` followed by `let requested = protocol_version.map_or(serde_json::Value::Null, Into::into);` — the map_or None arm is unreachable, but the code still implies an absent-version case exists.",
+      "suggested_fix": "Replace with `let requested: serde_json::Value = protocol_version.into();` (or keep the Option only if a future path can legitimately produce None)."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/compass-mcp/src/transport.rs",
+      "line": 838,
+      "claim": "The only legacy HTTP session test initializes with 2025-03-26, so the HTTP negotiation path for 2025-11-25 — the revision The Boss's SDK (1.27.1) actually requests — is exercised over stdio but not over the legacy-session HTTP transport whose session/SSE behavior differs.",
+      "evidence": "transport.rs tests: `const INITIALIZE` hardcodes `\"protocolVersion\":\"2025-03-26\"`; the multi-version loop in protocol_conformance.rs (`stdio_accepts_initialize_for_every_pre_discovery_revision`) covers stdio only. HTTP negotiation goes through legacy_session_mode and SSE framing, which the 2025-11-25 path never exercises in tests.",
+      "suggested_fix": "Parameterize the INITIALIZE payload (or add one case) so the legacy HTTP session test also runs with 2025-11-25, matching the primary client this change exists to restore."
+    }
+  ],
+  "mode": "diff",
+  "producer_model": "GPT-6",
+  "judge_model": "k3",
+  "cross_model_check": "verified-distinct",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "verdict": "PASS"
+}

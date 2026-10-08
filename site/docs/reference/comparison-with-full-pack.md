@@ -55,7 +55,6 @@ These are excluded by explicit constraint, not because porting them was deferred
 
 | Excluded | Why |
 |---|---|
-| ZeeSpec | `openspec/config.yaml` binding constraint: OpenSpec is the default; no ZeeSpec anywhere. |
 | Python anywhere | Hard constraint (C4 in the original port analysis). Every Python call site in the source pack (record-progress.py, state-* scripts' `python3` invocations) was translated to Node stdlib (`JSON.parse`/`stringify`, `crypto.randomUUID()`, `toISOString()`). |
 | Shell scripts (`.sh`) | Hard constraint. Hooks use exec-form Node commands exclusively. |
 | Symlink-based installs | This pack's installer and distribution generator are copy-mode only — the full pack declares fourteen targets, with copy delivery for Codex and MiniMax and symlink delivery for the other twelve, which needs Developer Mode or elevation on Windows. |

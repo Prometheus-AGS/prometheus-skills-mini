@@ -1,6 +1,6 @@
 # Spec handoff — the-boss-shipping-and-settings
 
-**6 changes across 2 repositories**, all validating. ZeeSpec: n/a (no `.zeespec/`).
+**6 changes across 2 repositories**, all validating. spec-gate: n/a (no `.spec-gate/`).
 
 **Mini (2 new):** `mini-vendor-submodules` (goal B4 — four SOURCE submodules under `tools/`, pinned
 to released commits), `the-boss-release-infrastructure` (goal A — three workflows to run, one CI

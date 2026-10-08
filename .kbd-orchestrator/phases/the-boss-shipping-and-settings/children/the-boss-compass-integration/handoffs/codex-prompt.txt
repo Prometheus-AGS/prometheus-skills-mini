@@ -1,0 +1,15 @@
+Read this handoff document in full before touching anything:
+
+/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/.kbd-orchestrator/phases/the-boss-shipping-and-settings/children/the-boss-compass-integration/handoffs/codex-handoff.md
+
+It covers a compass MCP protocol-negotiation fix (Phase A, step A1 of the plan at
+/Users/gqadonis/.claude/plans/agile-exploring-oasis.md) that a previous Claude session left
+95% done and got confused finishing. The handoff doc has: the reproduced bug, the exact diff
+already made (verify it against the live worktree, don't trust the doc blindly), the one
+remaining test failure with the precise root cause already diagnosed, two unrelated
+pre-existing test failures to ignore, and a definition of done.
+
+Start by running `/kbd-new-child the-boss-compass-integration` (or this project's equivalent
+KBD command) to formalize the phase properly, then follow the handoff doc. Verify every claim
+in that doc against the actual repository state before acting on it — it says clearly where I
+was uncertain.

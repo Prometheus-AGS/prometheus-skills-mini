@@ -117,11 +117,11 @@ constraints:
     check: 'git grep --no-index --exclude-standard -n -E -e "os\.(tmpdir|homedir)\(\)" -- "lib/*.mjs" "scripts/*.mjs" "hooks/*.mjs" "rules/*.mjs" ":!lib/platform/paths.mjs" ":!lib/platform/paths.test.mjs"'
     note: 'paths.test.mjs is the single documented exception: it asserts that the DEFAULT helpers delegate to the real OS, which cannot be asserted through the helper without becoming a tautology. Review caught two modules reading os.tmpdir() directly; this check makes the next one mechanical. KNOWN FALSE NEGATIVE, left in place deliberately and awaiting the rule owner: this pattern matches only the `os.tmpdir()` member-call spelling, so `import { tmpdir } from "node:os"` (and `require`/`await import` of the same specifier) is invisible to it. Four such violations stand today — scripts/convert-htmx-pdf.mjs:18, scripts/design-svg-logo.mjs:36, scripts/hook-cold-start.mjs:13, scripts/refine-moodboard.mjs:45 — and the check reports clean over them. Adding `-e "node:os"` fixes it, and was verified by execution to run, to report all four, and to match import/require/await-import in a probe. It is NOT applied here because this table authorises a change to edit a check only to fix a demonstrated FALSE POSITIVE; a tightening has no clause, and adding one would be a change writing its own authorisation. Found by rounds 6 and 7 of the review-housekeeping diff review; reverted in round 8. Needs /kbd-init or an explicit operator decision.'
 
-  - id: no-zeespec
+  - id: no-spec-gate
     severity: blocking
-    source: 'AGENTS.md §P — there is no ZeeSpec'
-    description: 'No skill, hook, script or library references ZeeSpec or reads .zeespec/'
-    check: 'git grep --no-index --exclude-standard -n -i -e "zeespec" -- "skills/*" "lib/*" "hooks/*" "scripts/*" "templates/*"'
+    source: 'AGENTS.md §P — there is no spec-gate'
+    description: 'No skill, hook, script or library references spec-gate or reads .spec-gate/'
+    check: 'git grep --no-index --exclude-standard -n -i -e "spec-gate" -- "skills/*" "lib/*" "hooks/*" "scripts/*" "templates/*"'
 
   - id: no-hardcoded-secrets
     severity: blocking

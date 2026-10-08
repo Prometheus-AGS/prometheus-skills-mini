@@ -1,0 +1,34 @@
+{
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "AGENTS.md",
+      "line": 371,
+      "claim": "The diff adds an unrelated 'Required Rust development skills' section to AGENTS.md and CLAUDE.md, breaching the project constraint that scope is limited to A1 MCP negotiation.",
+      "evidence": "Constraint sentence: 'Scope is A1 MCP negotiation. ... No dependency changes or unrelated fixture repairs.' The appended hunks in AGENTS.md (after line 368) and CLAUDE.md (after line 257) add skill-loading instructions and external GitHub links that have no connection to MCP protocol negotiation, the acceptance criteria, or any file in the target 'compass-mcp-protocol-negotiation'.",
+      "suggested_fix": "Split the AGENTS.md/CLAUDE.md skill-requirement additions into a separate change; this packet should touch only the MCP negotiation code, its tests, and the compatibility/changelog documentation for it."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/compass-mcp/src/transport.rs",
+      "line": 215,
+      "claim": "Enabling legacy session mode introduces stateful MCP sessions with no configurable lifetime or capacity bound, while the only operator knob that could govern them (--session-timeout / options.session_timeout) is documented as ignored and is never read when building the router.",
+      "evidence": "build_http_router now uses `.with_legacy_session_mode(true)` with a plain `Arc::new(LocalSessionManager::default())`, and the shown code never references `options.session_timeout` (the field is only set in tests). COMPATIBILITY.md states '--session-timeout ... emits a deprecation warning, and is ignored.' Previously no HTTP sessions existed at all (`with_legacy_session_mode(false)`); now sessions accumulate per client with no documented expiry, and on deployments without --api-key any unauthenticated client can create them.",
+      "suggested_fix": "Wire an explicit session expiry/capacity into StreamableHttpServerConfig/LocalSessionManager (or document and verify the rmcp default timeout), and reconcile that with the '--session-timeout is ignored' compatibility text."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/compass-mcp/src/transport.rs",
+      "line": 332,
+      "claim": "After defaulting the absent mcp-protocol-version header to 2025-03-26, `protocol_version` is unconditionally `Some`, leaving dead code: the `is_some_and` wrappers and the `map_or(serde_json::Value::Null, ...)` arm can never trigger, and the unsupported-version error now always reports the default as 'requested' even when the client sent nothing.",
+      "evidence": "`let protocol_version = Some(request.headers().get(\"mcp-protocol-version\")...map_or_else(|| LEGACY_DEFAULT_PROTOCOL_VERSION.to_owned(), str::to_owned));` makes the subsequent `protocol_version.as_deref().is_some_and(supports_protocol)` and `protocol_version.map_or(serde_json::Value::Null, Into::into)` vacuous, and a headerless client that fails the version check would see `\"requested\": \"2025-03-26\"` it never asked for.",
+      "suggested_fix": "Collapse the Option: keep the raw Option<&str> for the diagnostic (`requested: null` when truly absent) and compute an `effective_version` string for the supports_protocol/protocol_uses_discovery checks."
+    }
+  ],
+  "mode": "diff",
+  "producer_model": "GPT-6",
+  "judge_model": "k3",
+  "cross_model_check": "verified-distinct",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "verdict": "BLOCK"
+}

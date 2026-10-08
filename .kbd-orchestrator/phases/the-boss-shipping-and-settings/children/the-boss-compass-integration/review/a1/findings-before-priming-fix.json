@@ -1,0 +1,34 @@
+{
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "crates/compass-mcp/src/transport.rs",
+      "line": 264,
+      "claim": "The `convert_stateful_sse_to_json` field and the `sse_response_to_json` conversion branch in `http_gate` are now dead production code: the only `HttpGate` construction hardcodes the flag to `false`, so the SSE-to-JSON fallback can never trigger at runtime and survives only to be exercised by its own unit test.",
+      "evidence": "In `build_http_router`: `// rmcp transport negotiation owns the response representation.\\n convert_stateful_sse_to_json: false,` — there is no other construction of `HttpGate`, and the diff removed the prior path that enabled conversion (`with_legacy_session_mode(false)` era). The branch `if gate.convert_stateful_sse_to_json && method == Method::POST { return sse_response_to_json(response).await; }` in `http_gate` is therefore unreachable in production.",
+      "suggested_fix": "Delete the `convert_stateful_sse_to_json` field, the `sse_response_to_json`/`trim_ascii` helpers, and the now test-only conversion tests; or wire the flag to a real option if JSON conversion of legacy SSE responses is still a supported mode (COMPATIBILITY.md currently says legacy sessions always use SSE, which argues for deletion)."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/compass-mcp/src/transport.rs",
+      "line": 356,
+      "claim": "A POST carrying `Mcp-Protocol-Version: 2026-07-28` and an `initialize` body but no `Mcp-Method` header is rejected with -32020 'missing required Mcp-Method header' rather than the method-not-found directing the client to `server/discover` that the acceptance scenario describes for initialize on the discovery revision.",
+      "evidence": "In `http_gate` the `method.is_none()` check returning -32020 runs before the `method.as_deref() == Some(\"initialize\")` check returning -32601; acceptance criterion 'Discovery revision requests initialize → THEN Compass returns method-not-found directing it to server/discover' is satisfied on stdio and on HTTP paths (a) header+Mcp-Method and (b) no headers (handled by `CompassMcp::initialize`), but not on this malformed-header path.",
+      "suggested_fix": "When `uses_discovery` and `Mcp-Method` is absent, peek at the buffered body (already read later for the write-key gate) or simply tolerate the ordering, documenting that -32020 is the intended response for a 2026-07-28 request missing its mandatory method header."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/compass-mcp/src/lib.rs",
+      "line": 13,
+      "claim": "The doc comments cite three different SEP numbers for the same 2026-07-28 lifecycle change, leaving the protocol rationale internally inconsistent.",
+      "evidence": "`SUPPORTED_PROTOCOL_VERSION` doc says '`2026-07-28` (SEP-2243) replaces `initialize` with `server/discover`'; the `initialize` handler doc says '`2026-07-28` replaced `initialize` with `server/discover` (SEP-2575)'; the transport comment says 'rmcp serves `2026-07-28` statelessly regardless (SEP-2567)'; `protocol_uses_discovery` doc again attributes the `Mcp-Method` header to SEP-2243.",
+      "suggested_fix": "Pick the correct SEP identifier(s) and use them consistently across `lib.rs`, `transport.rs`, and the new test doc comments."
+    }
+  ],
+  "mode": "diff",
+  "producer_model": "GPT-6",
+  "judge_model": "k3",
+  "cross_model_check": "verified-distinct",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "verdict": "PASS"
+}

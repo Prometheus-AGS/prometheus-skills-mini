@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "Spec violations \u2014 the incremental diff is scoped to the Surreal natural-query parity correction described in the packet, and the changed code routes Surreal natural-query intents through the existing typed operations with an added public CLI assertion for ask/callers behavior.",
+    "Correctness \u2014 reviewed the new intent dispatch, Surreal backend detection, bounded relationship enrichment, and CLI assertion; no concrete logic error is provable from the provided hunks.",
+    "Regressions \u2014 the change preserves the existing non-Surreal path by gating the new relationship-enrichment branch behind CodeGraphBackend::is_surreal, and no removed behavior is shown in the diff.",
+    "Security \u2014 no new credential handling, path handling, deserialization boundary, authentication path, or shell/network construction is introduced in the provided hunks.",
+    "Constraint breaches \u2014 no unsafe code, unwrap/expect/panic, Graphify reference, nondeterministic HashMap/HashSet usage, shell construction, machine path, secret, or generated artifact is introduced in the diff.",
+    "Silent failure \u2014 the new dispatch propagates planner and typed-operation errors with Result, and the added internal-plan checks return typed QueryError values rather than panicking or swallowing errors."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

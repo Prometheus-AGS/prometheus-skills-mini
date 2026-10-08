@@ -77,7 +77,7 @@ export default function Home() {
               <li>Windows without WSL for anything the pack runs.</li>
               <li>Node.js LTS (&gt;=22) is the only script runtime.</li>
               <li>No shell scripts, no Python, anywhere.</li>
-              <li>OpenSpec native and default; no ZeeSpec.</li>
+              <li>OpenSpec native and default.</li>
               <li>
                 Optional surreal-memory and liter-llm services, with a Windows-oriented Docker stack.
               </li>

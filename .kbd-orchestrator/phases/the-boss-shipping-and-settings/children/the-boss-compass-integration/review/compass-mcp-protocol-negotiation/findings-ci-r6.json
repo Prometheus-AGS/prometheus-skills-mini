@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "Spec violations — the scoped diff only refreshes six discovery fixture digests, matching the packet's stated Discovery digest correction for six altered code-query input schemas; no acceptance criterion in the packet requires additional code changes in this incremental commit.",
+    "Correctness — the changed fixture preserves tool names, descriptions, outputSchemaSha256, and meta fields while altering only inputSchemaSha256 values; no internal inconsistency is evident from the provided diff.",
+    "Regressions — no production behavior, schema shape, ordering, or tool inventory is changed in the diff; only expected fixture hash values are updated.",
+    "Security — the diff adds no code, credentials, endpoints, paths, authentication behavior, deserialization, or network boundary.",
+    "Constraint breaches — the diff introduces no unsafe code, unwrap/expect/panic, dependencies, generated product data, Graphify references, shell construction, or non-deterministic collection behavior.",
+    "Silent failure — the diff does not add error handling, fallback logic, defaults, or swallowed-result paths."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

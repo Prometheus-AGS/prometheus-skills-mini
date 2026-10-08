@@ -1,0 +1,11 @@
+#V2
+INFO FOR ROOT;
+INFO FOR DB;
+SELECT * FROM agent_instance_occurrences LIMIT 30; SELECT * FROM agent_threads LIMIT 30; SELECT * FROM sessions LIMIT 30;
+SELECT * FROM agent_instance_occurrences LIMIT 30; SELECT * FROM sessions LIMIT 30; SELECT * FROM checkpoints LIMIT 30;
+SELECT * FROM agent_instance_occurrences LIMIT 30; SELECT * FROM sessions LIMIT 30;
+SELECT * FROM sessions LIMIT 30;
+SELECT * FROM canonical_tool_receipts LIMIT 100; SELECT * FROM tool_admission_evidence LIMIT 100; SELECT * FROM canonical_tool_receipt_runs LIMIT 100;
+SELECT * FROM tool_admission_evidence LIMIT 100;
+SELECT * FROM agents LIMIT 20; SELECT * FROM agent_instances LIMIT 20;
+SELECT * FROM agents LIMIT 20;

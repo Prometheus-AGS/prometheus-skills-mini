@@ -1,0 +1,55 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".github/workflows/compass-ci.yml",
+      "line": 253,
+      "claim": "The Windows SurrealDB job no longer compiles the supported combined SurrealKV plus remote feature surface, contradicting the recorded acceptance evidence.",
+      "evidence": "The hunk deletes `Compile combined embedded and remote SurrealDB surfaces` / `cargo check -p compass-cli --features surreal-surrealkv,surreal-remote --locked`; acceptance evidence says the prior review warning was fixed because \"Compass now keeps both checks, preserving the supported source-build combination while directly qualifying the official release profile.\"",
+      "suggested_fix": "Restore the combined `surreal-surrealkv,surreal-remote` compile check, or update the acceptance evidence and compatibility rationale if that supported combination is intentionally dropped."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".github/workflows/compass-ci.yml",
+      "line": 298,
+      "claim": "The release matrix no longer runs the full workspace integration-test boundary, violating the project test-gate constraint.",
+      "evidence": "The hunk deletes `Full integration tests` / `cargo test --workspace --test '*' --locked --target ${{ matrix.target }}` and replaces it with only two focused tests plus a release build; constraint `tests-pass` requires \"the full workspace integration suite must pass; unit tests are not valid evidence.\"",
+      "suggested_fix": "Keep the full integration-test step in CI, or move an equivalent `cargo test --workspace --test '*' --locked --target ...` gate to another required job."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "crates/compass-cli/tests/review_cli.rs",
+      "line": 210,
+      "claim": "The diff removes integration coverage for successful local review reconciliation of noncurrent or persisted history profiles and replaces it with only a rejection case.",
+      "evidence": "The hunk deletes `local_review_rebuilds_a_comparable_pair_from_a_noncurrent_profile`, `local_review_rebuilds_a_persisted_profile_after_a_current_graph_build`, `local_review_reconciles_existing_different_engine_profiles`, and `local_review_hard_cuts_over_matching_noncurrent_engine_profiles`; constraint `regression-test-present` says behavior changes require full integration coverage at the lowest public boundary.",
+      "suggested_fix": "Restore integration tests that prove compatible historical profiles still reconcile successfully, and add separate negative coverage only for genuinely incompatible profiles."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".github/workflows/compass-ci.yml",
+      "line": 347,
+      "claim": "The advisory ignore added in the workflow is inconsistent with the repository deny policy, so the audited advisory set can diverge between CI and local policy checks.",
+      "evidence": "The workflow adds `ignore: RUSTSEC-2026-0235,RUSTSEC-2023-0071`, while `deny.toml` adds ignores for `RUSTSEC-2025-0141` and `RUSTSEC-2023-0071` but not `RUSTSEC-2026-0235`; the blocking `clippy-clean`/`tests-pass` evidence relies on reproducible locked workspace gates, and `locked-dependencies` requires Cargo.lock/policy consistency when dependency resolution changes.",
+      "suggested_fix": "Use one source of truth for advisory exceptions: either add the same `RUSTSEC-2026-0235` exception with rationale to `deny.toml`, or remove the workflow-only ignore and make CI consume the repository policy."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".github/workflows/compass-ci.yml",
+      "line": 253,
+      "claim": "The diff under review contains no MCP protocol negotiation implementation or compatibility documentation despite acceptance criteria requiring both.",
+      "evidence": "Acceptance criteria 2.1 and 2.3 require legacy stdio/HTTP negotiation, SSE regression expectations, compatibility documentation, and exercising four protocol revisions; the packet diff modifies only `.github/workflows/compass-ci.yml`, `crates/compass-cli/tests/review_cli.rs`, and `deny.toml`, with no `crates/compass-mcp` or documentation changes.",
+      "suggested_fix": "Include the MCP implementation, public protocol integration tests, and compatibility documentation changes in the reviewed diff, or split this CI/test-policy change from the MCP acceptance packet."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

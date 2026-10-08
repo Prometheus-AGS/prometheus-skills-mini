@@ -19,7 +19,7 @@ context: |
   - No symlinks; installers copy. No reliance on the executable bit.
   - Paths via path.join, os.homedir(), os.tmpdir(); never ~, $HOME, or /tmp.
   - Child processes via spawn with shell: false and an args array.
-  - OpenSpec is the default SpecBackend; native-kbd is the fallback. No ZeeSpec.
+  - OpenSpec is the default SpecBackend; native-kbd is the fallback.
   - Templates are Nunjucks (*.njk), autoescape off.
   - Exactly two resident services are kept from the source pack:
     (1) surreal-memory server backed by SurrealDB, and (2) the liter-llm

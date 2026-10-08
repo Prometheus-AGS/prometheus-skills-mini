@@ -1,0 +1,23 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "deny.toml",
+      "line": 8,
+      "claim": "The repository cargo-deny advisory policy does not ignore the new `RUSTSEC-2026-0235` advisory that the CI audit job explicitly has to suppress, so the dependency-policy advisory gate can still fail.",
+      "evidence": "The workflow adds `ignore: RUSTSEC-2026-0235,RUSTSEC-2023-0071` with a comment explaining the rkyv advisory is reachable through the SurrealDB graph, but the `deny.toml` advisory ignore additions include only `RUSTSEC-2025-0141` and `RUSTSEC-2023-0071`; the acceptance context states cargo-deny owns repository license/source/advisory policy in `deny.toml`.",
+      "suggested_fix": "Add a scoped `RUSTSEC-2026-0235` advisory ignore with the same SurrealDB/rkyv justification to `deny.toml`, or remove the workflow ignore if the advisory is not actually present."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

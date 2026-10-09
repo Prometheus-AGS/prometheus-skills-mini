@@ -1,0 +1,24 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "library-candidates.json",
+      "line": 0,
+      "claim": "The build-required entries are not traceable to the analyzed gaps because all three use null capability_gap_id despite named gaps being available.",
+      "evidence": "library-candidates.json lists \"gaps_addressed\": [\"current-bundled-startup\", \"execution-bound-approvals\", \"job-delegation-continuity\", \"eligible-regression-review\", \"private-launch-roots\", \"release-scope\"], but each build_required item has \"capability_gap_id\": null, including \"Private packaged startup root contract or established isolated OS-user environment\", which directly corresponds to \"private-launch-roots\".",
+      "suggested_fix": "Populate capability_gap_id for each build_required item with the relevant gap IDs, e.g. private-launch-roots/current-bundled-startup for the startup-root contract, release-scope/eligible-regression-review for cumulative review, and current-bundled-startup/job-delegation-continuity/eligible-regression-review for the coordinator."
+    }
+  ],
+  "checked_classes": []
+}

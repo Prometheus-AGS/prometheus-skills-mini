@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "2",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 450,
+  "derivedRevision": 450,
+  "frontier": {
+    "69cddcdf-6458-4402-82b3-dcf30e2694b5": 450
+  },
+  "conflictCount": 0,
+  "phase": "phase-bauar-release-acceptance",
+  "phaseId": "phase-bauar-release-acceptance",
+  "parentPhase": null,
+  "last_updated": "2026-10-09T21:31:12.022663Z",
+  "last_updated_by": "kbd-runtime",
+  "changes_total": 3,
+  "changes_completed": 0,
+  "implementation_total": 3,
+  "implementation_completed": 0,
+  "completion": {
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 0,
+      "total": 3,
+      "status": "PENDING"
+    },
+    "evidence": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "certification": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "publication": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    }
+  },
+  "completionScopes": {
+    "completion": "phase",
+    "runCompletion": "run"
+  },
+  "runCompletion": {
+    "scope": "run",
+    "runId": "project-20261006T094115Z",
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 7,
+      "total": 10,
+      "status": "IN_PROGRESS"
+    },
+    "evidence": {
+      "status": "COMPLETE",
+      "summary": "Selected production-path acceptance, source binding, package/platform limitations and operator-deferred verification disposition documented. This is a completed evidence inventory; it does not say all acceptance passed.",
+      "blockers": []
+    },
+    "certification": {
+      "status": "SKIPPED",
+      "summary": "Operator waives full certification for this implementation phase and defers remaining broad tests, cumulative independent review and global formatting. Existing selected passes retained. Shipping/C05 and remote deployment certification unclaimed. Certification work deferred to later release acceptance.",
+      "blockers": []
+    },
+    "publication": {
+      "status": "SKIPPED",
+      "summary": "No product publication/deployment/merge is authorized by isolated phase closure; deliverable is local implementation plus reviewable handoff.",
+      "blockers": []
+    }
+  },
+  "changes": [
+    {
+      "id": "bauar-acc-01-private-packaged-desktop",
+      "title": "Private packaged desktop startup and acceptance",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 3,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Implement the optional early private-root contract in constants.ts/userDataLocation.ts and document it in the owned existing preboot README; completion means all selected paths bind before boot-config/logger/path freeze with absent selection preserving branches. This is source completion only; real acceptance follows the full parent production barrier.",
+      "blockers": []
+    },
+    {
+      "id": "bauar-acc-02-current-harness-regression",
+      "title": "Current Bossfang harness and eligible UAR regression",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 3,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Write the finite source/digest/profile/argv manifest for retained Bossfang API/kernel test hosts and bundled UAR; verify every required entry and explicit missing executable/build requirement in the delivered manifest, without compiling or running tests before parent production completion.",
+      "blockers": []
+    },
+    {
+      "id": "bauar-acc-03-local-acceptance-evidence",
+      "title": "Local source-bound acceptance evidence and readiness",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 5,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Implement the thin Node entry/capability modules and formal v1 input/receipt schemas, explicit runtimes/private child environments and owned process cleanup; completion means coherent production source for E01–E02 exists, without test authoring/execution or product review.",
+      "blockers": []
+    }
+  ],
+  "children": {},
+  "migrationStatus": null
+}

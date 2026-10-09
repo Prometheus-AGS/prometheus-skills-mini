@@ -1,0 +1,260 @@
+{
+  "phase": "phase-bauar-release-acceptance",
+  "generated_at": "2026-10-09T16:39:03.195Z",
+  "research_budget": {
+    "max_queries_per_tier": 8,
+    "max_minutes": 20,
+    "queries_used": {
+      "tier1": 2,
+      "tier2": 8,
+      "tier3": 2,
+      "tier4": 0
+    }
+  },
+  "gaps_addressed": [
+    "current-bundled-startup",
+    "execution-bound-approvals",
+    "job-delegation-continuity",
+    "eligible-regression-review",
+    "private-launch-roots",
+    "release-scope"
+  ],
+  "candidates": [
+    {
+      "id": "cand-001",
+      "name": "Installed Playwright Electron automation",
+      "kind": "framework",
+      "verdict": "adapt",
+      "fit_for_gap": "Actual packaged startup and desktop workflow observation",
+      "repo_url": "https://github.com/microsoft/playwright",
+      "registry": "npm",
+      "license": "Apache-2.0",
+      "maintenance": {
+        "observed_registry_latest": "1.64.0",
+        "registry_modified": "2026-10-09T06:35:26.222Z"
+      },
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/playwright.config.ts",
+          "claim": "Existing framework/config; installed Playwright1.62.1 and Electron44.2.0 observed in local metadata."
+        },
+        {
+          "tier": 2,
+          "source_url": "https://playwright.dev/docs/api/class-electron",
+          "claim": "Official experimental Electron API supports actual executable launch, supplied environment and main-process observation."
+        },
+        {
+          "tier": 3,
+          "source_url": "https://www.npmjs.com/package/@playwright/test",
+          "claim": "npm view observed latest1.64.0; no upgrade selected."
+        }
+      ],
+      "risks": [
+        "Current documentation is not a version-pinned compatibility proof for1.62.1.",
+        "Traces/screenshots may retain secret canaries; sanitize or disable sensitive capture."
+      ],
+      "decision_rationale": "Keep installed versions; adapt actual bundle launch and private roots rather than introducing another framework."
+    },
+    {
+      "id": "cand-002",
+      "name": "Boss experience and approval integration fixtures",
+      "kind": "skeleton",
+      "verdict": "adapt",
+      "fit_for_gap": "Strict exact approvals, eager/deferred discovery and actual tool effects",
+      "registry": "none",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/uarExperienceGate.test.ts",
+          "claim": "Existing gate launches development output with required external sidecar override; scenario logic is reusable but launch contract must change."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/support/uarExperienceProvider.ts",
+          "claim": "Controlled model responses check actual filesystem effect before completion."
+        }
+      ],
+      "risks": [
+        "Unchanged gate would certify external-sidecar behavior.",
+        "Fixtures cannot replace actual tool/admission authorities with mocks."
+      ],
+      "decision_rationale": "Reuse bounded assertions while proving current packaged generation and bundled binary selection."
+    },
+    {
+      "id": "cand-003",
+      "name": "Bossfang production-path full harness gate",
+      "kind": "skeleton",
+      "verdict": "adapt",
+      "fit_for_gap": "Selected admission, delegated loop observation/cancellation/restart and duplicate-effect counts",
+      "registry": "none",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-gate.mjs",
+          "claim": "Accepts prebuilt API host/kernel test/UAR binaries and source; requires Node24; normal/stream interruption, cancellation, fault and restart cases."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-runtime.mjs",
+          "claim": "Private child environment, actual UAR/router and embedded operational persistence, controlled peers; no shared daemon startup."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/tests/bauar_harness_host.rs",
+          "claim": "Real kernel and production API router host."
+        }
+      ],
+      "risks": [
+        "Standalone harness cannot certify packaged desktop bootstrap.",
+        "Cron/deferred producers without selected JobAttemptRef remain native.",
+        "Current candidate test binaries/features must be source-bound before use."
+      ],
+      "decision_rationale": "Use current sources/binaries and preserve unsupported/unknown restart reconciliation without automatic replay."
+    },
+    {
+      "id": "cand-004",
+      "name": "Eligible UAR real-boundary regression targets",
+      "kind": "skeleton",
+      "verdict": "adapt",
+      "fit_for_gap": "Identity, resource grants, HTTP/stdio credential ownership, secret projection and cursor continuity",
+      "registry": "none",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_identity_boundary.rs",
+          "claim": "Identity target gated by server and test-probes, distinct from production bundle features."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_stdio_boundary.rs",
+          "claim": "Existing real stdio environment/child/stderr scenario."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_full_harness_cursor.rs",
+          "claim": "Existing filtered cursor/reconnect and retention-gap cases."
+        }
+      ],
+      "risks": [
+        "Test-probes success is supporting regression, not production packaged certification.",
+        "F6 excluded files may not be inspected or run; exact eligible targets required."
+      ],
+      "decision_rationale": "Plan a finite current-source feature-specific gate; no whole-workspace sweep or invented JWT-forwarding requirement."
+    },
+    {
+      "id": "cand-005",
+      "name": "Node LTS built-in orchestration",
+      "kind": "pattern",
+      "verdict": "adopt",
+      "fit_for_gap": "Private roots, explicit child environments, hashing and typed receipt coordination",
+      "repo_url": "https://github.com/nodejs/node",
+      "registry": "none",
+      "evidence": [
+        {
+          "tier": 2,
+          "source_url": "https://nodejs.org/download/release/v22.20.0/docs/api/os.html#oshomedir",
+          "claim": "POSIX HOME affects Node home lookup, not proof of all Electron application paths."
+        },
+        {
+          "tier": 2,
+          "source_url": "https://nodejs.org/download/release/v22.20.0/docs/api/child_process.html#child_processspawncommand-args-options",
+          "claim": "Explicit argv/environment child process API."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/versions.toml",
+          "claim": "Node LTS required for workstream orchestration; product child runtime constraints separately observed."
+        }
+      ],
+      "risks": [
+        "Boss/Bossfang child tools require already-installed Node24; coordinator Node22 alone cannot run all children.",
+        "No blanket inherited credentials or raw subprocess output in published receipts."
+      ],
+      "decision_rationale": "Use built-ins through existing orchestration conventions; no new dependency or service."
+    },
+    {
+      "id": "cand-006",
+      "name": "Spectron",
+      "kind": "framework",
+      "verdict": "reject",
+      "fit_for_gap": "Electron acceptance automation alternative",
+      "repo_url": "https://github.com/electron-userland/spectron",
+      "registry": "npm",
+      "license": "MIT",
+      "maintenance": {
+        "observed_registry_latest": "19.0.0",
+        "registry_modified": "2024-09-22T08:15:57.363Z"
+      },
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/electron-userland/spectron",
+          "claim": "Repository search and official repository identify it as deprecated."
+        },
+        {
+          "tier": 3,
+          "source_url": "https://www.npmjs.com/package/spectron",
+          "claim": "Registry version19.0.0 observed, no migration benefit established."
+        }
+      ],
+      "risks": [
+        "Deprecated tool; new migration effort."
+      ],
+      "decision_rationale": "Existing Playwright stack already supplies automation; Spectron does not solve private packaged-root selection."
+    },
+    {
+      "id": "cand-007",
+      "name": "Existing Boss early startup configuration/path pattern",
+      "kind": "pattern",
+      "verdict": "adapt",
+      "fit_for_gap": "Private packaged configuration/profile/log paths without live boot-config mutation",
+      "registry": "none",
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/core/paths/constants.ts",
+          "claim": "Boot config resolves under home and logger paths are fixed early."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/core/preboot/userDataLocation.ts",
+          "claim": "Packaged selection uses boot map/branded appData; development suffix is unpackaged-only."
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/core/preboot/README.md",
+          "claim": "Path roots must precede registry freeze/single-instance startup; capability belongs to existing startup configuration responsibility."
+        },
+        {
+          "tier": 2,
+          "source_url": "https://www.electronjs.org/docs/latest/api/app",
+          "claim": "Application path configuration timing is explicit; sessionData must be established early."
+        }
+      ],
+      "risks": [
+        "Proposed private-root interface does not exist yet in inspected paths.",
+        "Must cover early config/log consumers and retain ordinary defaults.",
+        "Alternative isolated OS-user environment availability not established."
+      ],
+      "decision_rationale": "Smallest proposed Boss adaptation for explicit isolated acceptance requirement; Spec/Plan approval required before implementation, then repackage Boss only if UAR unchanged."
+    }
+  ],
+  "build_required": [
+    {
+      "need": "Bounded acceptance coordinator and source/artifact/effect receipts",
+      "why_no_candidate": "Existing gates cover separate boundaries; no existing runner coordinates current bundled desktop and selected job/regression evidence.",
+      "capability_gap_id": "current-bundled-startup"
+    },
+    {
+      "need": "Private packaged startup root contract or established isolated OS-user environment",
+      "why_no_candidate": "Existing helper mutates live boot config; inspected packaged startup overrides simple profile args. Framework launch API alone cannot guarantee all application roots.",
+      "capability_gap_id": "private-launch-roots"
+    },
+    {
+      "need": "Finite cumulative product-review allowlist and scoped formatting disposition",
+      "why_no_candidate": "Existing review tooling needs exact source boundaries, F6 exclusions and prior evidence/debt supplied; no library decides release readiness or scope.",
+      "capability_gap_id": "eligible-regression-review"
+    }
+  ]
+}

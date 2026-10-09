@@ -1,0 +1,319 @@
+{
+  "schemaVersion": 1,
+  "phase": "phase-bauar-release-acceptance",
+  "at": "2026-10-09",
+  "status": "planned-not-executed",
+  "runtimes": {
+    "coordinator": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+    "child": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+    "pnpm": "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+    "cargo": "/Users/gqadonis/.cargo/bin/cargo",
+    "playwright": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/@playwright/test/cli.js"
+  },
+  "productionBarrier": [
+    "bauar-acc-01-private-packaged-desktop/1.1",
+    "bauar-acc-02-current-harness-regression/1.1",
+    "bauar-acc-02-current-harness-regression/1.2",
+    "bauar-acc-03-local-acceptance-evidence/1.1",
+    "bauar-acc-03-local-acceptance-evidence/1.2"
+  ],
+  "bossBuild": [
+    {
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/prepare-local-uar-payload.cjs"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss"
+    },
+    {
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+        "run",
+        "build"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss"
+    },
+    {
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+        "exec",
+        "electron-builder",
+        "--mac",
+        "--arm64",
+        "--dir",
+        "--publish",
+        "never"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss"
+    }
+  ],
+  "bossBuildEnvironment": {
+    "THE_BOSS_UAR_ENABLED": "1",
+    "THE_BOSS_UAR_LOCAL": "1",
+    "THE_BOSS_LOCAL_UAR_SOURCE_DIR": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+    "CSC_IDENTITY_AUTO_DISCOVERY": "false",
+    "CI": "absent",
+    "PATH": "Node24 bin first; accepted toolchain paths, no cadence wrappers; preserve established hook credential boundary"
+  },
+  "hostBuilds": [
+    {
+      "program": "/Users/gqadonis/.cargo/bin/cargo",
+      "args": [
+        "test",
+        "--locked",
+        "-p",
+        "librefang-api",
+        "--no-default-features",
+        "--features",
+        "uar-driver,surreal-backend,test-util",
+        "--test",
+        "bauar_harness_host",
+        "--no-run",
+        "--message-format=json"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang"
+    },
+    {
+      "program": "/Users/gqadonis/.cargo/bin/cargo",
+      "args": [
+        "test",
+        "--locked",
+        "-p",
+        "librefang-kernel",
+        "--no-default-features",
+        "--features",
+        "uar-driver,surreal-backend",
+        "--test",
+        "bauar_harness_delegation",
+        "--no-run",
+        "--message-format=json"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang"
+    }
+  ],
+  "hostBuildEnvironment": {
+    "CARGO_TARGET_DIR": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/.context/bauar-release-acceptance-target",
+    "CARGO_BUILD_JOBS": "2",
+    "RUST_MIN_STACK": "16777216",
+    "policy": "single writer; retain cache and existing configured dependencies/toolchain; no update/unlocked resolution"
+  },
+  "hostPathResolution": {
+    "input": "compiler-artifact JSON executable",
+    "requiredTargets": [
+      "bauar_harness_host",
+      "bauar_harness_delegation"
+    ],
+    "match": "exact package and test target from this source/cwd/features receipt; one executable each; never newest filename"
+  },
+  "runtimeComponents": [
+    {
+      "id": "desktop",
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/@playwright/test/cli.js",
+        "test",
+        "--config",
+        "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/playwright.config.ts"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "environment": {
+        "THE_BOSS_E2E_GATE": "bauarPackagedAcceptance.test.ts",
+        "THE_BOSS_ACCEPTANCE_CONFIG": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/candidate-inputs.json"
+      },
+      "budgetMs": 2700000
+    },
+    {
+      "id": "harness",
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-gate.mjs",
+        "resolved-api-host-executable",
+        "resolved-kernel-test-executable",
+        "/Users/gqadonis/.claude/worktrees/bauar-release-boss/dist/mac-arm64/The Boss.app/Contents/Resources/app.asar.unpacked/resources/binaries/darwin-arm64/uar-sidecar",
+        "/Users/gqadonis/.claude/worktrees/bauar-release-uar"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang",
+      "budgetMs": 1800000
+    },
+    {
+      "id": "uar-regression",
+      "program": "/Users/gqadonis/.cargo/bin/cargo",
+      "args": [
+        "test",
+        "--locked",
+        "--features",
+        "server-full,test-probes",
+        "--test",
+        "bauar_identity_boundary",
+        "--test",
+        "bauar_resource_grants",
+        "--test",
+        "bauar_stdio_boundary",
+        "--test",
+        "bauar_secret_projection",
+        "--test",
+        "bauar_full_harness_cursor",
+        "--",
+        "--test-threads=1"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "environment": {
+        "CARGO_TARGET_DIR": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/target",
+        "CARGO_BUILD_JOBS": "2",
+        "RUST_MIN_STACK": "16777216"
+      },
+      "budgetMs": 10800000,
+      "profile": "supporting only; reuses isolated candidate cache; one target writer, no release rebuild"
+    },
+    {
+      "id": "package-controls",
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "-e",
+        "const v=require(process.argv[1]); v.verifyPackagedUarPayload(process.argv[2],\"darwin-arm64\",{localUar:process.argv[3]===\"local\",allowPlatformSigning:false})",
+        "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/uar-payload-integrity.cjs",
+        "controlled-copy-Resources",
+        "local-or-public"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "budgetMs": 120000
+    }
+  ],
+  "integration": {
+    "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+    "args": [
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/local-release-acceptance.mjs",
+      "--config",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/candidate-inputs.json",
+      "--stage",
+      "integration"
+    ],
+    "cwd": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture"
+  },
+  "finalize": {
+    "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+    "args": [
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/local-release-acceptance.mjs",
+      "--config",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/candidate-inputs.json",
+      "--stage",
+      "finalize"
+    ],
+    "cwd": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture"
+  },
+  "budgets": {
+    "bossBuildMs": 1800000,
+    "hostCompilationMs": 10800000,
+    "ownedShutdownGraceMs": 10000,
+    "policy": "acceptance supervision only, no new production timeout; timeout evidence BLOCKED unless observed expectation failed"
+  },
+  "retention": {
+    "oldApp": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/retained-before-private-root/The Boss.app",
+    "runtimeScratch": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/private",
+    "attempts": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/attempts",
+    "noDeletion": [
+      "old app",
+      "archive",
+      "source candidates",
+      "Cargo targets",
+      "dependency caches",
+      "failed receipts"
+    ]
+  },
+  "scopes": {
+    "selected": "unsigned local darwin-arm64",
+    "deferred": [
+      "signing",
+      "notarization",
+      "installed operation",
+      "Intel",
+      "Windows"
+    ],
+    "excluded": [
+      "production remote receiver/IdP/custody"
+    ],
+    "unauthorized": [
+      "publish",
+      "merge",
+      "release",
+      "shipping/C05",
+      "cache promotion"
+    ]
+  },
+  "limitations": [
+    "All argv are planned, not run; new coordinator/gate source does not exist yet.",
+    "Host executable paths are deliberately resolved only from actual compiler receipts after production barrier; current candidate target is missing.",
+    "UAR target cache is existing isolated worktree target, not shared primary target.",
+    "Private child environment defined by schema, no ambient provider credentials."
+  ],
+  "taskIdentityMapping": [
+    {
+      "phasePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance",
+      "change": "bauar-acc-01-private-packaged-desktop",
+      "backendId": "1",
+      "specLabel": "1.1"
+    },
+    {
+      "phasePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance",
+      "change": "bauar-acc-01-private-packaged-desktop",
+      "backendId": "2",
+      "specLabel": "1.2"
+    },
+    {
+      "phasePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance",
+      "change": "bauar-acc-01-private-packaged-desktop",
+      "backendId": "3",
+      "specLabel": "2.1"
+    },
+    {
+      "phasePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance",
+      "change": "bauar-acc-02-current-harness-regression",
+      "backendId": "1",
+      "specLabel": "1.1"
+    },
+    {
+      "phasePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance",
+      "change": "bauar-acc-02-current-harness-regression",
+      "backendId": "2",
+      "specLabel": "1.2"
+    },
+    {
+      "phasePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance",
+      "change": "bauar-acc-02-current-harness-regression",
+      "backendId": "3",
+      "specLabel": "2.1"
+    },
+    {
+      "phasePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance",
+      "change": "bauar-acc-03-local-acceptance-evidence",
+      "backendId": "1",
+      "specLabel": "1.1"
+    },
+    {
+      "phasePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance",
+      "change": "bauar-acc-03-local-acceptance-evidence",
+      "backendId": "2",
+      "specLabel": "1.2"
+    },
+    {
+      "phasePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance",
+      "change": "bauar-acc-03-local-acceptance-evidence",
+      "backendId": "3",
+      "specLabel": "2.1"
+    },
+    {
+      "phasePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance",
+      "change": "bauar-acc-03-local-acceptance-evidence",
+      "backendId": "4",
+      "specLabel": "2.2"
+    },
+    {
+      "phasePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance",
+      "change": "bauar-acc-03-local-acceptance-evidence",
+      "backendId": "5",
+      "specLabel": "2.3"
+    }
+  ]
+}

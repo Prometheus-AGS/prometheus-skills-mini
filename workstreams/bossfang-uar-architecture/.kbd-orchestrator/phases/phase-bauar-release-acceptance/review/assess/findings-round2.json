@@ -1,0 +1,20 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [],
+  "checked_classes": [
+    "goals with no corresponding gap analysis — all three seeded goals are explicitly assessed in the Goal progress table and expanded in Actual acceptance gaps / Release scope and ownership decision inputs",
+    "unsupported or contradicted codebase claims — artifact claims about app existence, runner absence, hashes, old override-based receipt, empty mcpServers, and cited source snippets are supported by supplied evidence; broad claims are bounded as not whole-repository or universal certification",
+    "vague findings that cannot drive a plan — gaps are stated as concrete acceptance work: launch isolated current bundle without override, exercise strict approvals/effects, Bossfang delegation cases, regression/review scope, local packaging controls, and release-scope decisions",
+    "goals restated instead of assessed — each seeded goal has status and reason, with supporting evidence and limitations rather than only restating desired outcomes"
+  ]
+}

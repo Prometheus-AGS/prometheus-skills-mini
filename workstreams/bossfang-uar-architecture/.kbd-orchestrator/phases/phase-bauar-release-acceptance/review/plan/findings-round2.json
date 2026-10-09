@@ -1,0 +1,24 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The plan's E01 package-control command calls `verifyPackagedUarPayload` without awaiting or otherwise normalizing a returned Promise, so the specified negative/positive validator checks may falsely pass if the export is asynchronous.",
+      "evidence": "The planned command contract uses `\"const v=require(process.argv[1]); v.verifyPackagedUarPayload(process.argv[2],\\\"darwin-arm64\\\",{localUar:process.argv[3]===\\\"local\\\",allowPlatformSigning:false})\"`. The actual validator is CommonJS today, but the plan also treats the command as a durable exact contract for execution and says E01 must call the actual exported validator; if that export ever returns a Promise, `node -e` can exit before rejection because the expression is not awaited or wrapped in an async main. The task says E01 controls must prove refusal: \"Healthy local candidate must pass; private copies with stale marker source, mutated payload or local marker/public option must refuse.\"",
+      "suggested_fix": "Wrap the Node -e validator invocation in an async IIFE or `Promise.resolve(...).then(...)` with `.catch(error => { console.error(...); process.exit(1); })`, while preserving redaction."
+    }
+  ],
+  "checked_classes": []
+}

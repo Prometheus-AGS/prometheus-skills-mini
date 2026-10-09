@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-09T14:42:57.961Z",
+  "phase": "phase-bauar-release-acceptance",
+  "kind": "static-assessment-inventory",
+  "repositories": {
+    "uar": {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "head": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+      "selectedStatus": "",
+      "selectedPaths": [
+        "src/uar/api/full_harness.rs",
+        "mcp.json"
+      ]
+    },
+    "boss": {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "head": "7a5bdb4b7c02e9f13875fc7f837815c03fe3dacd",
+      "selectedStatus": "",
+      "selectedPaths": [
+        "src/main/ai/runtime/uar/UarToolApprovalController.ts",
+        "build/local-uar-source.json"
+      ]
+    },
+    "bossfang": {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang",
+      "head": "1d518936cb15b79d30bdd315510ff925613a0f4d",
+      "selectedStatus": "",
+      "selectedPaths": [
+        "crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/lifecycle.rs"
+      ]
+    }
+  },
+  "artifacts": [
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/dist/mac-arm64/The Boss.app/Contents/Resources/app.asar",
+      "bytes": 325870709,
+      "sha256": "cb035b690d5f9c77879eaa5243903594014fcb093734522e255b4f2ff51c4c9c"
+    },
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/dist/mac-arm64/The Boss.app/Contents/Resources/app.asar.unpacked/resources/binaries/darwin-arm64/uar-sidecar",
+      "bytes": 296935808,
+      "sha256": "9f91874091f8241d97209fd21b8c0c5b79ae6cdeb82ee0e873a5ea4540a8adea"
+    },
+    {
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/dist/mac-arm64/The Boss.app/Contents/Resources/app.asar.unpacked/resources/binaries/darwin-arm64/.uar-local-payload.json",
+      "bytes": 2004,
+      "sha256": "d9d800ff54a56fce5e6ec1f6df9a11f807b218a1c53b5f4d19fc211ef3600050"
+    },
+    {
+      "file": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/local-delivery.json",
+      "bytes": 50396,
+      "sha256": "76c0bd1ff5dd331070b699e3916e5814cf7f6e4c0911321d3a72f3be0a189984"
+    }
+  ],
+  "appExists": true,
+  "plannedAcceptanceRunner": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/acceptance/local-release-intake.mjs",
+    "exists": false
+  },
+  "productTestsRun": false,
+  "productBuildsRun": false,
+  "productLaunchRun": false,
+  "excludedF6FilesAccessed": false,
+  "scope": "Only named files and Git refs; not a full repository cleanliness or source-to-bundle claim"
+}

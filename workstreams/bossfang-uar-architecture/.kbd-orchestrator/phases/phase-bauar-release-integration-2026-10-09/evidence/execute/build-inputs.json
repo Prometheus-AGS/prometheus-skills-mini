@@ -1,0 +1,1257 @@
+{
+  "schemaVersion": 1,
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "change": "bauar-int-02-local-current-uar-payload",
+  "task": "1",
+  "recordedAt": "2026-10-09T11:18:18.871Z",
+  "status": "inputs-bound-with-operation-prerequisites",
+  "sourceIntake": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/source-intake.json",
+    "sha256": "ae8dcf2d657cd419a45f65f6e7ae619bf50bbc90940b1ef9322cd97728cef13f",
+    "bytes": 97374
+  },
+  "commandContract": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/plan/command-contract.json",
+    "sha256": "028f0da331574e8593025be0cac1f9883ce0cb2bfb9e587247180443543ee8d8",
+    "bytes": 4561
+  },
+  "candidates": {
+    "uar": {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "commit": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e"
+    },
+    "boss": {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "intakeCommit": "bda3715df5425e323188f84c595978dbd4f2d1e5",
+      "finalPinCommit": "pending task2"
+    }
+  },
+  "platform": {
+    "nodePlatform": "darwin",
+    "nodeArch": "arm64",
+    "ciPresent": false,
+    "rustTarget": "aarch64-apple-darwin",
+    "cargoTargetDir": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/target",
+    "targetDirExists": false,
+    "noOldUarBinaryCopied": true,
+    "cargoIntermediateBuildDir": "Global Cargo configuration uses /Users/gqadonis/.cargo-build/{workspace-path-hash}; this is distinct per workspace and separate from final candidate target. Build owner must explicitly retain candidate-exclusive output discipline; no compilation has occurred."
+  },
+  "tools": [
+    {
+      "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+      "args": [
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "exitCode": 0,
+      "stdout": "v22.20.0",
+      "stderr": ""
+    },
+    {
+      "program": "cargo",
+      "args": [
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "exitCode": 0,
+      "stdout": "cargo 1.99.0-nightly (59800466c 2026-07-07)",
+      "stderr": ""
+    },
+    {
+      "program": "rustc",
+      "args": [
+        "-vV"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "exitCode": 0,
+      "stdout": "rustc 1.99.0-nightly (b6839f4d0 2026-07-17)\nbinary: rustc\ncommit-hash: b6839f4d0e2bd63b960bbff8619c6fdea27d81e5\ncommit-date: 2026-07-17\nhost: aarch64-apple-darwin\nrelease: 1.99.0-nightly\nLLVM version: 22.1.8",
+      "stderr": ""
+    },
+    {
+      "program": "rustup",
+      "args": [
+        "which",
+        "cargo"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "exitCode": 0,
+      "stdout": "/Users/gqadonis/.rustup/toolchains/nightly-2026-07-18-aarch64-apple-darwin/bin/cargo",
+      "stderr": ""
+    },
+    {
+      "program": "rustup",
+      "args": [
+        "which",
+        "rustc"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "exitCode": 0,
+      "stdout": "/Users/gqadonis/.rustup/toolchains/nightly-2026-07-18-aarch64-apple-darwin/bin/rustc",
+      "stderr": ""
+    },
+    {
+      "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+      "args": [
+        "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "exitCode": 0,
+      "stdout": "12.3.4",
+      "stderr": ""
+    },
+    {
+      "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+      "args": [
+        "/Users/gqadonis/Projects/prometheus/the-boss/node_modules/electron-builder/cli.js",
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "exitCode": 0,
+      "stdout": "26.15.6",
+      "stderr": ""
+    }
+  ],
+  "toolEntryFiles": [
+    {
+      "path": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+      "sha256": "49161ba4e67afda85c25b2daa1f0e91d1bffc023d2dbc4886eda7a9ba38bca62",
+      "bytes": 111332720
+    },
+    {
+      "path": "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+      "sha256": "b6e13402c88a275f5b1ec4fb420df8763179bbe9f2b87a10911be44a3622d68d",
+      "bytes": 5897
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/the-boss/node_modules/electron-builder/cli.js",
+      "sha256": "b61356c9f3a890e6d1e523b15c431802d3edf4833bb625c5cedf1c8405ec1886",
+      "bytes": 90
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/the-boss/node_modules/electron-builder/package.json",
+      "sha256": "af64d9bb728fed2bf1a3d620b5fb032d801ab68d9574238a51d423ecc7eda77a",
+      "bytes": 1653
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/the-boss/node_modules/electron/package.json",
+      "sha256": "d60daa401c3d81507406644a2ecf6d9af66114792428573fac2b141871a10877",
+      "bytes": 744
+    }
+  ],
+  "packageManagerAuthority": "pnpm@12.3.4+sha512.961aa41fb077da3a04a441d9f8e15ebc0c96da8ef710b2eb67bf9ee7cb0610eabd48f1fd85f51cffe73846785fa0f87c56a3a872a1d893f8446741b5cce45457",
+  "installedElectron": "44.2.0",
+  "features": {
+    "defaultsEnabled": true,
+    "explicit": [
+      "server-full"
+    ],
+    "rootDefault": [
+      "minimal"
+    ],
+    "rootFeatureClosure": [
+      "a2a-transport",
+      "admin-ui",
+      "api-docs",
+      "cedar-governance",
+      "default",
+      "document-intelligence",
+      "local-models",
+      "minimal",
+      "response-quality",
+      "server",
+      "server-full",
+      "surreal-backend",
+      "telemetry",
+      "wasm-runtime"
+    ],
+    "dependencyEdges": [
+      "a2a-transport",
+      "admin-ui",
+      "api-docs",
+      "cedar-governance",
+      "dep:axum",
+      "dep:axum-extra",
+      "dep:cedar-policy",
+      "dep:fastembed",
+      "dep:kreuzberg",
+      "dep:lopdf",
+      "dep:metrics",
+      "dep:metrics-exporter-prometheus",
+      "dep:opentelemetry",
+      "dep:opentelemetry-otlp",
+      "dep:opentelemetry_sdk",
+      "dep:prost",
+      "dep:surrealdb",
+      "dep:sycophancy-core",
+      "dep:tonic",
+      "dep:tonic-prost",
+      "dep:tower",
+      "dep:tower-http",
+      "dep:tracing-opentelemetry",
+      "dep:utoipa",
+      "dep:utoipa-swagger-ui",
+      "dep:wasmtime",
+      "dep:wasmtime-wasi",
+      "document-intelligence",
+      "local-models",
+      "minimal",
+      "response-quality",
+      "server",
+      "surreal-backend",
+      "telemetry",
+      "wasm-runtime"
+    ],
+    "basis": "static Cargo.toml recursive root feature expansion; dependency-unified resolution not executed",
+    "excluded": [
+      "test-probes",
+      "bauar-native-admission-gate"
+    ]
+  },
+  "authorities": {
+    "uar": [
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/Cargo.toml",
+        "sha256": "29d48665cac7ef20f3ff86f343e7ca8af8941defa7b5760601d4ffc5c4f21414",
+        "bytes": 26548
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/Cargo.lock",
+        "sha256": "1035e0befe1cf67eeb229f570c6308548914408407c65b6644cfe3d5278d086b",
+        "bytes": 382914
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/versions.toml",
+        "sha256": "262e5864da030bb4c5107fe5a7aed2a5ea03818304a34c7abf01c6c932645e48",
+        "bytes": 2194
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/rust-toolchain.toml",
+        "sha256": "d5a8793f42828a223749a6f50df95db82d3f237307e80414314d60f89faf5414",
+        "bytes": 659
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/.cargo/config.toml",
+        "sha256": "b8da292a25b840d96e94a5f4e4271fd7d66bf36a479a430ff0d6be73fddd3541",
+        "bytes": 3452
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/.gitmodules",
+        "sha256": "f9040c4404894f2df2329d37b7cf9e44fc5b073635b69cd554749270f8760b0d",
+        "bytes": 713
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/build.rs",
+        "sha256": "f6bb6b07d1c00a6a15e6f9bd225787263af311e52a6358912433fab87254c50a",
+        "bytes": 3643
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/scripts/package-boss-sidecar.mjs",
+        "sha256": "9b6800d0cb47147b3ce63cf0c7fba46f8de8f03112f1b61ba1375d83dfc0b135",
+        "bytes": 4736
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/catalog/provider_catalog.json",
+        "sha256": "b215f61fe9b5ccb55f0b7d33f412607e7198dc47b44bc6fadd0f8a12ebb1e991",
+        "bytes": 3551806
+      }
+    ],
+    "boss": [
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/package.json",
+        "sha256": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0",
+        "bytes": 28826
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/pnpm-lock.yaml",
+        "sha256": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7",
+        "bytes": 1317368
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/pnpm-workspace.yaml",
+        "sha256": "9ac466528555b983d35a1dfc558549143a6446df2beaaad554ba25bf169eca56",
+        "bytes": 11112
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/electron-builder.yml",
+        "sha256": "225094aea197088e0fd398c1c4ebf376224a88e20cef3c3f0e6d324319c58fd9",
+        "bytes": 11304
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/build/local-uar-source.json",
+        "sha256": "bb07a53faa7923faadd5f4d1094abcb359e1b2200a53ad3f54a7293da8a0ac92",
+        "bytes": 186
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/build/integration-artifacts.json",
+        "sha256": "8e60461cb117be208385725fcc963f8443d0e730f79fdf16461a5f593370690d",
+        "bytes": 13552
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/build/integration-sources.json",
+        "sha256": "47fea340a07d86eef09631a159d31df2f0fc854531236f8122ad726736c25083",
+        "bytes": 2493
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/build/node-artifacts.json",
+        "sha256": "87f701769582507b1e9b2175ae142a4c04cc6dd5370b6911df228f1105e65de7",
+        "bytes": 1803
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/before-pack.js",
+        "sha256": "89b58e705cc519921bf99f1dc6bc726def61a055fd845893ae87fa8ec2df470f",
+        "bytes": 11353
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/after-pack.js",
+        "sha256": "ac3c365d13eec68d81100c88f2294da603aa5f0a768ec3482997c198619d2a0a",
+        "bytes": 3286
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/package-prometheus.js",
+        "sha256": "b21efd0599843e98b8d36812b40984feb2e3b7160c1de1cefc26068a27af81d3",
+        "bytes": 8244
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/download-binaries.js",
+        "sha256": "3cc61fd96511710d75953f2438344c849963046b29a758ffb4807c684d3c69f4",
+        "bytes": 33882
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/prepare-local-uar-payload.cjs",
+        "sha256": "c73da697be62d16886cbf176c38c35dbb7d05817f9290880d6f84e2b20a24da9",
+        "bytes": 264
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/local-uar-payload.cjs",
+        "sha256": "6d6d06d41340c23ed26653b189bb1a6918395186ae60b0148e05bb4c59a13a13",
+        "bytes": 7966
+      }
+    ],
+    "bossVersionsToml": {
+      "missing": true
+    },
+    "dependencyManifests": [
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/Cargo.toml",
+        "sha256": "29d48665cac7ef20f3ff86f343e7ca8af8941defa7b5760601d4ffc5c4f21414",
+        "bytes": 26548
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/docs/cookbook/sdk/rust/Cargo.lock",
+        "sha256": "a620f2cbb0e48d569a4d0dc2ed90b7b2798c4c0a51843282f2cbe46763265cfa",
+        "bytes": 41575
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/docs/cookbook/sdk/rust/Cargo.toml",
+        "sha256": "eac201f6eaa449d11cdab5e87d5f5282f428c710aa630c06385c4d369ea95f65",
+        "bytes": 450
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/fuzz/Cargo.lock",
+        "sha256": "fb451bee10978c4c7b96f4661613f2bcfd1e3deb6031f8d1439d96236555baa3",
+        "bytes": 205792
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/fuzz/Cargo.toml",
+        "sha256": "63fd57afaa799f41fd11897197bd4ea8db8298ca797cf3661b1b76898dc0272b",
+        "bytes": 721
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/openspec/changes/fix-container-rust-toolchain-pin-consistency/fixtures/diskann-wide-probe/Cargo.lock",
+        "sha256": "a8009d91b3100b85708c89e032c7a330dd8bd64bd674c732dcec0c692a184f20",
+        "bytes": 2461
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/openspec/changes/fix-container-rust-toolchain-pin-consistency/fixtures/diskann-wide-probe/Cargo.toml",
+        "sha256": "d3bb4591e0ff01aed64baefa3a7f306fe2ed470f03f7364d9a75d438fe4cbf5f",
+        "bytes": 152
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/sdks/rust/Cargo.lock",
+        "sha256": "fe0f02c9c4da0ab5d02e6eb0eabf1cf6c92bba0d1f46307d9120f3936c47c7e8",
+        "bytes": 222598
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/sdks/rust/Cargo.toml",
+        "sha256": "0f421b27a9b4a17d375c423923801c30e1bd3797953cc5b4a4ade0a1bdddb074",
+        "bytes": 2121
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/spikes/pglite-oxide-intel-mac-spike/Cargo.lock",
+        "sha256": "596767e8fa5ed13d91bddad7f055b0d7ea01597061b9ffe0c4e93460212a1a92",
+        "bytes": 116346
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/spikes/pglite-oxide-intel-mac-spike/Cargo.toml",
+        "sha256": "4c707d4d900092159c2cd8c0920e31a3d2e4ddb8ebd2d3b0e508212ff5fea4a0",
+        "bytes": 491
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src-tauri/Cargo.lock",
+        "sha256": "1ec6ef09cc016d0ea039663cbeb0a3d3b76e837b9865bb7d930cf98a19dfc6bf",
+        "bytes": 336380
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src-tauri/Cargo.toml",
+        "sha256": "16a22bc624fcadba1ae88a17e696236f514873c0ef6f9743e14aa8fa22a769b6",
+        "bytes": 822
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tools/mcp-server-fetch/Cargo.toml",
+        "sha256": "0e7f238ea4a04824200f58866517e0d8f5cbb82a4556bcd3805eb5d9fd13c526",
+        "bytes": 906
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tools/project-init/Cargo.toml",
+        "sha256": "6b80305dec486a9baf00d3f8279da4b4ee1aa12fa97040f777581937160e4345",
+        "bytes": 638
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tools/uar-jwt-proxy/Cargo.toml",
+        "sha256": "9c11607dba451ef354424c2277f91212e9109aa98f860141140cb91a37eb4c73",
+        "bytes": 868
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tools/uar-model-builder/Cargo.toml",
+        "sha256": "3d738dccea9df86393dca24c6a37c3bc6d41f7635274dca0fb10736dd2a7db4b",
+        "bytes": 140
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/crates/esaxx-rs/Cargo.toml",
+        "sha256": "a0de21a7911c5e6f7d81f19402664bd26ca4d3b6afa4ed783bdc35a99e078afb",
+        "bytes": 735
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/prometheus-parking-lot-rs/Cargo.toml",
+        "sha256": "c363f5c781c4e656073bb0c7e38b9c9ab1b343c599227836b6ad973ca98f83ec",
+        "bytes": 2163
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/surreal-memory-server/crates/surreal-memory/Cargo.toml",
+        "sha256": "7423a95a88e2a23dc12587d3864b79ae813238b34731858f95577409cabc42b3",
+        "bytes": 1971
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/sycophancy-correction/crates/sycophancy-core/Cargo.toml",
+        "sha256": "a654d4b2fa5491cd6a5100f19361b8995c5a4ce65c6264af484f1f774ad6df1d",
+        "bytes": 853
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/Cargo.toml",
+        "sha256": "55bd433da99c085fd2164a7434065bf79d91da2c0fdc299a1d702b315498097f",
+        "bytes": 6102
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/crates/liter-llm-catalog-gen/Cargo.toml",
+        "sha256": "67c84655e8e829ac62c63f39ee72fb9a161617d78cbd1eaa23fc084656e8f306",
+        "bytes": 1199
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/crates/liter-llm-cli/Cargo.toml",
+        "sha256": "0e8ab6cec77a07428d8c199ee824169ee2df0e65909f263060cac85431ba87f2",
+        "bytes": 2342
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/crates/liter-llm-ffi/Cargo.toml",
+        "sha256": "12d2bce8a8bb730146751bcd02472ca9940ad6a3d0bc7dba741b7503345739dd",
+        "bytes": 2338
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/crates/liter-llm-jni/Cargo.toml",
+        "sha256": "37423e5cc1539664437946c113df3f553e83d1376d44d504e0ed318569a57212",
+        "bytes": 1791
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/crates/liter-llm-node/Cargo.toml",
+        "sha256": "3a3f532952c84fe3374d766c670adf10503d70a4ec5a1681329199d672abfe15",
+        "bytes": 2044
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/crates/liter-llm-php/Cargo.toml",
+        "sha256": "af085f8b25ddd2bd9221563f27b825752b40dd8a4a093428c7b41c28f9ad5bf6",
+        "bytes": 1475
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/crates/liter-llm-proxy/Cargo.toml",
+        "sha256": "095617491e0e94c08dda2699262285f24558408d9be5352ddb3a25d3f4ad3758",
+        "bytes": 3106
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/crates/liter-llm-py/Cargo.toml",
+        "sha256": "25b59eaf6e415cdb5b0b9fda3751ffdf8ee181e72f4135f0446da1198e7847d6",
+        "bytes": 2278
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/crates/liter-llm-wasm/Cargo.toml",
+        "sha256": "96e8370479ac10882cb96d38d6708029e222cca69bc67f7e77088a7a8268e4b5",
+        "bytes": 1579
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/crates/liter-llm/Cargo.toml",
+        "sha256": "9ad9bdac4e4425765d5a1a1ef7636908b0ac18093cc1499c7454b973d4e1804d",
+        "bytes": 9880
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/e2e/rust/Cargo.lock",
+        "sha256": "0f924aab9f62a089e0d54f84f5dab2c927f0105b5b6a1cd940bca878d5a1ba9e",
+        "bytes": 104900
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/e2e/rust/Cargo.toml",
+        "sha256": "3b004ba99225ec2d4bfdb014c67c3cfa4b927c6287f4286358dab9bfb799599f",
+        "bytes": 831
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/packages/dart/rust/Cargo.toml",
+        "sha256": "805ef6df2761da87a0525c104239a9cc2aeaa56a883ad528a3ee6f17f0020b8e",
+        "bytes": 1327
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/packages/elixir/native/liter_llm_nif/Cargo.lock",
+        "sha256": "bcf7a43f874d4a485a94597a150f1dc3aa67392d755525e56ee6b5d59889897d",
+        "bytes": 104508
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/packages/elixir/native/liter_llm_nif/Cargo.toml",
+        "sha256": "342bfdbdce87ddaf30d95b7ebc4021d7922959f3914c96e514306effbbe4e459",
+        "bytes": 1990
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/packages/ruby/ext/liter_llm_rb/native/Cargo.lock",
+        "sha256": "91bf901a205e1950d3e054f216d6e8816451999efc921b6cf20793a78246f829",
+        "bytes": 106154
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/packages/ruby/ext/liter_llm_rb/native/Cargo.toml",
+        "sha256": "b21fdd7be94c251a84ab1e93472ae9798ffde664ff5e7b15d79786f8abea8136",
+        "bytes": 1703
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/packages/swift/rust/Cargo.toml",
+        "sha256": "64915e8eac66bf75a2fdd62d3f5929ca60fe52886b0a339d2f41fa42a032880e",
+        "bytes": 2371
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/test_apps/rust/Cargo.lock",
+        "sha256": "1f176d3e8def55de0e458609db90860b3c55083b282adb07df5908572cb4c750",
+        "bytes": 105307
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/liter-llm/test_apps/rust/Cargo.toml",
+        "sha256": "9c3de895e79eccf2f78412507e92818bc8cd808e5734541c91ee61c5119a0e54",
+        "bytes": 817
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/crates/prometheus-exec/Cargo.lock",
+        "sha256": "6584974d12008ea0918e0cc79bbe35f0abe66be3b6fe1278f15017ac750afe6d",
+        "bytes": 96147
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/crates/prometheus-exec/Cargo.toml",
+        "sha256": "31b5cddc0ac0400a0cee123a2c82d52e12ad62e79177f76e16879f768f2f9086",
+        "bytes": 2018
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/crates/prometheus-hook/Cargo.lock",
+        "sha256": "06a8e505139930019536bcdb7dd4cc6b3c353d0ec75a03a09173200e9474829b",
+        "bytes": 4865
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/crates/prometheus-hook/Cargo.toml",
+        "sha256": "ffecf5293e57cbf2c071a6106ecbb621ab644535f450ad2816f1aab2098a5dbc",
+        "bytes": 789
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/adversarial-review/tests/fixtures/clean-agent/Cargo.toml",
+        "sha256": "4f2c696f8ba696bd3633c54f9738345c17711c5d7edf028ece484e939463a4e0",
+        "bytes": 50
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/adversarial-review/tests/fixtures/clean-agent/crates/agent-core/Cargo.toml",
+        "sha256": "38a22c2fe93df8cc3403fbf2cff9a43544d9913cedebc4aade6b6c3f7e0f7e3d",
+        "bytes": 129
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/adversarial-review/tests/fixtures/flawed-agent/Cargo.toml",
+        "sha256": "4f2c696f8ba696bd3633c54f9738345c17711c5d7edf028ece484e939463a4e0",
+        "bytes": 50
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/adversarial-review/tests/fixtures/flawed-agent/crates/agent-core/Cargo.toml",
+        "sha256": "14e3b6f40ad2605ffa46731a5fecc449b9cae9d7e066502ffe05e04f904fb630",
+        "bytes": 48
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/bdd-cucumber-rs/references/examples/api-http-only/Cargo.toml",
+        "sha256": "82dc724ad2e1e4212d98a77d1c2243c556e28bd93bb966858c596d077ad0bbc2",
+        "bytes": 389
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/bdd-cucumber-rs/references/examples/ui-thirtyfour/Cargo.toml",
+        "sha256": "3a33b1e8fdb1a057df1b81eaa6fd4d25f7006993a48e05d59350afa79521315d",
+        "bytes": 379
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/entity-graph-optimize/component/Cargo.lock",
+        "sha256": "de1d74ac01709944dc4e921136233e44c57b36fd55c40e6dc0638bb0d37e8cb9",
+        "bytes": 11348
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/entity-graph-optimize/component/Cargo.toml",
+        "sha256": "f787f717f2e8fb8ea11fb35e48686afdf33fe2f2b67f9d52487a1ee48d4b03cd",
+        "bytes": 280
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/librefang-wasm-skill/references/example-echo/Cargo.toml",
+        "sha256": "677404b200de05ced43a1f5db8c8f4e566f0d133165ab5b00ccac1652b0c0c6e",
+        "bytes": 390
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/prometheus-entity-skills/entity-graph-optimize/component/Cargo.lock",
+        "sha256": "de1d74ac01709944dc4e921136233e44c57b36fd55c40e6dc0638bb0d37e8cb9",
+        "bytes": 11348
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/prometheus-entity-skills/entity-graph-optimize/component/Cargo.toml",
+        "sha256": "f787f717f2e8fb8ea11fb35e48686afdf33fe2f2b67f9d52487a1ee48d4b03cd",
+        "bytes": 280
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/sycophancy-correction/Cargo.lock",
+        "sha256": "7097caa05ddc19f6096dd1e8d1d872bb0018d11a730b06a945ee01c9cb2038d8",
+        "bytes": 54530
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/sycophancy-correction/Cargo.toml",
+        "sha256": "e1ac388afe50c7c6a7b4df9d7b480486cc2be839b3da51c624ff0b7a4d9d84e1",
+        "bytes": 1351
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/sycophancy-correction/crates/sycophancy-core/Cargo.toml",
+        "sha256": "250b56bb74955373465eacea41fe01b695980dbd4da98f32e9e79cd33795f5b2",
+        "bytes": 826
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/claude/prometheus-skill-pack/skills/sycophancy-correction/crates/sycophancy-mcp/Cargo.toml",
+        "sha256": "a1e0ec71a8c90be2b0e2151c0886593a37ec9b8d156d27c2ebfe88a4d6ff68cd",
+        "bytes": 889
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/adversarial-review/tests/fixtures/clean-agent/Cargo.toml",
+        "sha256": "4f2c696f8ba696bd3633c54f9738345c17711c5d7edf028ece484e939463a4e0",
+        "bytes": 50
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/adversarial-review/tests/fixtures/clean-agent/crates/agent-core/Cargo.toml",
+        "sha256": "38a22c2fe93df8cc3403fbf2cff9a43544d9913cedebc4aade6b6c3f7e0f7e3d",
+        "bytes": 129
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/adversarial-review/tests/fixtures/flawed-agent/Cargo.toml",
+        "sha256": "4f2c696f8ba696bd3633c54f9738345c17711c5d7edf028ece484e939463a4e0",
+        "bytes": 50
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/adversarial-review/tests/fixtures/flawed-agent/crates/agent-core/Cargo.toml",
+        "sha256": "14e3b6f40ad2605ffa46731a5fecc449b9cae9d7e066502ffe05e04f904fb630",
+        "bytes": 48
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/bdd-cucumber-rs/references/examples/api-http-only/Cargo.toml",
+        "sha256": "82dc724ad2e1e4212d98a77d1c2243c556e28bd93bb966858c596d077ad0bbc2",
+        "bytes": 389
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/bdd-cucumber-rs/references/examples/ui-thirtyfour/Cargo.toml",
+        "sha256": "3a33b1e8fdb1a057df1b81eaa6fd4d25f7006993a48e05d59350afa79521315d",
+        "bytes": 379
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/entity-graph-optimize/component/Cargo.lock",
+        "sha256": "de1d74ac01709944dc4e921136233e44c57b36fd55c40e6dc0638bb0d37e8cb9",
+        "bytes": 11348
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/entity-graph-optimize/component/Cargo.toml",
+        "sha256": "f787f717f2e8fb8ea11fb35e48686afdf33fe2f2b67f9d52487a1ee48d4b03cd",
+        "bytes": 280
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/librefang-wasm-skill/references/example-echo/Cargo.toml",
+        "sha256": "677404b200de05ced43a1f5db8c8f4e566f0d133165ab5b00ccac1652b0c0c6e",
+        "bytes": 390
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/prometheus-entity-skills/entity-graph-optimize/component/Cargo.lock",
+        "sha256": "de1d74ac01709944dc4e921136233e44c57b36fd55c40e6dc0638bb0d37e8cb9",
+        "bytes": 11348
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/prometheus-entity-skills/entity-graph-optimize/component/Cargo.toml",
+        "sha256": "f787f717f2e8fb8ea11fb35e48686afdf33fe2f2b67f9d52487a1ee48d4b03cd",
+        "bytes": 280
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/sycophancy-correction/Cargo.lock",
+        "sha256": "7097caa05ddc19f6096dd1e8d1d872bb0018d11a730b06a945ee01c9cb2038d8",
+        "bytes": 54530
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/sycophancy-correction/Cargo.toml",
+        "sha256": "e1ac388afe50c7c6a7b4df9d7b480486cc2be839b3da51c624ff0b7a4d9d84e1",
+        "bytes": 1351
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/sycophancy-correction/crates/sycophancy-core/Cargo.toml",
+        "sha256": "250b56bb74955373465eacea41fe01b695980dbd4da98f32e9e79cd33795f5b2",
+        "bytes": 826
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/dist/plugins/codex/prometheus-skill-pack/skills/sycophancy-correction/crates/sycophancy-mcp/Cargo.toml",
+        "sha256": "a1e0ec71a8c90be2b0e2151c0886593a37ec9b8d156d27c2ebfe88a4d6ff68cd",
+        "bytes": 889
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/skills/process/adversarial-review/tests/fixtures/clean-agent/Cargo.toml",
+        "sha256": "4f2c696f8ba696bd3633c54f9738345c17711c5d7edf028ece484e939463a4e0",
+        "bytes": 50
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/skills/process/adversarial-review/tests/fixtures/clean-agent/crates/agent-core/Cargo.toml",
+        "sha256": "38a22c2fe93df8cc3403fbf2cff9a43544d9913cedebc4aade6b6c3f7e0f7e3d",
+        "bytes": 129
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/skills/process/adversarial-review/tests/fixtures/flawed-agent/Cargo.toml",
+        "sha256": "4f2c696f8ba696bd3633c54f9738345c17711c5d7edf028ece484e939463a4e0",
+        "bytes": 50
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/skills/process/adversarial-review/tests/fixtures/flawed-agent/crates/agent-core/Cargo.toml",
+        "sha256": "14e3b6f40ad2605ffa46731a5fecc449b9cae9d7e066502ffe05e04f904fb630",
+        "bytes": 48
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/skills/react/prometheus-entity-skills/entity-graph-optimize/component/Cargo.lock",
+        "sha256": "de1d74ac01709944dc4e921136233e44c57b36fd55c40e6dc0638bb0d37e8cb9",
+        "bytes": 11348
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/skills/react/prometheus-entity-skills/entity-graph-optimize/component/Cargo.toml",
+        "sha256": "f787f717f2e8fb8ea11fb35e48686afdf33fe2f2b67f9d52487a1ee48d4b03cd",
+        "bytes": 280
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/skills/rust/librefang-wasm-skill/references/example-echo/Cargo.toml",
+        "sha256": "677404b200de05ced43a1f5db8c8f4e566f0d133165ab5b00ccac1652b0c0c6e",
+        "bytes": 390
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/skills/testing/bdd-cucumber-rs/references/examples/api-http-only/Cargo.toml",
+        "sha256": "82dc724ad2e1e4212d98a77d1c2243c556e28bd93bb966858c596d077ad0bbc2",
+        "bytes": 389
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/skills/testing/bdd-cucumber-rs/references/examples/ui-thirtyfour/Cargo.toml",
+        "sha256": "3a33b1e8fdb1a057df1b81eaa6fd4d25f7006993a48e05d59350afa79521315d",
+        "bytes": 379
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-contracts/Cargo.lock",
+        "sha256": "51ef63cbb2664233074c1688221a69874050789983af92ac673c34e0e7a958f4",
+        "bytes": 29408
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-contracts/Cargo.toml",
+        "sha256": "679d00fa323adae78dac1871646532f246b3ce572c3726928e2c83b2d7183b77",
+        "bytes": 739
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-core/Cargo.lock",
+        "sha256": "265613801922acf6b9b8f239f99e42a5dab7c6d0450273a4b08561b4766030a9",
+        "bytes": 51050
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-core/Cargo.toml",
+        "sha256": "ce155fac2ba1a03ca14a5e7d75f2bad3a8ca8749563cf5d296702c862aaff579",
+        "bytes": 777
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-embedded/Cargo.lock",
+        "sha256": "1cbbac755ba223a4a1de765c7e0c7f73eaefa2de146f06244a511881f2573ac5",
+        "bytes": 86536
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-embedded/Cargo.toml",
+        "sha256": "caa887e7a78fdfcdc9b4ce5443091e9ecacb4baa47a3e155685bcee982ae05a3",
+        "bytes": 1044
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-remote/Cargo.lock",
+        "sha256": "5bcee86cd78be4a0a0eee636cf17b79d96c6534ca3aab5446ecb027657652f8b",
+        "bytes": 27764
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-remote/Cargo.toml",
+        "sha256": "2e21b072abe8b88150e77a18db5db868e29f7aa91f123ede25d5ad4d4b20ab3a",
+        "bytes": 849
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-service/Cargo.lock",
+        "sha256": "adb2d0f40285585dd2e590c33af892871860ddbcdc421c95d1e276d0cb355baf",
+        "bytes": 59295
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-service/Cargo.toml",
+        "sha256": "019ccf89d19565bdce8799cff768fb1e23a033c02dcbaf86caf86fb4d19005b5",
+        "bytes": 990
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-tier-p/Cargo.lock",
+        "sha256": "fd57b0f0bfde740f0a9be71fe3af3936a113a6905bfb49a4bfd293dded8be8ca",
+        "bytes": 49506
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-tier-p/Cargo.toml",
+        "sha256": "fd354481927d6cb32dfcce09cf261fdd1119303794f3b345d2a6c1dd9f00b470",
+        "bytes": 985
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-tier-w/Cargo.lock",
+        "sha256": "5c53f8a33a1439499133d8c3d3e2ef28bf2dd2622dbdf97d3d04532a71fa5474",
+        "bytes": 84907
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/exec-tier-w/Cargo.toml",
+        "sha256": "0b7fe951936c6c28bc2883605505c0e96eef54939eb8e649856166531110d33f",
+        "bytes": 1650
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/kbd-runtime/Cargo.lock",
+        "sha256": "faa21aab62cdefea66c3bb452b459bef66f2dca372e86ba75184ab19da9b6332",
+        "bytes": 71587
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/kbd-runtime/Cargo.toml",
+        "sha256": "f7fa393d3aaec06de9750a93cce9e2a98ee3cc919b4941b6f2ca6cb3d0ba224f",
+        "bytes": 1106
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/learner-model/Cargo.lock",
+        "sha256": "3fb30d79386e32754c24985e8e4ae74ab09c4e2179d12f24e2bd905e40200d50",
+        "bytes": 50685
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/learner-model/Cargo.toml",
+        "sha256": "8d6ce7f7089e3487be0de69c80b09eafbc1bb777fa1a6f3703aede467258b72c",
+        "bytes": 884
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/prometheus-research/Cargo.lock",
+        "sha256": "82dd570fc51f1af2e32187bec02d4871253bd6a36cfbde29447bee89c0df4c50",
+        "bytes": 57631
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/prometheus-research/Cargo.toml",
+        "sha256": "024b4d76f70bc3f8b31d606bdc90583c9ad306623941901f139f3533fb6272b5",
+        "bytes": 1956
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/skill-ffi/Cargo.lock",
+        "sha256": "56f6b31e0a48fdf62f88b18ed57cc5a60e171275f70183dc2a322e27d4e0a91e",
+        "bytes": 135078
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/skill-ffi/Cargo.toml",
+        "sha256": "3b9e5b3299799747a3d6d3a2562dca82d0d1bcc6a0f727080dc7bbc7a995b334",
+        "bytes": 1613
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/skill-index/Cargo.lock",
+        "sha256": "a9f6d46eb4ea6b43b546b026d0980f0ea6aaa7399c329ad905ae973d32db98be",
+        "bytes": 8101
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/skill-index/Cargo.toml",
+        "sha256": "480f3ddb4938b43b4610abbdfb21a2888c6f0473afa011de6a632689aafbc4ca",
+        "bytes": 312
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/storage-provider/Cargo.lock",
+        "sha256": "951205ec3cc54846b86f792eea10e76ca3169166690df8c1f1a4deceee9fd4af",
+        "bytes": 42956
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/storage-provider/Cargo.toml",
+        "sha256": "bdcf99904cf6b32a606e53406c25fcd5e3a2e6de265658a85ed0cf57142aa3dc",
+        "bytes": 633
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/surface-bridge/Cargo.lock",
+        "sha256": "ff0f4915ca35a89da30051be14ad1e9dc890e134a80436e4947c1eb20506d5a8",
+        "bytes": 15423
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/substrate/surface-bridge/Cargo.toml",
+        "sha256": "2c7cf0d397d321084bfa32dc5eef0f7236038332433e3b72321d15812e54bf92",
+        "bytes": 384
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/forge-rs/Cargo.lock",
+        "sha256": "70b854a5b8430b953dc5e522b7c6d6f75fed6257ae1560bd762661ca323c8387",
+        "bytes": 88730
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/forge-rs/Cargo.toml",
+        "sha256": "5fb85555167fd19df2c0e15b3027f002253edffb01233ef04b1b9dd5e1988e45",
+        "bytes": 2542
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/forge-rs/crates/forge-cli/Cargo.toml",
+        "sha256": "d1dd9d2768e15ee21e04758cf478a6b4df811359c84a857a51ba4a8468bf3acd",
+        "bytes": 909
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/forge-rs/crates/forge-core/Cargo.toml",
+        "sha256": "25fc1f9b6a24ba7587f7d28d11a3c030b04f536131d1402e8aeafd3f19e81162",
+        "bytes": 530
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/forge-rs/crates/forge-enricher/Cargo.toml",
+        "sha256": "432989f5cf48ee5ef218f9b9d21c980bfc81b30344e74928f932e156061e15ce",
+        "bytes": 815
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/forge-rs/crates/forge-mcp/Cargo.toml",
+        "sha256": "759335ebc01a042389ab7122907e65a822579a4a891ec541a02cd241ebf3c997",
+        "bytes": 855
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/forge-rs/crates/forge-reflect/Cargo.toml",
+        "sha256": "bafa3c447088fa57b837d3e2ad5d52e8f8a48c6680711907a9782986ca72c428",
+        "bytes": 570
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/forge-rs/crates/forge-skills/Cargo.toml",
+        "sha256": "0a1368517e267fe41679bbd8ad844aaf292793831141760f6a0121491a50e47f",
+        "bytes": 566
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/prometheus-cli/Cargo.lock",
+        "sha256": "574df89684c105dd07ab74190b7fc9ad4d9e07bade821522be895622329cc816",
+        "bytes": 256561
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/prometheus-cli/Cargo.toml",
+        "sha256": "77c8150c7d91e1b21d5e8da0bcbb11eeb5f453ef77016c9bc2f092ae22477b84",
+        "bytes": 2035
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/prometheus-cli/crates/prometheus-agents/Cargo.toml",
+        "sha256": "e16a9ae301c5a96134948361f5885c47ba507577dbea01aa9352ad6e4b57ad9f",
+        "bytes": 505
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/prometheus-cli/crates/prometheus-cedar/Cargo.toml",
+        "sha256": "4a74d0a10508cfe074484a43bdeb45899213efb039de7f13cdf623d138cfa138",
+        "bytes": 443
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/prometheus-cli/crates/prometheus-cli/Cargo.toml",
+        "sha256": "17ae6a2353b5e7c84553a1e13a2ab8bae1f6f25707ee7043d7906d7fd0c314fa",
+        "bytes": 1294
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/prometheus-cli/crates/prometheus-learn/Cargo.toml",
+        "sha256": "0c34508098f9a802de9085f82a436dddf2d8440e14c220243f1064972f852a32",
+        "bytes": 1221
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/prometheus-rust-auditor/Cargo.lock",
+        "sha256": "69a0a36106f678219109e325bd4b5545b543c3cfcc330b50469e89526a7f647c",
+        "bytes": 21853
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/crates/prometheus-skill-system/tools/prometheus-rust-auditor/Cargo.toml",
+        "sha256": "aec9a27a98ba572ffe9f3e15f477315f10092a0fd360dbee38698df0ed241f8c",
+        "bytes": 786
+      },
+      {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/vendor/git/rust-mcp-filesystem/Cargo.toml",
+        "sha256": "8c453acda0e19ac630f27d15a650cd768c234b06d31f376ea8911b1e52ed6df5",
+        "bytes": 1519
+      }
+    ],
+    "gitlinks": {
+      "uar": [
+        {
+          "path": "crates/prometheus-skill-system",
+          "revision": "e57421a86fae08ac4d1e3a625a213cf3f3eb98bc",
+          "checkout": "e57421a86fae08ac4d1e3a625a213cf3f3eb98bc"
+        },
+        {
+          "path": "frontend/packages/prometheus-entity-management",
+          "revision": "959839a88e65704014bab0bdd055df17fb210298",
+          "checkout": null
+        },
+        {
+          "path": "models.dev",
+          "revision": "f97df19af40bc322ccbffc91138f360154940a63",
+          "checkout": null
+        },
+        {
+          "path": "vendor/git/liter-llm",
+          "revision": "0617979022aea621dd13541dee07ad84ffcf7d21",
+          "checkout": "0617979022aea621dd13541dee07ad84ffcf7d21"
+        },
+        {
+          "path": "vendor/git/rust-mcp-filesystem",
+          "revision": "21f5f684c0a15a7536b947c5c02a8949e49d3062",
+          "checkout": "21f5f684c0a15a7536b947c5c02a8949e49d3062"
+        }
+      ],
+      "boss": [
+        {
+          "path": "resources/prometheus-skills-mini",
+          "revision": "f38a98a6ed064f9e5b8b9837e8b91781af570d22",
+          "checkout": "f38a98a6ed064f9e5b8b9837e8b91781af570d22"
+        }
+      ]
+    }
+  },
+  "matchingReuseAuthority": [
+    {
+      "candidate": {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/package.json",
+        "sha256": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0",
+        "bytes": 28826
+      },
+      "original": {
+        "path": "/Users/gqadonis/Projects/prometheus/the-boss/package.json",
+        "sha256": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0",
+        "bytes": 28826
+      },
+      "matches": true
+    },
+    {
+      "candidate": {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/pnpm-lock.yaml",
+        "sha256": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7",
+        "bytes": 1317368
+      },
+      "original": {
+        "path": "/Users/gqadonis/Projects/prometheus/the-boss/pnpm-lock.yaml",
+        "sha256": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7",
+        "bytes": 1317368
+      },
+      "matches": true
+    }
+  ],
+  "nativeInputs": [
+    {
+      "tool": "compass",
+      "version": "0.3.28",
+      "pinnedArchiveSha256": "706bda14f4867cf99e29c92c5c42c90b021e84c92f709ba96791e8c07c4d7e55",
+      "archive": "none",
+      "locations": [
+        "/Users/gqadonis/Projects/prometheus/the-boss/.git/cherry-binaries/darwin-arm64/compass/0.3.28-706bda14f4867cf9",
+        "/Users/gqadonis/.claude/worktrees/bauar-boss/resources/binaries/darwin-arm64"
+      ],
+      "copied": [
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/resources/binaries/darwin-arm64/compass",
+          "sha256": "706bda14f4867cf99e29c92c5c42c90b021e84c92f709ba96791e8c07c4d7e55",
+          "bytes": 183488880
+        }
+      ]
+    },
+    {
+      "tool": "rust-mcp-filesystem",
+      "version": "0.4.5",
+      "pinnedArchiveSha256": "8c473b7d8492967a1d043bd2d1efac9be5403d85b455928f23cb0ebd4c69f42c",
+      "archive": "none",
+      "locations": [
+        "/Users/gqadonis/Projects/prometheus/the-boss/.git/cherry-binaries/darwin-arm64/rust-mcp-filesystem/0.4.5-8c473b7d8492967a",
+        "/Users/gqadonis/.claude/worktrees/bauar-boss/resources/binaries/darwin-arm64"
+      ],
+      "copied": [
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/resources/binaries/darwin-arm64/rust-mcp-filesystem",
+          "sha256": "8c473b7d8492967a1d043bd2d1efac9be5403d85b455928f23cb0ebd4c69f42c",
+          "bytes": 8480368
+        }
+      ]
+    },
+    {
+      "tool": "prometheus",
+      "version": "1.10.0",
+      "pinnedArchiveSha256": "ddf4df1252e1fd97da8b1be854f901292a3517075e2af65964c44ec4779262be",
+      "archive": "none",
+      "locations": [
+        "/Users/gqadonis/Projects/prometheus/the-boss/.git/cherry-binaries/darwin-arm64/prometheus/1.10.0-ddf4df1252e1fd97",
+        "/Users/gqadonis/.claude/worktrees/bauar-boss/resources/binaries/darwin-arm64"
+      ],
+      "copied": [
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/resources/binaries/darwin-arm64/prometheus",
+          "sha256": "ddf4df1252e1fd97da8b1be854f901292a3517075e2af65964c44ec4779262be",
+          "bytes": 15666336
+        }
+      ]
+    },
+    {
+      "tool": "pk",
+      "version": "1.9.0",
+      "pinnedArchiveSha256": "104561ba5c6c0c994405c1eb8da36a9e8ab8dff051c1140e3b06471345b93e73",
+      "archive": "none",
+      "locations": [
+        "/Users/gqadonis/Projects/prometheus/the-boss/.git/cherry-binaries/darwin-arm64/pk/1.9.0-104561ba5c6c0c99",
+        "/Users/gqadonis/.claude/worktrees/bauar-boss/resources/binaries/darwin-arm64"
+      ],
+      "copied": [
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/resources/binaries/darwin-arm64/pk",
+          "sha256": "104561ba5c6c0c994405c1eb8da36a9e8ab8dff051c1140e3b06471345b93e73",
+          "bytes": 8184784
+        }
+      ]
+    },
+    {
+      "tool": "liter-llm",
+      "version": "2.1.1",
+      "pinnedArchiveSha256": "02b0433f91e0a964958d1441149f13bb4bb39efbc0c3193dc690cfe2191289ad",
+      "archive": "none",
+      "locations": [
+        "/Users/gqadonis/Projects/prometheus/the-boss/.git/cherry-binaries/darwin-arm64/liter-llm/2.1.1-02b0433f91e0a964",
+        "/Users/gqadonis/.claude/worktrees/bauar-boss/resources/binaries/darwin-arm64"
+      ],
+      "copied": [
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/resources/binaries/darwin-arm64/liter-llm",
+          "sha256": "02b0433f91e0a964958d1441149f13bb4bb39efbc0c3193dc690cfe2191289ad",
+          "bytes": 27895656
+        }
+      ]
+    },
+    {
+      "tool": "node",
+      "version": "24.11.1",
+      "pinnedArchiveSha256": "b05aa3a66efe680023f930bd5af3fdbbd542794da5644ca2ad711d68cbd4dc35",
+      "archive": "tar.gz",
+      "locations": [
+        "/Users/gqadonis/Projects/prometheus/the-boss/.git/cherry-binaries/darwin-arm64/node/24.11.1-b05aa3a66efe6800",
+        "/Users/gqadonis/.claude/worktrees/bauar-boss/resources/binaries/darwin-arm64"
+      ],
+      "copied": [
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/resources/binaries/darwin-arm64/node",
+          "sha256": "4255a388254ca4319e2f95f1da375d5deaddf25baf9c7c85070b67f9543b15d0",
+          "bytes": 117591472
+        }
+      ]
+    }
+  ],
+  "electronHeaders": {
+    "directory": "/Users/gqadonis/.electron-gyp/44.2.0",
+    "exists": true,
+    "beforePackRebuild": "existing hook force-builds better-sqlite3 for exact Electron ABI; not run"
+  },
+  "prerequisiteMaterialization": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/prerequisite-materialization.json",
+    "sha256": "81f1d2e7c6a0c3dc676942e0f6a5d1a0a223ed1bc87718c773eda5ced88f11b7",
+    "bytes": 22051
+  },
+  "remainingPrerequisites": [
+    {
+      "operation": "Boss build/package",
+      "input": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules",
+      "status": "absent",
+      "reuseSource": "/Users/gqadonis/Projects/prometheus/the-boss/node_modules",
+      "problem": "Naive recursive dereference encounters existing dangling optional Linux link .pnpm/@aiany+sqlite-vec@0.1.10-alpha.4.aiany.2/node_modules/@aiany/sqlite-vec-linux-arm64. No node_modules copy attempted; no install run.",
+      "remedy": "Packaging owner can materialize a bounded dependency graph from the matching installed source, handling irrelevant missing platform links explicitly and preserving workspace package source identity; broad pnpm install is not authorized."
+    },
+    {
+      "operation": "Boss beforePack",
+      "input": "scripts/package-prometheus.js",
+      "status": "required unchanged hook operations authorized by operator via root",
+      "command": [
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--include=dev",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/build/prometheus-payload",
+      "lockAuthority": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/resources/prometheus-skills-mini/package-lock.json",
+      "laterDownload": {
+        "url": "https://github.com/Prometheus-AGS/the-boss/releases/download/boss-tools-2.2.4-uar-p1.19/compass-skills.tar.gz",
+        "sha256": "8b13681910d532411300268c4ba2bab5712e1b7e5cba70f105e766cd89e2c7b0"
+      },
+      "localArchive": {
+        "path": "/Users/gqadonis/Projects/prometheus/the-boss/build/integration-output/compass-skills.tar.gz",
+        "sha256": "8b13681910d532411300268c4ba2bab5712e1b7e5cba70f105e766cd89e2c7b0",
+        "bytes": 34245
+      },
+      "localArchiveMatches": true,
+      "note": "Hook recreates payload and always performs npm ci/archive download; no hook operation executed in task1."
+    },
+    {
+      "operation": "Boss package-prometheus",
+      "input": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/resources/prometheus-skills-mini/tools/liter-llm",
+      "revision": "4f25d39f0075656b70bf945880d6033beda6d663",
+      "status": "nested catalog checkout still requires exact materialization"
+    }
+  ],
+  "boundaries": {
+    "productionPin": "pending task2",
+    "build": "not run",
+    "package": "not run",
+    "runtimeAcceptance": "operator-deferred",
+    "review": "operator-deferred",
+    "certification": "operator-deferred",
+    "publication": "not authorized",
+    "securityHardening": "none",
+    "f6": "cancelled; excluded paths were not accessed",
+    "canonicalState": "root owned; not mutated"
+  },
+  "next": "Stop for task2 model/ownership handoff. No source pin edit or Cargo build/check/test executed.",
+  "pathDependencies": [
+    {
+      "name": "sycophancy-core",
+      "path": "vendor/git/sycophancy-correction/crates/sycophancy-core",
+      "manifestPresent": true
+    },
+    {
+      "name": "surreal-memory",
+      "path": "vendor/git/surreal-memory-server/crates/surreal-memory",
+      "manifestPresent": true
+    },
+    {
+      "name": "prometheus_parking_lot",
+      "path": "vendor/git/prometheus-parking-lot-rs",
+      "manifestPresent": true
+    },
+    {
+      "name": "liter-llm",
+      "path": "vendor/git/liter-llm/crates/liter-llm",
+      "manifestPresent": true
+    }
+  ],
+  "globalCargoBuildConfiguration": {
+    "path": "/Users/gqadonis/.cargo/config.toml",
+    "sha256": "24604b9c3aab74d0ca132f9415b0a202a53f07097dfc0faa2fbd41643b47eee9",
+    "build": {
+      "build-dir": "/Users/gqadonis/.cargo-build/{workspace-path-hash}",
+      "rustc-wrapper": "/opt/homebrew/bin/sccache",
+      "jobs": 10
+    }
+  },
+  "sourcePreservation": {
+    "copiedInputs": "Source SHA256 recorded before copy and matched candidate after copy; originals never written",
+    "candidateHeadsUnchanged": true,
+    "scope": "No whole source-worktree status/diff or protected F6 reads",
+    "primaryPackageAndLockMatchedAtBinding": true
+  }
+}

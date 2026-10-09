@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "change": "bauar-int-02-local-current-uar-payload",
+  "task": "2",
+  "recordedAt": "2026-10-09T11:23:40.530Z",
+  "status": "pin-committed",
+  "candidateRoot": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+  "inputReceipt": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/build-inputs.json",
+    "sha256": "fe86a83ee98f67df5b3b46c13d24b88a95a8d22e16b2dd50326bc56c91c1e3f1"
+  },
+  "uarCheckpoint": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+  "pin": {
+    "path": "build/local-uar-source.json",
+    "before": {
+      "schema": 1,
+      "platform": "darwin-arm64",
+      "repository": "Prometheus-AGS/universal-agent-runtime",
+      "revision": "48bc45b59d02d4febf4ed36e352af367fef73049",
+      "version": "1.0.0"
+    },
+    "after": {
+      "schema": 1,
+      "platform": "darwin-arm64",
+      "repository": "Prometheus-AGS/universal-agent-runtime",
+      "revision": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+      "version": "1.0.0"
+    },
+    "sha256Before": "bb07a53faa7923faadd5f4d1094abcb359e1b2200a53ad3f54a7293da8a0ac92",
+    "sha256After": "2ea83779eb80253745be267b2de3bdd8cbf1a46ca0fd69043cae48afad95d92a",
+    "bytesBefore": 186,
+    "bytesAfter": 186
+  },
+  "commit": {
+    "hash": "7a5bdb4b7c02e9f13875fc7f837815c03fe3dacd",
+    "parent": "bda3715df5425e323188f84c595978dbd4f2d1e5",
+    "changedPaths": [
+      "build/local-uar-source.json"
+    ],
+    "diff": "diff --git a/build/local-uar-source.json b/build/local-uar-source.json\nindex 96f4ad2086..61b77e2c9f 100644\n--- a/build/local-uar-source.json\n+++ b/build/local-uar-source.json\n@@ -2,6 +2,6 @@\n   \"schema\": 1,\n   \"platform\": \"darwin-arm64\",\n   \"repository\": \"Prometheus-AGS/universal-agent-runtime\",\n-  \"revision\": \"48bc45b59d02d4febf4ed36e352af367fef73049\",\n+  \"revision\": \"84ca0ffff5da8fafc1e2e7f5585efc07a396b14e\",\n   \"version\": \"1.0.0\"\n }",
+    "diffSha256": "2e4aa877ec901895e181f63c54d4156c4374c7f94b4ec65577223f55a7faa648",
+    "attribution": "Assisted-by: Codex:gpt-6.1-sol [Node.js, Git]",
+    "signedOffBy": false,
+    "sshSignaturePresent": true,
+    "verification": {
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "Good \"git\" signature for travis@know-me.tools with ED25519 key SHA256:oE4PH+kELOLXvNGZVaBX48u3h3HiXwrQoonsGBh0DhM"
+    }
+  },
+  "preservedAuthorities": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/package.json",
+      "sha256Before": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0",
+      "sha256After": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0",
+      "preserved": true
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/pnpm-lock.yaml",
+      "sha256Before": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7",
+      "sha256After": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7",
+      "preserved": true
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/pnpm-workspace.yaml",
+      "sha256Before": "9ac466528555b983d35a1dfc558549143a6446df2beaaad554ba25bf169eca56",
+      "sha256After": "9ac466528555b983d35a1dfc558549143a6446df2beaaad554ba25bf169eca56",
+      "preserved": true
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/electron-builder.yml",
+      "sha256Before": "225094aea197088e0fd398c1c4ebf376224a88e20cef3c3f0e6d324319c58fd9",
+      "sha256After": "225094aea197088e0fd398c1c4ebf376224a88e20cef3c3f0e6d324319c58fd9",
+      "preserved": true
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/build/integration-artifacts.json",
+      "sha256Before": "8e60461cb117be208385725fcc963f8443d0e730f79fdf16461a5f593370690d",
+      "sha256After": "8e60461cb117be208385725fcc963f8443d0e730f79fdf16461a5f593370690d",
+      "preserved": true
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/build/integration-sources.json",
+      "sha256Before": "47fea340a07d86eef09631a159d31df2f0fc854531236f8122ad726736c25083",
+      "sha256After": "47fea340a07d86eef09631a159d31df2f0fc854531236f8122ad726736c25083",
+      "preserved": true
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/build/node-artifacts.json",
+      "sha256Before": "87f701769582507b1e9b2175ae142a4c04cc6dd5370b6911df228f1105e65de7",
+      "sha256After": "87f701769582507b1e9b2175ae142a4c04cc6dd5370b6911df228f1105e65de7",
+      "preserved": true
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/before-pack.js",
+      "sha256Before": "89b58e705cc519921bf99f1dc6bc726def61a055fd845893ae87fa8ec2df470f",
+      "sha256After": "89b58e705cc519921bf99f1dc6bc726def61a055fd845893ae87fa8ec2df470f",
+      "preserved": true
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/after-pack.js",
+      "sha256Before": "ac3c365d13eec68d81100c88f2294da603aa5f0a768ec3482997c198619d2a0a",
+      "sha256After": "ac3c365d13eec68d81100c88f2294da603aa5f0a768ec3482997c198619d2a0a",
+      "preserved": true
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/package-prometheus.js",
+      "sha256Before": "b21efd0599843e98b8d36812b40984feb2e3b7160c1de1cefc26068a27af81d3",
+      "sha256After": "b21efd0599843e98b8d36812b40984feb2e3b7160c1de1cefc26068a27af81d3",
+      "preserved": true
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/download-binaries.js",
+      "sha256Before": "3cc61fd96511710d75953f2438344c849963046b29a758ffb4807c684d3c69f4",
+      "sha256After": "3cc61fd96511710d75953f2438344c849963046b29a758ffb4807c684d3c69f4",
+      "preserved": true
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/prepare-local-uar-payload.cjs",
+      "sha256Before": "c73da697be62d16886cbf176c38c35dbb7d05817f9290880d6f84e2b20a24da9",
+      "sha256After": "c73da697be62d16886cbf176c38c35dbb7d05817f9290880d6f84e2b20a24da9",
+      "preserved": true
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/local-uar-payload.cjs",
+      "sha256Before": "6d6d06d41340c23ed26653b189bb1a6918395186ae60b0148e05bb4c59a13a13",
+      "sha256After": "6d6d06d41340c23ed26653b189bb1a6918395186ae60b0148e05bb4c59a13a13",
+      "preserved": true
+    }
+  ],
+  "gitlinks": {
+    "boss": [
+      {
+        "path": "resources/prometheus-skills-mini",
+        "revision": "f38a98a6ed064f9e5b8b9837e8b91781af570d22",
+        "checkout": "f38a98a6ed064f9e5b8b9837e8b91781af570d22"
+      }
+    ],
+    "preservedBySinglePathCommit": true
+  },
+  "ownedPathStatus": "",
+  "boundaries": {
+    "verification": "finite pin fields, hashes and single-file commit mechanics only",
+    "tests": "not run; deferred",
+    "build": "not run",
+    "package": "not run",
+    "runtimeAcceptance": "operator-deferred",
+    "review": "operator-deferred",
+    "publication": "not authorized",
+    "securityHardening": "none",
+    "f6": "excluded paths not accessed",
+    "canonicalState": "root owned; not mutated"
+  },
+  "diagnostics": [
+    "Initial heredoc Bash wrapper stalled before Node/Git launch; stopped without mutation; used Node -e instead"
+  ],
+  "ownership": "released for subsequent build owner"
+}

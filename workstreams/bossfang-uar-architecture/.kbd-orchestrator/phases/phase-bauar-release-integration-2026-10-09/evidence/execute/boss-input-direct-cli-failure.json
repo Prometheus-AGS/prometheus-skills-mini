@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-09T11:51:27.281Z",
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "task": "bauar-int-02-local-current-uar-payload/5",
+  "root": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+  "status": "input-failure",
+  "commands": [
+    {
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "exitCode": 0,
+      "stdout": "v24.11.1\n",
+      "stderr": ""
+    },
+    {
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "exitCode": 0,
+      "stdout": "12.3.4\n",
+      "stderr": ""
+    },
+    {
+      "program": "/usr/local/bin/pnpm",
+      "args": [
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "exitCode": 0,
+      "stdout": "12.3.4\n",
+      "stderr": ""
+    },
+    {
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/electron-builder/cli.js",
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "\n/Users/gqadonis/node_modules/ajv-keywords/src/index.ts:24\n  if (!defFunc) throw new Error(\"Unknown keyword \" + keyword)\n                      ^\nError: Unknown keyword formatMinimum\n    at get (/Users/gqadonis/node_modules/ajv-keywords/src/index.ts:24:23)\n    at ajvKeywords (/Users/gqadonis/node_modules/ajv-keywords/src/index.ts:9:30)\n    at Object.<anonymous> (/Users/gqadonis/node_modules/@develar/schema-utils/dist/validate.js:49:26)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at Module.require (node:internal/modules/cjs/loader:1504:12)\n    at require (node:internal/modules/helpers:152:16)\n    at Object.<anonymous> (/Users/gqadonis/node_modules/@develar/schema-utils/dist/index.js:3:18)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n"
+    }
+  ],
+  "toolAuthorities": [
+    {
+      "path": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "sha256": "4255a388254ca4319e2f95f1da375d5deaddf25baf9c7c85070b67f9543b15d0"
+    },
+    {
+      "path": "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+      "sha256": "b6e13402c88a275f5b1ec4fb420df8763179bbe9f2b87a10911be44a3622d68d"
+    },
+    {
+      "path": "/usr/local/lib/node_modules/corepack/dist/pnpm.js",
+      "sha256": "7c2a67995976b5b592b611d8b236e3b0633bd654fb49aedd96c6eb7ce04c9cbb"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/electron-builder/package.json",
+      "sha256": "af64d9bb728fed2bf1a3d620b5fb032d801ab68d9574238a51d423ecc7eda77a"
+    }
+  ],
+  "inputReceipts": [
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-inputprep.json",
+      "sha256": "114c6d0f76f0ecf9c658d30d867c775b10618cc52d36132d112979877abd50a1"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-workspace-inputprep.json",
+      "sha256": "6779cb3771caa7ddfd9f2c025aeb5eecabd6def177f6e7e2afbc51675137e9af"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-input-relocation.json",
+      "sha256": "03bd8cfeca1c609fc8a54f6713a21e1a18e4604a252da079d40e4d2fb5edb4c6"
+    }
+  ],
+  "hookOutcomes": [
+    {
+      "hook": "beforePack",
+      "status": "not-run"
+    },
+    {
+      "hook": "afterPack",
+      "status": "not-run"
+    }
+  ],
+  "runtime": "operator-deferred",
+  "certification": "operator-deferred",
+  "publication": "not-authorized",
+  "catalog": {
+    "revision": "4f25d39f0075656b70bf945880d6033beda6d663",
+    "expectedRevision": "4f25d39f0075656b70bf945880d6033beda6d663",
+    "providers": "568d741ee4e4771b7fd4191cde974d743c834fc1db7bbf27fcde45d0521b67b4",
+    "expectedProviders": "568d741ee4e4771b7fd4191cde974d743c834fc1db7bbf27fcde45d0521b67b4",
+    "models": "d6d57171617705eb9611cbfb62ff28a3d26fdaf85b4f38f4b2e4361fcfd153dd",
+    "expectedModels": "d6d57171617705eb9611cbfb62ff28a3d26fdaf85b4f38f4b2e4361fcfd153dd",
+    "matches": true
+  },
+  "sourcePreservation": {
+    "bossHeadBefore": "7a5bdb4b7c02e9f13875fc7f837815c03fe3dacd",
+    "bossHeadAfter": "7a5bdb4b7c02e9f13875fc7f837815c03fe3dacd",
+    "primaryHeadBefore": "822ed9990bd7626bbf76b04eeae184739c0f0655",
+    "primaryHeadAfter": "822ed9990bd7626bbf76b04eeae184739c0f0655",
+    "literSourceHeadBefore": "12a2fae9675e34b88e9373caa2bca9959f416493",
+    "literSourceHeadAfter": "12a2fae9675e34b88e9373caa2bca9959f416493",
+    "packagesTree": "040000 tree b5ef55bce9d577dacb0171a3a2b9bd77c014fce2\tpackages",
+    "packageAuthority": [
+      {
+        "file": "package.json",
+        "recorded": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0",
+        "currentPrimary": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0",
+        "currentCandidate": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0"
+      },
+      {
+        "file": "pnpm-lock.yaml",
+        "recorded": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7",
+        "currentPrimary": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7",
+        "currentCandidate": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7"
+      },
+      {
+        "file": "pnpm-workspace.yaml",
+        "recorded": "9ac466528555b983d35a1dfc558549143a6446df2beaaad554ba25bf169eca56",
+        "currentPrimary": "9ac466528555b983d35a1dfc558549143a6446df2beaaad554ba25bf169eca56",
+        "currentCandidate": "9ac466528555b983d35a1dfc558549143a6446df2beaaad554ba25bf169eca56"
+      }
+    ],
+    "originalRelocatedInputsUnchanged": true
+  },
+  "candidateWorkspaceKeys": [
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/a2ui-core",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/a2ui-uar",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/ai-sdk-provider",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/aiCore",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/dsh-bridge",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/extension-table-plus",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/provider-registry",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/ui"
+  ],
+  "candidateWorkspaceOnly": true,
+  "skippedDanglingLinks": 672,
+  "relocatedPaths": 3559,
+  "childRuntime": {
+    "node": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+    "version": "v24.11.1",
+    "pnpm": "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+    "versionPnpm": "12.3.4",
+    "pathPrepend": [
+      "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin",
+      "/usr/local/bin"
+    ],
+    "ciPresent": false,
+    "platform": "darwin",
+    "arch": "arm64"
+  }
+}

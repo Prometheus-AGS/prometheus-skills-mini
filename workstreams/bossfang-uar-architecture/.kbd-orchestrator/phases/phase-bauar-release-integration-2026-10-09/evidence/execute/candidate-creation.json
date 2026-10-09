@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "kind": "bauar-candidate-creation",
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "changeId": "bauar-int-01-scoped-source-intake",
+  "backendTaskId": "1",
+  "snapshotTime": "2026-10-09T10:59:27.709Z",
+  "inputBinding": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/intake-inputs.json",
+    "sha256": "dadb2b65794bf14df08b646ee8c89eb10acdc7b129bcb84db5a39717282fbacb",
+    "snapshotSha256": "61bcb75eaa4b5ed30c718cdb64ad35332af72d9a44572a3b7308be51ad845f60"
+  },
+  "serial": true,
+  "sourceTransferPerformed": false,
+  "excludedPathsAccessed": false,
+  "candidateCommits": "unknown until later intake checkpoints; candidate HEADs here are only approved bases",
+  "repositories": [
+    {
+      "name": "uar",
+      "originatingRoot": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime",
+      "candidateRoot": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "candidateBranch": "codex/bauar-release-integration-2026-10-09",
+      "candidateBase": "a7cb972992d4f83db6585449ea81af0fe4a1c990",
+      "candidateCommit": null,
+      "owner": "uar-intake",
+      "startedAt": "2026-10-09T10:59:27.917Z",
+      "completedAt": "2026-10-09T10:59:29.745Z",
+      "command": {
+        "executable": "git",
+        "cwd": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime",
+        "args": [
+          "-C",
+          "/Users/gqadonis/Projects/prometheus/universal-agent-runtime",
+          "worktree",
+          "add",
+          "-b",
+          "codex/bauar-release-integration-2026-10-09",
+          "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+          "a7cb972992d4f83db6585449ea81af0fe4a1c990"
+        ],
+        "shell": false
+      },
+      "exitCode": 0,
+      "stdout": "HEAD is now at a7cb9729 Merge pull request #320 from Prometheus-AGS/fix/docker-ship-cedar-policies\n",
+      "stderr": "Preparing worktree (new branch 'codex/bauar-release-integration-2026-10-09')\nUpdating files:  62% (5768/9196)\rUpdating files:  63% (5794/9196)\rUpdating files:  64% (5886/9196)\rUpdating files:  65% (5978/9196)\rUpdating files:  66% (6070/9196)\rUpdating files:  67% (6162/9196)\rUpdating files:  68% (6254/9196)\rUpdating files:  69% (6346/9196)\rUpdating files:  70% (6438/9196)\rUpdating files:  71% (6530/9196)\rUpdating files:  72% (6622/9196)\rUpdating files:  73% (6714/9196)\rUpdating files:  74% (6806/9196)\rUpdating files:  75% (6897/9196)\rUpdating files:  76% (6989/9196)\rUpdating files:  77% (7081/9196)\rUpdating files:  78% (7173/9196)\rUpdating files:  79% (7265/9196)\rUpdating files:  80% (7357/9196)\rUpdating files:  81% (7449/9196)\rUpdating files:  82% (7541/9196)\rUpdating files:  83% (7633/9196)\rUpdating files:  84% (7725/9196)\rUpdating files:  85% (7817/9196)\rUpdating files:  86% (7909/9196)\rUpdating files:  87% (8001/9196)\rUpdating files:  88% (8093/9196)\rUpdating files:  89% (8185/9196)\rUpdating files:  90% (8277/9196)\rUpdating files:  91% (8369/9196)\rUpdating files:  92% (8461/9196)\rUpdating files:  93% (8553/9196)\rUpdating files:  94% (8645/9196)\rUpdating files:  95% (8737/9196)\rUpdating files:  96% (8829/9196)\rUpdating files:  97% (8921/9196)\rUpdating files:  98% (9013/9196)\rUpdating files:  99% (9105/9196)\rUpdating files: 100% (9196/9196)\rUpdating files: 100% (9196/9196), done.\n",
+      "candidateHead": "a7cb972992d4f83db6585449ea81af0fe4a1c990",
+      "actualBranch": "codex/bauar-release-integration-2026-10-09",
+      "baseMatches": true,
+      "branchMatches": true
+    },
+    {
+      "name": "boss",
+      "originatingRoot": "/Users/gqadonis/Projects/prometheus/the-boss",
+      "candidateRoot": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "candidateBranch": "codex/bauar-release-integration-2026-10-09",
+      "candidateBase": "822ed9990bd7626bbf76b04eeae184739c0f0655",
+      "candidateCommit": null,
+      "owner": "boss-intake",
+      "startedAt": "2026-10-09T10:59:29.794Z",
+      "completedAt": "2026-10-09T10:59:32.093Z",
+      "command": {
+        "executable": "git",
+        "cwd": "/Users/gqadonis/Projects/prometheus/the-boss",
+        "args": [
+          "-C",
+          "/Users/gqadonis/Projects/prometheus/the-boss",
+          "worktree",
+          "add",
+          "-b",
+          "codex/bauar-release-integration-2026-10-09",
+          "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+          "822ed9990bd7626bbf76b04eeae184739c0f0655"
+        ],
+        "shell": false
+      },
+      "exitCode": 0,
+      "stdout": "HEAD is now at 822ed9990b test(commands): cover installCommandPath fresh-inode replacement\n",
+      "stderr": "Preparing worktree (new branch 'codex/bauar-release-integration-2026-10-09')\nUpdating files:  41% (4535/10871)\rUpdating files:  42% (4566/10871)\rUpdating files:  43% (4675/10871)\rUpdating files:  44% (4784/10871)\rUpdating files:  45% (4892/10871)\rUpdating files:  46% (5001/10871)\rUpdating files:  47% (5110/10871)\rUpdating files:  48% (5219/10871)\rUpdating files:  49% (5327/10871)\rUpdating files:  50% (5436/10871)\rUpdating files:  51% (5545/10871)\rUpdating files:  52% (5653/10871)\rUpdating files:  53% (5762/10871)\rUpdating files:  54% (5871/10871)\rUpdating files:  55% (5980/10871)\rUpdating files:  56% (6088/10871)\rUpdating files:  57% (6197/10871)\rUpdating files:  58% (6306/10871)\rUpdating files:  59% (6414/10871)\rUpdating files:  60% (6523/10871)\rUpdating files:  61% (6632/10871)\rUpdating files:  62% (6741/10871)\rUpdating files:  63% (6849/10871)\rUpdating files:  64% (6958/10871)\rUpdating files:  65% (7067/10871)\rUpdating files:  66% (7175/10871)\rUpdating files:  67% (7284/10871)\rUpdating files:  68% (7393/10871)\rUpdating files:  69% (7501/10871)\rUpdating files:  70% (7610/10871)\rUpdating files:  71% (7719/10871)\rUpdating files:  72% (7828/10871)\rUpdating files:  73% (7936/10871)\rUpdating files:  74% (8045/10871)\rUpdating files:  75% (8154/10871)\rUpdating files:  76% (8262/10871)\rUpdating files:  77% (8371/10871)\rUpdating files:  78% (8480/10871)\rUpdating files:  79% (8589/10871)\rUpdating files:  80% (8697/10871)\rUpdating files:  81% (8806/10871)\rUpdating files:  82% (8915/10871)\rUpdating files:  83% (9023/10871)\rUpdating files:  84% (9132/10871)\rUpdating files:  85% (9241/10871)\rUpdating files:  86% (9350/10871)\rUpdating files:  87% (9458/10871)\rUpdating files:  88% (9567/10871)\rUpdating files:  89% (9676/10871)\rUpdating files:  90% (9784/10871)\rUpdating files:  91% (9893/10871)\rUpdating files:  91% (9918/10871)\rUpdating files:  92% (10002/10871)\rUpdating files:  93% (10111/10871)\rUpdating files:  94% (10219/10871)\rUpdating files:  95% (10328/10871)\rUpdating files:  96% (10437/10871)\rUpdating files:  97% (10545/10871)\rUpdating files:  98% (10654/10871)\rUpdating files:  99% (10763/10871)\rUpdating files: 100% (10871/10871)\rUpdating files: 100% (10871/10871), done.\n",
+      "candidateHead": "822ed9990bd7626bbf76b04eeae184739c0f0655",
+      "actualBranch": "codex/bauar-release-integration-2026-10-09",
+      "baseMatches": true,
+      "branchMatches": true
+    },
+    {
+      "name": "bossfang",
+      "originatingRoot": "/Users/gqadonis/Projects/references/librefang",
+      "candidateRoot": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang",
+      "candidateBranch": "codex/bauar-release-integration-2026-10-09",
+      "candidateBase": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+      "candidateCommit": null,
+      "owner": "bossfang-intake",
+      "startedAt": "2026-10-09T10:59:32.143Z",
+      "completedAt": "2026-10-09T10:59:33.526Z",
+      "command": {
+        "executable": "git",
+        "cwd": "/Users/gqadonis/Projects/references/librefang",
+        "args": [
+          "-C",
+          "/Users/gqadonis/Projects/references/librefang",
+          "worktree",
+          "add",
+          "-b",
+          "codex/bauar-release-integration-2026-10-09",
+          "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang",
+          "bac04cb6b2c144520e28234ad77f00d4cf0f5b23"
+        ],
+        "shell": false
+      },
+      "exitCode": 0,
+      "stdout": "HEAD is now at bac04cb6b fix(uar-delegation): refresh terminal run projection during observation\n",
+      "stderr": "Preparing worktree (new branch 'codex/bauar-release-integration-2026-10-09')\nUpdating files:  86% (3657/4216)\rUpdating files:  87% (3668/4216)\rUpdating files:  88% (3711/4216)\rUpdating files:  89% (3753/4216)\rUpdating files:  90% (3795/4216)\rUpdating files:  91% (3837/4216)\rUpdating files:  92% (3879/4216)\rUpdating files:  93% (3921/4216)\rUpdating files:  94% (3964/4216)\rUpdating files:  95% (4006/4216)\rUpdating files:  96% (4048/4216)\rUpdating files:  97% (4090/4216)\rUpdating files:  98% (4132/4216)\rUpdating files:  99% (4174/4216)\rUpdating files: 100% (4216/4216)\rUpdating files: 100% (4216/4216), done.\n",
+      "candidateHead": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+      "actualBranch": "codex/bauar-release-integration-2026-10-09",
+      "baseMatches": true,
+      "branchMatches": true
+    }
+  ],
+  "status": "created",
+  "completedAt": "2026-10-09T10:59:33.579Z",
+  "preflight": {
+    "allPathsAbsent": true,
+    "allCandidateBranchRefsAbsent": true,
+    "protectedHeadsMatchedBinding": true,
+    "checkedBeforeAnyCreation": true,
+    "branchAbsenceExitStatus": 1
+  },
+  "preservation": {
+    "at": "2026-10-09T11:00:12.580Z",
+    "scope": "Original source and primary selected paths, modes, scoped index entries and HEAD/branch refs only; no claim about unrelated files",
+    "repositories": [
+      {
+        "name": "uar",
+        "pathCount": 126,
+        "sourceHead": "8bff32deb870f6363e94687a2e22492f91a34dfd",
+        "targetHead": "a7cb972992d4f83db6585449ea81af0fe4a1c990",
+        "sourceBranch": "codex/bauar-authorization-execution",
+        "targetBranch": "feat/uar-ui-foundation",
+        "sourceIndexSha256": "a5b73a82348d95b324774eadb4d43cd7397357aadccaaedf5c7a03350fd4e964",
+        "targetIndexSha256": "a5b73a82348d95b324774eadb4d43cd7397357aadccaaedf5c7a03350fd4e964",
+        "refsUnchanged": true,
+        "indexesUnchanged": true,
+        "bytesAndModesUnchanged": true,
+        "changedPaths": []
+      },
+      {
+        "name": "boss",
+        "pathCount": 43,
+        "sourceHead": "e2ae2ce21245030293c0bea96ed02ae853b820a7",
+        "targetHead": "822ed9990bd7626bbf76b04eeae184739c0f0655",
+        "sourceBranch": "codex/bauar-authorization-execution",
+        "targetBranch": "codex/d01-local-mac-durable-agent-delivery",
+        "sourceIndexSha256": "d378c27d2bf1fe78b1295cd136bd6ef29a749a488d6b5505a8738b7cedb5256e",
+        "targetIndexSha256": "d378c27d2bf1fe78b1295cd136bd6ef29a749a488d6b5505a8738b7cedb5256e",
+        "refsUnchanged": true,
+        "indexesUnchanged": true,
+        "bytesAndModesUnchanged": true,
+        "changedPaths": []
+      },
+      {
+        "name": "bossfang",
+        "pathCount": 72,
+        "sourceHead": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+        "targetHead": "16beef0fcf3053970a901990df4fedbdf86bd87d",
+        "sourceBranch": "codex/bauar-authorization-execution",
+        "targetBranch": "main",
+        "sourceIndexSha256": "227c4bea477370cca08c5a937c1fc569ebe9a1a4aea042b1db3e1192448c1671",
+        "targetIndexSha256": "076f4dcdcd632271aa851159bb59de5fec1359c8bb13043e159bea348474e334",
+        "refsUnchanged": true,
+        "indexesUnchanged": true,
+        "bytesAndModesUnchanged": true,
+        "changedPaths": []
+      }
+    ],
+    "drift": [],
+    "allSelectedInputsUnchanged": true
+  },
+  "productionSourceEdited": false,
+  "testsBuildsReviewsServicesRun": false,
+  "securityHardeningAdded": false,
+  "canonicalStateMutated": false,
+  "statuses": {
+    "task1": "complete",
+    "sourceTransfer": "pending",
+    "acceptance": "operator-deferred",
+    "certification": "operator-deferred",
+    "publication": "not-authorized"
+  }
+}

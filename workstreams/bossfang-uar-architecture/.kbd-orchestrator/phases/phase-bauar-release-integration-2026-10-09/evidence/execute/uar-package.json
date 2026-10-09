@@ -1,0 +1,539 @@
+{
+  "schemaVersion": 1,
+  "kind": "bauar-local-uar-package",
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "change": "bauar-int-02-local-current-uar-payload",
+  "task": "4",
+  "status": "packaged",
+  "startedAt": "2026-10-09T12:36:53.718Z",
+  "command": {
+    "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+    "args": [
+      "scripts/package-boss-sidecar.mjs",
+      "darwin-arm64",
+      "aarch64-apple-darwin"
+    ],
+    "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+    "shell": false,
+    "environmentOverrides": {
+      "UAR_SIDECAR_FEATURES": "server-full"
+    },
+    "omittedEnvironmentNames": [
+      "GITHUB_SHA",
+      "GITHUB_REF_TYPE",
+      "GITHUB_REF_NAME"
+    ]
+  },
+  "receipts": {
+    "build": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/uar-build.json",
+      "sha256": "938bcb3996a6dd9549beeb79e52f2831d507615cfd55f734099bb3af04c5b15f",
+      "bytes": 47602,
+      "mode": "644"
+    },
+    "buildInputs": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/build-inputs.json",
+      "sha256": "fe86a83ee98f67df5b3b46c13d24b88a95a8d22e16b2dd50326bc56c91c1e3f1",
+      "bytes": 59195,
+      "mode": "644"
+    },
+    "sourceIntake": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/source-intake.json",
+      "sha256": "ae8dcf2d657cd419a45f65f6e7ae619bf50bbc90940b1ef9322cd97728cef13f",
+      "bytes": 97374,
+      "mode": "644"
+    },
+    "uarIntake": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/intake/uar.json",
+      "sha256": "bffc57de355a3f47651c3c18198de9071dd5d5b869f3704d925381fbe00a7727",
+      "bytes": 481871,
+      "mode": "644"
+    },
+    "commandContract": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/plan/command-contract.json",
+      "sha256": "028f0da331574e8593025be0cac1f9883ce0cb2bfb9e587247180443543ee8d8",
+      "bytes": 4561,
+      "mode": "644"
+    }
+  },
+  "tools": {
+    "node": {
+      "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+      "version": "v22.20.0",
+      "platform": "darwin",
+      "arch": "arm64",
+      "identity": {
+        "path": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+        "sha256": "49161ba4e67afda85c25b2daa1f0e91d1bffc023d2dbc4886eda7a9ba38bca62",
+        "bytes": 111332720,
+        "mode": "755"
+      }
+    }
+  },
+  "source": {
+    "root": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+    "commit": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+    "intakeCommit": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+    "bossCommit": "7a5bdb4b7c02e9f13875fc7f837815c03fe3dacd",
+    "commitAfter": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e"
+  },
+  "build": {
+    "exitCode": 0,
+    "completedAt": "2026-10-09T12:33:04.651Z",
+    "profile": "release",
+    "target": "aarch64-apple-darwin",
+    "features": {
+      "defaultsEnabled": true,
+      "explicit": [
+        "server-full"
+      ],
+      "rootDefault": [
+        "minimal"
+      ],
+      "rootFeatureClosure": [
+        "a2a-transport",
+        "admin-ui",
+        "api-docs",
+        "cedar-governance",
+        "default",
+        "document-intelligence",
+        "local-models",
+        "minimal",
+        "response-quality",
+        "server",
+        "server-full",
+        "surreal-backend",
+        "telemetry",
+        "wasm-runtime"
+      ],
+      "dependencyEdges": [
+        "a2a-transport",
+        "admin-ui",
+        "api-docs",
+        "cedar-governance",
+        "dep:axum",
+        "dep:axum-extra",
+        "dep:cedar-policy",
+        "dep:fastembed",
+        "dep:kreuzberg",
+        "dep:lopdf",
+        "dep:metrics",
+        "dep:metrics-exporter-prometheus",
+        "dep:opentelemetry",
+        "dep:opentelemetry-otlp",
+        "dep:opentelemetry_sdk",
+        "dep:prost",
+        "dep:surrealdb",
+        "dep:sycophancy-core",
+        "dep:tonic",
+        "dep:tonic-prost",
+        "dep:tower",
+        "dep:tower-http",
+        "dep:tracing-opentelemetry",
+        "dep:utoipa",
+        "dep:utoipa-swagger-ui",
+        "dep:wasmtime",
+        "dep:wasmtime-wasi",
+        "document-intelligence",
+        "local-models",
+        "minimal",
+        "response-quality",
+        "server",
+        "surreal-backend",
+        "telemetry",
+        "wasm-runtime"
+      ],
+      "basis": "static Cargo.toml recursive root feature expansion; dependency-unified resolution not executed",
+      "excluded": [
+        "test-probes",
+        "bauar-native-admission-gate"
+      ]
+    }
+  },
+  "boundaries": {
+    "packaging": "packaged",
+    "runtimeAcceptance": "operator-deferred",
+    "tests": "not run",
+    "review": "operator-deferred",
+    "certification": "operator-deferred",
+    "publication": "not authorized",
+    "securityHardening": "none",
+    "f6": "excluded source paths not accessed directly",
+    "canonicalState": "root owned; not mutated"
+  },
+  "bootstrapLimitations": [
+    "PATH openspec list failed because its configured mini-runner.cjs is missing; no launcher repair or tooling refresh attempted; canonical backend remains root owned."
+  ],
+  "binaryBefore": {
+    "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/target/aarch64-apple-darwin/release/uar-sidecar",
+    "sha256": "9f91874091f8241d97209fd21b8c0c5b79ae6cdeb82ee0e873a5ea4540a8adea",
+    "bytes": 296935808,
+    "mode": "755"
+  },
+  "authoritiesBefore": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/Cargo.toml",
+      "sha256": "29d48665cac7ef20f3ff86f343e7ca8af8941defa7b5760601d4ffc5c4f21414",
+      "bytes": 26548,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/Cargo.lock",
+      "sha256": "1035e0befe1cf67eeb229f570c6308548914408407c65b6644cfe3d5278d086b",
+      "bytes": 382914,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/versions.toml",
+      "sha256": "262e5864da030bb4c5107fe5a7aed2a5ea03818304a34c7abf01c6c932645e48",
+      "bytes": 2194,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/rust-toolchain.toml",
+      "sha256": "d5a8793f42828a223749a6f50df95db82d3f237307e80414314d60f89faf5414",
+      "bytes": 659,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/.cargo/config.toml",
+      "sha256": "b8da292a25b840d96e94a5f4e4271fd7d66bf36a479a430ff0d6be73fddd3541",
+      "bytes": 3452,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/.gitmodules",
+      "sha256": "f9040c4404894f2df2329d37b7cf9e44fc5b073635b69cd554749270f8760b0d",
+      "bytes": 713,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/build.rs",
+      "sha256": "f6bb6b07d1c00a6a15e6f9bd225787263af311e52a6358912433fab87254c50a",
+      "bytes": 3643,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/scripts/package-boss-sidecar.mjs",
+      "sha256": "9b6800d0cb47147b3ce63cf0c7fba46f8de8f03112f1b61ba1375d83dfc0b135",
+      "bytes": 4736,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/catalog/provider_catalog.json",
+      "sha256": "b215f61fe9b5ccb55f0b7d33f412607e7198dc47b44bc6fadd0f8a12ebb1e991",
+      "bytes": 3551806,
+      "mode": "644"
+    }
+  ],
+  "pid": 67278,
+  "exitCode": 0,
+  "signal": null,
+  "finishedAt": "2026-10-09T12:37:04.368Z",
+  "stdout": "Packaged uar-sidecar-darwin-arm64.tar.gz: 12 files from 84ca0ffff5da8fafc1e2e7f5585efc07a396b14e\n",
+  "stderr": "",
+  "log": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/uar-package-2026-10-09T12-36-53-718Z.log",
+    "sha256": "b2a8a0c46a92cf4ed63da49b7e9a34ac35cdcb91b0a6e85d668b0198fc79174c",
+    "bytes": 522,
+    "mode": "644"
+  },
+  "output": {
+    "directory": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar",
+    "packageRoot": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64",
+    "archive": {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64.tar.gz",
+      "sha256": "47a565ce5e4f63f28eebd9183a6ed6eeeffbdad13d1c8a6ec318fb2498c34bcb",
+      "bytes": 124104664,
+      "mode": "644"
+    },
+    "record": {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64.json",
+      "sha256": "ac6cc6ba48fa10074154374b5bc2b4a7ee46fa84a08b5c3c30b9e1761431308a",
+      "bytes": 730,
+      "mode": "644"
+    },
+    "payloadManifest": {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/payload-manifest.json",
+      "sha256": "97227f91f5f88d19b9a054e356f8364a94c1a0f1f3bcdc09a9a56be4dc5dde93",
+      "bytes": 1956,
+      "mode": "644"
+    },
+    "recordContents": {
+      "name": "uar-sidecar",
+      "version": "1.0.0",
+      "platform": "darwin-arm64",
+      "source": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+      "features": [
+        "server-full"
+      ],
+      "asset": "uar-sidecar-darwin-arm64.tar.gz",
+      "sha256": "47a565ce5e4f63f28eebd9183a6ed6eeeffbdad13d1c8a6ec318fb2498c34bcb",
+      "archive": "tar.gz",
+      "binaries": [
+        "LICENSE",
+        "policies/default.cedar",
+        "policies/skill-mutation.cedar",
+        "policies/tool-approval.cedar",
+        "uar-models/bg-small-en-v1.5.onnx",
+        "uar-models/config.json",
+        "uar-models/MODEL-NOTICE.txt",
+        "uar-models/special_tokens_map.json",
+        "uar-models/tokenizer_config.json",
+        "uar-models/tokenizer.json",
+        "uar-sidecar",
+        "payload-manifest.json"
+      ]
+    },
+    "fileManifest": {
+      "schema": 1,
+      "name": "uar-sidecar",
+      "version": "1.0.0",
+      "platform": "darwin-arm64",
+      "source": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+      "features": [
+        "server-full"
+      ],
+      "files": [
+        {
+          "path": "LICENSE",
+          "size": 1071,
+          "sha256": "c80a50b8f2630936009ad9cd516ff1ac603a92f78386906afbac044452c5d2a7"
+        },
+        {
+          "path": "policies/default.cedar",
+          "size": 272,
+          "sha256": "533be695da370d80c039259788fff40b757be1b44e2b833a72ef3039e1a5b7d4"
+        },
+        {
+          "path": "policies/skill-mutation.cedar",
+          "size": 2339,
+          "sha256": "6feacc9af1090ad2f1d6871e15e76d56c185d6302e329cc603ff40958346ae9e"
+        },
+        {
+          "path": "policies/tool-approval.cedar",
+          "size": 1200,
+          "sha256": "f6c7844b10c6cabd594f05e94af314eb176e23a7fce908a35ddb9382afbf80f6"
+        },
+        {
+          "path": "uar-models/bg-small-en-v1.5.onnx",
+          "size": 34014426,
+          "sha256": "6c9c6101a956d62dfb5e7190c538226c0c5bb9cb27b651234b6df063ee7dbfe4"
+        },
+        {
+          "path": "uar-models/config.json",
+          "size": 650,
+          "sha256": "f2c87ea17fdfa286f48d6e1506f2cdc838d303420dc55606190e67e5acd9e186"
+        },
+        {
+          "path": "uar-models/MODEL-NOTICE.txt",
+          "size": 331,
+          "sha256": "99d87511d89807668120d86f3bce9f3d138d8da2428cf66c0c82e39d26b1ad22"
+        },
+        {
+          "path": "uar-models/special_tokens_map.json",
+          "size": 125,
+          "sha256": "b6d346be366a7d1d48332dbc9fdf3bf8960b5d879522b7799ddba59e76237ee3"
+        },
+        {
+          "path": "uar-models/tokenizer_config.json",
+          "size": 366,
+          "sha256": "9261e7d79b44c8195c1cada2b453e55b00aeb81e907a6664974b4d7776172ab3"
+        },
+        {
+          "path": "uar-models/tokenizer.json",
+          "size": 711396,
+          "sha256": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66"
+        },
+        {
+          "path": "uar-sidecar",
+          "size": 296935808,
+          "sha256": "9f91874091f8241d97209fd21b8c0c5b79ae6cdeb82ee0e873a5ea4540a8adea"
+        }
+      ]
+    }
+  },
+  "packagedFiles": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/LICENSE",
+      "sha256": "c80a50b8f2630936009ad9cd516ff1ac603a92f78386906afbac044452c5d2a7",
+      "bytes": 1071,
+      "mode": "644",
+      "relativePath": "LICENSE"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/payload-manifest.json",
+      "sha256": "97227f91f5f88d19b9a054e356f8364a94c1a0f1f3bcdc09a9a56be4dc5dde93",
+      "bytes": 1956,
+      "mode": "644",
+      "relativePath": "payload-manifest.json"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/policies/default.cedar",
+      "sha256": "533be695da370d80c039259788fff40b757be1b44e2b833a72ef3039e1a5b7d4",
+      "bytes": 272,
+      "mode": "644",
+      "relativePath": "policies/default.cedar"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/policies/skill-mutation.cedar",
+      "sha256": "6feacc9af1090ad2f1d6871e15e76d56c185d6302e329cc603ff40958346ae9e",
+      "bytes": 2339,
+      "mode": "644",
+      "relativePath": "policies/skill-mutation.cedar"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/policies/tool-approval.cedar",
+      "sha256": "f6c7844b10c6cabd594f05e94af314eb176e23a7fce908a35ddb9382afbf80f6",
+      "bytes": 1200,
+      "mode": "644",
+      "relativePath": "policies/tool-approval.cedar"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/uar-models/bg-small-en-v1.5.onnx",
+      "sha256": "6c9c6101a956d62dfb5e7190c538226c0c5bb9cb27b651234b6df063ee7dbfe4",
+      "bytes": 34014426,
+      "mode": "644",
+      "relativePath": "uar-models/bg-small-en-v1.5.onnx"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/uar-models/config.json",
+      "sha256": "f2c87ea17fdfa286f48d6e1506f2cdc838d303420dc55606190e67e5acd9e186",
+      "bytes": 650,
+      "mode": "644",
+      "relativePath": "uar-models/config.json"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/uar-models/MODEL-NOTICE.txt",
+      "sha256": "99d87511d89807668120d86f3bce9f3d138d8da2428cf66c0c82e39d26b1ad22",
+      "bytes": 331,
+      "mode": "644",
+      "relativePath": "uar-models/MODEL-NOTICE.txt"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/uar-models/special_tokens_map.json",
+      "sha256": "b6d346be366a7d1d48332dbc9fdf3bf8960b5d879522b7799ddba59e76237ee3",
+      "bytes": 125,
+      "mode": "644",
+      "relativePath": "uar-models/special_tokens_map.json"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/uar-models/tokenizer_config.json",
+      "sha256": "9261e7d79b44c8195c1cada2b453e55b00aeb81e907a6664974b4d7776172ab3",
+      "bytes": 366,
+      "mode": "644",
+      "relativePath": "uar-models/tokenizer_config.json"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/uar-models/tokenizer.json",
+      "sha256": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+      "bytes": 711396,
+      "mode": "644",
+      "relativePath": "uar-models/tokenizer.json"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/uar-sidecar",
+      "sha256": "9f91874091f8241d97209fd21b8c0c5b79ae6cdeb82ee0e873a5ea4540a8adea",
+      "bytes": 296935808,
+      "mode": "755",
+      "relativePath": "uar-sidecar"
+    }
+  ],
+  "packagedFilesDigest": "1c8eae5ef4c30236aa398b60bd39a33e7e3e5e14a27a31284bf1064013c9a313",
+  "archivedBinary": {
+    "program": "tar",
+    "args": [
+      "-xOzf",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64.tar.gz",
+      "uar-sidecar-darwin-arm64/uar-sidecar"
+    ],
+    "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+    "shell": false,
+    "exitCode": 0,
+    "stderr": "",
+    "archiveEntry": "uar-sidecar-darwin-arm64/uar-sidecar",
+    "bytes": 296935808,
+    "sha256": "9f91874091f8241d97209fd21b8c0c5b79ae6cdeb82ee0e873a5ea4540a8adea",
+    "matchesBuild": true
+  },
+  "binaryAfter": {
+    "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/target/aarch64-apple-darwin/release/uar-sidecar",
+    "sha256": "9f91874091f8241d97209fd21b8c0c5b79ae6cdeb82ee0e873a5ea4540a8adea",
+    "bytes": 296935808,
+    "mode": "755"
+  },
+  "authoritiesAfter": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/Cargo.toml",
+      "sha256": "29d48665cac7ef20f3ff86f343e7ca8af8941defa7b5760601d4ffc5c4f21414",
+      "bytes": 26548,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/Cargo.lock",
+      "sha256": "1035e0befe1cf67eeb229f570c6308548914408407c65b6644cfe3d5278d086b",
+      "bytes": 382914,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/versions.toml",
+      "sha256": "262e5864da030bb4c5107fe5a7aed2a5ea03818304a34c7abf01c6c932645e48",
+      "bytes": 2194,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/rust-toolchain.toml",
+      "sha256": "d5a8793f42828a223749a6f50df95db82d3f237307e80414314d60f89faf5414",
+      "bytes": 659,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/.cargo/config.toml",
+      "sha256": "b8da292a25b840d96e94a5f4e4271fd7d66bf36a479a430ff0d6be73fddd3541",
+      "bytes": 3452,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/.gitmodules",
+      "sha256": "f9040c4404894f2df2329d37b7cf9e44fc5b073635b69cd554749270f8760b0d",
+      "bytes": 713,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/build.rs",
+      "sha256": "f6bb6b07d1c00a6a15e6f9bd225787263af311e52a6358912433fab87254c50a",
+      "bytes": 3643,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/scripts/package-boss-sidecar.mjs",
+      "sha256": "9b6800d0cb47147b3ce63cf0c7fba46f8de8f03112f1b61ba1375d83dfc0b135",
+      "bytes": 4736,
+      "mode": "644"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/catalog/provider_catalog.json",
+      "sha256": "b215f61fe9b5ccb55f0b7d33f412607e7198dc47b44bc6fadd0f8a12ebb1e991",
+      "bytes": 3551806,
+      "mode": "644"
+    }
+  ],
+  "authoritiesPreserved": true,
+  "ownership": "released; candidate dist/boss-sidecar available for task5 handoff; target only read",
+  "runner": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/run-uar-package.mjs",
+    "sha256": "f5de455c59edce4600a538c75505ff62cc3c860ba14941db5d4c34d2cf479f74",
+    "bytes": 10539,
+    "mode": "644"
+  },
+  "completedAt": "2026-10-09T12:37:05.467Z",
+  "selfCheck": {
+    "sourceEdited": false,
+    "targetWritten": false,
+    "testsOrBuildsRun": false,
+    "canonicalStateMutated": false,
+    "unrequestedProductCodeAdded": false,
+    "securityHardeningAdded": false,
+    "scope": "Existing packager outputs and owned phase package receipt/log/helper only"
+  }
+}

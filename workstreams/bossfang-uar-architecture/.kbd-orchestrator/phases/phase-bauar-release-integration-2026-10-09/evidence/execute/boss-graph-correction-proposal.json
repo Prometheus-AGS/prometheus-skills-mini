@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "status": "proposed-not-authorized-not-executed",
+  "observedProblem": "Dereferencing pnpm package links removed canonical realpaths and changed transitive dependency resolution: rolldown-plugin-dts selected get-tsconfig4 instead of locked5, then proper-lockfile selected signal-exit4 instead of locked3. Repeated single-edge repairs do not restore the installed graph.",
+  "candidate": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+  "retention": {
+    "root": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.context/bauar-dependency-inputs/before-graph-rebuild",
+    "operation": "Node22 fs.renameSync of candidate root node_modules and each of the eight packages/*/node_modules into corresponding relative paths beneath retention root; no delete and no primary moves",
+    "ignoreAuthority": "git check-ignore confirms every retained node_modules path is ignored by existing .gitignore line37",
+    "rollback": "Retain failed rebuilt node_modules separately; rename the nine preserved input directories back to their original candidate paths. No source rollback is needed. Retained relative links are evidence and become valid again when restored to their original layout."
+  },
+  "command": {
+    "orchestrator": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+    "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+    "args": [
+      "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+      "install",
+      "--offline",
+      "--frozen-lockfile",
+      "--frozen-store",
+      "--ignore-scripts"
+    ],
+    "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+    "shell": false,
+    "environment": { "PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN": "warn" },
+    "pathPrepend": ["/Users/gqadonis/.nvm/versions/node/v24.11.1/bin", "/usr/local/bin"],
+    "explicitlyAbsent": ["--force", "--no-frozen-lockfile", "--fix-lockfile", "--trust-lockfile", "--ignore-manifest-check", "--shamefully-hoist", "--no-optional"]
+  },
+  "scopeToApprove": [
+    "A new root workspace install operation, beyond the existing packaging-hook approval",
+    "Use existing store only; fail on missing locked assets; no network fallback",
+    "Read-only shared store via --frozen-store; candidate graph writes only",
+    "Normal package-manager-generated relative links and shims within the candidate; no manually authored symlinks",
+    "All nine workspace dependency graphs from the unchanged exact lock and existing patch files"
+  ],
+  "authority": {
+    "pnpm": "12.3.4",
+    "node": "24.11.1",
+    "lockSha256": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7",
+    "packagesTree": "b5ef55bce9d577dacb0171a3a2b9bd77c014fce2",
+    "patchesTree": "d1207506610b459ef1bf3b8e220e1e3752ac3611",
+    "sourceAndCandidatePatchesTrackedStatus": "clean",
+    "npmrc": "engine-strict=true",
+    "supportedArchitectures": { "os": ["current"], "cpu": ["x64", "arm64"] },
+    "pnpmfilePresent": false,
+    "devEnginesRuntimePresent": false,
+    "sharedStoreObservedInModulesMetadata": "/Users/gqadonis/Library/pnpm/store/v11",
+    "cachedToolFlagSupport": "boss-pnpm-install-help.json; install --help exit0 confirms offline, frozen-lockfile, frozen-store, ignore-scripts",
+    "documentation": ["https://pnpm.io/cli/install", "https://pnpm.io/settings/build#verifydepsbeforerun", "https://pnpm.io/blog/releases/11.7"]
+  },
+  "postinstallImpact": {
+    "rootPostinstallSuppressed": "pnpm --filter @cherrystudio/dsh-bridge build",
+    "rootPrepareSuppressed": "Git blame configuration and prek hook installation",
+    "dependencyLifecycleScriptsSuppressed": true,
+    "implication": "Graph materialization alone does not prove generated workspace/native outputs are ready. DSH bridge dist is normally produced by root postinstall; if required after graph restoration, run that exact existing workspace build as an explicitly scoped production build step after archive handoff. No root prepare or broad dependency script replay is proposed.",
+    "nativeOutputs": "Preserve retained inputs and existing native caches. Existing beforePack rebuild/validation remains unchanged and authoritative. Missing generated artifacts are named failures, not permission to silently run all scripts."
+  },
+  "evidence": [
+    "Record nine directory moves, before/after authority hashes, actual argv/cwd/tool versions/exit/log",
+    "Retain previous failure receipts and copied inputs",
+    "After successful graph correction, retry only the failed exact pnpm exec electron-builder --version route with verifyDepsBeforeRun=warn",
+    "Verify candidate tracked status and package/lock/workspace/patch authority unchanged; do not rerun broad tests",
+    "Actual app prepare/build/assembly remains gated on root archive handoff"
+  ],
+  "failurePolicy": "A missing cache entry, frozen lock/patch mismatch, or another graph failure stops this operation with exact diagnostics. No online retry, upgrades, shared configuration edits, or source/pin changes."
+}

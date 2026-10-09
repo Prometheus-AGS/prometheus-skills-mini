@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "at": "2026-10-09T11:07:44.231Z",
+  "authority": "Direct operator instruction: Just waive it and continue; implement first and test later. Approved Plan carries these deferrals.",
+  "runtimeAcceptance": {
+    "status": "operator-deferred",
+    "passed": false
+  },
+  "negativeControls": {
+    "status": "operator-deferred",
+    "passed": false
+  },
+  "broadRegression": {
+    "status": "operator-deferred",
+    "passed": false
+  },
+  "cumulativeIndependentReview": {
+    "status": "operator-deferred",
+    "passed": false
+  },
+  "globalFormatting": {
+    "status": "operator-deferred",
+    "passed": false
+  },
+  "certification": {
+    "status": "operator-deferred",
+    "passed": false,
+    "signedWaiverClaimed": false
+  },
+  "publication": {
+    "status": "not-authorized",
+    "passed": false
+  },
+  "F6": {
+    "status": "cancelled",
+    "paths": [
+      "tests/bauar_session_owner.rs",
+      "src/uar/mcp_server.rs"
+    ],
+    "directAccessAuthorized": false
+  },
+  "requiredDelivery": "Actual source checkpoints and unsigned local darwin-arm64 app; compilation and inseparable packaging hooks remain delivery work.",
+  "limits": [
+    "No original shipping/C05 gate transition",
+    "No remote MCP server/IdP or credential custodian selected",
+    "No security finding reopened by intake",
+    "No unsupported hook or missing reviewer inferred successful"
+  ]
+}

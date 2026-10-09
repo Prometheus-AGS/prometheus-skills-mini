@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "at": "2026-10-09T11:15:44.390Z",
+  "observedProblem": "Existing Boss beforePack invokes packagePrometheus: locked npm ci in candidate build/prometheus-payload plus checksum-pinned Compass download, contrary to original no-install/download plan constraint.",
+  "operatorResponse": "Allow the existing locked/pinned packaging operations",
+  "scope": [
+    "Existing unchanged production packaging hooks",
+    "Exact lockfiles/checksum-pinned artifacts",
+    "Only isolated candidate paths"
+  ],
+  "preserved": [
+    "Dependency versions and gitlinks",
+    "beforePack/afterPack validators",
+    "Original source/primary worktrees",
+    "Runtime/review/certification deferrals"
+  ],
+  "notAuthorized": [
+    "Dependency upgrades",
+    "Shared service/config changes",
+    "Hook bypass",
+    "Publication"
+  ],
+  "sourceFiles": [
+    "scripts/package-prometheus.js",
+    "scripts/before-pack.js"
+  ]
+}

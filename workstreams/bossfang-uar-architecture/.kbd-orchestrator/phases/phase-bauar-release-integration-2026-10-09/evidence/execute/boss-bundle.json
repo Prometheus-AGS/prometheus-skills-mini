@@ -1,0 +1,238 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-09T12:39:29.600Z",
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "task": "bauar-int-02-local-current-uar-payload/5",
+  "root": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+  "status": "local-record-prepared-awaiting-graph-approval",
+  "commands": [
+    {
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "exitCode": 0,
+      "stdout": "v24.11.1\n",
+      "stderr": ""
+    },
+    {
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "exitCode": 0,
+      "stdout": "12.3.4\n",
+      "stderr": ""
+    },
+    {
+      "program": "/usr/local/bin/pnpm",
+      "args": [
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "exitCode": 0,
+      "stdout": "12.3.4\n",
+      "stderr": ""
+    },
+    {
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/electron-builder/cli.js",
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "\n/Users/gqadonis/node_modules/ajv-keywords/src/index.ts:24\n  if (!defFunc) throw new Error(\"Unknown keyword \" + keyword)\n                      ^\nError: Unknown keyword formatMinimum\n    at get (/Users/gqadonis/node_modules/ajv-keywords/src/index.ts:24:23)\n    at ajvKeywords (/Users/gqadonis/node_modules/ajv-keywords/src/index.ts:9:30)\n    at Object.<anonymous> (/Users/gqadonis/node_modules/@develar/schema-utils/dist/validate.js:49:26)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at Module.require (node:internal/modules/cjs/loader:1504:12)\n    at require (node:internal/modules/helpers:152:16)\n    at Object.<anonymous> (/Users/gqadonis/node_modules/@develar/schema-utils/dist/index.js:3:18)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n"
+    },
+    {
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+        "exec",
+        "electron-builder",
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Scope: all 9 workspace projects\n? Verifying lockfile against supply-chain policies (3088 entries)...\nProgress: resolved 1, reused 0, downloaded 1, added 0\n✓ Lockfile passes supply-chain policies (3088 entries in 35.3s)\nLockfile is up to date, resolution step is skipped\nPackages: +1\n+\nProgress: resolved 1, reused 0, downloaded 1, added 1, done\n.../node_modules/msw postinstall$ node -e \"import('./config/scripts/postinstall.js').catch(() => void 0)\"\n.../.pnpm/koffi@3.1.4/node_modules/koffi install$ node ./cnoke.cjs -P . -D src/koffi --prebuild --release\n.../node_modules/protobufjs postinstall$ node scripts/postinstall\n.../node_modules/msw postinstall: Done\n.../node_modules/protobufjs postinstall: Done\n.../.pnpm/koffi@3.1.4/node_modules/koffi install: Done\n.../node_modules/node-pty install$ node scripts/prebuild.js || node-gyp rebuild\n.../node_modules/node-pty install: \u001b[32m> Checking prebuilds...\u001b[0m\n.../node_modules/node-pty install: Done\n.../node_modules/node-pty postinstall$ node scripts/post-install.js\n.../node_modules/onnxruntime-node postinstall$ node ./script/install\n.../node_modules/node-pty postinstall: \u001b[32m> Cleaning release folder...\u001b[0m\n.../node_modules/node-pty postinstall: \u001b[32m> Moving conpty.dll...\u001b[0m\n.../node_modules/node-pty postinstall:   SKIPPED (not Windows)\n.../node_modules/node-pty postinstall: Done\n.../node_modules/@j178/prek postinstall$ node ./install.js\n.../node_modules/onnxruntime-node postinstall: Done\n.../@paymoapp/electron-shutdown-handler install$ node -e \"\"\n.../node_modules/@sentry/cli postinstall$ node ./scripts/install.js\n.../@paymoapp/electron-shutdown-handler install: Done\n.../esbuild@0.25.12/node_modules/esbuild postinstall$ node install.js\n.../node_modules/@sentry/cli postinstall: Done\n.../node_modules/@j178/prek postinstall: @j178/prek is already installed, skipping installation.\n.../node_modules/@j178/prek postinstall: Done\n.../node_modules/better-sqlite3 install$ prebuild-install || node-gyp rebuild --release\n.../node_modules/electron-winstaller install$ node ./script/select-7z-arch.js\n.../node_modules/electron-winstaller install: Selecting 7-Zip for arch arm64\n.../esbuild@0.25.12/node_modules/esbuild postinstall: Done\n.../node_modules/electron-winstaller install: Done\n.../node_modules/@swc/core postinstall$ node postinstall.js\n.../node_modules/better-sqlite3 install: (node:89638) [DEP0176] DeprecationWarning: fs.R_OK is deprecated, use fs.constants.R_OK instead\n.../node_modules/better-sqlite3 install: (Use `node --trace-deprecation ...` to show where the warning was created)\n.../node_modules/unrs-resolver postinstall$ node postinstall.js\n.../node_modules/unrs-resolver postinstall: Done\n.../node_modules/node-mac-permissions install$ node-gyp rebuild\n.../node_modules/@swc/core postinstall: Done\n.../node_modules/registry-js install$ prebuild-install || node-gyp rebuild\n.../node_modules/better-sqlite3 install: Done\n.../node_modules/selection-hook install$ node-gyp-build\n.../node_modules/node-mac-permissions install: gyp info it worked if it ends with ok\n.../node_modules/node-mac-permissions install: gyp info using node-gyp@12.3.0\n.../node_modules/node-mac-permissions install: gyp info using node@24.11.1 | darwin | arm64\n.../node_modules/tesseract.js postinstall$ opencollective-postinstall || true\n.../node_modules/tesseract.js postinstall: \u001b[96m\u001b[1mThank you for using tesseract.js!\u001b[96m\u001b[1m\n.../node_modules/tesseract.js postinstall: \u001b[0m\u001b[96mIf you rely on this package, please consider supporting our open collective:\u001b[22m\u001b[39m\n.../node_modules/tesseract.js postinstall: > \u001b[94mhttps://opencollective.com/tesseractjs/donate\u001b[0m\n.../node_modules/tesseract.js postinstall: \n.../node_modules/tesseract.js postinstall: Done\n.../node_modules/msw postinstall$ node -e \"import('./config/scripts/postinstall.js').catch(() => void 0)\"\n.../node_modules/msw postinstall: Done\n.../node_modules/registry-js install: (node:90011) [DEP0176] DeprecationWarning: fs.R_OK is deprecated, use fs.constants.R_OK instead\n.../node_modules/registry-js install: (Use `node --trace-deprecation ...` to show where the warning was created)\n.../node_modules/registry-js install: prebuild-install WARN install ENAMETOOLONG: name too long, open '/Users/gqadonis/.npm/_prebuilds/25116f-registry-js-v1.16.1-napi-v3-darwinasync-let-family-null-if-isLinux-family-await-familyFromInterpreter-if-family-family-await-familyFromFilesystem-if-family-family-familyFromReport-if-family-const-out-await-safeCommand-family-familyFromCommand-out-return-family-arm64.tar.gz'\n.../node_modules/selection-hook install: Done\n.../node_modules/node-mac-permissions install: gyp info find Python using Python version 3.12.8 found at \"/usr/local/bin/python3\"\n.../node_modules/msw postinstall$ node -e \"import('./config/scripts/postinstall.js').catch(() => void 0)\"\n.../node_modules/registry-js install: gyp info it worked if it ends with ok\n.../node_modules/registry-js install: gyp info using node-gyp@12.3.0\n.../node_modules/registry-js install: gyp info using node@24.11.1 | darwin | arm64\n.../node_modules/msw postinstall: Done\n.../node_modules/node-mac-permissions install: \n.../node_modules/node-mac-permissions install: gyp info spawn /usr/local/bin/python3\n.../node_modules/node-mac-permissions install: gyp info spawn args [\n.../node_modules/node-mac-permissions install: gyp info spawn args '/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/dist/node_modules/node-gyp/gyp/gyp_main.py',\n.../node_modules/node-mac-permissions install: gyp info spawn args 'binding.gyp',\n.../node_modules/node-mac-permissions install: gyp info spawn args '-f',\n.../node_modules/node-mac-permissions install: gyp info spawn args 'make',\n.../node_modules/node-mac-permissions install: gyp info spawn args '-I',\n.../node_modules/node-mac-permissions install: gyp info spawn args '/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/node-mac-permissions@2.5.0/node_modules/node-mac-permissions/build/config.gypi',\n.../node_modules/node-mac-permissions install: gyp info spawn args '-I',\n.../node_modules/node-mac-permissions install: gyp info spawn args '/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/dist/node_modules/node-gyp/addon.gypi',\n.../node_modules/node-mac-permissions install: gyp info spawn args '-I',\n.../node_modules/node-mac-permissions install: gyp info spawn args '/Users/gqadonis/Library/Caches/node-gyp/24.11.1/include/node/common.gypi',\n.../node_modules/node-mac-permissions install: gyp info spawn args '-Dlibrary=shared_library',\n.../node_modules/node-mac-permissions install: gyp info spawn args '-Dvisibility=default',\n.../node_modules/node-mac-permissions install: gyp info spawn args '-Dnode_root_dir=/Users/gqadonis/Library/Caches/node-gyp/24.11.1',\n.../node_modules/node-mac-permissions install: gyp info spawn args '-Dnode_gyp_dir=/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/dist/node_modules/node-gyp',\n.../node_modules/node-mac-permissions install: gyp info spawn args '-Dnode_lib_file=/Users/gqadonis/Library/Caches/node-gyp/24.11.1/<(target_arch)/node.lib',\n.../node_modules/node-mac-permissions install: gyp info spawn args '-Dmodule_root_dir=/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/node-mac-permissions@2.5.0/node_modules/node-mac-permissions',\n.../node_modules/node-mac-permissions install: gyp info spawn args '-Dnode_engine=v8',\n.../node_modules/node-mac-permissions install: gyp info spawn args '--depth=.',\n.../node_modules/node-mac-permissions install: gyp info spawn args '--no-parallel',\n.../node_modules/node-mac-permissions install: gyp info spawn args '--generator-output',\n.../node_modules/node-mac-permissions install: gyp info spawn args 'build',\n.../node_modules/node-mac-permissions install: gyp info spawn args '-Goutput_dir=.'\n.../node_modules/node-mac-permissions install: gyp info spawn args ]\n.../@deepseek-ai/dsh-subprocess-local postinstall$ node scripts/ensure-spawn-helper.mjs\n.../node_modules/registry-js install: gyp info find Python using Python version 3.12.8 found at \"/usr/local/bin/python3\"\n.../@deepseek-ai/dsh-subprocess-local postinstall: Done\n.../node_modules/registry-js install: \n.../node_modules/registry-js install: gyp info spawn /usr/local/bin/python3\n.../node_modules/registry-js install: gyp info spawn args [\n.../node_modules/registry-js install: gyp info spawn args '/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/dist/node_modules/node-gyp/gyp/gyp_main.py',\n.../node_modules/registry-js install: gyp info spawn args 'binding.gyp',\n.../node_modules/registry-js install: gyp info spawn args '-f',\n.../node_modules/registry-js install: gyp info spawn args 'make',\n.../node_modules/registry-js install: gyp info spawn args '-I',\n.../node_modules/registry-js install: gyp info spawn args '/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/registry-js@1.16.1/node_modules/registry-js/build/config.gypi',\n.../node_modules/registry-js install: gyp info spawn args '-I',\n.../node_modules/registry-js install: gyp info spawn args '/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/dist/node_modules/node-gyp/addon.gypi',\n.../node_modules/registry-js install: gyp info spawn args '-I',\n.../node_modules/registry-js install: gyp info spawn args '/Users/gqadonis/Library/Caches/node-gyp/24.11.1/include/node/common.gypi',\n.../node_modules/registry-js install: gyp info spawn args '-Dlibrary=shared_library',\n.../node_modules/registry-js install: gyp info spawn args '-Dvisibility=default',\n.../node_modules/registry-js install: gyp info spawn args '-Dnode_root_dir=/Users/gqadonis/Library/Caches/node-gyp/24.11.1',\n.../node_modules/registry-js install: gyp info spawn args '-Dnode_gyp_dir=/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/dist/node_modules/node-gyp',\n.../node_modules/registry-js install: gyp info spawn args '-Dnode_lib_file=/Users/gqadonis/Library/Caches/node-gyp/24.11.1/<(target_arch)/node.lib',\n.../node_modules/registry-js install: gyp info spawn args '-Dmodule_root_dir=/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/registry-js@1.16.1/node_modules/registry-js',\n.../node_modules/registry-js install: gyp info spawn args '-Dnode_engine=v8',\n.../node_modules/registry-js install: gyp info spawn args '--depth=.',\n.../node_modules/registry-js install: gyp info spawn args '--no-parallel',\n.../node_modules/registry-js install: gyp info spawn args '--generator-output',\n.../node_modules/registry-js install: gyp info spawn args 'build',\n.../node_modules/registry-js install: gyp info spawn args '-Goutput_dir=.'\n.../node_modules/registry-js install: gyp info spawn args ]\n.../node_modules/registry-js install: gyp info spawn make\n.../node_modules/registry-js install: gyp info spawn args [ 'BUILDTYPE=Release', '-C', 'build' ]\n.../node_modules/registry-js install:   SOLINK_MODULE(target) Release/registry.node\n.../node_modules/node-mac-permissions install: gyp info spawn make\n.../node_modules/node-mac-permissions install: gyp info spawn args [ 'BUILDTYPE=Release', '-C', 'build' ]\n.../node_modules/node-mac-permissions install:   CC(target) Release/obj.target/nothing/../node-addon-api/nothing.o\n.../node_modules/registry-js install: gyp info ok \n.../node_modules/registry-js install: Done\n.../node_modules/node-mac-permissions install:   LIBTOOL-STATIC Release/nothing.a\n.../node_modules/node-mac-permissions install: libtool: warning: 'nothing.o' has no symbols\n.../node_modules/node-mac-permissions install:   CXX(target) Release/obj.target/permissions/permissions.o\n.../node_modules/node-mac-permissions install: In file included from ../permissions.mm:1:\n.../node_modules/node-mac-permissions install: In file included from /Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/node-mac-permissions@2.5.0/node_modules/node-addon-api/napi.h:13:\n.../node_modules/node-mac-permissions install: In file included from /Users/gqadonis/Library/Caches/node-gyp/24.11.1/include/node/node_api.h:12:\n.../node_modules/node-mac-permissions install: In file included from /Users/gqadonis/Library/Caches/node-gyp/24.11.1/include/node/js_native_api.h:5:\n.../node_modules/node-mac-permissions install: In file included from /Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/stdbool.h:25:\n.../node_modules/node-mac-permissions install: In file included from /Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__config:15:\n.../node_modules/node-mac-permissions install: /Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__configuration/availability.h:204:4: warning: \"The selected platform is no longer supported by libc++.\" [-W#warnings]\n.../node_modules/node-mac-permissions install:   204 | #  warning \"The selected platform is no longer supported by libc++.\"\n.../node_modules/node-mac-permissions install:       |    ^\n.../node_modules/node-mac-permissions install: 1 warning generated.\n.../node_modules/node-mac-permissions install:   SOLINK_MODULE(target) Release/permissions.node\n.../node_modules/node-mac-permissions install: gyp info ok \n.../node_modules/node-mac-permissions install: Done\n. postinstall$ pnpm --filter @cherrystudio/dsh-bridge build\n. postinstall: $ tsdown\n. postinstall: ℹ tsdown v0.22.14 powered by rolldown v1.2.6\n. postinstall: \n. postinstall:  ERROR  file:///Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/tsdown@0.22.14_oxc-resolver@11.21.2_tsx@4.21.0_typescript@7.0.2_unrun@0.2.27_@emnapi+core@1.11.2_@emnapi+runtime@1.11.3_/node_modules/rolldown-plugin-dts/dist/internal.mjs:2\n. postinstall: import { readTsconfig } from \"get-tsconfig\";\n. postinstall:          ^^^^^^^^^^^^\n. postinstall: SyntaxError: The requested module 'get-tsconfig' does not provide an export named 'readTsconfig'\n. postinstall:     at #_instantiate (node:internal/modules/esm/module_job:254:21)\n. postinstall:     at async Module[ELIFECYCLE] Command failed with exit code 1.\n. postinstall: Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL\n. postinstall: \n. postinstall:   × \"pnpm recursive run\" failed in /Users/gqadonis/.claude/worktrees/bauar-\n. postinstall:   │ release-boss/packages/dsh-bridge\n. postinstall: \n. postinstall: Failed\nError: ERR_PNPM_EXECUTOR_LIFECYCLE_SCRIPT_FAILED\n\n  × installing dependencies\n  ╰─▶ /Users/gqadonis/.claude/worktrees/bauar-release-boss postinstall: `pnpm\n      --filter @cherrystudio/dsh-bridge build` exited with exit status: 1\n\n"
+    },
+    {
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+        "exec",
+        "electron-builder",
+        "--version"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "environment": {
+        "PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN": "warn"
+      },
+      "pathPrepend": [
+        "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin",
+        "/usr/local/bin"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "[WARN] Your node_modules are out of sync with your lockfile. Patches were modified\n\n/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/node_modules/proper-lockfile/lib/lockfile.js:331\nonExit(() => {\n^\nTypeError: onExit is not a function\n    at Object.<anonymous> (/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/node_modules/proper-lockfile/lib/lockfile.js:331:1)\n    at Module._compile (node:internal/modules/cjs/loader:1761:14)\n    at Object..js (node:internal/modules/cjs/loader:1893:10)\n    at Module.load (node:internal/modules/cjs/loader:1481:32)\n    at Module._load (node:internal/modules/cjs/loader:1300:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:328:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)\n    at Module.require (node:internal/modules/cjs/loader:1504:12)\n    at require (node:internal/modules/helpers:152:16)\n    at Object.<anonymous> (/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/node_modules/proper-lockfile/index.js:3:18)\n"
+    },
+    {
+      "schemaVersion": 1,
+      "stage": "prepare",
+      "startedAt": "2026-10-09T12:39:01.296Z",
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "scripts/prepare-local-uar-payload.cjs"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "environment": {
+        "THE_BOSS_UAR_ENABLED": "1",
+        "THE_BOSS_UAR_LOCAL": "1",
+        "THE_BOSS_LOCAL_UAR_SOURCE_DIR": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+        "CSC_IDENTITY_AUTO_DISCOVERY": "false",
+        "PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN": "warn"
+      },
+      "pathPrepend": [
+        "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin",
+        "/usr/local/bin"
+      ],
+      "shell": false,
+      "orchestrator": {
+        "path": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+        "version": "v22.20.0"
+      },
+      "logfile": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-prepare-2026-10-09T12-39-01-296Z.log",
+      "status": "complete",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-09T12:39:02.910Z",
+      "logSha256": "1eec0158d33ec0b12233aa6d3a80f32734820213e8f67095674df79d9c0a2410"
+    }
+  ],
+  "toolAuthorities": [
+    {
+      "path": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "sha256": "4255a388254ca4319e2f95f1da375d5deaddf25baf9c7c85070b67f9543b15d0"
+    },
+    {
+      "path": "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+      "sha256": "b6e13402c88a275f5b1ec4fb420df8763179bbe9f2b87a10911be44a3622d68d"
+    },
+    {
+      "path": "/usr/local/lib/node_modules/corepack/dist/pnpm.js",
+      "sha256": "7c2a67995976b5b592b611d8b236e3b0633bd654fb49aedd96c6eb7ce04c9cbb"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/electron-builder/package.json",
+      "sha256": "af64d9bb728fed2bf1a3d620b5fb032d801ab68d9574238a51d423ecc7eda77a"
+    }
+  ],
+  "inputReceipts": [
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-inputprep.json",
+      "sha256": "114c6d0f76f0ecf9c658d30d867c775b10618cc52d36132d112979877abd50a1"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-workspace-inputprep.json",
+      "sha256": "6779cb3771caa7ddfd9f2c025aeb5eecabd6def177f6e7e2afbc51675137e9af"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-input-relocation.json",
+      "sha256": "03bd8cfeca1c609fc8a54f6713a21e1a18e4604a252da079d40e4d2fb5edb4c6"
+    }
+  ],
+  "hookOutcomes": [
+    {
+      "hook": "beforePack",
+      "status": "not-run"
+    },
+    {
+      "hook": "afterPack",
+      "status": "not-run"
+    }
+  ],
+  "runtime": "operator-deferred",
+  "certification": "operator-deferred",
+  "publication": "not-authorized",
+  "catalog": {
+    "revision": "4f25d39f0075656b70bf945880d6033beda6d663",
+    "expectedRevision": "4f25d39f0075656b70bf945880d6033beda6d663",
+    "providers": "568d741ee4e4771b7fd4191cde974d743c834fc1db7bbf27fcde45d0521b67b4",
+    "expectedProviders": "568d741ee4e4771b7fd4191cde974d743c834fc1db7bbf27fcde45d0521b67b4",
+    "models": "d6d57171617705eb9611cbfb62ff28a3d26fdaf85b4f38f4b2e4361fcfd153dd",
+    "expectedModels": "d6d57171617705eb9611cbfb62ff28a3d26fdaf85b4f38f4b2e4361fcfd153dd",
+    "matches": true
+  },
+  "sourcePreservation": {
+    "bossHeadBefore": "7a5bdb4b7c02e9f13875fc7f837815c03fe3dacd",
+    "bossHeadAfter": "7a5bdb4b7c02e9f13875fc7f837815c03fe3dacd",
+    "primaryHeadBefore": "822ed9990bd7626bbf76b04eeae184739c0f0655",
+    "primaryHeadAfter": "822ed9990bd7626bbf76b04eeae184739c0f0655",
+    "literSourceHeadBefore": "12a2fae9675e34b88e9373caa2bca9959f416493",
+    "literSourceHeadAfter": "12a2fae9675e34b88e9373caa2bca9959f416493",
+    "packagesTree": "040000 tree b5ef55bce9d577dacb0171a3a2b9bd77c014fce2\tpackages",
+    "packageAuthority": [
+      {
+        "file": "package.json",
+        "recorded": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0",
+        "currentPrimary": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0",
+        "currentCandidate": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0"
+      },
+      {
+        "file": "pnpm-lock.yaml",
+        "recorded": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7",
+        "currentPrimary": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7",
+        "currentCandidate": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7"
+      },
+      {
+        "file": "pnpm-workspace.yaml",
+        "recorded": "9ac466528555b983d35a1dfc558549143a6446df2beaaad554ba25bf169eca56",
+        "currentPrimary": "9ac466528555b983d35a1dfc558549143a6446df2beaaad554ba25bf169eca56",
+        "currentCandidate": "9ac466528555b983d35a1dfc558549143a6446df2beaaad554ba25bf169eca56"
+      }
+    ],
+    "originalRelocatedInputsUnchanged": true
+  },
+  "candidateWorkspaceKeys": [
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/a2ui-core",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/a2ui-uar",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/ai-sdk-provider",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/aiCore",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/dsh-bridge",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/extension-table-plus",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/provider-registry",
+    "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/ui"
+  ],
+  "candidateWorkspaceOnly": true,
+  "skippedDanglingLinks": 672,
+  "relocatedPaths": 3559,
+  "childRuntime": {
+    "node": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+    "version": "v24.11.1",
+    "pnpm": "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+    "versionPnpm": "12.3.4",
+    "pathPrepend": [
+      "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin",
+      "/usr/local/bin"
+    ],
+    "ciPresent": false,
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "directCliProbeFailure": "boss-input-direct-cli-failure.json",
+  "inputRepair": {
+    "path": "boss-input-repair.json",
+    "sha256": "43aa624dc0deffb80c1b774c3305148ef27c0480d28e1e2a187e14860eb3a570"
+  },
+  "localUarPreparation": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-local-uar-preparation.json",
+    "size": 1984,
+    "sha256": "4d6c1c2638d2dec69da282aef1a19b4ff1b945b5b1b642becce44ac8855c3061"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "kind": "bauar-source-intake-receipt-validation",
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "changeId": "bauar-int-01-scoped-source-intake",
+  "backendTaskId": "5",
+  "snapshotTime": "2026-10-09T11:11:58.147Z",
+  "boundary": "Receipt assembly and finite existing-evidence consistency only; no product rehash, code review, build, runtime acceptance or certification",
+  "receipt": {
+    "path": "source-intake.json",
+    "sha256": "ae8dcf2d657cd419a45f65f6e7ae619bf50bbc90940b1ef9322cd97728cef13f"
+  },
+  "schema": {
+    "path": "../../contracts/source-intake.schema.json",
+    "sha256": "9025cb20dabfec9b41c9e610fc7a9f52964fa3d840a48bf7f9160dd8b14030c2",
+    "id": "urn:bauar:release-source-intake:1"
+  },
+  "validator": {
+    "runtime": "v22.20.0",
+    "module": "/Users/gqadonis/node_modules/ajv/dist/2020.js",
+    "version": "8.17.1",
+    "formats": "/Users/gqadonis/node_modules/ajv-formats/dist/index.js",
+    "strict": true
+  },
+  "outcome": "valid",
+  "errors": [],
+  "inputs": [
+    {
+      "path": "intake-inputs.json",
+      "sha256": "dadb2b65794bf14df08b646ee8c89eb10acdc7b129bcb84db5a39717282fbacb"
+    },
+    {
+      "path": "candidate-creation.json",
+      "sha256": "4e4f6291eb054ec043aae2115303cb3ccb3cdce7d6d1daca1465120d672ccf0d"
+    },
+    {
+      "path": "intake/uar.json",
+      "sha256": "bffc57de355a3f47651c3c18198de9071dd5d5b869f3704d925381fbe00a7727"
+    },
+    {
+      "path": "intake/boss.json",
+      "sha256": "bafdf5f110ea73c4a2494a04f93aa3226f3e290ab7eb4321bb045a58997db1a6"
+    },
+    {
+      "path": "intake/bossfang.json",
+      "sha256": "b3716bd38c48829e7b7b27ef77877e2053d0c1287b82880f8181168dbf416f32"
+    }
+  ],
+  "consistency": {
+    "candidateCommitsMatchActualWorkerReceipts": true,
+    "candidateParentsMatchApprovedBases": true,
+    "bindingsMatch": true,
+    "uniquePathsAndOperationsMatch": true,
+    "sourceCandidateDigestsAndModesMatchReceiptValues": true,
+    "totalPaths": 241,
+    "additions": 94,
+    "modifications": 147,
+    "deletions": 0,
+    "bossfangInheritedCommitIds": 279,
+    "bossTargetOnlyCommitIds": 2,
+    "originalStatePreservedAccordingToLinkedWorkerEvidence": true,
+    "pairedProducerConsumerPathsIncluded": true,
+    "excludedPathsAbsentFromIntake": true
+  },
+  "originalStateEvidence": {
+    "uar": "intake/uar.json#/originalStatePreserved",
+    "boss": "intake/boss.json#/originalStateComparison",
+    "bossfang": "intake/bossfang.json#/preservation"
+  },
+  "statuses": {
+    "implementation": "complete",
+    "acceptance": "operator-deferred",
+    "certification": "operator-deferred",
+    "publication": "not-authorized"
+  },
+  "limits": [
+    "Worker product byte/mode checks were consumed, not rerun.",
+    "No whole-original-UAR status, diff, search or hash; F6 paths were retained as exclusion names only.",
+    "No product source, dependencies, native assets, KBD canonical state, build outputs or publication were changed.",
+    "Schema and consistency checks do not constitute runtime acceptance or an independent review."
+  ],
+  "securityHardeningAdded": false
+}

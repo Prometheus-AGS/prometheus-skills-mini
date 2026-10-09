@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "at": "2026-10-09T11:41:00.172Z",
+  "observedRequirement": "Boss package.json engines.node >=24.11.1 <24.16.0; .npmrc engine-strict=true conflicts with planned Node22 build child.",
+  "adaptation": "Existing Node24.11.1 for Boss build/package child commands; retain Node22 orchestration/UAR packager.",
+  "node": {
+    "path": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+    "version": "v24.11.1",
+    "exitCode": 0
+  },
+  "pnpm": {
+    "launcher": "/usr/local/bin/pnpm",
+    "realPath": "/usr/local/lib/node_modules/corepack/dist/pnpm.js",
+    "version": "12.3.4",
+    "exitCode": 0
+  },
+  "childPathPrepend": [
+    "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin",
+    "/usr/local/bin"
+  ],
+  "installedOrUpgraded": false,
+  "pinsChanged": false
+}

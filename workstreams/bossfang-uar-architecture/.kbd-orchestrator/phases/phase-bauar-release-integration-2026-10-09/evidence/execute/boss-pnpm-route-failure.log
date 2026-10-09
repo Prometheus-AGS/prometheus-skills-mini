@@ -1,0 +1,169 @@
+Scope: all 9 workspace projects
+? Verifying lockfile against supply-chain policies (3088 entries)...
+Progress: resolved 1, reused 0, downloaded 1, added 0
+✓ Lockfile passes supply-chain policies (3088 entries in 35.3s)
+Lockfile is up to date, resolution step is skipped
+Packages: +1
++
+Progress: resolved 1, reused 0, downloaded 1, added 1, done
+.../node_modules/msw postinstall$ node -e "import('./config/scripts/postinstall.js').catch(() => void 0)"
+.../.pnpm/koffi@3.1.4/node_modules/koffi install$ node ./cnoke.cjs -P . -D src/koffi --prebuild --release
+.../node_modules/protobufjs postinstall$ node scripts/postinstall
+.../node_modules/msw postinstall: Done
+.../node_modules/protobufjs postinstall: Done
+.../.pnpm/koffi@3.1.4/node_modules/koffi install: Done
+.../node_modules/node-pty install$ node scripts/prebuild.js || node-gyp rebuild
+.../node_modules/node-pty install: [32m> Checking prebuilds...[0m
+.../node_modules/node-pty install: Done
+.../node_modules/node-pty postinstall$ node scripts/post-install.js
+.../node_modules/onnxruntime-node postinstall$ node ./script/install
+.../node_modules/node-pty postinstall: [32m> Cleaning release folder...[0m
+.../node_modules/node-pty postinstall: [32m> Moving conpty.dll...[0m
+.../node_modules/node-pty postinstall:   SKIPPED (not Windows)
+.../node_modules/node-pty postinstall: Done
+.../node_modules/@j178/prek postinstall$ node ./install.js
+.../node_modules/onnxruntime-node postinstall: Done
+.../@paymoapp/electron-shutdown-handler install$ node -e ""
+.../node_modules/@sentry/cli postinstall$ node ./scripts/install.js
+.../@paymoapp/electron-shutdown-handler install: Done
+.../esbuild@0.25.12/node_modules/esbuild postinstall$ node install.js
+.../node_modules/@sentry/cli postinstall: Done
+.../node_modules/@j178/prek postinstall: @j178/prek is already installed, skipping installation.
+.../node_modules/@j178/prek postinstall: Done
+.../node_modules/better-sqlite3 install$ prebuild-install || node-gyp rebuild --release
+.../node_modules/electron-winstaller install$ node ./script/select-7z-arch.js
+.../node_modules/electron-winstaller install: Selecting 7-Zip for arch arm64
+.../esbuild@0.25.12/node_modules/esbuild postinstall: Done
+.../node_modules/electron-winstaller install: Done
+.../node_modules/@swc/core postinstall$ node postinstall.js
+.../node_modules/better-sqlite3 install: (node:89638) [DEP0176] DeprecationWarning: fs.R_OK is deprecated, use fs.constants.R_OK instead
+.../node_modules/better-sqlite3 install: (Use `node --trace-deprecation ...` to show where the warning was created)
+.../node_modules/unrs-resolver postinstall$ node postinstall.js
+.../node_modules/unrs-resolver postinstall: Done
+.../node_modules/node-mac-permissions install$ node-gyp rebuild
+.../node_modules/@swc/core postinstall: Done
+.../node_modules/registry-js install$ prebuild-install || node-gyp rebuild
+.../node_modules/better-sqlite3 install: Done
+.../node_modules/selection-hook install$ node-gyp-build
+.../node_modules/node-mac-permissions install: gyp info it worked if it ends with ok
+.../node_modules/node-mac-permissions install: gyp info using node-gyp@12.3.0
+.../node_modules/node-mac-permissions install: gyp info using node@24.11.1 | darwin | arm64
+.../node_modules/tesseract.js postinstall$ opencollective-postinstall || true
+.../node_modules/tesseract.js postinstall: [96m[1mThank you for using tesseract.js![96m[1m
+.../node_modules/tesseract.js postinstall: [0m[96mIf you rely on this package, please consider supporting our open collective:[22m[39m
+.../node_modules/tesseract.js postinstall: > [94mhttps://opencollective.com/tesseractjs/donate[0m
+.../node_modules/tesseract.js postinstall: 
+.../node_modules/tesseract.js postinstall: Done
+.../node_modules/msw postinstall$ node -e "import('./config/scripts/postinstall.js').catch(() => void 0)"
+.../node_modules/msw postinstall: Done
+.../node_modules/registry-js install: (node:90011) [DEP0176] DeprecationWarning: fs.R_OK is deprecated, use fs.constants.R_OK instead
+.../node_modules/registry-js install: (Use `node --trace-deprecation ...` to show where the warning was created)
+.../node_modules/registry-js install: prebuild-install WARN install ENAMETOOLONG: name too long, open '/Users/gqadonis/.npm/_prebuilds/25116f-registry-js-v1.16.1-napi-v3-darwinasync-let-family-null-if-isLinux-family-await-familyFromInterpreter-if-family-family-await-familyFromFilesystem-if-family-family-familyFromReport-if-family-const-out-await-safeCommand-family-familyFromCommand-out-return-family-arm64.tar.gz'
+.../node_modules/selection-hook install: Done
+.../node_modules/node-mac-permissions install: gyp info find Python using Python version 3.12.8 found at "/usr/local/bin/python3"
+.../node_modules/msw postinstall$ node -e "import('./config/scripts/postinstall.js').catch(() => void 0)"
+.../node_modules/registry-js install: gyp info it worked if it ends with ok
+.../node_modules/registry-js install: gyp info using node-gyp@12.3.0
+.../node_modules/registry-js install: gyp info using node@24.11.1 | darwin | arm64
+.../node_modules/msw postinstall: Done
+.../node_modules/node-mac-permissions install: 
+.../node_modules/node-mac-permissions install: gyp info spawn /usr/local/bin/python3
+.../node_modules/node-mac-permissions install: gyp info spawn args [
+.../node_modules/node-mac-permissions install: gyp info spawn args '/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/dist/node_modules/node-gyp/gyp/gyp_main.py',
+.../node_modules/node-mac-permissions install: gyp info spawn args 'binding.gyp',
+.../node_modules/node-mac-permissions install: gyp info spawn args '-f',
+.../node_modules/node-mac-permissions install: gyp info spawn args 'make',
+.../node_modules/node-mac-permissions install: gyp info spawn args '-I',
+.../node_modules/node-mac-permissions install: gyp info spawn args '/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/node-mac-permissions@2.5.0/node_modules/node-mac-permissions/build/config.gypi',
+.../node_modules/node-mac-permissions install: gyp info spawn args '-I',
+.../node_modules/node-mac-permissions install: gyp info spawn args '/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/dist/node_modules/node-gyp/addon.gypi',
+.../node_modules/node-mac-permissions install: gyp info spawn args '-I',
+.../node_modules/node-mac-permissions install: gyp info spawn args '/Users/gqadonis/Library/Caches/node-gyp/24.11.1/include/node/common.gypi',
+.../node_modules/node-mac-permissions install: gyp info spawn args '-Dlibrary=shared_library',
+.../node_modules/node-mac-permissions install: gyp info spawn args '-Dvisibility=default',
+.../node_modules/node-mac-permissions install: gyp info spawn args '-Dnode_root_dir=/Users/gqadonis/Library/Caches/node-gyp/24.11.1',
+.../node_modules/node-mac-permissions install: gyp info spawn args '-Dnode_gyp_dir=/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/dist/node_modules/node-gyp',
+.../node_modules/node-mac-permissions install: gyp info spawn args '-Dnode_lib_file=/Users/gqadonis/Library/Caches/node-gyp/24.11.1/<(target_arch)/node.lib',
+.../node_modules/node-mac-permissions install: gyp info spawn args '-Dmodule_root_dir=/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/node-mac-permissions@2.5.0/node_modules/node-mac-permissions',
+.../node_modules/node-mac-permissions install: gyp info spawn args '-Dnode_engine=v8',
+.../node_modules/node-mac-permissions install: gyp info spawn args '--depth=.',
+.../node_modules/node-mac-permissions install: gyp info spawn args '--no-parallel',
+.../node_modules/node-mac-permissions install: gyp info spawn args '--generator-output',
+.../node_modules/node-mac-permissions install: gyp info spawn args 'build',
+.../node_modules/node-mac-permissions install: gyp info spawn args '-Goutput_dir=.'
+.../node_modules/node-mac-permissions install: gyp info spawn args ]
+.../@deepseek-ai/dsh-subprocess-local postinstall$ node scripts/ensure-spawn-helper.mjs
+.../node_modules/registry-js install: gyp info find Python using Python version 3.12.8 found at "/usr/local/bin/python3"
+.../@deepseek-ai/dsh-subprocess-local postinstall: Done
+.../node_modules/registry-js install: 
+.../node_modules/registry-js install: gyp info spawn /usr/local/bin/python3
+.../node_modules/registry-js install: gyp info spawn args [
+.../node_modules/registry-js install: gyp info spawn args '/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/dist/node_modules/node-gyp/gyp/gyp_main.py',
+.../node_modules/registry-js install: gyp info spawn args 'binding.gyp',
+.../node_modules/registry-js install: gyp info spawn args '-f',
+.../node_modules/registry-js install: gyp info spawn args 'make',
+.../node_modules/registry-js install: gyp info spawn args '-I',
+.../node_modules/registry-js install: gyp info spawn args '/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/registry-js@1.16.1/node_modules/registry-js/build/config.gypi',
+.../node_modules/registry-js install: gyp info spawn args '-I',
+.../node_modules/registry-js install: gyp info spawn args '/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/dist/node_modules/node-gyp/addon.gypi',
+.../node_modules/registry-js install: gyp info spawn args '-I',
+.../node_modules/registry-js install: gyp info spawn args '/Users/gqadonis/Library/Caches/node-gyp/24.11.1/include/node/common.gypi',
+.../node_modules/registry-js install: gyp info spawn args '-Dlibrary=shared_library',
+.../node_modules/registry-js install: gyp info spawn args '-Dvisibility=default',
+.../node_modules/registry-js install: gyp info spawn args '-Dnode_root_dir=/Users/gqadonis/Library/Caches/node-gyp/24.11.1',
+.../node_modules/registry-js install: gyp info spawn args '-Dnode_gyp_dir=/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/dist/node_modules/node-gyp',
+.../node_modules/registry-js install: gyp info spawn args '-Dnode_lib_file=/Users/gqadonis/Library/Caches/node-gyp/24.11.1/<(target_arch)/node.lib',
+.../node_modules/registry-js install: gyp info spawn args '-Dmodule_root_dir=/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/registry-js@1.16.1/node_modules/registry-js',
+.../node_modules/registry-js install: gyp info spawn args '-Dnode_engine=v8',
+.../node_modules/registry-js install: gyp info spawn args '--depth=.',
+.../node_modules/registry-js install: gyp info spawn args '--no-parallel',
+.../node_modules/registry-js install: gyp info spawn args '--generator-output',
+.../node_modules/registry-js install: gyp info spawn args 'build',
+.../node_modules/registry-js install: gyp info spawn args '-Goutput_dir=.'
+.../node_modules/registry-js install: gyp info spawn args ]
+.../node_modules/registry-js install: gyp info spawn make
+.../node_modules/registry-js install: gyp info spawn args [ 'BUILDTYPE=Release', '-C', 'build' ]
+.../node_modules/registry-js install:   SOLINK_MODULE(target) Release/registry.node
+.../node_modules/node-mac-permissions install: gyp info spawn make
+.../node_modules/node-mac-permissions install: gyp info spawn args [ 'BUILDTYPE=Release', '-C', 'build' ]
+.../node_modules/node-mac-permissions install:   CC(target) Release/obj.target/nothing/../node-addon-api/nothing.o
+.../node_modules/registry-js install: gyp info ok 
+.../node_modules/registry-js install: Done
+.../node_modules/node-mac-permissions install:   LIBTOOL-STATIC Release/nothing.a
+.../node_modules/node-mac-permissions install: libtool: warning: 'nothing.o' has no symbols
+.../node_modules/node-mac-permissions install:   CXX(target) Release/obj.target/permissions/permissions.o
+.../node_modules/node-mac-permissions install: In file included from ../permissions.mm:1:
+.../node_modules/node-mac-permissions install: In file included from /Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/node-mac-permissions@2.5.0/node_modules/node-addon-api/napi.h:13:
+.../node_modules/node-mac-permissions install: In file included from /Users/gqadonis/Library/Caches/node-gyp/24.11.1/include/node/node_api.h:12:
+.../node_modules/node-mac-permissions install: In file included from /Users/gqadonis/Library/Caches/node-gyp/24.11.1/include/node/js_native_api.h:5:
+.../node_modules/node-mac-permissions install: In file included from /Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/stdbool.h:25:
+.../node_modules/node-mac-permissions install: In file included from /Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__config:15:
+.../node_modules/node-mac-permissions install: /Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__configuration/availability.h:204:4: warning: "The selected platform is no longer supported by libc++." [-W#warnings]
+.../node_modules/node-mac-permissions install:   204 | #  warning "The selected platform is no longer supported by libc++."
+.../node_modules/node-mac-permissions install:       |    ^
+.../node_modules/node-mac-permissions install: 1 warning generated.
+.../node_modules/node-mac-permissions install:   SOLINK_MODULE(target) Release/permissions.node
+.../node_modules/node-mac-permissions install: gyp info ok 
+.../node_modules/node-mac-permissions install: Done
+. postinstall$ pnpm --filter @cherrystudio/dsh-bridge build
+. postinstall: $ tsdown
+. postinstall: ℹ tsdown v0.22.14 powered by rolldown v1.2.6
+. postinstall: 
+. postinstall:  ERROR  file:///Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/tsdown@0.22.14_oxc-resolver@11.21.2_tsx@4.21.0_typescript@7.0.2_unrun@0.2.27_@emnapi+core@1.11.2_@emnapi+runtime@1.11.3_/node_modules/rolldown-plugin-dts/dist/internal.mjs:2
+. postinstall: import { readTsconfig } from "get-tsconfig";
+. postinstall:          ^^^^^^^^^^^^
+. postinstall: SyntaxError: The requested module 'get-tsconfig' does not provide an export named 'readTsconfig'
+. postinstall:     at #_instantiate (node:internal/modules/esm/module_job:254:21)
+. postinstall:     at async Module[ELIFECYCLE] Command failed with exit code 1.
+. postinstall: Error: ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL
+. postinstall: 
+. postinstall:   × "pnpm recursive run" failed in /Users/gqadonis/.claude/worktrees/bauar-
+. postinstall:   │ release-boss/packages/dsh-bridge
+. postinstall: 
+. postinstall: Failed
+Error: ERR_PNPM_EXECUTOR_LIFECYCLE_SCRIPT_FAILED
+
+  × installing dependencies
+  ╰─▶ /Users/gqadonis/.claude/worktrees/bauar-release-boss postinstall: `pnpm
+      --filter @cherrystudio/dsh-bridge build` exited with exit status: 1
+

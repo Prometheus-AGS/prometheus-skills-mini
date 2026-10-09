@@ -97,10 +97,10 @@
       "agent": "/root/delivery_boss_bundle",
       "model": "gpt-6-astra",
       "reasoningEffort": "high",
-      "status": "awaiting-operator-scope",
+      "status": "complete",
       "scope": "Boss-only input preparation; actual app assembly waits for archive",
       "ownership": "Candidate Boss only; no UAR target/dist writes",
-      "result": "boss-local-uar-preparation.json; exact offline graph proposal prepared, not executed; actual app pending"
+      "result": "Actual unsigned darwin-arm64 app assembled; boss-delivery.json"
     },
     {
       "change": "bauar-int-02-local-current-uar-payload",
@@ -111,8 +111,19 @@
       "status": "complete",
       "scope": "Exclusive UAR dist/boss-sidecar, actual packager and linked archive identity",
       "route": "collaboration.spawn_agent fork_turns=none"
+    },
+    {
+      "change": "bauar-int-02-local-current-uar-payload",
+      "taskId": 6,
+      "agent": "/root/delivery_handoff",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "high",
+      "route": "collaboration.spawn_agent fork_turns=none",
+      "status": "complete",
+      "scope": "Linked local-delivery schema/validation/downstream handoff only; no reviewer",
+      "result": "Schema-valid local-delivery.json, validation and handoff; ownership released"
     }
   ],
   "scope": "Actual task-scoped native dispatch; no reviewer/verifier; not completion evidence",
-  "updatedAt": "2026-10-09T12:40:14.637Z"
+  "updatedAt": "2026-10-09T13:49:49.317Z"
 }

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "at": "2026-10-09T12:39:29.600Z",
+  "at": "2026-10-09T13:42:41.668Z",
   "phase": "phase-bauar-release-integration-2026-10-09",
   "task": "bauar-int-02-local-current-uar-payload/5",
   "root": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
-  "status": "local-record-prepared-awaiting-graph-approval",
+  "status": "assembled",
   "commands": [
     {
       "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
@@ -149,11 +149,13 @@
   "hookOutcomes": [
     {
       "hook": "beforePack",
-      "status": "not-run"
+      "status": "passed",
+      "evidence": "Actual assembly completed after exact native rebuild, staged current local UAR payload, bundled-binary verification, and pinned mini preparation."
     },
     {
       "hook": "afterPack",
-      "status": "not-run"
+      "status": "passed",
+      "evidence": "Actual assembly exit0 with unchanged hook: packaged Claude CLI check, local UAR identity/inventory/hash/executable checks, and invalid-launch-token rejection probe requiring exit2 and refusal message."
     }
   ],
   "runtime": "operator-deferred",
@@ -234,5 +236,132 @@
     "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-local-uar-preparation.json",
     "size": 1984,
     "sha256": "4d6c1c2638d2dec69da282aef1a19b4ff1b945b5b1b642becce44ac8855c3061"
+  },
+  "deliveryCommandReceipts": [
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-graph-install.json",
+      "sha256": "bcfbea62afb3eecc9bf17ccd8d27237df7c364652dbe987a0e0827bb8eb0e126",
+      "stage": "graph-offline",
+      "status": "failed-stopped",
+      "exitCode": 1,
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+        "install",
+        "--offline",
+        "--frozen-lockfile",
+        "--frozen-store",
+        "--ignore-scripts"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-graph-online-2026-10-09T13-36-44-301Z.json",
+      "sha256": "e2bcd333f43589c7ba4e8493658cab5cf08437c66f273b280409ee0538867966",
+      "stage": "graph-online",
+      "status": "complete",
+      "exitCode": 0,
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+        "install",
+        "--no-offline",
+        "--frozen-lockfile",
+        "--frozen-store",
+        "--ignore-scripts"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-dsh-2026-10-09T13-37-18-766Z.json",
+      "sha256": "2b15bb1e196b228c00ff60768d373441908215004ebe1ab86068bb007258979d",
+      "stage": "dsh",
+      "status": "complete",
+      "exitCode": 0,
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+        "--filter",
+        "@cherrystudio/dsh-bridge",
+        "build"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-build-2026-10-09T13-37-27-199Z.json",
+      "sha256": "81f62fe4d98c56bdf65852a05d52ec35e51f2b80a6ec39b216b387496169b955",
+      "stage": "build",
+      "status": "complete",
+      "exitCode": 0,
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+        "run",
+        "build"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-bundle-2026-10-09T13-38-47-743Z.json",
+      "sha256": "2f38e73a0ef1459c762f75eca2355b0799db9c56d5eb3a8fad3c41e4c00f437b",
+      "stage": "bundle",
+      "status": "complete",
+      "exitCode": 0,
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+        "exec",
+        "electron-builder",
+        "--mac",
+        "--arm64",
+        "--dir",
+        "--publish",
+        "never"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss"
+    }
+  ],
+  "graphMaterialization": {
+    "status": "complete",
+    "frozenLockfile": true,
+    "frozenStore": true,
+    "ignoreScripts": true,
+    "onlineMissingAssetsAuthorized": true,
+    "reused": 2614,
+    "downloaded": 139,
+    "added": 2761
+  },
+  "app": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/dist/mac-arm64/The Boss.app",
+  "deliveryReceipt": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-delivery.json",
+    "size": 21787,
+    "sha256": "be2e8b906734c979c2e99f04b535e520ba9120d728e13085139a3b421018fbd9"
+  },
+  "bundledUar": {
+    "binary": {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/dist/mac-arm64/The Boss.app/Contents/Resources/app.asar.unpacked/resources/binaries/darwin-arm64/uar-sidecar",
+      "size": 296935808,
+      "sha256": "9f91874091f8241d97209fd21b8c0c5b79ae6cdeb82ee0e873a5ea4540a8adea"
+    },
+    "markerFile": {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/dist/mac-arm64/The Boss.app/Contents/Resources/app.asar.unpacked/resources/binaries/darwin-arm64/.uar-local-payload.json",
+      "size": 2004,
+      "sha256": "d9d800ff54a56fce5e6ec1f6df9a11f807b218a1c53b5f4d19fc211ef3600050"
+    },
+    "source": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+    "archiveSha256": "47a565ce5e4f63f28eebd9183a6ed6eeeffbdad13d1c8a6ec318fb2498c34bcb",
+    "binding": {
+      "binaryMatchesBuiltArchive": true,
+      "sourceMatchesBuiltArchive": true,
+      "markerArchiveMatches": true,
+      "manifestArchiveMatches": true,
+      "fileRecordsMatch": true
+    }
+  },
+  "authorityPreservationAfterDelivery": {
+    "candidate": true,
+    "primary": true,
+    "candidateHead": true,
+    "primaryHead": true
   }
 }

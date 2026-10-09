@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "at": "2026-10-09T13:49:49.317Z",
+  "production": "complete",
+  "tasks": {
+    "complete": 11,
+    "total": 11
+  },
+  "changes": {
+    "complete": 2,
+    "total": 2
+  },
+  "backend": [
+    {
+      "change": "bauar-int-01-scoped-source-intake",
+      "operation": "verify",
+      "exitCode": 0,
+      "receiptPath": "boundaries/bauar-int-01-scoped-source-intake-1-verify.json"
+    },
+    {
+      "change": "bauar-int-01-scoped-source-intake",
+      "operation": "archive",
+      "exitCode": 0,
+      "receiptPath": "boundaries/bauar-int-01-scoped-source-intake-1-archive.json"
+    },
+    {
+      "change": "bauar-int-02-local-current-uar-payload",
+      "operation": "verify",
+      "exitCode": 0,
+      "receiptPath": "boundaries/bauar-int-02-local-current-uar-payload-1-verify.json"
+    },
+    {
+      "change": "bauar-int-02-local-current-uar-payload",
+      "operation": "archive",
+      "exitCode": 0,
+      "receiptPath": "boundaries/bauar-int-02-local-current-uar-payload-1-archive.json"
+    }
+  ],
+  "executeAfter": [
+    {
+      "status": 0,
+      "disposition": "skipped-unsupported",
+      "stdout": "",
+      "stderr": "hook command requires shell semantics and was not run: if [ \"$KBD_HOOK_EDGE\" = \"before\" ]; then verb=Starting; else verb=Completed; fi; if [ \"$KBD_HOOK_KIND\" = \"phase\" ]; then printf '%s phase %s out of %s:  %s\\n' \"$verb\" \"$KBD_HOOK_INDEX\" \"$KBD_HOOK_TOTAL\" \"$KBD_HOOK_NAME\" >&2; elif [ \"$KBD_HOOK_KIND\" = \"task\" ]; then printf '%s task %s out of %s:   %s\\n' \"$verb\" \"$KBD_HOOK_INDEX\" \"$KBD_HOOK_TOTAL\" \"$KBD_HOOK_NAME\" >&2; else printf '%s %s %s out of %s: %s\\n' \"$verb\" \"$KBD_HOOK_KIND\" \"$KBD_HOOK_INDEX\" \"$KBD_HOOK_TOTAL\" \"$KBD_HOOK_NAME\" >&2; fi"
+    },
+    {
+      "status": 0,
+      "disposition": "skipped-unsupported",
+      "stdout": "",
+      "stderr": "hook command requires shell semantics and was not run: \"${KBD_ORCHESTRATOR_ROOT:-$HOME/.claude/skills/kbd-process-orchestrator}/shared/lib/memory-log.sh\""
+    }
+  ],
+  "runtime": "operator-deferred",
+  "certification": "operator-deferred",
+  "publication": "not-authorized",
+  "F6": "cancelled",
+  "nextStage": "reflect",
+  "nextStageStarted": false,
+  "scopeSelfCheck": {
+    "unrequestedProductCode": false,
+    "newSecurityHardening": false,
+    "additionalTestsOrReview": false,
+    "sourcePreservation": "Finite boundaries recorded by actual intake/build/package receipts; no whole-original-UAR scan",
+    "unrelatedIndex": "Preserved by scoped commit"
+  }
+}

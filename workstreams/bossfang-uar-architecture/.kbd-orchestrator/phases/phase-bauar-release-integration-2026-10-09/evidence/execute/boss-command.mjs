@@ -7,6 +7,8 @@ const node = '/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node';
 const pnpm = '/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs';
 const stage = process.argv[2];
 const stages = {
+  'graph-online': [pnpm, 'install', '--no-offline', '--frozen-lockfile', '--frozen-store', '--ignore-scripts'],
+  dsh: [pnpm, '--filter', '@cherrystudio/dsh-bridge', 'build'],
   prepare: ['scripts/prepare-local-uar-payload.cjs'],
   build: [pnpm, 'run', 'build'],
   bundle: [pnpm, 'exec', 'electron-builder', '--mac', '--arm64', '--dir', '--publish', 'never'],

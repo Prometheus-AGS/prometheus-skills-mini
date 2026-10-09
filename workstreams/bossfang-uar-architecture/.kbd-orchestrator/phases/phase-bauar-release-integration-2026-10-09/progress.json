@@ -2,27 +2,27 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 412,
-  "derivedRevision": 412,
+  "sourceRevision": 420,
+  "derivedRevision": 420,
   "frontier": {
-    "69cddcdf-6458-4402-82b3-dcf30e2694b5": 412
+    "69cddcdf-6458-4402-82b3-dcf30e2694b5": 420
   },
   "conflictCount": 0,
   "phase": "phase-bauar-release-integration-2026-10-09",
   "phaseId": "phase-bauar-release-integration-2026-10-09",
   "parentPhase": null,
-  "last_updated": "2026-10-09T12:38:23.566319Z",
+  "last_updated": "2026-10-09T13:49:49.173731Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 2,
-  "changes_completed": 1,
+  "changes_completed": 2,
   "implementation_total": 2,
-  "implementation_completed": 1,
+  "implementation_completed": 2,
   "completion": {
     "primaryCounter": "implementation",
     "implementation": {
-      "completed": 1,
+      "completed": 2,
       "total": 2,
-      "status": "IN_PROGRESS"
+      "status": "COMPLETE"
     },
     "evidence": {
       "status": "NOT_TRACKED",
@@ -49,9 +49,9 @@
     "runId": "project-20261006T094115Z",
     "primaryCounter": "implementation",
     "implementation": {
-      "completed": 6,
+      "completed": 7,
       "total": 7,
-      "status": "IN_PROGRESS"
+      "status": "COMPLETE"
     },
     "evidence": {
       "status": "COMPLETE",
@@ -84,12 +84,12 @@
     {
       "id": "bauar-int-02-local-current-uar-payload",
       "title": "Local current-source UAR bundle",
-      "status": "IN_PROGRESS",
-      "implementation_status": "IN_PROGRESS",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
       "tasks_total": 6,
-      "tasks_done": 4,
-      "last_task_completed": "2.2 Run the existing Node sidecar packager against that target output with UAR_SIDECAR_FEATURES=server-full and produce its archive/record/file manifest. Completion is the actual source-bound archive and matching binary/archive/file digests; no old archive is relabeled.",
-      "next_task_pending": "2.3 Assemble an unsigned local Boss darwin-arm64 directory bundle using the existing local profile, preparation/build and electron-builder hooks with --dir --publish never. Completion is the actual bundle, intact hook results and bundled UAR source/digest; do not invoke signed-DMG validation or public publication.",
+      "tasks_done": 6,
+      "last_task_completed": "2.4 Write the linked local-delivery receipt and downstream handoff, including final commits, source-intake digest, build/profile/platform, archive and app identities, actual hook outcomes and separate deferred acceptance/certification/publication statuses. Completion is the schema-conforming finite delivery receipt; runtime/startup/negative-control acceptance is not claimed unless separately run after coherent delivery.",
+      "next_task_pending": null,
       "blockers": []
     }
   ],

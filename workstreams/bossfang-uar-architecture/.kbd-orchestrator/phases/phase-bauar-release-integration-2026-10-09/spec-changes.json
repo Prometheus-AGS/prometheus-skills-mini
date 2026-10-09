@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "backend": "openspec",
+  "stageBoundary": "Spec only",
+  "changes": [
+    {
+      "id": "bauar-int-01-scoped-source-intake",
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-int-01-scoped-source-intake",
+      "capability": "release-source-intake",
+      "tasks": 5,
+      "dependsOn": [],
+      "status": "specified;implementation-pending"
+    },
+    {
+      "id": "bauar-int-02-local-current-uar-payload",
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-int-02-local-current-uar-payload",
+      "capability": "local-uar-bundle-provenance",
+      "tasks": 6,
+      "dependsOn": [
+        "bauar-int-01-scoped-source-intake"
+      ],
+      "status": "specified;implementation-pending"
+    }
+  ],
+  "totalImplementationTasks": 11,
+  "taskRegistration": "Plan owns canonical ordering/task binding;no completed task inferred from OpenSpec artifact existence",
+  "scopeInputs": [
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/intake-comparison.json",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/analysis.md"
+  ],
+  "acceptance": "operator-deferred;contracts only",
+  "publication": "not-authorized"
+}

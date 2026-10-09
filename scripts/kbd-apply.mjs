@@ -32,6 +32,9 @@ import { hooksFire } from '../lib/kbd/hooks.mjs';
 import { kbdCurrentNodeDir } from '../lib/kbd/waypoint.mjs';
 import { runHookCommand } from '../lib/kbd/hook-command.mjs';
 import { detectBackend, specEngines } from '../lib/kbd/spec-backend.mjs';
+import { runReconcile } from '../lib/kbd/reconcile.mjs';
+import { readReconcileState } from '../lib/kbd/reconcile-state.mjs';
+import { repairAdapters } from '../lib/kbd/reconcile-repair.mjs';
 
 const SELF = 'kbd-apply';
 function die(message) {
@@ -124,6 +127,10 @@ function runtimeTaskTransition(change, taskId, title, sequence, status) {
   if (statusResult?.status !== 0) return false;
   let state = JSON.parse(statusResult.stdout);
   const phase = state?.activePath?.phaseId;
+  if (process.env.KBD_RECONCILE_PHASE && phase !== process.env.KBD_RECONCILE_PHASE) {
+    warn('reconcile repair phase is no longer active');
+    return false;
+  }
   if (!phase) {
     warn('canonical runtime has no active phase');
     return false;
@@ -287,7 +294,14 @@ async function cmdEndTask(args) {
   if (!change || !id) die('usage: end-task <change> <id> <i> <n> <title>');
 
   const before = bProgress('.', change);
-  const finalTask = before.remaining === 1;
+  let finalTask = before.remaining === 1;
+  const repairPhase = process.env.KBD_RECONCILE_PHASE;
+  if (repairPhase) {
+    const state = readReconcileState('.').state;
+    if (state?.activePath?.phaseId !== repairPhase) die('reconcile repair phase is no longer active');
+    const tasks = state.phases?.[repairPhase]?.changes?.[change]?.tasks ?? {};
+    finalTask = Object.values(tasks).filter((task) => !['complete', 'completed', 'done', 'cancelled', 'canceled'].includes(task.status)).length === 1;
+  }
 
   const guardEnabled = isBottleneckActive('.');
   if (guardEnabled) {
@@ -300,7 +314,7 @@ async function cmdEndTask(args) {
     }
   }
 
-  bMarkDone('.', change, id);
+  if (!repairPhase) bMarkDone('.', change, id);
   if (!runtimeTaskTransition(change, id, title, i, 'complete')) {
     die('failed to commit canonical task completion');
   }
@@ -377,7 +391,8 @@ const USAGE = `Usage: node scripts/kbd-apply.mjs <subcommand> [args]
   end-task   <change> <id> <i> <n> <title>
   mark-done  <change> <id>       flip one task to done in the backend (no hooks)
   verify     <change>            backend verify (non-zero = fail)
-  archive    <change>            backend archive`;
+  archive    <change>            backend archive
+  reconcile [<phase>] [--repair] [--json]  inspect task drift; opt in to safe repair`;
 
 async function main(argv) {
   const [cmd, ...rest] = argv;
@@ -398,6 +413,9 @@ async function main(argv) {
       return cmdVerify(rest[0]);
     case 'archive':
       return cmdArchive(rest[0]);
+    case 'reconcile':
+      process.exitCode = await runReconcile(rest, repairAdapters((root) => readReconcileState(root).state));
+      return undefined;
     case undefined:
     case '-h':
     case '--help':

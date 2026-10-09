@@ -1,0 +1,31 @@
+[
+  {
+    "command": "git pull --ff-only origin main",
+    "exitCode": 0,
+    "from": "4840903",
+    "to": "7012649"
+  },
+  {
+    "command": "node scripts/generate-skill-system-distribution.mjs",
+    "exitCode": 0,
+    "result": "100 skills, Claude and Codex"
+  },
+  {
+    "command": "node scripts/generate-skill-system-distribution.mjs --check",
+    "exitCode": 0,
+    "result": "100 skills; no bytes/POSIX modes drift"
+  },
+  {
+    "command": "node node_modules/@fission-ai/openspec/bin/openspec.js validate reconcile-kbd-task-state --strict --no-interactive",
+    "exitCode": 0
+  },
+  {
+    "command": "Node assert: package, lock root, skill-system and both plugin release versions; driver line limit",
+    "exitCode": 0,
+    "result": "1.12.1; driver430lines"
+  },
+  {
+    "command": "git diff --check",
+    "exitCode": 0
+  }
+]

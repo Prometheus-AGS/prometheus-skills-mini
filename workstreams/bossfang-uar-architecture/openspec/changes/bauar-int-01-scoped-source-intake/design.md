@@ -36,3 +36,24 @@ Tasks 1.1–1.5 own source intake. Change 02 owns the later Boss local-UAR pin e
 ## Migration Plan
 
 After approved Plan: assign isolated candidate roots, bind the manifest, capture the three deltas and checkpoint commits, then pass the set to change02. Keep original source indexes/worktrees and target refs intact. Rollback selects the prior candidate checkpoint or abandons the isolated candidate; do not reset another user's checkout or delete needed caches. Local generated commits require Assisted-by attribution, never Signed-off-by.
+
+## Analyze candidate evidence retained by Plan
+
+Reuse the selected candidates below; this is evidence from Analyze, not a new runtime verification. Exact candidate IDs map to the plan's library annotations.
+
+### cand-001: Git scoped checkpoint and full-index binary patch intake
+
+Verdict: adapt. Gap: intake-complete-working-tree. Reuse Git; assemble an explicit inventory checkpoint in isolation rather than commit the whole source worktree.
+
+- Tier 1: Assess intake-summary.json:241 uncommitted selected paths,94 additions; HEAD-only transfer omits deltas.
+- Tier 2: Three-way apply needs blob identities/available objects; full-index and binary patches supported. [Primary source](https://git-scm.com/docs/git-apply).
+
+Risks: A tracked diff alone can omit untracked additions. Concurrent target changes require fresh binding; no apply/merge has run.
+
+### cand-002: Accepted Bossfang baseline for isolated local intake
+
+Verdict: adapt. Gap: bossfang-baseline-prerequisites. Explicit newer local candidate preserves implemented prerequisites and avoids inventing a minimal oldmain backport.
+
+- Tier 1: intake-summary.json and evidence/analyze/bossfang-baseline-analysis.md:bac04 includes baseline delegation/projection infrastructure absent or changed at oldmain16beef0.
+
+Risks: Accepted base includes279 commits beyond observed oldmain. Baseline choice does not certify integrated compilation/runtime.

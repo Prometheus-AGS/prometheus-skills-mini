@@ -9,3 +9,7 @@ scope: exact source transfer inventory plus isolated candidate checkpoints and c
 - [ ] 1.3 Materialize Bossfang's 72 selected paths on accepted bac04cb6 using cand-001/cand-002 and create its scoped checkpoint. Completion is the candidate commit plus explicit 279-commit inherited-baseline disclosure and preserved old main ref, not a fabricated phase-only backport.
 - [ ] 1.4 Materialize Boss's 43 selected paths on approved 822ed999 candidate baseline, retaining its target-only commits and migrated exact-approval callers, then create its scoped checkpoint. Completion is the scoped commit and paired producer/consumer inventory; do not edit the local-UAR pin owned by change02 here.
 - [ ] 1.5 Publish the source-intake receipt locally for the payload producer, linking all three candidate commits, selected-path digests, unchanged source/primary state and prior evidence at its real boundary. Completion is the schema-conforming receipt and local handoff; tests/review/certification remain deferred and publication unclaimed.
+
+## Plan assignment reference
+
+Task models, worker ownership and execution order are defined in [the phase plan](../../../.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/plan.md). Match full phase path phase-bauar-release-integration-2026-10-09 / bauar-int-01-scoped-source-intake / OpenSpec backend ordinals 1–5. Display labels remain unchanged; no model metadata is a task.

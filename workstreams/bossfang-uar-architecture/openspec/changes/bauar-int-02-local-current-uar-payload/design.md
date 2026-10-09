@@ -36,3 +36,16 @@ Exact Plan-assigned roots/output paths are recorded before builds. Use Node 22 f
 ## Migration Plan
 
 After source intake and local-pin checkpoint, produce the real UAR binary/archive, assemble Boss with all existing hooks, and write the linked local delivery/handoff. No external path override is used to claim bundled identity. Superseding a candidate retains its prior receipts/checkpoints; rollback reselects them without changing primary branches or public manifests. Runtime negative controls and broader acceptance are defined in verification.md for the later completed-delivery boundary, not run during production edits.
+
+## Analyze candidate evidence retained by Plan
+
+Reuse the selected candidates below; this is evidence from Analyze, not a new runtime verification. Exact candidate IDs map to the plan's library annotations.
+
+### cand-004: Existing local-UAR pinned Apple Silicon packaging profile
+
+Verdict: adapt. Gap: bundled-current-uar-provenance. Reuse existing validated-profile implementation, update only approved checkpoint/payload selection after source intake;do not rewrite validators.
+
+- Tier 1: Boss scripts/local-uar-payload.cjs:39, before-pack.js:197, after-pack.js:10 and uar-payload-integrity.cjs:89 provide exact source/archive/file checks;local pin48bc45 still needs current checkpoint.
+- Tier 2: Upstream hook/file-copy concepts support retaining existing packaging wiring;Boss pins26.15.6. [Primary source](https://github.com/electron-userland/electron-builder/blob/master/website/docs/features/hooks.md).
+
+Risks: Native darwin-arm64 only;forbidden in release CI. UAR packaging script labels an already-built binary;build provenance must be recorded. Current-source package not built here.

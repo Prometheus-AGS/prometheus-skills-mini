@@ -1,0 +1,76 @@
+{
+  "changeName": "bauar-int-02-local-current-uar-payload",
+  "changeDir": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-int-02-local-current-uar-payload",
+  "schemaName": "spec-driven",
+  "contextFiles": {
+    "proposal": [
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-int-02-local-current-uar-payload/proposal.md"
+    ],
+    "specs": [
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-int-02-local-current-uar-payload/specs/local-uar-bundle-provenance/spec.md"
+    ],
+    "design": [
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-int-02-local-current-uar-payload/design.md"
+    ],
+    "tasks": [
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-int-02-local-current-uar-payload/tasks.md"
+    ]
+  },
+  "progress": {
+    "total": 6,
+    "complete": 0,
+    "remaining": 6
+  },
+  "tasks": [
+    {
+      "id": "1",
+      "description": "1.1 Bind the clean integrated UAR commit, server-full feature profile and native darwin-arm64 target to the existing sidecar/local packaging mechanisms, with dependency authority and toolchain recorded. Completion is an exact build-input record with no test-only features, dependency upgrade or invented source identity.",
+      "done": false,
+      "sourcePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-int-02-local-current-uar-payload/tasks.md",
+      "line": 7
+    },
+    {
+      "id": "2",
+      "description": "1.2 Set only the isolated Boss local-UAR source revision to that UAR checkpoint, preserve version/platform/repository and all canonical public manifests/validators, and checkpoint the final Boss source. Completion is the reviewed one-file pin diff and actual Boss commit; all coherent phase source/pin implementation must now be complete.",
+      "done": false,
+      "sourcePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-int-02-local-current-uar-payload/tasks.md",
+      "line": 8
+    },
+    {
+      "id": "3",
+      "description": "2.1 Build the real UAR sidecar once at the complete-production boundary using the recorded locked release target/features and exclusive target ownership; retain diagnostics and source/binary identity. Completion is the actual successful build and output digest, not an old external acceptance binary or a mislabeled compile.",
+      "done": false,
+      "sourcePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-int-02-local-current-uar-payload/tasks.md",
+      "line": 12
+    },
+    {
+      "id": "4",
+      "description": "2.2 Run the existing Node sidecar packager against that target output with UAR_SIDECAR_FEATURES=server-full and produce its archive/record/file manifest. Completion is the actual source-bound archive and matching binary/archive/file digests; no old archive is relabeled.",
+      "done": false,
+      "sourcePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-int-02-local-current-uar-payload/tasks.md",
+      "line": 13
+    },
+    {
+      "id": "5",
+      "description": "2.3 Assemble an unsigned local Boss darwin-arm64 directory bundle using the existing local profile, preparation/build and electron-builder hooks with --dir --publish never. Completion is the actual bundle, intact hook results and bundled UAR source/digest; do not invoke signed-DMG validation or public publication.",
+      "done": false,
+      "sourcePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-int-02-local-current-uar-payload/tasks.md",
+      "line": 14
+    },
+    {
+      "id": "6",
+      "description": "2.4 Write the linked local-delivery receipt and downstream handoff, including final commits, source-intake digest, build/profile/platform, archive and app identities, actual hook outcomes and separate deferred acceptance/certification/publication statuses. Completion is the schema-conforming finite delivery receipt; runtime/startup/negative-control acceptance is not claimed unless separately run after coherent delivery.",
+      "done": false,
+      "sourcePath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-int-02-local-current-uar-payload/tasks.md",
+      "line": 15
+    }
+  ],
+  "taskTrackingConfigured": true,
+  "state": "ready",
+  "instruction": "Read context files, work through pending tasks, mark complete as you go.\nPause if you hit blockers or need clarification.",
+  "context": "Isolated Bossfang–UAR authorization and execution-ownership remediation workstream.\nThe architectural review dated 2026-10-06 is the initial evidence ledger.\nCover local desktop and remote multi-user deployments; retain every finding F1–F7\nand every acceptance scenario, including conditions and disconfirming evidence.\nDistinguish model providers, execution harnesses and job orchestrators.\nReuse existing UAR full-harness, owner-bound MCP and exact admission mechanisms.\nApply each product repository constitution in its own future isolated worktree.\nKBD/tooling uses Node LTS, no shell/Python scripts or new resident services.\nOpenSpec is required. Do not replace it with another backend.\nNo direct writes to generated KBD state: use typed canonical commands.\nNo product source changes until the Plan handover is explicitly approved.\nComplete production behavior before its real-path integration gate; no fixture\nor static result certifies a deployed multi-user stack.\nExecute all stages: Assess, Analyze, Spec, Plan, Execute, Reflect.\nStop after each stage for explicit user approval; never infer approval from\nelapsed time or a completed handoff. No publication or deployment authorization.\n",
+  "root": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+    "source": "nearest"
+  }
+}

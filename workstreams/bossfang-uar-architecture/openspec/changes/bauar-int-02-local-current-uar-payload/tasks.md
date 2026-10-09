@@ -13,3 +13,7 @@ scope: isolated Boss build/local-uar-source.json, generated UAR/Boss candidate o
 - [ ] 2.2 Run the existing Node sidecar packager against that target output with UAR_SIDECAR_FEATURES=server-full and produce its archive/record/file manifest. Completion is the actual source-bound archive and matching binary/archive/file digests; no old archive is relabeled.
 - [ ] 2.3 Assemble an unsigned local Boss darwin-arm64 directory bundle using the existing local profile, preparation/build and electron-builder hooks with --dir --publish never. Completion is the actual bundle, intact hook results and bundled UAR source/digest; do not invoke signed-DMG validation or public publication.
 - [ ] 2.4 Write the linked local-delivery receipt and downstream handoff, including final commits, source-intake digest, build/profile/platform, archive and app identities, actual hook outcomes and separate deferred acceptance/certification/publication statuses. Completion is the schema-conforming finite delivery receipt; runtime/startup/negative-control acceptance is not claimed unless separately run after coherent delivery.
+
+## Plan assignment reference
+
+Task models, worker ownership and execution order are defined in [the phase plan](../../../.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/plan.md). Match full phase path phase-bauar-release-integration-2026-10-09 / bauar-int-02-local-current-uar-payload / OpenSpec backend ordinals 1–6. Display labels remain unchanged; no model metadata is a task.

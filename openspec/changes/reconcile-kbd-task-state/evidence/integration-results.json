@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-09T14:27:29.885Z",
+  "boundary": "completed mini and full reconcile production and generated payloads",
+  "runtime": {
+    "node": "v24.11.1",
+    "platform": "darwin",
+    "arch": "arm64",
+    "canonical": "installed prometheus CLI, isolated data/registry/project and temporary Ed25519 signer"
+  },
+  "status": "passed",
+  "namedTests": {
+    "passed": 4,
+    "failed": 0
+  },
+  "attempts": [
+    {
+      "command": "KBD_FULL_PACK_ROOT=/Users/gqadonis/Projects/prometheus/prometheus-skill-pack node --test lib/kbd/reconcile.integration.test.mjs",
+      "exitCode": 1,
+      "durationMs": 22259.354541,
+      "results": [
+        {
+          "name": "mini legacy backends",
+          "status": "passed",
+          "durationMs": 2181.878375
+        },
+        {
+          "name": "full legacy backends",
+          "status": "passed",
+          "durationMs": 2419.761792
+        },
+        {
+          "name": "mini canonical",
+          "status": "failed",
+          "cause": "Fixture attempted new guard-after refresh without matching start receipt; corrected to restore captured projection"
+        },
+        {
+          "name": "full canonical",
+          "status": "failed",
+          "cause": "Actual full guard used backend c/1 rather than mapped canonical c/c-t1; fixed"
+        }
+      ]
+    },
+    {
+      "exitCode": 1,
+      "durationMs": 26539.569666,
+      "cause": "Fixture incorrectly assumed pausing prohibits administrative task transition; changed to real unregistered signer refusal",
+      "program": "/private/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/cadence-boss-oJIuny/commands/node",
+      "args": [
+        "--test",
+        "--test-name-pattern=mini: real canonical",
+        "lib/kbd/reconcile.integration.test.mjs"
+      ]
+    },
+    {
+      "exitCode": 1,
+      "durationMs": 109908.601792,
+      "status": "cancelled",
+      "cause": "Full repair adapter ignored explicit isolated orchestrator root; stopped only four owned test process IDs, fixed root precedence",
+      "program": "/private/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/cadence-boss-oJIuny/commands/node",
+      "args": [
+        "--test",
+        "--test-name-pattern=full: real canonical",
+        "lib/kbd/reconcile.integration.test.mjs"
+      ],
+      "env": {
+        "KBD_FULL_PACK_ROOT": "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack"
+      }
+    },
+    {
+      "program": "/private/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/cadence-boss-oJIuny/commands/node",
+      "args": [
+        "--test",
+        "--test-name-pattern=real canonical",
+        "lib/kbd/reconcile.integration.test.mjs"
+      ],
+      "env": {
+        "KBD_FULL_PACK_ROOT": "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack"
+      },
+      "exitCode": 0,
+      "durationMs": 47442.1915,
+      "results": [
+        {
+          "name": "mini canonical",
+          "status": "passed",
+          "durationMs": 21084.754375
+        },
+        {
+          "name": "full canonical",
+          "status": "passed",
+          "durationMs": 26263.010708
+        }
+      ]
+    }
+  ],
+  "coverage": [
+    "OpenSpec, native KBD and Spec Kit read-only filesystem scans",
+    "active and nested phase default, explicit phase",
+    "legacy task and aggregate phase count drift/repair and idempotence",
+    "unique archives, ambiguous archives, malformed and missing artifacts, invalid input",
+    "real canonical task identity mapping and pending completion repair",
+    "duplicate-effect prevention by unchanged project and authority file digests",
+    "ledger-ahead and unmappable task drift",
+    "stale canonical task and phase projections",
+    "completed archived canonical tasks through source and generated entrypoints",
+    "inactive phase repair refusal before writes",
+    "cancelled task preservation",
+    "failed signed transition followed by rescan without completion",
+    "unavailable canonical authority exits2",
+    "ordinary scans preserve all fixture project and canonical authority bytes"
+  ],
+  "isolation": {
+    "finalRun": "Real runtime helpers copied into a temporary orchestrator with no builtin/user service hook configuration; source projects and runtime data isolated",
+    "cancelledAttempt": "Default production hooks could have attempted external memory/service operations before cancellation; no local hook logs or memory receipts exist in retained fixture, and buffered child output was lost on termination. External effects unknown; no external cleanup performed.",
+    "retainedCancelledFixture": "/var/folders/ln/0wnpd96j26z2qhvx9m6hwt2r0000gn/T/kbd-reconcile-acceptance-yAd9y1",
+    "windows": "not exercised"
+  },
+  "files": [
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/scripts/kbd-apply.mjs",
+      "sha256": "e1033c9fc9fcab23fcf0427bbdc2fffda455ac44d7bd60f21e42ed773ba075a1"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/lib/kbd/reconcile.mjs",
+      "sha256": "f8acf33035ed9ef99eda0f1b7151a23a8deb6756c06a6eda09221af895d25ce6"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/lib/kbd/reconcile-artifacts.mjs",
+      "sha256": "2ba93e08f53edd39694a823cf0f990c0bc853d11a6fa7b065ac0a246c134817d"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/lib/kbd/reconcile-state.mjs",
+      "sha256": "b885294d673a7e1c768e58ef741dc964f8cdcc5ddfaf75283fb5fcec37be4e31"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/lib/kbd/reconcile-repair.mjs",
+      "sha256": "a154bbfda309eab604d7b06eaf3a055f606cce7ca59718dd4473512ae4b3870f"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/lib/kbd/reconcile.integration.test.mjs",
+      "sha256": "cb4cdf26c7d9a08db8e6f2f46ce968be86f62b6907c1d613b7bebe071f5fc905"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/dist/plugins/codex/prometheus-skills-mini/scripts/kbd-apply.mjs",
+      "sha256": "e1033c9fc9fcab23fcf0427bbdc2fffda455ac44d7bd60f21e42ed773ba075a1"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack/skills/process/kbd-process-orchestrator/skills/kbd-apply/kbd-apply.sh",
+      "sha256": "c2f3446d6bd65ceee2cd1c708f5112e75aeace43c0e6787f28a6c55feb35c9ea"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack/skills/process/kbd-process-orchestrator/skills/kbd-apply/reconcile-command.mjs",
+      "sha256": "506dc7a26e8836bad83c38913ee860a221dd034808bb4cfdeb4abc4ebdcf2959"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skill-pack/dist/plugins/codex/prometheus-skill-pack/skills/kbd-apply/kbd-apply.sh",
+      "sha256": "c2f3446d6bd65ceee2cd1c708f5112e75aeace43c0e6787f28a6c55feb35c9ea"
+    }
+  ]
+}

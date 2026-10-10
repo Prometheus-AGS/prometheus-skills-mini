@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "dispatchedAt": "2026-10-07T11:48:37.162Z",
+  "phaseId": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+  "changeId": "bauar-05-native-discovery-admission",
+  "pendingTaskIds": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10"
+  ],
+  "modelAssignment": "plan.md#task-model-assignments",
+  "nativeRoute": "Actual native spawn_agent returned both tasknames; configuredmodel/effort arguments supported and applied by tool; exact served backendidentity not independently observed",
+  "sourceBaseline": "evidence/execute/baseline-preservation.json",
+  "contract": "evidence/execute/contract-freeze.json",
+  "rootServedModel": "unknown",
+  "reviewers": "dormant until complete delivery",
+  "stageStop": "before Reflect",
+  "workers": [
+    {
+      "agent": "/root/uar_native_v2",
+      "model": "gpt-6-astra",
+      "reasoning": "high",
+      "route": "collaboration.spawn_agent",
+      "forkTurns": "none",
+      "taskIds": [
+        "1"
+      ],
+      "role": "uar-native-worker",
+      "status": "spawned"
+    },
+    {
+      "agent": "/root/boss_native_v2",
+      "model": "gpt-6-astra",
+      "reasoning": "high",
+      "route": "collaboration.spawn_agent",
+      "forkTurns": "none",
+      "taskIds": [
+        "2"
+      ],
+      "role": "boss-runtime",
+      "status": "spawned"
+    }
+  ],
+  "additionalDispatches": [
+    {
+      "at": "2026-10-07T12:21:16.747Z",
+      "agent": "/root/boss_callers_v2",
+      "backendTaskId": "4",
+      "requestedModel": "gpt-6-astra",
+      "requestedReasoningEffort": "high",
+      "forkTurns": "none",
+      "route": "collaboration.spawn_agent",
+      "assignmentRef": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/plan.md#task-model-assignments",
+      "scopeReceipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/task4-dispatch-clarification.json",
+      "completionOwnedBy": "root",
+      "servedModelIdentity": "not exposed"
+    },
+    {
+      "at": "2026-10-07T12:35:37.786Z",
+      "agent": "/root/native_acceptance_author",
+      "backendTaskId": "7",
+      "requestedModel": "gpt-6-astra",
+      "requestedReasoningEffort": "high",
+      "forkTurns": "none",
+      "route": "collaboration.spawn_agent",
+      "assignmentRef": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/plan.md#task-model-assignments",
+      "scope": "V1 gate scenario authoring only",
+      "completionOwnedBy": "root",
+      "servedModelIdentity": "not exposed"
+    },
+    {
+      "at": "2026-10-07T12:35:37.789Z",
+      "agent": "/root/uar_native_v2",
+      "backendTaskId": "7",
+      "route": "collaboration.followup_task",
+      "modelSelection": "Existing requestedgpt-6-astra/high preserved; no switch",
+      "scope": "V1-storage offline compiled fixture utility",
+      "servedModelIdentity": "not exposed"
+    }
+  ]
+}

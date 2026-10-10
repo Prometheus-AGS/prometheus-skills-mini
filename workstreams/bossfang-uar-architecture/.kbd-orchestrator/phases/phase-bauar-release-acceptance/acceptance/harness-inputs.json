@@ -1,0 +1,579 @@
+{
+  "schemaVersion": 1,
+  "phase": "phase-bauar-release-acceptance",
+  "change": "bauar-acc-02-current-harness-regression",
+  "backendId": "1",
+  "specLabel": "1.1",
+  "at": "2026-10-09T21:41:53.603Z",
+  "status": "production-declaration-delivered-runtime-seal-pending",
+  "planInputs": [
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/plan/command-contract.json",
+      "exists": true,
+      "sha256": "2aaed668a2f9c1e10aa2288ff687657d2c426bb545ccbe516502694f650a27c5",
+      "bytes": 13717
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/plan/source-tool-inventory.json",
+      "exists": true,
+      "sha256": "f75d455be14c9aca230aa7293a0bc95a798a6f9131d59526b631c9d06d2d902c",
+      "bytes": 1924
+    }
+  ],
+  "sources": {
+    "bossfang": {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang",
+      "head": "1d518936cb15b79d30bdd315510ff925613a0f4d",
+      "identityScope": "HEAD and finite named files only; no whole-tree cleanliness claim",
+      "inputs": [
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/Cargo.toml",
+          "exists": true,
+          "sha256": "b5528e78f3f0c3fab4ada2b1d462f467b0ebe68fba9f4184db37468f1882760e",
+          "bytes": 16232
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/Cargo.lock",
+          "exists": true,
+          "sha256": "e9a544c54d5a5d4e1012bf7339793e31e7e435ef895faf965ece3e6542fda70a",
+          "bytes": 371636
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/rust-toolchain.toml",
+          "exists": true,
+          "sha256": "112489be515805daeca1062a9beebc301193ae772af174dbd14f5deae2d3c50a",
+          "bytes": 505
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/.cargo/config.toml",
+          "exists": true,
+          "sha256": "3b3ea061053233a975cb5ea950e030e0ca57a6e48e3b4db85e7e58c46b6c6538",
+          "bytes": 1110
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/Cargo.toml",
+          "exists": true,
+          "sha256": "5e8df57e1cc76fb967a27b1d2a3648371fbf4d907119c63d4de91bb6dec41ad0",
+          "bytes": 7953
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/tests/bauar_harness_host.rs",
+          "exists": true,
+          "sha256": "16cb6df5b9f9924d3fc6ac7046029145b87652681809f9e85ff5ffbe1f184d1d",
+          "bytes": 9315
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/Cargo.toml",
+          "exists": true,
+          "sha256": "17028deeeb59c65642652704ce203521eeb681e519847b1bdd9f822294090ef9",
+          "bytes": 5377
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/tests/bauar_harness_delegation.rs",
+          "exists": true,
+          "sha256": "99b4ed2c0c43e3f02828b2631f5373f588c8f11c7153cb015c34362f307336dd",
+          "bytes": 9386
+        }
+      ]
+    },
+    "uar": {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "head": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+      "identityScope": "HEAD and finite named files only; no whole-tree cleanliness claim",
+      "inputs": [
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/Cargo.toml",
+          "exists": true,
+          "sha256": "29d48665cac7ef20f3ff86f343e7ca8af8941defa7b5760601d4ffc5c4f21414",
+          "bytes": 26548
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/Cargo.lock",
+          "exists": true,
+          "sha256": "1035e0befe1cf67eeb229f570c6308548914408407c65b6644cfe3d5278d086b",
+          "bytes": 382914
+        },
+        {
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/rust-toolchain.toml",
+          "exists": true,
+          "sha256": "d5a8793f42828a223749a6f50df95db82d3f237307e80414314d60f89faf5414",
+          "bytes": 659
+        }
+      ]
+    },
+    "boss": {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "head": "7a5bdb4b7c02e9f13875fc7f837815c03fe3dacd"
+    }
+  },
+  "gateSources": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-gate.mjs",
+      "exists": true,
+      "sha256": "32db682d3fdfec4daf6c36b65276522066fe33e3e35c342782218c796e2ae047",
+      "bytes": 30880,
+      "planSha256": "32db682d3fdfec4daf6c36b65276522066fe33e3e35c342782218c796e2ae047"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-runtime.mjs",
+      "exists": true,
+      "sha256": "2f4faba41b92de2728cd451b61023b55a8e554086d4b09cc1e460214f505f9cb",
+      "bytes": 15033
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-peer.mjs",
+      "exists": true,
+      "sha256": "3d6c21811fec39ef25e939a9d4b80a1b44eb34775b227b37e3c53ae5d476d201",
+      "bytes": 19846
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-native.mjs",
+      "exists": true,
+      "sha256": "cad2ad9307fb5856907a9fa6faeb5de98e0a317fd4a5b24ffdeb8995bcdcc137",
+      "bytes": 11447
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-kernel-stage.mjs",
+      "exists": true,
+      "sha256": "94f1c848d75bc2eaa880502ec03cb6b3abb2c1d0a73b2a00ada38ee186c30e38",
+      "bytes": 2432
+    }
+  ],
+  "runtimes": {
+    "coordinator": {
+      "path": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+      "exists": true,
+      "sha256": "49161ba4e67afda85c25b2daa1f0e91d1bffc023d2dbc4886eda7a9ba38bca62",
+      "bytes": 111332720,
+      "version": "v22.20.0"
+    },
+    "child": {
+      "path": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "exists": true,
+      "sha256": "4255a388254ca4319e2f95f1da375d5deaddf25baf9c7c85070b67f9543b15d0",
+      "bytes": 117591472,
+      "version": "v24.11.1"
+    },
+    "bossfangCargo": {
+      "program": "/Users/gqadonis/.cargo/bin/cargo",
+      "version": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang",
+      "launcher": {
+        "path": "/Users/gqadonis/.cargo/bin/cargo",
+        "exists": true,
+        "sha256": "ec1b9233e7f72990ecd8e62063fa7f6c3dfc2bec8e97f88bff165f9100ac696a",
+        "bytes": 11319056
+      },
+      "resolved": {
+        "path": "/Users/gqadonis/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/cargo",
+        "exists": true,
+        "sha256": "c512bff73c86143b557463f021d0c3d5b0490d97d65040ba59ea2b3427784758",
+        "bytes": 31232696
+      }
+    },
+    "bossfangRustc": {
+      "program": "/Users/gqadonis/.cargo/bin/rustc",
+      "version": "rustc 1.95.0 (59807616e 2026-04-14)",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang",
+      "launcher": {
+        "path": "/Users/gqadonis/.cargo/bin/rustc",
+        "exists": true,
+        "sha256": "ec1b9233e7f72990ecd8e62063fa7f6c3dfc2bec8e97f88bff165f9100ac696a",
+        "bytes": 11319056
+      },
+      "resolved": {
+        "path": "/Users/gqadonis/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustc",
+        "exists": true,
+        "sha256": "b829b733131d4e1673eeebd1f34d06ae1e9ff4977b051313cf42e2a9e79ecf1c",
+        "bytes": 412504
+      }
+    },
+    "uarCargo": {
+      "program": "/Users/gqadonis/.cargo/bin/cargo",
+      "version": "cargo 1.99.0-nightly (59800466c 2026-07-07)",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "launcher": {
+        "path": "/Users/gqadonis/.cargo/bin/cargo",
+        "exists": true,
+        "sha256": "ec1b9233e7f72990ecd8e62063fa7f6c3dfc2bec8e97f88bff165f9100ac696a",
+        "bytes": 11319056
+      },
+      "resolved": {
+        "path": "/Users/gqadonis/.rustup/toolchains/nightly-2026-07-18-aarch64-apple-darwin/bin/cargo",
+        "exists": true,
+        "sha256": "65ba2b36bd365d1da4c7958515b63070a483d393316160db8f309bf4082765cf",
+        "bytes": 31822984
+      }
+    },
+    "uarRustc": {
+      "program": "/Users/gqadonis/.cargo/bin/rustc",
+      "version": "rustc 1.99.0-nightly (b6839f4d0 2026-07-17)",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "launcher": {
+        "path": "/Users/gqadonis/.cargo/bin/rustc",
+        "exists": true,
+        "sha256": "ec1b9233e7f72990ecd8e62063fa7f6c3dfc2bec8e97f88bff165f9100ac696a",
+        "bytes": 11319056
+      },
+      "resolved": {
+        "path": "/Users/gqadonis/.rustup/toolchains/nightly-2026-07-18-aarch64-apple-darwin/bin/rustc",
+        "exists": true,
+        "sha256": "57f1d2c5bf4a0de46f2cc14c41e7562bff5eddf9e0f9a6200c7b950c56684895",
+        "bytes": 412504
+      }
+    },
+    "planCargoVersion": {
+      "value": "cargo 1.99.0-nightly (59800466c 2026-07-07)",
+      "scope": "Plan inventory observed UAR cwd nightly; Bossfang uses its own pinned 1.95.0 toolchain"
+    }
+  },
+  "hosts": [
+    {
+      "id": "api",
+      "package": "librefang-api",
+      "testTarget": "bauar_harness_host",
+      "sourceHead": "1d518936cb15b79d30bdd315510ff925613a0f4d",
+      "defaultFeatures": false,
+      "features": [
+        "uar-driver",
+        "surreal-backend",
+        "test-util"
+      ],
+      "profile": "test (debug), host native darwin-arm64",
+      "compile": {
+        "program": "/Users/gqadonis/.cargo/bin/cargo",
+        "args": [
+          "test",
+          "--locked",
+          "-p",
+          "librefang-api",
+          "--no-default-features",
+          "--features",
+          "uar-driver,surreal-backend,test-util",
+          "--test",
+          "bauar_harness_host",
+          "--no-run",
+          "--message-format=json"
+        ],
+        "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang",
+        "environment": {
+          "CARGO_TARGET_DIR": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/.context/bauar-release-acceptance-target",
+          "CARGO_BUILD_JOBS": "2",
+          "RUST_MIN_STACK": "16777216",
+          "policy": "single writer; retain cache and existing configured dependencies/toolchain; no update/unlocked resolution"
+        },
+        "productionBarrier": [
+          "bauar-acc-01-private-packaged-desktop/1.1",
+          "bauar-acc-02-current-harness-regression/1.1",
+          "bauar-acc-02-current-harness-regression/1.2",
+          "bauar-acc-03-local-acceptance-evidence/1.1",
+          "bauar-acc-03-local-acceptance-evidence/1.2"
+        ],
+        "receipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/host-api-compile.receipt.json",
+        "compilerArtifacts": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/host-api-compiler-artifacts.jsonl",
+        "status": "planned-not-executed"
+      },
+      "resolution": {
+        "status": "pending-compilation-after-production-barrier",
+        "targetDirectory": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/.context/bauar-release-acceptance-target",
+        "targetDirectoryExists": false,
+        "executable": null,
+        "sha256": null,
+        "selection": {
+          "reason": "compiler-artifact",
+          "packageManifest": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/Cargo.toml",
+          "packageName": "librefang-api",
+          "targetName": "bauar_harness_host",
+          "targetKind": "test",
+          "profileTest": true,
+          "executableCount": 1,
+          "features": "must match this compile receipt; capture actual compiler artifact feature closure",
+          "sourceReceipt": "bind exact cwd, HEAD, named source digests, toolchain, literal argv and environment",
+          "rule": "Select the sole non-null executable from the exact package/test target compiler-artifact JSON; canonicalize and hash actual file. No newest/highest filename selection."
+        }
+      }
+    },
+    {
+      "id": "kernel",
+      "package": "librefang-kernel",
+      "testTarget": "bauar_harness_delegation",
+      "sourceHead": "1d518936cb15b79d30bdd315510ff925613a0f4d",
+      "defaultFeatures": false,
+      "features": [
+        "uar-driver",
+        "surreal-backend"
+      ],
+      "profile": "test (debug), host native darwin-arm64",
+      "compile": {
+        "program": "/Users/gqadonis/.cargo/bin/cargo",
+        "args": [
+          "test",
+          "--locked",
+          "-p",
+          "librefang-kernel",
+          "--no-default-features",
+          "--features",
+          "uar-driver,surreal-backend",
+          "--test",
+          "bauar_harness_delegation",
+          "--no-run",
+          "--message-format=json"
+        ],
+        "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang",
+        "environment": {
+          "CARGO_TARGET_DIR": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/.context/bauar-release-acceptance-target",
+          "CARGO_BUILD_JOBS": "2",
+          "RUST_MIN_STACK": "16777216",
+          "policy": "single writer; retain cache and existing configured dependencies/toolchain; no update/unlocked resolution"
+        },
+        "productionBarrier": [
+          "bauar-acc-01-private-packaged-desktop/1.1",
+          "bauar-acc-02-current-harness-regression/1.1",
+          "bauar-acc-02-current-harness-regression/1.2",
+          "bauar-acc-03-local-acceptance-evidence/1.1",
+          "bauar-acc-03-local-acceptance-evidence/1.2"
+        ],
+        "receipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/host-kernel-compile.receipt.json",
+        "compilerArtifacts": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/host-kernel-compiler-artifacts.jsonl",
+        "status": "planned-not-executed"
+      },
+      "resolution": {
+        "status": "pending-compilation-after-production-barrier",
+        "targetDirectory": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/.context/bauar-release-acceptance-target",
+        "targetDirectoryExists": false,
+        "executable": null,
+        "sha256": null,
+        "selection": {
+          "reason": "compiler-artifact",
+          "packageManifest": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/Cargo.toml",
+          "packageName": "librefang-kernel",
+          "targetName": "bauar_harness_delegation",
+          "targetKind": "test",
+          "profileTest": true,
+          "executableCount": 1,
+          "features": "must match this compile receipt; capture actual compiler artifact feature closure",
+          "sourceReceipt": "bind exact cwd, HEAD, named source digests, toolchain, literal argv and environment",
+          "rule": "Select the sole non-null executable from the exact package/test target compiler-artifact JSON; canonicalize and hash actual file. No newest/highest filename selection."
+        }
+      }
+    }
+  ],
+  "bundle": {
+    "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/dist/mac-arm64/The Boss.app/Contents/Resources/app.asar.unpacked/resources/binaries/darwin-arm64/uar-sidecar",
+    "exists": true,
+    "sha256": "9f91874091f8241d97209fd21b8c0c5b79ae6cdeb82ee0e873a5ea4540a8adea",
+    "bytes": 296935808,
+    "name": "uar-sidecar",
+    "version": "1.0.0",
+    "platform": "darwin-arm64",
+    "features": [
+      "server-full"
+    ],
+    "sourceHead": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+    "payloadManifest": {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/dist/mac-arm64/The Boss.app/Contents/Resources/app.asar.unpacked/resources/binaries/darwin-arm64/.uar-local-payload.json",
+      "exists": true,
+      "sha256": "d9d800ff54a56fce5e6ec1f6df9a11f807b218a1c53b5f4d19fc211ef3600050",
+      "bytes": 2004
+    },
+    "declaredSha256": "9f91874091f8241d97209fd21b8c0c5b79ae6cdeb82ee0e873a5ea4540a8adea",
+    "provenanceReceipt": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/local-delivery.json",
+      "exists": true,
+      "sha256": "76c0bd1ff5dd331070b699e3916e5814cf7f6e4c0911321d3a72f3be0a189984",
+      "bytes": 50396
+    },
+    "provenanceScope": "Retained prior local-delivery receipt declares server-full/source/sha256. Current bytes measured, not new runtime evidence.",
+    "sealStatus": "pending-current-package-after-desktop-production-build",
+    "sealedExecutable": null,
+    "sealedSha256": null,
+    "rebuildPolicy": "Do not recompile unchanged release UAR; bind exact newly packaged sidecar bytes and manifest at runtime sealing."
+  },
+  "harness": {
+    "id": "harness",
+    "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+    "args": [
+      "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-gate.mjs",
+      "resolved-api-host-executable",
+      "resolved-kernel-test-executable",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-boss/dist/mac-arm64/The Boss.app/Contents/Resources/app.asar.unpacked/resources/binaries/darwin-arm64/uar-sidecar",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-uar"
+    ],
+    "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang",
+    "budgetMs": 1800000,
+    "status": "planned-unresolved-hosts",
+    "argvResolution": [
+      {
+        "index": 1,
+        "host": "api",
+        "field": "resolution.executable"
+      },
+      {
+        "index": 2,
+        "host": "kernel",
+        "field": "resolution.executable"
+      }
+    ]
+  },
+  "supportingRegression": {
+    "id": "uar-regression",
+    "program": "/Users/gqadonis/.cargo/bin/cargo",
+    "args": [
+      "test",
+      "--locked",
+      "--features",
+      "server-full,test-probes",
+      "--test",
+      "bauar_identity_boundary",
+      "--test",
+      "bauar_resource_grants",
+      "--test",
+      "bauar_stdio_boundary",
+      "--test",
+      "bauar_secret_projection",
+      "--test",
+      "bauar_full_harness_cursor",
+      "--",
+      "--test-threads=1"
+    ],
+    "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+    "environment": {
+      "CARGO_TARGET_DIR": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/target",
+      "CARGO_BUILD_JOBS": "2",
+      "RUST_MIN_STACK": "16777216"
+    },
+    "budgetMs": 10800000,
+    "profile": "supporting only; reuses isolated candidate cache; one target writer, no release rebuild",
+    "status": "planned-not-executed",
+    "features": [
+      "server-full",
+      "test-probes"
+    ],
+    "targets": [
+      "bauar_identity_boundary",
+      "bauar_resource_grants",
+      "bauar_stdio_boundary",
+      "bauar_secret_projection",
+      "bauar_full_harness_cursor"
+    ],
+    "selectedTestsMustBeNonzero": true,
+    "sidecarSelection": "Per-target actual execution boundaries below; Cargo CARGO_BIN_EXE paths are compile-derived and pending. Supporting binaries cannot replace production server-full bundle.",
+    "toolchain": "cargo 1.99.0-nightly (59800466c 2026-07-07)",
+    "receipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/uar-regression.receipt.json",
+    "targetExecutionBoundaries": [
+      {
+        "target": "bauar_identity_boundary",
+        "mode": "standalone-process",
+        "binary": "universal-agent-runtime",
+        "selection": "CARGO_BIN_EXE_universal-agent-runtime",
+        "evidence": "tests/support/bauar_identity_peer.rs launch_standalone"
+      },
+      {
+        "target": "bauar_resource_grants",
+        "mode": "sidecar-process",
+        "binary": "uar-sidecar",
+        "selection": "CARGO_BIN_EXE_uar-sidecar",
+        "evidence": "tests/support/bauar_resource_peer.rs launch_sidecar"
+      },
+      {
+        "target": "bauar_stdio_boundary",
+        "mode": "current-test-executable-spawns-exact-helper-and-configured-Node-MCP-fixture",
+        "binary": null,
+        "nodePrerequisite": {
+          "path": "/opt/homebrew/opt/node@24/bin/node",
+          "version": "v24.21.0",
+          "sha256": "c7772c6a80072b2696ab9f5036229cdaf280b993e9a819171d7efd50a7ad99f8",
+          "exists": true
+        },
+        "evidence": "tests/bauar_stdio_boundary.rs NODE constant/current_exe --exact child_host_helper"
+      },
+      {
+        "target": "bauar_secret_projection",
+        "mode": "sidecar-process-and-receipt-metadata-test",
+        "binary": "uar-sidecar",
+        "selection": "CARGO_BIN_EXE_uar-sidecar",
+        "evidence": "tests/bauar_secret_projection.rs launch_sidecar"
+      },
+      {
+        "target": "bauar_full_harness_cursor",
+        "mode": "production-router-in-process-real-loopback-HTTP-model",
+        "binary": null,
+        "persistence": "in-memory SessionStore/catalog",
+        "authentication": "fixture Extension(UserContext); no authentication middleware gate",
+        "evidence": "tests/bauar_full_harness_cursor.rs Fixture"
+      }
+    ]
+  },
+  "isolation": {
+    "root": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/private/harness",
+    "rootStatus": "planned-not-created",
+    "spawn": {
+      "shell": false,
+      "inheritAmbientCredentials": false,
+      "mutateCoordinatorHome": false
+    },
+    "environment": {
+      "HOME": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/private/harness/home",
+      "CODEX_HOME": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/private/harness/codex",
+      "XDG_CONFIG_HOME": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/private/harness/config",
+      "XDG_DATA_HOME": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/private/harness/data",
+      "TMPDIR": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/private/harness/tmp",
+      "PATH": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin",
+      "RUST_LOG": "off"
+    },
+    "storeRoots": {
+      "fixtureRoot": "TMPDIR/bauar-harness-<mkdtemp suffix>",
+      "boss": "fixtureRoot/boss",
+      "kernel": "fixtureRoot/kernel",
+      "uar": "fixtureRoot/provider/surreal",
+      "queue": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/private/harness/queue",
+      "plugins": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/private/harness/plugins"
+    },
+    "innerEnvironment": "Existing privateEnv gives each owned child HOME/XDG/TMP under fixtureRoot; source currently explicitly supplies only fixture credentials and RUST_MIN_STACK to host/kernel.",
+    "binding": "Coordinator must create unique private per-attempt roots and record actual inner mkdtemp path; retain all inputs/receipts. No live profile/shared service mutation.",
+    "ports": "real loopback peers/fault proxy port0",
+    "cleanup": "stop only owned children; record actual cleanup outcome",
+    "targetRoots": {
+      "bossfang": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/.context/bauar-release-acceptance-target",
+      "uar": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/target"
+    },
+    "targetWriterPolicy": "serialize each target writer; no compilation before all production tasks complete"
+  },
+  "missingPrerequisites": [
+    "API host exact compiler-artifact executable/hash absent; declared candidate target directory does not exist",
+    "Kernel test exact compiler-artifact executable/hash absent; declared candidate target directory does not exist",
+    "Current package and runtime seal pending coherent production barrier; retained package identity is informational",
+    "Actual owned fixture/store roots and cleanup evidence pending execution"
+  ],
+  "evidenceBoundary": {
+    "kind": "finite-static-source-artifact-and-tool-version-intake",
+    "productBuildsRun": false,
+    "productTestsRun": false,
+    "productLaunchRun": false,
+    "executableTestsAuthored": false,
+    "runtimeAcceptance": "unverified",
+    "excludedF6FilesAccessed": false
+  },
+  "scope": {
+    "selected": "unsigned local darwin-arm64",
+    "remote": "synthetic configured fixture supporting evidence only; production receiver/IdP/custody excluded",
+    "restart": "unsupported/unknown requires reconciliation; never replay automatically",
+    "retention": [
+      "old app",
+      "archive",
+      "source candidates",
+      "Cargo targets",
+      "dependency caches",
+      "failed receipts"
+    ]
+  },
+  "amendments": [
+    {
+      "backendId": "2",
+      "specLabel": "1.2",
+      "at": "2026-10-09T21:45:56.617Z",
+      "priorManifestSha256": "5e70a9665828e8a5e59c77dd7cbd04a78141ce1d8d4c4708152fea779290c2ba",
+      "reason": "Finite target source inspection identified different actual supporting binary choices and additional hardcoded stdio Node; correction authorized by canonical driver. Literal planned argv unchanged."
+    }
+  ]
+}

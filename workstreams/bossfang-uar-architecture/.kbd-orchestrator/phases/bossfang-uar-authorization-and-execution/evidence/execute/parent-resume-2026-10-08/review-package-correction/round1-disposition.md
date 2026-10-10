@@ -1,0 +1,3 @@
+# Review packet correction
+
+The first packet incorrectly presented the descriptive diff size as a hard constraint. The governing package-correction-plan.md authorizes exactly the existing darwin-arm64 and win32-x64 artifact entries and sets no line-count budget. The critical finding therefore does not establish a product defect. Its count is also contradicted by git diff --numstat: 10	4	build/integration-artifacts.json. Actual count: ten inserted and four deleted lines. No product changes or gate reruns follow. The packet now states the actual scope constraint, and confirmation review checks that scope against unchanged artifacts and receipts.

@@ -1,0 +1,184 @@
+{
+  "schemaVersion": "1",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 490,
+  "derivedRevision": 490,
+  "frontier": {
+    "69cddcdf-6458-4402-82b3-dcf30e2694b5": 490
+  },
+  "conflictCount": 0,
+  "updatedAt": "2026-10-10T02:48:01.627581Z",
+  "cursor": [
+    "phase-bauar-release-acceptance",
+    "execute",
+    "bauar-acc-03-local-acceptance-evidence",
+    "3"
+  ],
+  "root": {
+    "type": "phase",
+    "id": "7041aa63-d951-4b19-a59c-b963d65b3b83",
+    "status": "running",
+    "progress": {
+      "done": 9,
+      "total": 10
+    },
+    "children": [
+      {
+        "type": "phase",
+        "id": "bossfang-uar-authorization-and-execution",
+        "canonicalId": "bossfang-uar-authorization-and-execution",
+        "status": "COMPLETE",
+        "progress": {
+          "done": 4,
+          "total": 4
+        },
+        "children": [
+          {
+            "type": "phase",
+            "id": "desktop-mcp-projection-acceptance",
+            "canonicalId": "bossfang-uar-authorization-and-execution::desktop-mcp-projection-acceptance",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 1,
+              "total": 1
+            },
+            "children": [
+              {
+                "type": "change",
+                "id": "bauar-05-native-discovery-admission",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 10,
+                  "total": 10
+                }
+              }
+            ],
+            "annotations": []
+          },
+          {
+            "type": "phase",
+            "id": "mini-pack-qa-remediation",
+            "canonicalId": "bossfang-uar-authorization-and-execution::mini-pack-qa-remediation",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 0,
+              "total": 0
+            },
+            "children": [],
+            "annotations": []
+          },
+          {
+            "type": "change",
+            "id": "bauar-01-identity-boundaries",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 7,
+              "total": 7
+            }
+          },
+          {
+            "type": "change",
+            "id": "bauar-02-execution-authorization",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 8,
+              "total": 8
+            }
+          },
+          {
+            "type": "change",
+            "id": "bauar-03-harness-delegation",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 9,
+              "total": 9
+            }
+          },
+          {
+            "type": "change",
+            "id": "bauar-04-resource-credential-lifecycle",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 10,
+              "total": 10
+            }
+          }
+        ],
+        "annotations": []
+      },
+      {
+        "type": "phase",
+        "id": "phase-bauar-release-acceptance",
+        "canonicalId": "phase-bauar-release-acceptance",
+        "status": "IN_PROGRESS",
+        "progress": {
+          "done": 2,
+          "total": 3
+        },
+        "children": [
+          {
+            "type": "change",
+            "id": "bauar-acc-01-private-packaged-desktop",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 3,
+              "total": 3
+            }
+          },
+          {
+            "type": "change",
+            "id": "bauar-acc-02-current-harness-regression",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 3,
+              "total": 3
+            }
+          },
+          {
+            "type": "change",
+            "id": "bauar-acc-03-local-acceptance-evidence",
+            "status": "IN_PROGRESS",
+            "progress": {
+              "done": 2,
+              "total": 5
+            }
+          }
+        ],
+        "annotations": []
+      },
+      {
+        "type": "phase",
+        "id": "phase-bauar-release-integration-2026-10-09",
+        "canonicalId": "phase-bauar-release-integration-2026-10-09",
+        "status": "COMPLETE",
+        "progress": {
+          "done": 2,
+          "total": 2
+        },
+        "children": [
+          {
+            "type": "change",
+            "id": "bauar-int-01-scoped-source-intake",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 5,
+              "total": 5
+            }
+          },
+          {
+            "type": "change",
+            "id": "bauar-int-02-local-current-uar-payload",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 6,
+              "total": 6
+            }
+          }
+        ],
+        "annotations": []
+      }
+    ],
+    "annotations": []
+  }
+}

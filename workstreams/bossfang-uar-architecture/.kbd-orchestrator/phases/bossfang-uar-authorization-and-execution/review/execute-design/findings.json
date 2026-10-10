@@ -1,0 +1,144 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "MiniMax-M3",
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/changes/bauar-03-harness-delegation/design.md",
+      "claim": "The parent design references a non-existent UAR client path while the child design and the actual source both use a different path.",
+      "evidence": "Parent design (Scope and sequencing): \"librefang-llm-drivers/src/drivers/uar.rs compatibility/selection boundary.\" Prerequisites.md inspection and child design both list the UAR client at `crates/librefang-llm-drivers/src/drivers/uar_run/{mod,binding,canonical,http,observation,wire,retained,diagnostic}.rs`. There is no evidence the file `crates/librefang-llm-drivers/src/drivers/uar.rs` exists; the child F-HARNESS-SELECTION claim list omits it and lists `uar_run/canonical.rs` and `uar_run/wire.rs` instead. The two designs will not bind to the same files.",
+      "suggested_fix": "Replace the parent reference `librefang-llm-drivers/src/drivers/uar.rs` with `librefang-llm-drivers/src/drivers/uar_run/` and reconcile with the child claim groups."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-mcp-attribution/design.md",
+      "claim": "The MCP attribution design names the wrong claim group as the one that releases network.rs to 04, so the serial transfer will not happen at the recorded checkpoint.",
+      "evidence": "MCP attribution design: \"Sole F-MCP writer is bossfang-feature-steward after F-HARNESS releases network.rs.\" In the harness-delegation execution-scope.json and design, F-HARNESS-SELECTION and F-HARNESS-CONTROL do not list `crates/librefang-api/src/routes/network.rs`; only F-RETRY (parent 03/6–7, child 2.3/2.4) lists network.rs, and the F-RETRY serial order puts it after F-HARNESS-CONTROL. The actual hand-off is therefore F-RETRY→F-MCP, not F-HARNESS→F-MCP, and an implementer following the MCP design will wait on a group that never touches the file.",
+      "suggested_fix": "Change the MCP design hand-off to \"after F-RETRY (parent 03/7 / child 2.4) completes and network.rs is released at the 03 A2A checkpoint.\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/execution-scope.json",
+      "claim": "F-RETRY (parent 03/6–7) does not list `crates/librefang-kernel/src/kernel/mod.rs`, yet the prerequisites inventory identifies `mod.rs:1847 wake_agent_after_approval` as a required reachability seam, leaving the approval wake path unowned and a candidate for a duplicate or unguarded dispatch.",
+      "evidence": "Prerequisites dispatch inventory explicitly calls out `crates/librefang-kernel/src/kernel/mod.rs:1847 wake_agent_after_approval → :1908 send_message_full` as a 03/5,6 path. F-RETRY claim paths: handles/task_queue.rs, accessors.rs, cron_tick.rs, triggers_and_workflow.rs, uar_harness/lifecycle.rs, routes/task_queue.rs, substrate.rs, routes/uar/delegated_tasks.rs, routes/uar.rs, routes/network.rs. mod.rs is absent. The design hands mod.rs only to F-HARNESS-SELECTION, but F-HARNESS-SELECTION is selection/mapping, not lifecycle/wake policy.",
+      "suggested_fix": "Add `crates/librefang-kernel/src/kernel/mod.rs` to the F-RETRY claim group with a stated slice (\"wake_agent_after_approval policy transfer only\"), or explicitly require the F-HARNESS-SELECTION writer to record a hand-off so F-RETRY does not silently depend on it."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/design.md",
+      "claim": "The child design reuses a module name (`UarRunControl`) that does not appear in the inspected source, weakening the residual-reuse claim and creating a phantom dependency.",
+      "evidence": "Design Decisions → Existing authority: \"Reuse UarRunControl/UarRunClient, UarDelegatedRunProjection, A2aTaskStore, routes/uar_delegation and routes/uar/delegated_tasks.rs.\" Prerequisites.md only enumerates `UarRunClient` (`crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs`), `UarDelegatedRunProjection`, and `A2aTaskStore`; no `UarRunControl` is named or located. The same phantom name is mirrored in `proposal.md` (\"Reuse C05 `UarRunControl`, `UarDelegatedRunProjection`...\") and in tasks.md 1.3.",
+      "suggested_fix": "Either replace `UarRunControl` with the actual symbol referenced in source (likely `UarRunClient` or a struct inside `uar_run/mod.rs`) and grep-verify it exists at `bac04cb6b2c144520e28234ad77f00d4cf0f5b23`, or remove the reference entirely."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/design.md",
+      "claim": "The child design makes the verified owner optional in storage while the spec scenario requires it for reconciliation, producing a contradiction the implementer cannot resolve without an undeclared fallback.",
+      "evidence": "Child design storage choice: \"Extend its versioned projection with product job/attempt, verified owner/tenant when available, workspace...\" Child spec scenario \"Submission acknowledgement is lost\": \"Bossfang reconciles with the original verified owner (subject/tenant), workspace, admission ID and expected runtime epoch before any further action; it does not change identity, create a fresh admission or claim that no effect occurred.\" The WHEN clause forces reconciliation with verified owner, but the storage choice permits null. The two child artifacts are loaded as a single plan; downstream writers will produce code whose reconciliation cannot execute.",
+      "suggested_fix": "Decide the invariant explicitly: either reject submission when verified owner is null (preferred for the security boundary the MCP attribution design also draws) or amend the scenario to specify a documented fallback (e.g., workspace+admission+epoch only, with a recorded unknown-owner flag)."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/tasks.md",
+      "claim": "Task 1.2 promises an \"atomic event/cursor/task outcome transaction\" but does not commit to the extraction into a focused module that the design uses to satisfy that atomicity, so the acceptance check (\"later projection updates use one transaction at the completed gate\") has no concrete code surface.",
+      "evidence": "tasks.md 1.2: \"Extend existing A2A projection/store with versioned product attempt relation and atomic event/cursor/task outcome transaction; include interrupted-write, old-record, retention and secret-exclusion scenarios/docs, then record schema-engineer handover to feature-steward.\" The corresponding design (Proposed storage choice for acceptance) says: \"Extract focused storage into crates/librefang-runtime/src/a2a/uar_delegation_store.rs with surgical a2a.rs wiring.\" The extraction is not in tasks.md 1.2 nor in the F-STORAGE claim paths of execution-scope.json. Without it, the implementer is free to keep the current separate-transaction shape described in prerequisites (\"persists projection, then calls separate task upsert\").",
+      "suggested_fix": "Add the new file `crates/librefang-runtime/src/a2a/uar_delegation_store.rs` to the F-STORAGE claim paths and add a sub-bullet to 1.2 that names the extraction and the focused transaction."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/design.md",
+      "claim": "The plan invokes \"test only the completed BAUAR delta at the agreed boundary\" as a verification principle while the actual gate task is a full kernel→UAR→effect integration test, creating an unverifiable or out-of-scope test.",
+      "evidence": "prerequisites.md C05 reuse section: \"test only the completed BAUAR delta at the agreed boundary.\" tasks.md 3.1: \"run real Bossfang kernel->UAR router/executor->safe effect gate through both supported entries and actual attempt persistence, covering scenarios authored above, native mode and unsupported ephemeral selection; record exact identities/effect counts/decision revisions/cursors/source hashes and failure outcomes.\" A real kernel→UAR router/executor trace is a full-stack gate, not a delta-boundary test. The amendment is explicit: \"no production changes yet in this Bossfang worktree\"; the gate is not bounded to a local-only contract.",
+      "suggested_fix": "Either redefine the gate as a local-only, no-network test that exercises BAUAR delta against a stub UAR, or remove the delta-boundary constraint and reclassify the gate as a production-blocked verification step. The chosen boundary must be consistent across prerequisites.md, the design, and tasks.md."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/execution-scope.json",
+      "claim": "F-RETRY claims `crates/librefang-memory/src/substrate.rs` only \"after schema-owner handover\", but no task in the plan is owned by a schema engineer and no hand-off task is enumerated, leaving the substrate write unowned in the recorded plan.",
+      "evidence": "Child design Exact file ownership: \"crates/librefang-memory/src/substrate.rs (attempt-aware requeue/reset only after schema-owner handover)\". execution-scope.json places substrate.rs in F-RETRY with the same note. tasks.md 2.3 says only \"Carry original attempt identity through cancellation, retry/PATCH/stale sweep/pending-event-cron wake and resume paths\" and does not name a schema-engineer pre-step or hand-off. The proposed storage choice says F-STORAGE finishes and hands over to F-HARNESS, with no schema-engineer hand-off into F-RETRY. There is no entry in execution-bindings.json identifying a schema engineer or schema-engineer task; the F-STORAGE owner is \"surrealdb-schema-engineer then serial bossfang-feature-steward\" but the substrate handover is not an F-STORAGE item.",
+      "suggested_fix": "Either add a hand-off step to tasks.md (e.g., 2.3.0) that names the schema engineer and the concrete substrate delta they must accept, or move substrate.rs out of F-RETRY and create a separate F-SCHEMA claim group with explicit paths and serial ordering."
+    },
+    {
+      "severity": "WARNING",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-mcp-attribution/design.md",
+      "claim": "Multiple MCP-attribution terms (remote multi-user, allow_no_auth, trusted server deployment/transport context, verified mapping, delegated mode, trusted-local mode, service mode) are not concretely defined, so the spec scenarios that reference them cannot be implemented or verified.",
+      "evidence": "Design: \"Trusted-local mode is based on the existing verified local connection/auth policy, service mode on the actual service credential path. Delegated mode requires existing authenticated authority to supply verified subject and required tenant plus any actor under an explicit application mapping.\" Spec scenario: \"WHEN a remote multi-user MCP caller supplies no accepted authentication, including when broader unauthenticated access is enabled, THEN MCP denies the request before effect\". Neither \"remote multi-user\" nor \"broader unauthenticated access\" nor \"trusted server deployment/transport context\" is defined as a deployment attribute, a config key, or a network identity in the inspected source.",
+      "suggested_fix": "Add a \"Definitions\" subsection that pins each term to a concrete anchor (config key, env var, server bind address, header that is read for transport context, or a runtime check). The spec scenarios should then reference these anchors."
+    },
+    {
+      "severity": "WARNING",
+      "file": "openspec/changes/bauar-03-harness-delegation/design.md",
+      "claim": "The parent design mentions \"RunManager\" as a thing not to duplicate but never identifies it in the inspected source, weakening the \"no second authority\" invariant.",
+      "evidence": "Parent design Decisions: \"Do not duplicate RunManager.\" The prerequisites inventory does not name RunManager; the only authorities listed are `UarRunControl/UarRunClient`, `UarDelegatedRunProjection`, `A2aTaskStore`, and `routes/uar_delegation`. The child design repeats \"do not duplicate RunManager\" implicitly by saying \"never another HTTP/run authority\", but neither the parent nor the child points to where RunManager lives or proves it is the same authority already in use.",
+      "suggested_fix": "Either grep-verify the symbol at `bac04cb6` and `a7cb972` and document the file/line, or replace \"RunManager\" with the actual symbol present in source."
+    },
+    {
+      "severity": "WARNING",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/design.md",
+      "claim": "The plan does not specify how \"selected job\" identification is propagated to the kernel dispatch hooks, so the F-HARNESS-SELECTION implementer must invent a context-passing contract that the spec does not assert.",
+      "evidence": "Child design: \"Selected jobs carry typed harness/attempt context resolved from durable product identity before normal non-streaming and streaming loop entry. Both call the same adapter; provider name and prompt text never select execution mode. Context travels through explicit parameters/job references, not ambient globals.\" The spec has scenarios for ephemeral rejection and unknown replay, but no scenario asserts that an unselected job still routes to native dispatch nor that the typed context is non-ambient. The F-HARNESS-SELECTION claim group touches `mod.rs`, `agent_execution.rs`, and `messaging.rs` without a stated entry-point signature.",
+      "suggested_fix": "Add a focused module-level interface (e.g., `crates/librefang-kernel/src/kernel/uar_harness/admission.rs::try_route_to_uar(job_ref) -> Result<Attempt, UnsupportedReason>`) and a spec scenario asserting that an unselected job produces a native dispatch with no UAR-side call."
+    },
+    {
+      "severity": "WARNING",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/execution-scope.json",
+      "claim": "The plan creates `crates/librefang-kernel/src/kernel/uar_harness/{mod,admission,observation,lifecycle}.rs` but does not state that the new directory must be registered in `kernel/mod.rs` (which is in F-HARNESS-SELECTION), and the F-HARNESS-SELECTION task 1.3 has no acceptance step for that registration.",
+      "evidence": "Execution-scope.json F-HARNESS-SELECTION paths include both new `uar_harness/mod.rs` and `uar_harness/admission.rs`; F-HARNESS-CONTROL adds `uar_harness/observation.rs`; F-RETRY adds `uar_harness/lifecycle.rs`. tasks.md 1.3 (\"Add explicit selected job dispatch before both supported kernel loop entries, reuse existing UarRunControl, and refuse unsupported ephemeral selection\") does not list the registration. The F-RETRY list explicitly omits `mod.rs` (see finding above), so an unrecorded registration step will block compilation.",
+      "suggested_fix": "Add a sub-bullet to tasks.md 1.3 (\"register uar_harness submodule in kernel/mod.rs\") or include the registration in the F-RETRY mod.rs hand-off."
+    },
+    {
+      "severity": "WARNING",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/tasks.md",
+      "claim": "The amendment requires removing UAR's shipped runtime MCP presets (Tavily, Surreal Memory, Kreuzberg) from mcp.json, but no task, claim group, or owner in the plan records this work.",
+      "evidence": "execute-scope-amendment.md (Direct user decisions, item 2): \"Remove UAR's shipped runtime MCP presets (Tavily, Surreal Memory and Kreuzberg) from mcp.json.\" The bossfang-bauar-mcp-attribution design and tasks.md only cover Bossfang-side attribution and explicitly state \"Inspected KernelConfig MCP server default is an empty Vec. No source remote preset was found in config/boot; hence no deletion claim.\" The UAR repo's mcp.json is in a different worktree (UAR), and no task in the harness-delegation or MCP-attribution child, nor in the parent, lists the removal.",
+      "suggested_fix": "Either record this as a UAR-side task in the UAR execution-boundings.json and reference it from the amendment, or explicitly mark the UAR mcp.json removal as out of scope for the Bossfang worktree and add a follow-up hand-off note."
+    },
+    {
+      "severity": "WARNING",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-mcp-attribution/design.md",
+      "claim": "Positive delegated success is conditional on \"the application actually provides the selected verified mapping\", but the plan provides no concrete contract for that mapping, so the verification step may silently degrade into unsupported-coverage-only without a way to detect regression.",
+      "evidence": "MCP attribution design Verification: \"Positive delegated success is required only if the application actually provides the selected verified mapping; otherwise report explicit unsupported coverage, not a fake principal fixture.\" Spec scenario \"Available delegated authority\" exists but no scenario asserts that a previously-working delegated mapping must still be rejected when an attacker forges actor/tenant/agent (only the forgery scenario covers that). The plan does not specify the application contract (e.g., OIDC claim path, token introspection endpoint, or specific OidcRoleGrant field) that constitutes a \"verified mapping\".",
+      "suggested_fix": "Pin the verified mapping to a concrete OIDC claim path or token introspection step (e.g., \"verified tenant = `acr == 'aal2'` and `sub` and `tenant_id` claims present\"), and add a regression scenario that requires positive delegated success whenever that contract is satisfied."
+    },
+    {
+      "severity": "WARNING",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/design.md",
+      "claim": "The plan has no test that asserts application-owned configuration is preserved (the user requirement to keep \"application-managed configuration, runtime catalog/grant APIs, and developer .mcp.json intact\").",
+      "evidence": "F-TEST claim paths include only `bauar_harness_delegation.rs`, `kernel_handle_contract_task.rs`, `task_board_assignee_wake_test.rs`, and `bauar-harness-gate.mjs`. None references the connection catalog, OIDC provider config, credential stores, or .mcp.json. The MCP child spec has a Scenario \"Application-owned configuration is preserved\" but no F-TEST entry validates it through a real catalog/grant read.",
+      "suggested_fix": "Add an F-TEST scenario in `bauar-harness-gate.mjs` (or a sibling file) that loads the application-managed connection catalog and asserts no entry was mutated."
+    },
+    {
+      "severity": "WARNING",
+      "file": "execute-scope-amendment.md",
+      "claim": "The amendment states \"Final review must inspect these changes\" but the plan does not record a final review task or claim group.",
+      "evidence": "execute-scope-amendment.md \"Final review must inspect these changes.\" tasks.md 3.1 and 3.2 are tests/build only; no independent material-design review task is enumerated. bossfang-prerequisites.md \"Driver design acceptance and independent material-design review remain prerequisites\" mentions it as a prerequisite, not a tracked task.",
+      "suggested_fix": "Add a final-review task (e.g., 3.3) with an explicit owner and a one-line acceptance criterion tying it to the amendment."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/specs/job-harness-delegation/spec.md",
+      "claim": "The child spec adds \"Requirement: First release preserves an explicit supported job profile\" but does not enumerate the supported profile items (job types, harnesses, transports), making the requirement self-referential.",
+      "evidence": "Spec: \"Normal scheduled and task-board UAR-harness jobs SHALL use the selected execution authority. Unsupported ephemeral-worker selection SHALL be refused before its native loop. Existing native jobs SHALL retain their execution path.\" The supported profile is described only as \"normal scheduled and task-board UAR-harness jobs\" without enumerating which transport entries (e.g., the four kernel wake paths in prerequisites) are in or out.",
+      "suggested_fix": "Enumerate the supported profile: list the in-scope call sites by file:line (e.g., `agent_execution.rs:1575`, `messaging.rs:3163`, the cron path, the approval wake path) and explicitly list the out-of-scope ones (the two ephemeral paths)."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-harness-delegation/design.md",
+      "claim": "The plan does not enumerate which JSON request fields constitute the exact body digest used for \"exact retry\" matching, leaving the implementation to choose.",
+      "evidence": "Design: \"The exact body/workspace digest is compared within that namespace. Changed body under the same namespace yields admission_digest_conflict.\" Spec: \"Scenario: Changed payload - WHEN the same owner/workspace/admission and runtime epoch are reused with a semantic field changed, THEN admission returns HTTP 409 and admission_digest_conflict.\" Neither document enumerates which fields are part of the digest, which are headers, and which are excluded (e.g., the credential reference's expiry/rotation marker).",
+      "suggested_fix": "Add a digest definition section that names the included fields (request body minus ephemeral timestamps; non-secret material only) and the order in which they are canonicalized."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "/Users/gqadonis/.claude/worktrees/bauar-bossfang/workstreams/bauar/openspec/changes/bossfang-bauar-mcp-attribution/specs/mcp-request-attribution/spec.md",
+      "claim": "The MCP-attribution spec does not forbid the implementation from logging or persisting credentials despite the non-secret design intent.",
+      "evidence": "Design: \"No raw credentials enter the record.\" Spec scenario: \"Available delegated authority... with no credential values.\" No scenario asserts that logging facilities or panic messages must redact credentials, and the design does not name a redaction helper.",
+      "suggested_fix": "Add a spec scenario that asserts a redaction helper is applied to all output paths (logs, errors, attribution record) and that a canary credential is not observable in any captured output."
+    }
+  ],
+  "checked_classes": []
+}

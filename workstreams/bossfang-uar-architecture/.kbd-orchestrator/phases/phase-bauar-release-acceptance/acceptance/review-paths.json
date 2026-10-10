@@ -1,0 +1,1979 @@
+{
+  "schemaVersion": 1,
+  "kind": "finite-cumulative-review-scope",
+  "phase": "phase-bauar-release-acceptance",
+  "status": "recorded-review-unrun",
+  "intake": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/source-intake.json",
+    "sha256": "ae8dcf2d657cd419a45f65f6e7ae619bf50bbc90940b1ef9322cd97728cef13f"
+  },
+  "scopeSource": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/plan/cumulative-source-scope.json",
+    "sha256": "352b829b6108e7ad775807a71cb0e0ecfbbbda601455c4e08653fa9faa3c87ca"
+  },
+  "repositories": [
+    {
+      "name": "uar",
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "base": "a7cb972992d4f83db6585449ea81af0fe4a1c990",
+      "intakeCheckpoint": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+      "candidateHead": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+      "inheritedPathCount": 126,
+      "paths": [
+        {
+          "repo": "uar",
+          "relative": "Cargo.toml",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/Cargo.toml",
+          "sha256": "29d48665cac7ef20f3ff86f343e7ca8af8941defa7b5760601d4ffc5c4f21414",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "docs/API_KEYS.md",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/docs/API_KEYS.md",
+          "sha256": "c2c2c58e505167b71ab15ef944894a1f7c765a65da9e94c87355b3942ef4d373",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "docs/operations/execution-authorization.md",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/docs/operations/execution-authorization.md",
+          "sha256": "8f0bd44d372529a3daf9d470aca4a06895bc358a305dd36dd649583f2cce3404",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "example.config.yaml",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/example.config.yaml",
+          "sha256": "0ef072215eee71618f78acbb48559c8e07e0203cfa694010e41ce3f3f8fddaa7",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "mcp.json",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/mcp.json",
+          "sha256": "38935ac9bd01a9a91be32d16fc131d8b9d46fbcede88855e85c01f31c7347615",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/config.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/config.rs",
+          "sha256": "53f8d9b25ba9bbdb364abc49e8c96f64399663a679c12d257c460e426aad740b",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/embedded.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/embedded.rs",
+          "sha256": "89f639efb9bc253ac1f07cd9b67b80e458f25a7ad80cb59a819bb2d5b4fa8a19",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/llm/anthropic_driver.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/llm/anthropic_driver.rs",
+          "sha256": "ed1c06ee5cddab76394f3ba583eed5ddc4793215ea8c85197156b3bb32a78e32",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/llm/liter_driver.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/llm/liter_driver.rs",
+          "sha256": "a7da2ed758cc3a334f659adba2becffc11b545d48867d97a32c6e94ff5c065a5",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/llm/orchestrator.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/llm/orchestrator.rs",
+          "sha256": "47c657854ce43a096dfb942989e16b330ea30200a62f33d767451fb73c67072d",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/mcp/registry.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/mcp/registry.rs",
+          "sha256": "668056c132d2beaabfe997729225aacc959cb3c40b3f0b80db91e2713237f162",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/mcp/runtime.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/mcp/runtime.rs",
+          "sha256": "2107903dc1fea8bdbbd341b180e11ac9f4a2be1720995003d15093ceb614888a",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/mcp/stdio_process.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/mcp/stdio_process.rs",
+          "sha256": "f26d78d63102e0e65ed1d0c13a0cd0cf996d0ae22c053ee6b753decec70f1044",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/server.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/server.rs",
+          "sha256": "e3f3aeb84eb230829582575ae7f9ce34d44f7fa14b59354bfddf5c2db030de9c",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/admin/memory.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/admin/memory.rs",
+          "sha256": "f2d53c5b9febc30e3ff1404253b125ed60bc37ad5ee55a5d55151ff655617f2f",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/a2a/grpc.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/a2a/grpc.rs",
+          "sha256": "5b51acb47561762b4053fd2618c6fce04adada4d001df5f750621e89e5ba7da3",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/a2a/handler.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/a2a/handler.rs",
+          "sha256": "edc674f91ec0465516520ba402572dbc5c918c65ec2b27b739fab27bb3800848",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/a2a/thread_service.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/a2a/thread_service.rs",
+          "sha256": "deeb7c7421c615d20d206447c5b0e269ef8e7247f8510d77eb355415205fa660",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/acp/handler.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/acp/handler.rs",
+          "sha256": "e2aeb8c8042c831fec6b8f93a0badb2539d0c4effa813e0189980d9c925f9012",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/acp/routes.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/acp/routes.rs",
+          "sha256": "2058f097da663eebaabd4a2b77f1278de319ba13395f10993ab9a8951d6d1f9d",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/auth.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/auth.rs",
+          "sha256": "5dc7d67ff0220facb714281b320f9fee7dd7db633078b86397d08d5a5ae84d14",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/full_harness.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/full_harness.rs",
+          "sha256": "2e8c50409bedbc34a446fb92c9ad982986ee7aa70a57c17820b7053da7947852",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/full_harness/handlers.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/full_harness/handlers.rs",
+          "sha256": "3a6e1a12b8e2fd0e4c6f744d49c5ef9f9357357cbc8bebf9798b248169937242",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/full_harness/types.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/full_harness/types.rs",
+          "sha256": "32dd4f5ecb61f84f9cbfdbe7b4a2c30d6d3566b64cead8a05f1d6d30427d5e60",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/memory_admin.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/memory_admin.rs",
+          "sha256": "6def7e4c3c1386034f59a7ba8740cc017013835abc912d65c4b025e68b5c38d8",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/openai/routes.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/openai/routes.rs",
+          "sha256": "d03159b33806e4d7f8a7d0abefdca9773c72a53cd70b4a1a87f6a4aa8989782a",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/presentations_tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/presentations_tests.rs",
+          "sha256": "41e0d74e0bdd777da1f5c546461b5dce5da29607ce24f6fc8a332b49ab2d512a",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/routes.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/routes.rs",
+          "sha256": "239904c15f76e335e656a653a8ba0274f4cf9b9aa6ddb705ee3c163b318d0df4",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/skills.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/skills.rs",
+          "sha256": "75ff7b320f6ce92ee97331f47e264a9dae1d9a405a890e5588b334bab13cc493",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/sse.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/sse.rs",
+          "sha256": "0eefc7542b68262e359697b2f10147f8de29e7a789a830d06f0dbbdc4af762d4",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/api/user_settings.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/user_settings.rs",
+          "sha256": "be631a36446e0849af1496a3e29b2624567f1c515fb2bc36dade79dfe81f0346",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/governance/middleware.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/governance/middleware.rs",
+          "sha256": "61bbcc234d4f6e145ca0f5fe20f1e75d17b520aa921b1132f91d5529a9514b71",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/memory/scopes.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/memory/scopes.rs",
+          "sha256": "1300299d50a353caad1cbe728e5ad19529c4a15d8350ded2fd6cf8bc5e79090e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/persistence/agent_threads.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/persistence/agent_threads.rs",
+          "sha256": "a864391c18dddb7e14059bf3b1683aa36b9b9a03d6d8a0c4ecb711f25388d324",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/persistence/mod.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/persistence/mod.rs",
+          "sha256": "36a1c0591cace708f49cf5d3f0627b9cb77f897f1cc45432fee2eed632e64586",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/persistence/providers/memory.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/persistence/providers/memory.rs",
+          "sha256": "9c061ed68477742284b3c8da60e8541430cca7748e33153043095332c826f721",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/persistence/providers/postgres.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/persistence/providers/postgres.rs",
+          "sha256": "ba6865442529f0dc636502bf9483c90cf508f2ea07a63493719472aa6626b3a3",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/persistence/providers/surreal.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/persistence/providers/surreal.rs",
+          "sha256": "fabdb3b6b1fbc09d1cb07dbe03b02b2bcdd47d6c9e4b4a54b837251286f8a32a",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/actor/agent_actor.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/actor/agent_actor.rs",
+          "sha256": "d890da10b95892f1acfdb3476f8f810eca1a6220a8391bb2787f81b252a0bc76",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/actor/messages.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/actor/messages.rs",
+          "sha256": "e8cecce072a4981490aa203a93b2938e37391a508806f243bceaf86da4d9c063",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/actor/system.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/actor/system.rs",
+          "sha256": "6e42d10c83c2bb87c045bf0224f6dfedfa17603ef460f8254dfabf43b24835dc",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/manager.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/manager.rs",
+          "sha256": "d1a36507cb6449b77f189abc0d44542befb1bb61c5370c5fbf072d5ea740e327",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/native_skills/mod.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/native_skills/mod.rs",
+          "sha256": "2013b79b08474f3ceba05a15c3f2a1b43a8f9b23c079e7d1663b68a7e3d525a6",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/native_skills/search_tools.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/native_skills/search_tools.rs",
+          "sha256": "3978b2edc91c6b4820360130cc76fa7c071d2e5d303e43cbc220f6365dd075d7",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/native_skills/search_tools_gate.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/native_skills/search_tools_gate.rs",
+          "sha256": "eac69a18c98d2c1eeba7a079eaa2ecd3e7e030a12e92ab1e67b5e0e63f7ce42d",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/presentation_history_tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/presentation_history_tests.rs",
+          "sha256": "33687f19423643f4a07c15cedaf934af8f5b7ca60bdb989135862bb6064940d3",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/presentations_tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/presentations_tests.rs",
+          "sha256": "2a6e6651d78fa9225184ff04b1092b9f241733e00115a3afd3b541dd03beb57b",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/skills/registry.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/skills/registry.rs",
+          "sha256": "edc26364829dcc6a10ce37cb1de74db367cef59f761d89baa9cf46465bb96dd7",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/skills/service.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/skills/service.rs",
+          "sha256": "feedd62a5078fd7922e8b31696a599f902e84de7c5019ace98d914697a723b0b",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/skills/service/selection.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/skills/service/selection.rs",
+          "sha256": "61c45334ed5e33e904e5d6c5ad31aefda2f1fb597a5253983dd5ca7219a165cc",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/thread/actor_host.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/thread/actor_host.rs",
+          "sha256": "7069488876e7655d04b2fb14137cc5801b0ff150e5a0b6cbf8f157f79d5bd36e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/thread/approval_tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/thread/approval_tests.rs",
+          "sha256": "c1c6daa2b020b5691e63b1718e2acc00fe0563344410c694c5b8f5263bd0f24a",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/thread/approvals.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/thread/approvals.rs",
+          "sha256": "5526a9e9dec334bca39a723a35fc34669a5db8152f54f0846c0381fd10790441",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/thread/kernel.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/thread/kernel.rs",
+          "sha256": "c473af8a5c59df1c9f0240132ac133b1d7582cc4e37c4d9549a35fdc12a7620f",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/thread/service_tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/thread/service_tests.rs",
+          "sha256": "26027fe43e78537a9b562edc0a6453866acde5c65607287b1f6a7729e9c96955",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/tool_admission/http.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/tool_admission/http.rs",
+          "sha256": "d5e7c4499fa4f2afa8f4df142c6cf50cfd6b1feefe69303e8cd9c7f47692355e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/tool_admission/lifecycle.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/tool_admission/lifecycle.rs",
+          "sha256": "89cd799a49f4fae80a8acf8fc82d5eab62aa327c364ab4fd1c9718c7faeff33f",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/tool_admission/mod.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/tool_admission/mod.rs",
+          "sha256": "ed74ec7865fe92352726d4874e647da85f09f928d2c545c37e5d761eb187d1d9",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/tool_admission/standalone.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/tool_admission/standalone.rs",
+          "sha256": "717e1c356353aafe3da0c440e239b58a0638299c864042a759fb1efd2c48bdb0",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/turn/bindings.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/turn/bindings.rs",
+          "sha256": "041222e6ee1b18b1cba1806a28893d5adf631f1563b9100331365387b9ff51fc",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/turn/host/event_projection.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/turn/host/event_projection.rs",
+          "sha256": "55fac6382dc363357545d2a20a88a8ddc49c50f484713b7695bfa329c1dc33b6",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/turn/host/mcp.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/turn/host/mcp.rs",
+          "sha256": "ffbce8153ab1cdd9e5d8a702112b5d12fc0b6f6a4e63b483c7ca024a98b6c81b",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/turn/host/mcp_tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/turn/host/mcp_tests.rs",
+          "sha256": "29497c18cef197ea4ad13cde46599e8f69f0591c9ee42d2ba1d4f62599a40fe8",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/turn/host/mod.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/turn/host/mod.rs",
+          "sha256": "a094d1496119a5c62112790c8486007a24c08508d83ce249f536b635243e83f4",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/turn/host/receipt_projection.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/turn/host/receipt_projection.rs",
+          "sha256": "26eb43b226f28457cd8c38dabeaf8f387b2fc9d1ef779dceb33bab4c61b06350",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/turn/host/secret_projection.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/turn/host/secret_projection.rs",
+          "sha256": "47558fea97a13c1c3f24e1c5591f3e00bd3f1bea3cb18b17a28d4a3e332b8e87",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/turn/host/secret_stream.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/turn/host/secret_stream.rs",
+          "sha256": "9c30e2a3eaeebf8dd76ecce508ab06a30465dcf5ec33da20b882f30636398340",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/turn/request.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/turn/request.rs",
+          "sha256": "f407b8d8f4bac034b9efdd28bbc1608624fadec2798acf6e43c1eddae16027a0",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/runtime/world_state/runtime.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/world_state/runtime.rs",
+          "sha256": "f91c0fc3c2430bfdea5acb2610b50c62a8054f37cffb4211fffd1f9440a6cfac",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/api_keys.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/api_keys.rs",
+          "sha256": "7921807eea94fb22bd5bee022df6d2fcc16d34a7518ee220f92e9d4672cec342",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/api_keys/policy.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/api_keys/policy.rs",
+          "sha256": "4d495e682a27e61ee7ea5ec40e6742eb18346c3a8bee8583f56cb35179241bd1",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/api_keys/tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/api_keys/tests.rs",
+          "sha256": "4866d91b0bc8617a075465a461d7674e27541a4e5d26e2caaad3dab908c2c041",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/api_keys/tests/authority.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/api_keys/tests/authority.rs",
+          "sha256": "c6307a1c9d2f54720f00aafd5f09a3c65a522481434fb0736e0064f5ff866496",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/api_keys/tests/lifecycle.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/api_keys/tests/lifecycle.rs",
+          "sha256": "789347219ae5879ea45bbf851b91b3a49ff639cbce277862b995eea055d5df7e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/api_keys/tests/management.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/api_keys/tests/management.rs",
+          "sha256": "cf5614c31b5df78821abb396d65166526bdd8d64784744627eed1a60e3b2faff",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/api_keys/tests/support.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/api_keys/tests/support.rs",
+          "sha256": "96a71781aee002ae61bd79955f035c0fa717b377c397fad7c69381c1b5f42902",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/authority.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/authority.rs",
+          "sha256": "7e29a7ddd0ecac287c807e92101bcab24ca8c8974aab4b5595cbe38fd728e3cb",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/claims.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/claims.rs",
+          "sha256": "c97b1f0be5bbb8f78a8f64fd99b8b11a975a7f40466998e57fabdbe093e628fd",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/credential_capture.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/credential_capture.rs",
+          "sha256": "23665e408a2c8735a82275c58f492b607fc9cb30c681387e07bc4eebf1191755",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/middleware.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/middleware.rs",
+          "sha256": "1069bef5193d6876ea8fbc0661b853704a09f7a969f2fafac813475d9be9312e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/mod.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/mod.rs",
+          "sha256": "ca12ec2b2aaf93db12ec0b9dbade688f5f8af1de7900e91cbb7d4842b7845bdb",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/sidecar_guard.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/sidecar_guard.rs",
+          "sha256": "ccb4111bcd9dfae57b4d5750e1c4567589241f7cea63c17943135692734ab477",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/verifier/jwks_cache.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/verifier/jwks_cache.rs",
+          "sha256": "298064dd873e6387f5366803b476a16393d68f0088f3bc1cbc8d0e1808d7004a",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/verifier/mod.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/verifier/mod.rs",
+          "sha256": "5aadadfd15579f8dfbfc212ebeedb410a46cc67fb850c616434305aa19099de3",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/verifier/test_support.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/verifier/test_support.rs",
+          "sha256": "638dfd85bda4167ba7d0f1da7bf64843dc2a64f92ee57d107ff57ef716a59dd8",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "src/uar/security/verifier/tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/verifier/tests.rs",
+          "sha256": "f831bb94771dad7bfa596333b4f993e002c4c961b07c52031b9f4f35d88a5f29",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/a2a_thread_service.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/a2a_thread_service.rs",
+          "sha256": "16405cf23cd658d89be108eb38fc35c4e95f251d2af1d83786ae89ec2827f1ed",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/bauar_full_harness_cursor.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_full_harness_cursor.rs",
+          "sha256": "de354385c0f3ac88bf5fd095373d4c9186df09068310e95dacb69bc0535e6bc8",
+          "bindingUse": "review-baseline-only-runtime-scenario-hash-required"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/bauar_identity_boundary.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_identity_boundary.rs",
+          "sha256": "4ed982bf76ffc80625622f89e77ce4db63cc78bed107a22913f3c47d66fd18f3",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/bauar_identity_boundary/key_authority.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_identity_boundary/key_authority.rs",
+          "sha256": "38fc5f5a2521882bb410d13c340d26574e7beebdf3fe8e76bf55e6e6dc0644c4",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/bauar_identity_boundary/local_admission.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_identity_boundary/local_admission.rs",
+          "sha256": "983166f349dffebaf9e0fc086e1862c3c59ffb216a8beb1c309820bd30534802",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/bauar_identity_boundary/remote_jwks.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_identity_boundary/remote_jwks.rs",
+          "sha256": "fba40deae93b28254e4b5eb98c9d16834dfc73f12ca6ba052025e0863951c352",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/bauar_inline_revision.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_inline_revision.rs",
+          "sha256": "77d298fa456b2ece0ad6bdabee71545f2a045cfebce3553c21d70354c48ef84e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/bauar_native_admission_storage_fixture.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_native_admission_storage_fixture.rs",
+          "sha256": "6261b88e9ece9e73aac91b55bf866e5d5936e03c8e5cb0826d0224df3fb4c141",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/bauar_receipt_projection.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_receipt_projection.rs",
+          "sha256": "cf33d7811338d43300c6d64b42af38186619386635dbf0e4423728962ca8a689",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/bauar_resource_grants.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_resource_grants.rs",
+          "sha256": "dbbf3d35f9f0a299aa7dc364d379dff7aaa82a222c71c4ac35a00c40e2cd46ad",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/bauar_secret_projection.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_secret_projection.rs",
+          "sha256": "a4b3ec9761fddb35ccaa14946a8964bb6ce9512a3d30ad983a65d166bcf1ef86",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/bauar_skill_selection.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_skill_selection.rs",
+          "sha256": "7259b7f716f68bf90abc3bf9530fe8ca0a6e40796d7db60ce2bda5933f3a212a",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/bauar_stdio_boundary.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_stdio_boundary.rs",
+          "sha256": "9e7edefe5f2f30ec84e0e073e2be29257c4b7a31964d2c85fa53e869a4332dc2",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/context_history_integrity.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/context_history_integrity.rs",
+          "sha256": "05169738267805048dc38023dbd42e656d48fa6bcd6bda268e9ffe7ef6791975",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/credentials_api_integration_test.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/credentials_api_integration_test.rs",
+          "sha256": "124eb618b42f98960e9b08a94a00f754dd18870732c3c064592b40a9e258e69c",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/fixtures/bauar_mcp_stdio.mjs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/fixtures/bauar_mcp_stdio.mjs",
+          "sha256": "cf4564582ddd42b7756863ae9f623994004dca64874f7837d2d4a6c19f0ef704",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/kb_embedding_space.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/kb_embedding_space.rs",
+          "sha256": "da62d998b280f062aa0126062beca58f57bb0471bd4711b1fc082fadc41c5785",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/mcp_child_environment.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/mcp_child_environment.rs",
+          "sha256": "b69d649cabec540402c6cdb53976dce037e92ed0643d28d5ff8afda163996d21",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/mcp_projection.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/mcp_projection.rs",
+          "sha256": "a52026f9ffa2120f482dce0059594edb27934cb90c3e6ab679c0414b91c3ee69",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/model_path_resiliency.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/model_path_resiliency.rs",
+          "sha256": "813e9a9f569a73cf5d655c6c279c976fbff942a327f19e40cdd516ffd8f9de23",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/remote_mcp_run_grants.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/remote_mcp_run_grants.rs",
+          "sha256": "836a2288640d8d6b1c9980706b16b78564d9948ab6de3192c1a106b30c386161",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/run_retention/runs.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/run_retention/runs.rs",
+          "sha256": "0487259ebbbedbae4682a3bd5f12aa638fa6caaafbdd033041e657ef663ab4e4",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/run_retention/sessions.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/run_retention/sessions.rs",
+          "sha256": "6209da26199ab13fba81f03bb0dfb936dadfe41575846734d14eda07d46e7237",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/settings_persistence.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/settings_persistence.rs",
+          "sha256": "10de3191e2e2ff0e33468b75f9f7314be23b056685a888b64f37f5ee59e76717",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/sidecar_session_principal/isolation.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/sidecar_session_principal/isolation.rs",
+          "sha256": "cff00067d71c1e38e59f1eea41f965a158c4a517a8f71d728609d95ac37574d1",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/skill_activation_runtime.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/skill_activation_runtime.rs",
+          "sha256": "f3e99eeb5f7394db88fd886bea34a2fd1ce99223e9bf0ba6e4f50c39b72d255d",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/support/approval_events.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/support/approval_events.rs",
+          "sha256": "6202284e853c5d9bf031695841b6399f6af56bd15a29ea6310d35da087179331",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/support/bauar_identity_jwks.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/support/bauar_identity_jwks.rs",
+          "sha256": "8097ce5d1c43947b776ce431a2ba985a09a4b33b1fd07e9db436163927c37937",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/support/bauar_identity_peer.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/support/bauar_identity_peer.rs",
+          "sha256": "0bacaa617b09e65114792e2c2921514990ee71c48a0fe310727db04a1293b384",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/support/bauar_receipt_peer.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/support/bauar_receipt_peer.rs",
+          "sha256": "6f299836e4c6ffcbf1fe7c8e0681df6f70f3b572fd775e215f428453c80a6232",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/support/bauar_resource_peer.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/support/bauar_resource_peer.rs",
+          "sha256": "c5326d41d82ce9652286ca5f24b411cef62436226f717c0bd56e8ed50384a71b",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/support/bauar_secret_harness.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/support/bauar_secret_harness.rs",
+          "sha256": "f4ba448932721a141e1ee06769fea9daec645a6932b87fa9bdd56bebf3eabf66",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/support/bauar_secret_provider.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/support/bauar_secret_provider.rs",
+          "sha256": "525af8bdba51c8310f5756e30fa15f3cf059d8a066981435cf48eb82b27f24a6",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/support/principal_host.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/support/principal_host.rs",
+          "sha256": "16d13ac05323e7323c9f7f0ed2c94618f45003db4a668e3c813f0add9981ad79",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/support/sidecar_process.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/support/sidecar_process.rs",
+          "sha256": "335894aa5fe8ea49183002df77ba2f6dcb04c2df7b04fc037c845abb947d2dbe",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/test_a2a_grpc.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/test_a2a_grpc.rs",
+          "sha256": "8cfbb422ef7a148cc1922651a1ebabe5dda39fadad4d25b1917715ae0f42387d",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/test_chat_completion.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/test_chat_completion.rs",
+          "sha256": "177ce0b57aebd86cf6b5a36366fab818c7879127823e3bd249eb10d2368cd6c5",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/tool_admission_integration.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/tool_admission_integration.rs",
+          "sha256": "eacc995ced51b22f979c9c11252c778edc4268fff76bf252b11e898127171f96",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/tool_call_protocol.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/tool_call_protocol.rs",
+          "sha256": "197cca52e56b3f94a28b94b2671c95e99df64d5b9cd0a9aece31ba0076e9688e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "uar",
+          "relative": "tests/uar_integration.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/uar_integration.rs",
+          "sha256": "44742656610057e8dc1ea64ea4e58e15899d9f5f2b4fc164874def285a730245",
+          "bindingUse": "production-selected"
+        }
+      ]
+    },
+    {
+      "name": "boss",
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "base": "822ed9990bd7626bbf76b04eeae184739c0f0655",
+      "intakeCheckpoint": "bda3715df5425e323188f84c595978dbd4f2d1e5",
+      "candidateHead": "7a5bdb4b7c02e9f13875fc7f837815c03fe3dacd",
+      "inheritedPathCount": 43,
+      "paths": [
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-approval-client.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-approval-client.ts",
+          "sha256": "3253f8c5f7cbade71559b5031a550e094c7235bb7611265d0ac37bd794492295",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-native-admission-controls.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-native-admission-controls.ts",
+          "sha256": "7c6662b8f65029312cf522bafad4ecaf29890456ce93c729a8443fce6b9bad12",
+          "bindingUse": "review-baseline-only-runtime-scenario-hash-required"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-native-desktop-cases.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-native-desktop-cases.ts",
+          "sha256": "6937391c97960cce2181f631275e5b063e9ca62709ac5c0883ecfce06872e26f",
+          "bindingUse": "review-baseline-only-runtime-scenario-hash-required"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-native-host-cases.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-native-host-cases.ts",
+          "sha256": "f40a506ef8a79043bf8face9b361c48caccc664f7dd512912eb1256a2f7e5b0b",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-post-ack-cases.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-post-ack-cases.ts",
+          "sha256": "ff99b00fd725b599ef3463e8605f8a9ae66f3df4dc1ca4f1250e199656e57a17",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-post-ack-gate.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-post-ack-gate.ts",
+          "sha256": "a95080010ffb9f3338e39ff4bde267c871309b77d1226378d638c370070c75da",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-provider-negative-cases.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-provider-negative-cases.ts",
+          "sha256": "546f153b906e8e7cb2d141e8fd64c7f0c11f2089da48d2d160a79e109f28fe9f",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-secret-projection-events.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-secret-projection-events.ts",
+          "sha256": "0d68158975be327c5e8bee7548d1033f3d0195153b2162fc483737caac797956",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-secret-projection-history.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-secret-projection-history.ts",
+          "sha256": "a12bd988258334bb3b876ef1b3f3cbe1524211d2cd59a75675cd5a21126167c0",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-secret-projection-launch.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-secret-projection-launch.ts",
+          "sha256": "fb44dfab7fa98f655f85658924b79815caf08904d7dea794ffceace7f0cacab8",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-secret-projection-lifecycle.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-secret-projection-lifecycle.ts",
+          "sha256": "aa89f82c774e3ee5839b5d0b379a0f08ae5258ed4677a4a63dff9219f1016dd7",
+          "bindingUse": "review-baseline-only-runtime-scenario-hash-required"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-secret-projection-mcp-diagnostic.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-secret-projection-mcp-diagnostic.ts",
+          "sha256": "bf41dd56167c7229602d22b06a820a73e1f3d41a282e408076c9d98cfd1f8246",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-secret-projection-mcp.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-secret-projection-mcp.ts",
+          "sha256": "19717b019902e427939ce5afe07d1f483c0639520ee9d30ac55e1e8c6acae53d",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-secret-projection-provider.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-secret-projection-provider.ts",
+          "sha256": "dabd8216a0889e1f644a3a1bfa9a6c1e8900f9dcce75786b2db88b71dd4750b8",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-secret-projection-revision.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-secret-projection-revision.ts",
+          "sha256": "46b4ee1e10b51616b831cfc902b1aacd2b78c3255732558a0573d6d1d1f448cd",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-secret-projection-turn.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-secret-projection-turn.ts",
+          "sha256": "4a9f7b311dfb1a3ffbcdc5805fe63934f7a1dbb3b1468a52896a0e935f14c0bf",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/bauar-secret-projection.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-secret-projection.ts",
+          "sha256": "2a36cd62504dc235d8371ea6d76d05da2f10eb6b52dfa7c48b3959ea43af45ee",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "scripts/gates/uar-exact-tool-admission.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/uar-exact-tool-admission.ts",
+          "sha256": "a8644e7cc756088da0f01d42f8147e7f7de929eedc12307ee371a38957caf837",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/mcp/McpCatalogService.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/mcp/McpCatalogService.ts",
+          "sha256": "0ba88722902735f4334b479acd22a079d2a95ee54184e019ee14174a85b78d02",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/mcp/McpRuntimeService.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/mcp/McpRuntimeService.ts",
+          "sha256": "843f4bea1fcc0053eea07255791facc19f01cbe35132e7c5650e8695dee6a728",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/mcp/createMcpBridgeServer.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/mcp/createMcpBridgeServer.ts",
+          "sha256": "4f5a53804d8e8e6854e985b50c287232001d0c7fb8eabe92311108c7b8c2e430",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/mcp/types.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/mcp/types.ts",
+          "sha256": "3de64bb560736a60a729f42911c774acf4a58177a823a47ed565f3f9ae7e1d0b",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/agentMcpServers.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/agentMcpServers.ts",
+          "sha256": "8a38641eb9a57ce2fe38815c2268780513fce4e8dfb54719675b67bd91ce4a4d",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/UarAguiAdapter.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/UarAguiAdapter.ts",
+          "sha256": "d233bc2074337d8d84142c45232d4c41bf8d0a10c7a25a197832fc81ce0f178b",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/UarCatalogAdministrationAdapter.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/UarCatalogAdministrationAdapter.ts",
+          "sha256": "c2dbf92de831d3ec9571370ab93b4fa82049636e936fd457add2fddb01a15e40",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/UarHostMcpBridge.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/UarHostMcpBridge.ts",
+          "sha256": "f084d4c7801098183982df7ac455fe78243aaa365f9a9f517322ad17948fc9f9",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/UarHostToolAdmission.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/UarHostToolAdmission.ts",
+          "sha256": "a2be07be8aeef919b632215d0fbd7c452f9bbee97ee69ed38546515603a1e2d9",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/UarRuntimeConnection.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/UarRuntimeConnection.ts",
+          "sha256": "5b0e002e326761eb9ea59f71bbc072bb86a57b995f0dd5ff68fc791e0109df3e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/UarSidecarService.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/UarSidecarService.ts",
+          "sha256": "847283ac6633807249f5f42b03312a0209c969f0016ceb592157e37828d5aa0e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/UarToolApprovalController.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/UarToolApprovalController.ts",
+          "sha256": "74bec6dbd5b054cc7b1a5b5372393d1d51e8445e4b46b6f54c93739ddadf187c",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/toolAdmission/wire.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/toolAdmission/wire.ts",
+          "sha256": "4fabd2ccedfe8acc76b3abcd1ca00bc8271a884759228fc1d1c9e6194bbc147e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/uarApprovalLifecycle.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/uarApprovalLifecycle.ts",
+          "sha256": "0392afd1f308aafd972482a7e1ab653d859abf0df63cbfc95162cc4882d2b8ad",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/uarHostClaimRevalidation.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/uarHostClaimRevalidation.ts",
+          "sha256": "668e982718aba2adf250585a272226525c9047287e8f9175b2cb2b24a776333d",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/uarProjectedMcpTransport.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/uarProjectedMcpTransport.ts",
+          "sha256": "b1a6789dd2b31860b8589e40ae584974da8853b56cbf95b4cd0639b041d6d33a",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/uarSecretProjection.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/uarSecretProjection.ts",
+          "sha256": "26f7468574dc8e6d3162188607ebb0bb5ef622422aeebd30a7892b3399d15ffd",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/uarStartupDiagnostic.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/uarStartupDiagnostic.ts",
+          "sha256": "c8ecba9d88dc7bc9a7995c8656bb58d707df87f74b22202e19462be5afade7bb",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/main/ai/runtime/uar/uarToolNames.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/uarToolNames.ts",
+          "sha256": "d762396a1084904fe58d771403412abd448e8147b1d148a76196c6dd8e02025d",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "src/shared/types/prometheusIntegration.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/shared/types/prometheusIntegration.ts",
+          "sha256": "8f8ec9888df045f4af385c207c7894bddb7b7471f71b35f4d5f25dd6398617f7",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "tests/e2e/gates/bauarApprovalClientFixture.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/bauarApprovalClientFixture.ts",
+          "sha256": "3eca018f068e3f970aeca48876c16a36b0c3a85e4765771621bde731305a2081",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "tests/e2e/gates/bauarHostAdmissionDiagnostic.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/bauarHostAdmissionDiagnostic.ts",
+          "sha256": "aa40fa528f0fd1e9234011b95be1c22a562a142a94166f142870b493c8be6919",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "tests/e2e/gates/support/uarExperienceProvider.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/support/uarExperienceProvider.ts",
+          "sha256": "148ab03162fda398e4b54b0edd6964219205a71cdf918c5d523720010ed4a6d4",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "tests/e2e/gates/uarExperienceGate.test.ts",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/uarExperienceGate.test.ts",
+          "sha256": "46820ee01ea4a14918e142565201060ab19e4ec8d56df64bf3ef61fe0f1049e6",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "boss",
+          "relative": "build/integration-artifacts.json",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/build/integration-artifacts.json",
+          "sha256": "8e60461cb117be208385725fcc963f8443d0e730f79fdf16461a5f593370690d",
+          "bindingUse": "production-selected"
+        }
+      ]
+    },
+    {
+      "name": "bossfang",
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang",
+      "base": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+      "intakeCheckpoint": "1d518936cb15b79d30bdd315510ff925613a0f4d",
+      "candidateHead": "1d518936cb15b79d30bdd315510ff925613a0f4d",
+      "inheritedPathCount": 72,
+      "paths": [
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/Cargo.toml",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/Cargo.toml",
+          "sha256": "5e8df57e1cc76fb967a27b1d2a3648371fbf4d907119c63d4de91bb6dec41ad0",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/channel_observers/control.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/channel_observers/control.rs",
+          "sha256": "dd565c196bc32908cca82391e73a4b7554f36391b12b9f013d17ff7527612096",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/lib.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/lib.rs",
+          "sha256": "62cba813e8bb6404136b4faaad8f40dae30055e2b0e6e8de2d1a1879523bd9ef",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/mcp_attribution.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/mcp_attribution.rs",
+          "sha256": "f0fdf67dfd6f182031cfb4b680bca1313b6446420be6781f7bc7f2a9e579510e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/middleware.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/middleware.rs",
+          "sha256": "c667697651582b64e32175464b05dd39e96c7c8e5695f977052859fdef84e083",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/oauth.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/oauth.rs",
+          "sha256": "311f44e8b5c370624ac32fa56693e6fe2e2fc4a6098a0ed11d2e2c02d289ecac",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/channels.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/channels.rs",
+          "sha256": "fb26536faf58a1c5b228fe68832e3eaa00f8b9768edeb8232f9de072ad361765",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/network.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/network.rs",
+          "sha256": "cef991630f21ce6d1ca9a2fd7833c177b8efa22f1e2d0b51bd278c1b7f5fd156",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/sidecar_toml.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/sidecar_toml.rs",
+          "sha256": "892292d07005fe0a78a76fb9143cca4690fcb9b91806304c213913fadb975a55",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/task_queue.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/task_queue.rs",
+          "sha256": "a301ab34939d99e98198e5c43c08ff2499d61e729021a3f8d4dde773d1107e7f",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/uar.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/uar.rs",
+          "sha256": "1302acf0fb8c45272a444133801b1f09929f1f1d3fec907564261d70adf0fc33",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/uar/delegated_tasks.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/uar/delegated_tasks.rs",
+          "sha256": "a37225c1c0ec8b50ba9d06ba27ca68c48bc75f66ea2b11c3e469429f868b6436",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/uar/delegated_view.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/uar/delegated_view.rs",
+          "sha256": "db71c4a71479069e30ae2496494ba228f00376f39393878238acc49cfa6bbd59",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/uar/delegated_view_tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/uar/delegated_view_tests.rs",
+          "sha256": "65c1d5128f24bbb7a4c8acd323ce04633a13aa5a3eef7ff451f3fb8651b681f0",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/uar_delegation.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/uar_delegation.rs",
+          "sha256": "5f7a57b26e11e7b13924edd95864043b258bff1bbaaf5efd9e85ac31cea69f04",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/uar_delegation/connections.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/uar_delegation/connections.rs",
+          "sha256": "3be7097aa85335e856b624d8a6271200b013557f44b5791f7561009d24dbb3c9",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/uar_delegation/diagnostic.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/uar_delegation/diagnostic.rs",
+          "sha256": "2211d9c9913e492ce8b3f15ad7d52863dc346fd874f5627f260ada334a176ff2",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/uar_delegation/job_mapping.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/uar_delegation/job_mapping.rs",
+          "sha256": "4a817a8874a2f2241f169fe15a74e197f402f327738aea89bc82d1ecda85a087",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/uar_delegation/observation.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/uar_delegation/observation.rs",
+          "sha256": "a004240d7e7aa5d4088a47850f478289caa8e7ec6c610ad0c1d941a2a2ebb51c",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/uar_delegation/schema.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/uar_delegation/schema.rs",
+          "sha256": "aa09fca598e253d11a0449203be3e62745d532a0a4c30fbeefa2f644efdce3f2",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/routes/uar_delegation/storage.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/uar_delegation/storage.rs",
+          "sha256": "3a8315eae672d635b0ea1f45529d70e47cf4edef5ffa9954b1116b51731d5e3b",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/src/server.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/server.rs",
+          "sha256": "cc910d166979671657ff3c0592e14ef7db59e657a4659aaeb3bdff0fadaeb372",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/tests/bauar_harness_host.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/tests/bauar_harness_host.rs",
+          "sha256": "16cb6df5b9f9924d3fc6ac7046029145b87652681809f9e85ff5ffbe1f184d1d",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-api/tests/bauar_mcp_identity.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/tests/bauar_mcp_identity.rs",
+          "sha256": "58cd94344f4809ace97654df422ce6821577377f2b84b388d7673583c871a73a",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-channels/src/bridge.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-channels/src/bridge.rs",
+          "sha256": "ef41822f9cd0f7f026beedb10065ad94b973e112af4202e0bc7be462abc77895",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/Cargo.toml",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/Cargo.toml",
+          "sha256": "17028deeeb59c65642652704ce203521eeb681e519847b1bdd9f822294090ef9",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel/ephemeral_spawn.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel/ephemeral_spawn.rs",
+          "sha256": "f43f23cd3d5fd11b7d0fbf850614e793c01a561c9533f743e1ac057a54be0346",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel/handles/task_queue.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel/handles/task_queue.rs",
+          "sha256": "c8b7d96a5478a54ffa3e4b8715c67ed42e9daa835d4c0a892b4444ae28bd3845",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel/messaging.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel/messaging.rs",
+          "sha256": "03fb46db6d89904c57d3115348ca06bbfb38a1317ff78b0de274119b1b86b72f",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel/mod.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel/mod.rs",
+          "sha256": "7a5f65d6bae203eec642e29cbf5ad83d58c78893093854402260d276d2ccb572",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel/triggers_and_workflow.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel/triggers_and_workflow.rs",
+          "sha256": "ccfe4d2a8778ebdb813e44e46e920c272327632309123d286a85fd0331dd5053",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
+          "sha256": "0bb62e66b555dd934fcaa20004a6a5100e715ac59cfa6e18cad9e069cd581922",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel/uar_harness/admission_tests.rs",
+          "sha256": "747e2424d2c6247b67aee42f176508983adca0fcc608bbe9262fca44212a5db8",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel/uar_harness/lifecycle.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel/uar_harness/lifecycle.rs",
+          "sha256": "23fc0312d05e44e1d3e643e47436dc33d48cfdda1ba496061b6cdbddf7685f64",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel/uar_harness/lifecycle_tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel/uar_harness/lifecycle_tests.rs",
+          "sha256": "a584765c209b26a8c049369185f1b4bef852c7723418083df79600c83248e95d",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel/uar_harness/mapping.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel/uar_harness/mapping.rs",
+          "sha256": "7d510ffb684c79e8f67e973287e373ccbeaa753f6129f31294f33f35fc3f6bc1",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel/uar_harness/mapping_tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel/uar_harness/mapping_tests.rs",
+          "sha256": "85e8c6ea2f09325c384bb21fed9fa333d931530a88022639983f3c6427f102d2",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel/uar_harness/mod.rs",
+          "sha256": "35c412f6be557983452e4e1af06f36bd10e594dcea7e9333575d29928ce33904",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel/uar_harness/observation.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel/uar_harness/observation.rs",
+          "sha256": "10673b4eac85f8c75a2f891bb30f9705cc0f57089c700b15f7f40906467854b5",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/src/kernel_api.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/src/kernel_api.rs",
+          "sha256": "4848f9eb7ee28a4756a5da4d5d825e1a671ea95a95c5aaf95eac0ee76cdf7783",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-kernel/tests/bauar_harness_delegation.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-kernel/tests/bauar_harness_delegation.rs",
+          "sha256": "99b4ed2c0c43e3f02828b2631f5373f588c8f11c7153cb015c34362f307336dd",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-llm-drivers/src/drivers/uar_run/approval.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/approval.rs",
+          "sha256": "d9970cf53ff44e97e8c81d2bd8e5f55ea9b517d74afd5eb236e217994afb494b",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-llm-drivers/src/drivers/uar_run/canonical.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/canonical.rs",
+          "sha256": "d5a56d76cf4d7a23ba18425cfa8f743db4309ef279f919b42b533265dc0ff17e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+          "sha256": "6c77fd436d484986cc51e42ad8ff14e099abc493d363b49b4296066687ad5eb5",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-llm-drivers/src/drivers/uar_run/observation.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/observation.rs",
+          "sha256": "c4f724cf1dbc7509343c687b88fbddbfa90b2fe0ac2a258d98fab22a512fe418",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-llm-drivers/src/drivers/uar_run/presentation.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/presentation.rs",
+          "sha256": "c04f6b31bb9f5cb269edcc8d1bc2cb70216d72da59580b6eff8cd1fcd8f272a0",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-llm-drivers/src/drivers/uar_run/presentation_tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/presentation_tests.rs",
+          "sha256": "b9129b2748db1b97d2fe0f80a456bcd986169691bc2bce7038907f5aecc5e3b6",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-llm-drivers/src/drivers/uar_run/retained.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/retained.rs",
+          "sha256": "069ce86d115fc6b6e4ba03839711208443173668ab49587d1f6ea4ff55a5fe6a",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-llm-drivers/src/drivers/uar_run/selection.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/selection.rs",
+          "sha256": "30c950a9594c16362c45e242ba3584a3e2aef58f919b0839ca4e06ba2aa9eb34",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-llm-drivers/src/drivers/uar_run/wire.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/wire.rs",
+          "sha256": "32caef2cf299f2f086dd46bf122c8ddb49c6eef9c72c21bb358eef24db95a568",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-memory/src/lib.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-memory/src/lib.rs",
+          "sha256": "11dcd40df8fa588b580b6a9ebdaab8f76fe66828cb226936760ce8a7f79512fd",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-memory/src/substrate.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-memory/src/substrate.rs",
+          "sha256": "bc51001773870b91881686c27f7a3880ac64011fdc60ddfee2cbc7d67a04bfd8",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-memory/src/substrate/task_dispatch.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-memory/src/substrate/task_dispatch.rs",
+          "sha256": "2e0af44e725bb805df5b3891dd98b9682f1f56d2fe866d3aa696360a4d9c25f4",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-memory/src/substrate/task_dispatch_tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-memory/src/substrate/task_dispatch_tests.rs",
+          "sha256": "562bfe445f4fec214ff2f7ca847497387067b7cc4d9362f40d3e0e9d26a6339e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-runtime/src/a2a.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-runtime/src/a2a.rs",
+          "sha256": "92aff70118ad30093e410b5532d78f4f896163de673cb18877ae3c7578ab3f2e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-runtime/src/a2a/uar_delegation_store.rs",
+          "sha256": "ea7d8c41e4b902dfcd5c1f9c84b40671316709d6bbaf69d6cdebaa39dde651f6",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-runtime/src/a2a/uar_delegation_store_tests.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-runtime/src/a2a/uar_delegation_store_tests.rs",
+          "sha256": "734a8b789146c3a442da92d09e5b4c71662fc290514820265e5f66d7f4cb3bf3",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-storage/src/channel_actions.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-storage/src/channel_actions.rs",
+          "sha256": "4a928037af4b2fa051c5b08fa5e2616f313027b74b72b6c0222cddbf29647a31",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-storage/src/channel_actions/surreal_impl/observers.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-storage/src/channel_actions/surreal_impl/observers.rs",
+          "sha256": "680dc379603e97bcd9ff77b6587ec95172fa9fcc158376404d1f59c4ec2fb36d",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-storage/src/channel_routes.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-storage/src/channel_routes.rs",
+          "sha256": "bb853ace2079e7cfd805143b718b271103aa3e502eec261cce25a4e0f8acc2ee",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-testing/Cargo.toml",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-testing/Cargo.toml",
+          "sha256": "3e35326228bca497fee85ab5939662d3aa2dc9ee03ee0e1296c2c108db9e12c8",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-testing/src/test_app.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-testing/src/test_app.rs",
+          "sha256": "b0562170b3c3dec560b10f21d3004b356b0b162bacd4d00045b7a7dca94732b6",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-types/src/uar_run.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-types/src/uar_run.rs",
+          "sha256": "e01937663ffaadf088ec041642312a9ea325b2b24afe05e5f0a5558a93792878",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "scripts/integration/afc-c05-gate.mjs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/afc-c05-gate.mjs",
+          "sha256": "5a4133e5e3094fad85813705d08b5dc0695fa777d02ce322438993fe77b9708e",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "scripts/integration/bauar-harness-gate.mjs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-gate.mjs",
+          "sha256": "32db682d3fdfec4daf6c36b65276522066fe33e3e35c342782218c796e2ae047",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "scripts/integration/bauar-harness-kernel-stage.mjs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-kernel-stage.mjs",
+          "sha256": "94f1c848d75bc2eaa880502ec03cb6b3abb2c1d0a73b2a00ada38ee186c30e38",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "scripts/integration/bauar-harness-native.mjs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-native.mjs",
+          "sha256": "cad2ad9307fb5856907a9fa6faeb5de98e0a317fd4a5b24ffdeb8995bcdcc137",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "scripts/integration/bauar-harness-peer.mjs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-peer.mjs",
+          "sha256": "3d6c21811fec39ef25e939a9d4b80a1b44eb34775b227b37e3c53ae5d476d201",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "scripts/integration/bauar-harness-runtime.mjs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-runtime.mjs",
+          "sha256": "2f4faba41b92de2728cd451b61023b55a8e554086d4b09cc1e460214f505f9cb",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "scripts/integration/bauar-postlint-gate.mjs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-postlint-gate.mjs",
+          "sha256": "07a011cd12d7f71e0a55a1bc8848a48ffdbb0aaae5bcbb96633fa6275099f8fe",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-llm-drivers/src/drivers/uar.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar.rs",
+          "sha256": "2901c1bb5525f8dd38668c018f8a9356eb9a9e12c394d245c6c756d5dfaa5bfe",
+          "bindingUse": "production-selected"
+        },
+        {
+          "repo": "bossfang",
+          "relative": "crates/librefang-llm-drivers/src/drivers/uar_run/http.rs",
+          "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/http.rs",
+          "sha256": "61ca787f5471ac736081d0c325c5306a9b0594968c8c6b0a3ee681d284903b4e",
+          "bindingUse": "production-selected"
+        }
+      ]
+    }
+  ],
+  "additions": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/core/paths/constants.ts",
+      "sha256": "538f88ca47220a5d1f157a3d71637d40e217a148c3e1a867cdc5b780b97fcb96"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/core/preboot/userDataLocation.ts",
+      "sha256": "ee296097de584e64bd14aefe8fa4bf191582c97ba56973a3037dc1f6c704f03f"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/core/preboot/README.md",
+      "sha256": "46caa3eee97fdbafa42e77f311b49f8697b5f2fc0e8b5e9ae742478bae16e078"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/prepare-local-uar-payload.cjs",
+      "sha256": "c73da697be62d16886cbf176c38c35dbb7d05817f9290880d6f84e2b20a24da9"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/local-uar-payload.cjs",
+      "sha256": "6d6d06d41340c23ed26653b189bb1a6918395186ae60b0148e05bb4c59a13a13"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/uar-payload-integrity.cjs",
+      "sha256": "eeaed03a7321f8d003500580394ab407f90a8b0bd93064efab919bad81bab456"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/validate-release-package.cjs",
+      "sha256": "8986a575ab684296eddba6fb6079c077fb03b0baa38cc4e3061e3547133f7e20"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/build/local-uar-source.json",
+      "sha256": "2ea83779eb80253745be267b2de3bdd8cbf1a46ca0fd69043cae48afad95d92a"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/local-release-acceptance.mjs",
+      "sha256": "52488bad56b1eba67e9513e15313b38917db5faabdbafeba940d503713d190e6"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/config.schema.json",
+      "sha256": "7126efc947d26f95d3bb0cf91f490a5c68d510bf184377eed5677d75961058d4"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/receipt.schema.json",
+      "sha256": "fe231173f7d8be269f969d424e2aa9f7e8f8c019d9c530fc73ea6b56fd6c984b"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/records.mjs",
+      "sha256": "68621714661d8c7923b05ef3c021bc3998b4ca03b2c4fde4dbeaccad32c9dbd1"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/inputs.mjs",
+      "sha256": "59e4545bcc612906871b6e759fcc2d2b2f516da52504412376bbaf8f6c9c4de6"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/environment.mjs",
+      "sha256": "2e869ad195f64b66a3fb6f3d36a91bcc0f0774596576b41cb03ee4e76cf5bda5"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/receipts.mjs",
+      "sha256": "787b037ef00628b1176638746bdaf5835f5cde125e0655eae7ac72bdfb66eff2"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/adapters.mjs",
+      "sha256": "0758b78938402e246488e3c6a4ffd65be553a0f3590eae41f32f9e34bc7900ff"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/stages.mjs",
+      "sha256": "9dc346c3d6455eda196e549b753a7a2a03001a46ee3129e60ca6e752089b8ab2"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/processes.mjs",
+      "sha256": "9db8c0af6ae9182b0f62c6a1efe889b1ff71f3f0d4c3b27d7b5e3e856b20e179"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/package.json",
+      "sha256": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/pnpm-lock.yaml",
+      "sha256": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/Cargo.toml",
+      "sha256": "b5528e78f3f0c3fab4ada2b1d462f467b0ebe68fba9f4184db37468f1882760e"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/Cargo.lock",
+      "sha256": "e9a544c54d5a5d4e1012bf7339793e31e7e435ef895faf965ece3e6542fda70a"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/rust-toolchain.toml",
+      "sha256": "112489be515805daeca1062a9beebc301193ae772af174dbd14f5deae2d3c50a"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/.cargo/config.toml",
+      "sha256": "3b3ea061053233a975cb5ea950e030e0ca57a6e48e3b4db85e7e58c46b6c6538"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/Cargo.lock",
+      "sha256": "1035e0befe1cf67eeb229f570c6308548914408407c65b6644cfe3d5278d086b"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/rust-toolchain.toml",
+      "sha256": "d5a8793f42828a223749a6f50df95db82d3f237307e80414314d60f89faf5414"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/integration/live/stub_llm.rs",
+      "sha256": "de9b969b595cb2d902f4710642417669833f002eccf44230771a74a92bcfe69b"
+    }
+  ],
+  "futureScenarioSources": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-native-admission-controls.ts",
+      "status": "runtime-seal-after-readiness",
+      "baseline": {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-native-admission-controls.ts",
+        "sha256": "7c6662b8f65029312cf522bafad4ecaf29890456ce93c729a8443fce6b9bad12"
+      }
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-native-desktop-cases.ts",
+      "status": "runtime-seal-after-readiness",
+      "baseline": {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-native-desktop-cases.ts",
+        "sha256": "6937391c97960cce2181f631275e5b063e9ca62709ac5c0883ecfce06872e26f"
+      }
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-secret-projection-lifecycle.ts",
+      "status": "runtime-seal-after-readiness",
+      "baseline": {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-secret-projection-lifecycle.ts",
+        "sha256": "aa89f82c774e3ee5839b5d0b379a0f08ae5258ed4677a4a63dff9219f1016dd7"
+      }
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/playwright.config.ts",
+      "status": "runtime-seal-after-readiness"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/bauarPackagedAcceptance.test.ts",
+      "status": "runtime-seal-after-readiness"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/support/bauarPackagedLaunch.ts",
+      "status": "runtime-seal-after-readiness"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_full_harness_cursor.rs",
+      "status": "runtime-seal-after-readiness",
+      "baseline": {
+        "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_full_harness_cursor.rs",
+        "sha256": "de354385c0f3ac88bf5fd095373d4c9186df09068310e95dacb69bc0535e6bc8"
+      }
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/scenarios/evidence-controls.mjs",
+      "status": "runtime-seal-after-readiness"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/scenarios/package-controls.mjs",
+      "status": "runtime-seal-after-readiness"
+    }
+  ],
+  "selfAndConfig": {
+    "paths": [
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/candidate-inputs.json",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/review-paths.json"
+    ],
+    "binding": "exact hashes in production-recorded-01.json; no recursive self digest"
+  },
+  "formatScope": {
+    "status": "pending-after-complete-source-readiness",
+    "paths": [
+      "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/core/paths/constants.ts",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/core/preboot/userDataLocation.ts",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/core/preboot/README.md",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/local-release-acceptance.mjs",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/config.schema.json",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/receipt.schema.json",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/records.mjs",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/inputs.mjs",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/environment.mjs",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/receipts.mjs",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/adapters.mjs",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/stages.mjs",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/processes.mjs",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-native-admission-controls.ts",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-native-desktop-cases.ts",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-boss/scripts/gates/bauar-secret-projection-lifecycle.ts",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/playwright.config.ts",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/bauarPackagedAcceptance.test.ts",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-boss/tests/e2e/gates/support/bauarPackagedLaunch.ts",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_full_harness_cursor.rs",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/scenarios/evidence-controls.mjs",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/scenarios/package-controls.mjs"
+    ],
+    "boss": {
+      "checker": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.bin/oxfmt",
+      "mode": "--check literal selected files; actual availability and compatible file types require final evidence"
+    },
+    "phase": {
+      "checker": "existing owner formatter if available",
+      "status": "availability-unverified; no installation authorized"
+    },
+    "rust": {
+      "paths": [
+        "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_full_harness_cursor.rs"
+      ],
+      "mode": "read-only rustfmt --check --config skip_children=true exact changed eligible file only"
+    },
+    "globalDebt": "unchanged; do not format inherited241 merely because reviewed"
+  },
+  "limitations": {
+    "bossfangBase": "bac04cb6b2c144520e28234ad77f00d4cf0f5b23",
+    "inheritedCommits": 279,
+    "baselineIntegration": "uncertified",
+    "reviewExecuted": false,
+    "independentModelIdentity": "unverified",
+    "excludedF6Accessed": false
+  },
+  "pairedBoundaries": [
+    {
+      "id": "host-tool-admission",
+      "owners": [
+        "boss",
+        "uar"
+      ],
+      "scope": "Boss UarHostToolAdmission / wire and UAR tool_admission/http lifecycle"
+    },
+    {
+      "id": "full-harness",
+      "owners": [
+        "bossfang",
+        "uar"
+      ],
+      "scope": "Bossfang uar_run client / delegated caller and UAR full_harness route"
+    },
+    {
+      "id": "private-profile",
+      "owners": [
+        "boss"
+      ],
+      "scope": "early constants and userDataLocation with registry-derived UAR storage"
+    }
+  ]
+}

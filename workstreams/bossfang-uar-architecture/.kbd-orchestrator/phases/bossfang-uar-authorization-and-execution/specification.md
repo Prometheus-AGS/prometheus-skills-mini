@@ -1,5 +1,7 @@
 # Specification handover: Bossfang–UAR authorization and execution
 
+> Execute amendment: [operator decisions and revised selected scope](execute-scope-amendment.md) supersede unresolved recovery, remote integration and cutover statements below.
+
 Date: 2026-10-06  
 Stage: Spec complete — awaiting explicit approval for Plan; no product implementation
 Authorization: user “Approved for handover” authorized Spec only. Plan requires a new approval.

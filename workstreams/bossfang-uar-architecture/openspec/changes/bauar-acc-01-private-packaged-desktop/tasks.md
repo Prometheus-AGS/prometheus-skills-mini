@@ -4,12 +4,12 @@ scope: the Boss paths enumerated in proposal.md, including the three existing ac
 
 ## 1. Private packaged production
 
-- [ ] 1.1 Implement the optional early private-root contract in constants.ts/userDataLocation.ts and document it in the owned existing preboot README; completion means all selected paths bind before boot-config/logger/path freeze with absent selection preserving branches. This is source completion only; real acceptance follows the full parent production barrier.
-- [ ] 1.2 After 01/1.1, 02/1.1–1.2 and 03/1.1–1.2 complete, retain the old candidate, build/package a newly source-bound Boss using existing locked/pinned hooks and unchanged UAR payload; verify the actual local build/package receipt and payload digests without executing runtime scenarios.
+- [x] 1.1 Implement the optional early private-root contract in constants.ts/userDataLocation.ts and document it in the owned existing preboot README; completion means all selected paths bind before boot-config/logger/path freeze with absent selection preserving branches. This is source completion only; real acceptance follows the full parent production barrier.
+- [x] 1.2 After 01/1.1, 02/1.1–1.2 and 03/1.1–1.2 complete, retain the old candidate, build/package a newly source-bound Boss using existing locked/pinned hooks and unchanged UAR payload; verify the actual local build/package receipt and payload digests without executing runtime scenarios.
 
 ## 2. Packaged integration scenarios
 
-- [ ] 2.1 Only after parent production and 01/1.2 finish, adapt the installed Playwright packaged gate/launch helper and scripts/gates/bauar-native-admission-controls.ts, scripts/gates/bauar-native-desktop-cases.ts and scripts/gates/bauar-secret-projection-lifecycle.ts for an explicit bundled main-directory input (with unchanged development defaults), strict approvals, eager/deferred effects, native fault/restart/projection cases and safe output; verify completion by delivered D01–D04 executable cases mapped to the frozen inventory. This task records scenario source readiness only; actual observable/negative results belong to consolidated 03/2.1 and cannot be claimed here.
+- [x] 2.1 Only after parent production and 01/1.2 finish, adapt the installed Playwright packaged gate/launch helper and scripts/gates/bauar-native-admission-controls.ts, scripts/gates/bauar-native-desktop-cases.ts and scripts/gates/bauar-secret-projection-lifecycle.ts for an explicit bundled main-directory input (with unchanged development defaults), strict approvals, eager/deferred effects, native fault/restart/projection cases and safe output; verify completion by delivered D01–D04 executable cases mapped to the frozen inventory. This task records scenario source readiness only; actual observable/negative results belong to consolidated 03/2.1 and cannot be claimed here.
 
 ## Workflow follow-up
 

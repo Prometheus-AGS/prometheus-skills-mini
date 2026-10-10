@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "2",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 425,
+  "derivedRevision": 425,
+  "frontier": {
+    "69cddcdf-6458-4402-82b3-dcf30e2694b5": 425
+  },
+  "conflictCount": 0,
+  "phase": "bossfang-uar-authorization-and-execution",
+  "phaseId": "bossfang-uar-authorization-and-execution",
+  "parentPhase": null,
+  "last_updated": "2026-10-09T14:35:32.490436Z",
+  "last_updated_by": "kbd-runtime",
+  "changes_total": 4,
+  "changes_completed": 4,
+  "implementation_total": 4,
+  "implementation_completed": 4,
+  "completion": {
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 4,
+      "total": 4,
+      "status": "COMPLETE"
+    },
+    "evidence": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "certification": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "publication": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    }
+  },
+  "completionScopes": {
+    "completion": "phase",
+    "runCompletion": "run"
+  },
+  "runCompletion": {
+    "scope": "run",
+    "runId": "project-20261006T094115Z",
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 7,
+      "total": 7,
+      "status": "COMPLETE"
+    },
+    "evidence": {
+      "status": "COMPLETE",
+      "summary": "Selected production-path acceptance, source binding, package/platform limitations and operator-deferred verification disposition documented. This is a completed evidence inventory; it does not say all acceptance passed.",
+      "blockers": []
+    },
+    "certification": {
+      "status": "SKIPPED",
+      "summary": "Operator waives full certification for this implementation phase and defers remaining broad tests, cumulative independent review and global formatting. Existing selected passes retained. Shipping/C05 and remote deployment certification unclaimed. Certification work deferred to later release acceptance.",
+      "blockers": []
+    },
+    "publication": {
+      "status": "SKIPPED",
+      "summary": "No product publication/deployment/merge is authorized by isolated phase closure; deliverable is local implementation plus reviewable handoff.",
+      "blockers": []
+    }
+  },
+  "changes": [
+    {
+      "id": "bauar-01-identity-boundaries",
+      "title": "bauar-01-identity-boundaries",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 7,
+      "tasks_done": 7,
+      "last_task_completed": "2.3 After the complete shared delivery, execute the 01 real-router/key/verifier matrix and required repository checks once. Record source/configuration, actual outcomes and security limitations; rerun only failed gates after fixes. This task cannot complete from static or unit-only evidence.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "bauar-02-execution-authorization",
+      "title": "bauar-02-execution-authorization",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 8,
+      "tasks_done": 8,
+      "last_task_completed": "3.2 Run required repository build/checks at this completed boundary, record source/payload and platform limits, and reconcile existing shipping ownership. Verify no unrelated parent delivery gate is marked complete.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "bauar-03-harness-delegation",
+      "title": "bauar-03-harness-delegation",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 9,
+      "tasks_done": 9,
+      "last_task_completed": "3.2 Run required repository build/integration checks once for this boundary and record accepted checkpoint/platform limitations. Verify no existing UAR C05 or shipping gate is closed without its own owner/acceptance.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "bauar-04-resource-credential-lifecycle",
+      "title": "bauar-04-resource-credential-lifecycle",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 10,
+      "tasks_done": 10,
+      "last_task_completed": "3.2 Execute required platform/build checks at the agreed completed boundary and record deployment-specific limitations. Verify the full phase remains incomplete while remote receiver/custody acceptance is blocked; do not substitute static inspection, old binaries or parent task checkmarks.",
+      "next_task_pending": null,
+      "blockers": []
+    }
+  ],
+  "children": {
+    "desktop-mcp-projection-acceptance": {
+      "status": "DONE",
+      "changes_completed": 1,
+      "changes_total": 1,
+      "implementation_completed": 1,
+      "implementation_total": 1,
+      "certification_status": "NOT_TRACKED",
+      "handoff": null,
+      "completed_at": null
+    },
+    "mini-pack-qa-remediation": {
+      "status": "DONE",
+      "changes_completed": 0,
+      "changes_total": 0,
+      "implementation_completed": 0,
+      "implementation_total": 0,
+      "certification_status": "NOT_TRACKED",
+      "handoff": null,
+      "completed_at": null
+    }
+  },
+  "migrationStatus": null
+}

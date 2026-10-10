@@ -1,5 +1,7 @@
 # Implementation plan: Bossfang–UAR authorization and execution
 
+> Execute amendment: [operator decisions and revised selected scope](execute-scope-amendment.md) supersede unresolved recovery, remote integration and cutover statements below.
+
 Date: 2026-10-06  
 Stage: Plan complete — awaiting explicit approval for Execute.  
 Canonical project: 7041aa63-d951-4b19-a59c-b963d65b3b83  
@@ -234,3 +236,7 @@ Plan is complete as a conditional coordinating plan; Execute requires explicit h
 Independent review: whole-plan PASS; a subsequent call-site revision review found one critical task-mapping omission, two warnings and one suggestion; the first correction confirmation returned PASS with no findings. All dispositions and exact packets are retained. [Final findings](review/plan/findings.json), [corrections](review/plan/correction-disposition.md), [review receipt](review/plan/final-disposition.json). Exact producer identity remains unavailable, so cross-model separation is unverified. The language screens raised only low length flags; no mandatory correction was reported. One vendor response failed normalization and was rejected rather than accepted as a review.
 
 The shell initially selected Node 26 for orchestration. The already-installed Node 24 LTS was selected for final artifact checks and subsequent review transport; no runtime was installed or configured. [Adaptation receipt](evidence/plan-runtime-adaptation.json). No product code, configuration, dependency or service changes, product builds, acceptance runs, publication or parent-gate closure occurred. Repository child worktrees and unresolved ownership/receiver/custody/recovery inputs remain prerequisites, not completed implementation. The original shipping KBD remains outside this workstream. Local documentation-only check-in satisfies A-17; it authorizes no Execute work.
+
+### Current task assignment correction — 2026-10-08T23:39:17.118Z
+
+Operator removed F6. Assignment rows02/5 and02/6 are withdrawn; no worker route or diagnostic is authorized for them. Row02/7 retains gpt-6-astra/high and exact approval/claim/cancellation scope only. Existing source ownership and phase gates remain.

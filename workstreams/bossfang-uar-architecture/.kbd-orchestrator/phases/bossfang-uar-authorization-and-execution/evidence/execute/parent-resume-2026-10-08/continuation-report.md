@@ -1,0 +1,37 @@
+# Parent Execute continuation — 2026-10-08
+
+The desktop child has exited with operator approval. Parent Execute continues in the isolated Bossfang–UAR workstream. This report does not advance the parent to Reflect or certify a release.
+
+## Completed in this continuation
+
+- **Full desktop aggregate G2 passed**, actual process exit 0 at 19:47:16 UTC. [Bound acceptance](G2-14-acceptance.json), [command receipt](G2-14-command-receipt.json), [finite observations](G2-14-finite-evidence.json).
+- Six eager/deferred success, MCP isError and error profiles each produced one target effect; deferred discovery and target execution each required their exact decision. Five negative provider/receiver controls passed with confirmed cleanup.
+- Nine event cases retained projected human content, persisted events and control correlation. Actual consumers received ten observed log records and eighteen spans without the synthetic credential canary. This is an observed span boundary, not persisted-trace certification.
+- Nine native acceptance cases passed. On the same instrumented artifact, positive calibration reached the checkpoint and entered the body once; cancellation after acknowledgment reached the checkpoint, entered the body zero times and retained an unknown outcome without replay. Both instrumented cases confirmed cleanup.
+- Parent change02/task4 was completed using the existing actual duplicate-claim and lost-response evidence: exactly one effect under duplicate consumption, and observed effect plus replay refusal after a lost response. [Canonical task receipt](claim-task4-completion.json).
+- Parent02/task3 caller migration is complete. The response schema/controller and named positive helpers retain exact originating IDs; the planned administrative forwarding surface proved to be capability metadata, so no unused forwarding API was added. [Disposition](approval-claim-disposition.md), [canonical receipt](approval-task3-completion.json).
+- Parent04/task9 common-boundary runtime acceptance is complete at the explicitly recorded boundaries. Retained grant, stdio and inbound matrices plus G2-14 cover the amended selected scope. [Disposition](resource-check-disposition.md), [applicability](resource-applicability.json), [canonical receipt](resource-task9-completion.json). The canonical task title retains its original receiver-specific wording; the operator-approved scope amendment and backend task contract control the actual selected scope. This does not certify an unselected receiver.
+- Canonical revision301: change01 6/7, change02 4/8, change03 9/9 COMPLETE, change04 9/10. Parent implementation1/4 and run implementation2/5; six parent tasks remain. Harness delegation closed through the supported helper; the parent phase remains incomplete.
+
+## Exact source and environment boundaries
+
+[Before-launch binding](prelaunch-after-restore.json) and [after-run binding](post-gate-binding.json) match all239 explicitly allowed source records and28 artifact/resource checks. Both excluded UAR paths were excluded before reads. Ordinary artifacts were emitted at source12 and the instrumented artifact at source13, with the child's scoped source17 applicability; no whole-source17 rebuild is claimed.
+
+G2-13 failed before runtime because the local Boss node_modules directory was absent (tsx could not load). Locked dependencies, pinned Electron, the Electron SQLite native module and the existing dsh bridge were restored serially in the isolated Boss checkout. The dependency restore and each native restoration exited0. Package, lockfile and workspace pins were unchanged; these were local dependency/build artifacts, not product-source changes. See [dependency receipt](dependency-restore-network.json), [Electron](restore-electron-receipt.json), [SQLite](restore-sqlite-receipt.json), and [bridge](restore-dsh-receipt.json).
+
+The old G2-12 failed aggregate receipt and G2-13 startup failure remain intact. The earlier aggregate failure's exact cause has not been retroactively proven. The successful run supersedes the missing aggregate acceptance, not those historical observations. Generic command-wrapper acceptance:false is deliberately superseded only by the separate bound acceptance record above.
+
+## Remaining parent boundaries
+
+- Resource04/task10 remains open for required checks and final review. No actual external receiver or identity provider was selected; synthetic common-boundary proof is not an external deployment certificate.
+- Authorization02/tasks5–8 remain open. Owned caller migration completion does not substitute for the combined current approval/F6 matrix or required checks.
+- [Harness03/9 disposition](harness-check-disposition.md): retained scoped lint/build/runtime passes remain valid at their recorded boundaries. [Next-check selection](harness-next-check.md) confirms that the desktop sidecar cannot replace the standalone server in the existing gate. The authorized remaining check is serialized ordinary standalone UAR and selected Bossfang host compilation, followed by the unchanged four-case postlint gate. It closes prospective input/pairing evidence without relabeling or rerunning all18 earlier harness cases. The subsequent builds and selected four-case runtime gate passed; see the current harness result below. Task9 and change03 are now closed.
+- D0/F6, the unwaived global formatting gate, required platform/package checks and cumulative independent parent review remain open. No existing C05 or shipping gate is closed here.
+
+No new security hardening or product implementation was added during this continuation. No shared service, dependency pin, release, issue, PR or publication was changed. Reflection, installed-platform acceptance and operator certification remain separate.
+
+The installed Rust workspace skill and its phase-gated verification reference were consulted for the selected check. rust-router is unavailable in the inspected installed skill location; no installation was attempted. Existing repository and approved phase checks govern. The Node-only constraint still prevents claiming the Python branding check passed; upstream node-gyp's compiler backend remains a disclosed toolchain adaptation.
+
+## Current harness check
+
+The ordinary standalone UAR compilation completed successfully with exit0 and unchanged Cargo manifest/lock pins. [Actual build receipt](uar-current-pair-standalone-01-receipt.json). It used offline/locked, no default features, server-full, and the universal-agent-runtime binary target. No diagnostic or test was selected by this command. Prospective inputs are [the239-record binding](current-pair-before.json) plus [the explicit input supplement](current-pair-inputs.json); this is scoped input coverage, not a whole-repository inventory. Bossfang host compilation also passed (29.03 minutes), followed by the four-case runtime gate (exit0). The finite result records one provider admission, one real effect and two real model calls. All239 source/28 artifact checks,26 supplemental inputs and both new binary hashes matched after execution. [Bound current-pair acceptance](bossfang-current-pair-acceptance.json), [finite observations](bossfang-current-pair-finite-evidence.json), [canonical task/change closure](harness-task9-completion.json). This closes the selected check contract without claiming the full historical18-case matrix was rerun. No builds or gates remain running.

@@ -1,0 +1,16 @@
+{
+  "time": "2026-10-09T22:01:15.541Z",
+  "task": "bauar-acc-03-local-acceptance-evidence/2",
+  "observedGap": "Adapter checked five kernel cases by count/length without exactnames and mappedonly13, missing required all18 and modelclasssum.",
+  "scope": "acceptance/lib/adapters.mjs only; correct before production barrier, preserve earlier report/digest; no gate",
+  "requiredFutureScenarios": [
+    "acceptance/scenarios/evidence-controls.mjs",
+    "acceptance/scenarios/package-controls.mjs (if fixture preparation needs script)"
+  ],
+  "status": "authorized-source-correction",
+  "componentBindingCorrection": {
+    "observed": "Component binding included all sealed package and host inputs, invalidating unaffected completed components.",
+    "authorized": "Scope packageFiles to component.packagePaths and hostFiles to actual sealed command argv. Preserve global admission rechecks and historical hashes.",
+    "requirement": "Approved selective reuse: rerun only failed or changed components."
+  }
+}

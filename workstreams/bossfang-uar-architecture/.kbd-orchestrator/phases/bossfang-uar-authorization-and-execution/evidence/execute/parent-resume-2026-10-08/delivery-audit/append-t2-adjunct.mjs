@@ -1,0 +1,24 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { spawnSync } from 'node:child_process';
+const out = path.dirname(new URL(import.meta.url).pathname);
+const root = '/Users/gqadonis/.claude/worktrees/bauar-uar';
+const file = 'tests/uar_integration.rs';
+const beforeExpected = 'e957eadf47b9c8bb037e8c7790f93a322b9c5fd4b3c0f7058a22e0dca3fdd36c';
+const afterExpected = '44742656610057e8dc1ea64ea4e58e15899d9f5f2b4fc164874def285a730245';
+const sha = s => crypto.createHash('sha256').update(s).digest('hex');
+const git = args => {
+  const r = spawnSync('git', ['--no-pager', '-C', root, ...args], { encoding: 'utf8', maxBuffer: 1_000_000 });
+  if (r.status !== 0) throw new Error(`Git failed: ${r.status}`);
+  return r.stdout;
+};
+const before = git(['show', `HEAD:${file}`]);
+const current = fs.readFileSync(path.join(root, file));
+if (sha(before) !== beforeExpected || sha(current) !== afterExpected) throw new Error('Adjunct source mismatch');
+const diff = git(['diff', '--no-ext-diff', '--no-textconv', '--full-index', '--binary', 'HEAD', '--', file]);
+const patchFile = 'uar-t2-fixture-adjunct.patch';
+fs.writeFileSync(path.join(out, patchFile), diff);
+const receipt = { schemaVersion: 1, capturedAt: new Date().toISOString(), repository: root, file, head: git(['rev-parse', 'HEAD']).trim(), beforeSha256: beforeExpected, currentSha256: afterExpected, matchesOwnerHandoff: true, baseMatchesHead: true, patchFile, patchSha256: sha(diff), patchBytes: Buffer.byteLength(diff), scope: 'Only observed legacy configured-MCP test fixture; verify shipped empty defaults/actual registry without dotenv/arbitrary configured invocation', authority: 'Root exact handoff after direct user continuation; test-only correction owned by remaining-T2 worker', original239ManifestPreserved: true, testsRunByAssembler: false, forbiddenFilesAccessed: false };
+fs.writeFileSync(path.join(out, 't2-source-adjunct.json'), JSON.stringify(receipt, null, 2) + '\n');
+console.log(JSON.stringify(receipt));

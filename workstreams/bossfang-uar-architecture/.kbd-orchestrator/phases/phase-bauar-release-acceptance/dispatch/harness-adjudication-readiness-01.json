@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "status": "dormant-evidence-driver-ready-not-invoked",
+  "phase": "phase-bauar-release-acceptance",
+  "owner": "/root/native_build_completion",
+  "createdAt": "2026-10-10T01:29:28.703Z",
+  "task": {
+    "changeId": "bauar-acc-02-current-harness-regression",
+    "backendId": "3",
+    "specLabel": "2.1"
+  },
+  "driver": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-adjudication-driver-01.mjs",
+    "sha256": "a6d1c03f8fb55731242ba4b6532e3ca52cf49345c8c8251b510eaba8af9bdfae",
+    "bytes": 20647,
+    "lines": 283
+  },
+  "interface": {
+    "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+    "args": [
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-adjudication-driver-01.mjs",
+      "--run",
+      "--config",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/candidate-inputs.json",
+      "--config-sha256",
+      "<final exact config SHA256>",
+      "--integration",
+      "<final full integration aggregate receipt path>",
+      "--integration-sha256",
+      "<actual aggregate SHA256>"
+    ],
+    "optionalOutput": "--output <new immutable phase evidence/execute JSON path>; default harness-adjudication.json.",
+    "prerequisite": "Root invocation only after final full source-bound integration PASS. No automatic invocation or build/runtime retry.",
+    "stdout": "Only fixed status/category or receipt path/SHA256 plus actual case/target/negative counts; no raw errors/bodies/credentials.",
+    "exitCodes": {
+      "0": "Complete matching evidence adjudicated; actual integration/component observations and assertions checked.",
+      "1": "Observed runtime/effect failure.",
+      "2": "Unavailable, stale, invalid or incomplete evidence/input."
+    }
+  },
+  "evidenceContract": {
+    "integration": "Standard schema-validated kind aggregate stage integration PASS; exact final config/source/package/profile/seal bindings, all current components/scenarios observed and passed.",
+    "chain": "Aggregate execution refs uniquely match every component. Execution and component receipts hashed, schema-validated, binding-compatible and clean. Paired package refusal components may validly have nonzero exits; harness/UAR require actual exit0.",
+    "harness": "Exact 13 main cases plus 5 kernel cases from real private main/kernel receipt refs; exact18/5 counts, nonzero physical model calls, model request classes total matches, unknown0, six independently expected permitted effect markers exactly once, native wake profile fields, actual supervised-sidecar coverage marker.",
+    "regression": "Exactly five command-selected targets server-full,test-probes and 15 exact named negatives; each H scenario case/negative count agrees with its configured exact mapping, actual adapter target/summary/positive/negative counts and cleanup observed.",
+    "correlation": "Original admission/run/epoch/cursor before/after data are assertion-backed inside the actually executed matching gate. They are not persisted fields; no IDs/counters are fabricated. Exact retry supplemental cursor case remains named actual supporting negative.",
+    "cleanup": "Actual process exit/category and owned group absence/unknownDescendants=false plus component descendantsReconciled/remaining0; no assumption from pre-finally success marker.",
+    "sourceScopes": "Only explicitly listed current eligible assertion sources rehashed: harness gate/runtime/peer/supervisor/native, kernel harness test, UAR cursor test and phase adapters. Full component source path/binding metadata is retained without repository traversal."
+  },
+  "expectedInventory": {
+    "harnessCases": [
+      "registered-owner-and-explicit-unsupported",
+      "normal-exact-approval-and-reconciliation",
+      "streaming-and-outcome-commit-crash",
+      "exact-denial-no-effect",
+      "three-surface-cancellation-exact-caller-revision",
+      "lost-admission-and-decision-response-no-reenactment",
+      "observation-reconnect-original-run",
+      "provider-admission-before-host-capture-crash",
+      "durable-intent-crash-before-a2a",
+      "actual-pending-and-stale-sweep-preserves-selected-intent",
+      "enabled-wake-native-and-selected-cas-winners",
+      "provider-epoch-restart-remains-unknown",
+      "native-legacy-and-ephemeral-kernel-contract"
+    ],
+    "kernelCases": [
+      "native-normal",
+      "native-stream",
+      "native-ephemeral-entrypoints",
+      "legacy-uar-model-provider",
+      "selected-ephemeral-refuses-before-reservation"
+    ],
+    "targets": [
+      "bauar_identity_boundary",
+      "bauar_resource_grants",
+      "bauar_stdio_boundary",
+      "bauar_secret_projection",
+      "bauar_full_harness_cursor"
+    ],
+    "negativeNames": [
+      "key_authority::http_key_issue_direct_exchange_revoke_preserve_identity_roles_and_bounded_ttl",
+      "key_authority::key_metadata_and_mutation_require_owner_tenant_and_exact_issuer_admin_kind",
+      "key_authority::standalone_host_grant_requires_mapped_issuer_credential_and_retains_scope_attenuation",
+      "local_admission::explicit_local_startup_validates_signed_registered_claims_before_run_admission",
+      "local_admission::incomplete_remote_policy_is_rejected_at_actual_startup",
+      "remote_jwks::remote_jwks_router_requires_tenant_and_mapping_for_bearer_and_direct_key",
+      "remote_jwks::real_jwks_rotation_cooldown_failed_refresh_hard_age_and_recovery",
+      "remote_jwks::remote_jwks_header_and_body_delay_share_the_total_verifier_budget",
+      "grants_pin_owner_run_destination_revision_lease_and_action",
+      "stdio_boundary_captures_environment_owns_children_and_discards_raw_stderr",
+      "actual_provider_and_mcp_copies_hide_variants_without_changing_execution",
+      "projected_receipt_metadata_is_explicit_and_hashes_retained_bytes",
+      "filtered_runtime_steps_keep_original_cursors_and_reconnect_without_gaps",
+      "lost_retained_history_remains_an_explicit_stream_gap",
+      "exact_admission_retry_preserves_original_run_and_rejects_changed_input"
+    ],
+    "persistedEffectExpectations": [
+      "BAUAR_NORMAL",
+      "BAUAR_STREAM",
+      "BAUAR_PARTIAL_TERMINAL",
+      "BAUAR_LOST",
+      "BAUAR_RECONNECT",
+      "BAUAR_SELECTED_RACE"
+    ],
+    "disposition": "These are expectations to compare against actual future committed evidence, not observed results."
+  },
+  "proofLimitations": [
+    "Bossfang harness -> private application-equivalent fixture supervisor -> actual packaged sidecar. Native direct Bossfang principal transport is not certified.",
+    "Local fixture host-session identity is distinct from supporting configured standalone JWT/JWKS/tenant checks. No original caller JWT forwarding or named production receiver/IdP/custody claim.",
+    "Supporting server-full,test-probes targets differ from packaged server-full sidecar; packaged desktop startup is a separate actual component.",
+    "Actual restart is unsupported/unknown and requires reconciliation. No durable recovery/replay/external exactly-once guarantee.",
+    "Per-target summary rows/test-name transcripts and original run/cursor snapshots are not persisted by existing adapters. Successful matching adapter/gate assertions are explicitly identified as such.",
+    "Unsigned local darwin-arm64 only; wider platform/signing/installation/publication/remote release authority remains outside this adjudication."
+  ],
+  "sources": [
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/plan.md",
+      "section": "02/2.1 actual harness/regression adjudication"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/spec.md",
+      "section": "H01-H04 and full barrier"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/openspec/changes/bauar-acc-02-current-harness-regression/verification.md"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/harness-scenarios.md",
+      "section": "Gate output contract and coordinator adjudication"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/receipts.mjs"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/inputs.mjs"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/adapters.mjs"
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/stages.mjs"
+    }
+  ],
+  "noDuplicate": "Finite phase/evidence/dispatch file inventory contained no existing harness adjudication implementation; this is a new receipt-only task implementation, reusing existing component binding and receipt validation helpers.",
+  "verification": {
+    "driverInvoked": false,
+    "evidenceAdjudicated": false,
+    "testsRun": false,
+    "buildsRun": false,
+    "runtimeGatesRun": false,
+    "formatterRun": false,
+    "reviewRun": false,
+    "canonicalTransitions": false,
+    "productEdits": [],
+    "f6Accessed": false,
+    "lineLimit": true
+  },
+  "handoff": "Add this driver/readiness to explicit preparation/diagnostic metadata as appropriate. Root invokes after actual completed integration. Driver writes no expectation-only PASS and makes no delivery/canonical completion transition."
+}

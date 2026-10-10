@@ -1,0 +1,158 @@
+{
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "generated_at": "2026-10-09T07:59:50.854Z",
+  "research_budget": {
+    "max_queries_per_tier": 8,
+    "max_minutes": 20,
+    "queries_used": {
+      "1": 2,
+      "2": 4,
+      "3": 0,
+      "4": 0
+    }
+  },
+  "gaps_addressed": [
+    "intake-complete-working-tree",
+    "bossfang-baseline-prerequisites",
+    "bundled-current-uar-provenance"
+  ],
+  "candidates": [
+    {
+      "id": "cand-001",
+      "name": "Git scoped checkpoint and full-index binary patch intake",
+      "kind": "pattern",
+      "registry": "none",
+      "repo_url": "https://github.com/git/git",
+      "verdict": "adapt",
+      "fit_for_gap": "intake-complete-working-tree",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Assess intake-summary.json:241 uncommitted selected paths,94 additions; HEAD-only transfer omits deltas."
+        },
+        {
+          "tier": 2,
+          "claim": "Three-way apply needs blob identities/available objects; full-index and binary patches supported.",
+          "source_url": "https://git-scm.com/docs/git-apply"
+        }
+      ],
+      "risks": [
+        "A tracked diff alone can omit untracked additions.",
+        "Concurrent target changes require fresh binding; no apply/merge has run."
+      ],
+      "decision_rationale": "Reuse Git; assemble an explicit inventory checkpoint in isolation rather than commit the whole source worktree."
+    },
+    {
+      "id": "cand-002",
+      "name": "Accepted Bossfang baseline for isolated local intake",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "adapt",
+      "fit_for_gap": "bossfang-baseline-prerequisites",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "intake-summary.json and evidence/analyze/bossfang-baseline-analysis.md:bac04 includes baseline delegation/projection infrastructure absent or changed at oldmain16beef0."
+        }
+      ],
+      "risks": [
+        "Accepted base includes279 commits beyond observed oldmain.",
+        "Baseline choice does not certify integrated compilation/runtime."
+      ],
+      "decision_rationale": "Explicit newer local candidate preserves implemented prerequisites and avoids inventing a minimal oldmain backport."
+    },
+    {
+      "id": "cand-003",
+      "name": "Assumed72-path overlay onto older Bossfang main",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "reject",
+      "fit_for_gap": "bossfang-baseline-prerequisites",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "39 baseline differences and unchanged helper/persistence dependencies mean selected72 paths are not demonstrated self-contained at oldmain."
+        }
+      ],
+      "risks": [
+        "Minimum backport dependency closure unknown.",
+        "Byte divergence is not a reproduced merge conflict."
+      ],
+      "decision_rationale": "Reject the unsupported assumption for this release intake; a specifically requested backport would require separate bounded adaptation discovery."
+    },
+    {
+      "id": "cand-004",
+      "name": "Existing local-UAR pinned Apple Silicon packaging profile",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "adapt",
+      "fit_for_gap": "bundled-current-uar-provenance",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Boss scripts/local-uar-payload.cjs:39, before-pack.js:197, after-pack.js:10 and uar-payload-integrity.cjs:89 provide exact source/archive/file checks;local pin48bc45 still needs current checkpoint."
+        },
+        {
+          "tier": 2,
+          "claim": "Upstream hook/file-copy concepts support retaining existing packaging wiring;Boss pins26.15.6.",
+          "source_url": "https://github.com/electron-userland/electron-builder/blob/master/website/docs/features/hooks.md"
+        }
+      ],
+      "risks": [
+        "Native darwin-arm64 only;forbidden in release CI.",
+        "UAR packaging script labels an already-built binary;build provenance must be recorded.",
+        "Current-source package not built here."
+      ],
+      "decision_rationale": "Reuse existing validated-profile implementation, update only approved checkpoint/payload selection after source intake;do not rewrite validators."
+    },
+    {
+      "id": "cand-005",
+      "name": "Canonical public multi-platform UAR release-record import",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "reference",
+      "fit_for_gap": "bundled-current-uar-provenance",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Boss scripts/import-uar-sidecar-payloads.cjs:111 requires source-matching GitHub release records and all four release-profile platforms."
+        }
+      ],
+      "risks": [
+        "Requires genuine published artifacts and separate publication authorization.",
+        "Local macOS candidate cannot satisfy public/Windows/signing acceptance."
+      ],
+      "decision_rationale": "Retain established downstream route;do not loosen it to import local unpublished archives."
+    },
+    {
+      "id": "cand-006",
+      "name": "External current-UAR startup override",
+      "kind": "pattern",
+      "registry": "none",
+      "verdict": "reference",
+      "fit_for_gap": "bundled-current-uar-provenance",
+      "evidence": [
+        {
+          "tier": 1,
+          "claim": "Retained startup04 external current binary passed only its recorded startup/authenticated-check boundary;canonical bundled source remainsba723 p1.19."
+        }
+      ],
+      "risks": [
+        "External startup pass is not bundled-current or installed release evidence."
+      ],
+      "decision_rationale": "Useful development evidence but not a replacement for frozen-source bundled payload production."
+    }
+  ],
+  "build_required": [
+    {
+      "need": "Bound exact scoped source checkpoints to isolated integration candidate refs and compatible callers.",
+      "why_no_candidate": "Git supplies mechanics, not project-specific ownership or prerequisite selection;no new framework required.",
+      "capability_gap_id": "intake-complete-working-tree"
+    },
+    {
+      "need": "Produce current-source localUAR archive and bind Boss local source pin to its actual checkpoint,features and hashes.",
+      "why_no_candidate": "Existing packaging profile supplies the mechanism;the current compiled payload and finite provenance receipt must still be produced at an approved delivery boundary.",
+      "capability_gap_id": "bundled-current-uar-provenance"
+    }
+  ]
+}

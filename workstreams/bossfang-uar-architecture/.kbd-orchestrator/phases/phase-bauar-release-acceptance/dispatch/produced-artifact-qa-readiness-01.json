@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "kind": "standalone-artifact-qa-source-readiness",
+  "phase": "phase-bauar-release-acceptance",
+  "status": "source-ready-not-invoked",
+  "driver": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/produced-artifact-qa-driver-01.mjs",
+    "sha256": "a942a4de5fd1c1948092474b72fb01ddde8d1cb72481369bbb0808c6712ec2b4",
+    "bytes": 17106,
+    "lines": 245
+  },
+  "interface": {
+    "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+    "args": [
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/produced-artifact-qa-driver-01.mjs",
+      "--inputs",
+      "<absolute public request JSON>",
+      "--inputs-sha256",
+      "<actual request SHA256>"
+    ],
+    "request": {
+      "schemaVersion": 1,
+      "phase": "phase-bauar-release-acceptance",
+      "config": "exact final public {path,sha256}",
+      "runtimeSeal": "exact final public {path,sha256}",
+      "integration": "exact full eight-component/fourteen-row PASS integration {path,sha256}",
+      "additions": "exact final finite review-format additions {path,sha256}",
+      "contracts": "exact public refs to records/inputs/receipts/adapters/stages MJS, config.schema.json, receipt.schema.json and selected approvedPlan; optional actual skill/constraint refs",
+      "artifacts": "nonempty explicit public list [{ref:{path,sha256},format:json|markdown,schema?:{path,sha256}}]",
+      "outputDirectory": "fresh child of phase evidence/execute; must not exist"
+    },
+    "outputs": [
+      "freshOutput/produced-artifact-qa.json",
+      "freshOutput/refinement_log.md"
+    ],
+    "exitCodes": {
+      "0": "actual selected artifact checks passed",
+      "1": "actual selected artifact check failures, bound receipt retained",
+      "2": "invalid, unavailable, incomplete or unbound admission; sanitized category only"
+    }
+  },
+  "applicability": [
+    {
+      "skillRequirement": "Schema validation",
+      "adaptation": "Use actual phase config/receipt schemas and records.validate vocabulary; standalone QA output has an inline strict schema. External JSON artifacts use their explicitly selected actual schema, or only a versioned JSON shape check when none exists. Do not claim generic JSON Schema support.",
+      "authorityPaths": [
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/config.schema.json",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/receipt.schema.json",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/records.mjs"
+      ]
+    },
+    {
+      "skillRequirement": "File integrity",
+      "adaptation": "Verify exact finite selected artifacts exist, are regular, nonempty, and match actual SHA256. Markdown checks are extension/nonempty/integrity checks, not a content correctness verdict."
+    },
+    {
+      "skillRequirement": "Constraint satisfaction",
+      "adaptation": "Validate existing complete-boundary config/source/package/profile/seal bindings, all eight mandatory executions, fourteen scenario rows, paired negatives and cleanup; 18 harness/13 API/5 kernel counters and five Cargo targets. Respect existing component-specific reuse and negative-validator nonzero exits.",
+      "authorityPaths": [
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/plan.md",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/inputs.mjs",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/receipts.mjs",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/adapters.mjs",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/stages.mjs"
+      ]
+    },
+    {
+      "skillRequirement": "State consistency",
+      "adaptation": "Emit a single actual standalone artifact-QA invocation log with its bound receipt. No PMPO iteration count, refinement state, convergence decision, canonical lifecycle or completion is fabricated."
+    }
+  ],
+  "unavailableGates": [
+    {
+      "gate": "PMPO artifact_manifest.json / constraints.json schemas",
+      "status": "not-applicable",
+      "reason": "Those files do not exist in the standalone acceptance phase; its actual config and receipt contracts are used instead."
+    },
+    {
+      "gate": "PMPO state/iteration/convergence gates",
+      "status": "unavailable",
+      "reason": "The phase has no PMPO state; the produced log is explicitly a standalone QA invocation, not a PMPO iteration."
+    },
+    {
+      "gate": "Generic mini refiner validator",
+      "status": "not-used",
+      "reason": "Its missing manifest/constraints path can return skipped with ok:true and its schema check only checks required fields; it cannot certify this phase's actual contracts."
+    },
+    {
+      "gate": "Mini-wide npm check/test/spec/distribution",
+      "status": "not-applicable",
+      "reason": "Approved plan's standalone workstream applicability resolution selects real product coordinator gates and strict managed OpenSpec checks; no mini production change."
+    },
+    {
+      "gate": "Product review / formatter / OpenSpec / release certification",
+      "status": "separate-not-invoked",
+      "reason": "This metadata driver does not dispatch critics, launch formatters, invoke specification CLIs, advance tasks or authorize release."
+    }
+  ],
+  "privacyAndScope": {
+    "excludedF6Accessed": false,
+    "pathInventoryBeforeRead": true,
+    "directoryTraversal": false,
+    "privateRuntimeBodiesRead": false,
+    "opaqueRuntimeEvidence": "Scenario evidence refs are retained as metadata only. Original integration's content checks and SHA verification remain inherited provenance, not reverified by this QA.",
+    "configEnvironmentExported": false,
+    "rawErrorsExported": false,
+    "syntheticSourceLiterals": "Not stripped from product review source by this QA."
+  },
+  "limitations": [
+    "Runtime assertion semantics require the original matching integration and independent product review; this driver does not reinterpret raw private harness evidence.",
+    "Explicit supervisor transport fixture cannot certify direct native Bossfang-to-UAR transport.",
+    "Unsigned local darwin-arm64 only. Windows, signing/notarization, installed operation, production remote receivers, shipping/C05 and publication are not certified.",
+    "Restart unsupported/unknown requires reconciliation; no automatic replay or recovery certification.",
+    "Inherited Bossfang 279-commit baseline remains uncertified.",
+    "No syntax check, QA invocation, test, build, review, formatter, config/seal write, product edit or canonical transition has run as part of this source preparation."
+  ],
+  "skillReadInFull": "/Users/gqadonis/.codex/skills/refine-validate/SKILL.md",
+  "sourceBoundary": {
+    "qaExecuted": false,
+    "gateExecuted": false,
+    "buildExecuted": false,
+    "reviewExecuted": false,
+    "formatExecuted": false,
+    "canonicalMutated": false,
+    "configMutated": false,
+    "sealWritten": false
+  }
+}

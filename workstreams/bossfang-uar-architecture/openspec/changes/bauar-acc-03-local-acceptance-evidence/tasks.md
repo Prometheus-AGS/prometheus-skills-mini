@@ -4,8 +4,8 @@ scope: phase acceptance coordinator/lib/config/receipt schemas, candidate-inputs
 
 ## 1. Acceptance coordination production
 
-- [ ] 1.1 Implement the thin Node entry/capability modules and formal v1 input/receipt schemas, explicit runtimes/private child environments and owned process cleanup; completion means coherent production source for E01–E02 exists, without test authoring/execution or product review.
-- [ ] 1.2 Freeze candidate source/package/test-host/scenario inputs and finite cumulative product review/formatting paths; deliver explicit scope/owner dispositions and record all parent production tasks complete only after their actual completion. Verify input declarations by schema and named file inspection, not a runtime acceptance claim.
+- [x] 1.1 Implement the thin Node entry/capability modules and formal v1 input/receipt schemas, explicit runtimes/private child environments and owned process cleanup; completion means coherent production source for E01–E02 exists, without test authoring/execution or product review.
+- [x] 1.2 Freeze candidate source/package/test-host/scenario inputs and finite cumulative product review/formatting paths; deliver explicit scope/owner dispositions and record all parent production tasks complete only after their actual completion. Verify input declarations by schema and named file inspection, not a runtime acceptance claim.
 
 ## 2. Complete parent integration and readiness
 

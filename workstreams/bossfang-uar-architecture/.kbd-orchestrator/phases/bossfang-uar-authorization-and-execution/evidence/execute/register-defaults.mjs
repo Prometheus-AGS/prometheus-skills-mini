@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import cp from 'node:child_process';
+const root='/Users/gqadonis/.claude/worktrees/bauar-uar/workstreams/bauar';
+const phase='bossfang-uar-authorization-and-execution';
+const change='uar-bauar-runtime-defaults';
+const cli=(args)=>JSON.parse(cp.execFileSync('/Users/gqadonis/.local/bin/prometheus',['kbd','--path',root,...args,'--json'],{encoding:'utf8'}));
+const run=(args)=>cp.execFileSync('/Users/gqadonis/.local/bin/prometheus',['kbd','--path',root,...args],{encoding:'utf8'});
+const before=cli(['status']);
+if(before.phases[phase].changes[change]) throw Error('Already registered; inspect canonical state');
+run(['change','register','--command-id','bauar-child-register-defaults','--phase',phase,'--id',change,'--title','Application-owned runtime defaults','--sequence','3']);
+const tasks=[...fs.readFileSync(root+'/openspec/changes/'+change+'/tasks.md','utf8').matchAll(/^- \[[ x]\] (.+)$/gm)].map(m=>m[1]);
+for(const [i,title] of tasks.entries()) run(['task','register','--command-id','bauar-defaults-task-'+(i+1),'--phase',phase,'--change',change,'--id',String(i+1),'--sequence',String(i+1),'--title',title]);
+const after=cli(['status']);
+console.log(JSON.stringify({projectId:after.projectId,revision:after.revision,change,tasks:tasks.length}));

@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "status": "source-ready-not-runtime-verified",
+  "owner": "/root/native_build_completion",
+  "createdAt": "2026-10-10T00:50:42.090Z",
+  "phase": "phase-bauar-release-acceptance",
+  "changes": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-runtime.mjs",
+      "sha256": "27f947358b0da73ad0cde0dede3612d0984f67b0270db6627aa2071207fa6ea0",
+      "bytes": 15796,
+      "lines": 271,
+      "beforeSha256": "5779af4539423254d7ef1555e9df9e41c5b10e461473e63988dbbbea814fa2a4"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-peer.mjs",
+      "sha256": "f9d934ce25971d6c5d3981f89e5a366098fd3644759549efb4a4e9dc6cadfecb",
+      "bytes": 20637,
+      "lines": 343,
+      "beforeSha256": "3d6c21811fec39ef25e939a9d4b80a1b44eb34775b227b37e3c53ae5d476d201"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-gate.mjs",
+      "sha256": "acd8fe8a6c401eed444a34a918cec3c5aab922846182dd2f0989433c132de16c",
+      "bytes": 31313,
+      "lines": 491,
+      "beforeSha256": "e05dec392ad5a4abef6fbbb8d8c1f5c09ea679229068b1e9fc66dadb567b1f0c"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-supervisor.mjs",
+      "sha256": "a024674e5ea3f412edbc9768e8109743987f36af860efe893ce2248c47247d8f",
+      "bytes": 4218,
+      "lines": 85,
+      "beforeSha256": null
+    }
+  ],
+  "sources": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/bin/uar-sidecar.rs",
+      "sha256": "e1bfe1377a9a654728aac9ba91a9c3c3c1b8516c4e8a874664fb8723aadf03de",
+      "bytes": 14791
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/sidecar_guard.rs",
+      "sha256": "ccb4111bcd9dfae57b4d5750e1c4567589241f7cea63c17943135692734ab477",
+      "bytes": 7136
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/middleware.rs",
+      "sha256": "1069bef5193d6876ea8fbc0661b853704a09f7a969f2fafac813475d9be9312e",
+      "bytes": 21504
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/security/claims.rs",
+      "sha256": "c97b1f0be5bbb8f78a8f64fd99b8b11a975a7f40466998e57fabdbe093e628fd",
+      "bytes": 5842
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/full_harness/handlers.rs",
+      "sha256": "3a6e1a12b8e2fd0e4c6f744d49c5ef9f9357357cbc8bebf9798b248169937242",
+      "bytes": 16045
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/routes.rs",
+      "sha256": "239904c15f76e335e656a653a8ba0274f4cf9b9aa6ddb705ee3c163b318d0df4",
+      "bytes": 59608
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/collaboration.rs",
+      "sha256": "42cc7431b6f19ebd38bf4d700e1e3e11f8dd45fad55be499e56b71ad9a4f6f22",
+      "bytes": 15139
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/api/user_settings.rs",
+      "sha256": "be631a36446e0849af1496a3e29b2624567f1c515fb2bc36dade79dfe81f0346",
+      "bytes": 10966
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/turn/host/mcp.rs",
+      "sha256": "ffbce8153ab1cdd9e5d8a702112b5d12fc0b6f6a4e63b483c7ca024a98b6c81b",
+      "bytes": 15209
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/runtime/turn/host/credentials.rs",
+      "sha256": "032bfa38a9aa25236eb7f69c089e3509816423b4183c0494bedff955c42a83f1",
+      "bytes": 8640
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/mcp/config.rs",
+      "sha256": "e2fd56ca86502e4cde8955ac887168581715218b75cf53a0d437679c9016c723",
+      "bytes": 19708
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/server.rs",
+      "sha256": "e3f3aeb84eb230829582575ae7f9ce34d44f7fa14b59354bfddf5c2db030de9c",
+      "bytes": 300054
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/http.rs",
+      "sha256": "61ca787f5471ac736081d0c325c5306a9b0594968c8c6b0a3ee681d284903b4e",
+      "bytes": 8734
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar_run/mod.rs",
+      "sha256": "6c77fd436d484986cc51e42ad8ff14e099abc493d363b49b4296066687ad5eb5",
+      "bytes": 14240
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/UarSidecarService.ts",
+      "sha256": "847283ac6633807249f5f42b03312a0209c969f0016ceb592157e37828d5aa0e",
+      "bytes": 18611
+    }
+  ],
+  "observedFailure": {
+    "checkpointPath": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/private/2df1e318-347d-4f8b-a6ba-cfc628d984f0/tmp/bauar-harness-EQvS49/failure-checkpoint.json",
+    "stage": "provider_start",
+    "exitCode": 2,
+    "completedCases": 0,
+    "signal": null,
+    "spawnError": false,
+    "rustPanic": false,
+    "allocationFailure": false,
+    "cause": "Packaged sidecar requires a 64-lowercase-hex stdin launch-token line and persistent stdin; previous provider launcher used stdin ignore."
+  },
+  "protocolMigration": {
+    "before": "Standalone HS256 JWT fixture, ignored stdin/stdout, configuration-only port, transparent proxy and inherited/global provider credentials.",
+    "after": "Explicit private application-equivalent supervisor uses persistent token handshake, actual READY port, external ownership override, rotating launch bearer and verified fixed host-session principal. Its stable frontend credential maps to protected sidecar launch authority.",
+    "startup": [
+      "Fresh 32-byte random token for each process start; token only in memory and stdin, never argv/env/config/artifact.",
+      "Pass --port; parse actual READY port without retaining stdout.",
+      "Preserve sidecar Host and Origin enforcement; frontend Host is rewritten to the selected sidecar authority, Origin remains forwarded for receiver rejection.",
+      "Set external ownership explicitly relative to Bossfang; trusted-local JWT setting remains disabled for the actual supervised host context."
+    ],
+    "shutdown": "Close stdin and allow five seconds for actual EOF cleanup, then use existing owned-process termination fallback.",
+    "restart": "Fresh token and actual READY port replace previous launch authority; stable frontend credential and immutable run resource object remain per fixture attempt. UAR epoch/recovery refusal remains actual.",
+    "resources": {
+      "model": "run_credentials for explicit openai-compatible controlled peer; no operator credential environment inheritance.",
+      "mcp": "mcp_servers configured fixture grant; registered destination bauar-private-effect; actual trusted host sidecar-launch-host; required scope fixture:invoke; fixture-v1 credential revision; immutable expires_at_unix fixed at fixture creation plus 7200 seconds.",
+      "serialization": "Selected admission receives explicit configured resource inputs before the real provider admission. Same resources and expiry are reused for every retry/replay in that attempt; no response, event, approval, execution receipt or tool effect is synthesized.",
+      "digest": "Bossfang retains its original selected-request digest. UAR computes the actual post-supervisor admission digest over the immutable configured resource payload; equal retries retain equal post-supervisor bodies."
+    }
+  },
+  "coverageCorrection": {
+    "path": "Bossfang -> private application-equivalent fixture supervisor -> packaged uar-sidecar",
+    "identity": "Opaque application credential -> fresh launch bearer -> actual HostAuthenticated marker -> fixed host-session principal plus real workspace header. No fabricated issuer/tenant claims.",
+    "targetCases": 18,
+    "targetCaseStatus": "Not executed by this worker; existing 13 selected harness assertions plus 5 kernel assertions retained.",
+    "notCovered": [
+      "Native direct Bossfang-to-sidecar principal transport: inspected Bossfang driver sends bearer and workspace only, without x-uar-principal.",
+      "Standalone JWT issuer/audience/expiry validation and remote tenant isolation are not established by this local sidecar fixture.",
+      "Production Boss application supervisor/client execution is not established by static similarity.",
+      "Resource expiry, insufficient scope and wrong-host refusal remain real receiver contracts but no additional case is asserted or marked passed here."
+    ],
+    "retained": "Actual Bossfang owner authorization, actual UAR owner/workspace and run-grant enforcement, exact approval IDs, actual controlled MCP effects, cancellation/reconnect/retry/epoch assertions are unchanged."
+  },
+  "bossSupervisorComparison": {
+    "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/ai/runtime/uar/UarSidecarService.ts",
+    "sha256": "847283ac6633807249f5f42b03312a0209c969f0016ceb592157e37828d5aa0e",
+    "staticEquivalences": [
+      "randomBytes(32).toString(hex) token through persistent stdin",
+      "--port and exact READY parsing with actual effective port",
+      "authenticatedFetch replaces Authorization with launch bearer and adds x-uar-principal",
+      "restart creates a fresh launch token",
+      "termination closes stdin before process fallback"
+    ],
+    "differences": [
+      "Fixture is external relative to Bossfang; The Boss normally owns its managed sidecar.",
+      "Fixture exposes a private authenticated HTTP supervisor endpoint for the native Bossfang bearer-only driver.",
+      "Fixture attaches immutable configured run resources; the inspected supervisor file only establishes process/authentication semantics. No assertion about the separate production run builder is made.",
+      "Fixture does not implement the Boss supervisor generation expectation or storage-apply workflow."
+    ]
+  },
+  "preservedEvidence": {
+    "diagnosticsReadiness01": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/dispatch/harness-diagnostics-readiness-01.json",
+    "hostBuildReceipt03": "Existing exact API/kernel binaries and successful no-run receipts are unchanged by this worker.",
+    "passingScopes": "No previous PASS receipt, source config, gate manifest, canonical runtime projection or phase-progress state was edited."
+  },
+  "verification": {
+    "executed": [],
+    "notExecuted": [
+      "No tests or gates",
+      "No build or compiler",
+      "No formatter or review",
+      "No product Rust edits",
+      "No source configuration/core/canonical mutations"
+    ],
+    "performed": "Source implementation and finite file byte/hash/line references only; coordinator owns resealing and failed-component runtime verification.",
+    "lineLimit": true,
+    "f6": "Excluded UAR test/mcp_server paths not read, hashed, diffed, tested or edited."
+  },
+  "handoff": "Bind all four changed files, including the new supervisor helper, in the next source/input manifest before the coordinator retries the failed harness. Do not certify local or remote authorization claims from this source-readiness report."
+}

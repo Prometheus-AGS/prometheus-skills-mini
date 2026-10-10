@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "kind": "harness-failure-diagnostic-readiness",
+  "phase": "phase-bauar-release-acceptance",
+  "status": "one-authorized-reproducer-completed-source-correction-held",
+  "observer": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-failure-diagnostic-observer-01.mjs",
+    "sha256": "b792aefc829b37e3cbd3429a12cc131b963bc23ba74e6fa55142c5f7650fe51e",
+    "bytes": 12869,
+    "lines": 181
+  },
+  "driver": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-failure-diagnostic-driver-01.mjs",
+    "sha256": "6cf5fd8fd41c2c741788b0f6b7ce0646a0bf571dbe6915b8659519e51de16cd6"
+  },
+  "diagnostic": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-failure-diagnostic-01/result.json",
+    "sha256": "c9423f5d865f247e44fbcb7d1e1cc08064363a99e789affc38c7e609794af9fe"
+  },
+  "fixedBindingSnapshot": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-binding-diagnostic-01.json",
+    "sha256": "6535b9913304f0c4b04285dac3cfc2f6514d3517da8a1284d135d5a23d456b11"
+  },
+  "observed": {
+    "runtimeInvocations": 1,
+    "exitCode": 1,
+    "category": "completed",
+    "groupAbsent": true,
+    "unknownDescendants": false,
+    "inputsUnchanged": true,
+    "stage": "normal_selected",
+    "completedCaseCount": 1,
+    "providerReady": true,
+    "httpStatus": 503,
+    "admissionCode": "uar_service_binding_unavailable",
+    "bindingCode": "endpoint_role_mismatch",
+    "modelOrEffectCounters": "Not inspected; no assertion of zero effects or 18-case acceptance."
+  },
+  "staticTrace": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-runtime.mjs",
+      "sha256": "27f947358b0da73ad0cde0dede3612d0984f67b0270db6627aa2071207fa6ea0"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-api/src/routes/uar_delegation/job_mapping.rs",
+      "sha256": "4a817a8874a2f2241f169fe15a74e197f402f327738aea89bc82d1ecda85a087"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/crates/librefang-llm-drivers/src/drivers/uar.rs",
+      "sha256": "2901c1bb5525f8dd38668c018f8a9356eb9a9e12c394d245c6c756d5dfaa5bfe"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/service_instance.rs",
+      "sha256": "67bedec4ba38d38e8b0d75080e7603ed6b213b40268a954269a9c05a134eba14"
+    }
+  ],
+  "cause": {
+    "observed": "Bossfang refuses service-binding compatibility before map_service_job and selected dispatch.",
+    "sourceContradiction": "providerFixture declares a console role, while actual UAR sidecar ServiceInstanceAuthority advertises no console role in sidecar mode.",
+    "codeReferences": {
+      "fixture": "bauar-harness-runtime.mjs endpoints map and config service_instance.console_endpoint",
+      "admission": "job_mapping.rs:84–86",
+      "roleValidation": "uar.rs:657–661",
+      "sidecarContract": "service_instance.rs:159–165"
+    },
+    "smallestCorrection": "After the parent releases source edits at batch completion, remove only providerFixture endpoints.console and unused console_endpoint entry; preserve all runtime/admin/model endpoint declarations and actual receiver checks.",
+    "correctionImplemented": false
+  },
+  "observerInterface": {
+    "export": "createHarnessDiagnosticObserver(exact four public fixture SHA refs)",
+    "methods": [
+      "observeLine(stream,line)",
+      "result() typed boolean/integer process observations",
+      "snapshot() fixed sanitized classifications only"
+    ],
+    "cli": "Node22 harness-failure-diagnostic-observer-01.mjs --inputs <digest-bound request> --inputs-sha256 <actual SHA>",
+    "cliMode": "extract-fixed-checkpoint: exact owned checkpoint plus failed execution and completed full aggregate; no child launch"
+  },
+  "boundaries": {
+    "sourceFilesChanged": false,
+    "configurationChanged": false,
+    "runtimeSealChanged": false,
+    "cargoInvoked": false,
+    "packageRebuilt": false,
+    "reviewInvoked": false,
+    "formatterInvoked": false,
+    "canonicalChanged": false,
+    "excludedF6Accessed": false,
+    "rawErrorsOrLogsPersisted": false,
+    "arbitraryRequestOrResponseCopied": false,
+    "privateArtifactsPreserved": true,
+    "supervisorFixtureIsNativeDirectTransport": false
+  },
+  "limitations": [
+    "Actual error output discarded by the original coordinator cannot be recovered; the authorized new reproducer retained only fixed classifications.",
+    "Fixed read_binding_status extraction selected only the action metadata and source-defined booleans/code. State vocabulary remains unknown/unclassified.",
+    "This private fixture transport is not native direct Bossfang-to-sidecar transport certification.",
+    "No source correction, retry after correction, 18-case acceptance or broader runtime certification is claimed by this report."
+  ]
+}

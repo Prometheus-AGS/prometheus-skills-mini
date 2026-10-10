@@ -4,12 +4,12 @@ scope: phase acceptance/harness-inputs.json and acceptance/harness-scenarios.md 
 
 ## 1. Source-bound gate preparation
 
-- [ ] 1.1 Write the finite source/digest/profile/argv manifest for retained Bossfang API/kernel test hosts and bundled UAR; verify every required entry and explicit missing executable/build requirement in the delivered manifest, without compiling or running tests before parent production completion.
-- [ ] 1.2 Record H01–H04 scenario mapping to existing requirements and the exact five eligible UAR targets/features, fixture subprocess roots and nonzero-test expectation; verify the inventory excludes F6 and production remote certification and distinguishes supporting test profile from packaged server-full. No executable test authoring in this task.
+- [x] 1.1 Write the finite source/digest/profile/argv manifest for retained Bossfang API/kernel test hosts and bundled UAR; verify every required entry and explicit missing executable/build requirement in the delivered manifest, without compiling or running tests before parent production completion.
+- [x] 1.2 Record H01–H04 scenario mapping to existing requirements and the exact five eligible UAR targets/features, fixture subprocess roots and nonzero-test expectation; verify the inventory excludes F6 and production remote certification and distinguishes supporting test profile from packaged server-full. No executable test authoring in this task.
 
 ## 2. Component evidence adjudication
 
-- [ ] 2.1 After consolidated 03/2.1 executes H01–H04, bind and adjudicate actual harness/regression observables, paired negative controls, source/profile identities and cleanup outcomes; completion requires passing selected receipts and truthful unsupported/unknown restart results, with defects or missing evidence retained as FAIL/BLOCKED.
+- [x] 2.1 After consolidated 03/2.1 executes H01–H04, bind and adjudicate actual harness/regression observables, paired negative controls, source/profile identities and cleanup outcomes; completion requires passing selected receipts and truthful unsupported/unknown restart results, with defects or missing evidence retained as FAIL/BLOCKED.
 
 ## Workflow follow-up
 

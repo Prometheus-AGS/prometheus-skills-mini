@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "time": "2026-10-09T21:59:02.777Z",
+  "kind": "required-scenario-readiness-amendment",
+  "observedEvidence": "dispatch/harness-task2-report.md and acceptance/harness-scenarios.md",
+  "phase": "phase-bauar-release-acceptance",
+  "existingRequirement": "H02 changed exact-retry payload conflicts",
+  "ownedPath": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_full_harness_cursor.rs",
+  "exactTestName": "exact_admission_retry_preserves_original_run_and_rejects_changed_input",
+  "scope": "same selected cursor target; no production/auth redesign; originalidentity preserved, samepayload retry same run, changedinput sameadmission returns409/admission_digest_conflict, zero additionalmodelcalls/historyretained",
+  "after": [
+    "full-five-task-production-barrier",
+    "source-bound Boss packaging"
+  ],
+  "runtime": "same selected supporting Cargo batch, source/profile marked separately from production bundle",
+  "review": "append changed eligibleRustpath, read-only rustfmt skip_children=true finite path at finalgate",
+  "status": "planned-not-authored"
+}

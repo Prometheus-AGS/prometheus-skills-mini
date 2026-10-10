@@ -113,3 +113,20 @@ HARNESS12 reproduces normal board reconciliation success and host-restart failur
 The approved atomic cursor/outcome and crash-before-board-reconciliation contract is implemented with a private version1 SQLite terminal-observation correlation record, sealed in the same transaction as successfully validated contiguous, fully projected event application. Seal only if actual original terminal receipt cursor equals committed applied cursor; bind original epoch/task/run/revision, and validate reservation/owner/workspace through existing selected paths. Unknown, partial, oversized, malformed, gap, refusal and legacy unsealed rows retain fail-closed behavior. A matching durable seal permits reading only already-projected, non-executable terminal history/usage and reconciling its outcome after Bossfang host restart without reopening streams, credentials, admission or effects. Existing effect_unconfirmed remains unchanged; this proof does not certify effect certainty, restore UAR execution, or alter the operator-selected unsupported/unknown UAR-restart policy.
 
 Exact storage/kernel observation paths are already owned by task03; any cohesive private helper is bound in the source handoff and kept under500lines. Complete correction precedes the failed-only current-source retry. Independent reviewers remain dormant. [Reproduced checkpoint](evidence/execute/final-gates/bossfang-harness-runtime-12.json).
+
+## Operator scope correction — 2026-10-08T23:39:17.118Z
+
+The operator instructed: “Forget about this and move forward. There is no vulnerability.” F6/D0 session-owner investigation and conditional remediation are removed from this release phase’s acceptance scope. Tasks02/5 and02/6 are withdrawn/cancelled, not passed or evidence-backed disproved. Task02/7 now covers exact approval/claim/cancellation only. Do not inspect, execute or retry the excluded diagnostic. No assertion of a demonstrated vulnerability or a verified absence of one follows. Application/service credentials on the selected Bossfang→UAR path and configured resource credentials on outbound MCP connections remain the accepted architecture. Other identity, exact-decision/effect, formatting, package/platform and independent-review requirements remain in force. This supersedes earlier F6 dependency and blocker statements in historical plans/reports.
+
+## Operator phase-formatting waiver — 2026-10-09T06:02:14.635Z
+
+Direct operator approval waives the global UAR formatting gate for this isolated phase; the recorded command remains FAILED. Retain baseline/vendor/excluded-path debt for the parent release and the scoped formatting passes separately. This supersedes only the earlier unwaived-global-format prerequisite for parent completion, not any acceptance outcome, F6 exclusion, remaining eligible checks, independent review, source/payload/platform limits or shipping ownership. See [authorization](evidence/execute/parent-resume-2026-10-08/global-format-operator-waiver.json). No product/rule change.
+
+
+## 2026-10-09 — Operator directs implementation closure with verification deferred
+
+Operator explicitly directs waiver and implementation-first/test-later closure. Remaining broad UAR regression/example/doctest batch, full cumulative independent delivery review and global formatting are deferred for later acceptance, not PASSED. Retain existing selected production-path acceptance, scoped checks, unsigned macOS package and external-current-UAR startup evidence. Close implementation/disposition tasks under this amendment; no shipping certification, deployment, external receiver acceptance or F6 reinstatement. Archive specifications and reflect with partial verification honestly recorded.
+
+Authority: “Just waive it and continue. we can handle it later. That is my rule--implement first and test later. Go”
+
+Tasks 02/8 and 04/10 now close by completed build/platform/ownership disposition plus the operator waiver, not by inventing passing broad checks. Certification remains incomplete/deferred. See evidence/execute/parent-resume-2026-10-08/operator-deferred-verification.json. No product code changes are introduced by this amendment.

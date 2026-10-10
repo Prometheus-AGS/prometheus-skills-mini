@@ -1,0 +1,19 @@
+schema: spec-driven
+
+context: |
+  Isolated Bossfang–UAR authorization and execution-ownership remediation workstream.
+  The architectural review dated 2026-10-06 is the initial evidence ledger.
+  Cover local desktop and remote multi-user deployments; retain every finding F1–F7
+  and every acceptance scenario, including conditions and disconfirming evidence.
+  Distinguish model providers, execution harnesses and job orchestrators.
+  Reuse existing UAR full-harness, owner-bound MCP and exact admission mechanisms.
+  Apply each product repository constitution in its own future isolated worktree.
+  KBD/tooling uses Node LTS, no shell/Python scripts or new resident services.
+  OpenSpec is required. Do not replace it with another backend.
+  No direct writes to generated KBD state: use typed canonical commands.
+  No product source changes until the Plan handover is explicitly approved.
+  Complete production behavior before its real-path integration gate; no fixture
+  or static result certifies a deployed multi-user stack.
+  Execute all stages: Assess, Analyze, Spec, Plan, Execute, Reflect.
+  Stop after each stage for explicit user approval; never infer approval from
+  elapsed time or a completed handoff. No publication or deployment authorization.

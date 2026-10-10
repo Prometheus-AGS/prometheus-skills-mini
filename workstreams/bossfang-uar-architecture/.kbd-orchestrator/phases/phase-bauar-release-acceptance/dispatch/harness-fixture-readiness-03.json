@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "status": "source-ready-not-runtime-verified",
+  "owner": "/root/runtime_seal",
+  "phase": "phase-bauar-release-acceptance",
+  "changes": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-gate.mjs",
+      "sha256": "acd8fe8a6c401eed444a34a918cec3c5aab922846182dd2f0989433c132de16c",
+      "bytes": 31313,
+      "lines": 491,
+      "beforeSha256": "acd8fe8a6c401eed444a34a918cec3c5aab922846182dd2f0989433c132de16c"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-peer.mjs",
+      "sha256": "f9d934ce25971d6c5d3981f89e5a366098fd3644759549efb4a4e9dc6cadfecb",
+      "bytes": 20637,
+      "lines": 343,
+      "beforeSha256": "f9d934ce25971d6c5d3981f89e5a366098fd3644759549efb4a4e9dc6cadfecb"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-runtime.mjs",
+      "sha256": "482ffa9b818201bea6bb3bd7b6052302a97505c69d935475c790e29af2c9e6c9",
+      "bytes": 15725,
+      "lines": 271,
+      "beforeSha256": "27f947358b0da73ad0cde0dede3612d0984f67b0270db6627aa2071207fa6ea0"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-supervisor.mjs",
+      "sha256": "a024674e5ea3f412edbc9768e8109743987f36af860efe893ce2248c47247d8f",
+      "bytes": 4218,
+      "lines": 85,
+      "beforeSha256": "a024674e5ea3f412edbc9768e8109743987f36af860efe893ce2248c47247d8f"
+    }
+  ],
+  "changedPaths": [
+    "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-runtime.mjs"
+  ],
+  "supersedes": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/dispatch/harness-fixture-readiness-02.json",
+    "sha256": "a5ac4cd9f0ade28ad02626a1ecd9331cb19b6d4fb9e515b918bfb6e0bed3534a"
+  },
+  "observedFailure": {
+    "diagnostic": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-failure-diagnostic-01/result.json",
+      "sha256": "c9423f5d865f247e44fbcb7d1e1cc08064363a99e789affc38c7e609794af9fe"
+    },
+    "bindingSnapshot": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-binding-diagnostic-01.json",
+      "sha256": "6535b9913304f0c4b04285dac3cfc2f6514d3517da8a1284d135d5a23d456b11"
+    },
+    "actualExitCode": 1,
+    "category": "completed",
+    "ownedGroupAbsent": true,
+    "unknownDescendants": false,
+    "originalInputsUnchanged": true,
+    "stage": "normal_selected",
+    "admissionHttpStatus": 503,
+    "admissionCode": "uar_service_binding_unavailable",
+    "bindingCode": "endpoint_role_mismatch",
+    "completedCases": 1
+  },
+  "correction": {
+    "problem": "Fixture declared an optional console endpoint even though packaged sidecar ServiceInstanceAuthority advertises console=None.",
+    "smallestChange": "Remove endpoints.console and unused service_instance.console_endpoint in providerFixture; two literal source-line changes in runtime fixture only.",
+    "fixtureLines": [
+      175,
+      184
+    ],
+    "receiverSource": {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/service_instance.rs",
+      "sha256": "67bedec4ba38d38e8b0d75080e7603ed6b213b40268a954269a9c05a134eba14",
+      "consoleBranchLine": 143,
+      "noneLine": 144
+    },
+    "remainingEndpointRoles": [
+      "runtime",
+      "administration",
+      "models"
+    ],
+    "receiverChecksPreserved": true,
+    "authenticationChanged": false,
+    "capabilityResponseSynthesized": false
+  },
+  "coverage": {
+    "transport": "Bossfang -> private application-equivalent fixture supervisor -> actual packaged UAR",
+    "actualAdmissionApprovalModelAndToolReceivers": true,
+    "nativeDirectTransportCertified": false,
+    "standaloneJwtCertified": false,
+    "remoteMultiTenantCertified": false,
+    "requiredHarnessCases": 18,
+    "postCorrectionCasesExecuted": 0,
+    "postCorrectionAcceptance": "not-run"
+  },
+  "verification": {
+    "performed": "Exact source edit and finite byte/hash/line recording only after parent released integration02 source freeze.",
+    "runtimeAfterCorrectionInvoked": false,
+    "buildInvoked": false,
+    "formatterInvoked": false,
+    "reviewInvoked": false,
+    "productRustChanged": false,
+    "coreConfigChanged": false,
+    "runtimeSealWritten": false,
+    "canonicalMutated": false,
+    "excludedF6Accessed": false,
+    "existingFailedEvidencePreserved": true,
+    "otherThreeFixtureHashesUnchanged": true
+  },
+  "handoff": "Parent binds current four fixture refs and actual readiness03, then runs only failed components at the completed boundary; do not claim this source correction passed runtime acceptance."
+}

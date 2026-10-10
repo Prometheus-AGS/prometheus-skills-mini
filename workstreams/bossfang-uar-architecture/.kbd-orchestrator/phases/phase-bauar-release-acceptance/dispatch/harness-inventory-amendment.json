@@ -1,0 +1,13 @@
+{
+  "time": "2026-10-09T21:44:22.874Z",
+  "kind": "bounded-observed-scope-amendment",
+  "task": "bauar-acc-02-current-harness-regression/2",
+  "changes": [
+    "Correct harness-inputs.json actual per-target binary/runtime selection while mapping H01–H04",
+    "Record missing H02 changed-payload same-admission assertion and identify bounded later scenario amendment"
+  ],
+  "observed": "Finite harness source inspection: identity uses standalone main binary; cursor uses in-process router; stdio hardcodes installed Node24.21.0. Gate does not generate changed-payload admission conflict.",
+  "noEarlyGate": true,
+  "productionBarrier": "still closed",
+  "testAmendment": "scope proposal pending after production barrier; no F6"
+}

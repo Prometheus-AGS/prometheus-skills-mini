@@ -181,7 +181,8 @@
       "owner": "uar-native-worker",
       "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
       "files": [
-        "src/llm/orchestrator.rs"
+        "src/llm/orchestrator.rs",
+        "src/uar/runtime/tool_admission/mod.rs"
       ]
     },
     {
@@ -229,7 +230,11 @@
         "scripts/gates/bauar-secret-projection-turn.ts",
         "scripts/gates/bauar-secret-projection-events.ts",
         "scripts/gates/bauar-secret-projection-history.ts",
-        "scripts/gates/bauar-secret-projection-lifecycle.ts"
+        "scripts/gates/bauar-secret-projection-lifecycle.ts",
+        "scripts/gates/bauar-secret-projection-provider.ts"
+      ],
+      "newFiles": [
+        "scripts/gates/bauar-secret-projection-provider.ts"
       ]
     },
     {
@@ -239,10 +244,14 @@
       "files": [
         "scripts/gates/uar-exact-tool-admission.ts",
         "scripts/gates/bauar-secret-projection.ts",
-        "scripts/gates/bauar-native-admission-controls.ts"
+        "scripts/gates/bauar-native-admission-controls.ts",
+        "scripts/gates/bauar-native-host-cases.ts",
+        "scripts/gates/bauar-native-desktop-cases.ts"
       ],
       "newFiles": [
-        "scripts/gates/bauar-native-admission-controls.ts"
+        "scripts/gates/bauar-native-admission-controls.ts",
+        "scripts/gates/bauar-native-host-cases.ts",
+        "scripts/gates/bauar-native-desktop-cases.ts"
       ],
       "startsOnlyAfter": [
         "1",
@@ -261,6 +270,86 @@
         "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/review"
       ],
       "productReadOnly": true
+    },
+    {
+      "scope": "V1-storage",
+      "owner": "uar-native-worker",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "files": [
+        "tests/bauar_native_admission_storage_fixture.rs"
+      ],
+      "newFiles": [
+        "tests/bauar_native_admission_storage_fixture.rs"
+      ],
+      "startsOnlyAfter": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "scope": "APPROVED-AMENDMENT-TASK9",
+      "owner": "boss_native_v2",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "files": [
+        "src/main/ai/mcp/McpCatalogService.ts",
+        "scripts/gates/bauar-secret-projection.ts",
+        "scripts/gates/bauar-secret-projection-mcp.ts",
+        "scripts/gates/bauar-secret-projection-launch.ts"
+      ]
+    },
+    {
+      "scope": "APPROVED-AMENDMENT-TASK9",
+      "owner": "uar_native_v2",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "files": [
+        "Cargo.toml",
+        "src/uar/runtime/native_skills/mod.rs",
+        "src/uar/runtime/native_skills/search_tools_gate.rs",
+        "src/llm/orchestrator.rs",
+        "src/uar/runtime/native_skills/search_tools.rs",
+        "src/uar/runtime/manager.rs"
+      ]
+    },
+    {
+      "scope": "APPROVED-AMENDMENT-TASK9",
+      "owner": "native_acceptance_author",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "files": [
+        "scripts/gates/bauar-native-admission-controls.ts",
+        "scripts/gates/bauar-native-desktop-cases.ts",
+        "scripts/gates/bauar-post-ack-cases.ts",
+        "scripts/gates/bauar-post-ack-gate.ts"
+      ]
+    },
+    {
+      "scope": "AMENDMENT-REASONING",
+      "owner": "root",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "files": [
+        "src/llm/liter_driver.rs"
+      ]
+    },
+    {
+      "scope": "TASK9-REQUIRED-NEGATIVE-COVERAGE",
+      "owner": "boss_native_v2",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "files": [
+        "scripts/gates/bauar-native-host-cases.ts",
+        "scripts/gates/bauar-secret-projection.ts",
+        "scripts/gates/bauar-secret-projection-provider.ts"
+      ]
+    },
+    {
+      "scope": "TASK9-REQUIRED-NEGATIVE-COVERAGE",
+      "owner": "native_acceptance_author",
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-boss",
+      "files": [
+        "scripts/gates/bauar-provider-negative-cases.ts"
+      ]
     }
   ],
   "fileOwnershipNote": "C1 and B2/B3 overlapping Boss paths have the same owner. V1 is an explicit later handoff only after all production writers finish; no concurrent second writer.",
@@ -310,6 +399,8 @@
         "tool_admission_integration",
         "--test",
         "bauar_inline_revision",
+        "--test",
+        "bauar_native_admission_storage_fixture",
         "--message-format=json"
       ],
       "when": "task7 after all production and final scenario authoring; compile only, no test execution or acceptance claim"
@@ -320,7 +411,7 @@
       "executable": "/Users/gqadonis/.local/share/fnm/node-versions/v24.14.1/installation/bin/node",
       "argv": [
         "--max-old-space-size=8192",
-        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/run-boss-existing-electron-build.mjs",
+        "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/run-boss-isolated-electron-build.mjs",
         "app"
       ],
       "when": "task7"
@@ -371,18 +462,24 @@
       ],
       "env": {
         "TSX_TSCONFIG_PATH": "tsconfig.node.json",
-        "THE_BOSS_UAR_SIDECAR_PATH": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/development-uar-payload/uar-sidecar"
+        "THE_BOSS_UAR_SIDECAR_PATH": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/development-uar-payload/uar-sidecar",
+        "THE_BOSS_UAR_STORAGE_FIXTURE_PATH": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/development-uar-payload/bauar-native-admission-storage-fixture"
       },
       "when": "task8 after G1; validate actual staged payload exact path before launch"
     }
   ],
   "payload": {
-    "outputDirectory": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/development-uar-payload",
-    "sourceManifest": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/final-source-manifest.json",
-    "artifactManifest": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/final-artifact-manifest.json",
+    "outputDirectory": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/development-uar-payload-12",
+    "sourceManifest": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/final-source-manifest-12.json",
+    "artifactManifest": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/final-artifact-manifest-12.json",
     "reuseOldPayloadAsFresh": false,
     "requiredBuildProfile": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/boss-uar-sidecar-profile-build-03-manifest.json",
-    "resources": "Reuse existing Node staging pattern; copy required model/policy/license resources only with exact hashes; no feature reduction"
+    "resources": "Reuse existing Node staging pattern; copy required model/policy/license resources only with exact hashes; no feature reduction",
+    "storageFixture": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/development-uar-payload-12/bauar-native-admission-storage-fixture",
+      "target": "bauar_native_admission_storage_fixture",
+      "scope": "gate-only offline seed/inspect; never release artifact or runtime replacement"
+    }
   },
   "faultControls": [
     {
@@ -453,5 +550,116 @@
     "planMutations": false,
     "executePrerequisite": "Re-read status/revisions; add bounded pending child tasks through actual manager; link canonical IDs; no rewrite of prior tasks",
     "uarTeamState": "none found; explicit native scoped worker, no definition install"
-  }
+  },
+  "executionScopeAmendments": [
+    {
+      "at": "2026-10-07T12:01:25.328Z",
+      "taskId": "5",
+      "file": "scripts/gates/bauar-secret-projection-provider.ts",
+      "reason": "Observed finite provider continuation adds >100 lines to existing419-line coordinator; cohesive provider conversation/types/diagnostics partition under same owner; no additional loop/scenario",
+      "authorization": "Approved Execute scope and repository500-line partition requirement; routine same-feature implementation correction"
+    },
+    {
+      "at": "2026-10-07T12:01:25.329Z",
+      "taskId": "3",
+      "file": "src/uar/runtime/tool_admission/mod.rs",
+      "reason": "Existing cancellation token is private; read-only is_cancelled accessor needed for explicit after-ack beforebody observation using same token, no new state",
+      "authorization": "Task3 required cancellation observation; already U1 source owner"
+    },
+    {
+      "at": "2026-10-07T12:28:13.286Z",
+      "taskId": "7",
+      "paths": [
+        "scripts/gates/bauar-native-host-cases.ts",
+        "scripts/gates/bauar-native-desktop-cases.ts"
+      ],
+      "reason": "Observed coordinator sizes G1~360/G2~434 plus required actual host/native fault acceptance cannot fit a single cohesive500-line control helper. Partition by host-case coordinator versus desktop-case coordinator; existing approved helper retains real transport interception. Gate-only paths; no production instrumentation/newexecutor/newdaemon.",
+      "approvalBasis": "Existing approved Execute scenario scope and500-line partition requirement; routine implementation path clarification",
+      "modelSelectionChanged": false
+    },
+    {
+      "at": "2026-10-07T12:33:44.730Z",
+      "taskId": "7",
+      "paths": [
+        "tests/bauar_native_admission_storage_fixture.rs"
+      ],
+      "repository": "/Users/gqadonis/.claude/worktrees/bauar-uar",
+      "reason": "Inspected pinned embedded Surreal engine supports offline schema assertion seed/inspect before genuine unchanged sidecar opens its gate-owned runtime.db. Gate-only compiled fixture utility uses existing SDK; not replacement executor/runtime/host, production instrumentation, new service, or dependency.",
+      "approvalBasis": "Approved task7 genuine isolated storage fault feasibility and actual persistence controls; exact gate-only path clarification",
+      "control": "FC-UAR-PERSISTENCE",
+      "runtimeAcceptance": "pending actual pinned-engine execution",
+      "scopeLimits": [
+        "Only new compiled fixture source and safe evidence",
+        "Node orchestrates emitted fixture; no shell/Python script",
+        "Production sidecar source remains unchanged",
+        "Never open/hash excluded D0 source"
+      ]
+    },
+    {
+      "at": "2026-10-07T12:37:37.374Z",
+      "taskId": "7",
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/run-boss-isolated-electron-build.mjs",
+      "reason": "Observed old adapter imports original installation binding. Actual locked isolated binding1.2.6 has same expectedSHA256; bounded helper changes only bindingpath, preserves real electron-vite config/features/import sequence.",
+      "source": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/run-boss-existing-electron-build.mjs",
+      "sourceSha256": "ea9eb4af7d62e0ba93678df6eb9643c254c9c2d50480cb445dea5ffb63faa89f",
+      "nativeSha256": "976ee53424608db5e470eb46b141088b80d95295d69210e1ebd8ba6056296377",
+      "approvalBasis": "Approved no foreign installation substitution and fresh source-boundbuild"
+    },
+    {
+      "at": "2026-10-07T18:27:01.143Z",
+      "authorization": "Operator Approved! all three documented amendments",
+      "dispatch": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/approved-three-amendments-dispatch.json",
+      "catalogIdentity": {
+        "serverId": "original id only"
+      },
+      "protocol": "Nondefault instrumented full-feature artifact; real cancel with explicit count0 and calibrated count1; truthful cancellation-drop outcome",
+      "newBossGatePartition": "scripts/gates/bauar-secret-projection-launch.ts",
+      "reason": "Cohesive existing Electron launch/profile lifecycle frees coordinator for separately owned postack helper; preserve500lines",
+      "gateInput": {
+        "THE_BOSS_UAR_POST_ACK_SIDECAR_PATH": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/development-uar-gate-payload-12/uar-sidecar"
+      },
+      "gateInputs": {
+        "THE_BOSS_UAR_POST_ACK_SIDECAR_PATH": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/development-uar-gate-payload-12/uar-sidecar",
+        "THE_BOSS_UAR_POST_ACK_MANIFEST_PATH": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/development-uar-gate-payload-12/gate-artifact-manifest.json"
+      },
+      "gateArtifactManifestFields": [
+        "schemaVersion",
+        "artifactPath",
+        "artifactSha256",
+        "sourceManifestPath",
+        "sourceManifestSha256",
+        "features"
+      ]
+    },
+    {
+      "at": "2026-10-07T19:03:06.446Z",
+      "taskId": "9",
+      "authorization": "Existing approved A1/A4 explicit negative control requirements, no new product behavior",
+      "design": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/children/desktop-mcp-projection-acceptance/evidence/execute/negative-control-execution-design.md",
+      "reason": "Inventory found wrong-owner and malformed provider history controls not separately reproduced. Finish real-boundary scenario authoring before final checks; prior passing receipts retain original boundaries.",
+      "gateOnly": true,
+      "productArtifacts": "Reuse only if all compiled product inputs and artifact hashes unchanged, with explicit source-specific binding; new TS compile required",
+      "cases": [
+        "changed_owner",
+        "unadvertised_target_after_discovery",
+        "unrelated_tool_call_id",
+        "missing_tool_call_id",
+        "missing_tool_result",
+        "filler_dispatch_refused"
+      ],
+      "nonClaim": "Provider input faults establish the controlled fixture boundary on real UAR requests, not UAR malformed-history robustness. Filler dispatch1 is distinguished from protected target effects0."
+    },
+    {
+      "at": "2026-10-07T19:23:46.091Z",
+      "taskId": "9",
+      "authorization": "Approved Execute failed-gate correction and rerun-only-failed requirement",
+      "paths": [
+        "scripts/gates/bauar-post-ack-gate.ts",
+        "scripts/gates/bauar-post-ack-cases.ts"
+      ],
+      "gateOnly": true,
+      "reason": "G2-12 passed six profiles/nine events/five provider negatives/seven ordinary natives then failed postack calibration registration with missing bounded failure metadata. Focused runner retains all postack assertions and genuine artifacts; preserve passing source15 receipts instead of repeating them.",
+      "productionChanges": false
+    }
+  ]
 }

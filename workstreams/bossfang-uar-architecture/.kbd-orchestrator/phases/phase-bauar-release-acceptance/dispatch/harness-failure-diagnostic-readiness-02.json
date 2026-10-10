@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "kind": "harness-failure-diagnostic-line-reference-correction",
+  "phase": "phase-bauar-release-acceptance",
+  "status": "diagnosed-source-correction-held",
+  "supersedes": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/dispatch/harness-failure-diagnostic-readiness-01.json",
+    "sha256": "323838e035b36cccd07fa25d337291eecd73321e7db0fcb5334f7bbfe04496ec"
+  },
+  "correction": "Correct exact inspected source line reference; diagnosis and file SHA refs unchanged.",
+  "actualCodeReferences": {
+    "fixture": {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-runtime.mjs",
+      "endpointsLine": 174,
+      "consoleConfigLine": 184
+    },
+    "receiver": {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/src/uar/service_instance.rs",
+      "consoleSidecarBranchLine": 143,
+      "noneLine": 144,
+      "configuredStandaloneConsoleLine": 146
+    }
+  },
+  "sourceCorrectionImplemented": false
+}

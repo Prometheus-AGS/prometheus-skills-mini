@@ -1,0 +1,19 @@
+# Tasks
+
+scope: isolated Boss build/local-uar-source.json, generated UAR/Boss candidate outputs and phase receipts. Depends on every source checkpoint from bauar-int-01-scoped-source-intake. Complete production source/pin wiring before any build/package verification; do not run broad tests or independent review as part of these tasks.
+
+## 1. Complete the local bundle source wiring
+
+- [x] 1.1 Bind the clean integrated UAR commit, server-full feature profile and native darwin-arm64 target to the existing sidecar/local packaging mechanisms, with dependency authority and toolchain recorded. Completion is an exact build-input record with no test-only features, dependency upgrade or invented source identity.
+- [x] 1.2 Set only the isolated Boss local-UAR source revision to that UAR checkpoint, preserve version/platform/repository and all canonical public manifests/validators, and checkpoint the final Boss source. Completion is the reviewed one-file pin diff and actual Boss commit; all coherent phase source/pin implementation must now be complete.
+
+## 2. Produce the completed local candidate
+
+- [x] 2.1 Build the real UAR sidecar once at the complete-production boundary using the recorded locked release target/features and exclusive target ownership; retain diagnostics and source/binary identity. Completion is the actual successful build and output digest, not an old external acceptance binary or a mislabeled compile.
+- [x] 2.2 Run the existing Node sidecar packager against that target output with UAR_SIDECAR_FEATURES=server-full and produce its archive/record/file manifest. Completion is the actual source-bound archive and matching binary/archive/file digests; no old archive is relabeled.
+- [x] 2.3 Assemble an unsigned local Boss darwin-arm64 directory bundle using the existing local profile, preparation/build and electron-builder hooks with --dir --publish never. Completion is the actual bundle, intact hook results and bundled UAR source/digest; do not invoke signed-DMG validation or public publication.
+- [x] 2.4 Write the linked local-delivery receipt and downstream handoff, including final commits, source-intake digest, build/profile/platform, archive and app identities, actual hook outcomes and separate deferred acceptance/certification/publication statuses. Completion is the schema-conforming finite delivery receipt; runtime/startup/negative-control acceptance is not claimed unless separately run after coherent delivery.
+
+## Plan assignment reference
+
+Task models, worker ownership and execution order are defined in [the phase plan](../../../.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/plan.md). Match full phase path phase-bauar-release-integration-2026-10-09 / bauar-int-02-local-current-uar-payload / OpenSpec backend ordinals 1–6. Display labels remain unchanged; no model metadata is a task.

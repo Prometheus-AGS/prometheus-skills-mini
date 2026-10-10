@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "at": "2026-10-09T10:58:44.789Z",
+  "tasks": [
+    {
+      "change": "bauar-int-01-scoped-source-intake",
+      "id": "1",
+      "agent": "/root/release_bind_inputs",
+      "provider": "OpenAI",
+      "model": "gpt-6-astra",
+      "reasoning": "high",
+      "route": "collaboration.spawn_agent fork_turns=none",
+      "status": "complete",
+      "ownership": [
+        "Three new candidate worktrees, creation only",
+        "evidence/execute/intake-inputs.json",
+        "evidence/execute/candidate-creation.json"
+      ],
+      "canonicalOwner": "/root",
+      "result": "intake-inputs.json and candidate-creation.json; actual task boundary recorded"
+    },
+    {
+      "change": "bauar-int-01-scoped-source-intake",
+      "taskId": 2,
+      "agent": "/root/intake_uar",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "status": "complete",
+      "candidateRoot": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "candidateCommit": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+      "receipt": "intake/uar.json"
+    },
+    {
+      "change": "bauar-int-01-scoped-source-intake",
+      "taskId": 3,
+      "agent": "/root/intake_bossfang",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "high",
+      "status": "complete",
+      "candidateRoot": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang",
+      "candidateCommit": "1d518936cb15b79d30bdd315510ff925613a0f4d",
+      "receipt": "intake/bossfang.json"
+    },
+    {
+      "change": "bauar-int-01-scoped-source-intake",
+      "taskId": 4,
+      "agent": "/root/intake_boss",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "status": "complete",
+      "candidateRoot": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "candidateCommit": "bda3715df5425e323188f84c595978dbd4f2d1e5",
+      "receipt": "intake/boss.json"
+    },
+    {
+      "change": "bauar-int-01-scoped-source-intake",
+      "taskId": 5,
+      "agent": "/root/intake_handoff",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "high",
+      "status": "complete",
+      "scope": "source-intake receipt and local handoff only",
+      "receipt": "source-intake.json",
+      "sha256": "ae8dcf2d657cd419a45f65f6e7ae619bf50bbc90940b1ef9322cd97728cef13f"
+    },
+    {
+      "change": "bauar-int-02-local-current-uar-payload",
+      "taskId": 1,
+      "agent": "/root/delivery_inputs",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "high",
+      "status": "complete",
+      "scope": "Actual build input binding; reuse existing pinned ignored inputs only"
+    },
+    {
+      "change": "bauar-int-02-local-current-uar-payload",
+      "taskId": 2,
+      "agent": "/root/delivery_pin",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "status": "complete",
+      "scope": "Only Boss build/local-uar-source.json and attributed checkpoint"
+    },
+    {
+      "change": "bauar-int-02-local-current-uar-payload",
+      "taskId": 3,
+      "agent": "/root/delivery_uar_build",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "high",
+      "status": "complete",
+      "scope": "Exclusive UAR target; actual locked server-full build only"
+    },
+    {
+      "change": "bauar-int-02-local-current-uar-payload",
+      "taskId": 5,
+      "agent": "/root/delivery_boss_bundle",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "high",
+      "status": "complete",
+      "scope": "Boss-only input preparation; actual app assembly waits for archive",
+      "ownership": "Candidate Boss only; no UAR target/dist writes",
+      "result": "Actual unsigned darwin-arm64 app assembled; boss-delivery.json"
+    },
+    {
+      "change": "bauar-int-02-local-current-uar-payload",
+      "taskId": 4,
+      "agent": "/root/delivery_uar_archive",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high",
+      "status": "complete",
+      "scope": "Exclusive UAR dist/boss-sidecar, actual packager and linked archive identity",
+      "route": "collaboration.spawn_agent fork_turns=none"
+    },
+    {
+      "change": "bauar-int-02-local-current-uar-payload",
+      "taskId": 6,
+      "agent": "/root/delivery_handoff",
+      "model": "gpt-6-astra",
+      "reasoningEffort": "high",
+      "route": "collaboration.spawn_agent fork_turns=none",
+      "status": "complete",
+      "scope": "Linked local-delivery schema/validation/downstream handoff only; no reviewer",
+      "result": "Schema-valid local-delivery.json, validation and handoff; ownership released"
+    }
+  ],
+  "scope": "Actual task-scoped native dispatch; no reviewer/verifier; not completion evidence",
+  "updatedAt": "2026-10-09T13:49:49.317Z"
+}

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "status": "source-ready-not-runtime-verified",
+  "owner": "/root/runtime_seal",
+  "phase": "phase-bauar-release-acceptance",
+  "changes": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-gate.mjs",
+      "sha256": "acd8fe8a6c401eed444a34a918cec3c5aab922846182dd2f0989433c132de16c",
+      "bytes": 31313,
+      "lines": 491,
+      "beforeSha256": "acd8fe8a6c401eed444a34a918cec3c5aab922846182dd2f0989433c132de16c"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-peer.mjs",
+      "sha256": "f9d934ce25971d6c5d3981f89e5a366098fd3644759549efb4a4e9dc6cadfecb",
+      "bytes": 20637,
+      "lines": 343,
+      "beforeSha256": "f9d934ce25971d6c5d3981f89e5a366098fd3644759549efb4a4e9dc6cadfecb"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-runtime.mjs",
+      "sha256": "7b162735e46dc35a73edec46017302ce1ed82b0b0b6d0c975c75f7fbf8167b1e",
+      "bytes": 15751,
+      "lines": 271,
+      "beforeSha256": "482ffa9b818201bea6bb3bd7b6052302a97505c69d935475c790e29af2c9e6c9"
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-supervisor.mjs",
+      "sha256": "a024674e5ea3f412edbc9768e8109743987f36af860efe893ce2248c47247d8f",
+      "bytes": 4218,
+      "lines": 85,
+      "beforeSha256": "a024674e5ea3f412edbc9768e8109743987f36af860efe893ce2248c47247d8f"
+    }
+  ],
+  "changedPaths": [
+    "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-runtime.mjs"
+  ],
+  "supersedes": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/dispatch/harness-fixture-readiness-04.json",
+    "sha256": "35958d19298fa175b41c361d39707894e21aa8b0ac642c15be842ca8d36407ee"
+  },
+  "observedFailure": {
+    "stage": "legacy_call",
+    "actualKernelExit": 101,
+    "rustPanic": true,
+    "mainCasesCompleted": 12,
+    "nativeKernelCasesCompleted": 3,
+    "exactPanicPayloadDiscarded": true,
+    "httpStatus": null,
+    "diagnostic": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-kernel-diagnostic-01.json",
+      "sha256": "87000eb96d49336a221a8bbc044a6c2ce5b959480f6d4ac9feffa6fa0462e324"
+    }
+  },
+  "correction": {
+    "observedStage": "legacy_call",
+    "nativeKernelCasesCompleted": 3,
+    "actualKernelExit": 101,
+    "mainCasesCompleted": 12,
+    "field": "llm.api_key",
+    "valueSource": "existing generated modelCredential",
+    "credentialKind": "upstream controlled model provider; distinct from frontend/service/launch authority",
+    "minimumCorrection": "Configure the existing upstream model credential for the legacy UAR model-provider path.",
+    "diagnostic": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-kernel-diagnostic-01.json",
+      "sha256": "87000eb96d49336a221a8bbc044a6c2ce5b959480f6d4ac9feffa6fa0462e324"
+    },
+    "lostPanicPayloadUnavailable": true,
+    "lostHttpStatus": null
+  },
+  "coverage": {
+    "transport": "Bossfang -> private application-equivalent fixture supervisor -> actual packaged UAR",
+    "actualAdmissionApprovalModelAndToolReceivers": true,
+    "nativeDirectTransportCertified": false,
+    "standaloneJwtCertified": false,
+    "remoteMultiTenantCertified": false,
+    "requiredHarnessCases": 18,
+    "postCorrectionCasesExecuted": 0,
+    "postCorrectionAcceptance": "not-run"
+  },
+  "verification": {
+    "runtimeAfterCorrection": false,
+    "buildsAfterCorrection": false,
+    "testsAfterCorrection": false,
+    "formatterRun": false,
+    "reviewRun": false,
+    "canonicalMutated": false,
+    "boundConfigOrSealMutated": false,
+    "f6Accessed": false
+  },
+  "handoff": "Exact four fixture refs are source ready only. Root owns config10/barrier/seal05 and failed-harness-only retry; no post-correction runtime result. Readiness04 copied historical console-correction narrative and is superseded here; source bytes are unchanged between04 and05.",
+  "createdAt": "2026-10-10T02:39:11.801Z",
+  "previousReadiness": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/dispatch/harness-fixture-readiness-03.json",
+    "sha256": "7d4ebd47600c49505ccb33df6ecc89f2718b45f9459dc7378e4445fec4aa9922"
+  },
+  "diagnosedCorrection": {
+    "observedStage": "legacy_call",
+    "nativeKernelCasesCompleted": 3,
+    "actualKernelExit": 101,
+    "mainCasesCompleted": 12,
+    "field": "llm.api_key",
+    "valueSource": "existing generated modelCredential",
+    "credentialKind": "upstream controlled model provider; distinct from frontend/service/launch authority",
+    "minimumCorrection": "Configure the existing upstream model credential for the legacy UAR model-provider path.",
+    "diagnostic": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-kernel-diagnostic-01.json",
+      "sha256": "87000eb96d49336a221a8bbc044a6c2ce5b959480f6d4ac9feffa6fa0462e324"
+    },
+    "lostPanicPayloadUnavailable": true,
+    "lostHttpStatus": null
+  },
+  "postCorrectionCasesExecuted": 0
+}

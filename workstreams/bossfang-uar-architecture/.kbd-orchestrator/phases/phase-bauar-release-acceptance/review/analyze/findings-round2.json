@@ -1,0 +1,23 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "analysis.md",
+      "claim": "The analysis recommends a macOS-only unsigned local acceptance target without evaluating whether the seeded goal's signed/platform/publication scope decision requires any candidate or evidence for other platforms/signing/publication.",
+      "evidence": "Goals require “(3) determine signed/platform/publication scope and its release owner,” while the recommendation says “Complete a bounded unsigned macOS ARM64 local acceptance delivery” and later says “Signed/installed macOS, Intel/Windows and publication need separately selected requirements, native hosts/owners and authority; their availability has not been established.” This records deferral, but the candidate table contains no signing/notarization, Windows/Intel, or publication/release-owner candidate evaluation beyond declaring them unselected.",
+      "suggested_fix": "Add an explicit analyze subsection/candidate disposition for signing, installation, Intel/Windows, and publication ownership explaining why each is rejected/deferred for this phase or what decision evidence Spec must obtain."
+    }
+  ],
+  "checked_classes": []
+}

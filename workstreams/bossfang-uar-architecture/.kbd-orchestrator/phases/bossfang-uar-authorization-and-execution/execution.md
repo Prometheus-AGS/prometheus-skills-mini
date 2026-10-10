@@ -1,5 +1,7 @@
 # Execute — Bossfang–UAR authorization and execution
 
+> **Latest continuation — revision310:** Identity01 and harness03 are complete. Operator withdrew F6; tasks02/5–6 are CANCELLED, not passed. Current reconnect/edited acceptance passed with source239/artifact28 unchanged; amended authorization02/task7 is complete. Active remaining task work:02/8 and04/10 packaging/checks/review. Global formatting FAILED and broad T2 NOT RUN remain parent-phase requirements. Packaging proceeds through the existing canonical bundle plus current external runtime path. [Current authorization acceptance](evidence/execute/parent-resume-2026-10-08/authorization-task7-acceptance.json). Historical titles/checkboxes retain old F6 wording and do not select work.
+
 Started 2026-10-06. **Execute remains active and incomplete.** The user authorized Execute and the agent team. No Execute completion, Reflect handover, publication or original shipping-gate closure has occurred.
 
 ## Authority and dispatch
@@ -320,3 +322,75 @@ Runtime08 history absence was a fixture lifecycle mismatch: releasing a window w
 ### Current-source postlint acceptance — 2026-10-06T23:35:43.248Z
 
 The focused postlint gate completed four authored actual cases with one provider admission, two actual model calls and one approved MCP effect. Null and object checkpoints retain original JSON through restarts; wrong/stale/missing/duplicate approval refusals preserve projections; repeated reconciliation does not readmit or replay the effect. Root tasks/get and tasks/cancel preserve -32602 parameter errors; enabled authenticated connection listing and all three moved OpenAPI descriptors remain present. [Actual current-source four-case acceptance and omissions](/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/bossfang-postlint-runtime-01-acceptance.json). This verifies the selected current postlint delta, not all historical H28 behavior or unsupported Accepted steer, disabled-profile HTTP, refresh/diagnostic invocation, sidecar edits or channel delivery. Primary passing evidence now totals50 across exact source groups. Existing H28 is not relabeled. Whole desktop projection remains failed at its MCP success assertion and fixed diagnostics are being compiled. No package acceptance or phase completion follows.
+
+
+### Current implemented responsibility boundaries — 2026-10-06T23:43:57.936Z
+
+These boundaries describe the selected implemented path, with exact runtime evidence limited to the linked source groups. Bossfang remains the job orchestrator: it persists the job, selected attempt, durable admission intent and reconciliation outcome. UAR owns the delegated model/tool/continuation loop. The Boss desktop owns application credential custody and the run-bound host tool authority. A model endpoint produces proposals; an MCP receiver performs only the tool call authorized for its resource and invocation. Restart uncertainty requires reconciliation, as the operator selected, rather than automatic re-execution.
+
+| Responsibility | Current owner and acceptance limit |
+|---|---|
+| Job/attempt selection and intent | Bossfang. Actual selected admission and persisted restart/no-readmission scenarios passed; cron/deferred jobs without selected attempt references retain their native path. |
+| Model, tool and continuation loop | UAR full-run harness. Original-source18-case acceptance and current postlint4-case delta are separately bound. No claim that every scheduler route selects UAR automatically. |
+| Approval decision | The originating execution and exact pending approval identity. Nine desktop cases and current Bossfang exact refusals passed; historical presentations cannot execute. |
+| Host authority and effects | The Boss prepared invocation store. Revalidation is non-consuming; actual authorized tools/call consumes the exact capability. Current grouped desktop proof includes one effect and one revalidation for reconnect. |
+| Credential custody and MCP resource authorization | Application-supplied credentials and run-scoped resource bindings. Synthetic private issuer/MCP paths were exercised; the operator selected no actual external server/identity provider defaults. External receiving-server and credential-custody certification remain outside those receipts. |
+| Recovery | Durable Bossfang job/presentation reconciliation; unsupported/unknown after UAR restart requires reconciliation. No durable UAR process-resume or automatic re-execution claim. |
+
+[Original-source full harness acceptance](/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/bossfang-harness-runtime-28-acceptance.json), [Current postlint delta](/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/bossfang-postlint-runtime-01-acceptance.json), [Source-grouped desktop approval acceptance](/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/boss-approval-runtime-15-acceptance.json).
+
+```mermaid
+flowchart LR
+  J[Bossfang job and selected attempt] --> I[Durable admission intent]
+  I --> H[UAR full-run admission]
+  H --> L[UAR model and tool loop]
+  L --> A[Originating exact approval decision]
+  A --> T[Bound MCP tool execution]
+  T --> L
+  L --> O[Retained correlated terminal outcome]
+  O --> R[Bossfang job reconciliation]
+  H --> U[Unknown restart outcome]
+  U --> R
+```
+
+The remaining projection failure is not yet attributed to a production defect. Source comparison establishes non-plan runtime Ask and explicit positive exact-ID decision as pre-existing behavior. Runtime11 now observes approval-request and decision counts without changing the original180-second wait. [Baseline/source comparison and limitations](/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/projection-mcp-approval-source-cause/receipt.json). Whole projection, current-source packaging, unwaived global formatting, excluded D0 evidence and final cumulative independent review remain unresolved.
+
+
+### Current desktop projection state — 2026-10-06T23:50:07.476Z
+
+Runtime11 confirmed a real approval request with no decision and no tool effect, explaining its failed original180-second wait. The pre-existing runtime Ask policy is preserved; the fixture now answers through the existing exact-ID IPC. Node16 passed. Runtime12 then completes without a stream error, with actual run inspection matching its projected source. It still fails the original first MCP success assertions: zero prepared invocations, zero receiving-server calls and zero matched model tool inputs. This failure is before host prepare; its cause is under source investigation. No projection primary PASS or production correction is claimed. [Actual runtime11/source comparison](/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/boss-secret-projection-runtime-11-observation.json), [Single fixture correction and preserved assertions](/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/projection-mcp-approval-fixture-correction/receipt.json), [Actual runtime12 assertion fields/source binding](/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/bossfang-uar-authorization-and-execution/evidence/execute/boss-secret-projection-runtime-12-observation.json). Current retained primary case count50, canonical185/plan5 and Execute active are unchanged.
+
+## Identity task7 resumption — 2026-10-08
+
+Canonical task7 was already in_progress at revision301; no duplicate start transition was made. The plan assignment for bossfang-uar-authorization-and-execution / bauar-01-identity-boundaries /7 was rechecked against the exposed native route and dispatched to identity_task7_disposition via collaboration.spawn_agent, gpt-6-astra/high, fresh context. Root retained KBD state ownership. The worker reconciled finite receipts; root verified15 accepted identity input hashes unchanged, maximum429 lines. No product edits, tests or builds ran. [Proposed task-specific acceptance boundary](evidence/execute/parent-resume-2026-10-08/identity-task7-disposition.md) awaits the operator: scoped runtime/format/compiler evidence can support task closure only with explicit disposition of the failed global formatter and unrun broad T2 suite, which remain parent-phase requirements. Task7 and all parent gates remain open pending that decision.
+
+### Cancelled-task backend reconciliation
+
+Canonical02/5 and02/6 remain CANCELLED. Their OpenSpec boxes represent closed-by-cancellation with explicit CANCELLED labels, preserving ordinals and preventing the backend from presenting withdrawn diagnostics as pending. They are not test passes. Only02/8 remains active in the authorization change.
+
+
+## Latest continuation — canonical revision 315
+
+F6 withdrawn; approval task 7 completed from current reconnect/edited real-path evidence. Obsolete mini QA blocker cleared against completed child repair. Task 8 attempted canonical unsigned directory packaging and remains open after reproduced payload/source identity mismatch. No packaged launch occurred; generated skill files restored and release pins unchanged. See [current execution status](evidence/execute/parent-resume-2026-10-08/current-execution-status.md) for exact evidence and remaining parent obligations. Parent Execute remains active; no stage handover or certification claimed.
+
+
+## Packaging continuation completed — revision317
+
+The 14-line artifact-entry correction preserves the intended source pin; canonical package02 and packaged external-current-UAR startup04 passed with cleanup/restoration. Scoped deterministic and isolated review passed. Earlier oracle/ENOSPC failures retained. See [current execution status](evidence/execute/parent-resume-2026-10-08/current-execution-status.md). Parent formatting/T2/platform and cumulative-review obligations remain; no full task/stage completion claimed.
+
+### Phase formatting waiver — 2026-10-09T06:02:14.635Z
+
+The operator explicitly waived the global formatter requirement for this phase and instructed continued work under implementation-first, completed-boundary testing. Canonical decision bauar-phase-global-format-waiver-2026-10-09 records that the global result remains FAILED; it is not relabeled green. Remaining eligible checks, cumulative independent review and handoff remain outstanding. [Receipt](evidence/execute/parent-resume-2026-10-08/global-format-operator-waiver.json).
+
+### Completed-boundary fixture correction — 2026-10-09T06:04:29.532Z
+
+The remaining regression inventory found test_verify_legacy_mcp_tools expects and executes a shipped default server, contradicting the accepted empty mcp.json contract. Exact claim permits only replacing that legacy test with a shipped-empty configuration/registry assertion, without ambient dotenv or tool execution. This is a test-only correction, not a new runtime boundary or reordered partial-production gate. [Claim](evidence/execute/parent-resume-2026-10-08/legacy-default-fixture-correction-claim.json).
+
+
+## 2026-10-09 — Operator directs implementation closure with verification deferred
+
+Operator explicitly directs waiver and implementation-first/test-later closure. Remaining broad UAR regression/example/doctest batch, full cumulative independent delivery review and global formatting are deferred for later acceptance, not PASSED. Retain existing selected production-path acceptance, scoped checks, unsigned macOS package and external-current-UAR startup evidence. Close implementation/disposition tasks under this amendment; no shipping certification, deployment, external receiver acceptance or F6 reinstatement. Archive specifications and reflect with partial verification honestly recorded.
+
+Authority: “Just waive it and continue. we can handle it later. That is my rule--implement first and test later. Go”
+
+Tasks 02/8 and 04/10 now close by completed build/platform/ownership disposition plus the operator waiver, not by inventing passing broad checks. Certification remains incomplete/deferred. See evidence/execute/parent-resume-2026-10-08/operator-deferred-verification.json. No product code changes are introduced by this amendment.

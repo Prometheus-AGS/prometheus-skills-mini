@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "2",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 490,
+  "derivedRevision": 490,
+  "frontier": {
+    "69cddcdf-6458-4402-82b3-dcf30e2694b5": 490
+  },
+  "conflictCount": 0,
+  "phase": "phase-bauar-release-acceptance",
+  "phaseId": "phase-bauar-release-acceptance",
+  "parentPhase": null,
+  "last_updated": "2026-10-10T02:48:01.627581Z",
+  "last_updated_by": "kbd-runtime",
+  "changes_total": 3,
+  "changes_completed": 2,
+  "implementation_total": 3,
+  "implementation_completed": 2,
+  "completion": {
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 2,
+      "total": 3,
+      "status": "IN_PROGRESS"
+    },
+    "evidence": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "certification": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    },
+    "publication": {
+      "status": "NOT_TRACKED",
+      "summary": null,
+      "blockers": []
+    }
+  },
+  "completionScopes": {
+    "completion": "phase",
+    "runCompletion": "run"
+  },
+  "runCompletion": {
+    "scope": "run",
+    "runId": "project-20261006T094115Z",
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 9,
+      "total": 10,
+      "status": "IN_PROGRESS"
+    },
+    "evidence": {
+      "status": "COMPLETE",
+      "summary": "Selected production-path acceptance, source binding, package/platform limitations and operator-deferred verification disposition documented. This is a completed evidence inventory; it does not say all acceptance passed.",
+      "blockers": []
+    },
+    "certification": {
+      "status": "SKIPPED",
+      "summary": "Operator waives full certification for this implementation phase and defers remaining broad tests, cumulative independent review and global formatting. Existing selected passes retained. Shipping/C05 and remote deployment certification unclaimed. Certification work deferred to later release acceptance.",
+      "blockers": []
+    },
+    "publication": {
+      "status": "SKIPPED",
+      "summary": "No product publication/deployment/merge is authorized by isolated phase closure; deliverable is local implementation plus reviewable handoff.",
+      "blockers": []
+    }
+  },
+  "changes": [
+    {
+      "id": "bauar-acc-01-private-packaged-desktop",
+      "title": "Private packaged desktop startup and acceptance",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 3,
+      "tasks_done": 3,
+      "last_task_completed": "2.1 Only after parent production and 01/1.2 finish, adapt the installed Playwright packaged gate/launch helper and scripts/gates/bauar-native-admission-controls.ts, scripts/gates/bauar-native-desktop-cases.ts and scripts/gates/bauar-secret-projection-lifecycle.ts for an explicit bundled main-directory input (with unchanged development defaults), strict approvals, eager/deferred effects, native fault/restart/projection cases and safe output; verify completion by delivered D01–D04 executable cases mapped to the frozen inventory. This task records scenario source readiness only; actual observable/negative results belong to consolidated 03/2.1 and cannot be claimed here.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "bauar-acc-02-current-harness-regression",
+      "title": "Current Bossfang harness and eligible UAR regression",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 3,
+      "tasks_done": 3,
+      "last_task_completed": "2.1 After consolidated 03/2.1 executes H01–H04, bind and adjudicate actual harness/regression observables, paired negative controls, source/profile identities and cleanup outcomes; completion requires passing selected receipts and truthful unsupported/unknown restart results, with defects or missing evidence retained as FAIL/BLOCKED.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "bauar-acc-03-local-acceptance-evidence",
+      "title": "Local source-bound acceptance evidence and readiness",
+      "status": "IN_PROGRESS",
+      "implementation_status": "IN_PROGRESS",
+      "tasks_total": 5,
+      "tasks_done": 2,
+      "last_task_completed": "1.2 Freeze candidate source/package/test-host/scenario inputs and finite cumulative product review/formatting paths; deliver explicit scope/owner dispositions and record all parent production tasks complete only after their actual completion. Verify input declarations by schema and named file inspection, not a runtime acceptance claim.",
+      "next_task_pending": "2.1 After all production tasks, 01/1.2 packaging and 01/2.1 executable scenario adaptation, run the exact integration-stage command in verification.md over D01–D04, H01–H04 and E01–E02; retain actual source-bound observables, negatives, exits and cleanup. Fix coherent failures then rerun only failed/invalidated components; missing prerequisite or zero-test evidence is BLOCKED.",
+      "blockers": []
+    }
+  ],
+  "children": {},
+  "migrationStatus": null
+}

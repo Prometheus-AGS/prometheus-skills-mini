@@ -60,3 +60,14 @@ All four coordinating OpenSpec changes validate strictly. Independent whole-set 
 2026-10-06. Preserve four coordinating changes and all 34 numeric backend task IDs. Bind reviewed requirements to isolated product child worktrees before dispatch. Source ownership, client compatibility and unanswered recovery/remote custody choices remain explicit blockers. Implement 01→02→03→04 production before shared V1/V2 acceptance, avoiding evidence-dependency deadlock. Existing C05 and original shipping gates remain independently owned.
 
 The first whole-plan review passed; targeted call inventory refinement exposed an unassigned A2A cancellation obligation. It is now explicit in 03/7 and LIFECYCLE acceptance, with pending-wake guard in 03/6 and exact serial network.rs function ownership. Independent correction confirmation passed. No product behavior was changed.
+
+## Execute product decisions 2026-10-06
+See [scope amendment](execute-scope-amendment.md) for direct restart, strict-cutover and empty-remote/default-removal decisions. These supersede the earlier open prerequisites.
+
+## 2026-10-08T23:24:26.255Z — Identity task7 acceptance boundary approved
+
+Direct operator reply: “Approved”. Accept the existing eight AUTH/KEY cases and scoped formatting/compiler evidence for01/7; retain global formatting FAILED and broad T2 NOT RUN at parent phase/release level. No D0/F6, package/platform, independent review or original shipping gate is waived. [Approval and source binding](evidence/execute/parent-resume-2026-10-08/identity-task7-acceptance.json).
+
+## Operator scope correction — 2026-10-08T23:39:17.118Z
+
+The operator instructed: “Forget about this and move forward. There is no vulnerability.” F6/D0 session-owner investigation and conditional remediation are removed from this release phase’s acceptance scope. Tasks02/5 and02/6 are withdrawn/cancelled, not passed or evidence-backed disproved. Task02/7 now covers exact approval/claim/cancellation only. Do not inspect, execute or retry the excluded diagnostic. No assertion of a demonstrated vulnerability or a verified absence of one follows. Application/service credentials on the selected Bossfang→UAR path and configured resource credentials on outbound MCP connections remain the accepted architecture. Other identity, exact-decision/effect, formatting, package/platform and independent-review requirements remain in force. This supersedes earlier F6 dependency and blocker statements in historical plans/reports.

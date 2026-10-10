@@ -1,0 +1,13 @@
+{
+  "stage": "assess",
+  "completedAt": "2026-10-09T14:48:31.300Z",
+  "outputs": [
+    "assessment.md",
+    "evidence/assess/baseline.json",
+    "review/assess/findings-round2.json"
+  ],
+  "nextStage": "analyze",
+  "summaryForNext": "Current source-bound unsigned darwin-arm64 app exists; exact bundled startup/workflows, eligible regression and cumulative product review remain unpassed. Analyze must scope executable acceptance and release ownership/platform/publication choices; the old experience gate requires an external override. Artifact review PASS after evidence-packet correction, but distinct-model identity is unverified; F6 remains cancelled, remote certification excluded and publication unauthorized.",
+  "skipped": false,
+  "skipReason": null
+}

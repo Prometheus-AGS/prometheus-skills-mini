@@ -1,0 +1,231 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:bauar:release-source-intake:1",
+  "title": "BAUAR scoped source intake receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "phase",
+    "snapshotTime",
+    "repositories",
+    "exclusions",
+    "retainedEvidence",
+    "statuses"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "phase": {
+      "const": "phase-bauar-release-integration-2026-10-09"
+    },
+    "snapshotTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "repositories": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "sourceRoot",
+          "acceptedBase",
+          "sourceHead",
+          "candidateRoot",
+          "candidateBase",
+          "candidateCommit",
+          "owner",
+          "paths",
+          "targetOnlyCommits",
+          "inheritedBaselineCommits"
+        ],
+        "properties": {
+          "name": {
+            "enum": [
+              "uar",
+              "boss",
+              "bossfang"
+            ]
+          },
+          "sourceRoot": {
+            "type": "string",
+            "minLength": 1
+          },
+          "acceptedBase": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "sourceHead": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "candidateRoot": {
+            "type": "string",
+            "minLength": 1
+          },
+          "candidateBase": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "candidateCommit": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "paths": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "operation",
+                "sourceSha256",
+                "candidateSha256",
+                "mode"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "operation": {
+                  "enum": [
+                    "add",
+                    "modify",
+                    "delete"
+                  ]
+                },
+                "sourceSha256": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "candidateSha256": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "mode": {
+                  "enum": [
+                    "100644",
+                    "100755",
+                    null
+                  ]
+                }
+              }
+            }
+          },
+          "targetOnlyCommits": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{40}$"
+            }
+          },
+          "inheritedBaselineCommits": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{40}$"
+            }
+          }
+        }
+      }
+    },
+    "exclusions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 2
+    },
+    "retainedEvidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "statuses": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "implementation",
+        "acceptance",
+        "certification",
+        "publication"
+      ],
+      "properties": {
+        "implementation": {
+          "enum": [
+            "complete",
+            "pending",
+            "operator-deferred",
+            "cancelled",
+            "blocked",
+            "not-authorized",
+            "not-run",
+            "failed"
+          ]
+        },
+        "acceptance": {
+          "enum": [
+            "complete",
+            "pending",
+            "operator-deferred",
+            "cancelled",
+            "blocked",
+            "not-authorized",
+            "not-run",
+            "failed"
+          ]
+        },
+        "certification": {
+          "enum": [
+            "complete",
+            "pending",
+            "operator-deferred",
+            "cancelled",
+            "blocked",
+            "not-authorized",
+            "not-run",
+            "failed"
+          ]
+        },
+        "publication": {
+          "enum": [
+            "complete",
+            "pending",
+            "operator-deferred",
+            "cancelled",
+            "blocked",
+            "not-authorized",
+            "not-run",
+            "failed"
+          ]
+        }
+      }
+    }
+  }
+}

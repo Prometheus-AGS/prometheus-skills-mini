@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "phase": "phase-bauar-release-acceptance",
+  "at": "2026-10-09T22:09:27.598Z",
+  "changes": [
+    {
+      "kind": "authorized-existing-packaging-hook",
+      "observation": "inspectLocalUarRecord includes existing git status preflight inside unchanged prepare/before-pack hooks",
+      "disposition": "Human authorized unchanged locked/pinned packaging operations. Treat hook internal preflight as permitted transitive packaging operation; no direct agent broad UAR inspection and no F6 content/read/hash/diff/test.",
+      "rawStatusPersisted": false
+    },
+    {
+      "kind": "observed-scenario-contract-correction",
+      "observation": "package-modified-archive invokes extracted payload validator that never reads archive",
+      "scope": "Version candidate input command and runtime scenario binding for actual copied inspectLocalUarRecord positive and corrupt archive negative; preserve pre-correction records",
+      "runtimeExecuted": false
+    }
+  ]
+}

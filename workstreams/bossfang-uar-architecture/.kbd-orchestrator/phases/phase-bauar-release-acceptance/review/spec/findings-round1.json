@@ -1,0 +1,43 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "spec",
+      "claim": "Change 01 requires adapting three existing acceptance-helper files that are not all included in the change's owned edit scope, so Plan/Execute can omit required implementation work.",
+      "evidence": "The artifact says change 01 owns “acceptance-only scripts/gates/bauar-native-admission-controls.ts, scripts/gates/bauar-native-desktop-cases.ts and scripts/gates/bauar-secret-projection-lifecycle.ts” and that “The latter three currently bind out/main; minimally accept the actual packaged main-directory path,” but change_1_proposal_md Impact scopes only “Boss `src/main/core/paths/constants.ts`, `src/main/core/preboot/userDataLocation.ts`; acceptance-only new `tests/e2e/gates/bauarPackagedAcceptance.test.ts`, `tests/e2e/gates/support/bauarPackagedLaunch.ts` and minimal routing in `tests/e2e/gates/playwright.config.ts`. Also owned: src/main/core/preboot/README.md; acceptance-only scripts/gates/...” while the file_tree contains only proposal/design/tasks/verification files and no OpenSpec task that explicitly edits or validates those three script paths beyond a broad 2.1 sentence. Downstream ownership is ambiguous between “new tests/e2e” and existing “scripts/gates” helpers.",
+      "suggested_fix": "Make the three existing scripts/gates files explicit owned paths in change 01 tasks and verification, with concrete acceptance criteria for bundled main-directory path input and preservation of development defaults."
+    },
+    {
+      "severity": "WARNING",
+      "file": "spec",
+      "claim": "The spec claims an existing helper mutates live boot-config, but none of the provided source excerpts or cited receipts show that helper or the mutation behavior.",
+      "evidence": "Artifact states: “Existing packaged helper mutates live boot-config and development gate supplies external UAR.” The packet provides actual_early_constants, actual_user_data_selection, actual_main_entry, actual_harness_gate_contract, and actual_approval_client, but no source excerpt for the packaged helper named in source_receipts as `check-packaged-external-uar-04.mjs` or any boot-config mutation. The claim is therefore not supported by the packet content.",
+      "suggested_fix": "Either include the concrete helper excerpt/evidence showing the live boot-config mutation or weaken the claim to an analyzed risk requiring Plan confirmation."
+    },
+    {
+      "severity": "WARNING",
+      "file": "spec",
+      "claim": "The spec asserts exact Node 24.11.1 for Boss/Playwright children while the current artifact evidence only proves the harness gate enforces major version 24, not patch 24.11.1.",
+      "evidence": "change_3_design_md says “exact Node 24.11.1 child selected for Boss/Playwright/Bossfang.” actual_harness_gate_contract contains only `assert.equal(process.versions.node.split('.')[0], '24', 'Use the accepted Node 24 runtime');`. No provided source excerpt demonstrates a 24.11.1 patch-level requirement for the existing Boss/Playwright or Bossfang child execution.",
+      "suggested_fix": "Clarify whether 24.11.1 is a new Plan-pinned requirement or an existing gate requirement; if it is required, add it to candidate-inputs/verification acceptance and do not present the current gate as already enforcing it."
+    },
+    {
+      "severity": "WARNING",
+      "file": "spec",
+      "claim": "The spec proposes Cargo command syntax that violates the project command policy’s cross-shell rule if reused as a required command.",
+      "evidence": "Constraints require “Every command to behave the same from `cmd.exe`, Windows PowerShell 5.1, bash and zsh” and “Double quotes only.” change_2_design_md Decision 3 specifies `cargo test --locked --features server-full,test-probes --test bauar_identity_boundary --test bauar_resource_grants --test bauar_stdio_boundary --test bauar_secret_projection --test bauar_full_harness_cursor -- --test-threads=1`, which uses an unquoted comma-containing feature list and bare tokens rather than the project’s double-quoted command style.",
+      "suggested_fix": "Represent this as an argv array or quote arguments consistently, e.g. `cargo test --locked --features \"server-full,test-probes\" ... -- \"--test-threads=1\"`, and require Plan to pin the exact cross-shell-safe invocation."
+    }
+  ]
+}

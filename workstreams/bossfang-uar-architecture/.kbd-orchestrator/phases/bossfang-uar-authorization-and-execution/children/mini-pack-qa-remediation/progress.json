@@ -2,16 +2,16 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 278,
-  "derivedRevision": 278,
+  "sourceRevision": 425,
+  "derivedRevision": 425,
   "frontier": {
-    "69cddcdf-6458-4402-82b3-dcf30e2694b5": 278
+    "69cddcdf-6458-4402-82b3-dcf30e2694b5": 425
   },
   "conflictCount": 0,
   "phase": "mini-pack-qa-remediation",
   "phaseId": "bossfang-uar-authorization-and-execution::mini-pack-qa-remediation",
   "parentPhase": "bossfang-uar-authorization-and-execution",
-  "last_updated": "2026-10-08T12:46:23.520459Z",
+  "last_updated": "2026-10-09T14:35:32.490436Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 0,
   "changes_completed": 0,
@@ -49,23 +49,23 @@
     "runId": "project-20261006T094115Z",
     "primaryCounter": "implementation",
     "implementation": {
-      "completed": 0,
-      "total": 5,
-      "status": "BLOCKED"
+      "completed": 7,
+      "total": 7,
+      "status": "COMPLETE"
     },
     "evidence": {
-      "status": "PENDING",
-      "summary": null,
+      "status": "COMPLETE",
+      "summary": "Selected production-path acceptance, source binding, package/platform limitations and operator-deferred verification disposition documented. This is a completed evidence inventory; it does not say all acceptance passed.",
       "blockers": []
     },
     "certification": {
-      "status": "BLOCKED",
-      "summary": "Required selected BF owned-libraries clippy07 passed. Desktop corrected runtime, excluded D0 session-owner evidence, unwaived global UAR formatting, current-source packaging and cumulative independent review remain incomplete. Execute stays active.",
+      "status": "SKIPPED",
+      "summary": "Operator waives full certification for this implementation phase and defers remaining broad tests, cumulative independent review and global formatting. Existing selected passes retained. Shipping/C05 and remote deployment certification unclaimed. Certification work deferred to later release acceptance.",
       "blockers": []
     },
     "publication": {
-      "status": "PENDING",
-      "summary": null,
+      "status": "SKIPPED",
+      "summary": "No product publication/deployment/merge is authorized by isolated phase closure; deliverable is local implementation plus reviewable handoff.",
       "blockers": []
     }
   },

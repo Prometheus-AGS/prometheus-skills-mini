@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:bauar:local-uar-delivery:1",
+  "title": "BAUAR local bundled current UAR delivery receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "phase",
+    "at",
+    "sourceIntakeSha256",
+    "uarCommit",
+    "bossCommit",
+    "platform",
+    "features",
+    "dependencyAuthority",
+    "commands",
+    "binary",
+    "archive",
+    "fileManifest",
+    "app",
+    "hookOutcomes",
+    "statuses",
+    "downstream"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "phase": {
+      "const": "phase-bauar-release-integration-2026-10-09"
+    },
+    "at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sourceIntakeSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "uarCommit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "bossCommit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "platform": {
+      "const": "darwin-arm64"
+    },
+    "features": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "server-full"
+        }
+      ],
+      "minItems": 1,
+      "maxItems": 1
+    },
+    "dependencyAuthority": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "commands": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "program",
+          "args",
+          "cwd",
+          "toolVersion",
+          "exitCode"
+        ],
+        "properties": {
+          "program": {
+            "type": "string",
+            "minLength": 1
+          },
+          "args": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cwd": {
+            "type": "string",
+            "minLength": 1
+          },
+          "toolVersion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "exitCode": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "binary": {
+      "$ref": "#/$defs/artifact"
+    },
+    "archive": {
+      "$ref": "#/$defs/artifact"
+    },
+    "fileManifest": {
+      "$ref": "#/$defs/artifact"
+    },
+    "app": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "bundledBinary",
+        "sourceMarker"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bundledBinary": {
+          "$ref": "#/$defs/artifact"
+        },
+        "sourceMarker": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        }
+      }
+    },
+    "hookOutcomes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "hook",
+          "status",
+          "receiptPath"
+        ],
+        "properties": {
+          "hook": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "complete",
+              "pending",
+              "operator-deferred",
+              "cancelled",
+              "blocked",
+              "not-authorized",
+              "not-run",
+              "failed"
+            ]
+          },
+          "receiptPath": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "statuses": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "production",
+        "build",
+        "package",
+        "runtime",
+        "certification",
+        "publication"
+      ],
+      "properties": {
+        "production": {
+          "enum": [
+            "complete",
+            "pending",
+            "operator-deferred",
+            "cancelled",
+            "blocked",
+            "not-authorized",
+            "not-run",
+            "failed"
+          ]
+        },
+        "build": {
+          "enum": [
+            "complete",
+            "pending",
+            "operator-deferred",
+            "cancelled",
+            "blocked",
+            "not-authorized",
+            "not-run",
+            "failed"
+          ]
+        },
+        "package": {
+          "enum": [
+            "complete",
+            "pending",
+            "operator-deferred",
+            "cancelled",
+            "blocked",
+            "not-authorized",
+            "not-run",
+            "failed"
+          ]
+        },
+        "runtime": {
+          "enum": [
+            "complete",
+            "pending",
+            "operator-deferred",
+            "cancelled",
+            "blocked",
+            "not-authorized",
+            "not-run",
+            "failed"
+          ]
+        },
+        "certification": {
+          "enum": [
+            "complete",
+            "pending",
+            "operator-deferred",
+            "cancelled",
+            "blocked",
+            "not-authorized",
+            "not-run",
+            "failed"
+          ]
+        },
+        "publication": {
+          "enum": [
+            "complete",
+            "pending",
+            "operator-deferred",
+            "cancelled",
+            "blocked",
+            "not-authorized",
+            "not-run",
+            "failed"
+          ]
+        }
+      }
+    },
+    "downstream": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    }
+  }
+}

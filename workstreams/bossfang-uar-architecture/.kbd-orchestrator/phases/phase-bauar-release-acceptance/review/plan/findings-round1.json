@@ -1,0 +1,24 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "line": 0,
+      "claim": "The plan omits a required repository-level gate pass before archiving/commit readiness, so downstream execution may finish phase artifacts without proving the mini repo constraints still pass.",
+      "evidence": "Project constraints list blocking gates `build-passes` (`npm run check`), `tests-pass` (`npm test`), and `specs-valid` (`npm run spec:validate`) as preventing archiving until resolved. The plan's final section says only: \"Plan-only checks: latest managed refresh; strict OpenSpec3changes; eleven backend-task↔assignment↔canonical identities; valid source/link/argv scopes; fresh artifact reviewer/screen; unchanged inspected product hashes and named product paths\" and later \"Commit only reviewed phase/OpenSpec Plan intake artifacts locally...\"; it never schedules `npm run check` or `npm test` for the mini repo before archiving/commit readiness.",
+      "suggested_fix": "Add an explicit validation step before archive/commit handoff to run and record `npm run check`, `npm test`, and `npm run spec:validate`, or state any approved exception if a gate is intentionally deferred."
+    }
+  ],
+  "checked_classes": []
+}

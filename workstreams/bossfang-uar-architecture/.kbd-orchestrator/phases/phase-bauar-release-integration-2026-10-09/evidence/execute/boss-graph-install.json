@@ -1,0 +1,882 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-09T13:35:28.112Z",
+  "status": "failed-stopped",
+  "root": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+  "primary": "/Users/gqadonis/Projects/prometheus/the-boss",
+  "retained": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.context/bauar-dependency-inputs/before-graph-rebuild",
+  "orchestrator": {
+    "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+    "version": "v22.20.0"
+  },
+  "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+  "args": [
+    "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+    "install",
+    "--offline",
+    "--frozen-lockfile",
+    "--frozen-store",
+    "--ignore-scripts"
+  ],
+  "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+  "environment": {
+    "PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN": "warn"
+  },
+  "pathPrepend": [
+    "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin",
+    "/usr/local/bin"
+  ],
+  "shell": false,
+  "logfile": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-graph-install-2026-10-09T13-35-28-112Z.log",
+  "moves": [
+    {
+      "from": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules",
+      "to": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.context/bauar-dependency-inputs/before-graph-rebuild/node_modules",
+      "at": "2026-10-09T13:35:28.759Z",
+      "operation": "rename-retain",
+      "deleted": false
+    },
+    {
+      "from": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/a2ui-core/node_modules",
+      "to": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.context/bauar-dependency-inputs/before-graph-rebuild/packages/a2ui-core/node_modules",
+      "at": "2026-10-09T13:35:28.759Z",
+      "operation": "rename-retain",
+      "deleted": false
+    },
+    {
+      "from": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/a2ui-uar/node_modules",
+      "to": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.context/bauar-dependency-inputs/before-graph-rebuild/packages/a2ui-uar/node_modules",
+      "at": "2026-10-09T13:35:28.760Z",
+      "operation": "rename-retain",
+      "deleted": false
+    },
+    {
+      "from": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/ai-sdk-provider/node_modules",
+      "to": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.context/bauar-dependency-inputs/before-graph-rebuild/packages/ai-sdk-provider/node_modules",
+      "at": "2026-10-09T13:35:28.762Z",
+      "operation": "rename-retain",
+      "deleted": false
+    },
+    {
+      "from": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/aiCore/node_modules",
+      "to": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.context/bauar-dependency-inputs/before-graph-rebuild/packages/aiCore/node_modules",
+      "at": "2026-10-09T13:35:28.763Z",
+      "operation": "rename-retain",
+      "deleted": false
+    },
+    {
+      "from": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/dsh-bridge/node_modules",
+      "to": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.context/bauar-dependency-inputs/before-graph-rebuild/packages/dsh-bridge/node_modules",
+      "at": "2026-10-09T13:35:28.763Z",
+      "operation": "rename-retain",
+      "deleted": false
+    },
+    {
+      "from": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/extension-table-plus/node_modules",
+      "to": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.context/bauar-dependency-inputs/before-graph-rebuild/packages/extension-table-plus/node_modules",
+      "at": "2026-10-09T13:35:28.764Z",
+      "operation": "rename-retain",
+      "deleted": false
+    },
+    {
+      "from": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/provider-registry/node_modules",
+      "to": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.context/bauar-dependency-inputs/before-graph-rebuild/packages/provider-registry/node_modules",
+      "at": "2026-10-09T13:35:28.765Z",
+      "operation": "rename-retain",
+      "deleted": false
+    },
+    {
+      "from": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/ui/node_modules",
+      "to": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.context/bauar-dependency-inputs/before-graph-rebuild/packages/ui/node_modules",
+      "at": "2026-10-09T13:35:28.765Z",
+      "operation": "rename-retain",
+      "deleted": false
+    }
+  ],
+  "exitCode": 1,
+  "priorEvidence": [
+    "boss-input-direct-cli-failure.json",
+    "boss-pnpm-route-failure.log",
+    "boss-input-repair.json",
+    "boss-input-diagnosis.json",
+    "boss-graph-correction-proposal.json"
+  ],
+  "lifecycleScripts": "disabled for project and dependencies",
+  "sharedStore": "read-only via --frozen-store",
+  "network": "offline; missing locked asset is a stopping failure",
+  "before": {
+    "candidateHead": "7a5bdb4b7c02e9f13875fc7f837815c03fe3dacd",
+    "primaryHead": "822ed9990bd7626bbf76b04eeae184739c0f0655",
+    "candidate": [
+      {
+        "path": ".npmrc",
+        "sha256": "7151cf397def0c2cb0ab65643701d27d335a72c90f775675b5f826bc7005818a"
+      },
+      {
+        "path": "build/integration-artifacts.json",
+        "sha256": "8e60461cb117be208385725fcc963f8443d0e730f79fdf16461a5f593370690d"
+      },
+      {
+        "path": "build/local-uar-source.json",
+        "sha256": "2ea83779eb80253745be267b2de3bdd8cbf1a46ca0fd69043cae48afad95d92a"
+      },
+      {
+        "path": "package.json",
+        "sha256": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0"
+      },
+      {
+        "path": "packages/a2ui-core/package.json",
+        "sha256": "6931ccb3ab99cf01a6d8b5b3a8129c5a0a6b9ddd744502c1aca1e69fd8b0ed02"
+      },
+      {
+        "path": "packages/a2ui-uar/package.json",
+        "sha256": "0026109847d6ad9872ae0932517813ef0663ae1e05fa5972acb5afe371f3b519"
+      },
+      {
+        "path": "packages/ai-sdk-provider/package.json",
+        "sha256": "1a14253c49acabf4132eff9243015485179ee4078ebf8b8b5e7fcf871d4eeefb"
+      },
+      {
+        "path": "packages/aiCore/package.json",
+        "sha256": "51214088f68e60785dad33509a298de318b08a5c1d0eaea01bf587788b2c5968"
+      },
+      {
+        "path": "packages/dsh-bridge/package.json",
+        "sha256": "d88c488f2aa6b354f49986a33726fabfe19c4c57dcd3bd0f54413663798c0bc7"
+      },
+      {
+        "path": "packages/extension-table-plus/package.json",
+        "sha256": "6d5d40a0c3467240138dfdd5668d8541cf0306b6414778c10db0a0ebf9bfc348"
+      },
+      {
+        "path": "packages/provider-registry/package.json",
+        "sha256": "6840d02f4005b732fada73d47ef985d182d547582974d3b8eb0e6b69b02d2743"
+      },
+      {
+        "path": "packages/ui/package.json",
+        "sha256": "0d8b6a046009c01cfb970864ab3a3af3c57d1336d1cd65a656d3877ab2957540"
+      },
+      {
+        "path": "patches/@ai-sdk__anthropic.patch",
+        "sha256": "a6fee9768531a088c004ca35f2889025e90645eabb4aeb2a867d169ed1462b34"
+      },
+      {
+        "path": "patches/@ai-sdk__google@3.0.113.patch",
+        "sha256": "8cbaff63516ef35b2a638a683af4799855611da4a40b71ff896798ba90e30874"
+      },
+      {
+        "path": "patches/@ai-sdk__open-responses@1.0.34.patch",
+        "sha256": "7a7a5a05a06775293425dfb63c279d62fded2d6ac0667ba64664cc43bfef0648"
+      },
+      {
+        "path": "patches/@ai-sdk__openai-compatible@2.0.72.patch",
+        "sha256": "e1c53c511799253d3cc69a6a2bdcba7cb2ea5792b27b243fd82cb8f086d50480"
+      },
+      {
+        "path": "patches/@ai-sdk__openai@3.0.109.patch",
+        "sha256": "2423513a443860e240fb1c10554f616ce6dcaf553eebfb044ba266aab075cc4d"
+      },
+      {
+        "path": "patches/@ai-sdk__react@3.0.187.patch",
+        "sha256": "8182f09c37c2d080e4794d30401712c0605e986e985380ea76699758f2ed7230"
+      },
+      {
+        "path": "patches/@deepseek-ai__dsh-llm-pi-ai@0.1.2-rc.1.patch",
+        "sha256": "f7f6f9cc47a1ad112122e1b0813f890afa6c157d3cbc26b8f20bbe40d1ca22d7"
+      },
+      {
+        "path": "patches/@deepseek-ai__dsh-sdk-client@0.1.2-rc.1.patch",
+        "sha256": "0792ce2f52077468c6f897dccce0d4e4823f1f0e99cc276b6aaae4b80a4ba337"
+      },
+      {
+        "path": "patches/@earendil-works__pi-ai@0.80.6.patch",
+        "sha256": "8ae915ecde8054da94741cecb272baf207ce5b7e596758c87ecdad572489e24d"
+      },
+      {
+        "path": "patches/@earendil-works__pi-coding-agent@0.80.3.patch",
+        "sha256": "1717b3290d2aaa3819537bd040f531534184c38f2e8c0e6d6b52fdb1ed02b564"
+      },
+      {
+        "path": "patches/@napi-rs__system-ocr@1.2.0.patch",
+        "sha256": "72d651f33c307945c636ea0a25b97b48018cab99b440ca02d8ea2dac222033d0"
+      },
+      {
+        "path": "patches/@openrouter__ai-sdk-provider@2.10.0.patch",
+        "sha256": "fe61d9ff590828fc0fd3f8b3b8b88a4a1b736a99b595a276c8df9e12c9498009"
+      },
+      {
+        "path": "patches/@opeoginni__github-copilot-openai-compatible@1.0.0.patch",
+        "sha256": "73beae4e712f7adc915602407dd74fd0c8ab448c7ed03f6beacd83ed51bf3fcb"
+      },
+      {
+        "path": "patches/@streamdown__code@1.1.1.patch",
+        "sha256": "41d33cca06822523e0dc1118ef7b24d80de81afc0d2d39cef9a12f20c5dc9547"
+      },
+      {
+        "path": "patches/@tavily-core-npm-0.3.1-fe69bf2bea.patch",
+        "sha256": "c758d6f972741867e7e2619bf3a358e62021eca1f2ed61e6cf7c26138be2f0eb"
+      },
+      {
+        "path": "patches/@tiptap__extension-drag-handle@3.26.1.patch",
+        "sha256": "2f5c32153f059725f94906803079b90be2a4cf602befe45cd4f2e96652099096"
+      },
+      {
+        "path": "patches/@tiptap__extension-list@3.26.1.patch",
+        "sha256": "584483147536f57383bef48109cf67a7798ae4c965a97009c61003a9c509898f"
+      },
+      {
+        "path": "patches/@tiptap__markdown@3.26.1.patch",
+        "sha256": "9ba2ca0537cedf2c97ebd75072889c258da2d3d96fbd0b9b09cfdc6092e6afb9"
+      },
+      {
+        "path": "patches/ai@6.0.185.patch",
+        "sha256": "61fc175c652267f39ec01df738fc61d1639faa19b980441005f7e9cd645d1711"
+      },
+      {
+        "path": "patches/app-builder-lib@26.15.6.patch",
+        "sha256": "3a5a7e68ef85c1e688dd4833be88653a9c4e46d829c058839fcdb317d2fd1b44"
+      },
+      {
+        "path": "patches/atomically-npm-1.7.0-e742e5293b.patch",
+        "sha256": "657b68ae90d71dfa6230dbf3431a1c2d952f87572cd8e00e635c4f5739f7b671"
+      },
+      {
+        "path": "patches/docx-preview@0.3.7.patch",
+        "sha256": "e208f8530bcfadc27794b50237188e2810a0d34c75b4d37c21c6195947fa0bc5"
+      },
+      {
+        "path": "patches/electron-updater-npm-6.7.0-47b11bb0d4.patch",
+        "sha256": "845dead3509897d7a5aed99b4d271a244449c544b840c21bf149ff6fc907cc85"
+      },
+      {
+        "path": "patches/emoji-picker-react@4.19.1.patch",
+        "sha256": "ba04440e6cf4cbf02fe55453d84c4fcf318bc83f6481fc7e5e5b3d5e29af3649"
+      },
+      {
+        "path": "patches/file-stream-rotator-npm-0.6.1-eab45fb13d.patch",
+        "sha256": "40d59705d29163ef409027f9558e88101f422adb4fa6c6d991e5d8dd1bdc8b1a"
+      },
+      {
+        "path": "patches/motion-dom@12.42.0.patch",
+        "sha256": "5c9bfe486d8d0472ab803d31133ec3a7e34aa8cadde01fdd9923e2dbbc170014"
+      },
+      {
+        "path": "patches/ollama-ai-provider-v2@3.3.1.patch",
+        "sha256": "d2b640ac5475c802eee5f983bcad08fb4e5cec7615c57aac188850c3f531743b"
+      },
+      {
+        "path": "patches/onnxruntime-node@1.25.1.patch",
+        "sha256": "7a18bfdf39cbd83c60197c06e5f5c5b2b46d265d7483ed3d80ec3ad499d99cef"
+      },
+      {
+        "path": "patches/pkce-challenge-npm-4.1.0-fbc51695a3.patch",
+        "sha256": "a999f9b5250014af6fd7dffac77bd9de2ce66f99bc828ceb694af56dea1fba5c"
+      },
+      {
+        "path": "patches/ppu-paddle-ocr@6.0.0.patch",
+        "sha256": "462a2a1d24fd9bdf645bed35f34c90d24b40389443b802018f77b85911f08096"
+      },
+      {
+        "path": "patches/streamdown@2.5.0.patch",
+        "sha256": "e7275804eb3d9c069a4b2f193c03553501f4db2d37dac35230551a7ab14444df"
+      },
+      {
+        "path": "patches/tesseract.js-npm-6.0.1-2562a7e46d.patch",
+        "sha256": "a131c9f36e950911e9fc548408131145a3e5e53977d67abe5196f6b23b32bb6e"
+      },
+      {
+        "path": "pnpm-lock.yaml",
+        "sha256": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7"
+      },
+      {
+        "path": "pnpm-workspace.yaml",
+        "sha256": "9ac466528555b983d35a1dfc558549143a6446df2beaaad554ba25bf169eca56"
+      }
+    ],
+    "primary": [
+      {
+        "path": ".npmrc",
+        "sha256": "7151cf397def0c2cb0ab65643701d27d335a72c90f775675b5f826bc7005818a"
+      },
+      {
+        "path": "build/integration-artifacts.json",
+        "sha256": "87a5a46fefa2f8a7676b5f9fafddfea605adb30556796936161803c4aa794c02"
+      },
+      {
+        "path": "build/local-uar-source.json",
+        "sha256": "bb07a53faa7923faadd5f4d1094abcb359e1b2200a53ad3f54a7293da8a0ac92"
+      },
+      {
+        "path": "package.json",
+        "sha256": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0"
+      },
+      {
+        "path": "packages/a2ui-core/package.json",
+        "sha256": "6931ccb3ab99cf01a6d8b5b3a8129c5a0a6b9ddd744502c1aca1e69fd8b0ed02"
+      },
+      {
+        "path": "packages/a2ui-uar/package.json",
+        "sha256": "0026109847d6ad9872ae0932517813ef0663ae1e05fa5972acb5afe371f3b519"
+      },
+      {
+        "path": "packages/ai-sdk-provider/package.json",
+        "sha256": "1a14253c49acabf4132eff9243015485179ee4078ebf8b8b5e7fcf871d4eeefb"
+      },
+      {
+        "path": "packages/aiCore/package.json",
+        "sha256": "51214088f68e60785dad33509a298de318b08a5c1d0eaea01bf587788b2c5968"
+      },
+      {
+        "path": "packages/dsh-bridge/package.json",
+        "sha256": "d88c488f2aa6b354f49986a33726fabfe19c4c57dcd3bd0f54413663798c0bc7"
+      },
+      {
+        "path": "packages/extension-table-plus/package.json",
+        "sha256": "6d5d40a0c3467240138dfdd5668d8541cf0306b6414778c10db0a0ebf9bfc348"
+      },
+      {
+        "path": "packages/provider-registry/package.json",
+        "sha256": "6840d02f4005b732fada73d47ef985d182d547582974d3b8eb0e6b69b02d2743"
+      },
+      {
+        "path": "packages/ui/package.json",
+        "sha256": "0d8b6a046009c01cfb970864ab3a3af3c57d1336d1cd65a656d3877ab2957540"
+      },
+      {
+        "path": "patches/@ai-sdk__anthropic.patch",
+        "sha256": "a6fee9768531a088c004ca35f2889025e90645eabb4aeb2a867d169ed1462b34"
+      },
+      {
+        "path": "patches/@ai-sdk__google@3.0.113.patch",
+        "sha256": "8cbaff63516ef35b2a638a683af4799855611da4a40b71ff896798ba90e30874"
+      },
+      {
+        "path": "patches/@ai-sdk__open-responses@1.0.34.patch",
+        "sha256": "7a7a5a05a06775293425dfb63c279d62fded2d6ac0667ba64664cc43bfef0648"
+      },
+      {
+        "path": "patches/@ai-sdk__openai-compatible@2.0.72.patch",
+        "sha256": "e1c53c511799253d3cc69a6a2bdcba7cb2ea5792b27b243fd82cb8f086d50480"
+      },
+      {
+        "path": "patches/@ai-sdk__openai@3.0.109.patch",
+        "sha256": "2423513a443860e240fb1c10554f616ce6dcaf553eebfb044ba266aab075cc4d"
+      },
+      {
+        "path": "patches/@ai-sdk__react@3.0.187.patch",
+        "sha256": "8182f09c37c2d080e4794d30401712c0605e986e985380ea76699758f2ed7230"
+      },
+      {
+        "path": "patches/@deepseek-ai__dsh-llm-pi-ai@0.1.2-rc.1.patch",
+        "sha256": "f7f6f9cc47a1ad112122e1b0813f890afa6c157d3cbc26b8f20bbe40d1ca22d7"
+      },
+      {
+        "path": "patches/@deepseek-ai__dsh-sdk-client@0.1.2-rc.1.patch",
+        "sha256": "0792ce2f52077468c6f897dccce0d4e4823f1f0e99cc276b6aaae4b80a4ba337"
+      },
+      {
+        "path": "patches/@earendil-works__pi-ai@0.80.6.patch",
+        "sha256": "8ae915ecde8054da94741cecb272baf207ce5b7e596758c87ecdad572489e24d"
+      },
+      {
+        "path": "patches/@earendil-works__pi-coding-agent@0.80.3.patch",
+        "sha256": "1717b3290d2aaa3819537bd040f531534184c38f2e8c0e6d6b52fdb1ed02b564"
+      },
+      {
+        "path": "patches/@napi-rs__system-ocr@1.2.0.patch",
+        "sha256": "72d651f33c307945c636ea0a25b97b48018cab99b440ca02d8ea2dac222033d0"
+      },
+      {
+        "path": "patches/@openrouter__ai-sdk-provider@2.10.0.patch",
+        "sha256": "fe61d9ff590828fc0fd3f8b3b8b88a4a1b736a99b595a276c8df9e12c9498009"
+      },
+      {
+        "path": "patches/@opeoginni__github-copilot-openai-compatible@1.0.0.patch",
+        "sha256": "73beae4e712f7adc915602407dd74fd0c8ab448c7ed03f6beacd83ed51bf3fcb"
+      },
+      {
+        "path": "patches/@streamdown__code@1.1.1.patch",
+        "sha256": "41d33cca06822523e0dc1118ef7b24d80de81afc0d2d39cef9a12f20c5dc9547"
+      },
+      {
+        "path": "patches/@tavily-core-npm-0.3.1-fe69bf2bea.patch",
+        "sha256": "c758d6f972741867e7e2619bf3a358e62021eca1f2ed61e6cf7c26138be2f0eb"
+      },
+      {
+        "path": "patches/@tiptap__extension-drag-handle@3.26.1.patch",
+        "sha256": "2f5c32153f059725f94906803079b90be2a4cf602befe45cd4f2e96652099096"
+      },
+      {
+        "path": "patches/@tiptap__extension-list@3.26.1.patch",
+        "sha256": "584483147536f57383bef48109cf67a7798ae4c965a97009c61003a9c509898f"
+      },
+      {
+        "path": "patches/@tiptap__markdown@3.26.1.patch",
+        "sha256": "9ba2ca0537cedf2c97ebd75072889c258da2d3d96fbd0b9b09cfdc6092e6afb9"
+      },
+      {
+        "path": "patches/ai@6.0.185.patch",
+        "sha256": "61fc175c652267f39ec01df738fc61d1639faa19b980441005f7e9cd645d1711"
+      },
+      {
+        "path": "patches/app-builder-lib@26.15.6.patch",
+        "sha256": "3a5a7e68ef85c1e688dd4833be88653a9c4e46d829c058839fcdb317d2fd1b44"
+      },
+      {
+        "path": "patches/atomically-npm-1.7.0-e742e5293b.patch",
+        "sha256": "657b68ae90d71dfa6230dbf3431a1c2d952f87572cd8e00e635c4f5739f7b671"
+      },
+      {
+        "path": "patches/docx-preview@0.3.7.patch",
+        "sha256": "e208f8530bcfadc27794b50237188e2810a0d34c75b4d37c21c6195947fa0bc5"
+      },
+      {
+        "path": "patches/electron-updater-npm-6.7.0-47b11bb0d4.patch",
+        "sha256": "845dead3509897d7a5aed99b4d271a244449c544b840c21bf149ff6fc907cc85"
+      },
+      {
+        "path": "patches/emoji-picker-react@4.19.1.patch",
+        "sha256": "ba04440e6cf4cbf02fe55453d84c4fcf318bc83f6481fc7e5e5b3d5e29af3649"
+      },
+      {
+        "path": "patches/file-stream-rotator-npm-0.6.1-eab45fb13d.patch",
+        "sha256": "40d59705d29163ef409027f9558e88101f422adb4fa6c6d991e5d8dd1bdc8b1a"
+      },
+      {
+        "path": "patches/motion-dom@12.42.0.patch",
+        "sha256": "5c9bfe486d8d0472ab803d31133ec3a7e34aa8cadde01fdd9923e2dbbc170014"
+      },
+      {
+        "path": "patches/ollama-ai-provider-v2@3.3.1.patch",
+        "sha256": "d2b640ac5475c802eee5f983bcad08fb4e5cec7615c57aac188850c3f531743b"
+      },
+      {
+        "path": "patches/onnxruntime-node@1.25.1.patch",
+        "sha256": "7a18bfdf39cbd83c60197c06e5f5c5b2b46d265d7483ed3d80ec3ad499d99cef"
+      },
+      {
+        "path": "patches/pkce-challenge-npm-4.1.0-fbc51695a3.patch",
+        "sha256": "a999f9b5250014af6fd7dffac77bd9de2ce66f99bc828ceb694af56dea1fba5c"
+      },
+      {
+        "path": "patches/ppu-paddle-ocr@6.0.0.patch",
+        "sha256": "462a2a1d24fd9bdf645bed35f34c90d24b40389443b802018f77b85911f08096"
+      },
+      {
+        "path": "patches/streamdown@2.5.0.patch",
+        "sha256": "e7275804eb3d9c069a4b2f193c03553501f4db2d37dac35230551a7ab14444df"
+      },
+      {
+        "path": "patches/tesseract.js-npm-6.0.1-2562a7e46d.patch",
+        "sha256": "a131c9f36e950911e9fc548408131145a3e5e53977d67abe5196f6b23b32bb6e"
+      },
+      {
+        "path": "pnpm-lock.yaml",
+        "sha256": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7"
+      },
+      {
+        "path": "pnpm-workspace.yaml",
+        "sha256": "9ac466528555b983d35a1dfc558549143a6446df2beaaad554ba25bf169eca56"
+      }
+    ],
+    "candidateStatus": ""
+  },
+  "toolAuthorities": [
+    {
+      "path": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "sha256": "4255a388254ca4319e2f95f1da375d5deaddf25baf9c7c85070b67f9543b15d0"
+    },
+    {
+      "path": "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+      "sha256": "b6e13402c88a275f5b1ec4fb420df8763179bbe9f2b87a10911be44a3622d68d"
+    }
+  ],
+  "pid": 60140,
+  "signal": null,
+  "finishedAt": "2026-10-09T13:35:58.357Z",
+  "logSha256": "3bdcdbbb239fdef16073cdf5cbcdb89fdbb97798572b0360e3203a2d5f4483bd",
+  "after": {
+    "candidateHead": "7a5bdb4b7c02e9f13875fc7f837815c03fe3dacd",
+    "primaryHead": "822ed9990bd7626bbf76b04eeae184739c0f0655",
+    "candidate": [
+      {
+        "path": ".npmrc",
+        "sha256": "7151cf397def0c2cb0ab65643701d27d335a72c90f775675b5f826bc7005818a"
+      },
+      {
+        "path": "build/integration-artifacts.json",
+        "sha256": "8e60461cb117be208385725fcc963f8443d0e730f79fdf16461a5f593370690d"
+      },
+      {
+        "path": "build/local-uar-source.json",
+        "sha256": "2ea83779eb80253745be267b2de3bdd8cbf1a46ca0fd69043cae48afad95d92a"
+      },
+      {
+        "path": "package.json",
+        "sha256": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0"
+      },
+      {
+        "path": "packages/a2ui-core/package.json",
+        "sha256": "6931ccb3ab99cf01a6d8b5b3a8129c5a0a6b9ddd744502c1aca1e69fd8b0ed02"
+      },
+      {
+        "path": "packages/a2ui-uar/package.json",
+        "sha256": "0026109847d6ad9872ae0932517813ef0663ae1e05fa5972acb5afe371f3b519"
+      },
+      {
+        "path": "packages/ai-sdk-provider/package.json",
+        "sha256": "1a14253c49acabf4132eff9243015485179ee4078ebf8b8b5e7fcf871d4eeefb"
+      },
+      {
+        "path": "packages/aiCore/package.json",
+        "sha256": "51214088f68e60785dad33509a298de318b08a5c1d0eaea01bf587788b2c5968"
+      },
+      {
+        "path": "packages/dsh-bridge/package.json",
+        "sha256": "d88c488f2aa6b354f49986a33726fabfe19c4c57dcd3bd0f54413663798c0bc7"
+      },
+      {
+        "path": "packages/extension-table-plus/package.json",
+        "sha256": "6d5d40a0c3467240138dfdd5668d8541cf0306b6414778c10db0a0ebf9bfc348"
+      },
+      {
+        "path": "packages/provider-registry/package.json",
+        "sha256": "6840d02f4005b732fada73d47ef985d182d547582974d3b8eb0e6b69b02d2743"
+      },
+      {
+        "path": "packages/ui/package.json",
+        "sha256": "0d8b6a046009c01cfb970864ab3a3af3c57d1336d1cd65a656d3877ab2957540"
+      },
+      {
+        "path": "patches/@ai-sdk__anthropic.patch",
+        "sha256": "a6fee9768531a088c004ca35f2889025e90645eabb4aeb2a867d169ed1462b34"
+      },
+      {
+        "path": "patches/@ai-sdk__google@3.0.113.patch",
+        "sha256": "8cbaff63516ef35b2a638a683af4799855611da4a40b71ff896798ba90e30874"
+      },
+      {
+        "path": "patches/@ai-sdk__open-responses@1.0.34.patch",
+        "sha256": "7a7a5a05a06775293425dfb63c279d62fded2d6ac0667ba64664cc43bfef0648"
+      },
+      {
+        "path": "patches/@ai-sdk__openai-compatible@2.0.72.patch",
+        "sha256": "e1c53c511799253d3cc69a6a2bdcba7cb2ea5792b27b243fd82cb8f086d50480"
+      },
+      {
+        "path": "patches/@ai-sdk__openai@3.0.109.patch",
+        "sha256": "2423513a443860e240fb1c10554f616ce6dcaf553eebfb044ba266aab075cc4d"
+      },
+      {
+        "path": "patches/@ai-sdk__react@3.0.187.patch",
+        "sha256": "8182f09c37c2d080e4794d30401712c0605e986e985380ea76699758f2ed7230"
+      },
+      {
+        "path": "patches/@deepseek-ai__dsh-llm-pi-ai@0.1.2-rc.1.patch",
+        "sha256": "f7f6f9cc47a1ad112122e1b0813f890afa6c157d3cbc26b8f20bbe40d1ca22d7"
+      },
+      {
+        "path": "patches/@deepseek-ai__dsh-sdk-client@0.1.2-rc.1.patch",
+        "sha256": "0792ce2f52077468c6f897dccce0d4e4823f1f0e99cc276b6aaae4b80a4ba337"
+      },
+      {
+        "path": "patches/@earendil-works__pi-ai@0.80.6.patch",
+        "sha256": "8ae915ecde8054da94741cecb272baf207ce5b7e596758c87ecdad572489e24d"
+      },
+      {
+        "path": "patches/@earendil-works__pi-coding-agent@0.80.3.patch",
+        "sha256": "1717b3290d2aaa3819537bd040f531534184c38f2e8c0e6d6b52fdb1ed02b564"
+      },
+      {
+        "path": "patches/@napi-rs__system-ocr@1.2.0.patch",
+        "sha256": "72d651f33c307945c636ea0a25b97b48018cab99b440ca02d8ea2dac222033d0"
+      },
+      {
+        "path": "patches/@openrouter__ai-sdk-provider@2.10.0.patch",
+        "sha256": "fe61d9ff590828fc0fd3f8b3b8b88a4a1b736a99b595a276c8df9e12c9498009"
+      },
+      {
+        "path": "patches/@opeoginni__github-copilot-openai-compatible@1.0.0.patch",
+        "sha256": "73beae4e712f7adc915602407dd74fd0c8ab448c7ed03f6beacd83ed51bf3fcb"
+      },
+      {
+        "path": "patches/@streamdown__code@1.1.1.patch",
+        "sha256": "41d33cca06822523e0dc1118ef7b24d80de81afc0d2d39cef9a12f20c5dc9547"
+      },
+      {
+        "path": "patches/@tavily-core-npm-0.3.1-fe69bf2bea.patch",
+        "sha256": "c758d6f972741867e7e2619bf3a358e62021eca1f2ed61e6cf7c26138be2f0eb"
+      },
+      {
+        "path": "patches/@tiptap__extension-drag-handle@3.26.1.patch",
+        "sha256": "2f5c32153f059725f94906803079b90be2a4cf602befe45cd4f2e96652099096"
+      },
+      {
+        "path": "patches/@tiptap__extension-list@3.26.1.patch",
+        "sha256": "584483147536f57383bef48109cf67a7798ae4c965a97009c61003a9c509898f"
+      },
+      {
+        "path": "patches/@tiptap__markdown@3.26.1.patch",
+        "sha256": "9ba2ca0537cedf2c97ebd75072889c258da2d3d96fbd0b9b09cfdc6092e6afb9"
+      },
+      {
+        "path": "patches/ai@6.0.185.patch",
+        "sha256": "61fc175c652267f39ec01df738fc61d1639faa19b980441005f7e9cd645d1711"
+      },
+      {
+        "path": "patches/app-builder-lib@26.15.6.patch",
+        "sha256": "3a5a7e68ef85c1e688dd4833be88653a9c4e46d829c058839fcdb317d2fd1b44"
+      },
+      {
+        "path": "patches/atomically-npm-1.7.0-e742e5293b.patch",
+        "sha256": "657b68ae90d71dfa6230dbf3431a1c2d952f87572cd8e00e635c4f5739f7b671"
+      },
+      {
+        "path": "patches/docx-preview@0.3.7.patch",
+        "sha256": "e208f8530bcfadc27794b50237188e2810a0d34c75b4d37c21c6195947fa0bc5"
+      },
+      {
+        "path": "patches/electron-updater-npm-6.7.0-47b11bb0d4.patch",
+        "sha256": "845dead3509897d7a5aed99b4d271a244449c544b840c21bf149ff6fc907cc85"
+      },
+      {
+        "path": "patches/emoji-picker-react@4.19.1.patch",
+        "sha256": "ba04440e6cf4cbf02fe55453d84c4fcf318bc83f6481fc7e5e5b3d5e29af3649"
+      },
+      {
+        "path": "patches/file-stream-rotator-npm-0.6.1-eab45fb13d.patch",
+        "sha256": "40d59705d29163ef409027f9558e88101f422adb4fa6c6d991e5d8dd1bdc8b1a"
+      },
+      {
+        "path": "patches/motion-dom@12.42.0.patch",
+        "sha256": "5c9bfe486d8d0472ab803d31133ec3a7e34aa8cadde01fdd9923e2dbbc170014"
+      },
+      {
+        "path": "patches/ollama-ai-provider-v2@3.3.1.patch",
+        "sha256": "d2b640ac5475c802eee5f983bcad08fb4e5cec7615c57aac188850c3f531743b"
+      },
+      {
+        "path": "patches/onnxruntime-node@1.25.1.patch",
+        "sha256": "7a18bfdf39cbd83c60197c06e5f5c5b2b46d265d7483ed3d80ec3ad499d99cef"
+      },
+      {
+        "path": "patches/pkce-challenge-npm-4.1.0-fbc51695a3.patch",
+        "sha256": "a999f9b5250014af6fd7dffac77bd9de2ce66f99bc828ceb694af56dea1fba5c"
+      },
+      {
+        "path": "patches/ppu-paddle-ocr@6.0.0.patch",
+        "sha256": "462a2a1d24fd9bdf645bed35f34c90d24b40389443b802018f77b85911f08096"
+      },
+      {
+        "path": "patches/streamdown@2.5.0.patch",
+        "sha256": "e7275804eb3d9c069a4b2f193c03553501f4db2d37dac35230551a7ab14444df"
+      },
+      {
+        "path": "patches/tesseract.js-npm-6.0.1-2562a7e46d.patch",
+        "sha256": "a131c9f36e950911e9fc548408131145a3e5e53977d67abe5196f6b23b32bb6e"
+      },
+      {
+        "path": "pnpm-lock.yaml",
+        "sha256": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7"
+      },
+      {
+        "path": "pnpm-workspace.yaml",
+        "sha256": "9ac466528555b983d35a1dfc558549143a6446df2beaaad554ba25bf169eca56"
+      }
+    ],
+    "primary": [
+      {
+        "path": ".npmrc",
+        "sha256": "7151cf397def0c2cb0ab65643701d27d335a72c90f775675b5f826bc7005818a"
+      },
+      {
+        "path": "build/integration-artifacts.json",
+        "sha256": "87a5a46fefa2f8a7676b5f9fafddfea605adb30556796936161803c4aa794c02"
+      },
+      {
+        "path": "build/local-uar-source.json",
+        "sha256": "bb07a53faa7923faadd5f4d1094abcb359e1b2200a53ad3f54a7293da8a0ac92"
+      },
+      {
+        "path": "package.json",
+        "sha256": "31fea5b69c367c82e0c5df8d7ff42f003593ab1c4a418f38f877f4a9df493bf0"
+      },
+      {
+        "path": "packages/a2ui-core/package.json",
+        "sha256": "6931ccb3ab99cf01a6d8b5b3a8129c5a0a6b9ddd744502c1aca1e69fd8b0ed02"
+      },
+      {
+        "path": "packages/a2ui-uar/package.json",
+        "sha256": "0026109847d6ad9872ae0932517813ef0663ae1e05fa5972acb5afe371f3b519"
+      },
+      {
+        "path": "packages/ai-sdk-provider/package.json",
+        "sha256": "1a14253c49acabf4132eff9243015485179ee4078ebf8b8b5e7fcf871d4eeefb"
+      },
+      {
+        "path": "packages/aiCore/package.json",
+        "sha256": "51214088f68e60785dad33509a298de318b08a5c1d0eaea01bf587788b2c5968"
+      },
+      {
+        "path": "packages/dsh-bridge/package.json",
+        "sha256": "d88c488f2aa6b354f49986a33726fabfe19c4c57dcd3bd0f54413663798c0bc7"
+      },
+      {
+        "path": "packages/extension-table-plus/package.json",
+        "sha256": "6d5d40a0c3467240138dfdd5668d8541cf0306b6414778c10db0a0ebf9bfc348"
+      },
+      {
+        "path": "packages/provider-registry/package.json",
+        "sha256": "6840d02f4005b732fada73d47ef985d182d547582974d3b8eb0e6b69b02d2743"
+      },
+      {
+        "path": "packages/ui/package.json",
+        "sha256": "0d8b6a046009c01cfb970864ab3a3af3c57d1336d1cd65a656d3877ab2957540"
+      },
+      {
+        "path": "patches/@ai-sdk__anthropic.patch",
+        "sha256": "a6fee9768531a088c004ca35f2889025e90645eabb4aeb2a867d169ed1462b34"
+      },
+      {
+        "path": "patches/@ai-sdk__google@3.0.113.patch",
+        "sha256": "8cbaff63516ef35b2a638a683af4799855611da4a40b71ff896798ba90e30874"
+      },
+      {
+        "path": "patches/@ai-sdk__open-responses@1.0.34.patch",
+        "sha256": "7a7a5a05a06775293425dfb63c279d62fded2d6ac0667ba64664cc43bfef0648"
+      },
+      {
+        "path": "patches/@ai-sdk__openai-compatible@2.0.72.patch",
+        "sha256": "e1c53c511799253d3cc69a6a2bdcba7cb2ea5792b27b243fd82cb8f086d50480"
+      },
+      {
+        "path": "patches/@ai-sdk__openai@3.0.109.patch",
+        "sha256": "2423513a443860e240fb1c10554f616ce6dcaf553eebfb044ba266aab075cc4d"
+      },
+      {
+        "path": "patches/@ai-sdk__react@3.0.187.patch",
+        "sha256": "8182f09c37c2d080e4794d30401712c0605e986e985380ea76699758f2ed7230"
+      },
+      {
+        "path": "patches/@deepseek-ai__dsh-llm-pi-ai@0.1.2-rc.1.patch",
+        "sha256": "f7f6f9cc47a1ad112122e1b0813f890afa6c157d3cbc26b8f20bbe40d1ca22d7"
+      },
+      {
+        "path": "patches/@deepseek-ai__dsh-sdk-client@0.1.2-rc.1.patch",
+        "sha256": "0792ce2f52077468c6f897dccce0d4e4823f1f0e99cc276b6aaae4b80a4ba337"
+      },
+      {
+        "path": "patches/@earendil-works__pi-ai@0.80.6.patch",
+        "sha256": "8ae915ecde8054da94741cecb272baf207ce5b7e596758c87ecdad572489e24d"
+      },
+      {
+        "path": "patches/@earendil-works__pi-coding-agent@0.80.3.patch",
+        "sha256": "1717b3290d2aaa3819537bd040f531534184c38f2e8c0e6d6b52fdb1ed02b564"
+      },
+      {
+        "path": "patches/@napi-rs__system-ocr@1.2.0.patch",
+        "sha256": "72d651f33c307945c636ea0a25b97b48018cab99b440ca02d8ea2dac222033d0"
+      },
+      {
+        "path": "patches/@openrouter__ai-sdk-provider@2.10.0.patch",
+        "sha256": "fe61d9ff590828fc0fd3f8b3b8b88a4a1b736a99b595a276c8df9e12c9498009"
+      },
+      {
+        "path": "patches/@opeoginni__github-copilot-openai-compatible@1.0.0.patch",
+        "sha256": "73beae4e712f7adc915602407dd74fd0c8ab448c7ed03f6beacd83ed51bf3fcb"
+      },
+      {
+        "path": "patches/@streamdown__code@1.1.1.patch",
+        "sha256": "41d33cca06822523e0dc1118ef7b24d80de81afc0d2d39cef9a12f20c5dc9547"
+      },
+      {
+        "path": "patches/@tavily-core-npm-0.3.1-fe69bf2bea.patch",
+        "sha256": "c758d6f972741867e7e2619bf3a358e62021eca1f2ed61e6cf7c26138be2f0eb"
+      },
+      {
+        "path": "patches/@tiptap__extension-drag-handle@3.26.1.patch",
+        "sha256": "2f5c32153f059725f94906803079b90be2a4cf602befe45cd4f2e96652099096"
+      },
+      {
+        "path": "patches/@tiptap__extension-list@3.26.1.patch",
+        "sha256": "584483147536f57383bef48109cf67a7798ae4c965a97009c61003a9c509898f"
+      },
+      {
+        "path": "patches/@tiptap__markdown@3.26.1.patch",
+        "sha256": "9ba2ca0537cedf2c97ebd75072889c258da2d3d96fbd0b9b09cfdc6092e6afb9"
+      },
+      {
+        "path": "patches/ai@6.0.185.patch",
+        "sha256": "61fc175c652267f39ec01df738fc61d1639faa19b980441005f7e9cd645d1711"
+      },
+      {
+        "path": "patches/app-builder-lib@26.15.6.patch",
+        "sha256": "3a5a7e68ef85c1e688dd4833be88653a9c4e46d829c058839fcdb317d2fd1b44"
+      },
+      {
+        "path": "patches/atomically-npm-1.7.0-e742e5293b.patch",
+        "sha256": "657b68ae90d71dfa6230dbf3431a1c2d952f87572cd8e00e635c4f5739f7b671"
+      },
+      {
+        "path": "patches/docx-preview@0.3.7.patch",
+        "sha256": "e208f8530bcfadc27794b50237188e2810a0d34c75b4d37c21c6195947fa0bc5"
+      },
+      {
+        "path": "patches/electron-updater-npm-6.7.0-47b11bb0d4.patch",
+        "sha256": "845dead3509897d7a5aed99b4d271a244449c544b840c21bf149ff6fc907cc85"
+      },
+      {
+        "path": "patches/emoji-picker-react@4.19.1.patch",
+        "sha256": "ba04440e6cf4cbf02fe55453d84c4fcf318bc83f6481fc7e5e5b3d5e29af3649"
+      },
+      {
+        "path": "patches/file-stream-rotator-npm-0.6.1-eab45fb13d.patch",
+        "sha256": "40d59705d29163ef409027f9558e88101f422adb4fa6c6d991e5d8dd1bdc8b1a"
+      },
+      {
+        "path": "patches/motion-dom@12.42.0.patch",
+        "sha256": "5c9bfe486d8d0472ab803d31133ec3a7e34aa8cadde01fdd9923e2dbbc170014"
+      },
+      {
+        "path": "patches/ollama-ai-provider-v2@3.3.1.patch",
+        "sha256": "d2b640ac5475c802eee5f983bcad08fb4e5cec7615c57aac188850c3f531743b"
+      },
+      {
+        "path": "patches/onnxruntime-node@1.25.1.patch",
+        "sha256": "7a18bfdf39cbd83c60197c06e5f5c5b2b46d265d7483ed3d80ec3ad499d99cef"
+      },
+      {
+        "path": "patches/pkce-challenge-npm-4.1.0-fbc51695a3.patch",
+        "sha256": "a999f9b5250014af6fd7dffac77bd9de2ce66f99bc828ceb694af56dea1fba5c"
+      },
+      {
+        "path": "patches/ppu-paddle-ocr@6.0.0.patch",
+        "sha256": "462a2a1d24fd9bdf645bed35f34c90d24b40389443b802018f77b85911f08096"
+      },
+      {
+        "path": "patches/streamdown@2.5.0.patch",
+        "sha256": "e7275804eb3d9c069a4b2f193c03553501f4db2d37dac35230551a7ab14444df"
+      },
+      {
+        "path": "patches/tesseract.js-npm-6.0.1-2562a7e46d.patch",
+        "sha256": "a131c9f36e950911e9fc548408131145a3e5e53977d67abe5196f6b23b32bb6e"
+      },
+      {
+        "path": "pnpm-lock.yaml",
+        "sha256": "39772b76b78b869b75171091396acd28742b43d4ffea54edd85cace5ec4675a7"
+      },
+      {
+        "path": "pnpm-workspace.yaml",
+        "sha256": "9ac466528555b983d35a1dfc558549143a6446df2beaaad554ba25bf169eca56"
+      }
+    ],
+    "candidateStatus": ""
+  },
+  "authorityPreservation": {
+    "candidate": true,
+    "primary": true,
+    "candidateHead": true,
+    "primaryHead": true
+  },
+  "next": "Report exact diagnostics; no online fallback, retry, or lock/source modification"
+}

@@ -1,0 +1,29 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "spec",
+      "claim": "The proposed THE_BOSS_PROFILE_ROOT contract does not explicitly cover appData, so boot-config may still read ordinary profile state before the private root is selected.",
+      "evidence": "The actual startup imports bootConfig before resolveUserDataLocation: `// BootConfig must load before any other import (configures userData path)` and `import '@main/data/bootConfig'`, while current constants define `export const CHERRY_HOME = path.join(os.homedir(), CHERRY_HOME_DIRNAME)` and `export const BOOT_CONFIG_PATH = path.join(CHERRY_HOME, 'boot-config.json')`. The spec says the private root establishes `R/config (CHERRY_HOME), R/config/boot-config.json, R/user-data...` and `Private root wins over its boot-map redirects`, but the requirement in `change_1_specs_packaged-profile-isolation_spec_md` only says `boot configuration, application configuration, userData, sessionData, application logs, owned temporary data and supervised UAR persistence resolve beneath that root` and does not name Electron `appData`, even though `actual_user_data_selection` falls back to `path.join(app.getPath('appData'), PRODUCT_DIRNAME)`.",
+      "suggested_fix": "Make the private-root spec and tasks explicitly require any appData-derived packaged fallback used before/inside userDataLocation to resolve under R or be bypassed, and add an acceptance observation for `app.getPath('appData')`/branded fallback behavior under THE_BOSS_PROFILE_ROOT."
+    },
+    {
+      "severity": "WARNING",
+      "file": "spec",
+      "claim": "The spec says every change has fully populated verification, but Change 02 deliberately skips spec deltas and has no capability spec file, so OpenSpec validation expectations may be ambiguous.",
+      "evidence": "Artifact states: `Each change has proposal, design, immutable-ID tasks and fully populated verification.` It also states: `Change02 intentionally sets skip_specs:true: it introduces no product behavior and must not invent a delta merely to validate.` The provided file tree lists only `openspec/changes/bauar-acc-02-current-harness-regression/{proposal,design,tasks,verification}.md` and no `specs/**/spec.md` for change 02.",
+      "suggested_fix": "Clarify that 'fully populated verification' for Change 02 means verification.md only and that its OpenSpec metadata must explicitly set skip_specs:true; ensure Plan validates the change with that exception rather than expecting a spec delta."
+    }
+  ]
+}

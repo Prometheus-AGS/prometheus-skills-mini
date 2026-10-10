@@ -1,0 +1,269 @@
+$ tsdown
+ℹ tsdown v0.22.14 powered by rolldown v1.2.6
+ℹ config file: /Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/dsh-bridge/tsdown.config.ts 
+(node:71071) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/dsh-bridge/tsdown.config.ts?no-cache=0bcf99c9-3804-41bb-8cb0-56f793940867 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/gqadonis/.claude/worktrees/bauar-release-boss/packages/dsh-bridge/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ℹ entry: src/index.ts
+ℹ entry: src/fork.ts, src/runtimeBin.ts, ../../node_modules/.pnpm/@deepseek-ai+cordis-plugin-timer@1.1.4_@deepseek-ai+cordis@4.0.2/node_modules/@deepseek-ai/cordis-plugin-timer/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-llm@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2/node_modules/@deepseek-ai/dsh-llm/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-session@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-scope@0._ee5063a80d448ae764858c08e7528ed1/node_modules/@deepseek-ai/dsh-session/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-session-title@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-ag_6040def299d97a7eeaf48f93670a2e59/node_modules/@deepseek-ai/dsh-session-title/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-system-prompt@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-in_81805129ffa4ec61e21e9f3609997ae1/node_modules/@deepseek-ai/dsh-system-prompt/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-tools@0.1.2-rc.1_de5e1ff2d608fbe22667925341ad1dfc/node_modules/@deepseek-ai/dsh-tools/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-agent@0.1.2-rc.1_6f833cf90b9dd3f0d529840b1aebfb48/node_modules/@deepseek-ai/dsh-agent/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-invariants@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2/node_modules/@deepseek-ai/dsh-invariants/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-session@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-scope@0._ee5063a80d448ae764858c08e7528ed1/node_modules/@deepseek-ai/dsh-session/lib/invariant.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-agent@0.1.2-rc.1_6f833cf90b9dd3f0d529840b1aebfb48/node_modules/@deepseek-ai/dsh-agent/lib/invariant.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-scope@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-invariants_df37bc295d349313b1ba0ff130f8e852/node_modules/@deepseek-ai/dsh-scope/lib/invariant.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-agent-loop@0.1.2-rc.1_b439f35cbe316bcb469bc5c5afd8b06f/node_modules/@deepseek-ai/dsh-agent-loop/lib/invariant.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-agent-loop@0.1.2-rc.1_b439f35cbe316bcb469bc5c5afd8b06f/node_modules/@deepseek-ai/dsh-agent-loop/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-agent-instructions@0.1.2-rc.1_e5b3de3f5523dbeda269ad8d2cfe7bc3/node_modules/@deepseek-ai/dsh-agent-instructions/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-skill@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-llm@0.1.2-_27d9bc4a586b1dc20e65c8617762abbf/node_modules/@deepseek-ai/dsh-skill/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-skill-filesystem@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh_dd35a046f70de6fccbfcb576bb4867f0/node_modules/@deepseek-ai/dsh-skill-filesystem/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-tool-skill@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-agent_b6884339612dbc37385c0c23cbfae446/node_modules/@deepseek-ai/dsh-tool-skill/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-tool-bash@0.1.2-rc.1_9a41237a1bb9eef4d7e30d2e8bff4cbe/node_modules/@deepseek-ai/dsh-tool-bash/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-sdk-jsonrpc-server@0.1.2-rc.1_9ebefa965194f0200ebd49df89f981ba/node_modules/@deepseek-ai/dsh-sdk-jsonrpc-server/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-llm-pi-ai@0.1.2-rc.1_patch_hash=f7f6f9cc47a1ad112122e1b0813f890afa6c15_ff568086b0f15b01a9c100cd09425337/node_modules/@deepseek-ai/dsh-llm-pi-ai/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-llm-retry@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-agent@_526c58f6379dac980b848fce73ba2b30/node_modules/@deepseek-ai/dsh-llm-retry/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-pwsh-local@0.1.2-rc.1_bc13a0a8cb6e26511125726b5aa577a7/node_modules/@deepseek-ai/dsh-pwsh-local/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-pwsh-sandbox@0.1.2-rc.1_f80391c6e4a9ab6fd6ee0f35d0fe42fe/node_modules/@deepseek-ai/dsh-pwsh-sandbox/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-sandbox-local@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-ll_33f6e149da5ad4f1c1495540d1971969/node_modules/@deepseek-ai/dsh-sandbox-local/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-sandbox-policy@0.1.2-rc.1_18dce1690d004f995bc0c8cfc6c6a37b/node_modules/@deepseek-ai/dsh-sandbox-policy/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-subprocess-local@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh_cedac3a8fc89f06288ffbb7692a79d52/node_modules/@deepseek-ai/dsh-subprocess-local/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-bash-sandbox@0.1.2-rc.1_7b29b6eebfdd5a8bd1d6e20c2ccde138/node_modules/@deepseek-ai/dsh-bash-sandbox/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-user-approval@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-ag_d50666f149273fd74051100372e70592/node_modules/@deepseek-ai/dsh-user-approval/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-attachment-local@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh_3b021664d2b959bfcbe2ee0a95a70e98/node_modules/@deepseek-ai/dsh-attachment-local/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-fs-local@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-fs@0.1._826ece88744992c5d8f0b8623533f379/node_modules/@deepseek-ai/dsh-fs-local/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-tool-fs@0.1.2-rc.1_ffc68c58826602f2edde8cc09bf810fe/node_modules/@deepseek-ai/dsh-tool-fs/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-tool-todo@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-agent@_0edbd0dd88434b3e110c8a86939e0da2/node_modules/@deepseek-ai/dsh-tool-todo/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-token-meter@0.1.2-rc.1_33cefa37a09563da6f42092b18e29755/node_modules/@deepseek-ai/dsh-token-meter/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-session-projection@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+d_9914d2092f927a2bafad9985f01d7afa/node_modules/@deepseek-ai/dsh-session-projection/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-session-query@0.1.2-rc.1_809f373f67fcc04cb47d7737b224b358/node_modules/@deepseek-ai/dsh-session-query/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-compaction-tool-result-pruner@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@de_29f12e240cce99118909774f135794e5/node_modules/@deepseek-ai/dsh-compaction-tool-result-pruner/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-compaction-basic@0.1.2-rc.1_7088644b6f3ca6eb633283bec3db1170/node_modules/@deepseek-ai/dsh-compaction-basic/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-commands@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-agent@0_2d30848b3a13efd131e9c6064820cb61/node_modules/@deepseek-ai/dsh-commands/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-command-compact@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-_e0bceefee411e98ffd18e0e95c7a7c78/node_modules/@deepseek-ai/dsh-command-compact/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-command-goal@0.1.2-rc.1_01eab1e40ca47a97e378c1072b5f8990/node_modules/@deepseek-ai/dsh-command-goal/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-goal@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-agent@0.1.2_6170b53951129fa4aed2a6e09be89d36/node_modules/@deepseek-ai/dsh-goal/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-goal-round-driver@0.1.2-rc.1_bf26b34cf1132cc19026df20148fe9bd/node_modules/@deepseek-ai/dsh-goal-round-driver/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-tool-goal@0.1.2-rc.1_e1cb56cc70102d4ca9e2be69b193b94a/node_modules/@deepseek-ai/dsh-tool-goal/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-subagent@0.1.2-rc.1_9d364c0354a617d3a24cd692643c04e3/node_modules/@deepseek-ai/dsh-subagent/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-subagent-spawn-in-process@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepse_199327d4e4b788ea9a8f8094d4414af5/node_modules/@deepseek-ai/dsh-subagent-spawn-in-process/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-subagent-fork-in-process@0.1.2-rc.1_f614daa4585b56ddb4efc19b8c79152e/node_modules/@deepseek-ai/dsh-subagent-fork-in-process/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-tool-subagent-control@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-a_08d2d37b4d15f4795ff546f3a4c59bd3/node_modules/@deepseek-ai/dsh-tool-subagent-control/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-tool-subagent-control@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-a_08d2d37b4d15f4795ff546f3a4c59bd3/node_modules/@deepseek-ai/dsh-tool-subagent-control/lib/types/list-agents.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-tool-subagent@0.1.2-rc.1_c4c2ab91efb79a37b1b30edc790b64b7/node_modules/@deepseek-ai/dsh-tool-subagent/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-user-questions@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepseek-ai+dsh-a_8e51a2e0c178e51f59f7edd2cff255f5/node_modules/@deepseek-ai/dsh-user-questions/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-plan-mode@0.1.2-rc.1_7d3c1b2e95ec9d29f6bc9a773ae114c6/node_modules/@deepseek-ai/dsh-plan-mode/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-session-persistence-jsonl@0.1.2-rc.1_@deepseek-ai+cordis@4.0.2_@deepse_84e24c974dd349d55602b72a46e026a7/node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-shell-env@0.1.2-rc.1_94dfb45c84ce80ce0cf573baf3dc5941/node_modules/@deepseek-ai/dsh-shell-env/lib/index.js, ../../node_modules/.pnpm/@deepseek-ai+dsh-tool-pwsh@0.1.2-rc.1_9a41237a1bb9eef4d7e30d2e8bff4cbe/node_modules/@deepseek-ai/dsh-tool-pwsh/lib/index.js, src/plugin.ts
+ℹ tsconfig: tsconfig.json
+ℹ tsconfig: tsconfig.json
+
+ WARN  `external` is deprecated. Use `deps.neverBundle` instead.
+
+
+ WARN  `noExternal` is deprecated. Use `deps.alwaysBundle` instead.
+
+ℹ Build start
+
+ WARN  TypeScript 7.0 does not yet have a stable API and is experimental. Some options will be unavailable.
+
+ℹ Emit types with typescript@7.0.2
+ℹ [CJS] dist/index.cjs  4.14 kB │ gzip: 1.10 kB
+ℹ [CJS] 1 files, total: 4.14 kB
+ℹ Hint: consider adding deps.onlyBundle option to avoid unintended bundling of dependencies, or set deps.onlyBundle: false to disable this hint.
+See more at https://tsdown.dev/options/dependencies#deps-onlybundle
+Detected dependencies in bundle:
+- @deepseek-ai/dsh-agent-instructions
+- @deepseek-ai/dsh-agent
+- @deepseek-ai/dsh-agent-loop
+- @deepseek-ai/dsh-attachment-local
+- @deepseek-ai/dsh-bash-local
+- @deepseek-ai/dsh-bash-sandbox
+- js-yaml
+- @deepseek-ai/cordis-plugin-loader
+- @deepseek-ai/cordis-plugin-group
+- @deepseek-ai/dsh-app-boot
+- @deepseek-ai/dsh-command-compact
+- @deepseek-ai/dsh-command-goal
+- @deepseek-ai/dsh-commands
+- @deepseek-ai/dsh-compaction-basic
+- @deepseek-ai/dsh-compaction-tool-result-pruner
+- @deepseek-ai/dsh-fs-local
+- @deepseek-ai/dsh-goal-round-driver
+- @deepseek-ai/dsh-invariants
+- @earendil-works/pi-ai
+- @deepseek-ai/dsh-llm-pi-ai
+- @deepseek-ai/dsh-llm-retry
+- @deepseek-ai/dsh-plan-mode
+- @deepseek-ai/dsh-pwsh-sandbox
+- @deepseek-ai/dsh-sandbox-local
+- @deepseek-ai/dsh-sandbox-policy
+- @deepseek-ai/dsh-scope
+- @deepseek-ai/dsh-atomic-write
+- @deepseek-ai/dsh-anonymous-user-id
+- eventsource-parser
+- @deepseek-ai/dsh-llm-deepseek
+- @deepseek-ai/dsh-sdk-jsonrpc-server
+- @deepseek-ai/dsh-session
+- @deepseek-ai/dsh-session-projection
+- @deepseek-ai/dsh-session-query
+- @deepseek-ai/dsh-shell-env
+- readdirp
+- chokidar
+- yaml
+- @deepseek-ai/dsh-skill-filesystem
+- @deepseek-ai/dsh-subagent-fork-in-process
+- @deepseek-ai/dsh-subagent-spawn-in-process
+- @deepseek-ai/dsh-subprocess-local
+- @deepseek-ai/cordis-plugin-timer
+- @deepseek-ai/dsh-token-meter
+- @deepseek-ai/dsh-tool-bash
+- diff
+- @deepseek-ai/dsh-tool-fs
+- @deepseek-ai/dsh-tool-goal
+- @deepseek-ai/dsh-tool-pwsh
+- @deepseek-ai/dsh-tool-skill
+- @deepseek-ai/dsh-subagent
+- @deepseek-ai/dsh-tool-subagent-control
+- @deepseek-ai/dsh-tool-subagent
+- @deepseek-ai/dsh-tool-todo
+- @deepseek-ai/dsh-user-approval
+- @anthropic-ai/sdk
+- ms
+- debug
+- has-flag
+- supports-color
+- agent-base
+- https-proxy-agent
+- web-streams-polyfill
+- fetch-blob
+- formdata-polyfill
+- node-domexception
+- retry
+- p-retry
+- extend
+- gaxios
+- bignumber.js
+- json-bigint
+- gcp-metadata
+- google-logging-utils
+- base64-js
+- google-auth-library
+- safe-buffer
+- ecdsa-sig-formatter
+- jws
+- buffer-equal-constant-time
+- jwa
+- ws
+- @google/genai
+- partial-json
+- @deepseek-ai/cosmokit
+- @deepseek-ai/dsh-session-persistence
+- @deepseek-ai/dsh-session-persistence-jsonl
+- @deepseek-ai/dsh-home-paths
+- @deepseek-ai/dsh-launch-environment
+- @deepseek-ai/dsh-credentials
+- @deepseek-ai/dsh-session-title
+- @deepseek-ai/dsh-system-prompt
+- @deepseek-ai/dsh-tools
+- @deepseek-ai/dsh-skill
+- @deepseek-ai/dsh-sandbox
+- @deepseek-ai/dsh-subprocess
+- @deepseek-ai/dsh-shell
+- @deepseek-ai/cordis
+- @deepseek-ai/dsh-sdk-protocol
+- @deepseek-ai/dsh-attachment
+- @deepseek-ai/dsh-pwsh-local
+- @deepseek-ai/dsh-fs
+- @deepseek-ai/dsh-compaction
+- @deepseek-ai/dsh-goal
+- @deepseek-ai/dsh-util-time
+- @deepseek-ai/dsh-subagent-in-process-driver
+- @deepseek-ai/dsh-user-questions
+- @deepseek-ai/dsh-brand
+- @deepseek-ai/dsh-typert-protocol
+- @deepseek-ai/dsh-util-crypto
+- @deepseek-ai/dsh-llm
+- @deepseek-ai/dsh-util-values
+- @deepseek-ai/schemastery
+- @deepseek-ai/dsh-timeout
+- node-fetch
+- @cherrystudio/openai
+- zod
+- data-uri-to-buffer
+ℹ [ESM] dist/runtime/llm-pi-ai.mjs                      565.74 kB │ gzip:  55.44 kB
+ℹ [ESM] dist/runtime/skill-filesystem.mjs               147.09 kB │ gzip:  45.97 kB
+ℹ [ESM] dist/runtime/bin.mjs                             64.56 kB │ gzip:  21.29 kB
+ℹ [ESM] dist/runtime/sdk-jsonrpc-server.mjs              52.35 kB │ gzip:  16.91 kB
+ℹ [ESM] dist/runtime/tool-fs.mjs                         30.71 kB │ gzip:  10.21 kB
+ℹ [ESM] dist/runtime/agent-loop.mjs                      23.66 kB │ gzip:   7.88 kB
+ℹ [ESM] dist/runtime/subprocess-local.mjs                21.47 kB │ gzip:   7.35 kB
+ℹ [ESM] dist/runtime/compaction-basic.mjs                20.20 kB │ gzip:   6.86 kB
+ℹ [ESM] dist/runtime/agent-instructions.mjs              20.11 kB │ gzip:   6.58 kB
+ℹ [ESM] dist/runtime/tool-subagent.mjs                   18.42 kB │ gzip:   5.88 kB
+ℹ [ESM] dist/runtime/session-query.mjs                   17.81 kB │ gzip:   5.33 kB
+ℹ [ESM] dist/runtime/attachment-local.mjs                14.34 kB │ gzip:   4.98 kB
+ℹ [ESM] dist/runtime/fs-local.mjs                        14.18 kB │ gzip:   4.61 kB
+ℹ [ESM] dist/runtime/cherry-bridge.mjs                   13.99 kB │ gzip:   5.36 kB
+ℹ [ESM] dist/runtime/tool-pwsh.mjs                       11.14 kB │ gzip:   4.37 kB
+ℹ [ESM] dist/runtime/token-meter.mjs                     10.69 kB │ gzip:   3.39 kB
+ℹ [ESM] dist/runtime/tool-goal.mjs                       10.17 kB │ gzip:   3.37 kB
+ℹ [ESM] dist/runtime/tool-bash.mjs                        9.94 kB │ gzip:   3.86 kB
+ℹ [ESM] dist/runtime/plan-mode.mjs                        7.66 kB │ gzip:   2.94 kB
+ℹ [ESM] dist/runtime/bash-sandbox.mjs                     7.62 kB │ gzip:   2.90 kB
+ℹ [ESM] dist/runtime/sandbox-local.mjs                    7.51 kB │ gzip:   2.66 kB
+ℹ [ESM] dist/runtime/commands.mjs                         7.49 kB │ gzip:   2.76 kB
+ℹ [ESM] dist/runtime/tool-skill.mjs                       7.01 kB │ gzip:   2.53 kB
+ℹ [ESM] dist/runtime/goal-round-driver.mjs                7.00 kB │ gzip:   2.53 kB
+ℹ [ESM] dist/runtime/session-projection.mjs               6.01 kB │ gzip:   2.03 kB
+ℹ [ESM] dist/runtime/command-goal.mjs                     3.54 kB │ gzip:   1.35 kB
+ℹ [ESM] dist/runtime/tool-todo.mjs                        3.53 kB │ gzip:   1.57 kB
+ℹ [ESM] dist/runtime/llm-retry.mjs                        3.41 kB │ gzip:   1.52 kB
+ℹ [ESM] dist/runtime/session-invariant.mjs                3.40 kB │ gzip:   1.35 kB
+ℹ [ESM] dist/runtime/tool-subagent-list-agents.mjs        3.22 kB │ gzip:   1.44 kB
+ℹ [ESM] dist/runtime/compaction-tool-result-pruner.mjs    3.17 kB │ gzip:   1.35 kB
+ℹ [ESM] dist/runtime/user-approval.mjs                    2.87 kB │ gzip:   1.32 kB
+ℹ [ESM] dist/runtime/pwsh-sandbox.mjs                     2.74 kB │ gzip:   1.15 kB
+ℹ [ESM] dist/runtime/shell-env.mjs                        2.58 kB │ gzip:   1.13 kB
+ℹ [ESM] dist/runtime/tool-subagent-control.mjs            2.53 kB │ gzip:   1.05 kB
+ℹ [ESM] dist/runtime/sandbox-policy.mjs                   2.30 kB │ gzip:   1.03 kB
+ℹ [ESM] dist/runtime/invariants.mjs                       2.00 kB │ gzip:   0.85 kB
+ℹ [ESM] dist/runtime/command-compact.mjs                  1.90 kB │ gzip:   0.87 kB
+ℹ [ESM] dist/runtime/timer.mjs                            1.90 kB │ gzip:   0.76 kB
+ℹ [ESM] dist/runtime/fork.mjs                             1.63 kB │ gzip:   0.84 kB
+ℹ [ESM] dist/runtime/scope-invariant.mjs                  1.58 kB │ gzip:   0.68 kB
+ℹ [ESM] dist/runtime/agent-loop-invariant.mjs             1.46 kB │ gzip:   0.67 kB
+ℹ [ESM] dist/runtime/llm.mjs                              1.33 kB │ gzip:   0.70 kB
+ℹ [ESM] dist/runtime/subagent.mjs                         0.92 kB │ gzip:   0.49 kB
+ℹ [ESM] dist/runtime/session.mjs                          0.83 kB │ gzip:   0.45 kB
+ℹ [ESM] dist/runtime/tools.mjs                            0.73 kB │ gzip:   0.39 kB
+ℹ [ESM] dist/runtime/subagent-fork-in-process.mjs         0.72 kB │ gzip:   0.46 kB
+ℹ [ESM] dist/runtime/subagent-spawn-in-process.mjs        0.52 kB │ gzip:   0.35 kB
+ℹ [ESM] dist/runtime/agent-invariant.mjs                  0.32 kB │ gzip:   0.24 kB
+ℹ [ESM] dist/runtime/session-title.mjs                    0.31 kB │ gzip:   0.19 kB
+ℹ [ESM] dist/runtime/goal.mjs                             0.28 kB │ gzip:   0.20 kB
+ℹ [ESM] dist/runtime/agent.mjs                            0.26 kB │ gzip:   0.18 kB
+ℹ [ESM] dist/runtime/system-prompt.mjs                    0.25 kB │ gzip:   0.18 kB
+ℹ [ESM] dist/runtime/skill.mjs                            0.23 kB │ gzip:   0.18 kB
+ℹ [ESM] dist/runtime/pwsh-local.mjs                       0.23 kB │ gzip:   0.18 kB
+ℹ [ESM] dist/runtime/session-persistence-jsonl.mjs        0.11 kB │ gzip:   0.11 kB
+ℹ [ESM] dist/runtime/user-questions.mjs                   0.10 kB │ gzip:   0.10 kB
+ℹ [ESM] dist/runtime/google-shared.mjs                  494.22 kB │ gzip: 117.56 kB
+ℹ [ESM] dist/runtime/anthropic-messages.mjs             102.73 kB │ gzip:  26.04 kB
+ℹ [ESM] dist/runtime/openai.mjs                         100.81 kB │ gzip:  26.97 kB
+ℹ [ESM] dist/runtime/schemas.mjs                         70.86 kB │ gzip:  18.73 kB
+ℹ [ESM] dist/runtime/from.mjs                            65.77 kB │ gzip:  16.33 kB
+ℹ [ESM] dist/runtime/lib15.mjs                           54.64 kB │ gzip:  16.42 kB
+ℹ [ESM] dist/runtime/lib10.mjs                           52.17 kB │ gzip:  14.41 kB
+ℹ [ESM] dist/runtime/lib26.mjs                           44.14 kB │ gzip:  13.24 kB
+ℹ [ESM] dist/runtime/lib5.mjs                            29.94 kB │ gzip:   9.79 kB
+ℹ [ESM] dist/runtime/lib9.mjs                            28.77 kB │ gzip:   9.05 kB
+ℹ [ESM] dist/runtime/lib2.mjs                            23.89 kB │ gzip:   8.16 kB
+ℹ [ESM] dist/runtime/openai-completions.mjs              22.67 kB │ gzip:   6.89 kB
+ℹ [ESM] dist/runtime/openai-codex-responses.mjs          21.97 kB │ gzip:   8.16 kB
+ℹ [ESM] dist/runtime/src.mjs                             19.84 kB │ gzip:   7.30 kB
+ℹ [ESM] dist/runtime/dist.mjs                            17.71 kB │ gzip:   6.69 kB
+ℹ [ESM] dist/runtime/lib25.mjs                           17.33 kB │ gzip:   5.15 kB
+ℹ [ESM] dist/runtime/models.mjs                          15.26 kB │ gzip:   4.76 kB
+ℹ [ESM] dist/runtime/lib13.mjs                           12.70 kB │ gzip:   4.03 kB
+ℹ [ESM] dist/runtime/mistral-conversations.mjs           12.11 kB │ gzip:   4.42 kB
+ℹ [ESM] dist/runtime/lib7.mjs                            11.93 kB │ gzip:   4.02 kB
+ℹ [ESM] dist/runtime/openai-responses-shared.mjs         11.75 kB │ gzip:   3.55 kB
+ℹ [ESM] dist/runtime/lib16.mjs                           10.59 kB │ gzip:   3.29 kB
+ℹ [ESM] dist/runtime/transform-messages.mjs               9.34 kB │ gzip:   3.40 kB
+ℹ [ESM] dist/runtime/lib4.mjs                             9.10 kB │ gzip:   3.16 kB
+ℹ [ESM] dist/runtime/google-vertex.mjs                    7.37 kB │ gzip:   2.72 kB
+ℹ [ESM] dist/runtime/lib14.mjs                            7.03 kB │ gzip:   2.73 kB
+ℹ [ESM] dist/runtime/google-generative-ai.mjs             6.44 kB │ gzip:   2.27 kB
+ℹ [ESM] dist/runtime/lib22.mjs                            6.04 kB │ gzip:   2.46 kB
+ℹ [ESM] dist/runtime/openai-responses.mjs                 5.73 kB │ gzip:   2.26 kB
+ℹ [ESM] dist/runtime/lib.mjs                              5.09 kB │ gzip:   2.06 kB
+ℹ [ESM] dist/runtime/pi-messages.mjs                      4.92 kB │ gzip:   2.02 kB
+ℹ [ESM] dist/runtime/azure-openai-responses.mjs           4.75 kB │ gzip:   2.00 kB
+ℹ [ESM] dist/runtime/json-parse.mjs                       4.73 kB │ gzip:   1.94 kB
+ℹ [ESM] dist/runtime/multipart-parser.mjs                 4.41 kB │ gzip:   1.86 kB
+ℹ [ESM] dist/runtime/lib27.mjs                            3.53 kB │ gzip:   1.68 kB
+ℹ [ESM] dist/runtime/lib6.mjs                             3.27 kB │ gzip:   1.24 kB
+ℹ [ESM] dist/runtime/lib20.mjs                            3.16 kB │ gzip:   1.28 kB
+ℹ [ESM] dist/runtime/lib17.mjs                            2.68 kB │ gzip:   1.22 kB
+ℹ [ESM] dist/runtime/lib3.mjs                             2.64 kB │ gzip:   1.09 kB
+ℹ [ESM] dist/runtime/lib21.mjs                            2.13 kB │ gzip:   1.02 kB
+ℹ [ESM] dist/runtime/lib28.mjs                            1.89 kB │ gzip:   0.93 kB
+ℹ [ESM] dist/runtime/lib24.mjs                            1.65 kB │ gzip:   0.78 kB
+ℹ [ESM] dist/runtime/diagnostics.mjs                      1.45 kB │ gzip:   0.66 kB
+ℹ [ESM] dist/runtime/error-body.mjs                       1.39 kB │ gzip:   0.58 kB
+ℹ [ESM] dist/runtime/lib8.mjs                             1.37 kB │ gzip:   0.63 kB
+ℹ [ESM] dist/runtime/provider-retry.mjs                   1.37 kB │ gzip:   0.69 kB
+ℹ [ESM] dist/runtime/lib12.mjs                            1.12 kB │ gzip:   0.60 kB
+ℹ [ESM] dist/runtime/rolldown-runtime.mjs                 0.88 kB │ gzip:   0.51 kB
+ℹ [ESM] dist/runtime/lib11.mjs                            0.75 kB │ gzip:   0.46 kB
+ℹ [ESM] dist/runtime/deferred-tools.mjs                   0.48 kB │ gzip:   0.30 kB
+ℹ [ESM] dist/runtime/provider-env.mjs                     0.46 kB │ gzip:   0.34 kB
+ℹ [ESM] dist/runtime/lib19.mjs                            0.41 kB │ gzip:   0.28 kB
+ℹ [ESM] dist/runtime/github-copilot-headers.mjs           0.41 kB │ gzip:   0.27 kB
+ℹ [ESM] dist/runtime/hash.mjs                             0.34 kB │ gzip:   0.22 kB
+ℹ [ESM] dist/runtime/lib23.mjs                            0.31 kB │ gzip:   0.20 kB
+ℹ [ESM] dist/runtime/lib18.mjs                            0.30 kB │ gzip:   0.26 kB
+ℹ [ESM] dist/runtime/headers.mjs                          0.22 kB │ gzip:   0.16 kB
+ℹ [ESM] dist/runtime/openai-prompt-cache.mjs              0.12 kB │ gzip:   0.12 kB
+ℹ [ESM] 115 files, total: 2.52 MB
+✔ Build complete in 1669ms
+ℹ [CJS] dist/index.d.cts  11.80 kB │ gzip: 3.40 kB
+ℹ [CJS] 1 files, total: 11.80 kB
+✔ Build complete in 1705ms
+ℹ [ESM] dist/index.mjs     3.83 kB │ gzip: 1.01 kB
+ℹ [ESM] dist/index.d.mts  11.80 kB │ gzip: 3.40 kB
+ℹ [ESM] 2 files, total: 15.63 kB
+✔ Build complete in 1707ms

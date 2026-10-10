@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "boundary": "Planned Execute operations; none run in Plan",
+  "node": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+  "ownership": "delivery-owner exclusively after all production source/pin wiring completes",
+  "commands": [
+    {
+      "task": "bauar-int-02-local-current-uar-payload/3",
+      "program": "cargo",
+      "args": [
+        "build",
+        "--locked",
+        "--release",
+        "--target",
+        "aarch64-apple-darwin",
+        "--bin",
+        "uar-sidecar",
+        "--features",
+        "server-full"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "environmentConstraints": {
+        "CARGO_TARGET_DIR": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/target"
+      },
+      "output": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/target/aarch64-apple-darwin/release/uar-sidecar",
+      "prerequisites": [
+        "Source/pin production complete",
+        "Exact locked dependency authority recorded",
+        "Native darwin-arm64 build inputs available"
+      ]
+    },
+    {
+      "task": "bauar-int-02-local-current-uar-payload/4",
+      "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+      "args": [
+        "scripts/package-boss-sidecar.mjs",
+        "darwin-arm64",
+        "aarch64-apple-darwin"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+      "environment": {
+        "UAR_SIDECAR_FEATURES": "server-full"
+      },
+      "omitFromChildEnvironment": [
+        "GITHUB_SHA",
+        "GITHUB_REF_TYPE",
+        "GITHUB_REF_NAME"
+      ],
+      "output": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar",
+      "prerequisites": [
+        "Actual successful build and binary hash bound"
+      ]
+    },
+    {
+      "task": "bauar-int-02-local-current-uar-payload/5",
+      "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+      "args": [
+        "scripts/prepare-local-uar-payload.cjs"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "environment": {
+        "THE_BOSS_UAR_ENABLED": "1",
+        "THE_BOSS_UAR_LOCAL": "1",
+        "THE_BOSS_LOCAL_UAR_SOURCE_DIR": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+        "CSC_IDENTITY_AUTO_DISCOVERY": "false"
+      },
+      "constraints": [
+        "Require actual non-CI native darwin-arm64; never suppress CI refusal",
+        "No external UAR executable override",
+        "Existing beforePack/afterPack remain enabled"
+      ]
+    },
+    {
+      "task": "bauar-int-02-local-current-uar-payload/5",
+      "program": "pnpm",
+      "args": [
+        "run",
+        "build"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "environment": {
+        "THE_BOSS_UAR_ENABLED": "1",
+        "THE_BOSS_UAR_LOCAL": "1",
+        "THE_BOSS_LOCAL_UAR_SOURCE_DIR": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+        "CSC_IDENTITY_AUTO_DISCOVERY": "false"
+      },
+      "packageManagerAuthority": "Existing package.json packageManager pnpm@12.3.4; recheck before Execute; do not implicitly install or upgrade"
+    },
+    {
+      "task": "bauar-int-02-local-current-uar-payload/5",
+      "program": "pnpm",
+      "args": [
+        "exec",
+        "electron-builder",
+        "--mac",
+        "--arm64",
+        "--dir",
+        "--publish",
+        "never"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "environment": {
+        "THE_BOSS_UAR_ENABLED": "1",
+        "THE_BOSS_UAR_LOCAL": "1",
+        "THE_BOSS_LOCAL_UAR_SOURCE_DIR": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+        "CSC_IDENTITY_AUTO_DISCOVERY": "false"
+      },
+      "output": "Resolve actual app path from builder output/config; directory bundle only",
+      "constraints": [
+        "Pinned existing electron-builder 26.15.6",
+        "Unsigned local boundary only",
+        "Do not run signed-DMG validator"
+      ]
+    }
+  ],
+  "spawning": {
+    "shell": false,
+    "sequential": true,
+    "secretHandling": "Record only declared non-secret overrides, argv/cwd/version/exit code; never dump inherited environment"
+  },
+  "acceptance": "operator-deferred; planned shared runner is not authored or run",
+  "refresh": {
+    "managed": "pending/unverified",
+    "installedCli": "1.14.0",
+    "reason": "Latest refresh may mutate tooling/configuration outside this bounded planning scope; no freshness claim"
+  }
+}

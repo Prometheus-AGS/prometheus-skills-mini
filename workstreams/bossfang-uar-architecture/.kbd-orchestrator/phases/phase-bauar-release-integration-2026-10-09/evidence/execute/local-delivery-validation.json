@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-09T13:47:11.436Z",
+  "phase": "phase-bauar-release-integration-2026-10-09",
+  "task": "bauar-int-02-local-current-uar-payload/6",
+  "receipt": {
+    "path": "local-delivery.json",
+    "sha256": "76c0bd1ff5dd331070b699e3916e5814cf7f6e4c0911321d3a72f3be0a189984"
+  },
+  "schema": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/contracts/local-delivery.schema.json",
+    "sha256": "a491b6f4fc91a68059410a4873dd0ea1b9ea76473977b2dda1e68c63cf735c60"
+  },
+  "validator": {
+    "node": "v22.20.0",
+    "ajv": "8.17.1",
+    "ajvFormats": "2.1.1",
+    "dialect": "2020-12",
+    "strict": true,
+    "attempts": 1
+  },
+  "valid": true,
+  "errors": [],
+  "inputReceipts": [
+    {
+      "path": "source-intake.json",
+      "sha256": "ae8dcf2d657cd419a45f65f6e7ae619bf50bbc90940b1ef9322cd97728cef13f"
+    },
+    {
+      "path": "build-inputs.json",
+      "sha256": "fe86a83ee98f67df5b3b46c13d24b88a95a8d22e16b2dd50326bc56c91c1e3f1"
+    },
+    {
+      "path": "boss-local-pin.json",
+      "sha256": "176c8d266b27e4a326942585b35593d03601445a123e1d79cc0bbb4aa75c777c"
+    },
+    {
+      "path": "uar-build.json",
+      "sha256": "938bcb3996a6dd9549beeb79e52f2831d507615cfd55f734099bb3af04c5b15f"
+    },
+    {
+      "path": "uar-package.json",
+      "sha256": "74dffb684e82cf32429aec0dc8e6d12e8508d0f75ce4f67bfecb2d638cf00b20"
+    },
+    {
+      "path": "boss-local-uar-preparation.json",
+      "sha256": "4d6c1c2638d2dec69da282aef1a19b4ff1b945b5b1b642becce44ac8855c3061"
+    },
+    {
+      "path": "boss-delivery.json",
+      "sha256": "be2e8b906734c979c2e99f04b535e520ba9120d728e13085139a3b421018fbd9"
+    },
+    {
+      "path": "boss-bundle.json",
+      "sha256": "07fff55aaed133ad831c74074fca52cb5ca0bbac3208c85f487a07e7fc604bdc"
+    },
+    {
+      "path": "boss-graph-install.json",
+      "sha256": "bcfbea62afb3eecc9bf17ccd8d27237df7c364652dbe987a0e0827bb8eb0e126"
+    },
+    {
+      "path": "boss-graph-online-2026-10-09T13-36-44-301Z.json",
+      "sha256": "e2bcd333f43589c7ba4e8493658cab5cf08437c66f273b280409ee0538867966"
+    },
+    {
+      "path": "boss-dsh-2026-10-09T13-37-18-766Z.json",
+      "sha256": "2b15bb1e196b228c00ff60768d373441908215004ebe1ab86068bb007258979d"
+    },
+    {
+      "path": "boss-build-2026-10-09T13-37-27-199Z.json",
+      "sha256": "81f62fe4d98c56bdf65852a05d52ec35e51f2b80a6ec39b216b387496169b955"
+    },
+    {
+      "path": "boss-bundle-2026-10-09T13-38-47-743Z.json",
+      "sha256": "2f38e73a0ef1459c762f75eca2355b0799db9c56d5eb3a8fad3c41e4c00f437b"
+    },
+    {
+      "path": "boss-prepare-2026-10-09T12-39-01-296Z.json",
+      "sha256": "b4d62de5a3935c306554fabbed05af82f104502dc1c7caeb2843ea7e6e87c4e3"
+    }
+  ],
+  "scope": "Receipt schema validation and receipt-file hashes only; no product reads, builds, tests, probes, services or independent review. Product identities are inherited from actual operation receipts.",
+  "certification": "operator-deferred",
+  "canonicalState": "root-owned; not mutated"
+}

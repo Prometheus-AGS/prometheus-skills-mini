@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "phase": "phase-bauar-release-acceptance",
+  "status": "source-ready-not-invoked-for-corrected-boundary",
+  "drivers": [
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-only-integration-driver-01.mjs",
+      "sha256": "b06b06cab00c26f751c48650f46ce6856e6905c8fdd082d72214dcf59bb4a5a3",
+      "bytes": 3781,
+      "lines": 58
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-only-integration-supervisor-01.mjs",
+      "sha256": "4977c38a608e837e850cbec122c0782186c3b300559ae48a131311af8eace322",
+      "bytes": 2518,
+      "lines": 43
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-only-integration-driver-02.mjs",
+      "sha256": "7cfb2770d17653defb419ffa1efcdeda1879b7c4a588337991254b422c8e1820",
+      "bytes": 3819,
+      "lines": 59
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-only-integration-supervisor-02.mjs",
+      "sha256": "4b4db9660d49f9bda2e3e4c3e71eaec254acca038aad8c15ca4397a8854f5926",
+      "bytes": 2544,
+      "lines": 43
+    },
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/harness-adjudication-driver-02.mjs",
+      "sha256": "bc0c7b55dfd3e64f67b45c0410c723cace06ec416efe3a5ebf8066f934da769c",
+      "bytes": 21603,
+      "lines": 290
+    }
+  ],
+  "rootReleaseRequired": true,
+  "interface": {
+    "runtime": "Node22 absolute harness-only-integration-supervisor-02.mjs --config-sha256 <actualConfig10SHA> --seal <actualSeal05Path> --seal-sha256 <actualSeal05SHA>",
+    "adjudication": "Node22 absolute harness-adjudication-driver-02.mjs --run --config <currentConfigPath> --config-sha256 <actualSHA> --integration <originalFull03FAILPath> --integration-sha256 <actualSHA> --harness-integration <actualNewHarnessOnlyPASSPath> --harness-integration-sha256 <actualSHA> --seal-sha256 <actualSeal05SHA> --output <newImmutablePublicReceiptPath>"
+  },
+  "runtimeBoundary": {
+    "selectedComponents": [
+      "harness"
+    ],
+    "requiredComponents": 1,
+    "requiredScenarios": 2,
+    "noDesktopReplay": true,
+    "noPassingScopeReplay": true,
+    "sameExecutionKeyAndOutputRoot": true,
+    "cleanupProof": "owned-desktop-cleanup-reconciliation-01.json",
+    "automaticRetry": false
+  },
+  "adjudicationBoundary": {
+    "selectedComponents": [
+      "harness",
+      "uar-regression"
+    ],
+    "selectedScenarios": [
+      "H01",
+      "H02.harness",
+      "H02.exact-retry",
+      "H03",
+      "H04"
+    ],
+    "fullOverallResult": "FAIL retained",
+    "reuse": "UAR allowed only with identical current component source/package/profile/scenario/command binding",
+    "detailedAssertionChecksPreserved": true,
+    "conflictingDuplicateSelectedPassRefused": true,
+    "harnessCases": 18,
+    "targets": 5,
+    "namedNegatives": 15,
+    "actualPassNotYetObserved": true,
+    "canonicalMutation": false
+  },
+  "verification": {
+    "drivers02Invoked": false,
+    "adjudicator02Invoked": false,
+    "newTests": false,
+    "newBuilds": false,
+    "newFormatting": false,
+    "newReview": false,
+    "boundConfigOrSealEdits": false,
+    "f6Access": false
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-09T14:36:30.197Z",
+  "phase": "phase-bauar-release-acceptance",
+  "previous": "phase-bauar-release-integration-2026-10-09",
+  "canonicalRevision": 428,
+  "previousStatus": "complete",
+  "status": "in_progress",
+  "phaseBeforeFired": 1,
+  "hooks": [
+    {
+      "status": 0,
+      "disposition": "skipped-unsupported"
+    },
+    {
+      "status": 0,
+      "disposition": "skipped-unsupported"
+    }
+  ],
+  "adaptations": [
+    "Node lifecycle helper replaces bundled Bash helper under repository Node-only rules",
+    "Legacy reflection warning is a field mismatch: canonical predecessor phase and reflect stage are complete",
+    "Canonical helper branch omits phase:before and authored project activePhase sync; completed here without changing product/tool code"
+  ],
+  "nextCommand": "/kbd-assess phase-bauar-release-acceptance"
+}

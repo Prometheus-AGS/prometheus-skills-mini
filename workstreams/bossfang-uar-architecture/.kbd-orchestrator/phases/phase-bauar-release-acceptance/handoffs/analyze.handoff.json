@@ -1,0 +1,15 @@
+{
+  "stage": "analyze",
+  "completedAt": "2026-10-09T16:44:42.930Z",
+  "outputs": [
+    "analysis.md",
+    "library-candidates.json",
+    "decision-log.md",
+    "evidence/analyze/artifact-validation.json",
+    "review/analyze/findings-round2.json"
+  ],
+  "nextStage": "spec",
+  "summaryForNext": "Seven candidates: reuse installed Playwright/Electron, Boss scenarios, Bossfang real harness gate and finite eligible UAR targets; adopt Node built-ins; reject deprecated Spectron. Propose smallest explicit early private packaged configuration/profile/log-root contract for Spec review; existing helper mutates live boot config and development gate uses an external sidecar. Unsigned local darwin-arm64 is proposed scope, not wider release approval. Final artifact review PASS (0 critical,1 warning): signing/installation/platform/publication scope and accountable owner require concrete operator/Spec decisions. Distinct-model independence unverified. No product tests/builds/launches or source edits. Current-bundle acceptance and certification remain unpassed; F6 cancelled, remote certification excluded, publication unauthorized.",
+  "skipped": false,
+  "skipReason": null
+}

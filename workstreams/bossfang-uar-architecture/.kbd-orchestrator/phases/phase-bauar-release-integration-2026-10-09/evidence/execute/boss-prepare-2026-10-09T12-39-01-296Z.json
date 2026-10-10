@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "stage": "prepare",
+  "startedAt": "2026-10-09T12:39:01.296Z",
+  "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+  "args": [
+    "scripts/prepare-local-uar-payload.cjs"
+  ],
+  "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+  "environment": {
+    "THE_BOSS_UAR_ENABLED": "1",
+    "THE_BOSS_UAR_LOCAL": "1",
+    "THE_BOSS_LOCAL_UAR_SOURCE_DIR": "/Users/gqadonis/.claude/worktrees/bauar-release-uar",
+    "CSC_IDENTITY_AUTO_DISCOVERY": "false",
+    "PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN": "warn"
+  },
+  "pathPrepend": [
+    "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin",
+    "/usr/local/bin"
+  ],
+  "shell": false,
+  "orchestrator": {
+    "path": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+    "version": "v22.20.0"
+  },
+  "logfile": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-prepare-2026-10-09T12-39-01-296Z.log",
+  "status": "complete",
+  "exitCode": 0,
+  "signal": null,
+  "finishedAt": "2026-10-09T12:39:02.910Z",
+  "logSha256": "1eec0158d33ec0b12233aa6d3a80f32734820213e8f67095674df79d9c0a2410"
+}

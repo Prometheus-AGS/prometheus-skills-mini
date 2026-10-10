@@ -1,0 +1,22 @@
+{
+  "mode": "artifact",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-6.1-sol",
+  "judge_identity": {
+    "providerId": "openai",
+    "providerConnectionId": "openai-proxy-8181",
+    "modelId": "gpt-6.1-sol"
+  },
+  "producer_model": "unknown",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "unverified-producer-unknown",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "analysis.md",
+      "claim": "The analyze artifact fails to address the goal to determine signed/platform/publication scope and release ownership.",
+      "evidence": "Goals require: \"determine signed/platform/publication scope and its release owner\" and carried boundary says \"Signing, installation, other platforms and publication are scope/ownership decisions for Assess/Analyze/Plan\". The artifact's `gaps_addressed` list contains only `current-bundled-startup`, `execution-bound-approvals`, `job-delegation-continuity`, `eligible-regression-review`, `private-launch-roots`, and `release-scope`; no candidate, recommendation, or build_required item evaluates signing, platform coverage, publication authorization, or release owner. `build_required` is limited to coordinator, private startup root contract, and product-review allowlist.",
+      "suggested_fix": "Add an explicit release-scope/ownership analysis section or candidates covering unsigned-local vs signing/notarization/installation/platform/publication ownership, with verdicts and unresolved decisions carried forward."
+    }
+  ]
+}

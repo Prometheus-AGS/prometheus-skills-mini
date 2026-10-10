@@ -1,0 +1,38 @@
+Scope: all 9 workspace projects
+✓ Lockfile passes supply-chain policies (verified 1h ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages are cloned from the content-addressable store to the virtual store.
+  Content-addressable store is at: /Users/gqadonis/Library/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+Progress: resolved 195, reused 195, downloaded 0, added 176
+Progress: resolved 341, reused 341, downloaded 0, added 322
+Progress: resolved 587, reused 587, downloaded 0, added 568
+Progress: resolved 791, reused 791, downloaded 0, added 772
+Progress: resolved 1075, reused 1075, downloaded 0, added 1056
+Progress: resolved 1271, reused 1271, downloaded 0, added 1252
+Progress: resolved 1382, reused 1382, downloaded 0, added 1363
+Progress: resolved 1478, reused 1478, downloaded 0, added 1459
+Progress: resolved 1668, reused 1668, downloaded 0, added 1649
+Progress: resolved 1833, reused 1833, downloaded 0, added 1814
+Progress: resolved 2024, reused 2024, downloaded 0, added 2005
+Progress: resolved 2099, reused 2099, downloaded 0, added 2080
+Progress: resolved 2183, reused 2183, downloaded 0, added 2164
+Progress: resolved 2242, reused 2242, downloaded 0, added 2223
+Progress: resolved 2285, reused 2285, downloaded 0, added 2267
+Progress: resolved 2373, reused 2373, downloaded 0, added 2356
+Progress: resolved 2481, reused 2481, downloaded 0, added 2466
+Progress: resolved 2547, reused 2547, downloaded 0, added 2535
+Progress: resolved 2564, reused 2564, downloaded 0, added 2554
+Progress: resolved 2592, reused 2592, downloaded 0, added 2583
+Progress: resolved 2608, reused 2607, downloaded 0, added 2599
+Progress: resolved 2612, reused 2612, downloaded 0, added 2605
+Error: ERR_PNPM_NO_OFFLINE_TARBALL
+
+  × installing dependencies
+  ╰─▶ Failed to fetch tarball for @ai-sdk/provider-utils@4.0.50 from https://
+      registry.npmjs.org/@ai-sdk/provider-utils/-/provider-utils-4.0.50.tgz in
+      offline mode: snapshot not present in local store
+  help: Drop `--offline` (or `offline=true` in pnpm-workspace.yaml) or run an
+        online install first to populate the store.
+

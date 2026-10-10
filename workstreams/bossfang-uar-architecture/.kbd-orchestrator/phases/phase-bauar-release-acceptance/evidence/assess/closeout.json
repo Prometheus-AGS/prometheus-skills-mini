@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-09T14:48:31.409Z",
+  "command": {
+    "program": "prometheus",
+    "args": [
+      "kbd",
+      "--path",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+      "stage",
+      "transition",
+      "--command-id",
+      "assess-complete:phase-bauar-release-acceptance:20261009",
+      "--phase",
+      "phase-bauar-release-acceptance",
+      "--id",
+      "assess",
+      "--status",
+      "complete"
+    ],
+    "exitCode": 0
+  },
+  "revision": 430,
+  "activePath": {
+    "phasePath": [
+      "phase-bauar-release-acceptance"
+    ],
+    "phaseId": "phase-bauar-release-acceptance",
+    "stageId": "assess",
+    "changeId": null,
+    "taskId": null,
+    "commit": "ddd936636f1f3582d7ea26d17780f4c92977cf6d"
+  },
+  "phaseStatus": "in_progress",
+  "stage": {
+    "id": "assess",
+    "title": "Assess",
+    "sequence": 1,
+    "status": "complete"
+  },
+  "artifactLinks": {
+    "checked": 25,
+    "missing": []
+  },
+  "hooks": [
+    {
+      "status": 0,
+      "disposition": "skipped-unsupported"
+    },
+    {
+      "status": 0,
+      "disposition": "skipped-unsupported"
+    },
+    {
+      "status": 0,
+      "disposition": "skipped-unsupported"
+    },
+    {
+      "status": 0,
+      "disposition": "skipped-unsupported"
+    }
+  ],
+  "selectedProductStatus": {
+    "uar": {
+      "selectedPaths": [
+        "src/uar/api/full_harness.rs",
+        "mcp.json"
+      ],
+      "status": "",
+      "matchesEntry": true
+    },
+    "boss": {
+      "selectedPaths": [
+        "src/main/ai/runtime/uar/UarToolApprovalController.ts",
+        "build/local-uar-source.json"
+      ],
+      "status": "",
+      "matchesEntry": true
+    },
+    "bossfang": {
+      "selectedPaths": [
+        "crates/librefang-kernel/src/kernel/uar_harness/admission.rs",
+        "crates/librefang-kernel/src/kernel/uar_harness/lifecycle.rs"
+      ],
+      "status": "",
+      "matchesEntry": true
+    }
+  },
+  "productTestsRun": false,
+  "productBuildsRun": false,
+  "productLaunchRun": false,
+  "productSourceEdits": false,
+  "F6": "cancelled/excluded",
+  "publication": "not-authorized",
+  "nextStage": "analyze",
+  "handover": "awaiting-operator"
+}

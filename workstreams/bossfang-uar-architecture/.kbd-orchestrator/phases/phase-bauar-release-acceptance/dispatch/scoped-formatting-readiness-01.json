@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "status": "dormant-driver-ready-not-invoked",
+  "phase": "phase-bauar-release-acceptance",
+  "owner": "/root/native_build_completion",
+  "createdAt": "2026-10-10T00:56:14.867Z",
+  "driver": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/scoped-formatting-driver-01.mjs",
+    "sha256": "444e5f9a6bbd330a6936caa12ad83c1fce01d730764303b17e05a70f7ee5db83",
+    "bytes": 14450,
+    "lines": 220
+  },
+  "invocation": {
+    "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+    "args": [
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/scoped-formatting-driver-01.mjs",
+      "--run",
+      "--config",
+      "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/candidate-inputs.json",
+      "--config-sha256",
+      "<exact final config SHA256>",
+      "--additions",
+      "<exact additions04 path>",
+      "--additions-sha256",
+      "<exact additions04 SHA256>"
+    ],
+    "release": "Only root coordinator may invoke after package and runtime complete; no gate invoked by preparation."
+  },
+  "inputs": {
+    "currentConfig07": {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/candidate-inputs.json",
+      "sha256": "1f51c0c87db4a0b9a4bd2e288700da009cebcdecdd8321bb06150b76b6bbb7d8",
+      "disposition": "History only; config08 or later exact final binding required."
+    },
+    "additions04": "Pending root/runtime-seal-driver03. Requires candidateConfig, recordedScenarioSources, recordedPreparationSources, recordedDiagnosticInputs, recordedHarnessSources, and formatScope arrays; no guessed filenames."
+  },
+  "scope": {
+    "bossProduction": [
+      "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/core/paths/constants.ts",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/core/preboot/userDataLocation.ts",
+      "/Users/gqadonis/.claude/worktrees/bauar-release-boss/src/main/core/preboot/README.md"
+    ],
+    "desktop": "Exactly seven literal paths from additions04 formatScope.desktopPaths; parent provided desktop-task3-sources-03.json as finite current inventory.",
+    "harness": "Exactly four literal paths from additions04 formatScope.harnessPaths, including supervisor helper.",
+    "rust": [
+      "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_full_harness_cursor.rs"
+    ],
+    "phase": "Only MJS/JSON paths in sealed config selected metadata and additions04 explicit preparation/diagnostic arrays. Enumerate literal-inventory.json before reading any selected source bytes.",
+    "excluded": "F6 file names refused by eligiblePath before any read/hash/spawn arguments. No global Rust traversal or formatter.",
+    "receiptSchema": "Standard acceptance receipt.schema.json $defs.review: kind format, executionKey, sourceSha256, packageSha256, profileSha256, status, executedCount, boolean/integer observations."
+  },
+  "commands": {
+    "oxfmt": {
+      "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "args": [
+        "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+        "exec",
+        "oxfmt",
+        "--check",
+        "<one literal eligible selected path>"
+      ],
+      "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss"
+    },
+    "rustfmt": {
+      "program": "/Users/gqadonis/.rustup/toolchains/stable-aarch64-apple-darwin/bin/rustfmt",
+      "args": [
+        "--check",
+        "--edition",
+        "2024",
+        "--config",
+        "skip_children=true",
+        "/Users/gqadonis/.claude/worktrees/bauar-release-uar/tests/bauar_full_harness_cursor.rs"
+      ],
+      "editionSource": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/Cargo.toml:34"
+    },
+    "environment": "Private HOME/TMPDIR/XDG cache, installed Node24/Boss .bin/system PATH, COREPACK_ENABLE_NETWORK=0, npm_config_offline=true; no ambient environment or credentials."
+  },
+  "checkerIdentities": [
+    {
+      "path": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "realPath": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+      "sha256": "4255a388254ca4319e2f95f1da375d5deaddf25baf9c7c85070b67f9543b15d0",
+      "bytes": 117591472
+    },
+    {
+      "path": "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+      "realPath": "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+      "sha256": "b6e13402c88a275f5b1ec4fb420df8763179bbe9f2b87a10911be44a3622d68d",
+      "bytes": 5897
+    },
+    {
+      "path": "/Users/gqadonis/.rustup/toolchains/stable-aarch64-apple-darwin/bin/rustfmt",
+      "realPath": "/Users/gqadonis/.rustup/toolchains/stable-aarch64-apple-darwin/bin/rustfmt",
+      "sha256": "5f552ee4d89172baa898b816c56dd5448f4060436d979ba8690d6007833996dd",
+      "bytes": 4473176
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/oxfmt/bin/oxfmt",
+      "realPath": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/oxfmt@0.61.0/node_modules/oxfmt/bin/oxfmt",
+      "sha256": "ecab4e2f1bebaab1a3306620bee562ec16e8cb83dd5fb739b94a5aae3c9e34bd",
+      "bytes": 46
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/oxfmt/dist/cli.js",
+      "realPath": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/oxfmt@0.61.0/node_modules/oxfmt/dist/cli.js",
+      "sha256": "3e57f44585e10d46065d93cf9540759dd1cdfccc4d552ffac476a110f28a0970",
+      "bytes": 7178
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/oxfmt@0.61.0/node_modules/@oxfmt/binding-darwin-arm64/oxfmt.darwin-arm64.node",
+      "realPath": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/@oxfmt+binding-darwin-arm64@0.61.0/node_modules/@oxfmt/binding-darwin-arm64/oxfmt.darwin-arm64.node",
+      "sha256": "4285763a9f1caf6454f71f787bf38f2967d625384062e4846af14cf5753a9d05",
+      "bytes": 6666464
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.oxfmtrc.json",
+      "realPath": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.oxfmtrc.json",
+      "sha256": "7575f600c687ee38800fb7e60ae8d072c6cbeb38e4abff7a60845ef1b2ecf0e8",
+      "bytes": 2353
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/.prettierignore",
+      "available": false,
+      "category": "missing"
+    }
+  ],
+  "observationsPlanned": [
+    "Actual per-file subprocess exit/signal/category/cleanup retained through runOwned; no raw formatter output saved.",
+    "Actual before/after source SHA256 plus final inventory hash-preservation check.",
+    "Oxfmt exact Finished-in summary must identify one processed file and clean summary before PASS; ignored/zero-file or missing summary becomes BLOCKED.",
+    "Only fixed format-difference classifications and exact selected diagnostic paths leave private output. Rust diff source discarded.",
+    "Tool realpath and byte identity checked before/after. Source/config/additions/seal drift prevents clean receipt.",
+    "Separate immutable scoped-formatting-detail JSON retains file identity, literal args, tool bindings, actual process result and safe diagnostics. Standard receipt keeps schema-compatible boolean/integer observations."
+  ],
+  "sources": [
+    {
+      "title": "Official Oxfmt --check behavior",
+      "url": "https://github.com/oxc-project/website/blob/main/src/docs/guide/usage/formatter/generated-cli.md"
+    },
+    {
+      "title": "Official Oxfmt exact statistics snapshot",
+      "url": "https://github.com/oxc-project/oxc/blob/main/apps/oxfmt/test/cli/oxfmtrc_overrides/0.snap.md"
+    },
+    {
+      "title": "Official additional file formats",
+      "url": "https://github.com/oxc-project/website/blob/main/src/blog/2026-02-24-oxfmt-beta.md"
+    }
+  ],
+  "verification": {
+    "commandsRun": [],
+    "formatterInvoked": false,
+    "gateInvoked": false,
+    "reviewInvoked": false,
+    "productFilesEdited": [],
+    "knownLimitations": [
+      "Stable rustfmt checks formatting only; no runtime toolchain migration or build.",
+      "Native Oxfmt/CLI and config identities recorded; not a complete transitive dependency certification.",
+      "Driver source is prepared but not runtime-verified. Missing/unavailable inputs or checker never produce PASS."
+    ]
+  }
+}

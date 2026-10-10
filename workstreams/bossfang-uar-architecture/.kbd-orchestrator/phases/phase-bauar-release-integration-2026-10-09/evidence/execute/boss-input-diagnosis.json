@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-09T11:59:22.950Z",
+  "observedFailure": "ERR_PNPM_EXECUTOR_LIFECYCLE_SCRIPT_FAILED during automatic root dsh-bridge postinstall; get-tsconfig readTsconfig missing",
+  "mechanism": "Dereferenced pnpm transitive package copies change realpath-based dependency lookup",
+  "resolution": [
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/the-boss",
+      "original": "/Users/gqadonis/Projects/prometheus/the-boss/node_modules/.pnpm/tsdown@0.22.14_oxc-resolver@11.21.2_tsx@4.21.0_typescript@7.0.2_unrun@0.2.27_@emnapi+core@1.11.2_@emnapi+runtime@1.11.3_/node_modules/rolldown-plugin-dts/dist/internal.mjs",
+      "real": "/Users/gqadonis/Projects/prometheus/the-boss/node_modules/.pnpm/rolldown-plugin-dts@0.27.14_oxc-resolver@11.21.2_rolldown@1.2.6_typescript@7.0.2/node_modules/rolldown-plugin-dts/dist/internal.mjs",
+      "resolved": "/Users/gqadonis/Projects/prometheus/the-boss/node_modules/.pnpm/get-tsconfig@5.0.0-beta.5/node_modules/get-tsconfig/dist/index.mjs",
+      "version": "5.0.0-beta.5",
+      "manifestSha256": "ae3d4cdb7f60c01722cf35669614294e22307f96bc2375c50117e491b93f9328"
+    },
+    {
+      "root": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+      "original": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/tsdown@0.22.14_oxc-resolver@11.21.2_tsx@4.21.0_typescript@7.0.2_unrun@0.2.27_@emnapi+core@1.11.2_@emnapi+runtime@1.11.3_/node_modules/rolldown-plugin-dts/dist/internal.mjs",
+      "real": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/tsdown@0.22.14_oxc-resolver@11.21.2_tsx@4.21.0_typescript@7.0.2_unrun@0.2.27_@emnapi+core@1.11.2_@emnapi+runtime@1.11.3_/node_modules/rolldown-plugin-dts/dist/internal.mjs",
+      "resolved": "/Users/gqadonis/.claude/worktrees/bauar-release-boss/node_modules/.pnpm/node_modules/get-tsconfig/dist/index.cjs",
+      "version": "4.13.6",
+      "manifestSha256": "456bb5c6f81bab2db264e81a4cc85e80e133c86fd0b03bfa120649ba47a4fdc8"
+    }
+  ],
+  "configProbe": {
+    "program": "/Users/gqadonis/.nvm/versions/node/v24.11.1/bin/node",
+    "args": [
+      "/Users/gqadonis/.cache/node/corepack/v1/pnpm/12.3.4/bin/pnpm.mjs",
+      "config",
+      "get",
+      "verifyDepsBeforeRun"
+    ],
+    "cwd": "/Users/gqadonis/.claude/worktrees/bauar-release-boss",
+    "environment": {
+      "PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN": "warn"
+    },
+    "exitCode": 0,
+    "stdout": "warn\n"
+  },
+  "documentation": {
+    "context7Library": "/websites/pnpm_io",
+    "url": "https://pnpm.io/settings/build#verifydepsbeforerun",
+    "default": "install",
+    "selected": "warn"
+  },
+  "nodeOptions": {
+    "present": true,
+    "packageMapFlag": false,
+    "importOrRequireOrLoaderFlag": false
+  },
+  "repair": "pending root scope decision; no dependency pin/source mutation"
+}

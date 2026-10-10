@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-09T12:39:29.600Z",
+  "status": "prepared-record-validated-not-staged",
+  "commandReceipt": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-integration-2026-10-09/evidence/execute/boss-prepare-2026-10-09T12-39-01-296Z.json",
+    "size": 1256,
+    "sha256": "b4d62de5a3935c306554fabbed05af82f104502dc1c7caeb2843ea7e6e87c4e3"
+  },
+  "archive": {
+    "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64.tar.gz",
+    "size": 124104664,
+    "sha256": "47a565ce5e4f63f28eebd9183a6ed6eeeffbdad13d1c8a6ec318fb2498c34bcb"
+  },
+  "record": {
+    "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64.json",
+    "size": 730,
+    "sha256": "ac6cc6ba48fa10074154374b5bc2b4a7ee46fa84a08b5c3c30b9e1761431308a"
+  },
+  "manifest": {
+    "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/payload-manifest.json",
+    "size": 1956,
+    "sha256": "97227f91f5f88d19b9a054e356f8364a94c1a0f1f3bcdc09a9a56be4dc5dde93"
+  },
+  "binary": {
+    "path": "/Users/gqadonis/.claude/worktrees/bauar-release-uar/dist/boss-sidecar/uar-sidecar-darwin-arm64/uar-sidecar",
+    "size": 296935808,
+    "sha256": "9f91874091f8241d97209fd21b8c0c5b79ae6cdeb82ee0e873a5ea4540a8adea"
+  },
+  "source": "84ca0ffff5da8fafc1e2e7f5585efc07a396b14e",
+  "archiveMatchesHandoff": true,
+  "binaryMatchesHandoff": true,
+  "manifestMatchesHandoff": true,
+  "candidateBossHead": "7a5bdb4b7c02e9f13875fc7f837815c03fe3dacd",
+  "staging": {
+    "performed": false,
+    "marker": null,
+    "reason": "prepare-local-uar-payload.cjs calls inspectLocalUarRecord only; beforePack stageLocalUarPayload remains unexecuted"
+  },
+  "graphRebuild": "pending-operator-approval",
+  "appBuild": "not-run",
+  "bundle": "not-run"
+}

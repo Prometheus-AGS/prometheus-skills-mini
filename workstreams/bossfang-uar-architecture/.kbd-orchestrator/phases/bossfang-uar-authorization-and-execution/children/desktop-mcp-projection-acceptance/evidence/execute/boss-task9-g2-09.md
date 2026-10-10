@@ -1,0 +1,37 @@
+# Task 9 / G2-09 bounded fixture correction handoff
+
+Restored revision 249, 2026-10-07. Boss runtime author; parent owns compiler, prelaunch binding, actual failed G2 rerun, scope/state and acceptance verdict. Source is frozen after this handoff.
+
+## Observed result and source conclusions
+
+G2-09 completed with exit 1 at native_restart. Its first restart provider request lacked both target and search_tools; discovery_not_advertised was recorded, with zero proposals. All six profile receipts and four native host/transport receipts passed; seven event outcomes passed. Split reasoning remains absent. Snapshot recorded two text events, zero rewritten assistant snapshots, zero emitted text, persisted assistant data, no stream error, and failed exact-text/redaction/snapshot predicates. Storage cases were unrun. This is not an acceptance pass.
+
+Snapshot: fully read uar-task9-snapshot-scenario.md. The fixture drained the first actual stream then reused last-event-id zero. UarRuntimeConnection.ts:260–275 supplies that initial zero. UAR sse.rs:135–159 accumulates assistant history only through the cursor, and routes.rs:794–821 replays events after it. The fixture blanked replay text, so the empty snapshot and missing output are explained by a concrete cursor setup contradiction. The old snapshot counter counted rewritten assistant messages, not snapshot frames.
+
+Restart: native agent setup uses the actual catalog APIs and a selected-server/all-tools/ask policy. UarRuntimeConnection.ts:419–440 preserves catalog authority; its native-controls wrapper does not change the artifact. No agent/model/policy override is justified. The external MCP fixture instead allocated one stateful SDK transport for its entire lifetime, including desktop restart. Installed @modelcontextprotocol/sdk is 1.27.1. Its webStandardStreamableHttp.js:425–441 rejects another initialize on an already initialized stateful transport with HTTP 400, and :570–582 closes a DELETE session without resetting the initialized flag. A new desktop creates a new MCP client. warmMcpToolCatalogs at piMcpToolAdapter.ts:40–51 uses Promise.allSettled, so a rejected refresh can leave the bridge with an empty catalog. This is a source-confirmed fixture lifecycle contradiction and a source-supported explanation of missing discovery; G2-09 did not record the MCP initialization response, so causality for that particular execution remains unproven.
+
+Context7 was used in required order: resolve @modelcontextprotocol/sdk, then query /modelcontextprotocol/typescript-sdk/__branch__v1.x for stateful multi-session lifecycle. Official SDK references returned per-session transport maps, new Server/transport per initialization, exact mcp-session-id routing, and onclose removal. The installed 1.27.1 implementation and declarations were inspected to pin the behavior because returned documentation also included main-branch examples. References: https://github.com/modelcontextprotocol/typescript-sdk/blob/v1.x/CLAUDE.md and https://github.com/modelcontextprotocol/typescript-sdk/blob/main/examples/standalone-get/server.ts . Installed source SHA-256: webStandardStreamableHttp.js c546706eff0103eb0962d55cc6319a4619b1f877dd825b35d602baba33c82974; streamableHttp.d.ts 425b22fcc2fd435f20a99a0f8ac9babb39aef8b9b56749f735b13b1410cc0413.
+
+## Exact authored scope
+
+Before each write, exact paths were sent to root via collaboration; root explicitly confirmed existing -mcp.ts ownership for this correction and -events.ts cursor amendment. Only the three gate files below and this handoff were written.
+
+- -mcp.ts: the existing authenticated HTTP fixture now owns an actual McpServer and stateful StreamableHTTPServerTransport per genuine initialize. Existing session requests route by their actual session header; closed sessions are removed; fixture cleanup closes active servers. Authorization remains before dispatch. The existing toolServer supplies the exact same 32-filler deferred catalog, target, canary, effect/error/progress behavior and shared counters to every session. No tool execution is added to the provider. Missing/unknown sessions and non-initialize first requests retain refusal through fixed status, consistent with the actual SDK boundary. No retry, timeout, cap, eager override or product configuration is introduced.
+- -events.ts: drain the original stream, parse real SSE source IDs and events only in memory, track actual assistant text and completed steps, select an observed nonterminal cursor with no active step and strictly before the actual RUN_FINISHED source. Missing cursor/failed run/invalid step order/no admissible boundary throw fixed categories. Clone the original headers and change only last-event-id for the same stream operation; real terminal replay is retained. No IDs or event values are logged. Existing snapshot replacement acts only on actual returned assistant snapshot messages. New snapshotFrames count is separate from the unchanged rewritten-assistant snapshot counter; snapshotCursorSelected is a fixed boolean.
+- main: retain finite MCP initialization diagnostics in success and failure JSON: authenticated initialize count, session creations, response and accepted counts, last numeric status, active sessions, target effects and filler calls. No IDs, credentials, bodies or endpoints are emitted.
+
+All original assertProjectedEvents predicates, sink predicates, aggregate model-input marker predicate, final all-events-passed condition and native restart authority/replay/terminal/effect/approval assertions remain unchanged. bauar-native-desktop-cases.ts was read only and remains SHA-256 6937391c97960cce2181f631275e5b063e9ca62709ac5c0883ecfce06872e26f. No failed case becomes a pass; normal operational errors still propagate. The new transport HTTP catch retains the existing 500 fixture-response behavior rather than converting exceptions to acceptance.
+
+## Frozen source hashes
+
+| Path relative to /Users/gqadonis/.claude/worktrees/bauar-boss | SHA-256 | Physical lines |
+| --- | --- | ---: |
+| scripts/gates/bauar-secret-projection-mcp.ts | 6fa8db9b808099cea6992b2399892727055c8a84f68ef20a33199e89ad3f0462 | 393 |
+| scripts/gates/bauar-secret-projection-events.ts | 7db857e0804926732490bd5498df2be5a0e8cae7933aa2c4c6cc013186c21205 | 286 |
+| scripts/gates/bauar-secret-projection.ts | 22ecb893c15895df7afbee2e1ebedb0c64e1ae8d8211b1bd9026d0e1e5619675 | 490 |
+
+## Limits and handoff
+
+No tests, compilers, builds, gates, formatters, dependency edits, product edits, service/default changes, KBD/team mutations or commits were run. Static inspection is the only verification performed here; the new session initialization acceptance and corrected snapshot path remain unrun. Root must finish its required compiler and source/artifact binding sequentially before running the failed G2 gate. Numeric initialization evidence will distinguish accepted fresh sessions from this source-only inference.
+
+Pending catalog trace leakage, aggregate marker semantics, split reasoning and post-ack cancellation amendments remain untouched. No raw logs/provider bodies/private credentials were read. Neither excluded UAR file was read or hashed; no D0 diagnostic was used. Existing earlier edits were preserved. The MCP session routing checks trace to the real authenticated protocol-session boundary (A-3); snapshot checks trace to the observed cursor failure and explicit bounded-cursor requirement (A-2). No additional concern was implemented.

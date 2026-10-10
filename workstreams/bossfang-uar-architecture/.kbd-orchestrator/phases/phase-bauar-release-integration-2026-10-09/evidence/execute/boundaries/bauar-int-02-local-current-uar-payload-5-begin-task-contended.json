@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-09T11:29:53.817Z",
+  "change": "bauar-int-02-local-current-uar-payload",
+  "id": "5",
+  "operation": "begin-task",
+  "program": "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+  "args": [
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/scripts/kbd-apply.mjs",
+    "begin-task",
+    "bauar-int-02-local-current-uar-payload",
+    "5",
+    "5",
+    "6",
+    "2.3 Assemble an unsigned local Boss darwin-arm64 directory bundle using the existing local profile, preparation/build and electron-builder hooks with --dir --publish never. Completion is the actual bundle, intact hook results and bundled UAR source/digest; do not invoke signed-DMG validation or public publication."
+  ],
+  "cwd": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture",
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "kbd-apply: openspec: instructions apply --change bauar-int-02-local-current-uar-payload failed: {\"code\":75,\"schemaVersion\":1,\"time\":\"2026-10-09T11:29:53.792Z\",\"operation\":\"run\",\"project\":\"/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture\",\"status\":\"contended\",\"reason\":\"OpenSpec operation is locked: /Users/gqadonis/.prometheus/openspec/operation.lock. Inspect the owner; remove only after confirming it has stopped.\",\"output\":\"\",\"receipt\":\"/Users/gqadonis/.prometheus/openspec/receipts/ef38d0ae220bea1773edced2/1791545393796-a50775ab-4068-4fe1-8fbd-515a91790e39.json\"}\n\n"
+}

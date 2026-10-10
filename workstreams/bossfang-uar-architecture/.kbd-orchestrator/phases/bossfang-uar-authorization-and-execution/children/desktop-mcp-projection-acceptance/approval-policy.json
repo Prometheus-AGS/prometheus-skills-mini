@@ -9,9 +9,11 @@
     "assess",
     "analyze",
     "spec",
-    "plan"
+    "plan",
+    "execute",
+    "reflect"
   ],
-  "pendingApprovalFor": "execute",
+  "pendingApprovalFor": null,
   "inheritedExecuteScope": "Parent production fixes already authorized; new child handovers retain stage stops.",
   "restrictions": [
     "Do not retry or route around D0 diagnostic",
@@ -35,8 +37,59 @@
       "stage": "plan",
       "at": "2026-10-07T10:35:37.770Z",
       "source": "Operator Approved in reply to explicit Plan handover request."
+    },
+    {
+      "stage": "execute",
+      "at": "2026-10-07T11:46:58.791Z",
+      "source": "Operator approved in reply to explicit Execute handover after Plan commit7765b14; use the agent team; stop before Reflect."
+    },
+    {
+      "stage": "execute-scope-amendment",
+      "at": "2026-10-07T18:22:21.965Z",
+      "source": "Operator: Approved!",
+      "amendments": [
+        "bauar05-catalog-trace-scope",
+        "bauar05-reasoning-event-scope",
+        "bauar05-postack-control-scope"
+      ]
+    },
+    {
+      "stage": "reflect",
+      "at": "2026-10-08T17:15:10.944Z",
+      "source": "Operator: Approved, responding to explicit Execute-to-Reflect handover request."
+    },
+    {
+      "stage": "child-exit",
+      "at": "2026-10-08T17:33:12.975Z",
+      "source": "Operator: Approve child exit"
     }
   ],
-  "stageCompleted": "plan",
-  "productChangesAuthorized": false
+  "stageCompleted": "reflect",
+  "productChangesAuthorized": true,
+  "pendingScopeAmendments": [
+    {
+      "id": "bauar05-catalog-trace-scope",
+      "status": "approved",
+      "requestedAt": "2026-10-07T15:08:51.626Z",
+      "source": "Explicit async user questions during Execute; existing Execute authorization remains active",
+      "approvedAt": "2026-10-07T18:22:21.965Z",
+      "approvalSource": "Operator: Approved! in reply to bundled three-amendment decision"
+    },
+    {
+      "id": "bauar05-postack-control-scope",
+      "status": "approved",
+      "requestedAt": "2026-10-07T15:08:51.627Z",
+      "source": "Explicit async user questions during Execute; existing Execute authorization remains active",
+      "approvedAt": "2026-10-07T18:22:21.965Z",
+      "approvalSource": "Operator: Approved! in reply to bundled three-amendment decision"
+    },
+    {
+      "id": "bauar05-reasoning-event-scope",
+      "status": "approved",
+      "requestedAt": "2026-10-07T15:27:09.902Z",
+      "source": "Explicit async scope question: one-file Liter reasoning mapping; existing Execute authorization remains active",
+      "approvedAt": "2026-10-07T18:22:21.965Z",
+      "approvalSource": "Operator: Approved! in reply to bundled three-amendment decision"
+    }
+  ]
 }

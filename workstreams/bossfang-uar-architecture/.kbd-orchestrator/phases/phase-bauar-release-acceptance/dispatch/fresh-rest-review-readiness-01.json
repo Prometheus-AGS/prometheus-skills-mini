@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "kind": "fresh-rest-review-source-readiness",
+  "phase": "phase-bauar-release-acceptance",
+  "status": "source-ready-not-runtime-verified",
+  "driver": {
+    "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/fresh-rest-review-driver-01.mjs",
+    "sha256": "6de29e8ec82cdb68b1501a4584d7c163635e929370c4a44884f32d764e11bd0a",
+    "bytes": 17358,
+    "lines": 245
+  },
+  "changes": [
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/fresh-rest-review-driver-01.mjs",
+      "sha256": "6de29e8ec82cdb68b1501a4584d7c163635e929370c4a44884f32d764e11bd0a"
+    }
+  ],
+  "cli": [
+    "/Users/gqadonis/.local/share/mise/installs/node/22.20.0/bin/node",
+    "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/fresh-rest-review-driver-01.mjs",
+    "--run",
+    "--inputs",
+    "<fresh-public-request.json>",
+    "--inputs-sha256",
+    "<actual-digest>"
+  ],
+  "request": {
+    "schemaVersion": 1,
+    "kind": "fresh-rest-review-request",
+    "phase": "phase-bauar-release-acceptance",
+    "gateway": "http://localhost:4000/v1",
+    "concurrency": "integer 1..3",
+    "dispatcher": "actual driver {path,sha256}",
+    "records": "acceptance/lib/records.mjs {path,sha256}",
+    "config": "current candidate config ref",
+    "runtimeSeal": "matching runtime seal ref",
+    "integration": "matching full eight-component/fourteen-scenario actual PASS aggregate ref",
+    "artifactQa": "matching standalone-produced-artifact-qa actual PASS receipt ref",
+    "packetManifest": "complete finite-cumulative-review-packets manifest ref",
+    "mandate": "exact primary mini diff mandate ref",
+    "models": "exact ~/.prometheus/kbd/models.toml ref",
+    "proxyConfiguration": "exact ~/.config/liter-llm/liter-llm-proxy.toml ref",
+    "modules": "exact primary mini judge-client/judge-findings/model-resolution refs below",
+    "outputDirectory": "fresh public phase evidence/execute child directory; immutable outputs"
+  },
+  "knownInputReferences": [
+    {
+      "path": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/acceptance/lib/records.mjs",
+      "sha256": "68621714661d8c7923b05ef3c021bc3998b4ca03b2c4fde4dbeaccad32c9dbd1"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/lib/review/judge-client.mjs",
+      "sha256": "3d6ab9002c1df43cb5221a3cbeb57cad9b042862425d03382cb52d340c6ec036"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/lib/review/judge-findings.mjs",
+      "sha256": "dcc422699d5efcebb2d48b85d0b5fbe4587d394701d959ee72e1c4287ea6bf50"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/lib/review/model-resolution.mjs",
+      "sha256": "665835f4cea186799987a3d70b82e4924d23c45d286592d239d7cc297ebeb27f"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/skills/adversarial-review/assets/reviewer-mandate-diff.md",
+      "sha256": "0ed0c87906a87f8ccec47a173b80b66218ef966b83037cf754ffe7c48416bea7"
+    },
+    {
+      "path": "/Users/gqadonis/.prometheus/kbd/models.toml",
+      "sha256": "bb443bc5b90433f813718ff9ad38ffdddd7506eac2655ffe4b1bc965edbb4440"
+    },
+    {
+      "path": "/Users/gqadonis/.config/liter-llm/liter-llm-proxy.toml",
+      "sha256": "829326cf0d36122faadcf3c31092b78ce96a984f94df87af59966a505841ca78"
+    }
+  ],
+  "selection": {
+    "role": "critic",
+    "alias": "MiniMax-M3",
+    "identity": {
+      "providerId": "minimax",
+      "providerConnectionId": "minimax-direct",
+      "modelId": "MiniMax-M3"
+    },
+    "selectionReason": "Approved different-family alternative to configured judge gpt-6.1-sol/openai/openai-proxy-8181, which collides with current producer family.",
+    "route": "Configured MiniMax-M3 provider_model and https://api.minimax.io/v1 route verified as safe metadata; fixed liter gateway4000; no gateway discovery/fallback.",
+    "producerIdentity": null,
+    "observedProducerModels": [
+      "gpt-6-astra",
+      "gpt-6.1-sol"
+    ],
+    "cross_model_check": "unverified-producer-unknown",
+    "independenceVerified": false
+  },
+  "securityBoundaries": [
+    "Digest-bound finite public packet manifest, every packet, integration, artifact QA, model config, mandate, modules, dispatcher and records source. Enumerate paths before target body access; reject F6 and private runtime bodies.",
+    "Existing process LITER_LLM_MASTER_KEY preferred. Otherwise read only known secrets.env in memory; literal assignment parser with conventional duplicate last-wins, no shell evaluation. No credential read occurred during preparation. No fallback credential, alternate gateway, setup or service mutation.",
+    "Proxy configuration used only for source identity comparison in memory; neither its body nor credentials enter prompts or outputs. Model config stored only as source ref and safe selected identity.",
+    "Responses validated before normalization; malformed findings are rejected rather than silently filtered to an empty PASS. Zero findings require nonempty checked_classes. A response containing the gateway credential is discarded.",
+    "Raw HTTP errors, completion text, configuration bodies and keys never persist or print. HTTP statuses/request attempt counts and fixed categories are retained."
+  ],
+  "outputs": [
+    "findings-NNNN.json normalized findings/checked_classes only, awaiting root screening.",
+    "result-NNNN.json immutable per-packet result, source packet ref, actual classification/statuses/attempt count; survives later interruption.",
+    "dispatch-coverage.json immutable complete/incomplete dispatch coverage plus all result refs, exact current bindings and limitations. No final kind:review PASS receipt is produced."
+  ],
+  "exitCodes": {
+    "0": "Every declared packet produced valid normalized findings; review remains unadjudicated even with CRITICAL findings or unknown independence.",
+    "2": "Unavailable credential/route, rejected output, incomplete packet coverage, invalid input/binding or incomplete scan. No fabricated clean result."
+  },
+  "boundedDispatch": {
+    "packetCountMaximum": 1024,
+    "concurrencyMaximum": 3,
+    "retryPolicy": "Reuse existing dispatchJudge defaults only: maxAttempts3, initialTimeout300000ms, existing timeout doubling and retry categories. No outer retries, alternate provider or model discovery.",
+    "freshContext": "System diff mandate plus user raw JSON for exactly one packet, no feedback/history/conversation."
+  },
+  "proofLimitations": [
+    "Configured route identity is source evidence; response is not runtime provider self-identification proof.",
+    "Complete original producer connection identity is unavailable; model independence remains unverified-producer-unknown. Root handles operator disposition.",
+    "Root performs anti-theater/sycophancy screening before surfacing/adjudicating results.",
+    "Supervisor fixture coverage does not certify native direct transport; unsigned local darwin-arm64 only; restart unknown/unsupported requires reconciliation; remote/Windows/signing/installed deployment and inherited279-commit baseline remain unverified/excluded.",
+    "No network requests, inference, syntax check, tests, build, formatting, artifact QA, review invocation, canonical transitions, config/seal or product changes occurred in this preparation."
+  ],
+  "observedImplementationAdaptations": [
+    "Existing primary mini dispatch-judge CLI has fallback gateway probing, sk-local default, raw upstream-error stderr and unknown-producer selection that could retain current judge. This phase driver reuses its lower-level modules while fixing those source-observed wrapper behaviors for the explicit approved review interface.",
+    "No existing Node secret loader found in scoped modules; restricted literal parser adapts the documented shell-source convention to Node-only project constraints. Unsupported shell expansions are reported unavailable rather than evaluated."
+  ],
+  "preparationScopeIncident": "A filenames-only scoped rg for QA source matched retained packaging-module paths and private-directory permission errors; no private body was read. Subsequent reads used exact owned QA source."
+}

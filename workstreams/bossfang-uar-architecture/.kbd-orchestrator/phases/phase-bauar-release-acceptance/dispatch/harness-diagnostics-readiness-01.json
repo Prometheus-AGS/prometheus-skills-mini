@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "kind": "harness-diagnostics-readiness",
+  "at": "2026-10-10T00:30:51.053Z",
+  "phase": "phase-bauar-release-acceptance",
+  "status": "source-ready-not-runtime-verified",
+  "sourceHead": "1d518936cb15b79d30bdd315510ff925613a0f4d",
+  "observedFailure": {
+    "executionReceipt": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/attempts/execution-0a50eef88a9cb91020cb5361/component-77e2d3fdeec023785671be93/7b1e5699-525c-44a3-b288-3a98b9722ef8/execution.json",
+    "exitCode": 1,
+    "category": "harness_failed",
+    "elapsedMs": 234,
+    "executedCases": 0,
+    "ownedGroupAbsent": true,
+    "unknownDescendants": false,
+    "fixtureRoot": "/Users/gqadonis/.codex/worktrees/bossfang-uar-architecture/prometheus-skills-mini/workstreams/bossfang-uar-architecture/.kbd-orchestrator/phases/phase-bauar-release-acceptance/evidence/execute/private/7b1e5699-525c-44a3-b288-3a98b9722ef8/tmp/bauar-harness-5ca2VB",
+    "checkpointAvailable": false,
+    "knownArtifacts": [
+      "provider/policies/default.cedar",
+      "provider/policies/tool-approval.cedar",
+      "provider/policies/skill-mutation.cedar",
+      "provider/builtin-skills/sample-skill/SKILL.md",
+      "provider/uar.yaml",
+      "provider/mcp.json"
+    ],
+    "absentArtifacts": [
+      "boss",
+      "kernel",
+      "effects.jsonl",
+      "receipt.json"
+    ],
+    "conclusion": "Provider startup or seed failed before the Bossfang host was launched; the exact cause was not retained."
+  },
+  "changes": [
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-gate.mjs",
+      "beforeSha256": "32db682d3fdfec4daf6c36b65276522066fe33e3e35c342782218c796e2ae047",
+      "sha256": "e05dec392ad5a4abef6fbbb8d8c1f5c09ea679229068b1e9fc66dadb567b1f0c",
+      "bytes": 31270,
+      "lines": 490
+    },
+    {
+      "path": "/Users/gqadonis/.claude/worktrees/bauar-release-bossfang/scripts/integration/bauar-harness-runtime.mjs",
+      "beforeSha256": "2f4faba41b92de2728cd451b61023b55a8e554086d4b09cc1e460214f505f9cb",
+      "sha256": "5779af4539423254d7ef1555e9df9e41c5b10e461473e63988dbbbea814fa2a4",
+      "bytes": 15059,
+      "lines": 256
+    }
+  ],
+  "behaviorChanges": [
+    "Distinct fixed provider_start, provider_seed, and host_start stage values before each setup call.",
+    "Provider launch enables existing stderr classifications for stack overflow, Rust panic, and allocation failure; raw stderr remains unretained.",
+    "Existing sanitized harnessFailureCheckpoint is persisted exclusively as fixture-root/failure-checkpoint.json before rethrow and finally cleanup; actual child exit/signal/spawn and existing classifications are retained."
+  ],
+  "diagnosticArtifactContract": {
+    "path": "TMPDIR/bauar-harness-<actual suffix>/failure-checkpoint.json",
+    "mode": "0600",
+    "exclusiveCreate": true,
+    "shape": {
+      "harnessFailureCheckpoint": [
+        "stage",
+        "cancellationSurface",
+        "cancellationStep",
+        "lastCompletedCase",
+        "completedCaseCount",
+        "host",
+        "provider",
+        "kernel"
+      ]
+    },
+    "childShape": [
+      "exitCode",
+      "signal",
+      "running",
+      "spawnError",
+      "stderrClassified",
+      "stackOverflow",
+      "rustPanic",
+      "allocationFailure"
+    ],
+    "retainsRawError": false,
+    "retainsRawStderr": false,
+    "retainsConfiguration": false,
+    "retainsCredentialValues": false
+  },
+  "verification": {
+    "testsRun": false,
+    "buildsRun": false,
+    "formatRun": false,
+    "reviewRun": false,
+    "extraRuntimeLaunch": false,
+    "sourceDigestsMeasured": true,
+    "syntaxGateRun": false
+  },
+  "boundaries": {
+    "ownedFilesOnly": true,
+    "configCoreCanonicalMutations": false,
+    "F6Accessed": false,
+    "serviceChanges": false,
+    "productionFixGuessed": false
+  },
+  "handover": "Parent must reseal changed harness/helper digests, preserve all first-batch receipts, then retry only failed or genuinely invalidated components after complete source delivery. No runtime success or complete phase gate is claimed."
+}

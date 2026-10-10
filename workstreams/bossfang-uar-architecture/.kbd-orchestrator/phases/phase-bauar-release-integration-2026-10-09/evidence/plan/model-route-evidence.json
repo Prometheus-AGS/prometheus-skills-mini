@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-10-09",
+  "source": "Exposed Codex collaboration.spawn_agent tool schema in current session",
+  "harness": "Codex desktop; build version unavailable",
+  "executionVerified": false,
+  "models": [
+    {
+      "provider": "OpenAI",
+      "model": "gpt-6-astra",
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max",
+        "ultra"
+      ],
+      "description": "Frontier intelligence for demanding work"
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-6.1-sol",
+      "efforts": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max",
+        "ultra"
+      ],
+      "description": "Latest workhorse for coding and everyday work"
+    }
+  ],
+  "nativeLaunch": {
+    "tool": "collaboration.spawn_agent",
+    "modelControl": "Fresh fork_turns=none supports model/reasoning overrides; full-history forks inherit and reject overrides",
+    "worker": "tool-enabled workspace agent; explicit scope/ownership/skills/results; no launch in Plan"
+  },
+  "prices": null,
+  "comparativeBenchmark": null,
+  "assignmentStatus": "Provisional task-fit recommendations; recheck route at Execute; no automatic alternative",
+  "unresolved": [
+    "Fresh invocation unexercised",
+    "Desktop build number unknown",
+    "Other harness provider access/controls unverified"
+  ],
+  "policy": "Project registry is explicitly unverified template; native predecessor frontier route retained for coordination",
+  "serviceUse": "No liter-llm or other inference service contacted; inference is not workspace execution"
+}

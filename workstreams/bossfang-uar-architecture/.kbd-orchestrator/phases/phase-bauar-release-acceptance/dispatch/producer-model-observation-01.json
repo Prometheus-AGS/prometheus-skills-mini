@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-09T23:16:28.107Z",
+  "kind": "producing-session-model-observation",
+  "threadId": "01a11073-a7c2-7880-b39d-bb4f09fdb3d0",
+  "source": "/Users/gqadonis/.codex/sessions/2026/10/06/rollout-2026-10-06T04-02-58-01a11073-a7c2-7880-b39d-bb4f09fdb3d0.jsonl",
+  "sessionProvider": "openai",
+  "sessionOriginator": "Codex Desktop",
+  "observedTurnContextCount": 135,
+  "observedModels": [
+    "gpt-6-astra",
+    "gpt-6.1-sol"
+  ],
+  "activeProducingTurn": {
+    "timestamp": "2026-10-09T22:59:37.810Z",
+    "model": "gpt-6.1-sol",
+    "effort": "high"
+  },
+  "resumedTeam": [
+    {
+      "task": "desktop_completion",
+      "spawnedAt": "2026-10-09T22:46:20.046Z",
+      "forkTurns": "all",
+      "explicitModelOverride": null,
+      "inheritsProducingTurnModel": "gpt-6.1-sol"
+    },
+    {
+      "task": "native_build_completion",
+      "spawnedAt": "2026-10-09T22:46:40.765Z",
+      "forkTurns": "all",
+      "explicitModelOverride": null,
+      "inheritsProducingTurnModel": "gpt-6.1-sol"
+    },
+    {
+      "task": "runtime_seal",
+      "spawnedAt": "2026-10-09T22:47:21.801Z",
+      "forkTurns": "all",
+      "explicitModelOverride": null,
+      "inheritsProducingTurnModel": "gpt-6.1-sol"
+    }
+  ],
+  "supersedesUnknownFor": "Current parent and three current resumed workers only",
+  "limits": [
+    "Selected runtime metadata observation, not inference from default configuration",
+    "Historical external/CLI authors and every inherited commit are not attested by this record",
+    "Reviewer identity and complete review coverage still pending",
+    "No raw conversation, credentials or tool outputs copied"
+  ]
+}

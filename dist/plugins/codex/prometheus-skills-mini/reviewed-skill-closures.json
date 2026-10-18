@@ -99,6 +99,30 @@
       "sha256": "sha256:c0209d76e1c4ab35544a7e1fd7d7e251057a468c54c7896267a5a64fa85d05e9"
     },
     {
+      "path": "lib/kbd/handoff/checks.mjs",
+      "sha256": "sha256:b06b7013ec1444f57648a2fc3548ab1122657ad0265bad46df28d0418fd917c7"
+    },
+    {
+      "path": "lib/kbd/handoff/extract.mjs",
+      "sha256": "sha256:33f966d1fb082bd35d23fc2210b7d22672ef5f9695fa741f816d1951d4385d0c"
+    },
+    {
+      "path": "lib/kbd/handoff/harnesses.mjs",
+      "sha256": "sha256:3cc7edb21c079481b71205388acd375c77b1cb10cc636a24f3230f7820a2323f"
+    },
+    {
+      "path": "lib/kbd/handoff/index.mjs",
+      "sha256": "sha256:9220a14af030215688531ad7dfc8a8b440739d41da3cf5e46d2c6d36836fbc57"
+    },
+    {
+      "path": "lib/kbd/handoff/packet.mjs",
+      "sha256": "sha256:36f6336b14598b048d2aa1721a69f38cb4c57c1ddbeaa9f7560fe37a83da546b"
+    },
+    {
+      "path": "lib/kbd/handoff/state.mjs",
+      "sha256": "sha256:774751da2a93d4b3cc6f4fff3eb735e9486200652c355bf33e07beb879e85c88"
+    },
+    {
       "path": "lib/kbd/hook-command.mjs",
       "sha256": "sha256:efe4442b46c6ef4b14ebc69bb05632300b7efcc15569810b61877ca30a20a1e2"
     },
@@ -113,6 +137,10 @@
     {
       "path": "lib/kbd/phase-readiness.mjs",
       "sha256": "sha256:c050575638a5cb98bd3f3dcd5882425537e8fd987b789a441b326681e96bc861"
+    },
+    {
+      "path": "lib/kbd/progress.mjs",
+      "sha256": "sha256:aa2086be02c2bfe431b94d80d62553d3af5ea33bb2e2b7ad5eec26243fc947fb"
     },
     {
       "path": "lib/kbd/reconcile-artifacts.mjs",
@@ -225,6 +253,10 @@
     {
       "path": "scripts/kbd-contract-adopt.mjs",
       "sha256": "sha256:9676125282c12449999cc5996117acbff69d0548bfd783c6035923c765c1b029"
+    },
+    {
+      "path": "scripts/kbd-handoff.mjs",
+      "sha256": "sha256:b091214044991155b1921ab7b84a28f01195e9b2d986ec174e9e12c2bca756ee"
     },
     {
       "path": "scripts/kbd-new-child.mjs",
@@ -1196,7 +1228,7 @@
     },
     {
       "path": "skills/delivery-cadence/SKILL.md",
-      "sha256": "sha256:57430a4a5a14899b1e4522bbeb5d23561c9e27db0dce105f2d9565499bbaf96f"
+      "sha256": "sha256:43ff3ed7ad2dec927bdb65efa5e012920b30b351e2c49e800c18794f96646c81"
     },
     {
       "path": "skills/delivery-cadence/assets/boss-provider-setup.mjs",
@@ -1240,7 +1272,7 @@
     },
     {
       "path": "skills/delivery-cadence/references/boss-profile.md",
-      "sha256": "sha256:053490d87bb2777ca52fbdb16e797d3dc4acef0d32fe967bd0681ae07d9377f1"
+      "sha256": "sha256:34cd654387a4f5049314d9876d3e589e86bd373cdb2b0e895b49854681593da8"
     },
     {
       "path": "skills/delivery-cadence/references/child-recovery.md",
@@ -1304,7 +1336,7 @@
     },
     {
       "path": "skills/delivery-cadence/scripts/boss-launch.mjs",
-      "sha256": "sha256:1a5dffa5cd5a5eef2ab6a1ce4b4249a656040759387cdf01385e80821e79a726"
+      "sha256": "sha256:68d0d5e3389b74d8a59ff00e6be1b23401400f22d0660f752fe1bd79424e0b6b"
     },
     {
       "path": "skills/delivery-cadence/scripts/cadence.mjs",
@@ -1867,6 +1899,10 @@
       "sha256": "sha256:b0e857b57e942464e8980e920ba94a6f0c5aeee87c58755714edb1cbf6e6bffb"
     },
     {
+      "path": "skills/kbd-handoff/SKILL.md",
+      "sha256": "sha256:1b8fedb56eb90e1fbf6fca6bf9fe0187cc19595537a25f570eed63bb161fd50a"
+    },
+    {
       "path": "skills/kbd-init/SKILL.md",
       "sha256": "sha256:1340a5dc3717b2193f624e4d0d8653a10aae5cce93b604c5b9bd06dc8cc74698"
     },
@@ -1948,7 +1984,7 @@
     },
     {
       "path": "skills/kbd-process-orchestrator/SKILL.md",
-      "sha256": "sha256:e19fe22b26b10e8f0eff425c31854dd26c8f207ae6bb3330110e8d314ebf16a3"
+      "sha256": "sha256:4ccd6e89dbbf8189575ba7a4477611698fafa4fed6a020797c0b686f17815a8d"
     },
     {
       "path": "skills/kbd-process-orchestrator/references/hooks.md",
@@ -3209,10 +3245,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -3241,6 +3284,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -3259,7 +3303,7 @@
           "skills/adversarial-review/references/model-configuration.md",
           "skills/adversarial-review/references/output-contract.md"
         ],
-        "digest": "sha256:22944b0edb682e8dd6736d74fbeeee57402ed1ce0bef3132b25409065462641f"
+        "digest": "sha256:755e3077900a7342c881afea6b2d9f0eea9ed6a9b42f7aaeba427358830c1dbb"
       }
     },
     {
@@ -3303,10 +3347,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -3335,6 +3386,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -3481,7 +3533,7 @@
           "skills/agent-team-creator/tests/models-memory.integration.mjs",
           "skills/agent-team-creator/tests/state.integration.mjs"
         ],
-        "digest": "sha256:a7c80f9183916dc7066e2ec88a5c0f5138a6ab214d812846182c0d2ac2b9e34d"
+        "digest": "sha256:9f25dc2ad66d9722f5201a51c8ea6e5571843544bcb87b5243e8004bc29c10cb"
       }
     },
     {
@@ -3525,10 +3577,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -3557,6 +3616,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -3567,7 +3627,7 @@
           "skills/agent-team-handoff/SKILL.md",
           "skills/agent-team-handoff/agents/openai.yaml"
         ],
-        "digest": "sha256:2a21249ae2620955f5c1e429850e1190386f52b8db3b7102c10483a6b97c29cb"
+        "digest": "sha256:170e1f726dc103b45cb03fd3eb294efc8aaab67d15fa92ad8b39c6640a41894b"
       }
     },
     {
@@ -3611,10 +3671,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -3643,6 +3710,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -3653,7 +3721,7 @@
           "skills/agent-team-manage/SKILL.md",
           "skills/agent-team-manage/agents/openai.yaml"
         ],
-        "digest": "sha256:867ab6642d54dfb185a004283c6b608c04240d89925bdf37b65531eeb82b6ba1"
+        "digest": "sha256:1a9dd1557541fcd0c512475b6e882bf1498aba96cbd7bbb83889ef70b171b3ce"
       }
     },
     {
@@ -3697,10 +3765,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -3729,6 +3804,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -3739,7 +3815,7 @@
           "skills/agent-team-models/SKILL.md",
           "skills/agent-team-models/agents/openai.yaml"
         ],
-        "digest": "sha256:5217334ea39a0bc1547a1011ed222ede5429fe102b55a25db2d361199d658117"
+        "digest": "sha256:7b9dc2e1ba11fa80a6033e1e86896d3c4ee9563b626ea79829b839880183784a"
       }
     },
     {
@@ -3783,10 +3859,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -3815,6 +3898,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -3837,7 +3921,7 @@
           "skills/android-compose-adaptive/references/android/develop/ui/compose/tooling/debug.md",
           "skills/android-compose-adaptive/references/android/guide/navigation/navigation-3/recipes/material-listdetail.md"
         ],
-        "digest": "sha256:3b1fb37471dc97d4c2c97e5d59c93bb24ff038713bea1dfb3e9274a4db427d7d"
+        "digest": "sha256:fb8256fa0497dd98d0bd7dad08cd530c748b43aabb1c1a4823247a693ff5ac39"
       }
     },
     {
@@ -3881,10 +3965,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -3913,6 +4004,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -3924,7 +4016,7 @@
           "skills/android-edge-to-edge/PROVENANCE.md",
           "skills/android-edge-to-edge/SKILL.md"
         ],
-        "digest": "sha256:bb88fa44715f7dd6f2be144386afd599da2ad3297b8718e4cab7764bc25e46b8"
+        "digest": "sha256:a1586d2041084eb39998b03b0bff8c6092994ec1d95e51b06d3390c33d5af299"
       }
     },
     {
@@ -3968,10 +4060,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -4000,6 +4099,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -4009,7 +4109,7 @@
           "scripts/record-progress.mjs",
           "skills/artifact-refiner/SKILL.md"
         ],
-        "digest": "sha256:6ea8df9b8dbe095844ccaab7b6571eb694ddf6effa375b52ccd0e5d0e26eb562"
+        "digest": "sha256:94516d095657f0b9dbb912e0f43997fb14ddddd2c89d8203da3637588693d9f9"
       }
     },
     {
@@ -4053,10 +4153,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -4085,6 +4192,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -4103,7 +4211,7 @@
           "skills/better-accessibility/screen-readers.md",
           "skills/better-accessibility/semantics-and-aria.md"
         ],
-        "digest": "sha256:9c81ab311950f572691a91008543065b84169497deab47a2d1a44986ca4e489c"
+        "digest": "sha256:8eec509181f3f843b760bee7d986d193d59b8722ba8b122220b74bea2500a83a"
       }
     },
     {
@@ -4147,10 +4255,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -4179,6 +4294,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -4197,7 +4313,7 @@
           "skills/better-colors/palette-structure.md",
           "skills/better-colors/token-naming.md"
         ],
-        "digest": "sha256:fd5cf5abac591d7e3e1d4f8a6b98d5d3c3522345d184c2706f677b2f3bc97b9b"
+        "digest": "sha256:21018d506cfe6ca95d154709cf8441c6deec65a61c9f838636a0a0015aae5806"
       }
     },
     {
@@ -4241,10 +4357,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -4273,6 +4396,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -4286,7 +4410,7 @@
           "skills/better-interface/agents/openai.yaml",
           "skills/better-interface/review-format.md"
         ],
-        "digest": "sha256:fadc2ba8a1cb40f86bfc9796e28f8150a6f7c6ae54f9501a134c69cd0f92d666"
+        "digest": "sha256:8446b17ca7127f0b53e2af6c63f0b4394bf4335c0ed5429c7b831f79a5dfc024"
       }
     },
     {
@@ -4330,10 +4454,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -4362,6 +4493,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -4376,7 +4508,7 @@
           "skills/better-layout/grouping-and-alignment.md",
           "skills/better-layout/spacing-and-adaptivity.md"
         ],
-        "digest": "sha256:56b06319532325a0572d9aef2709ee07bce5214b6762223e2de7e307811828dc"
+        "digest": "sha256:4fc2f1448be96e5894fc2ff7f20a4fc407d1f21de310850fc5e9bbe954160d0a"
       }
     },
     {
@@ -4420,10 +4552,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -4452,6 +4591,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -4470,7 +4610,7 @@
           "skills/better-typography/variable-fonts-and-opentype.md",
           "skills/better-typography/wrapping-and-punctuation.md"
         ],
-        "digest": "sha256:6d14c90c64411c148cb9b15e8504013decc603a3f99bee60d570f23228946030"
+        "digest": "sha256:2ba4d2d452646cca9260ff19151bf9119f01631332f438a228648d4b0d629cdc"
       }
     },
     {
@@ -4514,10 +4654,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -4546,6 +4693,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -4564,7 +4712,7 @@
           "skills/better-ui/performance.md",
           "skills/better-ui/surfaces.md"
         ],
-        "digest": "sha256:e024fc42c5cf0dfb31d436016f755f5416363926add0180cbd51566e56b3953c"
+        "digest": "sha256:95988ff3fe075812ee6e36fe512b033e6428ea7f2cadb68edae976807c0c4b43"
       }
     },
     {
@@ -4608,10 +4756,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -4640,6 +4795,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -4652,7 +4808,7 @@
           "skills/better-writing/SKILL.md",
           "skills/better-writing/agents/openai.yaml"
         ],
-        "digest": "sha256:54443b111a59cd20a12c78439863df4df41e487b1e17a9b20d9f10c79969ee30"
+        "digest": "sha256:4e433cc1c93e51e1812cd467f168bebf158f05de9967fbe479bb2421b3f52e43"
       }
     },
     {
@@ -4696,10 +4852,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -4728,6 +4891,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -4741,7 +4905,7 @@
           "skills/break/agents/openai.yaml",
           "skills/break/scenarios.md"
         ],
-        "digest": "sha256:6937cc4b8188804c9aeb91a71e3f9da3574262263aca0f834c44d60d1b414445"
+        "digest": "sha256:4ef5af17bba18561062016b73e1755bfd76794d7f2eefe27e1cee37aed8a3099"
       }
     },
     {
@@ -4785,10 +4949,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -4817,6 +4988,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -4826,7 +4998,7 @@
           "scripts/record-progress.mjs",
           "skills/convert-htmx-pdf/SKILL.md"
         ],
-        "digest": "sha256:8f6f4e817f5b5edbc897c8d064260f72f3f54c432db4a23e2cf41acbd87a6e3d"
+        "digest": "sha256:12cd9846ee2accb103a8332cc745843e12182e92861a98f4f87f211c1b7d57b2"
       }
     },
     {
@@ -4870,10 +5042,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -4902,6 +5081,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -4911,7 +5091,7 @@
           "scripts/record-progress.mjs",
           "skills/convert-htmx-react/SKILL.md"
         ],
-        "digest": "sha256:bc40652b2fbfb5e090476a18ee64ba57917eb47a784837a7950e242bbadfffb8"
+        "digest": "sha256:295d2f2f8be44dfeb0ad971b8f585dcaacf61191d1a63f1f324ed2c6c9dde0fe"
       }
     },
     {
@@ -4955,10 +5135,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -4987,6 +5174,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -4996,15 +5184,15 @@
           "scripts/record-progress.mjs",
           "skills/convert-md-to-htmx/SKILL.md"
         ],
-        "digest": "sha256:9d706dc077feae5a5a10efdb5cd10ec7a4529214019b30950e4c49618a965f40"
+        "digest": "sha256:dc5b3a3d062520f94576c8d843155a9e39e3bae9a4bb587bf754ebf8a04e2295"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "delivery-cadence",
-        "version": "1.2.7",
-        "artifactDigest": "sha256:57430a4a5a14899b1e4522bbeb5d23561c9e27db0dce105f2d9565499bbaf96f"
+        "version": "1.2.9",
+        "artifactDigest": "sha256:43ff3ed7ad2dec927bdb65efa5e012920b30b351e2c49e800c18794f96646c81"
       },
       "entrypoint": "skills/delivery-cadence/SKILL.md",
       "roots": [
@@ -5040,10 +5228,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -5072,6 +5267,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -5144,7 +5340,7 @@
           "skills/delivery-cadence/scripts/publication-receipt.mjs",
           "skills/delivery-cadence/scripts/sync-mini.mjs"
         ],
-        "digest": "sha256:17a4ee96953e92b06b1ad2700d96f4bd0316e82e4c60d70f7d3478ae1b18aeff"
+        "digest": "sha256:f33b278deb4bc0834fc68fa696e1b0f5b89b2fed9926197faf429949bc5f46aa"
       }
     },
     {
@@ -5188,10 +5384,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -5220,6 +5423,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -5229,7 +5433,7 @@
           "scripts/record-progress.mjs",
           "skills/design-svg-logo/SKILL.md"
         ],
-        "digest": "sha256:f6d1701744bdc17bee4fffe588208b41e16c16d386fd67c56b6b7fbba8dfd915"
+        "digest": "sha256:8bdb8523a5036f197362b004e59ee0452e3434a675e0937db77517addd1e287b"
       }
     },
     {
@@ -5273,10 +5477,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -5305,6 +5516,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -5316,7 +5528,7 @@
           "skills/design-taste-frontend-v1/PROVENANCE.md",
           "skills/design-taste-frontend-v1/SKILL.md"
         ],
-        "digest": "sha256:a42c00fb2226f46e2bc611a6debe62bf2c9af14551c38551d5d1efe50358f88a"
+        "digest": "sha256:a6e7fd45ae48e5dbfacfc5136bd65e8df2c760705112e8e7825b40337ec16247"
       }
     },
     {
@@ -5360,10 +5572,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -5392,6 +5611,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -5403,7 +5623,7 @@
           "skills/design-taste-frontend/PROVENANCE.md",
           "skills/design-taste-frontend/SKILL.md"
         ],
-        "digest": "sha256:27e8e2f184928fd26cbfe8c106502ddc5962d4dc06e84d72d6af91f95d5ecc71"
+        "digest": "sha256:7e1c5ffcc7a079910e0c8bb8568dbd9dff333185fadfeac6b0cf7230c1200f8a"
       }
     },
     {
@@ -5447,10 +5667,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -5479,6 +5706,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -5488,7 +5716,7 @@
           "scripts/record-progress.mjs",
           "skills/doctor/SKILL.md"
         ],
-        "digest": "sha256:d068e997b8fddd65a04dcde5adae35edb3d2a3c13a5193e8984b28ac60327b71"
+        "digest": "sha256:8959dd89c4b44a9022372a6c2133e6b807278714372c5f894a2b83aadf2f42d7"
       }
     },
     {
@@ -5532,10 +5760,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -5564,6 +5799,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -5580,7 +5816,7 @@
           "skills/explain-interface/no-browser.md",
           "skills/explain-interface/read-the-system.md"
         ],
-        "digest": "sha256:4f8cda770bdf6d0c0935637c8e1ddeb1da6eb101877d1e7d7eaa45a37ff50862"
+        "digest": "sha256:3bd904e093bf0f6a7c6bb597346144901f8eefd6948e46c85668da29165e3f2d"
       }
     },
     {
@@ -5624,10 +5860,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -5656,6 +5899,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -5670,7 +5914,7 @@
           "skills/expo-animation/SKILL.md",
           "skills/expo-animation/agents/openai.yaml"
         ],
-        "digest": "sha256:21e51d33d6c37c6ba7b493242510125823556f44f025204fa3e53c43e2183da4"
+        "digest": "sha256:eeba38d236a7f2071b039b1394b24ce83059bdd8d8a78572be1e849a8d865ac0"
       }
     },
     {
@@ -5714,10 +5958,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -5746,6 +5997,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -5760,7 +6012,7 @@
           "skills/expo-design-system/references/audit.md",
           "skills/expo-design-system/references/native-slop.md"
         ],
-        "digest": "sha256:2ae5c7589d8ca926ecb1ccea26f99b9eb8586eee6597e2ea489e6d017fa30de1"
+        "digest": "sha256:70572a2c2126d8a9698fc6e4b031c899483a2f902b453e70d9fdc337fb0b6ddc"
       }
     },
     {
@@ -5804,10 +6056,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -5836,6 +6095,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -5855,7 +6115,7 @@
           "skills/expo-native-ui/references/visual-effects.md",
           "skills/expo-native-ui/references/webgpu-three.md"
         ],
-        "digest": "sha256:07be1fec259d79da79941f290a0774973a2a18aa1f6754842e665e6499fce5ea"
+        "digest": "sha256:8aef25b169cd03a46f5acf8b3dd3d97c9153f5e0abc51e9ce69d0934072f6fed"
       }
     },
     {
@@ -5899,10 +6159,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -5931,6 +6198,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -5949,7 +6217,7 @@
           "skills/expo-router/references/toolbar-and-headers.md",
           "skills/expo-router/references/zoom-transitions.md"
         ],
-        "digest": "sha256:8fea58df8d07fb41d389608a0c8aa6bcca817859225cb752c4a4cf154084c4ac"
+        "digest": "sha256:046c560355593ac47c8c32ba857eb067506b725404a5dca261c85e3502ab7d90"
       }
     },
     {
@@ -5993,10 +6261,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -6025,6 +6300,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -6042,7 +6318,7 @@
           "skills/expo-ui/references/universal.md",
           "skills/expo-ui/scripts/list-components.mjs"
         ],
-        "digest": "sha256:6e01c87b16d6896997583e9e29e11f701eb97ed244daf39cf9d63e2802b517d6"
+        "digest": "sha256:8b23d8b979a9ff0acf7a840ddc78c8464c3bc766f69acde815e5d3902029c557"
       }
     },
     {
@@ -6086,10 +6362,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -6118,6 +6401,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -6129,7 +6413,7 @@
           "skills/flutter-build-responsive-layout/PROVENANCE.md",
           "skills/flutter-build-responsive-layout/SKILL.md"
         ],
-        "digest": "sha256:a4cac49d1a3bb195b6fe4c89b8fc2724b367fa591377b336ae37e5872ed2d856"
+        "digest": "sha256:3b0acaa1813a297e63b2364983e40da42c0bf1a834aca7e7cf130b882db8ebe1"
       }
     },
     {
@@ -6173,10 +6457,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -6205,6 +6496,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -6216,7 +6508,7 @@
           "skills/flutter-fix-layout-issues/PROVENANCE.md",
           "skills/flutter-fix-layout-issues/SKILL.md"
         ],
-        "digest": "sha256:6a6fb24df482a35ead89f34f59278d576cb11b7dec94354809826c368134ae54"
+        "digest": "sha256:afa38948925882c248d0ae6fce0824419a1068dae235f12ecb10d279058517f0"
       }
     },
     {
@@ -6260,10 +6552,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -6292,6 +6591,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -6303,7 +6603,7 @@
           "skills/flutter-setup-declarative-routing/PROVENANCE.md",
           "skills/flutter-setup-declarative-routing/SKILL.md"
         ],
-        "digest": "sha256:782da916b514e35cddbb596049e4645dd1020287385fd0125126d79b2b4c4311"
+        "digest": "sha256:7d39eee067f071d73824669244cb4e69674ca6ae6ce55bc003146717a3ae243e"
       }
     },
     {
@@ -6347,10 +6647,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -6379,6 +6686,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -6390,7 +6698,7 @@
           "skills/flutter-setup-localization/PROVENANCE.md",
           "skills/flutter-setup-localization/SKILL.md"
         ],
-        "digest": "sha256:59ddbd434470d7f50f9e71f700d94970c561815b75d43adbe7344324cc18c95a"
+        "digest": "sha256:8d1c78419e187eaa4f6b421a70bc40f25b7862883d4c1b57f388ecfb8ec896df"
       }
     },
     {
@@ -6434,10 +6742,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -6466,6 +6781,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -6477,7 +6793,7 @@
           "skills/full-output-enforcement/PROVENANCE.md",
           "skills/full-output-enforcement/SKILL.md"
         ],
-        "digest": "sha256:cb11374af9b405e68b5c61a65d240b247adec05ef6abd040082b05ea1a86906d"
+        "digest": "sha256:e8ef2ed23bb3eab20f877b1e2ab5e1dd0f49912dd12577dd30b062ec6d367ebf"
       }
     },
     {
@@ -6521,10 +6837,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -6553,6 +6876,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -6564,7 +6888,7 @@
           "skills/gpt-taste/PROVENANCE.md",
           "skills/gpt-taste/SKILL.md"
         ],
-        "digest": "sha256:a5a383143ca0e365b2bc0eab63b1b93b2b1f3ed1a0a2be49d7cbf1f49d25d548"
+        "digest": "sha256:a52c95c38b260f8cb72e921c97c5fe120439ae5f82107698d9f8faf6dab2ccc3"
       }
     },
     {
@@ -6608,10 +6932,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -6640,6 +6971,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -6651,7 +6983,7 @@
           "skills/high-end-visual-design/PROVENANCE.md",
           "skills/high-end-visual-design/SKILL.md"
         ],
-        "digest": "sha256:5841b32ac1cf9f28e5f8242bde4db51ab1be0dc68016315a2989745583e37bcd"
+        "digest": "sha256:ee02ac8e71d90898213836b8e273385da16cf3b3d18807492ebbfae90bbc4ca7"
       }
     },
     {
@@ -6695,10 +7027,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -6727,6 +7066,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -6737,7 +7077,7 @@
           "skills/ideation-mindmap/SKILL.md",
           "skills/ideation-mindmap/references/harness-delivery.md"
         ],
-        "digest": "sha256:925dd4a6ea62250daa08f327b5d2e24e600dce9e621d8bb73fe8e329503e4bae"
+        "digest": "sha256:e453042286cf2eb67c0eb21ccd5d18bdf79da92373bd9c30f3c2acc33a00bd1f"
       }
     },
     {
@@ -6781,10 +7121,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -6813,6 +7160,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -6824,7 +7172,7 @@
           "skills/industrial-brutalist-ui/PROVENANCE.md",
           "skills/industrial-brutalist-ui/SKILL.md"
         ],
-        "digest": "sha256:5e743cded51e3620261780710efe33bfa8df82dda8c986e9c628a63b83202b82"
+        "digest": "sha256:5750a41ac874b063ae91860677bf615e596326a18a4eb1102c3bdfb6e2d2f2df"
       }
     },
     {
@@ -6868,10 +7216,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -6900,6 +7255,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -6914,7 +7270,7 @@
           "skills/interface-review/removed-signals.md",
           "skills/interface-review/scope-resolution.md"
         ],
-        "digest": "sha256:2667e58d42f7b401f8ec27c4e382f8cc7dffda1f56180c008d4b66964b6b594a"
+        "digest": "sha256:3ef1b46f3483c385a242404ef09eb9d8cf7fdb04e81d3160ccffe23721d194d7"
       }
     },
     {
@@ -6958,10 +7314,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -6990,6 +7353,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -6999,7 +7363,7 @@
           "scripts/record-progress.mjs",
           "skills/karpathy-progress-memory/SKILL.md"
         ],
-        "digest": "sha256:5df149488b4de0fc12e513661171a598f7b5c7fe818644e4db3203a625a46307"
+        "digest": "sha256:83b48d9614e46bbe1a50f4a49c426a1cb90a7bb8bdc78d93c5f8907e2bc6933c"
       }
     },
     {
@@ -7043,10 +7407,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -7075,6 +7446,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -7084,7 +7456,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-analyze/SKILL.md"
         ],
-        "digest": "sha256:3c4d6b3279f25f88d1a278577615f976cae03daf4fc9c4ce8c28a54c3710142e"
+        "digest": "sha256:ab2b69a05aedf9a69a0ac0224d6cbb76f4f5787c0ec388e3497e90e6fdcdb953"
       }
     },
     {
@@ -7128,10 +7500,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -7160,6 +7539,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -7169,7 +7549,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-apply/SKILL.md"
         ],
-        "digest": "sha256:0d551aed42f260f1fceb9af4f3045fbfda5db61ea88cf6fcdae35ae7333beeac"
+        "digest": "sha256:3f6fe5b25bfc7b96227ebde46724aecc1a83f999dac62dfa5b2a0e2d39e92219"
       }
     },
     {
@@ -7213,10 +7593,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -7245,6 +7632,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -7254,7 +7642,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-assess/SKILL.md"
         ],
-        "digest": "sha256:57f2420cf025d9905bf79b1f7b35e8b56bef7800b9460b7bac2bd645f8a4f64f"
+        "digest": "sha256:70dd2b3818545d02260ae6f3f34746a8925d89fc6fe4cbb7f738928fb47c8c76"
       }
     },
     {
@@ -7298,10 +7686,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -7330,6 +7725,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -7339,7 +7735,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-audit/SKILL.md"
         ],
-        "digest": "sha256:f05c818ac7fb93dd8e950a49759debc1ab236dda8cba562ba7007bb0dc0efd69"
+        "digest": "sha256:6e8e652a2134ccbc55bd9d953e2eda6dfd098d57a1e24ba7e72a6c931daeed4f"
       }
     },
     {
@@ -7383,10 +7779,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -7415,6 +7818,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -7424,7 +7828,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-bottleneck-detector/SKILL.md"
         ],
-        "digest": "sha256:c35b4610d7ad0370f13907547aa308f10a1ab6b02484f2384e9c131b149668dd"
+        "digest": "sha256:572b1bce7aedeac9a4f9ae013dc60bbdbf60265a6f3a49b81652328a52162776"
       }
     },
     {
@@ -7468,10 +7872,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -7500,6 +7911,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -7509,7 +7921,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-cancel/SKILL.md"
         ],
-        "digest": "sha256:d81f480b3a7a75f329ebd0cf28af7533055c7771533ea1ac1024fb0e5d63eb64"
+        "digest": "sha256:979412667ba9bab5a59d9c3a2183565ba33d8fa9cf1c110ee02d5780e6015684"
       }
     },
     {
@@ -7553,10 +7965,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -7585,6 +8004,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -7594,7 +8014,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-child-exit/SKILL.md"
         ],
-        "digest": "sha256:3e3d141d990d17a7d8d8fe502beedb0032ab53059785b2f9902146c7d447c719"
+        "digest": "sha256:304d61523430a7cadde09d2e1d94ebdf328289be9fb3a5e862fae8f8d0cfbb54"
       }
     },
     {
@@ -7638,10 +8058,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -7670,6 +8097,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -7681,7 +8109,7 @@
           "skills/kbd-evolve/references/criteria.md",
           "skills/kbd-evolve/references/landscape-research.md"
         ],
-        "digest": "sha256:8f1767958f991cd2b65ce4325a85dee62c55f6ebc4a2b932e64ed7b6eedf4696"
+        "digest": "sha256:b2a96fe6f972d637057d21055ef234074f7455ecbfae4d0e54c105a5b11c6392"
       }
     },
     {
@@ -7725,10 +8153,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -7757,6 +8192,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -7766,7 +8202,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-execute/SKILL.md"
         ],
-        "digest": "sha256:55bc659abae776d72d05cc3f8a1fd2a08acb82a8f725dc29d0d5de2166ad5d16"
+        "digest": "sha256:9a850568997c5a24612d5b0d3ae9679b9e5610bf548107606f84107bbec16dba"
       }
     },
     {
@@ -7810,10 +8246,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -7842,6 +8285,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -7851,7 +8295,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-goal-check/SKILL.md"
         ],
-        "digest": "sha256:54ef33b0f80b556ac1a00435c34098f7ee9fb1116c05a76ba1011466c5e31e90"
+        "digest": "sha256:ab22ac5966729bedf1487f02ef3b6e1ed4897459027b10f8503780202b6f0a5a"
       }
     },
     {
@@ -7895,10 +8339,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -7927,6 +8378,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -7936,7 +8388,100 @@
           "scripts/record-progress.mjs",
           "skills/kbd-goal/SKILL.md"
         ],
-        "digest": "sha256:a49226c56f2e4d17b289b5575ccb96eb95242b324797d7af184411c8f888b358"
+        "digest": "sha256:f33e2840a8e0d3fcf26b95a0b63539ef82d1ea3b931d24cd2a8489e4033eb2dc"
+      }
+    },
+    {
+      "identity": {
+        "id": null,
+        "name": "kbd-handoff",
+        "version": null,
+        "artifactDigest": "sha256:1b8fedb56eb90e1fbf6fca6bf9fe0187cc19595537a25f570eed63bb161fd50a"
+      },
+      "entrypoint": "skills/kbd-handoff/SKILL.md",
+      "roots": [
+        "skills/kbd-handoff",
+        ".mcp.json",
+        "hooks",
+        "lib",
+        "scripts"
+      ],
+      "closure": {
+        "paths": [
+          ".mcp.json",
+          "hooks/hooks.json",
+          "lib/cadence-adapters/io.mjs",
+          "lib/cadence-adapters/karpathy.mjs",
+          "lib/cadence-adapters/kbd.mjs",
+          "lib/hooks/context.mjs",
+          "lib/hooks/posttool-write-position-reminder.mjs",
+          "lib/hooks/precompact-kbd-control.mjs",
+          "lib/hooks/sessionstart-detect-project-context.mjs",
+          "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/subagent-fallback-checkpoint.mjs",
+          "lib/hooks/subagentstart-learning.mjs",
+          "lib/hooks/taskcompleted-kbd-receipt.mjs",
+          "lib/karpathy/canonical-state.mjs",
+          "lib/karpathy/event.mjs",
+          "lib/karpathy/hash.mjs",
+          "lib/karpathy/receipt.mjs",
+          "lib/karpathy/record.mjs",
+          "lib/karpathy/session-log.mjs",
+          "lib/karpathy/transport.mjs",
+          "lib/karpathy/validate.mjs",
+          "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/bottleneck-guard.mjs",
+          "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
+          "lib/kbd/hook-command.mjs",
+          "lib/kbd/hooks.mjs",
+          "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
+          "lib/kbd/reconcile-artifacts.mjs",
+          "lib/kbd/reconcile-repair.mjs",
+          "lib/kbd/reconcile-state.mjs",
+          "lib/kbd/reconcile.mjs",
+          "lib/kbd/runtime-authority.mjs",
+          "lib/kbd/spec-backend.mjs",
+          "lib/kbd/task-identity.mjs",
+          "lib/kbd/waypoint.mjs",
+          "lib/learning/envelope.mjs",
+          "lib/learning/file-tier.mjs",
+          "lib/learning/identity.mjs",
+          "lib/platform/atomic-write.mjs",
+          "lib/platform/lock.mjs",
+          "lib/platform/openspec.mjs",
+          "lib/platform/openspec/README.md",
+          "lib/platform/openspec/backup.mjs",
+          "lib/platform/openspec/cli.mjs",
+          "lib/platform/openspec/lifecycle.mjs",
+          "lib/platform/openspec/runtime.mjs",
+          "lib/platform/openspec/state.mjs",
+          "lib/platform/paths.mjs",
+          "lib/platform/spawn.mjs",
+          "lib/platform/text.mjs",
+          "scripts/cadence-karpathy-adapter.mjs",
+          "scripts/cadence-kbd-adapter.mjs",
+          "scripts/hook-entry.mjs",
+          "scripts/kbd-apply.mjs",
+          "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
+          "scripts/kbd-new-child.mjs",
+          "scripts/kbd-new-phase.mjs",
+          "scripts/kbd-next-child.mjs",
+          "scripts/kbd-next-phase.mjs",
+          "scripts/kbd-phase-close-eval.mjs",
+          "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/record-progress.mjs",
+          "skills/kbd-handoff/SKILL.md"
+        ],
+        "digest": "sha256:f6b73c7bbfdfac60b69b5f50714e8c48670184297b17ea003c68c1a9e929f3c6"
       }
     },
     {
@@ -7980,10 +8525,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -8012,6 +8564,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -8026,7 +8579,7 @@
           "skills/kbd-init/references/workspace-context.md",
           "skills/kbd-init/scripts/kbd-init-validate.mjs"
         ],
-        "digest": "sha256:f3b3ce687ead0c78c9c643a052d6efdf077689ab0c665923b822ccd6c98c2382"
+        "digest": "sha256:6d32c6815e340f5b06e61446014e27566d91ab743c420e732d9f47cf11a432cd"
       }
     },
     {
@@ -8070,10 +8623,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -8102,6 +8662,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -8115,7 +8676,7 @@
           "skills/kbd-inject-agent-rules/references/template-agent-rules.md",
           "skills/kbd-inject-agent-rules/references/template-uiux-routing.md"
         ],
-        "digest": "sha256:2e7707e17b29fa1036f4c8d66d6bcbc07728b67d0c0174a7476465aea230a33d"
+        "digest": "sha256:8c2c5016e7ac43a3b537fb7d4e15e0be6e043c7a3768be694bdc5ed24d430bbf"
       }
     },
     {
@@ -8159,10 +8720,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -8191,6 +8759,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -8200,7 +8769,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-loop/SKILL.md"
         ],
-        "digest": "sha256:f35f6959a728d0a51929b212c152291fedc503d7bab740f853f247b868c749a0"
+        "digest": "sha256:c6105d71627b932a900650524ff74fd472ac4cbb0653d7e88f34456ceca1a2e0"
       }
     },
     {
@@ -8244,10 +8813,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -8276,6 +8852,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -8285,7 +8862,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-memory-recall/SKILL.md"
         ],
-        "digest": "sha256:d1b25714da057ac6c0012a29882825ad57c5de2c2ca438cb5c230fd992e87fdd"
+        "digest": "sha256:50dcc1c729315c6431b7cc38e687d38393527980163f0e077d492ff459b16524"
       }
     },
     {
@@ -8329,10 +8906,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -8361,6 +8945,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -8370,7 +8955,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-new-child/SKILL.md"
         ],
-        "digest": "sha256:dc2516c9f83271e541b50ba2efc1aaf815872563309ba53ed7830f40f3b9a71f"
+        "digest": "sha256:9e65a71c387ce96a645c44b63dce63010a92b43d17351c74a2a28bf02149d55e"
       }
     },
     {
@@ -8414,10 +8999,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -8446,6 +9038,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -8455,7 +9048,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-new-phase/SKILL.md"
         ],
-        "digest": "sha256:e341993051543721b186798e9f30d84f18a91043d2077aaf11ed28311c51b449"
+        "digest": "sha256:3e1615db9dfefbeec9a16907073963193563f8932dd2c6fb673eae7bb054f6f8"
       }
     },
     {
@@ -8499,10 +9092,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -8531,6 +9131,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -8540,7 +9141,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-next-child/SKILL.md"
         ],
-        "digest": "sha256:c434dfaed32e58eee1e64c35f5a73d19545241043a49cbccb740e2562694d789"
+        "digest": "sha256:7dc6ef6b53d4baf1c4be3edfbf5a2c7c4f55b24ab9d7c5ffdda5372ca579c7cd"
       }
     },
     {
@@ -8584,10 +9185,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -8616,6 +9224,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -8625,7 +9234,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-next-phase/SKILL.md"
         ],
-        "digest": "sha256:d8d7a6a3f03ddf4c9d17ff532a36a0949c123667ec673a94afe580cea1a31847"
+        "digest": "sha256:cd9df2c9f08e862a850ab71d5ae73ea3c3c02e7ec83a2f8d91ba1ca0c2b3fc9c"
       }
     },
     {
@@ -8669,10 +9278,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -8701,6 +9317,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -8710,7 +9327,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-pause/SKILL.md"
         ],
-        "digest": "sha256:89a569685bd1ffd58d9f39d15f53789ac5f276abb6fb3b217e5e3213f360f987"
+        "digest": "sha256:e69f15e5c5a7abe91cf1a84c79906b6f68b6c1bf6d728962a19d30b755e7baec"
       }
     },
     {
@@ -8754,10 +9371,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -8786,6 +9410,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -8796,7 +9421,7 @@
           "skills/kbd-plan/SKILL.md",
           "skills/kbd-plan/references/task-model-selection.md"
         ],
-        "digest": "sha256:0ebd774e818264c0f2106fc49829bd463e0115852d6e85fd85ea175bf538e479"
+        "digest": "sha256:5268806e04f7cced0672319f855c48b5950a9cf8177c9943976f5a5038f2572f"
       }
     },
     {
@@ -8804,7 +9429,7 @@
         "id": null,
         "name": "kbd-process-orchestrator",
         "version": null,
-        "artifactDigest": "sha256:e19fe22b26b10e8f0eff425c31854dd26c8f207ae6bb3330110e8d314ebf16a3"
+        "artifactDigest": "sha256:4ccd6e89dbbf8189575ba7a4477611698fafa4fed6a020797c0b686f17815a8d"
       },
       "entrypoint": "skills/kbd-process-orchestrator/SKILL.md",
       "roots": [
@@ -8840,10 +9465,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -8872,6 +9504,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -8886,7 +9519,7 @@
           "skills/kbd-process-orchestrator/references/templates/acceptance.template.md",
           "skills/kbd-process-orchestrator/references/templates/adopted-contract.template.md"
         ],
-        "digest": "sha256:c94b3af88f7a783ba211d0bd824b63c55e941ee2c5803b9b43f092f497b1ec5a"
+        "digest": "sha256:e59d8ae602f59cd74a1f33832154f7c239470c088c251eb91bb0ac3ca6add2c0"
       }
     },
     {
@@ -8930,10 +9563,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -8962,6 +9602,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -8971,7 +9612,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-reflect/SKILL.md"
         ],
-        "digest": "sha256:c9f0141761287cf86dd2530ba6b45760c5e82a36ac141466ead9c451541cc734"
+        "digest": "sha256:f5f6a0a009d8cbe056a17da7016cb51e479fb4204c196224e4acd2791c83a415"
       }
     },
     {
@@ -9015,10 +9656,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -9047,6 +9695,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -9056,7 +9705,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-resume/SKILL.md"
         ],
-        "digest": "sha256:2b8f5d7b4bd672d2e5bfd2d8817cdc14e4e66adaee01b0327bce813facd465b1"
+        "digest": "sha256:76e8181f58ac5858ccfcc583e59218887ba5600e52322434e6f25587251635fa"
       }
     },
     {
@@ -9100,10 +9749,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -9132,6 +9788,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -9141,7 +9798,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-spec/SKILL.md"
         ],
-        "digest": "sha256:7501e1107133a92740755882e9070b9bb203e7e11bfdb1235d12abb60e0613d1"
+        "digest": "sha256:5ce39f3cde80275d47763c9c6ccd64a4fd1e4caecbc5a9126f4e7793bd74ddb8"
       }
     },
     {
@@ -9185,10 +9842,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -9217,6 +9881,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -9226,7 +9891,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-status/SKILL.md"
         ],
-        "digest": "sha256:aece633c5f38d4524ba544a145e5ab7d431f1f8b1f215c8f043d5a73d0cb93ea"
+        "digest": "sha256:e5f992d87b948a3239f254d31d21b72f58e098ed04c4e6a98d22d76eb6b4ca7c"
       }
     },
     {
@@ -9270,10 +9935,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -9302,6 +9974,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -9313,7 +9986,7 @@
           "skills/minimalist-ui/PROVENANCE.md",
           "skills/minimalist-ui/SKILL.md"
         ],
-        "digest": "sha256:00fcab2b12e0bf2e50ba52e48d65bf5a4ddf97fef70dc491b4cddfe17f4668e7"
+        "digest": "sha256:bf7219a874c9bfac2ec46cc1da7c575c8c4309f9c73285698a31f4ce05bcd946"
       }
     },
     {
@@ -9357,10 +10030,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -9389,6 +10069,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -9401,7 +10082,7 @@
           "skills/prometheus-context-bootstrap/references/rules-rust.md",
           "skills/prometheus-context-bootstrap/references/rules-typescript.md"
         ],
-        "digest": "sha256:422919953037e46ef73c5347fba247d2c9810f257635868d6c2a8d3f087038f9"
+        "digest": "sha256:820bb0754e0ed63ad5002fba4dff55b92896e409d1cea452229e50bf9e805d1d"
       }
     },
     {
@@ -9445,10 +10126,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -9477,6 +10165,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -9489,7 +10178,7 @@
           "skills/prometheus-impeccable-core/references/impeccable-context-and-modes.md",
           "skills/prometheus-impeccable-core/references/impeccable-craft-floor.md"
         ],
-        "digest": "sha256:9ef346d7e465c28340c358bae3e3ef72113a4d9bec86f6cedb94562e18665fd5"
+        "digest": "sha256:b2d85228ba75de385d3efb764abc81911315e56429007cc36a8ce29f17e8c0ee"
       }
     },
     {
@@ -9533,10 +10222,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -9565,6 +10261,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -9576,7 +10273,7 @@
           "skills/prometheus-rust-workspace/references/phase-gated-verification.md",
           "skills/prometheus-rust-workspace/references/skill-routing.md"
         ],
-        "digest": "sha256:470c284da22f50ab81c35630c4494a3fac98d80c81731115e446862df7845ecf"
+        "digest": "sha256:bd9203b25cb747abae4136f3de53a20754d37a5bd8bc14e1e816824578eeb6a1"
       }
     },
     {
@@ -9620,10 +10317,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -9652,6 +10356,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -9661,7 +10366,7 @@
           "scripts/record-progress.mjs",
           "skills/prometheus-ui-review/SKILL.md"
         ],
-        "digest": "sha256:9fcb7c580372fc6ae83bedb91616506806f57f6322d5b954e642ba8d4cae74ee"
+        "digest": "sha256:ed30ccde72bb4aad8171a3feb3d04a97ff7b454a159ba1a86cc28eb4532073c7"
       }
     },
     {
@@ -9705,10 +10410,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -9737,6 +10449,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -9759,7 +10472,7 @@
           "skills/prometheus-ui-ux/scripts/install.mjs",
           "skills/prometheus-ui-ux/scripts/routing.mjs"
         ],
-        "digest": "sha256:88e748db7ce663528a68af1d56c654e5f0781713f77d46c345bf0aadd90a6028"
+        "digest": "sha256:c33def7bf95ecf5ad6639796e502b4eb80ead5223a022ce020e3cc45890fe408"
       }
     },
     {
@@ -9803,10 +10516,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -9835,6 +10555,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -9844,7 +10565,7 @@
           "scripts/record-progress.mjs",
           "skills/rebrand-artifact/SKILL.md"
         ],
-        "digest": "sha256:b3a17cfbe76a70d1505e1b43c8405a3b75b44947de46d0c8c986b6dd7d9d9efc"
+        "digest": "sha256:da1339f072b1699a401a31ce2fb4b99b35e0bc145314ef9ffcea14b0c5e970e9"
       }
     },
     {
@@ -9888,10 +10609,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -9920,6 +10648,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -9931,7 +10660,7 @@
           "skills/redesign-existing-projects/PROVENANCE.md",
           "skills/redesign-existing-projects/SKILL.md"
         ],
-        "digest": "sha256:fd8aa1dc222b411549ca371662b07c129d44e9d42c472e81d0fe6f89f0404d93"
+        "digest": "sha256:40aaa9dfc13444a21cae1b0811f24345f5a15373e06867fe1c7436778bad52c2"
       }
     },
     {
@@ -9975,10 +10704,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -10007,6 +10743,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -10016,7 +10753,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-a2ui/SKILL.md"
         ],
-        "digest": "sha256:edc887785435292b97bddf0ea5b7f88262fc69731c1d16e5beabfd9498fdb785"
+        "digest": "sha256:d0c9f1360a8584d264bfb6eafd0053077a7af8a870acb3fbd8f9187c3582c963"
       }
     },
     {
@@ -10060,10 +10797,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -10092,6 +10836,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -10101,7 +10846,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-content/SKILL.md"
         ],
-        "digest": "sha256:e89550b943438d4196b586d1f958afba85bef9f982caab9567f076c5c78ea56b"
+        "digest": "sha256:bb0f724efe82a28e70f24637a186ad7d2e814a616cde834b519163effbf57df6"
       }
     },
     {
@@ -10145,10 +10890,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -10177,6 +10929,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -10186,7 +10939,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-image/SKILL.md"
         ],
-        "digest": "sha256:c3ad1a0719d9c8faa91a245f08d15e7ebe0973a4dc1fdc013d8f0b503b165079"
+        "digest": "sha256:07f01ef7e1a169367165933a3fea3b166118321cd299ce213bd496713f9b31c3"
       }
     },
     {
@@ -10230,10 +10983,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -10262,6 +11022,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -10271,7 +11032,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-logo/SKILL.md"
         ],
-        "digest": "sha256:6007e932083136a9e4ff338fe9c50bf6faea484613543c1406f00c1c295add42"
+        "digest": "sha256:1e84c07daaf8704a1fbe33fcc10c967ee5c7f076cc7e0712ccd2d75259fc43a8"
       }
     },
     {
@@ -10315,10 +11076,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -10347,6 +11115,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -10356,7 +11125,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-mcp-ui/SKILL.md"
         ],
-        "digest": "sha256:9f9a3612586d5bf1c65049c967f40266e4721f79122a7e1e9e650b313e5bcebf"
+        "digest": "sha256:117bf7c212166c7afca9fa7b8e54a2c03ab44dc9a83d1cc67b3502b33454a6ba"
       }
     },
     {
@@ -10400,10 +11169,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -10432,6 +11208,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -10441,7 +11218,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-moodboard/SKILL.md"
         ],
-        "digest": "sha256:51ef4b5562f11875ab56baacc5f0edb71c67ce6ed6c5949a7a9eba7b4ad7aaba"
+        "digest": "sha256:408f6289e0b7b25a1b2f41de30bde12d07370366c6142f4f272624333e5c53c5"
       }
     },
     {
@@ -10485,10 +11262,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -10517,6 +11301,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -10526,7 +11311,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-status/SKILL.md"
         ],
-        "digest": "sha256:b6a1a56c94514e40e205ef4babd6ca7cce881586d54ce77c11ab1e83c33bb052"
+        "digest": "sha256:a8891c8841b1051b0a9903350a650acb96065e118f144bf8554b3ebe8cc33a21"
       }
     },
     {
@@ -10570,10 +11355,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -10602,6 +11394,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -10611,7 +11404,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-ui/SKILL.md"
         ],
-        "digest": "sha256:b982fe4de89fc7744c66abdcb6f03944830de3ab71a281121534678c08bebad8"
+        "digest": "sha256:e7e2acb936b468cf26717a59e73255eab88258b4ad3dcf7b670b2af2a396e66a"
       }
     },
     {
@@ -10655,10 +11448,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -10687,6 +11487,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -10696,7 +11497,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-validate/SKILL.md"
         ],
-        "digest": "sha256:f736db76b02fd6c7efb4e1a701bedf2109152cfc131e4569b422b4ec5252cb82"
+        "digest": "sha256:b7e92b698803fc4c758495d0869494b2950b53c09fc7c0b21b84468e760cda05"
       }
     },
     {
@@ -10740,10 +11541,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -10772,6 +11580,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -10782,7 +11591,7 @@
           "skills/rust-async-patterns/SKILL.md",
           "skills/rust-async-patterns/references/details.md"
         ],
-        "digest": "sha256:689c5b0f5c90e1cefc7811d7b145d09f55db8c9abe54959e317a657d7cddc16d"
+        "digest": "sha256:fb0195571b31a58b94b4026b4ee82dbc3a09138833107a314fe0eb9089c610e3"
       }
     },
     {
@@ -10826,10 +11635,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -10858,6 +11674,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -10876,7 +11693,7 @@
           "skills/rust-best-practices/references/chapter_08.md",
           "skills/rust-best-practices/references/chapter_09.md"
         ],
-        "digest": "sha256:39139e6070d36f636bff724829fe255d64adf9b98fe8937cf470e2ec90eb8c1a"
+        "digest": "sha256:f95103be3814531c8477e807b7a9a71700ad6ab819db787a693f9799d3e78742"
       }
     },
     {
@@ -10920,10 +11737,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -10952,6 +11776,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -10962,7 +11787,7 @@
           "skills/rust-mcp-server-generator/SKILL.md",
           "skills/rust-mcp-server-generator/references/generator.md"
         ],
-        "digest": "sha256:6dd9420f910be16e5cfcab4c22b5ec7084bf45cbe830bbee769355013404eb7e"
+        "digest": "sha256:510aa78b50afe1151deb313ca6fcabab006458f4b77192b03de49d5913eddf77"
       }
     },
     {
@@ -11006,10 +11831,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -11038,6 +11870,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -11047,7 +11880,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-flutter-a2ui/SKILL.md"
         ],
-        "digest": "sha256:027f84f34f6442fa998b19d2d0aef188e8c2c137efbcb47762007f8e76697300"
+        "digest": "sha256:8d2fb76c57c9f2af32ff041efef85e041a5813628ce6c973e0c6f6ca8c2cf992"
       }
     },
     {
@@ -11091,10 +11924,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -11123,6 +11963,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -11132,7 +11973,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-a2ui/SKILL.md"
         ],
-        "digest": "sha256:c70910f16a4c13f9540ae3c4fde603dbeff125950661f0f98175575aa18fd9db"
+        "digest": "sha256:4a25195838d4ce214616d5882d28d6a7eb2a38e0670d4de3303dc00e15433994"
       }
     },
     {
@@ -11176,10 +12017,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -11208,6 +12056,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -11217,7 +12066,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-agui/SKILL.md"
         ],
-        "digest": "sha256:1e52a8a2eae936b28c717bc147e1ead7ecaae3d606082ab2612ba4486d068166"
+        "digest": "sha256:ff82c13eefdabfd0aefa52c371cdc0b56893b659e2a69df674faecd97a60b5a7"
       }
     },
     {
@@ -11261,10 +12110,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -11293,6 +12149,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -11302,7 +12159,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-tauri/SKILL.md"
         ],
-        "digest": "sha256:dceae7dd568aea2507123d0384df8d391e352921b0b36da0235458d58a0f340c"
+        "digest": "sha256:807b17b2e91d7fd7b06e44df6561d66191dd99f7373319c056d76eeae4339dbf"
       }
     },
     {
@@ -11346,10 +12203,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -11378,6 +12242,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -11387,7 +12252,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite/SKILL.md"
         ],
-        "digest": "sha256:c30dc9bcb32d62d9c8a1bc96c4fde023ad98223af615bc6bedac6f0363d31186"
+        "digest": "sha256:63bfd5e80c70d700e792a3d67f2ab08002e039b8914fc28ca928baecd9521af5"
       }
     },
     {
@@ -11431,10 +12296,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -11463,6 +12335,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -11475,7 +12348,7 @@
           "skills/stitch-design-taste/PROVENANCE.md",
           "skills/stitch-design-taste/SKILL.md"
         ],
-        "digest": "sha256:c4c1911b012f4f44d69163c5ef4a19a7efae3a3eb833b6a9df656c5cc26c08d8"
+        "digest": "sha256:4bc3095fcca7c8262a52d8375dfc51e72d8d0dd55c6a33563dccffdc63666b34"
       }
     },
     {
@@ -11519,10 +12392,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -11551,6 +12431,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -11574,7 +12455,7 @@
           "skills/swiftui-pro/references/swift.md",
           "skills/swiftui-pro/references/views.md"
         ],
-        "digest": "sha256:e02f694bccd59ff405da4563dab2b6dcb3c27d1f924a1fabee2d7d40f7c8bdf4"
+        "digest": "sha256:47aaf3d0b48042e69a77d7df8fb75442063a286394117073c5a63ee175b25585"
       }
     },
     {
@@ -11618,10 +12499,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -11650,6 +12538,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -11725,7 +12614,7 @@
           "skills/ui-ux-pro-max/scripts/reasoning.mjs",
           "skills/ui-ux-pro-max/scripts/search.mjs"
         ],
-        "digest": "sha256:bef2866ed9b2455ee71ace543d59b6124d0e0c07e37f9d21504fb0dac86278d7"
+        "digest": "sha256:297c084d179d0f387de22d07d5803088377b7a9b7e9b5cb42b75f32f0ad51553"
       }
     },
     {
@@ -11769,10 +12658,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -11801,6 +12697,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -11814,7 +12711,7 @@
           "skills/variant/agents/openai.yaml",
           "skills/variant/picker.md"
         ],
-        "digest": "sha256:3590d7dbf49405b434aede0175f8b1f6cd06e2883e09e1c24d472971909c35c2"
+        "digest": "sha256:6f38f86ebba6a1b989de09fe7424f6fbd06e5551ff402d8c1e870737bec7c8b1"
       }
     },
     {
@@ -11858,10 +12755,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -11890,6 +12794,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -11914,7 +12819,7 @@
           "skills/vercel-composition-patterns/rules/state-decouple-implementation.md",
           "skills/vercel-composition-patterns/rules/state-lift-state.md"
         ],
-        "digest": "sha256:92e65eb944537527dd770375e4e3f368a8cdd3c1520a503e5fda70f15e2ab891"
+        "digest": "sha256:8ebb6b525cf9d0dd506adf5162d8d1f6e23a03c0a9e5b784fa9f6b2ed92e02bb"
       }
     },
     {
@@ -11958,10 +12863,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -11990,6 +12902,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -12076,7 +12989,7 @@
           "skills/vercel-react-best-practices/rules/server-parallel-nested-fetching.md",
           "skills/vercel-react-best-practices/rules/server-serialization.md"
         ],
-        "digest": "sha256:5d9c855633b49c162995f8c5e540c8a239c68194811bdcc92904edb24e0844cd"
+        "digest": "sha256:9b13ba3a9a3e250eb9f28f3458839c61e133fb64b15838dea08706a7acc62bff"
       }
     },
     {
@@ -12120,10 +13033,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -12152,6 +13072,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -12204,7 +13125,7 @@
           "skills/vercel-react-native-skills/rules/ui-scrollview-content-inset.md",
           "skills/vercel-react-native-skills/rules/ui-styling.md"
         ],
-        "digest": "sha256:293204cbce6e1d6b25b2faa7377abe0395432ff4f43a36d4467bec667d2baac4"
+        "digest": "sha256:21301b832c3ad2606a2acdf4c78e069b6dd3b81807e585d5e3a6c02a37f56351"
       }
     },
     {
@@ -12248,10 +13169,17 @@
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
           "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
@@ -12280,6 +13208,7 @@
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
           "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
           "scripts/kbd-new-phase.mjs",
           "scripts/kbd-next-child.mjs",
@@ -12293,9 +13222,9 @@
           "skills/web-design-guidelines/references/LICENSE.web-interface-guidelines",
           "skills/web-design-guidelines/references/web-interface-guidelines.md"
         ],
-        "digest": "sha256:72c1c013bb7de387277b3991996f393b725e2b548898f93efa7f132c143d1c71"
+        "digest": "sha256:a02c71ae1b0143038ce4778d415e3d5b17201446b08f69a9322f0e3d08717b90"
       }
     }
   ],
-  "inventoryDigest": "sha256:41bec470dece72ebd65cf9c572f618e8ec6a3ce9345ea1ab43219f67126f42c8"
+  "inventoryDigest": "sha256:d2caf71fd4f1c7c4d446250d8c14ec5677fe1f19c7e4305a526a58ddb13c82fe"
 }

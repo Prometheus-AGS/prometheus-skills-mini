@@ -30,6 +30,7 @@ This reference summarizes the KBD family. The generated catalog and current skil
 | `kbd-resume` | Use to resume a paused KBD run after validating its checkpoint and plan revision. A normal assistant response is never a resume signal — resuming requires this explicit skill. |
 | `kbd-cancel` | Use to gracefully cancel the active KBD run while preserving its checkpoint and immutable audit history. Requires a non-empty cancellation reason. Cancellation is terminal. |
 | `kbd-goal-check` | Use after each execution turn within a goal-driven KBD phase to evaluate whether the active phase's stopping condition has been met, without the implementer agent grading its own work — returns PASS (with evidence) or CONTINUE (with the next action). Implements the maker-is-not-evaluator pattern for harnesses whose loop is a queue rather than a condition-based loop. |
+| `kbd-handoff` | Hand the active phase to another harness (`claude-code`, `codex`, `opencode`, `kimi-code`) with a read-only packet under `harness-handoffs/`: position, repo state, files to read, operator gates, task rules, never-do list, open prerequisites and the start prompt. Refuses on open boundary obligations or a missing phase; no lease, never edits KBD state. |
 
 ## Phase and child hierarchy
 

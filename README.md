@@ -108,6 +108,13 @@ investigation, and `prometheus-ui-ux` for UI or product copy. UI routing preserv
 project design authority and chooses focused craft guidance. Start with
 [UI routing and project adoption](docs/ui-ux-routing.md).
 
+Phases close only against an adopted completion contract: adoption and amendments go
+through the canonical decision writer, Plan→Execute readiness is deterministic
+(READY/BLOCKED/REJECT-STALE/REJECT-IDENTITY), and the terminal evaluator consumes
+scenario-result evidence — FAIL never closes, missing or stale evidence is BLOCKED,
+and reflection alone never creates a successor phase. See
+[Phase completion contract](docs/phase-completion-contract.md).
+
 ## Teams, models and memory
 
 `agent-team-creator` creates or imports teams and stages native definitions.

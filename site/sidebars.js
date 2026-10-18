@@ -12,7 +12,13 @@ const sidebars = {
     {
       type: 'category',
       label: 'KBD Process',
-      items: ['kbd/overview', 'kbd/skills', 'kbd/task-model-assignments', 'kbd/openspec-lifecycle'],
+      items: [
+        'kbd/overview',
+        'kbd/skills',
+        'kbd/task-model-assignments',
+        'kbd/openspec-lifecycle',
+        'kbd/completion-contract',
+      ],
     },
     {
       type: 'category',

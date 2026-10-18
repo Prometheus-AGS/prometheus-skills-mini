@@ -360,4 +360,5 @@ deferred list live in `docs/phase-completion-contract.md`. Canonical receipts: d
 `phase-closure-issue-60-completion-contract-5eca3554`, evidence
 `.kbd-orchestrator/phases/issue-60-completion-contract/boundary-results.json` (RC-01…RC-08
 PASS). Push and PR creation were not part of the adopted scope; they were performed
-afterward under a separate, explicit operator instruction. The issues remain open.
+afterward under a separate, explicit operator instruction. Issues #59/#60 were closed via
+PR #61 with the unclaimed successor scope preserved in #62.

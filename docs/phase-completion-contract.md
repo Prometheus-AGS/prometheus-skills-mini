@@ -134,7 +134,9 @@ tests, all green. Repo-wide `node --test` shows 16 failures that are
 
 ## Deferred requirements
 
-Not claimed by this change (issues remain open; no full-resolution claim):
+Not claimed by this change (moved to successor issue
+[#62](https://github.com/Prometheus-AGS/prometheus-skills-mini/issues/62) when
+#59/#60 were closed via PR #61):
 
 - **#59 addendum M1–M6** (proposed successor scope, deferred per the issue itself):
   - M1 shared two-claim/two-configuration claim×cell fixture corpus with stable

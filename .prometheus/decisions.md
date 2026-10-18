@@ -359,4 +359,5 @@ deferred list live in `docs/phase-completion-contract.md`. Canonical receipts: d
 `contract-adoption-issue-60-completion-contract-94e64f68` and
 `phase-closure-issue-60-completion-contract-5eca3554`, evidence
 `.kbd-orchestrator/phases/issue-60-completion-contract/boundary-results.json` (RC-01…RC-08
-PASS). No push, merge, or publication was performed; the issues remain open.
+PASS). Push and PR creation were not part of the adopted scope; they were performed
+afterward under a separate, explicit operator instruction. The issues remain open.

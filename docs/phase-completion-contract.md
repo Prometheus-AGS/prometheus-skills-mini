@@ -155,7 +155,9 @@ Not claimed by this change (issues remain open; no full-resolution claim):
 - Token telemetry: UNKNOWN by design (no telemetry exists); governed by
   time/toolCalls fallback.
 - Phase Exit / Know Decision model loop: separate scope.
-- Push/merge/publication: out of scope by constraint; this change is local only.
+- Push/merge/publication: not part of the adopted contract scope; a subsequent
+  operator instruction authorized branch push and a pull request. The issues
+  remain open pending the deferred items above.
 
 ## Install, migration, rollback
 

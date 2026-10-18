@@ -88,9 +88,15 @@ test('errors when current-waypoint.json is absent', () => {
   }
 });
 
-test('seeds a new phase from an explicit name when no reflection.md exists', () => {
+test('seeds a new phase from an explicit name when reflection.md has no seed section', () => {
   const w = world();
   try {
+    // mini #59: reflection.md must exist for a reflect_complete waypoint; write one
+    // without a "Recommended Next Phase" section so the empty-seed path is exercised.
+    writeFileSync(
+      path.join(w.root, '.kbd-orchestrator', 'phases', 'phase-1', 'reflection.md'),
+      '# Reflection\n\n## Summary\n\nDone, with no recommendation.\n'
+    );
     const result = run(['ux-refresh'], w.root);
     assert.equal(result.status, 0, result.stderr);
     assert.match(result.stdout, /KBD NEXT PHASE/);
@@ -146,10 +152,87 @@ test('extracts the "Recommended Next Phase" section from reflection.md as seed c
 test('refuses a name collision with an existing phase directory', () => {
   const w = world();
   try {
+    writeFileSync(
+      path.join(w.root, '.kbd-orchestrator', 'phases', 'phase-1', 'reflection.md'),
+      '# Reflection\n\n## Summary\n\nDone.\n'
+    );
     mkdirSync(path.join(w.root, '.kbd-orchestrator', 'phases', 'taken'), { recursive: true });
     const result = run(['taken'], w.root);
     assert.notEqual(result.status, 0);
     assert.match(result.stderr, /already exists/);
+  } finally {
+    w.dispose();
+  }
+});
+
+// ---------------------------------------------------------------------------
+// mini #59: a reflection recommendation is a proposal, not authorization —
+// no successor phase without a completed reflection (or explicit operator flag)
+// ---------------------------------------------------------------------------
+
+function worldInFlight() {
+  const w = world();
+  writeFileSync(
+    path.join(w.root, '.kbd-orchestrator', 'current-waypoint.json'),
+    JSON.stringify({ phase: 'phase-1', stage: 'executing', changesTotal: 3, changesCompleted: 2 })
+  );
+  return w;
+}
+
+test('refuses to create a successor phase when the current stage is not reflection-complete', () => {
+  const w = worldInFlight();
+  try {
+    const before = snapshotTree(w.root);
+    const result = run(['phase-2'], w.root);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /not a recognized reflection-complete state/);
+    assert.match(result.stderr, /mini #59/);
+    assert.match(result.stderr, /--allow-incomplete-reflection/);
+    // Zero mutation: no phase dir, no waypoint rewrite.
+    assert.deepEqual(snapshotTree(w.root), before);
+  } finally {
+    w.dispose();
+  }
+});
+
+test('refuses when reflection.md is missing even if the stage claims reflect_complete', () => {
+  const w = world(); // stage reflect_complete, but no reflection.md written
+  try {
+    const before = snapshotTree(w.root);
+    const result = run([], w.root);
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /No reflection\.md found/);
+    assert.deepEqual(snapshotTree(w.root), before);
+  } finally {
+    w.dispose();
+  }
+});
+
+test('--allow-incomplete-reflection records explicit operator authorization and continues', () => {
+  const w = worldInFlight();
+  try {
+    const result = run(['phase-2', '--allow-incomplete-reflection'], w.root);
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, /OPERATOR AUTHORIZATION RECORDED/);
+    assert.match(result.stdout, /continuing from stage 'executing'/);
+    const waypoint = JSON.parse(readFileSync(path.join(w.root, '.kbd-orchestrator', 'current-waypoint.json'), 'utf8'));
+    assert.equal(waypoint.phase, 'phase-2');
+  } finally {
+    w.dispose();
+  }
+});
+
+test('--allow-incomplete-reflection without reflection.md records authorization and seeds empty', () => {
+  const w = world();
+  try {
+    const result = run(['phase-2', '--allow-incomplete-reflection'], w.root);
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, /OPERATOR AUTHORIZATION RECORDED: no reflection\.md/);
+    const goals = readFileSync(
+      path.join(w.root, '.kbd-orchestrator', 'phases', 'phase-2', 'goals.md'),
+      'utf8'
+    );
+    assert.match(goals, /No seed content found in reflection/);
   } finally {
     w.dispose();
   }

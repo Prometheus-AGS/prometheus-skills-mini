@@ -1,0 +1,200 @@
+{
+  "contractVersion": "1",
+  "kind": "kbd.adopted-contract",
+  "identity": {
+    "projectId": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
+    "runId": "the-boss-shipping-and-settings-20261018T134618Z",
+    "phaseId": "issue-60-completion-contract",
+    "planRevision": 5,
+    "contractDigest": "94e64f68454f0510b563413a1e999bf84e8eb877c4355a2aafdfe8e5b6bfba2f"
+  },
+  "digestNormalization": {
+    "algorithm": "sha256",
+    "command": "lib/kbd/adopted-contract.mjs: sha256(stableStringify(digestPayload(contract)))",
+    "stalenessRule": "STALE iff latest non-superseded adoption digest != recomputed digest"
+  },
+  "adoptionSource": "operator instruction 2026-10-17/18: implement mini #60+#59 as the customer-safe port of full-pack ebc8f687 (qualification note 9a7c4bbf), Kimi coding subscription only, isolated worktree",
+  "decisionOwner": "operator (gqadonis)",
+  "amendmentPolicy": "amendments via node scripts/kbd-contract-adopt.mjs --supersedes only; never edit adopted bytes in place",
+  "releaseClaim": {
+    "userOperation": "Adopt a finite, runnable KBD phase completion contract and have mini enforce it: Plan→Execute dispatches only with canonical identity, scenario coverage, and freshness validated; phase close consumes only scenario-result evidence; refusal classes are recorded truthfully; no unauthorized successor phase is created.",
+    "supportedEnvironments": [
+      "node>=22",
+      "macOS",
+      "Linux",
+      "Windows",
+      "offline (optional services down)"
+    ],
+    "currentCapabilities": "Contract adoption via canonical decision writer; deterministic READY/BLOCKED/REJECT-* readiness; stage-gate semantic handoff validation with contract-bound identity at Plan→Execute; closed-phase dispatch refusal; terminal evaluator with PASS/FAIL/BLOCKED disposition, budget predicate, bound idempotent replay; next-phase reflection guard with explicit operator authorization escape hatch; Claude and Codex payload parity.",
+    "explicitUnknowns": [
+      "token consumption (no telemetry exists; UNKNOWN, governed by time/toolCalls fallback)",
+      "exact wall-clock and tool-call consumption of prior session segments (estimated, classed in evidence)",
+      "Windows host execution of the boundary packet (CI-shaped but not run on Windows in this phase)"
+    ]
+  },
+  "statusVocabulary": [
+    "PASS",
+    "FAIL",
+    "BLOCKED",
+    "NOT_EXERCISED"
+  ],
+  "scenarioMatrix": [
+    {
+      "id": "RC-01",
+      "name": "Valid adoption + readiness + gate transition + closure",
+      "ownerTask": "T2",
+      "productionEntry": "node scripts/kbd-contract-adopt.mjs + node scripts/kbd-phase-readiness-check.mjs + lib/kbd/stage-gate.mjs stageGate + node scripts/kbd-phase-close-eval.mjs",
+      "oracle": "ADOPTED decision recorded via canonical writer; readiness READY; identity-bound plan handoff passes stageGate('execute'); close-eval records PHASE-CLOSED; replay is ALREADY-CLOSED",
+      "negativeControl": "same fixture without the adoption decision is BLOCKED, not READY",
+      "fixtures": "scratch root with .kbd-orchestrator, status-file/decision-sink disclosed fixtures (unit); real canonical writer for this phase's own adoption (real path)",
+      "evidence": "boundary-results.json entries BG-01/BG-02/BG-18 + lib/kbd/contract-adopt.test.mjs + lib/kbd/phase-readiness.test.mjs + this phase's ADOPTED/PHASE-CLOSED canonical decisions"
+    },
+    {
+      "id": "RC-02",
+      "name": "Missing mandatory criteria block readiness",
+      "ownerTask": "T2",
+      "productionEntry": "node scripts/kbd-phase-readiness-check.mjs",
+      "oracle": "absent contract / absent adoption / absent ownerTask coverage each produce BLOCKED with the minimal missing list on stdout",
+      "negativeControl": "adding the missing criterion flips the same fixture to READY",
+      "fixtures": "scratch roots; status-file fixture",
+      "evidence": "boundary-results.json entries BG-03/BG-04 + phase-readiness unit tests"
+    },
+    {
+      "id": "RC-03",
+      "name": "Stale digest rejection and amendment lineage",
+      "ownerTask": "T2",
+      "productionEntry": "node scripts/kbd-contract-adopt.mjs [--supersedes] + node scripts/kbd-phase-readiness-check.mjs",
+      "oracle": "digest mismatch => REJECT-STALE (4); amendment without --supersedes => exit 4 with zero writes; with correct --supersedes => ADOPTED with lineage; superseded-chain readiness validates against the live decision",
+      "negativeControl": "unauthorized in-place byte change is REJECT-STALE, never silently re-adopted",
+      "fixtures": "scratch roots; status-file/decision-sink fixtures",
+      "evidence": "boundary-results.json entries BG-05/BG-08 + contract-adopt/phase-readiness unit tests"
+    },
+    {
+      "id": "RC-04",
+      "name": "Identity rejection (project/run/phase mismatch)",
+      "ownerTask": "T2",
+      "productionEntry": "node scripts/kbd-phase-readiness-check.mjs + node scripts/kbd-phase-close-eval.mjs",
+      "oracle": "projectId/runId/phaseId disagreement => REJECT-IDENTITY (3) at readiness; wrong-run evidence => BLOCKED evidence-run-mismatch at close",
+      "negativeControl": "matching identity passes the same fixtures",
+      "fixtures": "scratch roots; status-file fixture",
+      "evidence": "boundary-results.json entries BG-06/BG-07 + phase-readiness/phase-close-eval unit tests"
+    },
+    {
+      "id": "RC-05",
+      "name": "Plan→Execute gate semantics (#60)",
+      "ownerTask": "T3",
+      "productionEntry": "lib/kbd/stage-gate.mjs stageGate (the transition used by kbd-execute/kbd-plan)",
+      "oracle": "plan handoff without identity => blocked; incomplete identity fields named; handoff phaseId disagreement blocked; identity-bound handoff + READY contract passes; CLOSED phase refuses execute dispatch; guard status 2 is never treated as success",
+      "negativeControl": "pre-#60 handoff (no identity) that previously passed now blocks",
+      "fixtures": "scratch phase dirs; status-file fixture for canonical decisions",
+      "evidence": "boundary-results.json entries BG-14/BG-15 + lib/kbd/stage-gate.test.mjs (32 tests)"
+    },
+    {
+      "id": "RC-06",
+      "name": "Terminal evaluator refusal classes and budget predicate (#59)",
+      "ownerTask": "T4",
+      "productionEntry": "node scripts/kbd-phase-close-eval.mjs",
+      "oracle": "FAIL oracle => verdict FAIL (3) never closes; missing/stale/wrong-run/digest-mismatched evidence => BLOCKED (2); missing accounting => BLOCKED; exceeded budget => BLOCKED; at-ceiling closes with exhaustion note; unknown-class values not enforced; NOT_EXERCISED never counts as PASS; bound historical closure alone authorizes ALREADY-CLOSED",
+      "negativeControl": "a FAIL result can never produce PHASE-CLOSED; stale evidence is refused even when a bound historical closure exists",
+      "fixtures": "scratch roots; real production-source file under digest-keyed freshness",
+      "evidence": "boundary-results.json entries BG-09..BG-13/BG-16 + lib/kbd/phase-close-eval.test.mjs (26 tests)"
+    },
+    {
+      "id": "RC-07",
+      "name": "No unauthorized successor phase (#59)",
+      "ownerTask": "T5",
+      "productionEntry": "node scripts/kbd-next-phase.mjs",
+      "oracle": "stage not reflection-complete => refusal, zero mutation; missing reflection.md => refusal; --allow-incomplete-reflection records explicit operator authorization and is the only continuation path",
+      "negativeControl": "reflection recommendation text alone never creates or activates a phase",
+      "fixtures": "scratch roots with waypoint fixtures",
+      "evidence": "boundary-results.json entry BG-17 + scripts/kbd-next-phase.test.mjs (9 tests)"
+    },
+    {
+      "id": "RC-08",
+      "name": "Source/generated/installed payload parity",
+      "ownerTask": "T5",
+      "productionEntry": "node scripts/generate-skill-system-distribution.mjs --check + packaged scripts under dist/plugins/*/prometheus-skills-mini/",
+      "oracle": "--check reports no drift; packaged kbd-contract-adopt/kbd-phase-readiness-check/kbd-phase-close-eval scripts and lib/kbd modules ship in both Claude and Codex payloads; packaged readiness script runs standalone (BLOCKED on empty scratch root)",
+      "negativeControl": "pre-change dist lacked the three scripts (git HEAD comparison)",
+      "fixtures": "regenerated dist in the worktree; scratch root smoke run",
+      "evidence": "boundary-results.json entry for dist parity + skill-system-distribution.test.mjs 14/14"
+    }
+  ],
+  "functionalScope": [
+    "RC-01",
+    "RC-02",
+    "RC-03",
+    "RC-04",
+    "RC-05",
+    "RC-06",
+    "RC-07",
+    "RC-08"
+  ],
+  "resilienceScope": {
+    "policy": "adopted never defers; optional services (surreal-memory, liter-llm critic) are absent by design and no scenario requires them",
+    "deferredOptional": [
+      "Phase Exit / Know Decision model loop (separate scope)",
+      "Windows-host boundary packet run (CI-shaped, not executed here)"
+    ]
+  },
+  "exclusions": [
+    "no Bash/Python/jq/shell runtime dependencies",
+    "no new daemons, ports, or services",
+    "no push/merge/publication; no changes to the full pack, global installs, or credentials",
+    "no migration or rewrite of existing pending canonical state (the-boss phases stay as-is)"
+  ],
+  "requiredSafetyChecks": [
+    "canonical writer only for state mutation (prometheus kbd decision record); disclosed fixtures never touch canonical state",
+    "no second ledger; append-only decision history; supersedes lineage for amendments",
+    "offline operation: entire boundary packet runs with both optional services down"
+  ],
+  "budgets": {
+    "timeMinutes": 240,
+    "toolCalls": 160,
+    "repairAttempts": 4,
+    "noProgressLimit": 2,
+    "tokenBudget": "UNKNOWN",
+    "tokenFallback": "time+toolCalls bounds govern when tokens are unmeasured",
+    "exhaustion": "checkpoint + BLOCKED; at-ceiling closes completed in-budget work and admits no more",
+    "extensions": []
+  },
+  "evidenceInvalidation": "digest-keyed: evidence carries sha256 of production sources; close-eval recomputes and refuses stale evidence",
+  "workerRoutes": {
+    "agent": "opencode main session (Kimi K3-256K, kimi-for-coding subscription)",
+    "model": "kimi-code-plan-global/k3-256k"
+  },
+  "boundaryPacket": {
+    "postImplementationOnly": true,
+    "singleRun": true,
+    "commands": [
+      "node --test lib/kbd/adopted-contract.test.mjs lib/kbd/contract-adopt.test.mjs lib/kbd/phase-readiness.test.mjs lib/kbd/phase-close-eval.test.mjs lib/kbd/stage-gate.test.mjs",
+      "node --test scripts/kbd-next-phase.test.mjs",
+      "node --test scripts/kbd-readiness-gate.integration.test.mjs",
+      "node --test scripts/tests/skill-system-distribution.test.mjs",
+      "node scripts/generate-skill-system-distribution.mjs --check",
+      "node scripts/kbd-contract-adopt.mjs .kbd-orchestrator/phases/issue-60-completion-contract/adopted-contract.json",
+      "node scripts/kbd-phase-readiness-check.mjs --phase issue-60-completion-contract",
+      "node scripts/kbd-phase-close-eval.mjs --phase issue-60-completion-contract"
+    ],
+    "expectedEffects": [
+      "canonical ADOPTED-CONTRACT decision for this phase (append-only)",
+      "canonical PHASE-CLOSED decision for this phase (append-only)",
+      "boundary-results.json written beside the contract"
+    ],
+    "requiredApprovals": "none beyond the operator instruction that authorized this phase",
+    "receipts": [
+      ".kbd-orchestrator/phases/issue-60-completion-contract/boundary-results.json"
+    ],
+    "cleanup": [
+      "scratch roots under the platform temp dir are removed by the tests themselves"
+    ],
+    "stopConditions": [
+      "any scenario FAIL => stop, report, no closure",
+      "budgets exhausted => checkpoint + BLOCKED",
+      "no-progress twice => stop and ask"
+    ]
+  },
+  "status": {
+    "implementationComplete": true
+  }
+}

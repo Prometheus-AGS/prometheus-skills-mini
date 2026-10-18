@@ -22,12 +22,20 @@ import { isBottleneckActive, evaluateBottleneck, bottleneckSignalText } from '..
 import { hooksFire } from '../lib/kbd/hooks.mjs';
 import { runHookCommand } from '../lib/kbd/hook-command.mjs';
 
-const USAGE = `Usage: node scripts/kbd-next-phase.mjs [phase-name]
+const USAGE = `Usage: node scripts/kbd-next-phase.mjs [phase-name] [--allow-incomplete-reflection]
 
 Seed and activate the next KBD phase from the current phase reflection.
 
+A reflection recommendation is a proposal, not authorization (mini #59): when the current
+stage is not a recognized reflection-complete state, or reflection.md is missing, this
+driver REFUSES to complete the current phase and create/activate a successor. Re-run
+/kbd-reflect first, or pass --allow-incomplete-reflection to record an explicit operator
+authorization for this exact continuation scope.
+
 Options:
-  -h, --help  Show this help.
+  --allow-incomplete-reflection  Explicit operator authorization to continue despite an
+                                 incomplete or missing reflection (recorded in output).
+  -h, --help                     Show this help.
 `;
 
 function die(message) {
@@ -101,7 +109,8 @@ async function main(argv) {
     return;
   }
 
-  const proposedName = argv[0] ?? '';
+  const allowIncompleteReflection = argv.includes('--allow-incomplete-reflection');
+  const proposedName = argv.filter((a) => !a.startsWith('-'))[0] ?? '';
   const timestamp = new Date().toISOString();
   const dateSlug = timestamp.slice(0, 10);
 
@@ -127,12 +136,23 @@ async function main(argv) {
   const projectStatus = projectData?.status ?? '';
 
   const reflectDone = new Set(['reflect_complete', 'reflected', 'phase_complete']);
-  if (!reflectDone.has(currentStage) && !reflectDone.has(projectStatus)) {
+  const reflectionComplete = reflectDone.has(currentStage) || reflectDone.has(projectStatus);
+  if (!reflectionComplete && !allowIncompleteReflection) {
+    die(
+      `Current stage is '${currentStage}' (project status '${projectStatus || 'none'}'), ` +
+        'not a recognized reflection-complete state.\n' +
+        '  A successor phase is never created or activated without a completed reflection (mini #59).\n' +
+        '  Remediation: run /kbd-reflect first, then re-run /kbd-next-phase. If an operator\n' +
+        '  explicitly authorizes this exact continuation without one, re-run with\n' +
+        '  --allow-incomplete-reflection.'
+    );
+  }
+  if (!reflectionComplete) {
     process.stdout.write(
-      `\n[kbd-next-phase] WARNING: Current stage is '${currentStage}' (project status '${projectStatus || 'none'}'), ` +
-        "not a recognized reflection-complete state.\n" +
-        '  It is recommended to run /kbd-reflect before continuing to the next phase.\n' +
-        '  Proceeding anyway -- next phase will be seeded from whatever reflection content exists.\n\n'
+      `\n[kbd-next-phase] OPERATOR AUTHORIZATION RECORDED: continuing from stage '${currentStage}' ` +
+        'without a completed reflection (--allow-incomplete-reflection).\n' +
+        '  The next phase is seeded from whatever reflection content exists; this authorization\n' +
+        '  covers only this invocation and does not amend any adopted contract.\n\n'
     );
   }
 
@@ -143,11 +163,16 @@ async function main(argv) {
     const reflectionText = readFileSync(reflectionFile, 'utf8');
     seedContent = extractSeedContent(reflectionText);
     seedPhaseName = extractSeedPhaseName(seedContent);
+  } else if (!allowIncompleteReflection) {
+    die(
+      `No reflection.md found at:\n  ${reflectionFile}\n` +
+        '  Run /kbd-reflect first to generate a reflection, then re-run /kbd-next-phase.\n' +
+        '  An explicitly authorized continuation without it requires --allow-incomplete-reflection.'
+    );
   } else {
     process.stdout.write(
-      `\n[kbd-next-phase] WARNING: No reflection.md found at:\n  ${reflectionFile}\n` +
-        '  Run /kbd-reflect first to generate a reflection, then re-run /kbd-next-phase.\n' +
-        '  Continuing with empty seed content.\n\n'
+      `\n[kbd-next-phase] OPERATOR AUTHORIZATION RECORDED: no reflection.md at ${reflectionFile};\n` +
+        '  continuing with empty seed content (--allow-incomplete-reflection).\n\n'
     );
   }
 

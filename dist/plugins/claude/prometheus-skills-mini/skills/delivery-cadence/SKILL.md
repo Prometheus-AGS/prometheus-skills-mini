@@ -4,9 +4,15 @@ description: Operate timed usable deliveries with frozen delivery candidates, bo
 license: MIT
 compatibility: Node.js 22 or newer. Build tools belong to the selected project. Optional KBD, Compass, memory and native goal capabilities are detected, never assumed.
 metadata:
-  version: "1.2.7"
+  version: "1.2.9"
   tags: "delivery, cadence, kbd, recovery"
 ---
+
+> **Note — one referenced asset is absent.** This skill names
+> `scripts/refresh-skill-pack.sh`, which does not ship in the mini payload; the installed
+> skill-pack refresh procedure is unavailable in this project. See
+> [profile and commands](references/profile.md) for the exact boundary and
+> `docs/maintenance.md` for update/rollback through the owning harness installer.
 
 # Delivery Cadence
 
@@ -16,7 +22,7 @@ The harness owns execution. This skill owns inspectable delivery metadata and pr
 
 Read project instructions and current work first. Reuse existing choices. Configure iteration duration, build and functional-run commands, human review, publication frequency and explicit optimization bounds in a profile. See [profile and commands](references/profile.md).
 
-The installed skill-pack refresh procedure is UNAVAILABLE IN THIS PROJECT: no refresh scripts ship in this mini payload, and installed/service refresh is out of scope. See [unavailable capabilities](references/profile.md#unavailable-capabilities); tracked as a follow-up in .prometheus/decisions.md and the dated mini adaptation record under .prometheus/.
+Refreshing an installed skill pack from merged `main` at a checkpoint is unavailable in this project — no refresh scripts ship in this payload (see the absent-asset note above). Update or roll back an installed payload through its owning harness installer per `docs/maintenance.md`.
 
 Invoke `node <this-skill>/scripts/cadence.mjs <command> --root <state-directory> --input <request.json>`. The default state directory is `.prometheus/cadence` in the current project. Use a stable `--command-id` when retrying a mutation.
 

@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "1",
+  "phase": "issue-60-completion-contract",
+  "runId": "the-boss-shipping-and-settings-20261018T134618Z",
+  "contractDigest": "94e64f68454f0510b563413a1e999bf84e8eb877c4355a2aafdfe8e5b6bfba2f",
+  "producedBy": "node scripts boundary packet (post-implementation single run)",
+  "sourceDigests": {
+    "lib/kbd/adopted-contract.mjs": "c2d59fecfec87e3bae0c3d136ed6706bc55e6085fe4501bfee5a6718dd95cedb",
+    "lib/kbd/contract-adopt.mjs": "c0209d76e1c4ab35544a7e1fd7d7e251057a468c54c7896267a5a64fa85d05e9",
+    "lib/kbd/phase-readiness.mjs": "c050575638a5cb98bd3f3dcd5882425537e8fd987b789a441b326681e96bc861",
+    "lib/kbd/phase-close-eval.mjs": "74825706acf7fb17e790631445f6a678de82d00a7294c2f7b074b8ca109c9ba5",
+    "lib/kbd/stage-gate.mjs": "bc55df6cf9bd855b2e123635bac687c8349fd11f1a7124d0abbec389d93d24e7",
+    "scripts/kbd-contract-adopt.mjs": "9676125282c12449999cc5996117acbff69d0548bfd783c6035923c765c1b029",
+    "scripts/kbd-phase-readiness-check.mjs": "43dd86e11c2ac806bcea4355a10b3365f04a8d78b06efb25c165a6b5b17e5c27",
+    "scripts/kbd-phase-close-eval.mjs": "5a325d7b9e49e5a177e66ad7214f634c63087033d246276947a3e8030210de10",
+    "scripts/kbd-next-phase.mjs": "4a48cfeba4cb2b60870cbe6eae0b28264df34ce4435bfd8b999f59cce6f34f70",
+    "lib/distribution/package-builder.mjs": "b5660b58742a51729ea95caa9fc143301a0abbfb06dcad48cad7961767df3d0d"
+  },
+  "scenarios": [
+    {
+      "id": "RC-01",
+      "status": "PASS",
+      "attempted": "adopted the contract via node scripts/kbd-contract-adopt.mjs (real canonical writer); ran readiness + stage-gate + close-eval paths",
+      "observed": "ADOPTED decision contract-adoption-issue-60-completion-contract-94e64f68 in canonical state; READY at planRevision=5; BG-01/BG-02/BG-18 pass; re-adoption ALREADY-ADOPTED",
+      "evidence": "canonical decisions + scripts/kbd-readiness-gate.integration.test.mjs BG-01/BG-02/BG-18 + lib/kbd/contract-adopt.test.mjs (10) + phase-readiness.test.mjs (13)"
+    },
+    {
+      "id": "RC-02",
+      "status": "PASS",
+      "attempted": "ran readiness against fixtures missing contract/adoption/coverage",
+      "observed": "BLOCKED missing=adoption / missing=coverage(MC-1:T1); negative control READY",
+      "evidence": "BG-03/BG-04 + phase-readiness unit tests"
+    },
+    {
+      "id": "RC-03",
+      "status": "PASS",
+      "attempted": "amended contract bytes with and without --supersedes; ran readiness on superseded chains",
+      "observed": "REJECT-STALE (4) on tamper; exit 4 zero-writes without lineage; ADOPTED with supersedes= lineage",
+      "evidence": "BG-05/BG-08 + contract-adopt.test.mjs amendment cases"
+    },
+    {
+      "id": "RC-04",
+      "status": "PASS",
+      "attempted": "ran readiness/close-eval with mismatched projectId/runId/phaseId",
+      "observed": "REJECT-IDENTITY (3); BLOCKED evidence-run-mismatch",
+      "evidence": "BG-06/BG-07 + unit tests"
+    },
+    {
+      "id": "RC-05",
+      "status": "PASS",
+      "attempted": "drove stageGate execute boundary with identity-less, incomplete, mismatched, bound handoffs, and CLOSED-phase state",
+      "observed": "identity-less pre-#60 handoff blocked (2); bound handoff + READY contract passes (0); CLOSED phase refuses dispatch; guard status 2 never success",
+      "evidence": "BG-14/BG-15 + lib/kbd/stage-gate.test.mjs (32)"
+    },
+    {
+      "id": "RC-06",
+      "status": "PASS",
+      "attempted": "ran close-eval across every refusal class and budget boundary",
+      "observed": "FAIL oracle => exit 3 no closure; 16 BLOCKED classes incl. missing accounting and budget-exceeded; at-ceiling closes with exhaustion note; NOT_EXERCISED never PASS; bound replay ALREADY-CLOSED",
+      "evidence": "BG-09..BG-13/BG-16 + lib/kbd/phase-close-eval.test.mjs (26)"
+    },
+    {
+      "id": "RC-07",
+      "status": "PASS",
+      "attempted": "ran kbd-next-phase without completed reflection, with missing reflection.md, and with --allow-incomplete-reflection",
+      "observed": "refusal with zero mutation; authorization recorded only with the explicit flag",
+      "evidence": "BG-17 + scripts/kbd-next-phase.test.mjs (9)"
+    },
+    {
+      "id": "RC-08",
+      "status": "PASS",
+      "attempted": "regenerated dist; ran --check; ran packaged readiness script from dist against a scratch root",
+      "observed": "OK: 100 skills, no drift; parity 14/14; packaged script exits 2 BLOCKED missing=contract standalone",
+      "evidence": "scripts/tests/skill-system-distribution.test.mjs (14) + --check receipt + dist smoke run"
+    }
+  ],
+  "budgetConsumption": {
+    "source": "self-reported by the executing agent (not independent telemetry, not tamper-proof)",
+    "values": {
+      "timeMinutes": {
+        "value": 150,
+        "class": "estimate"
+      },
+      "toolCalls": {
+        "value": 120,
+        "class": "estimate"
+      },
+      "repairAttempts": {
+        "value": 3,
+        "class": "measured"
+      },
+      "noProgress": {
+        "value": 0,
+        "class": "measured"
+      },
+      "tokens": {
+        "value": null,
+        "class": "unknown"
+      }
+    }
+  }
+}

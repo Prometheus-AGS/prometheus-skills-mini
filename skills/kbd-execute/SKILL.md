@@ -217,6 +217,29 @@ outcome under project hook policy, and then write the completion handoff.
 Required hook failures must be resolved before handing off to Reflect.
 Preserve actual earlier receipts; never manufacture a successful past hook.
 
+## Pre-dispatch readiness gate (mandatory, mini #60)
+
+Before any dispatch, the Plan→Execute stage gate enforces readiness; the
+standalone check is:
+
+```
+node scripts/kbd-phase-readiness-check.mjs --phase <phase>
+```
+
+- `READY` (exit 0) is required to dispatch implementation. READY authorizes
+  dispatch of implementation work only — it does NOT start testing; the
+  contract's boundaryPacket runs once at the completed phase boundary.
+- `BLOCKED` (exit 2): do not dispatch; surface the minimal missing list.
+- `REJECT-IDENTITY` (3) / `REJECT-STALE` (4): do not dispatch; stale digests
+  require an operator-adopted amendment
+  (`node scripts/kbd-contract-adopt.mjs <contract> --supersedes <prior-decision-id>`).
+- A phase the terminal evaluator has closed (`PHASE-CLOSED verdict=PASS`)
+  refuses further dispatch at this gate; open a successor phase through the
+  canonical next-phase flow.
+
+Never fabricate PASS, never treat unknown as success, and never hand-write
+handoffs, journals, or receipts.
+
 ## Stage gate & handoff
 
 At dispatch, require the plan handoff and write only dispatch artifacts:

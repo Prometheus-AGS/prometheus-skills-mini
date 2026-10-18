@@ -122,7 +122,10 @@ new phase is started, not here.
 The bottleneck-guard evaluation (`evaluateBottleneck`/`isBottleneckActive` from
 `lib/kbd/bottleneck-guard.mjs`) and any phase-transition write both need to
 succeed before `phase:after` fires — this ordering prevents a rejected or
-partial reflection from producing a completion memory record:
+partial reflection from producing a completion memory record. When the guard
+is active, **only status 0 is success**: status 2 means the guard evaluation
+itself was unavailable, which is a BLOCKED-class result — it must abort the
+transition, never count as a passing guard (mini #59):
 
 ```js
 import { hooksFire } from '../../lib/kbd/hooks.mjs';
@@ -135,7 +138,8 @@ await hooksFire('reflect', 'after', phase, 1, 1, { orchestratorRoot, cwd, runCom
 const guardEnabled = isBottleneckActive(cwd);
 if (guardEnabled) {
   const preTransition = evaluateBottleneck('phase', 'after', phase, true, { root: cwd });
-  if (preTransition.status !== 0 && preTransition.status !== 2) throw new Error(preTransition.stderr);
+  // Guard status 2 (evaluation unavailable while active) is NOT success — abort.
+  if (preTransition.status !== 0) throw new Error(preTransition.stderr || `guard status ${preTransition.status}`);
 }
 
 // … record the phase transition to complete, e.g. via the project's own
@@ -143,7 +147,7 @@ if (guardEnabled) {
 
 if (guardEnabled) {
   const postTransition = evaluateBottleneck('phase', 'after', phase, false, { root: cwd });
-  if (postTransition.status !== 0 && postTransition.status !== 2) throw new Error(postTransition.stderr);
+  if (postTransition.status !== 0) throw new Error(postTransition.stderr || `guard status ${postTransition.status}`);
 }
 
 await hooksFire('phase', 'after', phase, 1, 1, { orchestratorRoot, cwd, runCommand }); // canonical phase-end boundary

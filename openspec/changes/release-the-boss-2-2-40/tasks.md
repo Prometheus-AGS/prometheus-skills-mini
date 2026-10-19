@@ -2,15 +2,15 @@
 
 ## 1. Source freeze and mini
 
-- [ ] 1.1 Freeze fetched mini, liter-llm, UAR candidate, and Cherry Studio revisions; verify recorded SHAs match their fetched refs.
-- [ ] 1.2 Fast-forward the local mini checkout without changing its knowledge files; verify HEAD equals the frozen mini revision and the pre-existing dirty-file inventory is preserved.
+- [x] 1.1 Freeze fetched mini, liter-llm, UAR candidate, and Cherry Studio revisions; verify recorded SHAs match their fetched refs.
+- [x] 1.2 Fast-forward the local mini checkout without changing its knowledge files; verify the frozen mini revision and pre-existing dirty-file inventory are preserved.
 
-## 2. UAR 1.1.1 qualification
+## 2. UAR 1.1.1 unqualified distribution
 
 - [ ] 2.1 Create an isolated branch from the committed 1.1.1 candidate and transfer only release-blocking changes supported by qualification reports; verify its diff excludes unrelated dirty-checkout files.
 - [ ] 2.2 Advance UAR's liter-llm gitlink and authorized version policy to the frozen 2.3.0 commit, update Cargo.lock and required catalog/provenance outputs, and verify all source/version assertions agree.
-- [ ] 2.3 Resolve the observed credential-migration 503 and complete the required local 1.1.1 acceptance; verify the retained local receipt reports every mandatory group passed.
-- [ ] 2.4 Commit and publish the qualified UAR source, complete its required ARM64 and AMD64 published-image acceptance, and publish Mac ARM64 and Windows x64 sidecar records; verify both records name the qualified source and pass checksum validation.
+- [ ] 2.3 Record the unresolved acceptance and embedding-space mismatch proof, and disclose the operator's explicit unqualified-distribution exception without claiming passed UAR behavior.
+- [ ] 2.4 Commit and publish the scoped UAR source, then publish Mac ARM64 and Windows x64 sidecar records after their approved native builds; verify both records name that exact unqualified source and pass checksum validation.
 
 ## 3. The Boss integration
 

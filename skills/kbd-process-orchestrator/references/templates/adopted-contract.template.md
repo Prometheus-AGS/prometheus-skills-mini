@@ -8,8 +8,13 @@ section; placeholders are not acceptance evidence.
 
 ## Adoption (canonical writer only)
 
+Run from the consumer project. Replace `<package-root>` with the absolute root
+of the loaded mini package (the directory containing `scripts` and `lib`), or
+the source checkout root for development. Keep the consumer working directory;
+do not copy scripts into the project. Quote paths, including paths with spaces.
+
 ```
-node scripts/kbd-contract-adopt.mjs .kbd-orchestrator/phases/<phase>/adopted-contract.json
+node "<package-root>/scripts/kbd-contract-adopt.mjs" ".kbd-orchestrator/phases/<phase>/adopted-contract.json"
 ```
 
 The writer validates the contract against the schema, computes the digest with

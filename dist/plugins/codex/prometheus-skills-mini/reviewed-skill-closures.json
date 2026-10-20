@@ -167,6 +167,10 @@
       "sha256": "sha256:cdb64fbafcc2ffa908eb273210a25dc8b5eb0500c4b2126a979d07b24c069db7"
     },
     {
+      "path": "lib/kbd/stage-gate.mjs",
+      "sha256": "sha256:094dcb2d3a38b4ad485832a34a997260d64dcc519ba33c96cb78e832832aa99e"
+    },
+    {
       "path": "lib/kbd/task-identity.mjs",
       "sha256": "sha256:59f63fd1f60c87ac033855a151a83fce6808d6fdfacb0a144247e9eaea46f5b1"
     },
@@ -252,7 +256,7 @@
     },
     {
       "path": "scripts/kbd-contract-adopt.mjs",
-      "sha256": "sha256:9676125282c12449999cc5996117acbff69d0548bfd783c6035923c765c1b029"
+      "sha256": "sha256:9eb9c43a075f47531d7dc9d6491e6ecd8b6cff27698f4d4af1c0caff7c70ffc8"
     },
     {
       "path": "scripts/kbd-handoff.mjs",
@@ -280,7 +284,7 @@
     },
     {
       "path": "scripts/kbd-phase-readiness-check.mjs",
-      "sha256": "sha256:43dd86e11c2ac806bcea4355a10b3365f04a8d78b06efb25c165a6b5b17e5c27"
+      "sha256": "sha256:4b6be80dc691a11f089741f15bd927b8a247fc810e78fc7cffb67cfe3154e550"
     },
     {
       "path": "scripts/record-progress.mjs",
@@ -1848,7 +1852,7 @@
     },
     {
       "path": "skills/kbd-analyze/SKILL.md",
-      "sha256": "sha256:44027376da3524902369f27a24c283c1758709b78788a5e20ae4dca638c0841f"
+      "sha256": "sha256:5f3f0418c42bbd24a28c3cfb9d498b39bf7a03938d66c34f1c34261cc0964a38"
     },
     {
       "path": "skills/kbd-apply/SKILL.md",
@@ -1888,7 +1892,7 @@
     },
     {
       "path": "skills/kbd-execute/SKILL.md",
-      "sha256": "sha256:07c3555bafbb5cdf0eda043361662efa5db990113ed4c5d5074a53cc6d4298c9"
+      "sha256": "sha256:f5c13010bffe3e7abbe7fd3a6f55ac936e29f65530ae8cc5ceee1b784186e367"
     },
     {
       "path": "skills/kbd-goal-check/SKILL.md",
@@ -1976,7 +1980,7 @@
     },
     {
       "path": "skills/kbd-plan/SKILL.md",
-      "sha256": "sha256:5c44719a4a5a3f00afe6dbd7ff22ccda0b635608034dfcd2faa4af5416834d6d"
+      "sha256": "sha256:b6a9813a79883ea5c45c179847342c2e46f93d0da0e469b1ac7828da12d26cc2"
     },
     {
       "path": "skills/kbd-plan/references/task-model-selection.md",
@@ -2004,7 +2008,7 @@
     },
     {
       "path": "skills/kbd-process-orchestrator/references/templates/adopted-contract.template.md",
-      "sha256": "sha256:2fcb42f7e1c536bd47da193b4e38a682e92ec95ea18eeb36f297c51c1fef37ad"
+      "sha256": "sha256:bdb5fd11868be941bf0c5e77ebe8ac575a55c89af1151de13cd7cab07c4fdb91"
     },
     {
       "path": "skills/kbd-reflect/SKILL.md",
@@ -3262,6 +3266,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -3303,7 +3308,7 @@
           "skills/adversarial-review/references/model-configuration.md",
           "skills/adversarial-review/references/output-contract.md"
         ],
-        "digest": "sha256:755e3077900a7342c881afea6b2d9f0eea9ed6a9b42f7aaeba427358830c1dbb"
+        "digest": "sha256:3300ac6ec98900cc9ba75675fa28aa06e9ff1627c4d040f0a3538c20a142a518"
       }
     },
     {
@@ -3364,6 +3369,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -3533,7 +3539,7 @@
           "skills/agent-team-creator/tests/models-memory.integration.mjs",
           "skills/agent-team-creator/tests/state.integration.mjs"
         ],
-        "digest": "sha256:9f25dc2ad66d9722f5201a51c8ea6e5571843544bcb87b5243e8004bc29c10cb"
+        "digest": "sha256:55a0207b0217658dd144b99aaea27ef45305aaf8c28b19050656c753a75db3ec"
       }
     },
     {
@@ -3594,6 +3600,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -3627,7 +3634,7 @@
           "skills/agent-team-handoff/SKILL.md",
           "skills/agent-team-handoff/agents/openai.yaml"
         ],
-        "digest": "sha256:170e1f726dc103b45cb03fd3eb294efc8aaab67d15fa92ad8b39c6640a41894b"
+        "digest": "sha256:691f863117c7cb9f7baaca29bda4bc5946bc708225af687ffd934d384b652689"
       }
     },
     {
@@ -3688,6 +3695,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -3721,7 +3729,7 @@
           "skills/agent-team-manage/SKILL.md",
           "skills/agent-team-manage/agents/openai.yaml"
         ],
-        "digest": "sha256:1a9dd1557541fcd0c512475b6e882bf1498aba96cbd7bbb83889ef70b171b3ce"
+        "digest": "sha256:e839e18bd4bd2252295bae2c7b6fa1e2de90c303b9a2b5824dd68d8e8024d416"
       }
     },
     {
@@ -3782,6 +3790,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -3815,7 +3824,7 @@
           "skills/agent-team-models/SKILL.md",
           "skills/agent-team-models/agents/openai.yaml"
         ],
-        "digest": "sha256:7b9dc2e1ba11fa80a6033e1e86896d3c4ee9563b626ea79829b839880183784a"
+        "digest": "sha256:01a9727d3259310a7cf0fabeb97b35cc377f85ee9702c782b6b76867048a78b5"
       }
     },
     {
@@ -3876,6 +3885,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -3921,7 +3931,7 @@
           "skills/android-compose-adaptive/references/android/develop/ui/compose/tooling/debug.md",
           "skills/android-compose-adaptive/references/android/guide/navigation/navigation-3/recipes/material-listdetail.md"
         ],
-        "digest": "sha256:fb8256fa0497dd98d0bd7dad08cd530c748b43aabb1c1a4823247a693ff5ac39"
+        "digest": "sha256:9c0045eac5f9ab99b0036c657faff3cd12067828f95920cb2c4eff0d2e84f69e"
       }
     },
     {
@@ -3982,6 +3992,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -4016,7 +4027,7 @@
           "skills/android-edge-to-edge/PROVENANCE.md",
           "skills/android-edge-to-edge/SKILL.md"
         ],
-        "digest": "sha256:a1586d2041084eb39998b03b0bff8c6092994ec1d95e51b06d3390c33d5af299"
+        "digest": "sha256:36307b13c0aa05518228e89af2c43b633c0dd69b1f746ff6d9adb46ffc0be9bb"
       }
     },
     {
@@ -4077,6 +4088,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -4109,7 +4121,7 @@
           "scripts/record-progress.mjs",
           "skills/artifact-refiner/SKILL.md"
         ],
-        "digest": "sha256:94516d095657f0b9dbb912e0f43997fb14ddddd2c89d8203da3637588693d9f9"
+        "digest": "sha256:3c6ee2ea1cf91051a81431077223a4ec1efe60be965f7637a78696da518fb9b5"
       }
     },
     {
@@ -4170,6 +4182,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -4211,7 +4224,7 @@
           "skills/better-accessibility/screen-readers.md",
           "skills/better-accessibility/semantics-and-aria.md"
         ],
-        "digest": "sha256:8eec509181f3f843b760bee7d986d193d59b8722ba8b122220b74bea2500a83a"
+        "digest": "sha256:07f76d2ed9bd85450960083ae0e105141ffcdec51880b1c983171852432e3e25"
       }
     },
     {
@@ -4272,6 +4285,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -4313,7 +4327,7 @@
           "skills/better-colors/palette-structure.md",
           "skills/better-colors/token-naming.md"
         ],
-        "digest": "sha256:21018d506cfe6ca95d154709cf8441c6deec65a61c9f838636a0a0015aae5806"
+        "digest": "sha256:1814966d707bf0c3e1eba03519d583eeea60ab09084c63043f99ed7f601836d9"
       }
     },
     {
@@ -4374,6 +4388,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -4410,7 +4425,7 @@
           "skills/better-interface/agents/openai.yaml",
           "skills/better-interface/review-format.md"
         ],
-        "digest": "sha256:8446b17ca7127f0b53e2af6c63f0b4394bf4335c0ed5429c7b831f79a5dfc024"
+        "digest": "sha256:37f7673d628189ef77bf2138d74840af70b84a961f52e916f4482dbe0f1e5b0d"
       }
     },
     {
@@ -4471,6 +4486,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -4508,7 +4524,7 @@
           "skills/better-layout/grouping-and-alignment.md",
           "skills/better-layout/spacing-and-adaptivity.md"
         ],
-        "digest": "sha256:4fc2f1448be96e5894fc2ff7f20a4fc407d1f21de310850fc5e9bbe954160d0a"
+        "digest": "sha256:725ae823812996a1ab84898e003a124fc37b7847584b07433889928d7a7bc8fe"
       }
     },
     {
@@ -4569,6 +4585,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -4610,7 +4627,7 @@
           "skills/better-typography/variable-fonts-and-opentype.md",
           "skills/better-typography/wrapping-and-punctuation.md"
         ],
-        "digest": "sha256:2ba4d2d452646cca9260ff19151bf9119f01631332f438a228648d4b0d629cdc"
+        "digest": "sha256:c4f2db8533f762608051d99fa9aeae75f5ebd08a7e6333237cdc6a75ffea4f25"
       }
     },
     {
@@ -4671,6 +4688,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -4712,7 +4730,7 @@
           "skills/better-ui/performance.md",
           "skills/better-ui/surfaces.md"
         ],
-        "digest": "sha256:95988ff3fe075812ee6e36fe512b033e6428ea7f2cadb68edae976807c0c4b43"
+        "digest": "sha256:88f703347cf130ff2e55fc6dd390603d8e62289d3231a324cab2ebf06713728b"
       }
     },
     {
@@ -4773,6 +4791,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -4808,7 +4827,7 @@
           "skills/better-writing/SKILL.md",
           "skills/better-writing/agents/openai.yaml"
         ],
-        "digest": "sha256:4e433cc1c93e51e1812cd467f168bebf158f05de9967fbe479bb2421b3f52e43"
+        "digest": "sha256:1ce64c21fe3db249ece7603ac20fd28e29af26f6c00a0b7a0217df49b649040e"
       }
     },
     {
@@ -4869,6 +4888,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -4905,7 +4925,7 @@
           "skills/break/agents/openai.yaml",
           "skills/break/scenarios.md"
         ],
-        "digest": "sha256:4ef5af17bba18561062016b73e1755bfd76794d7f2eefe27e1cee37aed8a3099"
+        "digest": "sha256:d0c30f9ddba5180aacc41f888381d83052775942c13c0dfd09aea8eb11b09c86"
       }
     },
     {
@@ -4966,6 +4986,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -4998,7 +5019,7 @@
           "scripts/record-progress.mjs",
           "skills/convert-htmx-pdf/SKILL.md"
         ],
-        "digest": "sha256:12cd9846ee2accb103a8332cc745843e12182e92861a98f4f87f211c1b7d57b2"
+        "digest": "sha256:3a3e7d3e8b0467b6331901bcca165186d8b67ca98b5b1180960f74732b42d017"
       }
     },
     {
@@ -5059,6 +5080,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -5091,7 +5113,7 @@
           "scripts/record-progress.mjs",
           "skills/convert-htmx-react/SKILL.md"
         ],
-        "digest": "sha256:295d2f2f8be44dfeb0ad971b8f585dcaacf61191d1a63f1f324ed2c6c9dde0fe"
+        "digest": "sha256:f251da8fb583f905a3935b69fbfd0703f1664e3a6047a5cc2b62f86291577e34"
       }
     },
     {
@@ -5152,6 +5174,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -5184,7 +5207,7 @@
           "scripts/record-progress.mjs",
           "skills/convert-md-to-htmx/SKILL.md"
         ],
-        "digest": "sha256:dc5b3a3d062520f94576c8d843155a9e39e3bae9a4bb587bf754ebf8a04e2295"
+        "digest": "sha256:e7d3b7507fb0d81eb81be7e82531c120d921775ebb084f17535033117c91016c"
       }
     },
     {
@@ -5245,6 +5268,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -5340,7 +5364,7 @@
           "skills/delivery-cadence/scripts/publication-receipt.mjs",
           "skills/delivery-cadence/scripts/sync-mini.mjs"
         ],
-        "digest": "sha256:38db26002983da96c5ea193ddd531182360879ec6efeee6624ce7ca13b2fa150"
+        "digest": "sha256:617992d49bdb770e5170ac1a606b3d2548ec5e51ba9a507f8534ff231dc13aad"
       }
     },
     {
@@ -5401,6 +5425,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -5433,7 +5458,7 @@
           "scripts/record-progress.mjs",
           "skills/design-svg-logo/SKILL.md"
         ],
-        "digest": "sha256:8bdb8523a5036f197362b004e59ee0452e3434a675e0937db77517addd1e287b"
+        "digest": "sha256:e89261d171932aea7cac1018fb05d6fec0883f10ffc62ccd2b0f66b38ff16959"
       }
     },
     {
@@ -5494,6 +5519,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -5528,7 +5554,7 @@
           "skills/design-taste-frontend-v1/PROVENANCE.md",
           "skills/design-taste-frontend-v1/SKILL.md"
         ],
-        "digest": "sha256:a6e7fd45ae48e5dbfacfc5136bd65e8df2c760705112e8e7825b40337ec16247"
+        "digest": "sha256:cf65750fa4c6aca82fc475faa7f4b70ad366fb2f03d62d51ee0196dd91bc2970"
       }
     },
     {
@@ -5589,6 +5615,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -5623,7 +5650,7 @@
           "skills/design-taste-frontend/PROVENANCE.md",
           "skills/design-taste-frontend/SKILL.md"
         ],
-        "digest": "sha256:7e1c5ffcc7a079910e0c8bb8568dbd9dff333185fadfeac6b0cf7230c1200f8a"
+        "digest": "sha256:41018dbd9772931bf5098ae44fa54dfa1a5aa13fea255156cf28a32ec9875b1c"
       }
     },
     {
@@ -5684,6 +5711,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -5716,7 +5744,7 @@
           "scripts/record-progress.mjs",
           "skills/doctor/SKILL.md"
         ],
-        "digest": "sha256:8959dd89c4b44a9022372a6c2133e6b807278714372c5f894a2b83aadf2f42d7"
+        "digest": "sha256:ebcdcb1f749c91db1c36118238994e6d7788b952a705d744c0a9f623b22309e2"
       }
     },
     {
@@ -5777,6 +5805,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -5816,7 +5845,7 @@
           "skills/explain-interface/no-browser.md",
           "skills/explain-interface/read-the-system.md"
         ],
-        "digest": "sha256:3bd904e093bf0f6a7c6bb597346144901f8eefd6948e46c85668da29165e3f2d"
+        "digest": "sha256:341898d5361b697dc96b2e15d7a6d8b5cc040fdbe1b44751a4e7209e802a54e8"
       }
     },
     {
@@ -5877,6 +5906,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -5914,7 +5944,7 @@
           "skills/expo-animation/SKILL.md",
           "skills/expo-animation/agents/openai.yaml"
         ],
-        "digest": "sha256:eeba38d236a7f2071b039b1394b24ce83059bdd8d8a78572be1e849a8d865ac0"
+        "digest": "sha256:d9a6a8aeb1ffe55dbda8156ffbbd52a29a94b2189340474eb1267bda3b55fd8c"
       }
     },
     {
@@ -5975,6 +6005,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -6012,7 +6043,7 @@
           "skills/expo-design-system/references/audit.md",
           "skills/expo-design-system/references/native-slop.md"
         ],
-        "digest": "sha256:70572a2c2126d8a9698fc6e4b031c899483a2f902b453e70d9fdc337fb0b6ddc"
+        "digest": "sha256:0ea99356c4aec027b171047c1bd695271d9c54903f0773f00da1377ef8eaa19a"
       }
     },
     {
@@ -6073,6 +6104,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -6115,7 +6147,7 @@
           "skills/expo-native-ui/references/visual-effects.md",
           "skills/expo-native-ui/references/webgpu-three.md"
         ],
-        "digest": "sha256:8aef25b169cd03a46f5acf8b3dd3d97c9153f5e0abc51e9ce69d0934072f6fed"
+        "digest": "sha256:a58e77af7190461ee322169a27773accdfc6990dfe3dcd1e4c5cb5aeba2565b6"
       }
     },
     {
@@ -6176,6 +6208,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -6217,7 +6250,7 @@
           "skills/expo-router/references/toolbar-and-headers.md",
           "skills/expo-router/references/zoom-transitions.md"
         ],
-        "digest": "sha256:046c560355593ac47c8c32ba857eb067506b725404a5dca261c85e3502ab7d90"
+        "digest": "sha256:84d2b8cd87534d66dfd6cd05d1801ae65bb033654fcf30c65dc6cef76b123541"
       }
     },
     {
@@ -6278,6 +6311,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -6318,7 +6352,7 @@
           "skills/expo-ui/references/universal.md",
           "skills/expo-ui/scripts/list-components.mjs"
         ],
-        "digest": "sha256:8b23d8b979a9ff0acf7a840ddc78c8464c3bc766f69acde815e5d3902029c557"
+        "digest": "sha256:f6d3063e6e8fec35a64bfe74a802c1d484f643a4c15cb3aa91e79820da3aaad1"
       }
     },
     {
@@ -6379,6 +6413,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -6413,7 +6448,7 @@
           "skills/flutter-build-responsive-layout/PROVENANCE.md",
           "skills/flutter-build-responsive-layout/SKILL.md"
         ],
-        "digest": "sha256:3b0acaa1813a297e63b2364983e40da42c0bf1a834aca7e7cf130b882db8ebe1"
+        "digest": "sha256:813d486a7d322f44e5785071f9a06b1e59a05196d964e98c35cad8fd574a59ba"
       }
     },
     {
@@ -6474,6 +6509,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -6508,7 +6544,7 @@
           "skills/flutter-fix-layout-issues/PROVENANCE.md",
           "skills/flutter-fix-layout-issues/SKILL.md"
         ],
-        "digest": "sha256:afa38948925882c248d0ae6fce0824419a1068dae235f12ecb10d279058517f0"
+        "digest": "sha256:4ec6d6ee873b003f382ab2e3ac2046a76d6dfd0c785be3b41aa29ef651d6a53c"
       }
     },
     {
@@ -6569,6 +6605,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -6603,7 +6640,7 @@
           "skills/flutter-setup-declarative-routing/PROVENANCE.md",
           "skills/flutter-setup-declarative-routing/SKILL.md"
         ],
-        "digest": "sha256:7d39eee067f071d73824669244cb4e69674ca6ae6ce55bc003146717a3ae243e"
+        "digest": "sha256:9572f01d66341cfbf953291e548c20c1c8f2739946b669799e6007e8fff742e1"
       }
     },
     {
@@ -6664,6 +6701,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -6698,7 +6736,7 @@
           "skills/flutter-setup-localization/PROVENANCE.md",
           "skills/flutter-setup-localization/SKILL.md"
         ],
-        "digest": "sha256:8d1c78419e187eaa4f6b421a70bc40f25b7862883d4c1b57f388ecfb8ec896df"
+        "digest": "sha256:f1b47ed3fbdcd40c18a43589b3a5e9507938c4d3b309da2f12b11d2c3bad7c84"
       }
     },
     {
@@ -6759,6 +6797,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -6793,7 +6832,7 @@
           "skills/full-output-enforcement/PROVENANCE.md",
           "skills/full-output-enforcement/SKILL.md"
         ],
-        "digest": "sha256:e8ef2ed23bb3eab20f877b1e2ab5e1dd0f49912dd12577dd30b062ec6d367ebf"
+        "digest": "sha256:dbcb5ce420e1d46804070d0c4a963250ecb1682c4d4d07b9451e716d7611a37e"
       }
     },
     {
@@ -6854,6 +6893,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -6888,7 +6928,7 @@
           "skills/gpt-taste/PROVENANCE.md",
           "skills/gpt-taste/SKILL.md"
         ],
-        "digest": "sha256:a52c95c38b260f8cb72e921c97c5fe120439ae5f82107698d9f8faf6dab2ccc3"
+        "digest": "sha256:5c81fa21b676a1c7bfa7edbee60f14cfb20606eaad50ebfb2f783cef69480f2d"
       }
     },
     {
@@ -6949,6 +6989,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -6983,7 +7024,7 @@
           "skills/high-end-visual-design/PROVENANCE.md",
           "skills/high-end-visual-design/SKILL.md"
         ],
-        "digest": "sha256:ee02ac8e71d90898213836b8e273385da16cf3b3d18807492ebbfae90bbc4ca7"
+        "digest": "sha256:97f41b911cc2d73d28946d43b5dd82eaa4a0cbee793bd76af5d2a35c7e05e012"
       }
     },
     {
@@ -7044,6 +7085,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -7077,7 +7119,7 @@
           "skills/ideation-mindmap/SKILL.md",
           "skills/ideation-mindmap/references/harness-delivery.md"
         ],
-        "digest": "sha256:e453042286cf2eb67c0eb21ccd5d18bdf79da92373bd9c30f3c2acc33a00bd1f"
+        "digest": "sha256:8858a6b64bab30e809d207fa0187feee406cc9cf4dd1b45951bb4d555a97327a"
       }
     },
     {
@@ -7138,6 +7180,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -7172,7 +7215,7 @@
           "skills/industrial-brutalist-ui/PROVENANCE.md",
           "skills/industrial-brutalist-ui/SKILL.md"
         ],
-        "digest": "sha256:5750a41ac874b063ae91860677bf615e596326a18a4eb1102c3bdfb6e2d2f2df"
+        "digest": "sha256:2cff84de76771836f007e92b6a38a0cbcc059f62e58f20d8805757075fb00714"
       }
     },
     {
@@ -7233,6 +7276,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -7270,7 +7314,7 @@
           "skills/interface-review/removed-signals.md",
           "skills/interface-review/scope-resolution.md"
         ],
-        "digest": "sha256:3ef1b46f3483c385a242404ef09eb9d8cf7fdb04e81d3160ccffe23721d194d7"
+        "digest": "sha256:bad77d4292d10a231b989cb5e5dbe9a07b49f83323c38159d6f4363eabf171c3"
       }
     },
     {
@@ -7331,6 +7375,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -7363,7 +7408,7 @@
           "scripts/record-progress.mjs",
           "skills/karpathy-progress-memory/SKILL.md"
         ],
-        "digest": "sha256:83b48d9614e46bbe1a50f4a49c426a1cb90a7bb8bdc78d93c5f8907e2bc6933c"
+        "digest": "sha256:26c2dec4c0fbfaf5901ce25ff3a8b108cf438429cba2de736f365d3e3800b4fa"
       }
     },
     {
@@ -7371,7 +7416,7 @@
         "id": null,
         "name": "kbd-analyze",
         "version": null,
-        "artifactDigest": "sha256:44027376da3524902369f27a24c283c1758709b78788a5e20ae4dca638c0841f"
+        "artifactDigest": "sha256:5f3f0418c42bbd24a28c3cfb9d498b39bf7a03938d66c34f1c34261cc0964a38"
       },
       "entrypoint": "skills/kbd-analyze/SKILL.md",
       "roots": [
@@ -7424,6 +7469,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -7456,7 +7502,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-analyze/SKILL.md"
         ],
-        "digest": "sha256:ab2b69a05aedf9a69a0ac0224d6cbb76f4f5787c0ec388e3497e90e6fdcdb953"
+        "digest": "sha256:0d33914c1cb4a89d03f03e1fabce85a45e86a6039b672bc43e28b283a8ce3061"
       }
     },
     {
@@ -7517,6 +7563,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -7549,7 +7596,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-apply/SKILL.md"
         ],
-        "digest": "sha256:3f6fe5b25bfc7b96227ebde46724aecc1a83f999dac62dfa5b2a0e2d39e92219"
+        "digest": "sha256:38ad1545546b7efc137d82ddad1b7738dbcfd9e26f0faff152c38c8c4bef22ac"
       }
     },
     {
@@ -7610,6 +7657,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -7642,7 +7690,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-assess/SKILL.md"
         ],
-        "digest": "sha256:70dd2b3818545d02260ae6f3f34746a8925d89fc6fe4cbb7f738928fb47c8c76"
+        "digest": "sha256:9d386f2eb0ff49b45820d36c128156be051e69568ca596c185c146fc9db8f295"
       }
     },
     {
@@ -7703,6 +7751,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -7735,7 +7784,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-audit/SKILL.md"
         ],
-        "digest": "sha256:6e8e652a2134ccbc55bd9d953e2eda6dfd098d57a1e24ba7e72a6c931daeed4f"
+        "digest": "sha256:9d7b580578f8906ec0c6cd20a6c4d78046bc6d39e5dc63f7df1a9a0569c095f0"
       }
     },
     {
@@ -7796,6 +7845,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -7828,7 +7878,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-bottleneck-detector/SKILL.md"
         ],
-        "digest": "sha256:572b1bce7aedeac9a4f9ae013dc60bbdbf60265a6f3a49b81652328a52162776"
+        "digest": "sha256:0af233d0196d9d1bc49599468fcedf479e35f7d2435ec945c1dbcb95ea42bccf"
       }
     },
     {
@@ -7889,6 +7939,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -7921,7 +7972,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-cancel/SKILL.md"
         ],
-        "digest": "sha256:979412667ba9bab5a59d9c3a2183565ba33d8fa9cf1c110ee02d5780e6015684"
+        "digest": "sha256:dd7356c1d0da88362d57de38941001c01d58f4a4b3dd7582953799277a6b1957"
       }
     },
     {
@@ -7982,6 +8033,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -8014,7 +8066,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-child-exit/SKILL.md"
         ],
-        "digest": "sha256:304d61523430a7cadde09d2e1d94ebdf328289be9fb3a5e862fae8f8d0cfbb54"
+        "digest": "sha256:48ff526aaf08287c9c3d6f80c53068619131dcbe701cf66871e2bdf433c100e1"
       }
     },
     {
@@ -8075,6 +8127,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -8109,7 +8162,7 @@
           "skills/kbd-evolve/references/criteria.md",
           "skills/kbd-evolve/references/landscape-research.md"
         ],
-        "digest": "sha256:b2a96fe6f972d637057d21055ef234074f7455ecbfae4d0e54c105a5b11c6392"
+        "digest": "sha256:ac13ab9b3f9a04f2e51bd90482f6fc1aebd43ec974a68c297a4083fd720acd8a"
       }
     },
     {
@@ -8117,7 +8170,7 @@
         "id": null,
         "name": "kbd-execute",
         "version": null,
-        "artifactDigest": "sha256:07c3555bafbb5cdf0eda043361662efa5db990113ed4c5d5074a53cc6d4298c9"
+        "artifactDigest": "sha256:f5c13010bffe3e7abbe7fd3a6f55ac936e29f65530ae8cc5ceee1b784186e367"
       },
       "entrypoint": "skills/kbd-execute/SKILL.md",
       "roots": [
@@ -8170,6 +8223,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -8202,7 +8256,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-execute/SKILL.md"
         ],
-        "digest": "sha256:9a850568997c5a24612d5b0d3ae9679b9e5610bf548107606f84107bbec16dba"
+        "digest": "sha256:388bb34d0ae77d2375a595348d9ee5b450438e5beb3c978ebaae439d605f592f"
       }
     },
     {
@@ -8263,6 +8317,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -8295,7 +8350,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-goal-check/SKILL.md"
         ],
-        "digest": "sha256:ab22ac5966729bedf1487f02ef3b6e1ed4897459027b10f8503780202b6f0a5a"
+        "digest": "sha256:af7c328ff02dbd9010153a7afc4eeef07c01aa9b41f0a4fccfcd4532596aedcd"
       }
     },
     {
@@ -8356,6 +8411,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -8388,7 +8444,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-goal/SKILL.md"
         ],
-        "digest": "sha256:f33e2840a8e0d3fcf26b95a0b63539ef82d1ea3b931d24cd2a8489e4033eb2dc"
+        "digest": "sha256:86330531cb65582c3f0f52cb3e17d8729b0141ed92c33e0aeff5e2c5ffaf9b09"
       }
     },
     {
@@ -8449,6 +8505,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -8481,7 +8538,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-handoff/SKILL.md"
         ],
-        "digest": "sha256:f6b73c7bbfdfac60b69b5f50714e8c48670184297b17ea003c68c1a9e929f3c6"
+        "digest": "sha256:2b255f004f467e0b078f7f0150eec7318e24fd4dc90e1323e747d62453f97a32"
       }
     },
     {
@@ -8542,6 +8599,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -8579,7 +8637,7 @@
           "skills/kbd-init/references/workspace-context.md",
           "skills/kbd-init/scripts/kbd-init-validate.mjs"
         ],
-        "digest": "sha256:6d32c6815e340f5b06e61446014e27566d91ab743c420e732d9f47cf11a432cd"
+        "digest": "sha256:824c8718dae840120422728a4223c379c3478cd65047c14301f60dc0ee618eab"
       }
     },
     {
@@ -8640,6 +8698,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -8676,7 +8735,7 @@
           "skills/kbd-inject-agent-rules/references/template-agent-rules.md",
           "skills/kbd-inject-agent-rules/references/template-uiux-routing.md"
         ],
-        "digest": "sha256:8c2c5016e7ac43a3b537fb7d4e15e0be6e043c7a3768be694bdc5ed24d430bbf"
+        "digest": "sha256:24f76d40ab97afd02a7986021837c18cefe571ad584f46d53dd6fab753eca4cd"
       }
     },
     {
@@ -8737,6 +8796,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -8769,7 +8829,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-loop/SKILL.md"
         ],
-        "digest": "sha256:c6105d71627b932a900650524ff74fd472ac4cbb0653d7e88f34456ceca1a2e0"
+        "digest": "sha256:d38f101fa4149492e31f78efbe0442b7f70a5d5f78fa66661ece1ba874915fed"
       }
     },
     {
@@ -8830,6 +8890,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -8862,7 +8923,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-memory-recall/SKILL.md"
         ],
-        "digest": "sha256:50dcc1c729315c6431b7cc38e687d38393527980163f0e077d492ff459b16524"
+        "digest": "sha256:c3fc10df5be2d7525fe860a08019af742c87adf6eb4c24552cb7d3d77f68102e"
       }
     },
     {
@@ -8923,6 +8984,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -8955,7 +9017,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-new-child/SKILL.md"
         ],
-        "digest": "sha256:9e65a71c387ce96a645c44b63dce63010a92b43d17351c74a2a28bf02149d55e"
+        "digest": "sha256:2db4ff3a23ebb92992248a3d68d28f04474c1cc342e48b91a4028f34b456a4b9"
       }
     },
     {
@@ -9016,6 +9078,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -9048,7 +9111,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-new-phase/SKILL.md"
         ],
-        "digest": "sha256:3e1615db9dfefbeec9a16907073963193563f8932dd2c6fb673eae7bb054f6f8"
+        "digest": "sha256:f75e248939177856dd1ccaa448c324ea9cb68712fb32b964115dbdf945e96c23"
       }
     },
     {
@@ -9109,6 +9172,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -9141,7 +9205,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-next-child/SKILL.md"
         ],
-        "digest": "sha256:7dc6ef6b53d4baf1c4be3edfbf5a2c7c4f55b24ab9d7c5ffdda5372ca579c7cd"
+        "digest": "sha256:1892454413803f9d0317d04047eb5d5afcd38928059c1014efbd21c098b00968"
       }
     },
     {
@@ -9202,6 +9266,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -9234,7 +9299,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-next-phase/SKILL.md"
         ],
-        "digest": "sha256:cd9df2c9f08e862a850ab71d5ae73ea3c3c02e7ec83a2f8d91ba1ca0c2b3fc9c"
+        "digest": "sha256:47c3defc827eeff2fff794d182e0c2867dc8a3482cd4b423dc2c7ae86f59cab1"
       }
     },
     {
@@ -9295,6 +9360,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -9327,7 +9393,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-pause/SKILL.md"
         ],
-        "digest": "sha256:e69f15e5c5a7abe91cf1a84c79906b6f68b6c1bf6d728962a19d30b755e7baec"
+        "digest": "sha256:d80376cf102714ec8272e36b5bcb5a5293cf2da6577ba56e6367b99a9ab0f587"
       }
     },
     {
@@ -9335,7 +9401,7 @@
         "id": null,
         "name": "kbd-plan",
         "version": null,
-        "artifactDigest": "sha256:5c44719a4a5a3f00afe6dbd7ff22ccda0b635608034dfcd2faa4af5416834d6d"
+        "artifactDigest": "sha256:b6a9813a79883ea5c45c179847342c2e46f93d0da0e469b1ac7828da12d26cc2"
       },
       "entrypoint": "skills/kbd-plan/SKILL.md",
       "roots": [
@@ -9388,6 +9454,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -9421,7 +9488,7 @@
           "skills/kbd-plan/SKILL.md",
           "skills/kbd-plan/references/task-model-selection.md"
         ],
-        "digest": "sha256:5268806e04f7cced0672319f855c48b5950a9cf8177c9943976f5a5038f2572f"
+        "digest": "sha256:810bd69844a8bb38993345de3ffded27b47853dc98a21d6b678c3ec0f6ab8180"
       }
     },
     {
@@ -9482,6 +9549,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -9519,7 +9587,7 @@
           "skills/kbd-process-orchestrator/references/templates/acceptance.template.md",
           "skills/kbd-process-orchestrator/references/templates/adopted-contract.template.md"
         ],
-        "digest": "sha256:e59d8ae602f59cd74a1f33832154f7c239470c088c251eb91bb0ac3ca6add2c0"
+        "digest": "sha256:d61bca4e260363fc545c9f91b056d94881a403c97e073008bfb1201ec2607d22"
       }
     },
     {
@@ -9580,6 +9648,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -9612,7 +9681,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-reflect/SKILL.md"
         ],
-        "digest": "sha256:f5f6a0a009d8cbe056a17da7016cb51e479fb4204c196224e4acd2791c83a415"
+        "digest": "sha256:22925d254e6b01d54fc5e24d8a0b1a4e8da864a2f3b558b6d943a44f51e485e1"
       }
     },
     {
@@ -9673,6 +9742,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -9705,7 +9775,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-resume/SKILL.md"
         ],
-        "digest": "sha256:76e8181f58ac5858ccfcc583e59218887ba5600e52322434e6f25587251635fa"
+        "digest": "sha256:03c8409476a87a0b00b3e8ad3a5a3686c5719a838eb49a9366b12c064f573f30"
       }
     },
     {
@@ -9766,6 +9836,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -9798,7 +9869,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-spec/SKILL.md"
         ],
-        "digest": "sha256:5ce39f3cde80275d47763c9c6ccd64a4fd1e4caecbc5a9126f4e7793bd74ddb8"
+        "digest": "sha256:c091827fc2ea325149648a9e363d0899dc12f29476967891c76bdabafca3d006"
       }
     },
     {
@@ -9859,6 +9930,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -9891,7 +9963,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-status/SKILL.md"
         ],
-        "digest": "sha256:e5f992d87b948a3239f254d31d21b72f58e098ed04c4e6a98d22d76eb6b4ca7c"
+        "digest": "sha256:80cafd1f347ae6b2ba70cdd8170e40d3adb826f79890a329ff2826ffb3a093ea"
       }
     },
     {
@@ -9952,6 +10024,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -9986,7 +10059,7 @@
           "skills/minimalist-ui/PROVENANCE.md",
           "skills/minimalist-ui/SKILL.md"
         ],
-        "digest": "sha256:bf7219a874c9bfac2ec46cc1da7c575c8c4309f9c73285698a31f4ce05bcd946"
+        "digest": "sha256:b671580114636c2763f5fcbab65435b5adff72ecbab99807de8299cd734a9990"
       }
     },
     {
@@ -10047,6 +10120,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -10082,7 +10156,7 @@
           "skills/prometheus-context-bootstrap/references/rules-rust.md",
           "skills/prometheus-context-bootstrap/references/rules-typescript.md"
         ],
-        "digest": "sha256:820bb0754e0ed63ad5002fba4dff55b92896e409d1cea452229e50bf9e805d1d"
+        "digest": "sha256:aba5b208d30e79aed4973949471cdcd883fd6b7ba1bc17df125a809651916392"
       }
     },
     {
@@ -10143,6 +10217,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -10178,7 +10253,7 @@
           "skills/prometheus-impeccable-core/references/impeccable-context-and-modes.md",
           "skills/prometheus-impeccable-core/references/impeccable-craft-floor.md"
         ],
-        "digest": "sha256:b2d85228ba75de385d3efb764abc81911315e56429007cc36a8ce29f17e8c0ee"
+        "digest": "sha256:68a921c5af7fb2dde88a7d3f5013b7fb57b9c4cfd2a01f3d51eb4c166239dcd3"
       }
     },
     {
@@ -10239,6 +10314,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -10273,7 +10349,7 @@
           "skills/prometheus-rust-workspace/references/phase-gated-verification.md",
           "skills/prometheus-rust-workspace/references/skill-routing.md"
         ],
-        "digest": "sha256:bd9203b25cb747abae4136f3de53a20754d37a5bd8bc14e1e816824578eeb6a1"
+        "digest": "sha256:8d8d458eeab33421f4827b765e10163f7d423a4e30f75803060f9d42c9e371e8"
       }
     },
     {
@@ -10334,6 +10410,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -10366,7 +10443,7 @@
           "scripts/record-progress.mjs",
           "skills/prometheus-ui-review/SKILL.md"
         ],
-        "digest": "sha256:ed30ccde72bb4aad8171a3feb3d04a97ff7b454a159ba1a86cc28eb4532073c7"
+        "digest": "sha256:46e9e5f3ca835b0e7c98f89c58ebf1846a4105caa5346e93fa5f59544795880c"
       }
     },
     {
@@ -10427,6 +10504,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -10472,7 +10550,7 @@
           "skills/prometheus-ui-ux/scripts/install.mjs",
           "skills/prometheus-ui-ux/scripts/routing.mjs"
         ],
-        "digest": "sha256:c33def7bf95ecf5ad6639796e502b4eb80ead5223a022ce020e3cc45890fe408"
+        "digest": "sha256:b77f92f224cc18de98d87fd0a14f85d5ac2eb2ee1a8580830bcf4410d0751861"
       }
     },
     {
@@ -10533,6 +10611,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -10565,7 +10644,7 @@
           "scripts/record-progress.mjs",
           "skills/rebrand-artifact/SKILL.md"
         ],
-        "digest": "sha256:da1339f072b1699a401a31ce2fb4b99b35e0bc145314ef9ffcea14b0c5e970e9"
+        "digest": "sha256:d3d47b6ba450a7baf1968d1f0b5079507974c46bb35bf8874c4a89fc70d3e96f"
       }
     },
     {
@@ -10626,6 +10705,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -10660,7 +10740,7 @@
           "skills/redesign-existing-projects/PROVENANCE.md",
           "skills/redesign-existing-projects/SKILL.md"
         ],
-        "digest": "sha256:40aaa9dfc13444a21cae1b0811f24345f5a15373e06867fe1c7436778bad52c2"
+        "digest": "sha256:4c47859d425fbedab1dacfc2c0c087490f481fa4687ae134a0d3839dfef1557f"
       }
     },
     {
@@ -10721,6 +10801,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -10753,7 +10834,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-a2ui/SKILL.md"
         ],
-        "digest": "sha256:d0c9f1360a8584d264bfb6eafd0053077a7af8a870acb3fbd8f9187c3582c963"
+        "digest": "sha256:d52817942957ad4f9f7e9062e33c8daaba994c1395348addd3975b4ba725ef17"
       }
     },
     {
@@ -10814,6 +10895,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -10846,7 +10928,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-content/SKILL.md"
         ],
-        "digest": "sha256:bb0f724efe82a28e70f24637a186ad7d2e814a616cde834b519163effbf57df6"
+        "digest": "sha256:bf4d5c97e6dc9c52136faba45db5e311c0e1cdad96f31d3ef7b53a08ea2c5cb2"
       }
     },
     {
@@ -10907,6 +10989,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -10939,7 +11022,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-image/SKILL.md"
         ],
-        "digest": "sha256:07f01ef7e1a169367165933a3fea3b166118321cd299ce213bd496713f9b31c3"
+        "digest": "sha256:ef14168e14f97ba5369ac467036bb324daac11e78c2ba5d223788679649cf746"
       }
     },
     {
@@ -11000,6 +11083,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -11032,7 +11116,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-logo/SKILL.md"
         ],
-        "digest": "sha256:1e84c07daaf8704a1fbe33fcc10c967ee5c7f076cc7e0712ccd2d75259fc43a8"
+        "digest": "sha256:81392b8409f50ad467caceafdab3a7327986c320749bc7b87c265b84dfa88af9"
       }
     },
     {
@@ -11093,6 +11177,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -11125,7 +11210,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-mcp-ui/SKILL.md"
         ],
-        "digest": "sha256:117bf7c212166c7afca9fa7b8e54a2c03ab44dc9a83d1cc67b3502b33454a6ba"
+        "digest": "sha256:0bdd36b0c5dbdb62a0a20d18afc9165c473f79f86dfa1db1f02fdfa51a16b04c"
       }
     },
     {
@@ -11186,6 +11271,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -11218,7 +11304,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-moodboard/SKILL.md"
         ],
-        "digest": "sha256:408f6289e0b7b25a1b2f41de30bde12d07370366c6142f4f272624333e5c53c5"
+        "digest": "sha256:9bd5801e6103d26bbe9b61b74af4b0a6d2ca31de8f0ce1b56400483f4987cb76"
       }
     },
     {
@@ -11279,6 +11365,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -11311,7 +11398,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-status/SKILL.md"
         ],
-        "digest": "sha256:a8891c8841b1051b0a9903350a650acb96065e118f144bf8554b3ebe8cc33a21"
+        "digest": "sha256:c4e2108dd9d27aef1bd52bf0435929ce9fb2e43c74ecfb726efbce6f1e20cba5"
       }
     },
     {
@@ -11372,6 +11459,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -11404,7 +11492,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-ui/SKILL.md"
         ],
-        "digest": "sha256:e7e2acb936b468cf26717a59e73255eab88258b4ad3dcf7b670b2af2a396e66a"
+        "digest": "sha256:7e092df8506ff4c46857a8d76335bb8bcb220875e550b74f08c3cf7244d55af7"
       }
     },
     {
@@ -11465,6 +11553,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -11497,7 +11586,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-validate/SKILL.md"
         ],
-        "digest": "sha256:b7e92b698803fc4c758495d0869494b2950b53c09fc7c0b21b84468e760cda05"
+        "digest": "sha256:8e6f5e87ca40343dd4192c3bf6456c232ae6e789c81cd1b3a7d34b0c641b0c72"
       }
     },
     {
@@ -11558,6 +11647,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -11591,7 +11681,7 @@
           "skills/rust-async-patterns/SKILL.md",
           "skills/rust-async-patterns/references/details.md"
         ],
-        "digest": "sha256:fb0195571b31a58b94b4026b4ee82dbc3a09138833107a314fe0eb9089c610e3"
+        "digest": "sha256:a3038f6e14648007107be894761c06adf41542eed5ef580d3b8a7c84ddb25a39"
       }
     },
     {
@@ -11652,6 +11742,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -11693,7 +11784,7 @@
           "skills/rust-best-practices/references/chapter_08.md",
           "skills/rust-best-practices/references/chapter_09.md"
         ],
-        "digest": "sha256:f95103be3814531c8477e807b7a9a71700ad6ab819db787a693f9799d3e78742"
+        "digest": "sha256:7cf2dd1579bcd53b859da3d1b92396ad965e3cae354257c04254e13a7ec8113f"
       }
     },
     {
@@ -11754,6 +11845,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -11787,7 +11879,7 @@
           "skills/rust-mcp-server-generator/SKILL.md",
           "skills/rust-mcp-server-generator/references/generator.md"
         ],
-        "digest": "sha256:510aa78b50afe1151deb313ca6fcabab006458f4b77192b03de49d5913eddf77"
+        "digest": "sha256:398158dcd56643b01ed9424e1aa8a0eeb7a70456a43cb802ff406d7d245e79eb"
       }
     },
     {
@@ -11848,6 +11940,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -11880,7 +11973,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-flutter-a2ui/SKILL.md"
         ],
-        "digest": "sha256:8d2fb76c57c9f2af32ff041efef85e041a5813628ce6c973e0c6f6ca8c2cf992"
+        "digest": "sha256:d413fb7381edbb394893b6fef775e99b32cd9f08a06104951876296c01d176cc"
       }
     },
     {
@@ -11941,6 +12034,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -11973,7 +12067,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-a2ui/SKILL.md"
         ],
-        "digest": "sha256:4a25195838d4ce214616d5882d28d6a7eb2a38e0670d4de3303dc00e15433994"
+        "digest": "sha256:162cf5be6310220d25310f854fb2b2245fb29943a23f4e1b3cebfba90307e499"
       }
     },
     {
@@ -12034,6 +12128,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -12066,7 +12161,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-agui/SKILL.md"
         ],
-        "digest": "sha256:ff82c13eefdabfd0aefa52c371cdc0b56893b659e2a69df674faecd97a60b5a7"
+        "digest": "sha256:f95e62a3e8323dc6394470e34e0de232511a6f51d9b05a53b23d35b287e60189"
       }
     },
     {
@@ -12127,6 +12222,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -12159,7 +12255,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-tauri/SKILL.md"
         ],
-        "digest": "sha256:807b17b2e91d7fd7b06e44df6561d66191dd99f7373319c056d76eeae4339dbf"
+        "digest": "sha256:a92e5c544f0154d978ae997591e995b601a911ff326d2615284c421841c6d8e1"
       }
     },
     {
@@ -12220,6 +12316,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -12252,7 +12349,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite/SKILL.md"
         ],
-        "digest": "sha256:63bfd5e80c70d700e792a3d67f2ab08002e039b8914fc28ca928baecd9521af5"
+        "digest": "sha256:dc3079103b68d59cc5fc6f39b032332c05059ba4a1198bc828e992b6dce3ea08"
       }
     },
     {
@@ -12313,6 +12410,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -12348,7 +12446,7 @@
           "skills/stitch-design-taste/PROVENANCE.md",
           "skills/stitch-design-taste/SKILL.md"
         ],
-        "digest": "sha256:4bc3095fcca7c8262a52d8375dfc51e72d8d0dd55c6a33563dccffdc63666b34"
+        "digest": "sha256:280062a59dfb3beefe0f1251378c5da999326517123afe2744b8d83a70517e42"
       }
     },
     {
@@ -12409,6 +12507,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -12455,7 +12554,7 @@
           "skills/swiftui-pro/references/swift.md",
           "skills/swiftui-pro/references/views.md"
         ],
-        "digest": "sha256:47aaf3d0b48042e69a77d7df8fb75442063a286394117073c5a63ee175b25585"
+        "digest": "sha256:f3df2f12c3ce6f95e76b075b771cb870ae6276d234a414627ffea877fe68cb4d"
       }
     },
     {
@@ -12516,6 +12615,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -12614,7 +12714,7 @@
           "skills/ui-ux-pro-max/scripts/reasoning.mjs",
           "skills/ui-ux-pro-max/scripts/search.mjs"
         ],
-        "digest": "sha256:297c084d179d0f387de22d07d5803088377b7a9b7e9b5cb42b75f32f0ad51553"
+        "digest": "sha256:a070a183ef7ab6b4ae1b108f0a7cb68c0a786cd913b16f29f8bcdb4efa5cd05e"
       }
     },
     {
@@ -12675,6 +12775,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -12711,7 +12812,7 @@
           "skills/variant/agents/openai.yaml",
           "skills/variant/picker.md"
         ],
-        "digest": "sha256:6f38f86ebba6a1b989de09fe7424f6fbd06e5551ff402d8c1e870737bec7c8b1"
+        "digest": "sha256:1cb5010dcb9b5ef879179a8aa4a55f039b8367ff3f6f608514d844c4670dcd88"
       }
     },
     {
@@ -12772,6 +12873,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -12819,7 +12921,7 @@
           "skills/vercel-composition-patterns/rules/state-decouple-implementation.md",
           "skills/vercel-composition-patterns/rules/state-lift-state.md"
         ],
-        "digest": "sha256:8ebb6b525cf9d0dd506adf5162d8d1f6e23a03c0a9e5b784fa9f6b2ed92e02bb"
+        "digest": "sha256:572628b44c12837e81e97cd05c0a8d970340516316bd9a90324e061d45d765bd"
       }
     },
     {
@@ -12880,6 +12982,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -12989,7 +13092,7 @@
           "skills/vercel-react-best-practices/rules/server-parallel-nested-fetching.md",
           "skills/vercel-react-best-practices/rules/server-serialization.md"
         ],
-        "digest": "sha256:9b13ba3a9a3e250eb9f28f3458839c61e133fb64b15838dea08706a7acc62bff"
+        "digest": "sha256:662032527d0cd7af16e41c1720f3f4dc9c1e2e7dce687d31b9c63dcfc714f731"
       }
     },
     {
@@ -13050,6 +13153,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -13125,7 +13229,7 @@
           "skills/vercel-react-native-skills/rules/ui-scrollview-content-inset.md",
           "skills/vercel-react-native-skills/rules/ui-styling.md"
         ],
-        "digest": "sha256:21301b832c3ad2606a2acdf4c78e069b6dd3b81807e585d5e3a6c02a37f56351"
+        "digest": "sha256:0d32b952936a835a91e1a9f492e786e4bcfe234c195bd87466440b2c52e0981f"
       }
     },
     {
@@ -13186,6 +13290,7 @@
           "lib/kbd/reconcile.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
+          "lib/kbd/stage-gate.mjs",
           "lib/kbd/task-identity.mjs",
           "lib/kbd/waypoint.mjs",
           "lib/learning/envelope.mjs",
@@ -13222,9 +13327,9 @@
           "skills/web-design-guidelines/references/LICENSE.web-interface-guidelines",
           "skills/web-design-guidelines/references/web-interface-guidelines.md"
         ],
-        "digest": "sha256:a02c71ae1b0143038ce4778d415e3d5b17201446b08f69a9322f0e3d08717b90"
+        "digest": "sha256:35b5fd6cf4cd9ea3e47cefbbb27b788ac07a1e7546fbc0421862774b0d32f7f2"
       }
     }
   ],
-  "inventoryDigest": "sha256:d5bd18847d62ac4cb27e0e9e23e9943b2700e744666fb50e66ab2026bbcd15a2"
+  "inventoryDigest": "sha256:c165c69544c94920d5c1546837362c4be77f9707eeda6d9b9fb2103bc4e4e60f"
 }

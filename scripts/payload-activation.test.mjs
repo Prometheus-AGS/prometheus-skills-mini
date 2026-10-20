@@ -16,7 +16,8 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, readlinkSync, rmSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -48,6 +49,43 @@ function makeSandbox(client) {
   mkdirSync(project, { recursive: true });
   cpSync(payloadSource(client), payload, { recursive: true, verbatimSymlinks: true });
   return { base, payload, home, project };
+}
+
+// Catch runtime cache writes and accidental installation from a hook: the full
+// pack's observed failure mutated a signed package and began activation during
+// dispatch. Mini must keep its copied package immutable and need no full store.
+function packageSnapshot(root, relative = '') {
+  return readdirSync(path.join(root, relative), { withFileTypes: true })
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .flatMap((entry) => {
+      const name = path.join(relative, entry.name);
+      const filename = path.join(root, name);
+      if (entry.isDirectory()) return [[name, 'directory'], ...packageSnapshot(root, name)];
+      if (entry.isSymbolicLink()) return [[name, 'link', readlinkSync(filename)]];
+      return [[name, 'file', createHash('sha256').update(readFileSync(filename)).digest('hex')]];
+    });
+}
+
+function sandboxEnvironment(sandbox) {
+  const env = { ...process.env };
+  for (const key of Object.keys(env)) {
+    if (/^(PROMETHEUS_|KBD_)/.test(key)) delete env[key];
+  }
+  return {
+    ...env,
+    HOME: sandbox.home,
+    USERPROFILE: sandbox.home,
+    CODEX_HOME: path.join(sandbox.home, '.codex'),
+    CLAUDE_CONFIG_DIR: path.join(sandbox.home, '.claude'),
+    XDG_CONFIG_HOME: path.join(sandbox.home, '.config'),
+    XDG_DATA_HOME: path.join(sandbox.home, '.local', 'share'),
+    XDG_CACHE_HOME: path.join(sandbox.home, '.cache'),
+    XDG_STATE_HOME: path.join(sandbox.home, '.local', 'state'),
+    APPDATA: path.join(sandbox.home, 'AppData', 'Roaming'),
+    LOCALAPPDATA: path.join(sandbox.home, 'AppData', 'Local'),
+    CLAUDE_PLUGIN_ROOT: sandbox.payload,
+    PLUGIN_ROOT: sandbox.payload,
+  };
 }
 
 /** Every command hook the payload declares, in the shape its harness would run it. */
@@ -88,7 +126,7 @@ function activate(sandbox) {
       input,
       encoding: 'utf8',
       timeout: PER_HOOK_TIMEOUT_MS,
-      env: { ...process.env, HOME: sandbox.home, USERPROFILE: sandbox.home, CLAUDE_PLUGIN_ROOT: sandbox.payload },
+      env: sandboxEnvironment(sandbox),
     });
     const output = `${run.stdout ?? ''}\n${run.stderr ?? ''}`;
     return {
@@ -108,7 +146,14 @@ for (const client of CLIENTS) {
   test(`the shipped ${client} payload activates from a clean HOME and runs every hook it declares`, () => {
     const sandbox = makeSandbox(client);
     try {
+      const before = packageSnapshot(sandbox.payload);
       const results = activate(sandbox);
+      assert.deepEqual(packageSnapshot(sandbox.payload), before, 'hook execution must not write into its package');
+      assert.equal(
+        existsSync(path.join(sandbox.home, '.prometheus', 'plugins', 'prometheus-skill-pack')),
+        false,
+        'mini hooks must not create or activate a full-pack generation store',
+      );
       const names = results.map((r) => r.name);
       // Every declared hook must be one the entry can dispatch, and Claude Code ships them all.
       // (Codex deliberately omits the Claude-only SubagentStart file-tier hook.)

@@ -4,13 +4,15 @@
 // Port of shared/scripts/kbd-phase-readiness-check.sh.
 //
 // Usage:
-//   node scripts/kbd-phase-readiness-check.mjs --phase <phase-id>
+//   node "<package-root>/scripts/kbd-phase-readiness-check.mjs" --phase <phase-id>
 //       [--phase-dir <dir>]      fixture override (scratch trees)
 //       [--status-file <f>]      fixture override for `prometheus kbd status --json`
 //       [--contract <f>]         fixture override for the contract path
 //
 // Exit codes: 0 READY; 1 usage/io; 2 BLOCKED (minimal missing list on stdout);
 //             3 REJECT-IDENTITY; 4 REJECT-STALE; 5 contract malformed.
+
+import { fileURLToPath } from 'node:url';
 
 import { phaseReadiness } from '../lib/kbd/phase-readiness.mjs';
 
@@ -23,7 +25,7 @@ function parseArgs(argv) {
     else if (arg === '--status-file') args.statusFile = argv[++i] ?? null;
     else if (arg === '--contract') args.contractPath = argv[++i] ?? null;
     else if (arg === '-h' || arg === '--help') {
-      process.stdout.write('usage: node scripts/kbd-phase-readiness-check.mjs --phase <id> [--phase-dir <dir>] [--status-file <f>] [--contract <f>]\n');
+      process.stdout.write(`usage: node "${fileURLToPath(import.meta.url)}" --phase <id> [--phase-dir <dir>] [--status-file <f>] [--contract <f>]\n`);
       process.exit(0);
     } else {
       process.stderr.write(`kbd-phase-readiness-check: unknown argument ${arg}\n`);

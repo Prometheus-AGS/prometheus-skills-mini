@@ -153,7 +153,7 @@ handoff instead of failing.
 
 Each build-vs-adopt decision must state its effect on phase readiness: which
 contract section it satisfies, and whether the phase can reach READY
-(`node scripts/kbd-phase-readiness-check.mjs --phase <phase>`) without new
+(the package-root readiness command in kbd-execute) without new
 runtime code. Close analysis.md with an explicit `READY to spec` / `BLOCKED`
 recommendation; BLOCKED names the minimal missing items. Do not run broad
 external research when the operator has ruled current inputs sufficient.

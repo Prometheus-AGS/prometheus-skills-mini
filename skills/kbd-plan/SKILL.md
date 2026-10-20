@@ -167,8 +167,15 @@ A deliberate stage skip is recorded with
 
 Plan output must bind contract identity + digest, scenario→task coverage,
 worker routes, freshness keys, budgets, and ONE bounded boundary execution
-packet — and record adoption via
-`node scripts/kbd-contract-adopt.mjs .kbd-orchestrator/phases/<phase>/adopted-contract.json`
+packet.
+
+Run from the consumer project. Replace `<package-root>` with the absolute root
+of the loaded mini package (the directory containing `scripts` and `lib`), or
+the source checkout root for development. Keep the consumer working directory;
+do not copy scripts into the project. Quote paths, including paths with spaces.
+
+Record adoption via
+`node "<package-root>/scripts/kbd-contract-adopt.mjs" ".kbd-orchestrator/phases/<phase>/adopted-contract.json"`
 before writing the identity-bound plan handoff (`ctx.identity` or
 `KBD_HANDOFF_IDENTITY_JSON`). See
 `skills/kbd-process-orchestrator/references/templates/adopted-contract.template.md`.

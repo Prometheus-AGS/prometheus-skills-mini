@@ -222,8 +222,13 @@ Preserve actual earlier receipts; never manufacture a successful past hook.
 Before any dispatch, the Plan→Execute stage gate enforces readiness; the
 standalone check is:
 
+Run from the consumer project. Replace `<package-root>` with the absolute root
+of the loaded mini package (the directory containing `scripts` and `lib`), or
+the source checkout root for development. Keep the consumer working directory;
+do not copy scripts into the project. Quote paths, including paths with spaces.
+
 ```
-node scripts/kbd-phase-readiness-check.mjs --phase <phase>
+node "<package-root>/scripts/kbd-phase-readiness-check.mjs" --phase "<phase>"
 ```
 
 - `READY` (exit 0) is required to dispatch implementation. READY authorizes
@@ -232,7 +237,7 @@ node scripts/kbd-phase-readiness-check.mjs --phase <phase>
 - `BLOCKED` (exit 2): do not dispatch; surface the minimal missing list.
 - `REJECT-IDENTITY` (3) / `REJECT-STALE` (4): do not dispatch; stale digests
   require an operator-adopted amendment
-  (`node scripts/kbd-contract-adopt.mjs <contract> --supersedes <prior-decision-id>`).
+  (`node "<package-root>/scripts/kbd-contract-adopt.mjs" "<contract>" --supersedes "<prior-decision-id>"`).
 - A phase the terminal evaluator has closed (`PHASE-CLOSED verdict=PASS`)
   refuses further dispatch at this gate; open a successor phase through the
   canonical next-phase flow.

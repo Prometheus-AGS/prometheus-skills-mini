@@ -18,6 +18,7 @@ import { hooksFire } from '../lib/kbd/hooks.mjs';
 import { kbdExistingPathTokens, kbdNodeDir, kbdNodeChain } from '../lib/kbd/waypoint.mjs';
 import { rollupChain } from '../lib/kbd/rollup.mjs';
 import { runHookCommand } from '../lib/kbd/hook-command.mjs';
+import { readDisposition } from '../lib/kbd/phase-disposition.mjs';
 
 function die(message) {
   process.stderr.write(`kbd-child-exit: ${message}\n`);
@@ -140,21 +141,35 @@ async function runExit(waypoint) {
     if (!childRuntimeId) die('runtime omitted active child phase');
     const parentId = state.activePath.phasePath[state.activePath.phasePath.length - 2];
 
-    const bottleneckAvailable = isBottleneckActive('.');
-    if (bottleneckAvailable) {
-      const pre = evaluateBottleneck('phase', 'after', childRuntimeId, true, { root: '.' });
-      if (pre.status !== 0) die('child phase completion precommit evaluation blocked');
-    }
-    const transitionResult = spawnExecutable('prometheus', [
-      'kbd', '--path', '.', 'phase', 'transition',
-      '--command-id', `phase-complete:${childRuntimeId}`,
-      '--id', childRuntimeId, '--status', 'complete',
-    ]);
-    if (transitionResult?.status !== 0) die('child phase completion transition failed');
-    if (bottleneckAvailable) {
-      const post = evaluateBottleneck('phase', 'after', childRuntimeId, false, { root: '.' });
-      if (post.status !== 0) die('child phase completion postcommit evaluation blocked');
-      process.stdout.write(`${bottleneckSignalText(post.stdout)}\n`);
+    // Mini #66 / full #192: a contract-bound child closes only through its terminal
+    // evaluator; child-exit then returns control without its own transition.
+    const childDisposition = readDisposition({ root: '.', phase: childRuntimeId });
+    if (childDisposition.status !== 0) die(childDisposition.stderr);
+    if (childDisposition.json.contractBound) {
+      if (childDisposition.json.disposition !== 'CLOSED') {
+        process.stderr.write(
+          `kbd-child-exit: NOT-CLOSED: contract-bound child ${childRuntimeId} is ${childDisposition.json.disposition}; ` +
+            `run node scripts/kbd-phase-close-eval.mjs --phase ${childRuntimeId} first\n`,
+        );
+        process.exit(2);
+      }
+    } else {
+      const bottleneckAvailable = isBottleneckActive('.');
+      if (bottleneckAvailable) {
+        const pre = evaluateBottleneck('phase', 'after', childRuntimeId, true, { root: '.' });
+        if (pre.status !== 0) die('child phase completion precommit evaluation blocked');
+      }
+      const transitionResult = spawnExecutable('prometheus', [
+        'kbd', '--path', '.', 'phase', 'transition',
+        '--command-id', `phase-complete:${childRuntimeId}`,
+        '--id', childRuntimeId, '--status', 'complete',
+      ]);
+      if (transitionResult?.status !== 0) die('child phase completion transition failed');
+      if (bottleneckAvailable) {
+        const post = evaluateBottleneck('phase', 'after', childRuntimeId, false, { root: '.' });
+        if (post.status !== 0) die('child phase completion postcommit evaluation blocked');
+        process.stdout.write(`${bottleneckSignalText(post.stdout)}\n`);
+      }
     }
     try {
       await hooksFire('phase', 'after', childRuntimeId, depth, depth, hookCtx);

@@ -16,6 +16,13 @@
 // canonical writer persists (decision id + summary + supersedes), nothing more. No
 // prometheus CLI, no canonical state, no services are touched.
 
+// Mini #66 / full #192: closure is now a typed canonical disposition, not decision text. The
+// cases that asserted closure, idempotent replay, refusal recording, budget boundaries,
+// amendments and closed-phase dispatch through this file's decision-text fixture bridge
+// (BG-01, -02, -05, -07..-13, -15, -16, -18) are covered against the real runtime by
+// scripts/kbd-phase-closure.conformance.test.mjs (shared corpus, cases 01-17). The remaining
+// cases here exercise readiness and continuation paths that do not depend on closure text.
+
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
@@ -158,65 +165,6 @@ const passIdentity = (digest) => ({
 // Valid progression: adopt (real CLI) -> READY (real CLI) -> gate passes -> CLOSED
 // ---------------------------------------------------------------------------
 
-test('BG-01 valid progression: real adoption, READY gate transition, truthful closure', () => {
-  const s = scratch();
-  try {
-    const contract = makeContract();
-    const { result: adopt, statusFile, sink } = adoptViaCli(s.root, contract);
-    assert.equal(adopt.status, 0, adopt.stderr);
-    assert.match(adopt.stdout, /^ADOPTED /);
-    const digest = contractDigest(contract);
-    assert.match(readFileSync(sink, 'utf8'), new RegExp(`ADOPTED-CONTRACT path=${REL.replace(/\//g, '\\/')} sha256=${digest}`));
-
-    // Bridge: the canonical writer would now persist the adoption decision.
-    const [id, decision] = adoptionDecisionEntry(contract);
-    writeStatus(s.root, { [id]: decision });
-
-    // tasks.json coverage for MC-1's ownerTask.
-    writeFileSync(
-      path.join(s.root, '.kbd-orchestrator', 'phases', PHASE, 'tasks.json'),
-      JSON.stringify({ tasks: [{ id: 'T1' }] }),
-    );
-
-    const readiness = runScript('kbd-phase-readiness-check.mjs', ['--phase', PHASE, '--status-file', statusFile], s.root);
-    assert.equal(readiness.status, 0, readiness.stdout + readiness.stderr);
-    assert.match(readiness.stdout, /^READY phase=phase-x /);
-
-    // The REAL Plan→Execute transition: identity-bound plan handoff passes.
-    const phaseDir = path.join(s.root, '.kbd-orchestrator', 'phases', PHASE);
-    stageHandoffWrite('plan', 'plan ready', { phaseDir, identity: passIdentity(digest) });
-    const gate = stageGate('execute', { phaseDir, statusFile, env: {} });
-    assert.equal(gate.status, 0, gate.stderr);
-  } finally {
-    s.dispose();
-  }
-});
-
-test('BG-02 valid closure: close-eval records PHASE-CLOSED; replay is ALREADY-CLOSED', () => {
-  const s = scratch();
-  try {
-    const f = closeableFixture(s.root);
-    const first = closeEval(s.root, f);
-    assert.equal(first.status, 0, first.stdout);
-    assert.match(first.stdout, /^CLOSED phase=phase-x verdict=PASS/);
-    const closureLine = readFileSync(f.sink, 'utf8').trim();
-    assert.match(closureLine, /PHASE-CLOSED phase=phase-x verdict=PASS/);
-
-    // Idempotent replay: bridge the closure decision into canonical state, re-run.
-    const closureId = `phase-closure-${PHASE}-replay`;
-    const status = JSON.parse(readFileSync(f.statusFile, 'utf8'));
-    status.decisions[closureId] = { id: closureId, summary: closureLine };
-    writeFileSync(f.statusFile, JSON.stringify(status));
-    rmSync(f.sink);
-    const replay = closeEval(s.root, f);
-    assert.equal(replay.status, 0, replay.stdout);
-    assert.match(replay.stdout, /ALREADY-CLOSED/);
-    assert.equal(existsSync(f.sink), false); // zero new records on replay
-  } finally {
-    s.dispose();
-  }
-});
-
 // ---------------------------------------------------------------------------
 // Missing mandatory criteria
 // ---------------------------------------------------------------------------
@@ -264,30 +212,6 @@ test('BG-04 missing coverage: scenario ownerTask absent from tasks.json blocks r
 // Stale / wrong identity
 // ---------------------------------------------------------------------------
 
-test('BG-05 REJECT-STALE: amended contract bytes without an adoption amendment', () => {
-  const s = scratch();
-  try {
-    const { result: adopt, statusFile } = adoptViaCli(s.root, makeContract());
-    assert.equal(adopt.status, 0, adopt.stderr);
-    const [id, decision] = adoptionDecisionEntry(makeContract());
-    writeStatus(s.root, { [id]: decision });
-    writeFileSync(
-      path.join(s.root, '.kbd-orchestrator', 'phases', PHASE, 'tasks.json'),
-      JSON.stringify({ tasks: [{ id: 'T1' }] }),
-    );
-    // Amend bytes in place (unauthorized): the digest no longer matches the decision.
-    writeFileSync(
-      path.join(s.root, '.kbd-orchestrator', 'phases', PHASE, 'adopted-contract.json'),
-      JSON.stringify(makeContract({ adoptionSource: 'tampered' }), null, 2),
-    );
-    const result = runScript('kbd-phase-readiness-check.mjs', ['--phase', PHASE, '--status-file', statusFile], s.root);
-    assert.equal(result.status, 4);
-    assert.match(result.stdout, /REJECT-STALE/);
-  } finally {
-    s.dispose();
-  }
-});
-
 test('BG-06 REJECT-IDENTITY: contract identity disagrees with canonical status', () => {
   const s = scratch();
   try {
@@ -302,147 +226,17 @@ test('BG-06 REJECT-IDENTITY: contract identity disagrees with canonical status',
   }
 });
 
-test('BG-07 wrong-run evidence cannot close (evidence-run-mismatch)', () => {
-  const s = scratch();
-  try {
-    const f = closeableFixture(s.root, { evidence: { runId: 'older-run' } });
-    const result = closeEval(s.root, f);
-    assert.equal(result.status, 2);
-    assert.match(result.stdout, /evidence-run-mismatch/);
-  } finally {
-    s.dispose();
-  }
-});
-
 // ---------------------------------------------------------------------------
 // Amendment lineage (real CLI)
 // ---------------------------------------------------------------------------
-
-test('BG-08 amendment: unauthorized change refused (exit 4); --supersedes records lineage', () => {
-  const s = scratch();
-  try {
-    const original = makeContract();
-    const first = adoptViaCli(s.root, original);
-    assert.equal(first.result.status, 0, first.result.stderr);
-    const [firstId] = adoptionDecisionEntry(original);
-
-    // Amendment without --supersedes: refused, zero NEW writes to the sink.
-    const amended = makeContract({ adoptionSource: 'amended source (operator v2)' });
-    const sinkBefore = readFileSync(first.sink, 'utf8');
-    const unauthorized = adoptViaCli(s.root, amended, { priorDecisions: { [firstId]: adoptionDecisionEntry(original)[1] } });
-    assert.equal(unauthorized.result.status, 4);
-    assert.match(unauthorized.result.stderr, /no --supersedes given/);
-    assert.equal(readFileSync(unauthorized.sink, 'utf8'), sinkBefore);
-
-    // Authorized amendment: supersedes the live decision.
-    const authorized = adoptViaCli(s.root, amended, {
-      supersedes: firstId,
-      priorDecisions: { [firstId]: adoptionDecisionEntry(original)[1] },
-    });
-    assert.equal(authorized.result.status, 0, authorized.result.stderr);
-    assert.match(authorized.result.stdout, new RegExp(`supersedes=${firstId}`));
-
-    // Readiness with the amended chain: the new live adoption governs.
-    const [secondId, secondDecision] = adoptionDecisionEntry(amended, firstId);
-    const statusFile = writeStatus(s.root, {
-      [firstId]: adoptionDecisionEntry(original)[1],
-      [secondId]: secondDecision,
-    });
-    writeFileSync(
-      path.join(s.root, '.kbd-orchestrator', 'phases', PHASE, 'tasks.json'),
-      JSON.stringify({ tasks: [{ id: 'T1' }] }),
-    );
-    const readiness = runScript('kbd-phase-readiness-check.mjs', ['--phase', PHASE, '--status-file', statusFile], s.root);
-    assert.equal(readiness.status, 0, readiness.stdout + readiness.stderr);
-  } finally {
-    s.dispose();
-  }
-});
 
 // ---------------------------------------------------------------------------
 // Failed / missing evidence at the terminal evaluator
 // ---------------------------------------------------------------------------
 
-test('BG-09 failed oracle: FAIL refusal (exit 3), never closes', () => {
-  const s = scratch();
-  try {
-    const f = closeableFixture(s.root, {
-      evidence: { scenarios: [{ id: 'MC-1', status: 'FAIL', attempted: 'ran it', observed: 'oracle unmet', evidence: 'log' }] },
-    });
-    const result = closeEval(s.root, f);
-    assert.equal(result.status, 3);
-    assert.match(result.stdout, /product-oracle-unmet\(MC-1\)/);
-    const sink = readFileSync(f.sink, 'utf8');
-    assert.match(sink, /PHASE-CLOSURE-REFUSED phase=phase-x verdict=FAIL/);
-    assert.doesNotMatch(sink, /PHASE-CLOSED/);
-  } finally {
-    s.dispose();
-  }
-});
-
-test('BG-10 missing evidence: BLOCKED refusal (exit 2), closure refused and recorded', () => {
-  const s = scratch();
-  try {
-    const f = closeableFixture(s.root);
-    rmSync(path.join(f.phaseDir, 'boundary-results.json'));
-    const result = closeEval(s.root, f);
-    assert.equal(result.status, 2);
-    assert.match(result.stdout, /evidence-missing/);
-    assert.match(readFileSync(f.sink, 'utf8'), /PHASE-CLOSURE-REFUSED phase=phase-x verdict=BLOCKED/);
-  } finally {
-    s.dispose();
-  }
-});
-
-test('BG-11 stale evidence: source digests recomputed at evaluation refuse closure', () => {
-  const s = scratch();
-  try {
-    const f = closeableFixture(s.root);
-    writeFileSync(f.sourceFile, '// changed AFTER evidence was produced\n');
-    const result = closeEval(s.root, f);
-    assert.equal(result.status, 2);
-    assert.match(result.stdout, /evidence-stale-sources\(stale\(src\/production\.mjs\)\)/);
-  } finally {
-    s.dispose();
-  }
-});
-
 // ---------------------------------------------------------------------------
 // Budget accounting
 // ---------------------------------------------------------------------------
-
-test('BG-12 missing accounting is BLOCKED, never a qualified PASS', () => {
-  const s = scratch();
-  try {
-    const f = closeableFixture(s.root, { evidence: { budgetConsumption: null } });
-    const result = closeEval(s.root, f);
-    assert.equal(result.status, 2);
-    assert.match(result.stdout, /budget-consumption-missing/);
-  } finally {
-    s.dispose();
-  }
-});
-
-test('BG-13 budget boundaries: exceeded refuses; at-ceiling closes with exhaustion note', () => {
-  const s = scratch();
-  try {
-    const exceeded = closeableFixture(s.root, {
-      evidence: { budgetConsumption: { source: 'self-reported', values: { toolCalls: { value: 11, class: 'measured' } } } },
-    });
-    const over = closeEval(s.root, exceeded);
-    assert.equal(over.status, 2);
-    assert.match(over.stdout, /budget-exceeded\(toolCalls\(11>10,measured\)\)/);
-
-    const atCeiling = closeableFixture(s.root, {
-      evidence: { budgetConsumption: { source: 'self-reported', values: { toolCalls: { value: 10, class: 'measured' } } } },
-    });
-    const at = closeEval(s.root, atCeiling);
-    assert.equal(at.status, 0, at.stdout);
-    assert.match(readFileSync(atCeiling.sink, 'utf8'), /budget-note=allowance-fully-consumed\(toolCalls\);no-further-work-admitted/);
-  } finally {
-    s.dispose();
-  }
-});
 
 // ---------------------------------------------------------------------------
 // Guard status 2 at the REAL Plan→Execute transition (guard failure != success)
@@ -467,53 +261,9 @@ test('BG-14 guard status 2: execute blocked when readiness is BLOCKED (adoption 
   }
 });
 
-test('BG-15 closed phase refuses further execute dispatch at the real gate', () => {
-  const s = scratch();
-  try {
-    const phaseDir = path.join(s.root, '.kbd-orchestrator', 'phases', PHASE);
-    writeFileSync(path.join(phaseDir, 'adopted-contract.json'), JSON.stringify(makeContract(), null, 2));
-    writeFileSync(path.join(phaseDir, 'tasks.json'), JSON.stringify({ tasks: [{ id: 'T1' }] }));
-    const digest = contractDigest(makeContract());
-    const [id, decision] = adoptionDecisionEntry(makeContract());
-    const statusFile = writeStatus(s.root, {
-      [id]: decision,
-      'phase-closure-phase-x-12345678': {
-        id: 'phase-closure-phase-x-12345678',
-        summary: `PHASE-CLOSED phase=phase-x verdict=PASS evidence=sha256:${'b'.repeat(64)} contract=${digest} run=r entries=1`,
-      },
-    });
-    stageHandoffWrite('plan', 'plan ready', { phaseDir, identity: passIdentity(digest) });
-
-    const gate = stageGate('execute', { phaseDir, statusFile, env: {} });
-    assert.equal(gate.status, 2);
-    assert.match(gate.stderr, /phase phase-x is CLOSED/);
-  } finally {
-    s.dispose();
-  }
-});
-
 // ---------------------------------------------------------------------------
 // Unresolved critical findings cannot produce a successful closure (mini #59)
 // ---------------------------------------------------------------------------
-
-test('BG-16 unresolved critical findings: a FAIL review result is never accepted as closure', () => {
-  const s = scratch();
-  try {
-    // Review loop ended with the adopted-critical finding unresolved: the evidence
-    // records FAIL for the scenario it binds. The evaluator refuses closure.
-    const f = closeableFixture(s.root, {
-      evidence: {
-        scenarios: [{ id: 'MC-1', status: 'FAIL', attempted: 'review round 2 (ceiling)', observed: 'CRITICAL finding unresolved', evidence: 'review.md' }],
-      },
-    });
-    const result = closeEval(s.root, f);
-    assert.equal(result.status, 3);
-    assert.match(result.stdout, /^FAIL phase=phase-x/);
-    assert.doesNotMatch(readFileSync(f.sink, 'utf8'), /PHASE-CLOSED/);
-  } finally {
-    s.dispose();
-  }
-});
 
 // ---------------------------------------------------------------------------
 // No unauthorized successor phase (mini #59)
@@ -539,22 +289,3 @@ test('BG-17 next-phase refuses an unauthorized successor (no completed reflectio
 // Idempotent re-adoption (real CLI)
 // ---------------------------------------------------------------------------
 
-test('BG-18 idempotent re-adoption: same digest is ALREADY-ADOPTED, zero new decisions', () => {
-  const s = scratch();
-  try {
-    const contract = makeContract();
-    const [id, decision] = adoptionDecisionEntry(contract);
-    const phaseDir = path.join(s.root, '.kbd-orchestrator', 'phases', PHASE);
-    const contractPath = path.join(phaseDir, 'adopted-contract.json');
-    writeFileSync(contractPath, JSON.stringify(contract, null, 2));
-    const statusFile = writeStatus(s.root, { [id]: decision });
-    const sink = path.join(s.root, 'decisions.log');
-
-    const result = runScript('kbd-contract-adopt.mjs', [contractPath, '--status-file', statusFile, '--decision-sink', sink], s.root);
-    assert.equal(result.status, 0, result.stderr);
-    assert.match(result.stdout, /ALREADY-ADOPTED/);
-    assert.equal(existsSync(sink), false);
-  } finally {
-    s.dispose();
-  }
-});

@@ -21,6 +21,7 @@ import { isRuntimeAuthoritative } from '../lib/kbd/runtime-authority.mjs';
 import { isBottleneckActive, evaluateBottleneck, bottleneckSignalText } from '../lib/kbd/bottleneck-guard.mjs';
 import { hooksFire } from '../lib/kbd/hooks.mjs';
 import { runHookCommand } from '../lib/kbd/hook-command.mjs';
+import { readDisposition, runPhaseCommand } from '../lib/kbd/phase-disposition.mjs';
 
 const USAGE = `Usage: node scripts/kbd-next-phase.mjs [phase-name] [--allow-incomplete-reflection]
 
@@ -32,7 +33,16 @@ driver REFUSES to complete the current phase and create/activate a successor. Re
 /kbd-reflect first, or pass --allow-incomplete-reflection to record an explicit operator
 authorization for this exact continuation scope.
 
+Contract-bound phases (mini #66 / full #192): closing is not continuing. The current phase
+must already be CLOSED in canonical state (kbd-phase-close-eval records that; otherwise exit 2,
+nothing written), and a successor starts only with an operator-signed start-successor
+manifest (otherwise exit 4, nothing written). The successor id and title come from the
+manifest; a rerun reports ALREADY-STARTED. --allow-incomplete-reflection never bypasses this.
+
 Options:
+  --authorize-successor <manifest> --signature <sig>
+                                 Signed start-successor authorization (see
+                                 scripts/kbd-scope-authority-template.mjs).
   --allow-incomplete-reflection  Explicit operator authorization to continue despite an
                                  incomplete or missing reflection (recorded in output).
   -h, --help                     Show this help.
@@ -103,6 +113,146 @@ function normalizePhaseName(name) {
     .replace(/[^a-z0-9-]/g, '');
 }
 
+/** goals.md is written only after canonical success, labelled as proposals, never adopted scope. */
+function writeGoals({ newPhaseDir, newPhase, currentPhase, timestamp, seedContent }) {
+  mkdirSync(newPhaseDir, { recursive: true });
+  const goalsBody = seedContent || '(No seed content found in reflection -- add goals manually before running /kbd-assess)';
+  atomicWrite(
+    path.join(newPhaseDir, 'goals.md'),
+    [
+      `# Goals: ${newPhase}`,
+      '',
+      `Seeded from: \`${currentPhase}/reflection.md\``,
+      `Created: ${timestamp}`,
+      '',
+      '## Reflection proposals — not adopted scope',
+      '',
+      'These are suggestions carried forward from the previous reflection. They are not',
+      "requirements: blocking scope exists only once this phase's contract is adopted (and any",
+      'later change is a signed amendment).',
+      '',
+      goalsBody,
+      '',
+      '---',
+      '',
+      '## Instructions',
+      '',
+      'Review and refine the goals above before running `/kbd-assess`.',
+      'Add, remove, or clarify as needed. When ready:',
+      '',
+      '```',
+      `/kbd-assess ${newPhase}`,
+      '```',
+      '',
+    ].join('\n')
+  );
+}
+
+function canonicalStatus(projectRoot) {
+  const result = spawnExecutable('prometheus', ['kbd', '--path', projectRoot, 'status', '--json']);
+  if (result?.status !== 0) die('canonical status read failed');
+  return JSON.parse(result.stdout);
+}
+
+/**
+ * Contract-bound continuation (mini #66 / full #192). Returns { done: true } when it already
+ * reported an outcome, { successor } when an authorized start should proceed, or {} when the
+ * current phase is unbound (legacy flow).
+ */
+function boundContinuation({ projectRoot, kbdDir, currentPhase, proposedName, authManifest, authSignature }) {
+  let requested = proposedName;
+  if (!requested && authManifest && existsSync(authManifest)) requested = readJsonSafe(authManifest)?.successorPhaseId ?? '';
+  if (requested && requested === currentPhase) {
+    // A rerun after the authorized successor started: the active phase already is it.
+    const phases = canonicalStatus(projectRoot)?.phaseClosure?.phases ?? {};
+    const predecessor = Object.entries(phases).find(([, entry]) => entry?.successor?.phaseId === requested)?.[0];
+    if (predecessor) {
+      process.stdout.write(`[kbd-next-phase] ALREADY-STARTED: successor '${requested}' of '${predecessor}' was already started; no new events.\n`);
+      process.stdout.write(`  Next:  /kbd-assess ${requested}\n`);
+      return { done: true };
+    }
+  }
+  const disposition = readDisposition({ root: projectRoot, phase: currentPhase });
+  if (disposition.status !== 0) die(`${disposition.stderr}; nothing was written`);
+  const view = disposition.json;
+  if (!view.contractBound) return {};
+  if (view.disposition !== 'CLOSED') {
+    process.stdout.write(
+      `[kbd-next-phase] NOT-CLOSED: phase '${currentPhase}' disposition is ${view.disposition}; nothing was written.\n` +
+        '  A contract-bound phase closes only through its terminal evaluator:\n' +
+        `    node scripts/kbd-phase-close-eval.mjs --phase ${currentPhase}\n`
+    );
+    process.exit(2);
+  }
+  if (view.successor?.phaseId) {
+    const started = view.successor.phaseId;
+    const goals = path.join(kbdDir, 'phases', started, 'goals.md');
+    if (!existsSync(goals)) {
+      const reflection = path.join(kbdDir, 'phases', currentPhase, 'reflection.md');
+      const seed = existsSync(reflection) ? extractSeedContent(readFileSync(reflection, 'utf8')) : '';
+      writeGoals({ newPhaseDir: path.dirname(goals), newPhase: started, currentPhase, timestamp: new Date().toISOString(), seedContent: seed });
+    }
+    process.stdout.write(`[kbd-next-phase] ALREADY-STARTED: successor '${started}' of '${currentPhase}' was already started; no new events.\n`);
+    process.stdout.write(`  Next:  /kbd-assess ${started}\n`);
+    return { done: true };
+  }
+  if (!authManifest || !authSignature) {
+    process.stdout.write(
+      `[kbd-next-phase] SUCCESSOR-UNAUTHORIZED: '${currentPhase}' is CLOSED; closure alone never starts a successor. Nothing was written.\n` +
+        '  An operator signs a start-successor manifest naming the successor:\n' +
+        `    node scripts/kbd-scope-authority-template.mjs start-successor --phase ${currentPhase} --successor <id> --title '<title>' > successor.json\n` +
+        '    ssh-keygen -Y sign -f <operator-key> -n prometheus-kbd-scope-amendment successor.json\n' +
+        '  then: node scripts/kbd-next-phase.mjs --authorize-successor successor.json --signature successor.json.sig\n'
+    );
+    process.exit(4);
+  }
+  const manifest = readJsonSafe(authManifest);
+  const id = manifest?.successorPhaseId ?? '';
+  const title = manifest?.successorTitle ?? '';
+  if (!id || !title) {
+    process.stdout.write('[kbd-next-phase] SUCCESSOR-UNAUTHORIZED: manifest names no successorPhaseId/successorTitle\n');
+    process.exit(4);
+  }
+  if (proposedName && normalizePhaseName(proposedName) !== id) {
+    process.stdout.write(`[kbd-next-phase] SUCCESSOR-UNAUTHORIZED: '${proposedName}' is not the authorized successor '${id}'\n`);
+    process.exit(4);
+  }
+  return { successor: { id, title, authManifest, authSignature } };
+}
+
+/** One typed runtime event defines and activates exactly the authorized successor. */
+async function startAuthorizedSuccessor({ id, title, authManifest, authSignature, projectRoot, kbdDir, currentPhase, orchestratorRoot, timestamp }) {
+  const newPhaseDir = path.join(kbdDir, 'phases', id);
+  if (existsSync(newPhaseDir)) die(`Phase '${id}' already exists:\n  ${newPhaseDir}`);
+  refreshOpenSpec(projectRoot);
+  const started = runPhaseCommand({ root: projectRoot, args: ['successor', 'start', '--predecessor', currentPhase,
+    '--id', id, '--title', title, '--exact-next-work', `/kbd-assess ${id}`,
+    '--authorization', authManifest, '--signature', authSignature] });
+  if (started.status !== 0) {
+    process.stdout.write(`[kbd-next-phase] SUCCESSOR-UNAUTHORIZED: the runtime refused the successor; nothing was written.\n${started.stdout}${started.stderr}`);
+    process.exit(4);
+  }
+  try {
+    await hooksFire('phase', 'after', currentPhase, 1, 1, {
+      orchestratorRoot, cwd: projectRoot, runCommand: runHookCommand, phasePath: currentPhase, sourceTool: 'kbd-next-phase',
+    });
+  } catch {
+    process.stderr.write('[kbd-next-phase] phase completion hook failed\n');
+  }
+  if (isBottleneckActive(projectRoot)) {
+    const postStart = evaluateBottleneck('phase', 'before', id, false, { root: projectRoot });
+    if (postStart.status !== 0) die(`next phase start postcommit blocked; record it with: prometheus kbd --path . guard evaluate --boundary phase --edge before --subject ${id} --json`);
+    process.stdout.write(`${bottleneckSignalText(postStart.stdout)}\n`);
+  }
+  const reflection = path.join(kbdDir, 'phases', currentPhase, 'reflection.md');
+  const seedContent = existsSync(reflection) ? extractSeedContent(readFileSync(reflection, 'utf8')) : '';
+  writeGoals({ newPhaseDir, newPhase: id, currentPhase, timestamp, seedContent });
+  process.stdout.write(`\nCompleted kbd-next-phase — ${id} ready for /kbd-assess\n`);
+  process.stdout.write(`  phase: ${id}\n`);
+  process.stdout.write(`  goals: ${path.join(newPhaseDir, 'goals.md')}\n`);
+  process.stdout.write(`  Next:  /kbd-assess ${id}\n`);
+}
+
 async function main(argv) {
   if (argv.includes('-h') || argv.includes('--help')) {
     process.stdout.write(USAGE);
@@ -110,7 +260,14 @@ async function main(argv) {
   }
 
   const allowIncompleteReflection = argv.includes('--allow-incomplete-reflection');
-  const proposedName = argv.filter((a) => !a.startsWith('-'))[0] ?? '';
+  const optionValue = (flag) => {
+    const index = argv.indexOf(flag);
+    return index === -1 ? null : argv[index + 1] ?? null;
+  };
+  const authManifest = optionValue('--authorize-successor');
+  const authSignature = optionValue('--signature');
+  const valueArgs = new Set([authManifest, authSignature].filter(Boolean));
+  const proposedName = argv.filter((a) => !a.startsWith('-') && !valueArgs.has(a))[0] ?? '';
   const timestamp = new Date().toISOString();
   const dateSlug = timestamp.slice(0, 10);
 
@@ -134,6 +291,15 @@ async function main(argv) {
   const projectData = existsSync(projectJson) ? readJsonSafe(projectJson) : null;
   const projectName = projectData?.name ?? 'unknown';
   const projectStatus = projectData?.status ?? '';
+
+  if (isRuntimeAuthoritative(projectRoot)) {
+    const bound = boundContinuation({ projectRoot, kbdDir, currentPhase, proposedName, authManifest, authSignature });
+    if (bound.done) return;
+    if (bound.successor) {
+      await startAuthorizedSuccessor({ ...bound.successor, projectRoot, kbdDir, currentPhase, orchestratorRoot, timestamp });
+      return;
+    }
+  }
 
   const reflectDone = new Set(['reflect_complete', 'reflected', 'phase_complete']);
   const reflectionComplete = reflectDone.has(currentStage) || reflectDone.has(projectStatus);
@@ -191,35 +357,6 @@ async function main(argv) {
   }
 
   refreshOpenSpec(projectRoot);
-
-  mkdirSync(newPhaseDir, { recursive: true });
-
-  const goalsBody = seedContent || '(No seed content found in reflection -- add goals manually before running /kbd-assess)';
-  atomicWrite(
-    path.join(newPhaseDir, 'goals.md'),
-    [
-      `# Goals: ${newPhase}`,
-      '',
-      `Seeded from: \`${currentPhase}/reflection.md\``,
-      `Created: ${timestamp}`,
-      '',
-      '## Seeded Goals',
-      '',
-      goalsBody,
-      '',
-      '---',
-      '',
-      '## Instructions',
-      '',
-      'Review and refine the goals above before running `/kbd-assess`.',
-      'Add, remove, or clarify as needed. When ready:',
-      '',
-      '```',
-      `/kbd-assess ${newPhase}`,
-      '```',
-      '',
-    ].join('\n')
-  );
 
   if (isRuntimeAuthoritative(projectRoot)) {
     const statusResult = spawnExecutable('prometheus', ['kbd', '--path', projectRoot, 'status', '--json']);
@@ -288,6 +425,7 @@ async function main(argv) {
       process.stdout.write(`${bottleneckSignalText(postStart.stdout)}\n`);
     }
 
+    writeGoals({ newPhaseDir, newPhase, currentPhase, timestamp, seedContent });
     process.stdout.write(`\nCompleted kbd-next-phase — ${newPhase} ready for /kbd-assess\n`);
     process.stdout.write(`  phase: ${newPhase}\n`);
     process.stdout.write(`  goals: ${path.join(newPhaseDir, 'goals.md')}\n`);
@@ -295,6 +433,7 @@ async function main(argv) {
     return;
   }
 
+  writeGoals({ newPhaseDir, newPhase, currentPhase, timestamp, seedContent });
   atomicWrite(
     path.join(newPhaseDir, 'progress.json'),
     JSON.stringify(

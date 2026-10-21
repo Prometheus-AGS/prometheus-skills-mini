@@ -82,7 +82,7 @@ jobs:
     name: kbd runtime integration (real prometheus CLI)
     runs-on: ubuntu-latest
     env:
-      PROMETHEUS_CLI_REF: 540af0299d9360761d2dcea7a484f010c568c0f3
+      PROMETHEUS_CLI_REF: fbee605cce14e8ef5b1fb3aa836b23ffd52a1215
     steps:
       - uses: actions/checkout@v4
 

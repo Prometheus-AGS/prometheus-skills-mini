@@ -26,9 +26,34 @@ export function digestPayload(contract) {
   return { ...rest, identity: identityRest };
 }
 
-/** sha256 hex of the normalized contract. */
+/**
+ * The bound snapshot bytes: exactly what `jq -S -c` prints, INCLUDING its trailing newline.
+ * sha256 of these bytes is the contract digest shared with the full pack (golden vectors in
+ * shared/references/conformance/kbd-phase-closure/v1/golden).
+ */
+export function contractSnapshotBytes(contract) {
+  return `${stableStringify(digestPayload(contract))}\n`;
+}
+
+/** sha256 hex of the normalized contract (cross-pack digest). */
 export function contractDigest(contract) {
+  return createHash('sha256').update(contractSnapshotBytes(contract), 'utf8').digest('hex');
+}
+
+/**
+ * The pre-#66 mini digest (no trailing newline). Used only to recognise a legacy text
+ * adoption of unchanged content so it can be bound without an amendment.
+ */
+export function legacyContractDigest(contract) {
   return createHash('sha256').update(stableStringify(digestPayload(contract)), 'utf8').digest('hex');
+}
+
+/** Per-scenario digests: sha256 of each scenarioMatrix entry's `jq -S -c` line. */
+export function scenarioDigests(contract) {
+  return Object.fromEntries((contract?.scenarioMatrix ?? []).map((entry) => [
+    entry.id,
+    createHash('sha256').update(`${stableStringify(entry)}\n`, 'utf8').digest('hex'),
+  ]));
 }
 
 /** sha256 hex of a UTF-8 string or Buffer (file freshness checks). */
@@ -167,6 +192,8 @@ export function computeCeilings(budgets = {}) {
   return ceilings;
 }
 
+const ENFORCED_DIMENSIONS = ['timeMinutes', 'toolCalls', 'repairAttempts'];
+
 const CONSUMPTION_TO_CEILING = {
   timeMinutes: 'timeMinutes',
   toolCalls: 'toolCalls',
@@ -191,6 +218,13 @@ export function budgetPredicate(contract, consumption) {
   if (!isNonEmptyString(consumption.source)) return { outcome: 'source-missing' };
   const ceilings = computeCeilings(contract?.budgets);
   const values = consumption.values ?? {};
+  // An enforceable dimension that is unmetered cannot be shown to hold (mini #66 / full #192);
+  // only token consumption may stay unknown under the declared fallback.
+  const unmeasured = ENFORCED_DIMENSIONS.filter((key) => {
+    const entry = values[key];
+    return entry == null || entry.value == null || (entry.class ?? 'unknown') === 'unknown';
+  });
+  if (unmeasured.length > 0) return { outcome: 'unmeasured', hits: unmeasured, ceilings, source: consumption.source };
   const exceeded = [];
   const atCeiling = [];
   for (const [consumptionKey, ceilingKey] of Object.entries(CONSUMPTION_TO_CEILING)) {

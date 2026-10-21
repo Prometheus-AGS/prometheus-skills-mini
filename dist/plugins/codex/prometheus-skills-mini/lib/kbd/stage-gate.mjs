@@ -24,8 +24,9 @@
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { atomicWrite } from '../platform/atomic-write.mjs';
-import { spawnExecutable } from '../platform/spawn.mjs';
 import { phaseReadiness } from './phase-readiness.mjs';
+import { readDisposition } from './phase-disposition.mjs';
+import { isRuntimeAuthoritative } from './runtime-authority.mjs';
 
 const STAGE_ORDER = ['assess', 'analyze', 'spec', 'plan', 'execute', 'reflect'];
 const OPTIONAL_STAGES = new Set(['analyze', 'spec']);
@@ -126,32 +127,6 @@ function assertCanonicalPhase(stage, phaseDir, cwd) {
 }
 
 /**
- * Canonical status JSON for the Plan→Execute boundary checks, or null when no source is
- * available (fixture file seam first, then the prometheus CLI). A null here is not a pass:
- * the readiness check that follows reports BLOCKED for the same unavailability.
- */
-function gateStatusJson({ ctx, phaseDir, cwd }) {
-  const statusFile = ctx.statusFile ?? ctx.env?.KBD_READINESS_STATUS_FILE ?? null;
-  if (statusFile) {
-    try {
-      return JSON.parse(readFileSync(statusFile, 'utf8'));
-    } catch {
-      return null;
-    }
-  }
-  const root = rootFromPhaseDir(phaseDir, cwd);
-  if (!root) return null;
-  const spawn = ctx.spawn ?? spawnExecutable;
-  const result = spawn('prometheus', ['kbd', '--path', root, 'status', '--json']);
-  if (result?.status !== 0 || result?.error) return null;
-  try {
-    return JSON.parse(result.stdout);
-  } catch {
-    return null;
-  }
-}
-
-/**
  * Semantic handoff validation (port of _sg_validate_handoff from the source's stage-gate.sh,
  * ebc8f687): valid JSON, required schema fields, stage-name match, identity.phaseId agreement
  * when identity is present. At the Plan→Execute boundary the plan handoff MUST carry full
@@ -210,21 +185,26 @@ function validateHandoff(handoffFile, prev, phaseDir, forStage, ctx) {
       );
     }
 
-    const statusJson = gateStatusJson({ ctx, phaseDir, cwd: ctx.cwd ?? process.cwd() });
     const workedPhase = isNonEmptyString(identity.phaseId) ? identity.phaseId : worked;
+    const gateRoot = rootFromPhaseDir(phaseDir, ctx.cwd ?? process.cwd());
 
-    // B2: a phase closed PASS by the terminal evaluator refuses further execute dispatch.
-    if (statusJson) {
-      const decisions = Object.values(statusJson.decisions ?? {});
-      const closed = decisions.some(
-        (d) => typeof d?.summary === 'string' && d.summary.includes(`PHASE-CLOSED phase=${workedPhase} verdict=PASS`),
+    // B2 (mini #66 / full #192): a phase CLOSED in canonical state refuses further execute
+    // dispatch. The disposition comes from the typed runtime authority, never from decision
+    // text, so a recorded string cannot fake or hide a closure. REFUSED_* phases still admit
+    // repair dispatch. Under canonical runtime authority an unreadable disposition blocks.
+    const dispositionFile = ctx.dispositionFile ?? ctx.env?.KBD_PHASE_DISPOSITION_FILE ?? null;
+    const disposition = readDisposition({ root: gateRoot, phase: workedPhase, dispositionFile, spawn: ctx.spawn });
+    if (disposition.status === 0 && disposition.json.disposition === 'CLOSED') {
+      return fail(
+        `kbd_stage_gate: execute blocked — phase ${workedPhase} is CLOSED in canonical state (typed phase disposition).\n` +
+          'A closed phase receives no further dispatch. A successor starts only with a signed start-successor authorization (kbd-next-phase --authorize-successor).\n',
       );
-      if (closed) {
-        return fail(
-          `kbd_stage_gate: execute blocked — phase ${workedPhase} is CLOSED (PHASE-CLOSED verdict=PASS recorded by the terminal evaluator).\n` +
-            'A closed phase receives no further dispatch. Remediation: open a successor phase via the canonical next-phase flow.\n',
-        );
-      }
+    }
+    if (disposition.status !== 0 && (dispositionFile || (gateRoot && isRuntimeAuthoritative(gateRoot)))) {
+      return fail(
+        `kbd_stage_gate: execute blocked — canonical phase disposition for ${workedPhase} is unreadable.\n` +
+          'Remediation: install a prometheus CLI with typed phase closure (prometheus kbd phase disposition), then retry.\n',
+      );
     }
 
     // B1: full canonical readiness validation at the real Plan→Execute transition. Handoff
@@ -235,8 +215,9 @@ function validateHandoff(handoffFile, prev, phaseDir, forStage, ctx) {
       phase: workedPhase,
       phaseDir,
       statusFile: ctx.statusFile ?? ctx.env?.KBD_READINESS_STATUS_FILE ?? null,
+      dispositionFile,
       spawn: ctx.spawn,
-      root: rootFromPhaseDir(phaseDir, ctx.cwd ?? process.cwd()),
+      root: gateRoot,
     });
     if (readiness.status !== 0) {
       return fail(

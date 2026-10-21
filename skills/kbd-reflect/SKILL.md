@@ -100,7 +100,7 @@ Use the canonical phase name from the argument or `current-waypoint.json`. Emit 
 5. **Load all change data** — from `openspec/changes/archive/` if OpenSpec,
    or `.kbd-orchestrator/changes/archive/` if native KBD
 6. **Write reflection** to `.kbd-orchestrator/phases/<phase>/reflection.md`
-7. **Advance when authorized** through `/kbd-next-phase`; its helper activates the phase and generates projections
+7. **Advance only when authorized** through `/kbd-next-phase`. For a contract-bound phase that authorization is an operator-signed start-successor manifest (`--authorize-successor <manifest> --signature <sig>`); closure alone never starts a successor, and reflection text, review findings or memory cannot supply that authority — the Next Phase Seed is a proposal, never adopted scope
 8. **Trigger**: report that reflection is complete and the next step is to
    advance to a new phase
 
@@ -142,8 +142,14 @@ if (guardEnabled) {
   if (preTransition.status !== 0) throw new Error(preTransition.stderr || `guard status ${preTransition.status}`);
 }
 
-// … record the phase transition to complete, e.g. via the project's own
-//     phase-completion write path …
+// … for a contract-bound phase (`prometheus kbd phase disposition --id <phase>` reports
+//     contractBound: true) run `node scripts/kbd-phase-close-eval.mjs --phase <phase>`
+//     instead of any transition: only a PASS disposition closes it, and the runtime
+//     refuses `phase transition --status complete` for bound phases (mini #66). Exit 0 is
+//     CLOSED; 2/3 are recorded BLOCKED/FAIL refusals (the phase stays open); 5 is a writer
+//     failure; 6 means already closed under other evidence. Report it and stop.
+//     For an unbound legacy phase, record the transition to complete via the project's
+//     own phase-completion write path …
 
 if (guardEnabled) {
   const postTransition = evaluateBottleneck('phase', 'after', phase, false, { root: cwd });

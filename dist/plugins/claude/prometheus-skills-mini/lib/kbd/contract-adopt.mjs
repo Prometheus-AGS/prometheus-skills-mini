@@ -7,18 +7,24 @@
 // source's --status-file / KBD_READINESS_STATUS_FILE equivalents).
 //
 // Exit statuses: 0 adopted/already-adopted; 1 usage/io; 2 invalid contract;
-// 3 identity mismatch; 4 amendment without --supersedes (or ambiguous lineage).
+// 3 identity mismatch; 4 amendment without --supersedes or verified signed authority (or
+// ambiguous lineage); 5 canonical writer failure.
 
-import { appendFileSync, existsSync, readFileSync } from 'node:fs';
+import { appendFileSync, existsSync, mkdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { spawnExecutable } from '../platform/spawn.mjs';
 import { atomicWrite } from '../platform/atomic-write.mjs';
 import {
   contractDigest,
+  contractSnapshotBytes,
   latestAdoption,
+  legacyContractDigest,
   repoRelative,
+  scenarioDigests,
+  sha256Of,
   validateAdoptedContract,
 } from './adopted-contract.mjs';
+import { readDisposition, runPhaseCommand } from './phase-disposition.mjs';
 
 /** Walk up from `cwd` looking for `.kbd-orchestrator`. Returns null when none found. */
 export function findKbdRoot(cwd) {
@@ -76,6 +82,13 @@ export function recordDecision({ root, id, commandId, summary, supersedes, decis
 /**
  * Adopt `contractPath` as the phase's completion contract. Pure orchestration over the
  * helpers above; never throws — returns { status, stdout, stderr }.
+ *
+ * Mini #66 / full #192: adoption binds the phase in canonical state
+ * (`prometheus kbd phase bind-contract`) and writes the byte-exact snapshot
+ * `phases/<id>/adopted/<digest>.json`. Once bound, a changed digest is a material amendment
+ * that needs `supersedes` plus a signed amend-contract manifest (`amendment` + `signature`),
+ * which the runtime verifies. `owner`/`adoptionSource` stay descriptive text, never authority.
+ * Exit 4 also covers refused authority; exit 5 is a canonical writer failure.
  */
 export function adoptContract(contractPath, ctx = {}) {
   const fail = (stderr, status = 1) => ({ status, stdout: '', stderr: `kbd-contract-adopt: ${stderr}\n` });
@@ -124,6 +137,36 @@ export function adoptContract(contractPath, ctx = {}) {
   }
 
   const digest = contractDigest(contract);
+  const legacyDigest = legacyContractDigest(contract);
+  const decisionId = `contract-adoption-${phaseId}-${digest.slice(0, 8)}`;
+  const disposition = readDisposition({ root, phase: phaseId, dispositionFile: ctx.dispositionFile, spawn: ctx.spawn });
+  if (disposition.status !== 0) return fail(disposition.stderr, 1);
+  const binding = disposition.json.binding ?? null;
+  const snapshot = path.join(expectedDir, 'adopted', `${digest}.json`);
+  const writeSnapshot = () => {
+    const bytes = contractSnapshotBytes(contract);
+    if (sha256Of(bytes) !== digest) throw new Error('internal error: snapshot digest mismatch');
+    mkdirSync(path.dirname(snapshot), { recursive: true });
+    atomicWrite(snapshot, bytes);
+  };
+
+  if (binding?.contractDigest === digest) {
+    if (!existsSync(snapshot)) writeSnapshot();
+    return {
+      status: 0,
+      stdout: `ALREADY-ADOPTED path=${rel} sha256=${digest} decision=${binding.adoptionDecisionId} bound=revision-${binding.bindingRevision} (idempotent no-op)\n`,
+      stderr: '',
+    };
+  }
+  const supersedes = ctx.supersedes ?? null;
+  if (binding && (!supersedes || !ctx.amendment || !ctx.signature)) {
+    return fail(
+      `bound contract changed (digest ${binding.contractDigest} -> ${digest}).\n` +
+        'A material amendment requires --supersedes <decision> --amendment <manifest> --signature <sig>.\n' +
+        `Generate the manifest with: node scripts/kbd-scope-authority-template.mjs amend-contract --phase ${phaseId} --contract ${rel}`,
+      4,
+    );
+  }
 
   const latest = latestAdoption(statusJson, rel);
   if (latest === 'ambiguous') {
@@ -132,37 +175,50 @@ export function adoptContract(contractPath, ctx = {}) {
       4,
     );
   }
-  const supersedes = ctx.supersedes ?? null;
+  let legacyMatch = false;
   if (latest) {
-    if (latest.digest === digest) {
-      return {
-        status: 0,
-        stdout: `ALREADY-ADOPTED path=${rel} sha256=${digest} decision=${latest.id} (idempotent no-op)\n`,
-        stderr: '',
-      };
-    }
-    if (!supersedes) {
+    if (latest.digest === digest || latest.digest === legacyDigest) {
+      legacyMatch = true;
+    } else if (!binding) {
+      return fail(
+        `contract differs from its unbound text adoption (${latest.digest} -> ${digest}).\n` +
+          'Restore the adopted content and re-run to bind it, then amend with a signed manifest.',
+        4,
+      );
+    } else if (!supersedes) {
       return fail(
         `contract changed (digest ${latest.digest} -> ${digest}) but no --supersedes given.\n` +
           `Amendments require explicit operator version-adoption: re-run with --supersedes ${latest.id}`,
         4,
       );
-    }
-    if (supersedes !== latest.id) {
+    } else if (supersedes !== latest.id) {
       return fail(`--supersedes ${supersedes} does not match latest adoption decision ${latest.id}`, 4);
     }
   }
 
-  // Stamp identity.planRevision + identity.contractDigest. Stamping is digest-neutral by
-  // construction (both fields are excluded from the digest payload); assert it anyway.
-  const stamped = {
-    ...contract,
-    identity: { ...contract.identity, planRevision: canonicalPlanRevision, contractDigest: digest },
-  };
-  if (contractDigest(stamped) !== digest) return fail('internal error: stamping changed the digest', 1);
-  atomicWrite(absolute, `${JSON.stringify(stamped, null, 2)}\n`);
+  // Canonical binding first (authoritative), then the compatibility decision, then the
+  // digest-neutral stamp of the working file — never the file before canonical success.
+  writeSnapshot();
+  const bindArgs = ['bind-contract', '--id', phaseId, '--contract-path', rel, '--contract-digest', digest,
+    '--plan-revision', String(canonicalPlanRevision ?? 0), '--adoption-decision', decisionId,
+    ...Object.entries(scenarioDigests(contract)).flatMap(([id, d]) => ['--scenario-digest', `${id}=${d}`])];
+  if (binding) bindArgs.push('--amendment', ctx.amendment, '--signature', ctx.signature);
+  // The disclosed decision-sink seam records the bind it would perform; it never writes
+  // canonical state (fixture isolation only).
+  const bound = ctx.decisionSink
+    ? (appendFileSync(ctx.decisionSink, `PHASE-BIND ${bindArgs.join(' ')}\n`, 'utf8'), { status: 0, stdout: '', stderr: '' })
+    : runPhaseCommand({ root, args: bindArgs, spawn: ctx.spawn });
+  if (bound.status !== 0) {
+    return fail(`canonical binding refused (exit ${bound.status}): ${bound.stdout}${bound.stderr}`.trim(), bound.status === 7 ? 4 : 5);
+  }
+  if (legacyMatch) {
+    return {
+      status: 0,
+      stdout: `ALREADY-ADOPTED path=${rel} sha256=${digest} decision=${latest.id} bound=revision-1 (text adoption upgraded to canonical binding)\n`,
+      stderr: '',
+    };
+  }
 
-  const decisionId = `contract-adoption-${phaseId}-${digest.slice(0, 8)}`;
   const commandId = ctx.commandId ?? `contract-adopt-${phaseId}-${digest.slice(0, 8)}`;
   const summary =
     `ADOPTED-CONTRACT path=${rel} sha256=${digest} planRevision=${canonicalPlanRevision} ` +
@@ -177,11 +233,22 @@ export function adoptContract(contractPath, ctx = {}) {
     decisionSink: ctx.decisionSink,
     spawn: ctx.spawn,
   });
-  if (recorded.status !== 0) return fail(recorded.stderr, 1);
+  if (recorded.status !== 0) return fail(`${recorded.stderr} (binding is authoritative and was recorded)`, 5);
 
+  // Stamp identity.planRevision + identity.contractDigest. Stamping is digest-neutral by
+  // construction (both fields are excluded from the digest payload); assert it anyway.
+  const stamped = {
+    ...contract,
+    identity: { ...contract.identity, planRevision: canonicalPlanRevision, contractDigest: digest },
+  };
+  if (contractDigest(stamped) !== digest) return fail('internal error: stamping changed the digest', 1);
+  atomicWrite(absolute, `${JSON.stringify(stamped, null, 2)}\n`);
+
+  const after = readDisposition({ root, phase: phaseId, dispositionFile: ctx.dispositionFile, spawn: ctx.spawn });
+  const revision = after.status === 0 ? after.json.binding?.bindingRevision ?? '?' : '?';
   return {
     status: 0,
-    stdout: `ADOPTED path=${rel} sha256=${digest} planRevision=${canonicalPlanRevision} decision=${decisionId}${supersedes ? ` supersedes=${supersedes}` : ''}\n`,
+    stdout: `ADOPTED path=${rel} sha256=${digest} planRevision=${canonicalPlanRevision} decision=${decisionId} bound=revision-${revision}${supersedes ? ` supersedes=${supersedes}` : ''}\n`,
     stderr: '',
   };
 }

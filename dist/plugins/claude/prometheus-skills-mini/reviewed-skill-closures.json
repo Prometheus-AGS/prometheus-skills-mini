@@ -88,7 +88,7 @@
     },
     {
       "path": "lib/kbd/adopted-contract.mjs",
-      "sha256": "sha256:c2d59fecfec87e3bae0c3d136ed6706bc55e6085fe4501bfee5a6718dd95cedb"
+      "sha256": "sha256:36f3b4220c281c015db69b135968d196a6061406b80f6e2b054185b40fe73538"
     },
     {
       "path": "lib/kbd/bottleneck-guard.mjs",
@@ -96,7 +96,7 @@
     },
     {
       "path": "lib/kbd/contract-adopt.mjs",
-      "sha256": "sha256:c0209d76e1c4ab35544a7e1fd7d7e251057a468c54c7896267a5a64fa85d05e9"
+      "sha256": "sha256:bbaf64279dc79be456393176f77d689156774ee14a403198e9018129a3c65bb5"
     },
     {
       "path": "lib/kbd/handoff/checks.mjs",
@@ -132,11 +132,15 @@
     },
     {
       "path": "lib/kbd/phase-close-eval.mjs",
-      "sha256": "sha256:74825706acf7fb17e790631445f6a678de82d00a7294c2f7b074b8ca109c9ba5"
+      "sha256": "sha256:9b765ffe802fed519e9fbb1cbe0a2c14fcf496d17d55c4c934bd12b6b4e3f8af"
+    },
+    {
+      "path": "lib/kbd/phase-disposition.mjs",
+      "sha256": "sha256:48ce5ebd727ceecdca0dcc86a35e802016f0a139b69554069d58437b2fff07d1"
     },
     {
       "path": "lib/kbd/phase-readiness.mjs",
-      "sha256": "sha256:c050575638a5cb98bd3f3dcd5882425537e8fd987b789a441b326681e96bc861"
+      "sha256": "sha256:39ae3fcb08e1caf2ba9ab5a4c5dd568fde2162150f1c63c50986422a9c4d480d"
     },
     {
       "path": "lib/kbd/progress.mjs",
@@ -159,6 +163,10 @@
       "sha256": "sha256:f8acf33035ed9ef99eda0f1b7151a23a8deb6756c06a6eda09221af895d25ce6"
     },
     {
+      "path": "lib/kbd/rollup.mjs",
+      "sha256": "sha256:e20ea35674d839f6dee00b1dd39441117b97c48c7213a59077af577e2cde3d4a"
+    },
+    {
       "path": "lib/kbd/runtime-authority.mjs",
       "sha256": "sha256:abb220bbe47725add91928d218beabe7ff9c3200982b689e1e776e4874b77e03"
     },
@@ -168,7 +176,7 @@
     },
     {
       "path": "lib/kbd/stage-gate.mjs",
-      "sha256": "sha256:094dcb2d3a38b4ad485832a34a997260d64dcc519ba33c96cb78e832832aa99e"
+      "sha256": "sha256:862e40ce3e7ce96409e76538503d4aa3611262333bb0a2214ce611152a53b78f"
     },
     {
       "path": "lib/kbd/task-identity.mjs",
@@ -255,8 +263,12 @@
       "sha256": "sha256:e1033c9fc9fcab23fcf0427bbdc2fffda455ac44d7bd60f21e42ed773ba075a1"
     },
     {
+      "path": "scripts/kbd-child-exit.mjs",
+      "sha256": "sha256:b6b9a18795944cc04ec1d212a37fc7e2409e703db2cc8ac563ddc1bc11f9c207"
+    },
+    {
       "path": "scripts/kbd-contract-adopt.mjs",
-      "sha256": "sha256:9eb9c43a075f47531d7dc9d6491e6ecd8b6cff27698f4d4af1c0caff7c70ffc8"
+      "sha256": "sha256:75e7fbd3eb3077b0fd47cc76f9edea5e0c8036b59728cb5ad57fe33829baf309"
     },
     {
       "path": "scripts/kbd-handoff.mjs",
@@ -276,15 +288,19 @@
     },
     {
       "path": "scripts/kbd-next-phase.mjs",
-      "sha256": "sha256:4a48cfeba4cb2b60870cbe6eae0b28264df34ce4435bfd8b999f59cce6f34f70"
+      "sha256": "sha256:13af978122d4544374bbef6906c87f53cc67039858d5976b8b7360b061cc0406"
     },
     {
       "path": "scripts/kbd-phase-close-eval.mjs",
-      "sha256": "sha256:5a325d7b9e49e5a177e66ad7214f634c63087033d246276947a3e8030210de10"
+      "sha256": "sha256:4681d0c364710912c5c6d85eb88e9b14e9cce1ff3cf67688451197eb296aaed3"
     },
     {
       "path": "scripts/kbd-phase-readiness-check.mjs",
       "sha256": "sha256:4b6be80dc691a11f089741f15bd927b8a247fc810e78fc7cffb67cfe3154e550"
+    },
+    {
+      "path": "scripts/kbd-scope-authority-template.mjs",
+      "sha256": "sha256:ebeff86d0de0e3e37f88593794584dd4f7c078abeef15037abb70c1318a09a14"
     },
     {
       "path": "scripts/record-progress.mjs",
@@ -1972,7 +1988,7 @@
     },
     {
       "path": "skills/kbd-next-phase/SKILL.md",
-      "sha256": "sha256:e1cb6a5e63c0d82c353dd52b8ff6fdaaff62486cac87fa5bbb352ad91c45ee81"
+      "sha256": "sha256:e2838ac59b8818210b25337137dda04f51b419d7547e7dd58089a019059be73f"
     },
     {
       "path": "skills/kbd-pause/SKILL.md",
@@ -2012,7 +2028,7 @@
     },
     {
       "path": "skills/kbd-reflect/SKILL.md",
-      "sha256": "sha256:9a1abad39f0989e22085668df4e7cb924561bc31f0528159cb3dc34d78710d19"
+      "sha256": "sha256:ea4e4e5df835f2f635c5c2d67f37ecfad8b5885c785ac34cbafeb53547a5f2b9"
     },
     {
       "path": "skills/kbd-resume/SKILL.md",
@@ -3258,12 +3274,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -3288,6 +3306,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -3296,6 +3315,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/adversarial-review/SKILL.md",
           "skills/adversarial-review/assets/reviewer-mandate-agent.md",
@@ -3308,7 +3328,7 @@
           "skills/adversarial-review/references/model-configuration.md",
           "skills/adversarial-review/references/output-contract.md"
         ],
-        "digest": "sha256:4c4e45254b0e17b9b95b5c3fce57c43dbe199c629bc517c962eec04b0f1b5109"
+        "digest": "sha256:b3145378409e689a48e2468dccb17635023c1e14c2b1458666d5bee86b3772a3"
       }
     },
     {
@@ -3361,12 +3381,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -3391,6 +3413,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -3399,6 +3422,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/agent-team-creator/SKILL.md",
           "skills/agent-team-creator/agents/openai.yaml",
@@ -3539,7 +3563,7 @@
           "skills/agent-team-creator/tests/models-memory.integration.mjs",
           "skills/agent-team-creator/tests/state.integration.mjs"
         ],
-        "digest": "sha256:027af30082377edc7d522217e34ed53c2e67383e04429830305003f6a09fc3b2"
+        "digest": "sha256:c9fceba121827d426e1491a2e3264178864de4f62a1e5688693f4963fb5c2e02"
       }
     },
     {
@@ -3592,12 +3616,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -3622,6 +3648,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -3630,11 +3657,12 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/agent-team-handoff/SKILL.md",
           "skills/agent-team-handoff/agents/openai.yaml"
         ],
-        "digest": "sha256:d931d9d2546c72233ddac6903c3fe8d43edd89836c97965600c703e36e502d8e"
+        "digest": "sha256:208c45b1a13f81a851b4bf0505f3518d45a10c1d43df6d13007143bd2f1f0afb"
       }
     },
     {
@@ -3687,12 +3715,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -3717,6 +3747,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -3725,11 +3756,12 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/agent-team-manage/SKILL.md",
           "skills/agent-team-manage/agents/openai.yaml"
         ],
-        "digest": "sha256:695490d607ba3d101c6edff89a767eb8f69a76ee746662543031da0ceba10e97"
+        "digest": "sha256:58465bcc14f6b78f5600ee2d4e53e7a2ed816d0f7bfe746d881523076edf2014"
       }
     },
     {
@@ -3782,12 +3814,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -3812,6 +3846,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -3820,11 +3855,12 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/agent-team-models/SKILL.md",
           "skills/agent-team-models/agents/openai.yaml"
         ],
-        "digest": "sha256:c35e22255fb60870b178e173774f40d1adcbebcdb4850347e45efce4c56beb86"
+        "digest": "sha256:2b07cc13a106e2beae70585804f9333a508702562b437843801cda2f54c017b7"
       }
     },
     {
@@ -3877,12 +3913,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -3907,6 +3945,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -3915,6 +3954,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/android-compose-adaptive/LICENSE.txt",
           "skills/android-compose-adaptive/PROVENANCE.md",
@@ -3931,7 +3971,7 @@
           "skills/android-compose-adaptive/references/android/develop/ui/compose/tooling/debug.md",
           "skills/android-compose-adaptive/references/android/guide/navigation/navigation-3/recipes/material-listdetail.md"
         ],
-        "digest": "sha256:df28f04618b79db97543136eaf9a488795c5295437ebb395f72f05b72d087f5a"
+        "digest": "sha256:a65e32bb8cd38fb052715a790a20d84da8ce6bb1673c000ab72596c07edc659c"
       }
     },
     {
@@ -3984,12 +4024,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -4014,6 +4056,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -4022,12 +4065,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/android-edge-to-edge/LICENSE.txt",
           "skills/android-edge-to-edge/PROVENANCE.md",
           "skills/android-edge-to-edge/SKILL.md"
         ],
-        "digest": "sha256:6377135487ae2b1a6466670b1cc0a77283d8a34c321373cbd7fe14fa5b702176"
+        "digest": "sha256:76578313cfba543483b85bd549078d982220730eacffe87285f282d88cf2c6ea"
       }
     },
     {
@@ -4080,12 +4124,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -4110,6 +4156,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -4118,10 +4165,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/artifact-refiner/SKILL.md"
         ],
-        "digest": "sha256:cdf791964e0f49bb3c906daba56ea5ea91fb2a5a6716adef25eb8a2bfe834eb5"
+        "digest": "sha256:437b5f7bd418bc06e4da1a102da70b2282fcff5b2cd29a833de135a021e5c21d"
       }
     },
     {
@@ -4174,12 +4222,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -4204,6 +4254,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -4212,6 +4263,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/better-accessibility/LICENSE",
           "skills/better-accessibility/PROVENANCE.md",
@@ -4224,7 +4276,7 @@
           "skills/better-accessibility/screen-readers.md",
           "skills/better-accessibility/semantics-and-aria.md"
         ],
-        "digest": "sha256:404e6e381ab7ba32d2263df847a086546eaebc37a3d3f3773057abef1e4ec129"
+        "digest": "sha256:641ea5d27bae50c695a39321311851932ff5cf93389cdc5688308fc3a6ea217e"
       }
     },
     {
@@ -4277,12 +4329,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -4307,6 +4361,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -4315,6 +4370,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/better-colors/LICENSE",
           "skills/better-colors/PROVENANCE.md",
@@ -4327,7 +4383,7 @@
           "skills/better-colors/palette-structure.md",
           "skills/better-colors/token-naming.md"
         ],
-        "digest": "sha256:4b3c2fb112decc835e46b4e002c1343e99fea50e4c9215b0dfa77dddbe0823a6"
+        "digest": "sha256:05e2468d4848cc712737a7e3c21b7399b74b0b036f300b38a098273f970550b1"
       }
     },
     {
@@ -4380,12 +4436,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -4410,6 +4468,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -4418,6 +4477,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/better-interface/LICENSE",
           "skills/better-interface/PROVENANCE.md",
@@ -4425,7 +4485,7 @@
           "skills/better-interface/agents/openai.yaml",
           "skills/better-interface/review-format.md"
         ],
-        "digest": "sha256:8811ba91241c82f82ce2a17b2e61a97041d2a0c72592a30b83f9f712abbb2047"
+        "digest": "sha256:33bccbcab2fc93bc70effe970fa10b68bba2d1ecc4263e437acd8b9ff4e7aaeb"
       }
     },
     {
@@ -4478,12 +4538,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -4508,6 +4570,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -4516,6 +4579,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/better-layout/LICENSE",
           "skills/better-layout/PROVENANCE.md",
@@ -4524,7 +4588,7 @@
           "skills/better-layout/grouping-and-alignment.md",
           "skills/better-layout/spacing-and-adaptivity.md"
         ],
-        "digest": "sha256:f8fcc83daef58aa86b77c8a6b5f369e81a6cddec553ec1b4d0a4724c9ba37409"
+        "digest": "sha256:9d9c0ffde2af16733861ff8579f07edd89e30299de4558f14406edcbd8eab62a"
       }
     },
     {
@@ -4577,12 +4641,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -4607,6 +4673,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -4615,6 +4682,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/better-typography/LICENSE",
           "skills/better-typography/PROVENANCE.md",
@@ -4627,7 +4695,7 @@
           "skills/better-typography/variable-fonts-and-opentype.md",
           "skills/better-typography/wrapping-and-punctuation.md"
         ],
-        "digest": "sha256:c5accc99ce3787d66fb761ddb37d580aa231d4330aa3ca3379afe9ab5600244d"
+        "digest": "sha256:5bc329ff2637b9030595e78e3460158924b465ac4c3d173d1105df1f28043994"
       }
     },
     {
@@ -4680,12 +4748,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -4710,6 +4780,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -4718,6 +4789,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/better-ui/LICENSE",
           "skills/better-ui/PROVENANCE.md",
@@ -4730,7 +4802,7 @@
           "skills/better-ui/performance.md",
           "skills/better-ui/surfaces.md"
         ],
-        "digest": "sha256:9f1bbda6d53b40644d82d2039cbc25e3c975a9a3046596332c887df3a8d3e31b"
+        "digest": "sha256:00c2b122f90a6b173a12f728e5a6743af044090b87336b1a351121e321a33daa"
       }
     },
     {
@@ -4783,12 +4855,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -4813,6 +4887,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -4821,13 +4896,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/better-writing/LICENSE",
           "skills/better-writing/PROVENANCE.md",
           "skills/better-writing/SKILL.md",
           "skills/better-writing/agents/openai.yaml"
         ],
-        "digest": "sha256:ee8c69b94c5d47dc92cc888e53f0a3dc65cbe3f2583970d8398f833f9f570521"
+        "digest": "sha256:66a83f243b21f98d2e8b112835bd7c7d022a24e89fdec520139672ff9d3e8338"
       }
     },
     {
@@ -4880,12 +4956,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -4910,6 +4988,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -4918,6 +4997,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/break/LICENSE",
           "skills/break/PROVENANCE.md",
@@ -4925,7 +5005,7 @@
           "skills/break/agents/openai.yaml",
           "skills/break/scenarios.md"
         ],
-        "digest": "sha256:2c0baaa734bb238153a88b07c886dfbac2ed57368889a1f3d23da284513c13a3"
+        "digest": "sha256:bdd9ec62e6999ad8388c76e0e07ca83841a4cab3aa756106099f7984f5a8949e"
       }
     },
     {
@@ -4978,12 +5058,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -5008,6 +5090,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -5016,10 +5099,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/convert-htmx-pdf/SKILL.md"
         ],
-        "digest": "sha256:a1cffd5310d4306fcab38e5a64d61bd06a21cb4bfb947add8e31e298229bc8b9"
+        "digest": "sha256:d7f5b4ff9de76cd1e5eafcbd309e98dc5bbd42d833f2a6310abd355de8220999"
       }
     },
     {
@@ -5072,12 +5156,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -5102,6 +5188,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -5110,10 +5197,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/convert-htmx-react/SKILL.md"
         ],
-        "digest": "sha256:452418a28f7c9287df46cae3c177e345ac24602b5c5a305158e9732aff2a99da"
+        "digest": "sha256:30ac8437db247fb98d530e78892837f706407b137bb269776b800488c56c7e06"
       }
     },
     {
@@ -5166,12 +5254,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -5196,6 +5286,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -5204,10 +5295,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/convert-md-to-htmx/SKILL.md"
         ],
-        "digest": "sha256:19ae2bb1dab3dfba32e39c76786abf825f554570524ad114d61d485e419a3753"
+        "digest": "sha256:78dac6234e792612d0a682ab2954d8064c8a1ddd5d9377a29d0a9cc3c4553f28"
       }
     },
     {
@@ -5260,12 +5352,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -5290,6 +5384,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -5298,6 +5393,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/delivery-cadence/SKILL.md",
           "skills/delivery-cadence/assets/boss-provider-setup.mjs",
@@ -5364,7 +5460,7 @@
           "skills/delivery-cadence/scripts/publication-receipt.mjs",
           "skills/delivery-cadence/scripts/sync-mini.mjs"
         ],
-        "digest": "sha256:00c2e23775b60938bb554f3c197738bb71c10f2ce843066d4fd0f40e6158e452"
+        "digest": "sha256:b8700fbfdf46dd82336b2cc76e9cb892fca3b2b77956ff2c25de32127643761f"
       }
     },
     {
@@ -5417,12 +5513,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -5447,6 +5545,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -5455,10 +5554,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/design-svg-logo/SKILL.md"
         ],
-        "digest": "sha256:17fe58d1cb755c0bf6cff5446c0795063e753362b6330866ab0581ae1a16e017"
+        "digest": "sha256:efd256ea061540f3ab0c39978d9f909f84df4f6edf093281d064d04446e78207"
       }
     },
     {
@@ -5511,12 +5611,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -5541,6 +5643,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -5549,12 +5652,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/design-taste-frontend-v1/LICENSE",
           "skills/design-taste-frontend-v1/PROVENANCE.md",
           "skills/design-taste-frontend-v1/SKILL.md"
         ],
-        "digest": "sha256:fc95a1c10f8bcb56e427f9195c8064e8d32bbefc547662194c4f5670851968aa"
+        "digest": "sha256:8ca5f17dcad7b06b3a0ca7ea8c06db323bf314ec65612d41c12d06abd7b073d1"
       }
     },
     {
@@ -5607,12 +5711,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -5637,6 +5743,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -5645,12 +5752,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/design-taste-frontend/LICENSE",
           "skills/design-taste-frontend/PROVENANCE.md",
           "skills/design-taste-frontend/SKILL.md"
         ],
-        "digest": "sha256:74816b75797bc020fa77d49af8ebaaf551c29e69d1678d30bf2d25ae92b1fd44"
+        "digest": "sha256:03a0d63c2fd771d06d5da9372341180cfd4712b84b1fb15f3f97249bf2d7a377"
       }
     },
     {
@@ -5703,12 +5811,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -5733,6 +5843,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -5741,10 +5852,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/doctor/SKILL.md"
         ],
-        "digest": "sha256:66a7da78d70d3e0899715ec82a59e0ba6293b6b49a590215db1094c2082e5ab9"
+        "digest": "sha256:5cbf1f15ee57519d7a041a4fd54bded2319daf2bd4459de0ecf6305667f4c48d"
       }
     },
     {
@@ -5797,12 +5909,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -5827,6 +5941,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -5835,6 +5950,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/explain-interface/LICENSE",
           "skills/explain-interface/PROVENANCE.md",
@@ -5845,7 +5961,7 @@
           "skills/explain-interface/no-browser.md",
           "skills/explain-interface/read-the-system.md"
         ],
-        "digest": "sha256:c89656e2281944ca33492a918abce1125b08ffaa60f88ccbd5d8dd182ca76b49"
+        "digest": "sha256:100c76224663a79ea607092ead4aa62483c781c9a54a88148c5321cb941757e3"
       }
     },
     {
@@ -5898,12 +6014,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -5928,6 +6046,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -5936,6 +6055,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/expo-animation/LICENSE",
           "skills/expo-animation/LICENSE.repository",
@@ -5944,7 +6064,7 @@
           "skills/expo-animation/SKILL.md",
           "skills/expo-animation/agents/openai.yaml"
         ],
-        "digest": "sha256:1fd95c0b07be33a8aca4fba186244c044535fe5e1607f513ad31816837b777be"
+        "digest": "sha256:206c34a64b9405c4b82ed32ace0fb472b440f84edcea821a502a4730a8b9f788"
       }
     },
     {
@@ -5997,12 +6117,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -6027,6 +6149,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -6035,6 +6158,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/expo-design-system/LICENSE",
           "skills/expo-design-system/PROVENANCE.md",
@@ -6043,7 +6167,7 @@
           "skills/expo-design-system/references/audit.md",
           "skills/expo-design-system/references/native-slop.md"
         ],
-        "digest": "sha256:0360ce83454ec6bf33bb228d7330c165bb8ad598bd088daa6c785d754c1ca4e1"
+        "digest": "sha256:2f5a941b4ded7712c07dbe618d36d71363c3e2e4cf45e1fb9c3a558fce3dcc00"
       }
     },
     {
@@ -6096,12 +6220,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -6126,6 +6252,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -6134,6 +6261,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/expo-native-ui/LICENSE",
           "skills/expo-native-ui/PROVENANCE.md",
@@ -6147,7 +6275,7 @@
           "skills/expo-native-ui/references/visual-effects.md",
           "skills/expo-native-ui/references/webgpu-three.md"
         ],
-        "digest": "sha256:8085e8aa42b309d5bbb96e2676152dfa66bea25d82bc0235286b0f66a325924b"
+        "digest": "sha256:8b4ea0ab51b69ab11566f452933427f2900d6a589c3e656f7a48f1721f5aa92c"
       }
     },
     {
@@ -6200,12 +6328,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -6230,6 +6360,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -6238,6 +6369,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/expo-router/LICENSE",
           "skills/expo-router/PROVENANCE.md",
@@ -6250,7 +6382,7 @@
           "skills/expo-router/references/toolbar-and-headers.md",
           "skills/expo-router/references/zoom-transitions.md"
         ],
-        "digest": "sha256:5b315d8342427277a0ca9b2e53400b15f98b74a331244d3f8cb6b9497cdeda77"
+        "digest": "sha256:46953939f92650e4a448c26b4cfeef081f1172a7d36f7ba3c564753f03dfbb46"
       }
     },
     {
@@ -6303,12 +6435,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -6333,6 +6467,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -6341,6 +6476,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/expo-ui/LICENSE",
           "skills/expo-ui/PROVENANCE.md",
@@ -6352,7 +6488,7 @@
           "skills/expo-ui/references/universal.md",
           "skills/expo-ui/scripts/list-components.mjs"
         ],
-        "digest": "sha256:c4e6e23849a581fd0c6eaf1ac0197bb1c0a44c130d5000d84f0b49340666bfd9"
+        "digest": "sha256:3cdfb409502ea7b155c0b5cbe53c2fcfbb26ca0951f78e750e62e2407e6fe7c9"
       }
     },
     {
@@ -6405,12 +6541,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -6435,6 +6573,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -6443,12 +6582,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/flutter-build-responsive-layout/LICENSE",
           "skills/flutter-build-responsive-layout/PROVENANCE.md",
           "skills/flutter-build-responsive-layout/SKILL.md"
         ],
-        "digest": "sha256:7c74d7e8f57cdb8fe6eb79a40db607f78d9a52f4644f349a2352de311cd290ee"
+        "digest": "sha256:5d89d4f86377371fe297affe4f0eb7744f30029140914f78980d5b8ec2adfc83"
       }
     },
     {
@@ -6501,12 +6641,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -6531,6 +6673,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -6539,12 +6682,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/flutter-fix-layout-issues/LICENSE",
           "skills/flutter-fix-layout-issues/PROVENANCE.md",
           "skills/flutter-fix-layout-issues/SKILL.md"
         ],
-        "digest": "sha256:46b65a8a34d7b7edfb9ab02725367ed423845c33234b31575ddbe0e9612ab924"
+        "digest": "sha256:51e356d6a1f4895a0eeda6419e9a591b85180b97d1f0636db517c67c21c34a53"
       }
     },
     {
@@ -6597,12 +6741,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -6627,6 +6773,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -6635,12 +6782,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/flutter-setup-declarative-routing/LICENSE",
           "skills/flutter-setup-declarative-routing/PROVENANCE.md",
           "skills/flutter-setup-declarative-routing/SKILL.md"
         ],
-        "digest": "sha256:9da68f6ed1ddd53c083ab77c84f5e5ae0662605f0bbf15abdb85d5d8b7d7d5fd"
+        "digest": "sha256:e7bb64e0672cfac82071c5af204678d1b6dc5160a30256aaff783dadcdb04c68"
       }
     },
     {
@@ -6693,12 +6841,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -6723,6 +6873,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -6731,12 +6882,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/flutter-setup-localization/LICENSE",
           "skills/flutter-setup-localization/PROVENANCE.md",
           "skills/flutter-setup-localization/SKILL.md"
         ],
-        "digest": "sha256:ff7185d3cb657807b9658994de4bf079ed2bcb7241d8eb2726e925fdd625740a"
+        "digest": "sha256:d3ba8668871df1664c7d9521be7a2bbb4314a7de20ab4c9d171b0a10492b2fdd"
       }
     },
     {
@@ -6789,12 +6941,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -6819,6 +6973,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -6827,12 +6982,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/full-output-enforcement/LICENSE",
           "skills/full-output-enforcement/PROVENANCE.md",
           "skills/full-output-enforcement/SKILL.md"
         ],
-        "digest": "sha256:9b5a91ce9b971e3d86b826fb2d5768769c5942765538b198f83c6929adac8500"
+        "digest": "sha256:fad8c8a82a1cc6e3499f59fee467473a5adf2b3b5f0b64a89f903808f7bb5e91"
       }
     },
     {
@@ -6885,12 +7041,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -6915,6 +7073,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -6923,12 +7082,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/gpt-taste/LICENSE",
           "skills/gpt-taste/PROVENANCE.md",
           "skills/gpt-taste/SKILL.md"
         ],
-        "digest": "sha256:32442b3c9d6c3a4310f63a525d9822a3d9e4ae11a770a09d83cfd88ebab9e3c1"
+        "digest": "sha256:a944f1a7eb8b864677edc305c559ed935ef50e878fd52e19178457b6ea66a120"
       }
     },
     {
@@ -6981,12 +7141,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -7011,6 +7173,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -7019,12 +7182,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/high-end-visual-design/LICENSE",
           "skills/high-end-visual-design/PROVENANCE.md",
           "skills/high-end-visual-design/SKILL.md"
         ],
-        "digest": "sha256:a5474a0fed77750e3bad757279f7d84e4e72d8256645c47221c306cc9190017b"
+        "digest": "sha256:3f108e8286745a4705cff85eb7c99d9359d4e342da3266edb246ce2ba57b5291"
       }
     },
     {
@@ -7077,12 +7241,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -7107,6 +7273,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -7115,11 +7282,12 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/ideation-mindmap/SKILL.md",
           "skills/ideation-mindmap/references/harness-delivery.md"
         ],
-        "digest": "sha256:531c8599f5c707adf0d21b6e456f82bf12b3f24513c1795b67adb86400f505dd"
+        "digest": "sha256:9d5fff2a049cfa719a5f2049bbce2c343d61051ef755138cd92010ef5f428e5f"
       }
     },
     {
@@ -7172,12 +7340,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -7202,6 +7372,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -7210,12 +7381,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/industrial-brutalist-ui/LICENSE",
           "skills/industrial-brutalist-ui/PROVENANCE.md",
           "skills/industrial-brutalist-ui/SKILL.md"
         ],
-        "digest": "sha256:940cf978154cdc507ad95ca7a676fd20a565d7890fabf75dafc89844fe802205"
+        "digest": "sha256:f8d1f511687cfdde3afb0b292729ed7c5a4c854acfc2ef54b3eb48d06c3f625a"
       }
     },
     {
@@ -7268,12 +7440,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -7298,6 +7472,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -7306,6 +7481,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/interface-review/LICENSE",
           "skills/interface-review/PROVENANCE.md",
@@ -7314,7 +7490,7 @@
           "skills/interface-review/removed-signals.md",
           "skills/interface-review/scope-resolution.md"
         ],
-        "digest": "sha256:87306e0f5f7644f64efe1b93bad5e8fd934a576106e5f11b3ff315f7907e9c3a"
+        "digest": "sha256:80414ed28bd4c842143c75cf4648a51b06b1832d13a706b2c9d56db53e3023f7"
       }
     },
     {
@@ -7367,12 +7543,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -7397,6 +7575,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -7405,10 +7584,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/karpathy-progress-memory/SKILL.md"
         ],
-        "digest": "sha256:8aa01f793dd192b4a14640c15f8032a861a7e089c8409b4d4ef93accabe4d2a1"
+        "digest": "sha256:35a3e3fd674315bed0a9e060f91a1b469fce772169fa24afd9a1468bec6642f7"
       }
     },
     {
@@ -7461,12 +7641,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -7491,6 +7673,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -7499,10 +7682,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-analyze/SKILL.md"
         ],
-        "digest": "sha256:df101f282e900668d93b7c334983d42eea1774fd4e5cee27a316781569e1800a"
+        "digest": "sha256:5712585173fd4e65a2b00f79bc125bd5ac1434cd96dd7bc8fc9019b2af16a24c"
       }
     },
     {
@@ -7555,12 +7739,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -7585,6 +7771,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -7593,10 +7780,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-apply/SKILL.md"
         ],
-        "digest": "sha256:b2c56108cb48513354ea88fc3c332b15c9d7c53881cdd12d8c16b222190d8375"
+        "digest": "sha256:73842bb525d64ad046f5a238d08f97c6a969799f2b239a3a5c185ca6cb867aa2"
       }
     },
     {
@@ -7649,12 +7837,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -7679,6 +7869,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -7687,10 +7878,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-assess/SKILL.md"
         ],
-        "digest": "sha256:f04475cb6e6133e368bf33da21218e594c6c1960d05fc4f25d200066a625b991"
+        "digest": "sha256:974ab3140d73cc4c61b25e2b2e12f6926e9dbea8c29ab9fc0390e722fbe3ee88"
       }
     },
     {
@@ -7743,12 +7935,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -7773,6 +7967,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -7781,10 +7976,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-audit/SKILL.md"
         ],
-        "digest": "sha256:a201269339c20ebd5c6c381da327b0fa1666a3ae3899bdc8b9c692dfb6594187"
+        "digest": "sha256:da1baa0b012ba4e158fda46ab54b175ffb858f8c506f0e891ddda0f31fcdb978"
       }
     },
     {
@@ -7837,12 +8033,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -7867,6 +8065,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -7875,10 +8074,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-bottleneck-detector/SKILL.md"
         ],
-        "digest": "sha256:33cf069300bc186549754d287d631cffbd4956fe7d5440508fe51acb9d73149f"
+        "digest": "sha256:d3944ec919a175fdbc755aa9cb86cff6baf403860f0a6740941b21484ed9d186"
       }
     },
     {
@@ -7931,12 +8131,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -7961,6 +8163,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -7969,10 +8172,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-cancel/SKILL.md"
         ],
-        "digest": "sha256:130e53ca7b0708e1609a1952a2f71be6158fb3a5e0ebbfc91aed403f044c10d7"
+        "digest": "sha256:d7d87237002f09ce79e76d64f8b4eebcf63016645fb8e04122e47539900784a4"
       }
     },
     {
@@ -8025,12 +8229,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -8055,6 +8261,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -8063,10 +8270,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-child-exit/SKILL.md"
         ],
-        "digest": "sha256:1e2b604a5cda09d41c5bd445c92861b38b72d4a1a22cd20f155a455206153232"
+        "digest": "sha256:8d4ef114c633dfa44301f63bfefcacee00305a70cddc3d4ccec780e36234c2e9"
       }
     },
     {
@@ -8119,12 +8327,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -8149,6 +8359,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -8157,12 +8368,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-evolve/SKILL.md",
           "skills/kbd-evolve/references/criteria.md",
           "skills/kbd-evolve/references/landscape-research.md"
         ],
-        "digest": "sha256:4680e32c89fbbcd5714908e64ce59cdc2e9f353e6dc8cbc1dc17f0f2f02a9ec4"
+        "digest": "sha256:453b1f4337b4bfdf677f94f7bbf07fe7e9b35306ab92a00cfe56fc20669c660f"
       }
     },
     {
@@ -8215,12 +8427,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -8245,6 +8459,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -8253,10 +8468,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-execute/SKILL.md"
         ],
-        "digest": "sha256:a543426cd3b0bae9153508e1c6351176143ea7085056cac6b8fac1a5848be6f6"
+        "digest": "sha256:fe50b96f2b9d1f44c0b6bbd0f22d313a215e72b8bfd96fdf8c6c00c1166977ab"
       }
     },
     {
@@ -8309,12 +8525,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -8339,6 +8557,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -8347,10 +8566,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-goal-check/SKILL.md"
         ],
-        "digest": "sha256:065b247c06f8b24c0a480952c48430916b62ebd03f1c4fa9e2ea8a668aa11e0d"
+        "digest": "sha256:e336a03b89173c6a28eab1ac3d1424f357e300389973fb0c6ef484d3ee5eedf6"
       }
     },
     {
@@ -8403,12 +8623,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -8433,6 +8655,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -8441,10 +8664,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-goal/SKILL.md"
         ],
-        "digest": "sha256:8c87a6758adcaba19ae48fe175dbb8e195397390564a6389f1e1df17248dc050"
+        "digest": "sha256:e0faa65e2d8e01d584863f28c9ee4a0155118bd088b907f20164773854b46b99"
       }
     },
     {
@@ -8497,12 +8721,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -8527,6 +8753,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -8535,10 +8762,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-handoff/SKILL.md"
         ],
-        "digest": "sha256:4cb5d3c285e02b4dc1a6524990972b79b11b5d8c78bf2fd3030a92185debe59d"
+        "digest": "sha256:5c83d5b27c74042384d4a07cb55643a9d8fa379667d5544cbd7a8e10f2e120fa"
       }
     },
     {
@@ -8591,12 +8819,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -8621,6 +8851,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -8629,6 +8860,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-init/SKILL.md",
           "skills/kbd-init/references/constraints.md",
@@ -8637,7 +8869,7 @@
           "skills/kbd-init/references/workspace-context.md",
           "skills/kbd-init/scripts/kbd-init-validate.mjs"
         ],
-        "digest": "sha256:90995856615c9e6115584ffe079a70c49e276c31050abfb520e49e8e05c7d871"
+        "digest": "sha256:2a573f9f9d6e7808cf699a761f27cb4b35a73382d410e86dc75616fbfbc1b49a"
       }
     },
     {
@@ -8690,12 +8922,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -8720,6 +8954,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -8728,6 +8963,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-inject-agent-rules/SKILL.md",
           "skills/kbd-inject-agent-rules/references/cache-agent-rules.md",
@@ -8735,7 +8971,7 @@
           "skills/kbd-inject-agent-rules/references/template-agent-rules.md",
           "skills/kbd-inject-agent-rules/references/template-uiux-routing.md"
         ],
-        "digest": "sha256:f1f456aa1f38497bb0dc2a99ef6b2e8cc3ff22e27c7597fc8af30a1606351494"
+        "digest": "sha256:8734a8c8f5c467a0ef21e8ced4eb594fa94f376527183fab2514e53200538205"
       }
     },
     {
@@ -8788,12 +9024,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -8818,6 +9056,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -8826,10 +9065,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-loop/SKILL.md"
         ],
-        "digest": "sha256:d527b1ad3e4b8fc484a0cf6539183b6a9152b1290266082586062a7819378182"
+        "digest": "sha256:0561fc59d73035b1563b03e12a305e54e0d354adf8842da98727c27deff89024"
       }
     },
     {
@@ -8882,12 +9122,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -8912,6 +9154,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -8920,10 +9163,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-memory-recall/SKILL.md"
         ],
-        "digest": "sha256:7dcaaaf864ca137ad04e318d2c6057bc0cf87a68ce59945116b4652e0f956c28"
+        "digest": "sha256:dfbf04e898094daeb8e1bcdb18128386b7fa398db5efc9ebd1c9857554e46fe3"
       }
     },
     {
@@ -8976,12 +9220,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -9006,6 +9252,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -9014,10 +9261,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-new-child/SKILL.md"
         ],
-        "digest": "sha256:d684371a9b3347e91e632f322559cf60a9b7a5de417752f15a17ed98ee9c7cd9"
+        "digest": "sha256:08dd4cb8caaaa5801fcdf53e6fdc9e70ea8cbe49a6cbea2121275a9bcced1b90"
       }
     },
     {
@@ -9070,12 +9318,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -9100,6 +9350,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -9108,10 +9359,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-new-phase/SKILL.md"
         ],
-        "digest": "sha256:d685aceeada527f042de7cb2f9772cec030c163f3cb358aa2fd3911e2daa01d5"
+        "digest": "sha256:4ebd14d7ad65d74473dfc3d7bf9964e216ce26af8df37e38099b72ebb211e36f"
       }
     },
     {
@@ -9164,12 +9416,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -9194,6 +9448,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -9202,10 +9457,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-next-child/SKILL.md"
         ],
-        "digest": "sha256:3f10ae82950c01ba939f6279f8d8083f8b8ecb5d2c857d93147b779cf7c230f1"
+        "digest": "sha256:4948621a6b2456f13ce1ff29d42fc0e128016ab74bae123b7b00179d195f0391"
       }
     },
     {
@@ -9213,7 +9469,7 @@
         "id": null,
         "name": "kbd-next-phase",
         "version": null,
-        "artifactDigest": "sha256:e1cb6a5e63c0d82c353dd52b8ff6fdaaff62486cac87fa5bbb352ad91c45ee81"
+        "artifactDigest": "sha256:e2838ac59b8818210b25337137dda04f51b419d7547e7dd58089a019059be73f"
       },
       "entrypoint": "skills/kbd-next-phase/SKILL.md",
       "roots": [
@@ -9258,12 +9514,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -9288,6 +9546,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -9296,10 +9555,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-next-phase/SKILL.md"
         ],
-        "digest": "sha256:df33179cc105b94f4176b97c81b645367522d34ce4ebbc8541541dafe4eb042c"
+        "digest": "sha256:b60b70014a8342cfdd70b83058185e8b7f8dfd2406f3871fbe80160ae76d9411"
       }
     },
     {
@@ -9352,12 +9612,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -9382,6 +9644,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -9390,10 +9653,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-pause/SKILL.md"
         ],
-        "digest": "sha256:351e2fa767a5e4baab09a51ab2384703af88f0ec9d4825c0ed4143e0eb279e0f"
+        "digest": "sha256:f65fcd7545c8930117e83fbdcea1feb25c7f0c4fc674091c8ebd6648ab51b10d"
       }
     },
     {
@@ -9446,12 +9710,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -9476,6 +9742,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -9484,11 +9751,12 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-plan/SKILL.md",
           "skills/kbd-plan/references/task-model-selection.md"
         ],
-        "digest": "sha256:18a492398054107c0319262856b8e4bb8b17c918e4cca174813334fb806b0d2c"
+        "digest": "sha256:5bfece419cf8b9f9228d1168eca04d4a1c3534cd0dea7cde660aeb708523a1bd"
       }
     },
     {
@@ -9541,12 +9809,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -9571,6 +9841,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -9579,6 +9850,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-process-orchestrator/SKILL.md",
           "skills/kbd-process-orchestrator/references/hooks.md",
@@ -9587,7 +9859,7 @@
           "skills/kbd-process-orchestrator/references/templates/acceptance.template.md",
           "skills/kbd-process-orchestrator/references/templates/adopted-contract.template.md"
         ],
-        "digest": "sha256:7a56586490b174f4983c3e808b69acd2d4eb1514f4a771d7d7c946fb97f6e243"
+        "digest": "sha256:b5228b807bcf0a5b018838b98014debb610844e147d3d6a9d75a5c743c0f0086"
       }
     },
     {
@@ -9595,7 +9867,7 @@
         "id": null,
         "name": "kbd-reflect",
         "version": null,
-        "artifactDigest": "sha256:9a1abad39f0989e22085668df4e7cb924561bc31f0528159cb3dc34d78710d19"
+        "artifactDigest": "sha256:ea4e4e5df835f2f635c5c2d67f37ecfad8b5885c785ac34cbafeb53547a5f2b9"
       },
       "entrypoint": "skills/kbd-reflect/SKILL.md",
       "roots": [
@@ -9640,12 +9912,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -9670,6 +9944,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -9678,10 +9953,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-reflect/SKILL.md"
         ],
-        "digest": "sha256:c146d3a3f5bd38d244e79c5695f49b00e6e82f9dbc472b103cfda943eea2418a"
+        "digest": "sha256:9bfe21b291d6cd8ab90ace1e62827c18e59550f9be51007a1d8a7d9cd9497aa1"
       }
     },
     {
@@ -9734,12 +10010,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -9764,6 +10042,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -9772,10 +10051,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-resume/SKILL.md"
         ],
-        "digest": "sha256:28c32bc4b1a3351bfe98e210886f5fd843c97884749dea5ab60ef9db87f48425"
+        "digest": "sha256:68a2926c09a5f5071f24d09120398d588a0a38232673bc4ecfda10d5a0d9ad5c"
       }
     },
     {
@@ -9828,12 +10108,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -9858,6 +10140,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -9866,10 +10149,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-spec/SKILL.md"
         ],
-        "digest": "sha256:a2e4923257509db403d147c3571d319bca4f25773421d9dfae1c9427ceee51cf"
+        "digest": "sha256:9560ba14fb57ebead0882e78485a76503eb3eea10f38bc746c3fff51a648b4ea"
       }
     },
     {
@@ -9922,12 +10206,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -9952,6 +10238,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -9960,10 +10247,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-status/SKILL.md"
         ],
-        "digest": "sha256:40fa36ede15afc07ed24b15d19b17abecc0fe298222069d9d12df50fc8d70761"
+        "digest": "sha256:d6ef9330b7d28e8dc545e3ae3688e8ea6278ab0914d9c721b7f836a82d9774de"
       }
     },
     {
@@ -10016,12 +10304,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -10046,6 +10336,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -10054,12 +10345,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/minimalist-ui/LICENSE",
           "skills/minimalist-ui/PROVENANCE.md",
           "skills/minimalist-ui/SKILL.md"
         ],
-        "digest": "sha256:445d79f1734d97a7ecb6dbaa3786ae34c313ac47b9c2faea2a41b258e98426bc"
+        "digest": "sha256:3a1d946f87bf9fedac3ffcf711b3490ea65d8c26656eb6de841fadd0c5e1eef5"
       }
     },
     {
@@ -10112,12 +10404,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -10142,6 +10436,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -10150,13 +10445,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/prometheus-context-bootstrap/SKILL.md",
           "skills/prometheus-context-bootstrap/references/AGENTS.base.md",
           "skills/prometheus-context-bootstrap/references/rules-rust.md",
           "skills/prometheus-context-bootstrap/references/rules-typescript.md"
         ],
-        "digest": "sha256:35a4275e80acbf1ab26e8a9c23c73cd58ab35d901c9f5cb52872aba478820bba"
+        "digest": "sha256:1cfce1685ae751a55625e13d8cf479ac3fbad06acbb3e7ec4ec7bbe5fdfb6c0e"
       }
     },
     {
@@ -10209,12 +10505,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -10239,6 +10537,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -10247,13 +10546,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/prometheus-impeccable-core/SKILL.md",
           "skills/prometheus-impeccable-core/references/LICENSE.impeccable",
           "skills/prometheus-impeccable-core/references/impeccable-context-and-modes.md",
           "skills/prometheus-impeccable-core/references/impeccable-craft-floor.md"
         ],
-        "digest": "sha256:9393f2296304893f24de5407d9c6db06c3935ffc6b77c722d49c234e3629a164"
+        "digest": "sha256:cfd956915b07f1507f7ab7e6b19d4a0f62e291d6eb83c6437aa122146879f48e"
       }
     },
     {
@@ -10306,12 +10606,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -10336,6 +10638,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -10344,12 +10647,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/prometheus-rust-workspace/SKILL.md",
           "skills/prometheus-rust-workspace/references/phase-gated-verification.md",
           "skills/prometheus-rust-workspace/references/skill-routing.md"
         ],
-        "digest": "sha256:3ecfea26c713fa3f274379c8e84fb607fd8657e0de689eb0c3d50a3de073be3c"
+        "digest": "sha256:8bf3acfe555944aee89f3729bfdbcc248f2fd548a21c00c92ec93343c021842d"
       }
     },
     {
@@ -10402,12 +10706,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -10432,6 +10738,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -10440,10 +10747,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/prometheus-ui-review/SKILL.md"
         ],
-        "digest": "sha256:81cc2272ed991c4c53a260007189116961bff374bd509f9a2a7c028bf7d6e593"
+        "digest": "sha256:27013301b197223169c3d397d29b7304a99ec4d708f03e5b6762cbe75eeb5f14"
       }
     },
     {
@@ -10496,12 +10804,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -10526,6 +10836,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -10534,6 +10845,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/prometheus-ui-ux/SKILL.md",
           "skills/prometheus-ui-ux/references/UI_UX_PROTOCOL.md",
@@ -10550,7 +10862,7 @@
           "skills/prometheus-ui-ux/scripts/install.mjs",
           "skills/prometheus-ui-ux/scripts/routing.mjs"
         ],
-        "digest": "sha256:9c4b8d7f9cfc357fa1d3c40b647701436bf70e2ebf370b0ddb4755cdf93c1855"
+        "digest": "sha256:76cd7cf3676cb4b8b7504c1404e09e6f83a8755ec03415b5ababd059bf937a08"
       }
     },
     {
@@ -10603,12 +10915,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -10633,6 +10947,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -10641,10 +10956,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/rebrand-artifact/SKILL.md"
         ],
-        "digest": "sha256:8c727234c462d0045f702727dfc4103a08f0779b5fff9ddc3a9138e6e2463ef8"
+        "digest": "sha256:da0e2d9a77c940b29ac692f90b8339f81dafd000ef674fc75afa00abd6fb2fff"
       }
     },
     {
@@ -10697,12 +11013,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -10727,6 +11045,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -10735,12 +11054,13 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/redesign-existing-projects/LICENSE",
           "skills/redesign-existing-projects/PROVENANCE.md",
           "skills/redesign-existing-projects/SKILL.md"
         ],
-        "digest": "sha256:9ba348bb4c2dd61e8a4431ce47004cf71ea055570d5dcb96ab42d77a48e4c51a"
+        "digest": "sha256:0d26b1676d22d8e5dec3818e6229ee427e7128d71b19801dcc80b731d56502be"
       }
     },
     {
@@ -10793,12 +11113,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -10823,6 +11145,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -10831,10 +11154,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-a2ui/SKILL.md"
         ],
-        "digest": "sha256:162604d186cee7af36cc13c38d2d3a96c5737132024db5fcfaa09ccc26b9a6a1"
+        "digest": "sha256:90ee1013927db61446227440a828518cf4d100cbc06178b6dda17d474593b51e"
       }
     },
     {
@@ -10887,12 +11211,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -10917,6 +11243,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -10925,10 +11252,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-content/SKILL.md"
         ],
-        "digest": "sha256:082e950a1034099282c2183374733d75b99567f26c54460d289c2828a7352b3f"
+        "digest": "sha256:9f279ea323f3d6009c2b35f9e1b727be21093e3f6548da638e77c7255247ad8e"
       }
     },
     {
@@ -10981,12 +11309,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -11011,6 +11341,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -11019,10 +11350,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-image/SKILL.md"
         ],
-        "digest": "sha256:0591c508488e4fda6199b8943f65e78c40530e2159ef0518802c7ab4666188ca"
+        "digest": "sha256:eba5ac45a05baad2eb0fa3a8ebdb7f9bdc58bfb30609640b9512da24d820db87"
       }
     },
     {
@@ -11075,12 +11407,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -11105,6 +11439,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -11113,10 +11448,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-logo/SKILL.md"
         ],
-        "digest": "sha256:6085b2abde2f3f2c49c5fd4edcd1038195d53bb3e7b57e4fbf080307bf35bc4c"
+        "digest": "sha256:67f2e38f3cc65ccc56387bf48ce5ea0702110adf5b63e28e059bea93960eed99"
       }
     },
     {
@@ -11169,12 +11505,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -11199,6 +11537,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -11207,10 +11546,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-mcp-ui/SKILL.md"
         ],
-        "digest": "sha256:18acbffb75c049f96f630d7fecaa46f9938fa3f3c1524606beae709b14314fa6"
+        "digest": "sha256:bd1d6f76cf6b0e652ceb4482a42e3b52d4b2b9c75ea3c8c51c8097a96fbd78b6"
       }
     },
     {
@@ -11263,12 +11603,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -11293,6 +11635,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -11301,10 +11644,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-moodboard/SKILL.md"
         ],
-        "digest": "sha256:ee79e1c86c13ce9bfa61eaad887a6b4529e2140b84321f92c535db9f661daafd"
+        "digest": "sha256:267a7f38b131be4ea564a5a3fdb1dbbb973fb8d8348275928ee6c5201734220b"
       }
     },
     {
@@ -11357,12 +11701,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -11387,6 +11733,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -11395,10 +11742,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-status/SKILL.md"
         ],
-        "digest": "sha256:dc8bbf72f7ac1ea7bc3592eeae5ad0f80283c102a21305923af974756d70978f"
+        "digest": "sha256:98a1b5a9e8af3719ae7fc77b85d7e07203b0ece8d0f93770580ad242199f3a6e"
       }
     },
     {
@@ -11451,12 +11799,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -11481,6 +11831,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -11489,10 +11840,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-ui/SKILL.md"
         ],
-        "digest": "sha256:bc0348d7d99ac3ac14cc3768d520498d4d43e4d6726d9cb23435707a3ae8a195"
+        "digest": "sha256:a569e4626ca3c005e196b3c18b75b2e10e3c5d96a8e43c40fb6c902f2ae102a8"
       }
     },
     {
@@ -11545,12 +11897,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -11575,6 +11929,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -11583,10 +11938,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-validate/SKILL.md"
         ],
-        "digest": "sha256:43043eb83e06eb55b2a3f0d1c2f95cf623a8feee39c483801361a360a6565a45"
+        "digest": "sha256:17223208299df07ed0697483bf06c05d3ab539c264c72931ce276de63e44db89"
       }
     },
     {
@@ -11639,12 +11995,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -11669,6 +12027,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -11677,11 +12036,12 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/rust-async-patterns/SKILL.md",
           "skills/rust-async-patterns/references/details.md"
         ],
-        "digest": "sha256:23976192749927fd5e6c20e4cb0d54024506817cf043bcb8fd3af4df6459ca36"
+        "digest": "sha256:7fb789bf8e8ca206e89f8c914a73afbcb8240738d49b0fbe754b279524c10add"
       }
     },
     {
@@ -11734,12 +12094,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -11764,6 +12126,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -11772,6 +12135,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/rust-best-practices/SKILL.md",
           "skills/rust-best-practices/references/chapter_01.md",
@@ -11784,7 +12148,7 @@
           "skills/rust-best-practices/references/chapter_08.md",
           "skills/rust-best-practices/references/chapter_09.md"
         ],
-        "digest": "sha256:fa930f8ae589705ce63de0a9a2c92661a5f5956d0dfbdf8d67d229d4db8bdaf9"
+        "digest": "sha256:5660ffeaa16a59302ae80086d529fac8294951e59746bf5a7ddb3971538e3635"
       }
     },
     {
@@ -11837,12 +12201,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -11867,6 +12233,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -11875,11 +12242,12 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/rust-mcp-server-generator/SKILL.md",
           "skills/rust-mcp-server-generator/references/generator.md"
         ],
-        "digest": "sha256:432e46f993e5b2eb0a3a689f9f7b16c11bdd4ea3d2d3fecc31dcae24b416b60e"
+        "digest": "sha256:2f8eb94c58118387ec948d570a16343c0ae3ecc8ce3cfd249988dc7e10ae0c30"
       }
     },
     {
@@ -11932,12 +12300,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -11962,6 +12332,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -11970,10 +12341,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/scaffold-flutter-a2ui/SKILL.md"
         ],
-        "digest": "sha256:b18a13b658c7808e8bf798ad6c82625b86e8d79ae7f445d39cc0adb0a7c0d019"
+        "digest": "sha256:bd9650fab44fb3a0344e00ad69c4f2cd3862fc7ec3dac7ae5291643dbf96bc14"
       }
     },
     {
@@ -12026,12 +12398,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -12056,6 +12430,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -12064,10 +12439,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-a2ui/SKILL.md"
         ],
-        "digest": "sha256:4f294a170a2f8726558e831657855020d573cc52276408416d569d6e7b6c791d"
+        "digest": "sha256:ced05625cec41796e9b0e09c50f2d115bc812b27f949e7428fdfc0c07c49df72"
       }
     },
     {
@@ -12120,12 +12496,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -12150,6 +12528,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -12158,10 +12537,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-agui/SKILL.md"
         ],
-        "digest": "sha256:d8b0a1b4af54d560e2e37d3ee4a4b56213457fedc733f7102e29d7594061033b"
+        "digest": "sha256:619680cc00468e2e6cec44ac8823d27889b7c4f945b037300dc7b5bd5e87e2ef"
       }
     },
     {
@@ -12214,12 +12594,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -12244,6 +12626,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -12252,10 +12635,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-tauri/SKILL.md"
         ],
-        "digest": "sha256:70b2689ce9e4b1168964255f4653a3e3fff798bb3a5d5ad939e3485d50193e6f"
+        "digest": "sha256:d7ab546cb0918e392186057756ff27f1968b358621b73ec6d878dcaf1e6cb5cb"
       }
     },
     {
@@ -12308,12 +12692,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -12338,6 +12724,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -12346,10 +12733,11 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite/SKILL.md"
         ],
-        "digest": "sha256:fa29c341dd2089036221a6f8d61c9e69d627327d1c0e050872bf48db839f7dec"
+        "digest": "sha256:a5a285621b68fbff19d9f56cfa5a5e6232f9e90531aa8e92298300890feaf640"
       }
     },
     {
@@ -12402,12 +12790,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -12432,6 +12822,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -12440,13 +12831,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/stitch-design-taste/DESIGN.stitch.md",
           "skills/stitch-design-taste/LICENSE",
           "skills/stitch-design-taste/PROVENANCE.md",
           "skills/stitch-design-taste/SKILL.md"
         ],
-        "digest": "sha256:4d97ebf5191c7da27a1a17b49919eec445306444c1fd0a3ef23d3b69f1f27489"
+        "digest": "sha256:511b2221c305f0367cbf99e382c2d1b22557e76e0292c59e200abecc074f43d4"
       }
     },
     {
@@ -12499,12 +12891,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -12529,6 +12923,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -12537,6 +12932,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/swiftui-pro/LICENSE",
           "skills/swiftui-pro/PROVENANCE.md",
@@ -12554,7 +12950,7 @@
           "skills/swiftui-pro/references/swift.md",
           "skills/swiftui-pro/references/views.md"
         ],
-        "digest": "sha256:5db7a7878ef465d4ebed7256f500af07b5d723792ddd96e415132d69c7442e1f"
+        "digest": "sha256:c256d4719ed1b264280b5e244ec0faeadc6caf17481aea39c509012c479a4bc2"
       }
     },
     {
@@ -12607,12 +13003,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -12637,6 +13035,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -12645,6 +13044,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/ui-ux-pro-max/LICENSE",
           "skills/ui-ux-pro-max/PORT.md",
@@ -12714,7 +13114,7 @@
           "skills/ui-ux-pro-max/scripts/reasoning.mjs",
           "skills/ui-ux-pro-max/scripts/search.mjs"
         ],
-        "digest": "sha256:ad19d496a979fb8f07e0893947e10aaa152e1bf8636d6e8c6c69236292e49996"
+        "digest": "sha256:2b43072c9526ea48112e564260e13a8f41ae5205893283c1dc4aafc47ba34fb6"
       }
     },
     {
@@ -12767,12 +13167,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -12797,6 +13199,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -12805,6 +13208,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/variant/LICENSE",
           "skills/variant/PROVENANCE.md",
@@ -12812,7 +13216,7 @@
           "skills/variant/agents/openai.yaml",
           "skills/variant/picker.md"
         ],
-        "digest": "sha256:a666c64437aa777de6f86f61203c571fbacafee9d5e7366d7bec0fcf1ad61604"
+        "digest": "sha256:f3396902ae9a3eb4623cb9209117de85fa8a4309a634b08af90e2b4fbe359138"
       }
     },
     {
@@ -12865,12 +13269,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -12895,6 +13301,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -12903,6 +13310,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/vercel-composition-patterns/AGENTS.md",
           "skills/vercel-composition-patterns/PROVENANCE.md",
@@ -12921,7 +13329,7 @@
           "skills/vercel-composition-patterns/rules/state-decouple-implementation.md",
           "skills/vercel-composition-patterns/rules/state-lift-state.md"
         ],
-        "digest": "sha256:80f36552ab2ee4fc7a919d1d28d7e0809a53e89d058782d406d599343b3d90b9"
+        "digest": "sha256:4dcd79b9ab42b1f92b0f71e862b19220c6b582eb1d2f3491b4e856a10375d0d3"
       }
     },
     {
@@ -12974,12 +13382,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -13004,6 +13414,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -13012,6 +13423,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/vercel-react-best-practices/AGENTS.md",
           "skills/vercel-react-best-practices/PROVENANCE.md",
@@ -13092,7 +13504,7 @@
           "skills/vercel-react-best-practices/rules/server-parallel-nested-fetching.md",
           "skills/vercel-react-best-practices/rules/server-serialization.md"
         ],
-        "digest": "sha256:db4dc728c572981d8c82fa3fb9d0e2a70cfcef4e20c6019f33dc073addafd8bf"
+        "digest": "sha256:335a40e33c0418226d850f3b1f7124217b8078bb827a789db055bc714c5ce005"
       }
     },
     {
@@ -13145,12 +13557,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -13175,6 +13589,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -13183,6 +13598,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/vercel-react-native-skills/AGENTS.md",
           "skills/vercel-react-native-skills/PROVENANCE.md",
@@ -13229,7 +13645,7 @@
           "skills/vercel-react-native-skills/rules/ui-scrollview-content-inset.md",
           "skills/vercel-react-native-skills/rules/ui-styling.md"
         ],
-        "digest": "sha256:8f0882f82044992c2b7ea0138632f8896b714d6fc6d083b88aafdaaaa992bfb8"
+        "digest": "sha256:57c58398021456e487b36830307c57ed510976b11751c8874f5f3dec15e78d18"
       }
     },
     {
@@ -13282,12 +13698,14 @@
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
           "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
           "lib/kbd/phase-readiness.mjs",
           "lib/kbd/progress.mjs",
           "lib/kbd/reconcile-artifacts.mjs",
           "lib/kbd/reconcile-repair.mjs",
           "lib/kbd/reconcile-state.mjs",
           "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
           "lib/kbd/runtime-authority.mjs",
           "lib/kbd/spec-backend.mjs",
           "lib/kbd/stage-gate.mjs",
@@ -13312,6 +13730,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-child-exit.mjs",
           "scripts/kbd-contract-adopt.mjs",
           "scripts/kbd-handoff.mjs",
           "scripts/kbd-new-child.mjs",
@@ -13320,6 +13739,7 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
           "scripts/record-progress.mjs",
           "skills/web-design-guidelines/PROVENANCE.md",
           "skills/web-design-guidelines/SKILL.md",
@@ -13327,9 +13747,9 @@
           "skills/web-design-guidelines/references/LICENSE.web-interface-guidelines",
           "skills/web-design-guidelines/references/web-interface-guidelines.md"
         ],
-        "digest": "sha256:a91af1194d9e455b2c81a15454582b5c3722b8985225db1198e146a000bea872"
+        "digest": "sha256:c7f190c74b726fab1c4dc56a933582376304c907307b1690073325a701d1f5e3"
       }
     }
   ],
-  "inventoryDigest": "sha256:8139b3c4f61569630bbcd21d5a11e8d5ad91a7ea968ffee683533476a770aee3"
+  "inventoryDigest": "sha256:d1707c6189673dd81174576918f6ec65d8659a6bdf65f8559f1e51be65940fa6"
 }

@@ -88,7 +88,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      PROMETHEUS_CLI_REF: fbee605cce14e8ef5b1fb3aa836b23ffd52a1215
+      PROMETHEUS_CLI_REF: 8638656b12fc83114f01947ccae7288f4d24a889
     steps:
       - uses: actions/checkout@v4
 

@@ -42,7 +42,7 @@ test('the matrix job runs the four verification commands in order', () => {
 
   const expected = [
     'npm ci',
-    'node --test',
+    'node --test --test-timeout=300000',
     'node rules/build.mjs --check',
     'node scripts/spec-validate.mjs',
   ];

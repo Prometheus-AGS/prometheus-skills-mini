@@ -2,7 +2,8 @@
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { resolveRuntimeTaskId } from './task-identity.mjs';
-import { readJson, complete, cancelled, resolvePhase, readBackendTasks } from './reconcile-artifacts.mjs';
+import { readJson, complete, cancelled, resolvePhase } from './reconcile-artifacts.mjs';
+import { IdentityError, progressRowsById, assertCanonicalIdentity, retiredAliases, readBackendFor } from './reconcile-identity.mjs';
 
 export function parseReconcileArgs(args) {
   let phase;
@@ -49,22 +50,24 @@ export async function scanReconcile(root, requested, { readCanonical, resolveIde
     const progressFile = path.join(context.directory, 'progress.json');
     const progress = readJson(progressFile);
     if (!Array.isArray(progress.changes)) throw new Error('invalid phase progress changes');
-    const rows = new Map();
-    for (const row of progress.changes) {
-      if (!row?.id || rows.has(row.id)) throw new Error('invalid or duplicate progress change ID');
-      rows.set(row.id, row);
-    }
+    const rows = progressRowsById(phase, progress.changes);
+    if (state) assertCanonicalIdentity(phase, state);
     const projectFile = path.join(root, '.kbd-orchestrator', 'project.json');
     const pinned = existsSync(projectFile) ? readJson(projectFile).specBackend : undefined;
+    const aliases = state ? retiredAliases(state, phase) : new Map();
     const changes = state ? Object.keys(state.phases[phase].changes ?? {}) : [...rows.keys()];
     // Projection-only changes must also be inspected: silently dropping them would hide drift.
-    for (const id of rows.keys()) if (!changes.includes(id)) changes.push(id);
+    // A row under a retired alias is inspected through its surviving canonical change.
+    for (const id of rows.keys()) {
+      if (!changes.includes(id) && !(aliases.has(id) && changes.includes(aliases.get(id)))) changes.push(id);
+    }
     Object.assign(context, { progressFile, progress });
     for (const change of changes) {
       const ledger = state?.phases[phase].changes?.[change];
-      const projection = rows.get(change);
+      const names = [change, ...[...aliases].filter(([, target]) => target === change).map(([alias]) => alias)];
+      const projection = names.map((name) => rows.get(name)).find(Boolean);
       try {
-        const artifact = readBackendTasks(root, change, pinned);
+        const { artifact, backendChange } = readBackendFor(root, names, pinned);
         context.artifacts[change] = artifact;
         const { tasks, archived } = artifact;
         const total = tasks.length;
@@ -88,7 +91,9 @@ export async function scanReconcile(root, requested, { readCanonical, resolveIde
             if (task.done && !complete(status)) {
               const kind = isCancelled ? 'cancelled' : archived ? 'archived' : status ? 'ledger-pending' : 'ledger-missing';
               add(task, kind);
-              if (kind === 'ledger-pending' || kind === 'ledger-missing') context.repairs.push({ change, ...task, total, runtimeId: id, status });
+              // Repair drives kbd-apply by backend name; mini's kbd-apply does not resolve retired aliases,
+              // so drift behind an alias is reported and left for the signed-identity workflow.
+              if ((kind === 'ledger-pending' || kind === 'ledger-missing') && backendChange === change) context.repairs.push({ change, ...task, total, runtimeId: id, status });
             } else if (!task.done && complete(status)) add(task, 'ledger-ahead');
           }
           for (const [id, task] of Object.entries(registered)) {
@@ -115,7 +120,7 @@ export async function scanReconcile(root, requested, { readCanonical, resolveIde
       drift.push({ change: '-', task: '-', sequence: 0, total: counts.total,
         kind: state ? 'projection' : 'phase-count', title: `phase implementation counts must match change ledger ${counts.completed}/${counts.total}` });
     }
-  } catch (error) { errors.push(errorRow('scan', error.message)); }
+  } catch (error) { errors.push(errorRow(error instanceof IdentityError ? 'identity' : 'scan', error.message)); }
   return { report: result(phase, drift, errors), context };
 }
 

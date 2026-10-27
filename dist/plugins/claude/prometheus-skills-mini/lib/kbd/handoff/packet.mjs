@@ -15,6 +15,7 @@ export function startPrompt({ harness, phaseChain, repoRoot, packetRel }) {
     `You are ${harness.label} taking over KBD phase ${phaseChain} in ${repoRoot}.`,
     `Read ${packetRel} first, then every file it lists under "Read in order", in that order.`,
     'Before changing anything, restate the phase, stage, implementation N/T, next change and task, and every open prerequisite from the packet.',
+    'Before dependent work, re-resolve the selected method, adopted contract revision and stage authority from current canonical KBD status (method-context.md is a derived index, not authority); a missing or changed reference is an explicit prerequisite. For a selected VLBV phase, no generated-code tests, builds, lint or typecheck run until the complete agreed value phase is done; a task, hour, commit, reviewer request or compiler problem is not that boundary.',
     'Confirm position with the kbd-status skill, then drive the next task with the kbd-apply skill: begin-task, the work, end-task.',
     'Obey the packet\'s "Never do" list. Stop at every operator gate and ask the operator once, in one batch. Do not push, tag, publish or merge.',
   ].join('\n');
@@ -33,6 +34,17 @@ function positionSection(facts) {
     `- Implementation: ${implementation.completed} of ${implementation.total} (\`completion.implementation\` in the phase \`progress.json\`)`,
     `- Next: ${next}`,
     `- Source: ${position.source === 'cli' ? '`prometheus kbd status --json`' : `projection files (${position.statusError ?? 'runtime unavailable'})`}`,
+  ].join('\n');
+}
+
+function methodSection(facts) {
+  const lines = facts.methodContext.map((item) => `- ${code(item.path)}: ${item.observation}${item.sha256 ? ` (sha256 ${item.sha256.slice(0, 12)})` : ''}`);
+  return [
+    '## Method and contract references',
+    '',
+    ...lines,
+    '- These are identities, not authority. Re-resolve the latest non-superseded selected method, the adopted contract revision, stage authority, evidence/candidate freshness, consumed budgets and unresolved effects from current canonical state before dependent work; reconcile uncertain effects before any retry.',
+    '- Refresh the derived index with `node <pack-root>/scripts/kbd-method-context.mjs --phase <canonical-phase-id> --write`. A missing or stale index is an explicit prerequisite, never guessed from memory or `exactNextCommand`.',
   ].join('\n');
 }
 
@@ -98,6 +110,8 @@ export function renderPacket(facts) {
     '',
     repoSection(facts.repo),
     '',
+    methodSection(facts),
+    '',
     '## Read in order',
     '',
     facts.filesToRead.map((file, index) => `${index + 1}. ${code(file)}`).join('\n'),
@@ -148,6 +162,7 @@ export function renderSidecar(facts) {
     },
     repo: facts.repo,
     filesToRead: facts.filesToRead,
+    methodContext: { references: facts.methodContext, authority: 'identity only; re-resolve canonical status before dependent work' },
     nativeRoles: facts.nativeRoles,
     skills: { ...facts.skills, broken: facts.skills.broken.map(({ path: entryPath, detail }) => ({ path: entryPath, detail })) },
     prerequisites: prerequisiteItems(facts),

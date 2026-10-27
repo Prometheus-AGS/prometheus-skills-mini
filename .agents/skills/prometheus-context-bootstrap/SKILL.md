@@ -14,10 +14,34 @@ skill copies. The bootstrap owns only marked regions. It preserves prose outside
 those markers and refuses a corrupt marker pair or a symlink that resolves outside
 the target project.
 
-The generated policy finishes coherent production functionality before testing.
-It treats the smallest real integration flow at a completed change or phase boundary
-as evidence. Unit, mock-only, filtered-function, and per-edit test loops do not count
-as completion proof.
+The generated policy finishes every planned production change in the phase before
+testing. It runs one real integration flow at the final phase boundary as evidence.
+When the harness provides an agent team, implementation roles work first and review,
+audit, verification, and integration-checker roles remain dormant until that boundary.
+Unit, mock-only, filtered-function, and per-edit test loops do not count as proof.
+
+## Selected method and phase authority
+
+The managed resident and path-scoped templates carry compact references to the
+active phase's `method-context.md` and adopted contract, not another authority
+ledger. Signed canonical KBD status/decisions remain authoritative; the waypoint
+is their derived position view. Session-start and pre-compaction hooks restore
+pointers and a labelled derived snapshot (`lib/hooks/method-reanchor.mjs`); a
+missing or stale index is reported explicitly. The index is produced by
+`scripts/kbd-method-context.mjs` in the mini pack; a bootstrapped project without
+the pack reads the existing index and does not invent one.
+
+Recovery preserves the latest authorized supersession, original evidence,
+candidate freshness, consumed budgets and unresolved effects, and reconciles
+uncertain effects before retry. For a selected VLBV phase the templates retain the
+complete agreed value-phase boundary and keep execution authority separate: no
+task, hour, commit, reviewer or compiler boundary, and no stack-rule compiler or
+completed-change example, opens generated-code verification. Host compiler or
+skill-policy conflicts are surfaced before dependent action without changing
+operator-owned prose outside the marked regions. Template guidance is
+instruction-only unless a named host boundary enforces it; no global context
+rewrite, universal interception, release or automatic-successor authority is
+implied.
 
 ## Run from the mini pack
 
@@ -53,3 +77,10 @@ The Rust path rule loads `prometheus-rust-workspace`, which routes
 `rust-best-practices`, `rust-async-patterns`, `rust-mcp-server-generator`, and
 the specialized catalog only when relevant. Dependency and protocol pins in the
 target project remain authoritative.
+
+## Shared UI and team defaults
+Bootstrap also installs the offline UI catalog, shared protocol (preserving a project override), short UI pointers in both entrypoints and recovery data. It adopts a sole or explicitly selected existing project team using creator install-project; ambiguous teams require selection. UI roles use prometheus-ui-ux, reviewers prometheus-ui-review, backend-only work no UI context. New helpers use TypeScript 7 compiled to Node .mjs.
+
+## Delivery cadence context
+
+When `.prometheus/cadence-binding.json` exists, read that small binding and carry its profile/root into the execution dispatch. Load delivery-cadence only for cadence-enabled work. Its configured build-and-run boundary, publication frequency and pending failure obligations survive compaction; do not substitute test suites or silently reset the run. No profile means no additional cadence context.

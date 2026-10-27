@@ -12,6 +12,9 @@ import { tempDir } from '../lib/platform/paths.mjs';
 import { cadenceRuntimeFiles, LIFECYCLE_ENTRIES } from '../lib/distribution/package-builder.mjs';
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// Windows CI stalled for 6 h (issue #63) with this file the first in run order to report nothing, so it is the
+// suspected stall (inferred from ordered reporter output). A bounded child turns a hang into a failing assertion.
+const GENERATOR_TIMEOUT_MS = 120_000;
 const SCRIPT_RELATIVE = path.join('scripts', 'generate-skill-system-distribution.mjs');
 
 function buildFixtureRepo(dir) {
@@ -21,6 +24,9 @@ function buildFixtureRepo(dir) {
   for (const relative of cadenceRuntimeFiles(REPO_ROOT, LIFECYCLE_ENTRIES)) {
     cpSync(path.join(REPO_ROOT, ...relative.split('/')), path.join(dir, ...relative.split('/')));
   }
+  // The package builder lists `hooks` as a reviewed shared root, and only creates it from hooks/hooks.json.
+  mkdirSync(path.join(dir, 'hooks'), { recursive: true });
+  writeFileSync(path.join(dir, 'hooks', 'hooks.json'), JSON.stringify({ hooks: {} }), 'utf8');
   mkdirSync(path.join(dir, 'skills', 'sample-skill'), { recursive: true });
   writeFileSync(
     path.join(dir, 'skills', 'sample-skill', 'SKILL.md'),
@@ -59,10 +65,10 @@ const workspace = (run) => {
 test('running the generator against a clean fixture, then --check, exits 0 with no drift reported', () => {
   workspace((dir) => {
     buildFixtureRepo(dir);
-    const generate = spawnSync(process.execPath, [SCRIPT_RELATIVE], { cwd: dir, encoding: 'utf8', shell: false });
-    assert.equal(generate.status, 0, generate.stderr);
+    const generate = spawnSync(process.execPath, [SCRIPT_RELATIVE], { cwd: dir, encoding: 'utf8', shell: false, timeout: GENERATOR_TIMEOUT_MS });
+    assert.equal(generate.status, 0, generate.error?.message ?? generate.stderr);
 
-    const check = spawnSync(process.execPath, [SCRIPT_RELATIVE, '--check'], { cwd: dir, encoding: 'utf8', shell: false });
+    const check = spawnSync(process.execPath, [SCRIPT_RELATIVE, '--check'], { cwd: dir, encoding: 'utf8', shell: false, timeout: GENERATOR_TIMEOUT_MS });
 
     assert.equal(check.status, 0, check.stderr);
     assert.match(check.stdout, /no drift/);
@@ -72,10 +78,10 @@ test('running the generator against a clean fixture, then --check, exits 0 with 
 test('--check exits non-zero and names the stale output once a packaged file is tampered with', () => {
   workspace((dir) => {
     buildFixtureRepo(dir);
-    spawnSync(process.execPath, [SCRIPT_RELATIVE], { cwd: dir, encoding: 'utf8', shell: false });
+    spawnSync(process.execPath, [SCRIPT_RELATIVE], { cwd: dir, encoding: 'utf8', shell: false, timeout: GENERATOR_TIMEOUT_MS });
     writeFileSync(path.join(dir, 'dist/plugins/claude/fixture-pack/.claude-plugin/plugin.json'), '{}', 'utf8');
 
-    const check = spawnSync(process.execPath, [SCRIPT_RELATIVE, '--check'], { cwd: dir, encoding: 'utf8', shell: false });
+    const check = spawnSync(process.execPath, [SCRIPT_RELATIVE, '--check'], { cwd: dir, encoding: 'utf8', shell: false, timeout: GENERATOR_TIMEOUT_MS });
 
     assert.notEqual(check.status, 0);
     assert.match(check.stderr, /stale/);

@@ -1,5 +1,6 @@
 // SessionStart: the bounded KBD session adapter. Declared at 1000 ms, so it
 // imports only what it needs — Node cold start is already most of that budget.
+import { methodReanchorLines } from './method-reanchor.mjs';
 import { findProjectRoot, readProjectId, isPaused, degradeSafely, cwdOf } from './context.mjs';
 
 export async function run(payload) {
@@ -13,6 +14,8 @@ export async function run(payload) {
         'KBD REANCHOR: pause advisory is active. Confirm intent before advancing planned work; tools remain available.\n',
       );
     }
+
+    for (const line of methodReanchorLines(projectRoot)) process.stderr.write(`${line}\n`);
 
     return { projectRoot, projectId: readProjectId(projectRoot), paused };
   });

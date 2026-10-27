@@ -22,6 +22,9 @@ marked absent are flagged in `CLAUDE.md`. Re-check with a directory listing of `
 | before a PR: interrogate the change | `grill-me` | present | `npx skills add mattpocock/skills@grill-me` |
 | phase lifecycle or position | `kbd-status`, `kbd-assess`, `kbd-analyze`, `kbd-plan`, `kbd-execute`, `kbd-reflect` | present | native to this repo — ported to Node under `skills/kbd-*` and `lib/kbd/`; no longer the bash originals |
 | implementing KBD-owned change tasks | `kbd-apply` | present | use `begin-task` / `end-task` for every task, then driver `verify` / `archive`; never bare OpenSpec apply inside KBD |
+| proposing a finite, calibrated set of value scenarios in Assess/Spec/Plan | `value-scenario-discovery` | present | native to this repo — `skills/value-scenario-discovery`; proposals only, grants no adoption or execution |
+| authoring approved BDD for adopted scenario IDs | `bdd-cucumber-js` | present | native to this repo — Node-only, author-only first; never runs checks or installs dependencies |
+| authorized phase-end value verification | `value-scenario-verify` | present | native to this repo — runs once at the completed boundary; evidence goes to the existing canonical writer |
 | structuring a one-line concept into branches | `ideation-mindmap` | present | native to this repo — `skills/ideation-mindmap`, `lib/ideation/`; needs surreal-memory |
 | team creation/export | `agent-team-creator` | present | guided or expert manifest; propose the smallest useful team; staged exports do not install or execute agents |
 | team task management | `agent-team-manage` | present | creator's shared compiled Node runtime; state/task revisions and explicit ownership; KBD completion stays canonical |

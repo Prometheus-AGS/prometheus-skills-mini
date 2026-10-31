@@ -192,7 +192,7 @@ export function computeCeilings(budgets = {}) {
   return ceilings;
 }
 
-const ENFORCED_DIMENSIONS = ['timeMinutes', 'toolCalls', 'repairAttempts'];
+const ENFORCED_DIMENSIONS = ['timeMinutes', 'toolCalls', 'repairAttempts', 'noProgress'];
 
 const CONSUMPTION_TO_CEILING = {
   timeMinutes: 'timeMinutes',
@@ -218,7 +218,8 @@ export function budgetPredicate(contract, consumption) {
   if (!isNonEmptyString(consumption.source)) return { outcome: 'source-missing' };
   const ceilings = computeCeilings(contract?.budgets);
   const values = consumption.values ?? {};
-  // An enforceable dimension that is unmetered cannot be shown to hold (mini #66 / full #192);
+  // An enforceable dimension that is unmetered cannot be shown to hold (mini #66 / full #192;
+  // no-progress cycles against noProgressLimit since full #184);
   // only token consumption may stay unknown under the declared fallback.
   const unmeasured = ENFORCED_DIMENSIONS.filter((key) => {
     const entry = values[key];

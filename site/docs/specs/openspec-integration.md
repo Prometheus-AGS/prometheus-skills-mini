@@ -22,7 +22,7 @@ openspec init --tools claude,codex,cursor,opencode --no-animation .
 | `.agents/skills/openspec-*` | 12 skills (Codex — skills only, no commands) |
 | `.cursor/`, `.opencode/` | 12 skills + 12 commands each |
 
-The OpenSpec CLI (`@fission-ai/openspec`, pinned `1.14.0` in `package.json`) is itself a Node
+The OpenSpec CLI (`@fission-ai/openspec`, pinned `1.16.0` in `package.json`; it needs Node.js 22.12.0+) is itself a Node
 package, satisfying the Node-only constraint with no extra runtime.
 
 See [OpenSpec lifecycle updates](/docs/kbd/openspec-lifecycle) for automatic refresh, explicit overrides, offline behavior and backups. Generated tool counts depend on the selected OpenSpec version and profile.

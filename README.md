@@ -9,10 +9,10 @@ toolchain.
 [Skill catalog](SKILLS.md) · [Maintenance](docs/maintenance.md) ·
 [Contribution rules](CONTRIBUTING.md)
 
-## Spec engines (1.12.0)
+## Spec engines (1.14.0)
 
 `kbd-apply` speaks three spec engines through one registry (`lib/kbd/spec-backend.mjs`):
-**OpenSpec (default)**, **GitHub Spec Kit** (`speckit`, pinned to [spec-kit v1.1.2](https://github.com/github/spec-kit) — artifacts under `.specify/` and `specs/<slug>/`), and **native-kbd**. Detection prefers an explicit `.kbd-orchestrator/project.json` `specBackend` pin, then OpenSpec, then Spec Kit, then native-kbd. All five adapter ops (list, progress, mark-done, verify, archive) are implemented for every engine as pure-Node `.mjs` (Windows-safe, no shell). Engine metadata and version pins live in `config/spec-engines.json`; when a new Spec Kit release ships, bump `pinnedVersion` there after confirming the adapter still matches the `specs/` layout — see `skills/kbd-apply/SKILL.md` for the update procedure and for how to register additional engines.
+**OpenSpec 1.16.0 (primary; needs Node.js 22.12.0+)**, **GitHub Spec Kit** (the backup, `speckit`, pinned to [spec-kit v1.3.0](https://github.com/github/spec-kit) — artifacts under `.specify/` and `specs/<slug>/`), and **native-kbd** (compatibility for existing native projects). `/kbd-init` initializes OpenSpec on new projects, or Spec Kit with `--spec-engine speckit`. Detection prefers an explicit `.kbd-orchestrator/project.json` `specBackend` pin, then OpenSpec, then Spec Kit, then native-kbd. All five adapter ops (list, progress, mark-done, verify, archive) are implemented for every engine as pure-Node `.mjs` (Windows-safe, no shell). Engine metadata and version pins live in `config/spec-engines.json`; when a new Spec Kit release ships, bump `pinnedVersion` there after confirming the adapter still matches the `specs/` layout — see `skills/kbd-apply/SKILL.md` for the update procedure and for how to register additional engines.
 
 ## Choose mini or full
 

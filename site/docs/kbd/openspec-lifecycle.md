@@ -6,7 +6,7 @@ description: Latest-stable OpenSpec selection, automatic project refresh and rec
 
 # OpenSpec lifecycle updates
 
-The release baseline is **OpenSpec 1.14.0**, confirmed on 2026-10-03 from the official npm latest tag and [upstream release](https://github.com/Fission-AI/OpenSpec/releases/tag/v1.14.0). Source dependencies pin this version. The managed KBD runner checks the latest stable release, with 1.14.0 as its minimum, whenever it performs a refresh.
+The release baseline is **OpenSpec 1.16.0**, confirmed on 2026-11-05 from the official npm latest tag and [upstream release](https://github.com/Fission-AI/OpenSpec/releases/tag/v1.16.0). Source dependencies pin this version. The managed KBD runner checks the latest stable release, with 1.16.0 as its minimum, whenever it performs a refresh; a cached selection below that minimum is replaced. OpenSpec 1.16.0 needs Node.js 22.12.0 or newer, and the runner refuses an older Node with a failed receipt before installing anything. OpenSpec is the primary spec engine for new projects: `/kbd-init` runs the runner's `init` command (`node lib/platform/openspec/cli.mjs init --project <root> --tools claude,codex`), which reports `already-initialized` when `openspec/` exists. GitHub Spec Kit is the supported backup.
 
 ## What updates automatically
 
@@ -30,7 +30,7 @@ In an installed package, locate the complete bundled helper directory through th
 
 The managed installation lives under ~/.prometheus/openspec/versions. It executes the package's JavaScript entry with Node and shell disabled. Exact versions are installed without lifecycle scripts or binary symlinks. It does not upgrade project dependencies or global CLI installations. Mini retains its Node-only portability contract; Windows execution still requires independent runtime validation.
 
-For a separately installed global CLI, use the package manager that owns that installation and verify every executable found on PATH. An npm-managed installation can be explicitly upgraded with npm install --global @fission-ai/openspec@1.14.0. A newer managed KBD CLI does not prove an older global shim was replaced.
+For a separately installed global CLI, use the package manager that owns that installation and verify every executable found on PATH. An npm-managed installation can be explicitly upgraded with npm install --global @fission-ai/openspec@1.16.0. A newer managed KBD CLI does not prove an older global shim was replaced.
 
 ## Availability and operator controls
 
@@ -41,7 +41,7 @@ For a separately installed global CLI, use the package manager that owns that in
 | Cold startup with insufficient time to install | Report pending (exit 75); complete the longer refresh before OpenSpec work |
 | Concurrent managed operation | Report contention (exit 75); no parallel updater or background daemon |
 | PROMETHEUS_OPENSPEC_HOME | Set a different managed cache, receipt and backup root |
-| PROMETHEUS_OPENSPEC_VERSION | Pin an exact stable version at or above 1.14.0; report operator-pin, not latest |
+| PROMETHEUS_OPENSPEC_VERSION | Pin an exact stable version at or above 1.16.0; report operator-pin, not latest |
 | PROMETHEUS_OPENSPEC_DISABLE=1 | Record disabled refresh; managed run exits 2 without executing OpenSpec |
 
 The normal refresh budget is 120 seconds. Startup uses a shorter budget and never begins installation with fewer than 60 seconds remaining. A timeout can leave partially regenerated files; use the recorded backup or retry after resolving the failure.

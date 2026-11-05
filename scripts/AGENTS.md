@@ -8,7 +8,7 @@ For harnesses without path-scoped rules. The constitution is the root `AGENTS.md
 Loaded when a script, hook or package file is read. Not resident.
 
 Every script in this repo has to behave identically from `cmd.exe`, PowerShell, bash and zsh. Node.js LTS
-(>= 22) is the only runtime; files are ESM `.mjs`, invoked as `node <file>`.
+(>= 22.12.0) is the only runtime; files are ESM `.mjs`, invoked as `node <file>`.
 
 Batch implementation until every planned production entry-point flow in the phase is
 complete. Use `node --check` earlier only when an observed syntax error blocks further

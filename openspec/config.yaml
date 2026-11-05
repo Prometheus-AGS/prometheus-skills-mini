@@ -8,7 +8,7 @@ context: |
 
   Hard constraints (every change must satisfy all of them):
   - Runs on Windows from cmd.exe / PowerShell with no WSL and no Git Bash.
-  - Node.js LTS (>= 22) is the only script runtime. Runtime hooks and scripts are
+  - Node.js LTS (>= 22.12.0) is the only script runtime. Runtime hooks and scripts are
     ESM .mjs files invoked as `node <file>`; new team tooling is authored
     in TypeScript 7 and ships its compiled .mjs artifacts. Hooks use exec form
     ("command": "node", "args": [...]), never a shell string.

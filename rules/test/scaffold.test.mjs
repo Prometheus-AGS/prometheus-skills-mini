@@ -11,7 +11,7 @@ test('package.json declares the supported runtime', () => {
 
   assert.equal(manifest.type, 'module');
   assert.equal(manifest.private, true);
-  assert.equal(manifest.engines.node, '>=22');
+  assert.equal(manifest.engines.node, '>=22.12.0');
 });
 
 test('package.json defines test, check and coverage scripts', () => {

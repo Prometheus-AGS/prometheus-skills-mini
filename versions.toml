@@ -5,9 +5,11 @@
 # 3.3.0. The file did not exist yet, and docs/versions-toml.md requires [node]
 # and every tools/ gitlink to be present once it does, so those were written alongside the image —
 # each from a value the tree already enforces, not a new decision. See docs/versions-toml.md.
+# The operator raised [node] minimum to >=22.12.0 on 2026-11-05 ("raise the mini node floor to
+# >=22.12.0 too"), because OpenSpec 1.16.0 requires Node.js 22.12.0.
 
 [node]
-minimum = ">=22"          # must equal package.json engines.node, exactly
+minimum = ">=22.12.0"     # must equal package.json engines.node, exactly
 
 [submodules]
 # "<path under the repository root>" = "<full or short commit sha>"

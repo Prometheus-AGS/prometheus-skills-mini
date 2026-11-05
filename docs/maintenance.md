@@ -15,16 +15,16 @@ internal data directory is the separate supported scope in that situation.
 ## Bounded support matrix
 
 `skill-system.json` declares `darwin`, `linux` and `win32` for portable skills.
-Node 22+ is the script runtime. Exact OS releases, architectures and installed
+Node 22.12+ is the script runtime. Exact OS releases, architectures and installed
 harness versions must be frozen in the accepted release matrix; they remain
 pending for this candidate. A source portability claim or Windows-like path on
 macOS cannot certify native Windows operation.
 
 | Platform | Portable source contract | Optional service boundary | Acceptance |
 |---|---|---|---|
-| macOS | Node 22+, copied payloads | Compatible external services or separately selected Docker stack | Pending release-bound native harness and real operation receipts |
-| Linux | Node 22+, copied payloads | Compatible external services or separately selected Docker stack | Pending exact host, harness and service receipts |
-| Windows `cmd.exe`/PowerShell | Node 22+, shell-free portable helpers; no WSL/Git Bash/Python requirement for these helpers | Existing Docker Desktop/Engine and Compose when selected; mini does not install them | Pending native Windows receipts |
+| macOS | Node 22.12+, copied payloads | Compatible external services or separately selected Docker stack | Pending release-bound native harness and real operation receipts |
+| Linux | Node 22.12+, copied payloads | Compatible external services or separately selected Docker stack | Pending exact host, harness and service receipts |
+| Windows `cmd.exe`/PowerShell | Node 22.12+, shell-free portable helpers; no WSL/Git Bash/Python requirement for these helpers | Existing Docker Desktop/Engine and Compose when selected; mini does not install them | Pending native Windows receipts |
 
 The nine finite target IDs are `claude`, `codex`, `opencode`, `agents`, `cursor`,
 `gemini`, `windsurf`, `zed` and `cline`. Their manifest paths are respectively

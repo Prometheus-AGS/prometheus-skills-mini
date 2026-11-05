@@ -20,7 +20,7 @@ toolchain.
 |---|---|---|
 | Intended use | Portable process, team, research and UI guidance | Broad language/domain guidance, learning and optional native tools |
 | Source layout | Flat `skills/<name>/` | Categorized skills, flattened for distribution |
-| Core prerequisites | Node 22+; Git for a source checkout | Node, Git and Bash; individual workflows can require Python, jq or Rust |
+| Core prerequisites | Node 22.12+; Git for a source checkout | Node, Git and Bash; individual workflows can require Python, jq or Rust |
 | Platforms | Node entry points for Windows, macOS and Linux | Windows skills through Git Bash or WSL; native services on macOS/Linux |
 | Optional infrastructure | HTTP memory/model services; a supplied Docker Compose stack | Native memory, knowledge, gateway, research and execution components |
 

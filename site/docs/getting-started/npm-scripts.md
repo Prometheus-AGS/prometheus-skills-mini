@@ -9,7 +9,7 @@ Selected root scripts from `package.json`; inspect the file for the complete cur
 
 ```json
 {
-  "engines": { "node": ">=22" },
+  "engines": { "node": ">=22.12.0" },
   "scripts": {
     "test": "node --test",
     "check": "node rules/build.mjs --check",

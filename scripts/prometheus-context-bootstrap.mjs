@@ -36,6 +36,8 @@ try {
   } else {
     const result = runContextBootstrap(options);
     for (const item of result.plan) console.log(`${item.kind.padEnd(9)} ${item.path}`);
+    const { resident } = result;
+    console.log(`RESIDENT  ${resident.path}: ${resident.managed} managed words (ceiling ${resident.ceiling}) + ${resident.project} project words`);
     if (options.check && result.drift.length) {
       console.error(`Context drift: ${result.drift.join(', ')}`);
       process.exitCode = 1;

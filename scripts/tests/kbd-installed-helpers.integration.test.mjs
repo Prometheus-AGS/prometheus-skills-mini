@@ -1,5 +1,8 @@
 // Real CLI + signed canonical state + copied plugin payload regression.
 // No status files, decision sinks, helper stubs, live home, or live KBD phase.
+// Uses the prometheus executable on PATH (or PROMETHEUS_CLI_TEST_BINARY) and skips visibly when
+// none is runnable; PROMETHEUS_CLI_REQUIRED=1 (the CI kbd-runtime job) turns that skip into a failure.
+import test from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -9,7 +12,16 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const scratch = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'kbd installed helpers ')));
+const prometheus = process.env.PROMETHEUS_CLI_TEST_BINARY || 'prometheus';
+const prometheusProbe = spawnSync(prometheus, ['--version'], { encoding: 'utf8', timeout: 30_000 });
+const prometheusAvailable = !prometheusProbe.error && prometheusProbe.status === 0;
+if (process.env.PROMETHEUS_CLI_REQUIRED === '1' && !prometheusAvailable) {
+  throw new Error(`PROMETHEUS_CLI_REQUIRED=1 but ${prometheus} is not runnable: ${prometheusProbe.error?.message ?? prometheusProbe.stderr}`);
+}
+const runtimeOnly = prometheusAvailable
+  ? {}
+  : { skip: `real prometheus executable not found (${prometheus}); set PROMETHEUS_CLI_TEST_BINARY, or PROMETHEUS_CLI_REQUIRED=1 to fail instead` };
+const scratch = prometheusAvailable ? fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'kbd installed helpers '))) : null;
 const phase = 'packaging-regression';
 const read = file => JSON.parse(fs.readFileSync(file, 'utf8'));
 const write = (file, value) => { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, JSON.stringify(value, null, 2), { mode: 0o600 }); };
@@ -57,7 +69,7 @@ function exercise(label, payload, box, installed = false) {
   const { base, env } = box;
   const project = path.join(base, 'consumer with spaces'); fs.mkdirSync(project);
   fs.mkdirSync(path.join(project, '.kbd-orchestrator'));
-  const native = (...args) => run('prometheus', ['kbd', '--path', project, ...args], project, env);
+  const native = (...args) => run(prometheus, ['kbd', '--path', project, ...args], project, env);
   native('status', '--json');
   native('phase', 'create', '--command-id', 'create', '--id', phase, '--title', 'Packaging regression');
   native('phase', 'activate', '--command-id', 'activate', '--id', phase);
@@ -139,15 +151,17 @@ function exercise(label, payload, box, installed = false) {
   assert.equal(fs.existsSync(path.join(project, 'scripts')), false);
   console.log(`PASS ${label}: adoption, READY, real gate, idempotent journal, documented commands/help, missing/malformed/identity/stale state${installed ? ', missing helper, copied payload parity' : ''}; consumer has no scripts`);
 }
-try {
-  exercise('source', root, isolated('source'));
-  for (const platform of ['claude', 'codex']) {
-    const payload = path.join(root, 'dist/plugins', platform, 'prometheus-skills-mini');
-    exercise(`generated ${platform}`, payload, isolated(`generated ${platform}`));
-    const box = isolated(`installed ${platform}`), installed = path.join(box.base, 'installed package with spaces');
-    // Mini's plugin-cache installation surface is a copy, not a full-pack generation store.
-    fs.cpSync(payload, installed, { recursive: true });
-    exercise(`installed ${platform}`, installed, box, true);
-  }
-  console.log('PASS all isolated package surfaces');
-} finally { fs.rmSync(scratch, { recursive: true, force: true }); }
+test('installed mini helpers run against the real CLI from source, generated and installed payloads', runtimeOnly, () => {
+  try {
+    exercise('source', root, isolated('source'));
+    for (const platform of ['claude', 'codex']) {
+      const payload = path.join(root, 'dist/plugins', platform, 'prometheus-skills-mini');
+      exercise(`generated ${platform}`, payload, isolated(`generated ${platform}`));
+      const box = isolated(`installed ${platform}`), installed = path.join(box.base, 'installed package with spaces');
+      // Mini's plugin-cache installation surface is a copy, not a full-pack generation store.
+      fs.cpSync(payload, installed, { recursive: true });
+      exercise(`installed ${platform}`, installed, box, true);
+    }
+    console.log('PASS all isolated package surfaces');
+  } finally { fs.rmSync(scratch, { recursive: true, force: true }); }
+});

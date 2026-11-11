@@ -131,3 +131,13 @@ jobs:
           PROMETHEUS_CLI_REQUIRED: '1'
           PROMETHEUS_CLI_TEST_BINARY: ${{ github.workspace }}/.ci/prometheus-skill-system/tools/prometheus-cli/target/release/prometheus
         run: node --test scripts/kbd-new-phase.integration.test.mjs
+
+      # The packaged helpers it exercises spawn `prometheus` from PATH themselves, so the built
+      # binary's directory goes on PATH as well as into PROMETHEUS_CLI_TEST_BINARY.
+      - name: kbd installed-helpers integration against the real CLI
+        env:
+          PROMETHEUS_CLI_REQUIRED: '1'
+          PROMETHEUS_CLI_TEST_BINARY: ${{ github.workspace }}/.ci/prometheus-skill-system/tools/prometheus-cli/target/release/prometheus
+        run: |
+          export PATH="$(dirname "$PROMETHEUS_CLI_TEST_BINARY"):$PATH"
+          node --test --test-timeout=300000 scripts/tests/kbd-installed-helpers.integration.test.mjs

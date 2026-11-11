@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "scope": "project",
+  "generation": "899cb12541b5572337082d6637c5543d36aaf3b817e9b77f8813388131270e81",
+  "candidateCount": 2,
+  "byteCount": 2025,
+  "entries": [
+    {
+      "id": "empty-source-document",
+      "title": "Empty Source Document",
+      "content": "No technical content was provided in the raw document.\n\n# Citations\n\n1. [1] stdin",
+      "tags": [
+        "empty-document",
+        "source-ingestion",
+        "knowledge-base"
+      ],
+      "links": [],
+      "sources": [
+        {
+          "resource": "stdin"
+        }
+      ],
+      "created_at": "2026-09-21T16:06:37.300153Z",
+      "updated_at": "2026-09-21T16:06:37.300644Z",
+      "revision": 1,
+      "entry_type": "Reference",
+      "description": null,
+      "generated_by": null,
+      "extra": {
+        "content_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "karpathy-session-a6b519610406342c",
+      "title": "Karpathy session a6b519610406",
+      "content": "## Delta\n\nThe `v1.13.2` tag now exists on mini and points at `8d23100`, the tip of mini `main` (PR #71 merged). I pushed it to origin and confirmed it's there.\n\nIt's annotated like the existing `v1.12.1`. I only created the tag. I didn't create a GitHub release, since you didn't ask for one.\n\nMini is at 1.13.2 on `main` with the full-pack CLI pin. The failing checks I listed earlier are unchanged: the secret-scan test, the stale `versions.toml` pin, and the Windows hang I could only bound with timeouts. I haven't closed the issues on GitHub. #63 stays open, and #195 and #196 stay open because VER-001 and VER-003 are not exercised.\n\n## Root Cause\n\nNo explicit root-cause section was captured; preserve this as a session record, not an inferred diagnosis.\n\n## Corrective Actions\n\nReview and promote only reusable findings.\n\n## Session Metadata\n\n- Harness: claude-code\n- Session: ddfed9c0-3939-414b-b8a9-3a0b30d2e01c\n- Captured: 2026-10-27T17:25:08.638078Z\n- Project: /Users/gqadonis/Projects/prometheus/prometheus-skills-mini\n\n## Changed Paths\n\n- No changed paths detected.\n",
+      "tags": [
+        "karpathy",
+        "session-learning"
+      ],
+      "links": [],
+      "sources": [
+        {
+          "resource": "session:ddfed9c0-3939-414b-b8a9-3a0b30d2e01c"
+        }
+      ],
+      "created_at": "2026-10-27T17:25:09.335353Z",
+      "updated_at": "2026-10-27T17:25:09.335353Z",
+      "revision": 0,
+      "entry_type": "SessionRecord",
+      "description": null,
+      "generated_by": null,
+      "extra": {}
+    }
+  ]
+}

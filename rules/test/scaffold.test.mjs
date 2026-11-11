@@ -11,7 +11,7 @@ test('package.json declares the supported runtime', () => {
 
   assert.equal(manifest.type, 'module');
   assert.equal(manifest.private, true);
-  assert.equal(manifest.engines.node, '>=22');
+  assert.equal(manifest.engines.node, '>=22.12.0');
 });
 
 test('package.json defines test, check and coverage scripts', () => {
@@ -37,7 +37,7 @@ test('the OpenSpec CLI is pinned to an exact version and is the only dependency'
 
   const devDeps = manifest.devDependencies;
 
-  assert.equal(devDeps['@fission-ai/openspec'], '1.14.0');
+  assert.equal(devDeps['@fission-ai/openspec'], '1.16.0');
   // The project pin is the managed runner's audited baseline (lib/platform/openspec/README.md).
   assert.equal(devDeps['@fission-ai/openspec'], MINIMUM_VERSION);
   assert.deepEqual(Object.keys(devDeps), ['@fission-ai/openspec']);
@@ -50,7 +50,7 @@ test('the pinned OpenSpec CLI runs from its JavaScript entry without a global in
 
   const version = execFileSync(process.execPath, [entry, '--version'], { encoding: 'utf8' });
 
-  assert.equal(version.trim(), '1.14.0');
+  assert.equal(version.trim(), '1.16.0');
 });
 
 test('package.json lists no test runner or assertion library', () => {

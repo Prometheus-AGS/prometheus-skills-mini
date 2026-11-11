@@ -9,7 +9,7 @@ Selected root scripts from `package.json`; inspect the file for the complete cur
 
 ```json
 {
-  "engines": { "node": ">=22" },
+  "engines": { "node": ">=22.12.0" },
   "scripts": {
     "test": "node --test",
     "check": "node rules/build.mjs --check",
@@ -22,7 +22,7 @@ Selected root scripts from `package.json`; inspect the file for the complete cur
     "generate:commands": "node scripts/generate-commands.mjs"
   },
   "devDependencies": {
-    "@fission-ai/openspec": "1.14.0"
+    "@fission-ai/openspec": "1.16.0"
   }
 }
 ```

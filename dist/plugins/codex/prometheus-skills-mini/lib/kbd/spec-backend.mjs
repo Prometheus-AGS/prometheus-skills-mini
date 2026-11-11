@@ -376,7 +376,7 @@ export function osArchive(root, change, { spawn = spawnOpenSpec } = {}) {
 // ---------------------------------------------------------------------------
 // Spec Kit (speckit) adapter — source: kbd-apply.sh `sk_*` functions
 // ---------------------------------------------------------------------------
-// A "change" for Spec Kit is a feature dir name under specs/ (GitHub Spec Kit v1.1.2 layout,
+// A "change" for Spec Kit is a feature dir name under specs/ (GitHub Spec Kit v1.3.0 layout,
 // pinned in config/spec-engines.json). tasks.md is a markdown checklist
 // ("- [ ] T001 description"). Pure filesystem markdown parsing: no `specify` CLI call, no shell,
 // no child_process — matching the bash source, whose sk_* functions are plain awk over the file.

@@ -3,29 +3,30 @@
   "engines": {
     "openspec": {
       "cli": "openspec",
-      "pinnedVersion": "1.14.0",
+      "pinnedVersion": "1.16.0",
       "pinSource": "package.json devDependencies @fission-ai/openspec (exact)",
-      "rationale": "Exact pin per the repo dependency-pin discipline; version matches package.json. DEFAULT engine: detection order is pinned > openspec > speckit > native-kbd.",
+      "rationale": "Primary engine. Exact pin per the repo dependency-pin discipline; version matches package.json. Needs Node.js 22.12.0+ (enforced by lib/platform/openspec). DEFAULT engine: detection order is pinned > openspec > speckit > native-kbd.",
       "adapter": "os* in lib/kbd/spec-backend.mjs (CLI-backed, spawned with no shell)"
     },
     "speckit": {
       "cli": "specify",
-      "pinnedVersion": "1.1.2",
-      "pinSource": "github/spec-kit latest release",
-      "rationale": "Exact pin per the repo dependency-pin discipline; adapter is markdown-based (no specify CLI is ever invoked) and the version is pinned for layout conformance with specs/<slug>/{spec.md,plan.md,tasks.md}.",
+      "pinnedVersion": "1.3.0",
+      "pinSource": "github/spec-kit release v1.3.0 (2026-11-03)",
+      "rationale": "Supported backup engine. Exact pin per the repo dependency-pin discipline; adapter is markdown-based (no specify CLI is ever invoked) and the version is pinned for layout conformance with specs/<NNN-slug>/{spec.md,plan.md,tasks.md}, verified against v1.3.0 on 2026-11-05.",
       "adapter": "sk* in lib/kbd/spec-backend.mjs (pure filesystem markdown parsing)",
       "upstream": "github/spec-kit",
-      "notes": "artifacts under .specify/ and specs/<slug>/{spec.md,plan.md,tasks.md}; tasks.md is a markdown checklist \"- [ ] T001 description\""
+      "notes": "install: uv tool install specify-cli --from git+https://github.com/github/spec-kit.git@v1.3.0; init: specify init --here --force --non-interactive --integration <harness>; artifacts under .specify/ and specs/<slug>/{spec.md,plan.md,tasks.md}; tasks.md is a markdown checklist \"- [ ] T001 description\""
     },
     "native-kbd": {
       "cli": "prometheus kbd",
       "pinnedVersion": null,
-      "rationale": "Repo-owned backend; version tracks this repo, no external pin.",
+      "rationale": "Compatibility engine for projects that already keep native changes or pin native-kbd; not offered as a default. Repo-owned; version tracks this repo, no external pin.",
       "adapter": "nk* in lib/kbd/spec-backend.mjs",
       "notes": "source of truth .kbd-orchestrator/changes/<change>/tasks.json"
     }
   },
   "customEngines": {
     "hint": "To plug in another spec engine, add an adapter object to the specEngines registry in lib/kbd/spec-backend.mjs implementing the five ops (list/progress/markDone/verify/archive) under the uniform (root, change, ctx) shape, add its detection shape to detectBackend and its id to the project.json specBackend pin values, then register its metadata here."
-  }
+  },
+  "backup": "speckit"
 }

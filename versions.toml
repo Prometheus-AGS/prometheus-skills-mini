@@ -16,7 +16,7 @@ minimum = ">=22.12.0"     # must equal package.json engines.node, exactly
 # Each path must be a gitlink in HEAD at exactly this commit.
 "tools/prometheus-knowledge"    = "4b3a6744a4211512ff88a1cb96cf1e2a7db4c3ef"   # prometheus-knowledge v1.11.0
 "tools/liter-llm"               = "a6047386cc9fae4258b4a8577f6a016022095586"   # operator-requested current gitlink; restored transport boundaries and absent refusal fix
-"tools/surreal-memory-server"   = "63eb413ebf520a4a525ffd3b8d1d07f1389d48d4"    # surreal-memory-server v1.10.0 (surrealdb =3.3.0, matching the image below)
+"tools/surreal-memory-server"   = "63eb413ebf520a4a525ffd3b8d1d07f1389d48d4"    # surreal-memory-server v1.10.2 (surrealdb =3.3.0, matching the image below)
 
 [images]
 # The one SurrealDB container is shared by surreal-memory, compass and UAR. The release must keep

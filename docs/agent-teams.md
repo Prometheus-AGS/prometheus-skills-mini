@@ -733,6 +733,7 @@ moves between harnesses.
 | Memory stays queued | Preserve the outbox, resolve explicit project identity and the selected endpoint, and reconcile uncertain attempts before retrying. |
 | A service is missing | Choose its owning installation and follow [service operations](service-operations.md); local task files remain usable without it. |
 | A teammate's KBD writes fail with "not the journal's active enrolled device" or "active enrolled operator" | Their machine's key is not enrolled in the project's signed journal; see [add a teammate to a KBD plan](#add-a-teammate-to-a-kbd-plan). |
+| A KBD write fails with "comes from a signed journal that is not on this machine" | The plan was written on another machine and this one has no copy of its journal. Sync or restore the journal, then get enrolled; see [add a teammate to a KBD plan](#add-a-teammate-to-a-kbd-plan). Set `PROMETHEUS_KBD_NEW_JOURNAL=1` only if that journal is permanently lost: it starts a separate journal that only this machine controls. |
 
 ## Add a teammate to a KBD plan
 
@@ -752,9 +753,11 @@ operator. Committing the repository does not share that authority.
    `prometheus kbd device revoke --command-id revoke-<name> --key-id <key-id> --reason "<why>"`
 
 Enrollment is a signed journal event, so the teammate's runtime must see the same
-journal (for example through sovereign-sync). Enrollment, grants and revocations
-appear in `prometheus kbd audit`. These commands need a `prometheus` CLI that
-includes `kbd device`.
+journal (for example through sovereign-sync). Until it does, the teammate's KBD
+writes are refused rather than starting a second journal for the same plan.
+Enrollment, grants and revocations appear in `prometheus kbd audit`. These
+commands need a `prometheus` CLI that includes `kbd device`; the refusal needs
+one that includes full-pack PR #217.
 
 ## Optional shared memory and verification limits
 

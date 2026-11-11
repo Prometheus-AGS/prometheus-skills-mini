@@ -732,6 +732,29 @@ moves between harnesses.
 | Another project has not acknowledged a request | Retain its correlation reference and reconcile delivery with the destination owner; see [cross-project coordination](#coordinate-with-another-project). |
 | Memory stays queued | Preserve the outbox, resolve explicit project identity and the selected endpoint, and reconcile uncertain attempts before retrying. |
 | A service is missing | Choose its owning installation and follow [service operations](service-operations.md); local task files remain usable without it. |
+| A teammate's KBD writes fail with "not the journal's active enrolled device" or "active enrolled operator" | Their machine's key is not enrolled in the project's signed journal; see [add a teammate to a KBD plan](#add-a-teammate-to-a-kbd-plan). |
+
+## Add a teammate to a KBD plan
+
+The KBD journal accepts writes only from enrolled signing keys. Any enrolled device
+can record decisions, phases, tasks and plan revisions. Only an operator key can
+change the run lifecycle (`pause`, `resume`, `run start`, `cancel`), resolve
+conflicts, or enroll other devices. The person who set the plan up is the first
+operator. Committing the repository does not share that authority.
+
+1. The teammate, in their checkout, prints their key:
+   `prometheus kbd device identity`
+2. The teammate sends the printed device name and public key to an operator. The
+   public key is not a secret; never send a private key or a key file.
+3. The operator enrolls it. Add `--operator` to make the teammate a co-operator:
+   `prometheus kbd device enroll --command-id enroll-<name> --device-id <name> --public-key <key> --operator`
+4. Check with `prometheus kbd device list`. To remove access later:
+   `prometheus kbd device revoke --command-id revoke-<name> --key-id <key-id> --reason "<why>"`
+
+Enrollment is a signed journal event, so the teammate's runtime must see the same
+journal (for example through sovereign-sync). Enrollment, grants and revocations
+appear in `prometheus kbd audit`. These commands need a `prometheus` CLI that
+includes `kbd device`.
 
 ## Optional shared memory and verification limits
 

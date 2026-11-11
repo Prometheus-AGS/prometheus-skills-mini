@@ -129,7 +129,8 @@ function assertCanonicalPhase(stage, phaseDir, cwd) {
 /**
  * Semantic handoff validation (port of _sg_validate_handoff from the source's stage-gate.sh,
  * ebc8f687): valid JSON, required schema fields, stage-name match, identity.phaseId agreement
- * when identity is present. At the Plan→Execute boundary the plan handoff MUST carry full
+ * when identity is present, a reason on every skip and the existence of every declared output
+ * (full #184). At the Plan→Execute boundary the plan handoff MUST carry full
  * identity (projectId, runId, phaseId, planRevision, contractDigest) bound to the adopted
  * contract, the phase must not be CLOSED, and full readiness validation must pass — an
  * identity-less, stale, or unready plan handoff is rejected, never dispatched (mini #60).
@@ -150,6 +151,31 @@ function validateHandoff(handoffFile, prev, phaseDir, forStage, ctx) {
     return fail(
       `kbd_stage_gate: ${forStage} blocked — ${prev} handoff fails schema check (${problems.join(' ')}): ${handoffFile}\n` +
         `Remediation: rewrite the handoff via stageHandoffWrite('${prev}', ...) (never hand-edit).\n`,
+    );
+  }
+
+  // A skip is an explicit decision, so it must say why (full #184).
+  if (handoff.skipped === true && !isNonEmptyString(handoff.skipReason)) {
+    return fail(
+      `kbd_stage_gate: ${forStage} blocked — ${prev} handoff is skipped without a skipReason: ${handoffFile}\n` +
+        `Remediation: record the skip via stageHandoffSkip('${prev}', '<reason>', { cwd }).\n`,
+    );
+  }
+
+  // Every declared output must still exist (full #184). Relative paths resolve against the phase
+  // dir, then the repository root; absolute paths are taken as given. Content is not hashed
+  // because outputs include runtime projections such as progress.json that are regenerated on
+  // every transition.
+  const outRoot = rootFromPhaseDir(phaseDir, ctx.cwd ?? process.cwd());
+  const missingOutputs = (Array.isArray(handoff.outputs) ? handoff.outputs : [])
+    .filter(isNonEmptyString)
+    .filter((out) => (path.isAbsolute(out)
+      ? !existsSync(out)
+      : !existsSync(path.join(phaseDir, out)) && !(outRoot && existsSync(path.join(outRoot, out)))));
+  if (missingOutputs.length > 0) {
+    return fail(
+      `kbd_stage_gate: ${forStage} blocked — ${prev} handoff declares outputs that do not exist: ${missingOutputs.join(', ')}\n` +
+        `Remediation: restore the outputs, or rewrite the handoff via stageHandoffWrite('${prev}', ...) listing only outputs that exist.\n`,
     );
   }
 

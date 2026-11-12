@@ -3,7 +3,7 @@
 //   node <pack-root>/scripts/kbd-method-context.mjs [--project <root>] [--phase <id>] [--write] [--json] [--require-resolved]
 //
 // Exit codes: 0 index produced, 2 usage/discovery failure or (with --require-resolved) a
-// BLOCKED index. The `prometheus` CLI is optional; without it the index reports every
+// BLOCKED or CONFLICT index. The `prometheus` CLI is optional; without it the index reports every
 // canonical fact as unresolved instead of failing the session.
 
 import { existsSync, readFileSync, realpathSync } from 'node:fs';
@@ -53,9 +53,19 @@ export function runMethodContext(argv, { env = process.env, now = new Date() } =
     if (options.write) writeMethodContext(root, context);
     const text = options.json ? `${JSON.stringify(context, null, 2)}\n` : renderMethodContext(context);
     const err = canonical.statusError ? [`method-context: canonical status unavailable: ${canonical.statusError}`] : [];
-    return { exitCode: options.requireResolved && context.status === 'BLOCKED' ? 2 : 0, out: [text.trimEnd()], err };
+    return { exitCode: options.requireResolved && context.status !== 'RESOLVED_REFERENCES' ? 2 : 0, out: [text.trimEnd()], err };
   } catch (error) {
     return { exitCode: 2, out: [], err: [`method-context: ${error.message}`] };
+  }
+}
+
+/** Paths of policy conflicts in the phase's derived index that no current KBD-POLICY-ACK resolves. */
+export function unacknowledgedPolicyConflicts(phaseDirectoryAbsolute) {
+  try {
+    const conflicts = JSON.parse(readFileSync(path.join(phaseDirectoryAbsolute, INDEX_JSON), 'utf8')).policyConflicts;
+    return (Array.isArray(conflicts) ? conflicts : []).filter((item) => item?.acknowledged !== true && typeof item?.path === 'string').map((item) => item.path);
+  } catch {
+    return [];
   }
 }
 

@@ -17,6 +17,7 @@
     "spec:validate": "node scripts/spec-validate.mjs",
     "build:distribution": "node scripts/generate-skill-system-distribution.mjs",
     "check:distribution": "node scripts/generate-skill-system-distribution.mjs --check",
+    "check:selected-method": "node scripts/check-selected-method-core.mjs",
     "generate:commands": "node scripts/generate-commands.mjs"
   },
   "devDependencies": {

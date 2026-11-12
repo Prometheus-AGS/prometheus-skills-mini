@@ -33,9 +33,13 @@ export function methodReanchorLines(projectRoot) {
   const snapshot = index
     ? `Method snapshot (derived; re-resolve canonical authority): ${JSON.stringify(Object.fromEntries(SNAPSHOT_FIELDS.map((field) => [field, index[field]])))}`
     : 'Method snapshot unavailable: resolve selected method and contract before dependent work; do not infer them from old commands or memory.';
+  const conflicts = (Array.isArray(index?.policyConflicts) ? index.policyConflicts : [])
+    .filter((item) => item?.acknowledged !== true && typeof item?.path === 'string')
+    .map((item) => `BLOCKING policy conflict: ${item.path} — stop dependent work; resolve with a current hash-bound KBD-POLICY-ACK, never by rewriting operator rules.`);
   return [
     `KBD METHOD RECOVERY: ${directory}/method-context.md; contract: ${directory}/adopted-contract.json`,
     snapshot,
+    ...conflicts,
     'Recovery preserves latest supersession, original evidence, candidate freshness, consumed budgets and unresolved effects. Reconcile uncertain effects before retry.',
     'For selected VLBV: only the complete agreed value-phase boundary with separate authority permits generated-code verification. Host-policy conflicts remain explicit; no generic tool interception is claimed.',
   ];

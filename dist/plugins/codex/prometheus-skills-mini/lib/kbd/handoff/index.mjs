@@ -14,7 +14,7 @@ import { SUPPORTED_HARNESSES, resolveHarness } from './harnesses.mjs';
 import { classifyObligations, readPhaseFiles, readPosition, selectPhasePath } from './state.mjs';
 import { nativeRoleCheck, repoState, repoWarnings, skillCheck } from './checks.mjs';
 import { gateSections, neverDoFromAgents } from './extract.mjs';
-import { phaseMethodReferences } from '../method-context/index.mjs';
+import { phaseMethodReferences, unacknowledgedPolicyConflicts } from '../method-context/index.mjs';
 import { obligationRemediation, renderPacket, renderSidecar, startPrompt } from './packet.mjs';
 
 export const USAGE = 'usage: kbd-handoff --to <harness> [--phase <name>] [--dry-run]';
@@ -103,6 +103,9 @@ export function runHandoff(argv, { root = process.cwd(), env = process.env, home
   }
   const repo = repoState(projectRoot);
   warnings.push(...repoWarnings(repo));
+  for (const conflict of unacknowledgedPolicyConflicts(selected.dir)) {
+    warnings.push(`BLOCKING policy conflict: ${conflict}; stop dependent work until a current hash-bound KBD-POLICY-ACK resolves it.`);
+  }
 
   const phaseFiles = readPhaseFiles(selected.dir);
   const methodReferences = phaseMethodReferences(projectRoot, selected.dir);

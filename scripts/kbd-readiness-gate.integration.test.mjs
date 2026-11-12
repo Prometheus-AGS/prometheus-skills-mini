@@ -92,9 +92,12 @@ const makeContract = (overrides = {}) => ({
 });
 
 /** Canonical-status fixture bridge: mirrors what the canonical writer persists. */
+/** Canonical phase tasks, keyed by id as kbd-runtime reports them; readiness coverage reads these. */
+const canonicalTasks = (...ids) => ({ [PHASE]: { changes: { C1: { tasks: Object.fromEntries(ids.map((id) => [id, { id }])) } } } });
+
 const writeStatus = (root, decisions = {}, extra = {}) => {
   const statusFile = path.join(root, 'status-fixture.json');
-  writeFileSync(statusFile, JSON.stringify({ projectId: 'p', runId: 'r', planRevision: 1, decisions, ...extra }));
+  writeFileSync(statusFile, JSON.stringify({ projectId: 'p', runId: 'r', planRevision: 1, decisions, phases: canonicalTasks('T1'), ...extra }));
   return statusFile;
 };
 
@@ -191,14 +194,14 @@ test('BG-03 missing adoption: readiness BLOCKED with the minimal missing list', 
   }
 });
 
-test('BG-04 missing coverage: scenario ownerTask absent from tasks.json blocks readiness', () => {
+test('BG-04 missing coverage: scenario ownerTask absent from canonical phase tasks blocks readiness', () => {
   const s = scratch();
   try {
     const phaseDir = path.join(s.root, '.kbd-orchestrator', 'phases', PHASE);
     writeFileSync(path.join(phaseDir, 'adopted-contract.json'), JSON.stringify(makeContract(), null, 2));
-    writeFileSync(path.join(phaseDir, 'tasks.json'), JSON.stringify({ tasks: [{ id: 'OTHER' }] }));
+    writeFileSync(path.join(phaseDir, 'tasks.json'), JSON.stringify({ tasks: [{ id: 'T1' }] })); // stale projection is ignored
     const [id, decision] = adoptionDecisionEntry(makeContract());
-    const statusFile = writeStatus(s.root, { [id]: decision });
+    const statusFile = writeStatus(s.root, { [id]: decision }, { phases: canonicalTasks('OTHER') });
 
     const result = runScript('kbd-phase-readiness-check.mjs', ['--phase', PHASE, '--status-file', statusFile], s.root);
     assert.equal(result.status, 2);

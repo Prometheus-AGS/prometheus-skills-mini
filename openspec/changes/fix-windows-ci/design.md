@@ -8,7 +8,7 @@ Restore successful Windows CI without weakening its matrix or skipping affected 
 
 ## Decisions
 - Node's Windows recursive mkdir returns a namespaced path (node_file.cc calls ToNamespacedPath). Convert the walking path to the same representation before comparing; preserve the existing permission and ownership boundary. Do not increase timeouts to mask the loop.
-- Windows fd 0 is a FIFO, not a POSIX socket. Use the existing async idle/byte-bounded reader for Windows FIFOs; synchronous reads of these handles discard payloads in the baseline. POSIX FIFOs and regular files retain EOF reads.
+- Windows child stdin is not a POSIX socket and fstat does not consistently classify its handle as a FIFO (PR run 43418307713). Use the existing async idle/byte-bounded reader for Windows non-terminal streams; synchronous reads of these handles discard payloads in the baseline. POSIX FIFOs and regular files retain EOF reads.
 - Hash expectations use the actual git common directory's canonical path, not a canonical parent plus a basename. Retain the assertion that both real worktrees share an identity. Add path diagnostics to assertion failures if needed; no production identity change without evidence.
 - Existing full-path generator and hook tests remain the regression checks. Add a closed regular-file input case, preserve open/closed/empty stream cases, and regenerate distribution before the final boundary.
 

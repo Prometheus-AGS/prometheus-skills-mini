@@ -18,3 +18,9 @@ Full local compatibility/coverage gates and hosted CI are pending. Windows Node 
 
 ## Scope preservation
 Work is in a new isolated worktree. The original checkout's 18 modified files have a SHA-256 snapshot outside the repository. Managed OpenSpec produced unrelated generated skill/command changes in the isolated worktree; those were restored and excluded.
+
+## First hosted repair boundary
+Run 43418307713 confirms packaging and identity cases now pass on Windows Node 22. Three hook cases still fail: fstat reports neither socket nor FIFO. The follow-up reads Windows non-terminal stdin via Node's stream, preserving file and terminal handling. Full local suite and coverage were stopped before this repair; they are not reported as passes. Hosted CI supplies the complete platform gate.
+
+## Follow-up local boundary
+All 20 hook-entry tests pass (Node 24.18.0/macOS), including closed/open/empty native streams and regular-file input. Both distributions regenerated. Independent follow-up JavaScript review reports no concrete findings; Windows execution remains pending. Review-summary sycophancy screen passed with score 0.0. The original checkout's 18 unrelated files remain byte-identical to the snapshot.

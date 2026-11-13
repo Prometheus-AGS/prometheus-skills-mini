@@ -207,12 +207,12 @@ const runWithOpenStream = ({ cwd, write, close }) =>
 test('precondition: child stdin uses the native socket or pipe transport', () => {
   const result = spawnSync(
     process.execPath,
-    ['-e', "process.stdout.write(JSON.stringify({socket:require('node:fs').fstatSync(0).isSocket(),pipe:require('node:fs').fstatSync(0).isFIFO()}))"],
+    ['-e', "process.stdout.write(JSON.stringify({socket:require('node:fs').fstatSync(0).isSocket(),tty:Boolean(process.stdin.isTTY)}))"],
     { shell: false, encoding: 'utf8', input: '{}' },
   );
 
   assert.equal(result.status, 0, result.stderr);
-  assert.deepEqual(JSON.parse(result.stdout), { socket: process.platform !== 'win32', pipe: process.platform === 'win32' });
+  assert.deepEqual(JSON.parse(result.stdout), { socket: process.platform !== 'win32', tty: false });
 });
 
 test('a payload on native stdin that the harness closes reaches the hook', async () => {

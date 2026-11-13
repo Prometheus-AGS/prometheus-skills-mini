@@ -50,7 +50,7 @@ const valueAfter = (args, flag) => {
 //
 // An earlier guard read only FIFOs and regular files, which kept the last case
 // from hanging and silently dropped the first: every hook ran under Claude Code
-// with `{}` as its input. So a FIFO or a file is still read to EOF, and a socket
+// with `{}` as its input. POSIX FIFOs and files are read to EOF, and a socket
 // (and a Windows pipe) is read until EOF, an idle gap, or a byte cap — the
 // harness closes it at once, and one that never closes costs one idle gap, not
 // the hook's timeout. A terminal, or anything else, yields no input, which
@@ -98,9 +98,9 @@ const readStdin = async ({
   try {
     const stat = fstatSync(0);
     if (stat.isFile()) return readFileSync(0, 'utf8');
-    // Windows child pipes use async handles: readFileSync can fail and lose
-    // the payload. They also need the idle bound when the writer stays open.
-    if (stat.isSocket() || (process.platform === 'win32' && stat.isFIFO())) return await readSocket(process.stdin, { idleMs, maxBytes });
+    // Windows child pipe handles are not consistently classified as FIFOs by
+    // fstat. Node's non-terminal stdin stream still reads them correctly.
+    if (stat.isSocket() || (process.platform === 'win32' && !process.stdin.isTTY)) return await readSocket(process.stdin, { idleMs, maxBytes });
     if (stat.isFIFO()) return readFileSync(0, 'utf8');
     return '';
   } catch {

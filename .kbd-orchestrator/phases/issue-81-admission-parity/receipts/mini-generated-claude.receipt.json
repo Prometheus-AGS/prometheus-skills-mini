@@ -1,0 +1,1300 @@
+{
+  "schema": "kbd.conformance-receipt/v1",
+  "corpus": "kbd-phase-closure/v1",
+  "pack": "prometheus-skills-mini",
+  "surface": "generated claude",
+  "packageRoot": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/dist/plugins/claude/prometheus-skills-mini",
+  "commit": "c54ffdfc8e78a170a8b3f41db66ba44433a0a353",
+  "versions": {
+    "prometheus": "prometheus 1.14.0",
+    "node": "v24.18.0",
+    "sshKeygen": "OpenSSH_10.3p1, LibreSSL 3.3.6",
+    "os": "darwin 25.6.0"
+  },
+  "cases": [
+    {
+      "id": "01-pass-closes-once",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "close-eval",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "stage-gate-execute",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "next-phase",
+          "exit": 4,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "02-forged-text-is-not-closure",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "forge-decision",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "stage-gate-execute",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "next-phase",
+          "exit": 2,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "03-refused-closure-blocks-continuation",
+      "acceptance": [
+        1,
+        4
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "close-eval",
+          "exit": 3,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "next-phase",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "phase-transition",
+          "exit": 1,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "04-repeat-and-restart-are-no-ops",
+      "acceptance": [
+        2
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "close-eval",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "close-eval",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "cli-close",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "restart",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "close-eval",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 8,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "05-concurrent-close-records-once",
+      "acceptance": [
+        2
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "close-eval",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "06-closed-phase-is-immutable",
+      "acceptance": [
+        2
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "close-eval",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 6,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "cli-close",
+          "exit": 6,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "07-imported-scope-cannot-block",
+      "acceptance": [
+        3
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "edit-contract",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "adopt",
+          "exit": 4,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "08-unmet-requirement-stays-refused",
+      "acceptance": [
+        4
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 8,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 9,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "09-writer-failure-claims-nothing",
+      "acceptance": [
+        4
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "close-eval",
+          "exit": 5,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 5,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "10-budget-at-ceiling-closes-labelled",
+      "acceptance": [
+        4
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "close-eval",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "11-budget-exceeded-or-unmeasured-blocks",
+      "acceptance": [
+        4
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "12-signed-amendment-invalidates-only-changed",
+      "acceptance": [
+        5
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "close-eval",
+          "exit": 3,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "edit-contract",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 8,
+          "op": "close-eval",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 9,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "13-amendment-requires-valid-authority",
+      "acceptance": [
+        3,
+        5
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "edit-contract",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "adopt",
+          "exit": 4,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "adopt",
+          "exit": 4,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "adopt",
+          "exit": 4,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "adopt",
+          "exit": 4,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "adopt",
+          "exit": 4,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "adopt",
+          "exit": 4,
+          "problems": []
+        },
+        {
+          "index": 8,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 9,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 10,
+          "op": "edit-contract",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 11,
+          "op": "adopt",
+          "exit": 4,
+          "problems": []
+        },
+        {
+          "index": 12,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "14-budget-cannot-reset",
+      "acceptance": [
+        5
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "close-eval",
+          "exit": 3,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "15-authorized-successor-starts-once",
+      "acceptance": [
+        6
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "close-eval",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "next-phase",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "next-phase",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "16-successor-requires-valid-authority",
+      "acceptance": [
+        6
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "close-eval",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "next-phase",
+          "exit": 4,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "next-phase",
+          "exit": 4,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "phase-create",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "phase-activate",
+          "exit": 1,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "phase-activate",
+          "exit": 1,
+          "problems": []
+        },
+        {
+          "index": 8,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 9,
+          "op": "cli-successor",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 10,
+          "op": "cli-successor",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 11,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "17-legacy-unbound-phase-unchanged",
+      "acceptance": [
+        7
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "next-phase",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "18-evidence-for-another-phase-is-refused",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "19-evidence-for-another-project-is-refused",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "20-missing-source-digests-are-refused",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "21-stale-source-digest-is-refused",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "22-empty-observation-fields-are-refused",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 8,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 9,
+          "op": "cli-close",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 10,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    },
+    {
+      "id": "23-valid-receipt-closes-once-through-direct-close",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "cli-close",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 4,
+          "op": "cli-close",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "edit-source",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "cli-close",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "close-eval",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 8,
+          "op": "restart",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 9,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 10,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 11,
+          "op": "cli-close",
+          "exit": 6,
+          "problems": []
+        },
+        {
+          "index": 12,
+          "op": "assert",
+          "exit": null,
+          "problems": []
+        }
+      ]
+    }
+  ],
+  "notRun": [
+    "remote control plane",
+    "Windows and Linux hosts",
+    "installed generations (mini installs via the plugin marketplace)"
+  ],
+  "passed": 23,
+  "total": 23
+}

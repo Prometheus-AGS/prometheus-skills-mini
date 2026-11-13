@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/Users/gqadonis/.volta/tools/image/node/24.18.0/bin/node",
+    "--test",
+    "--test-reporter=tap",
+    "--test-name-pattern=^corpus on installed claude$",
+    "scripts/kbd-phase-closure.conformance.test.mjs"
+  ],
+  "env": {
+    "PROMETHEUS_CLI_TEST_BINARY": "/Users/gqadonis/Projects/prometheus/prometheus-skill-system/.claude/worktrees/fix-219-phase-close-admission-1d13d7/tools/prometheus-cli/target/release/prometheus",
+    "PROMETHEUS_CLI_REQUIRED": "1",
+    "KBD_CONFORMANCE_INSTALLED_ROOT": "/var/folders/2l/dfb80qb56z99f_t41vyw6s5r0000gn/T/mini-81-installed-KZt1Iw/home/.claude/plugins/cache/prometheus-skills-mini/prometheus-skills-mini/1.13.2",
+    "KBD_CONFORMANCE_CASE_IDS": "18-evidence-for-another-phase-is-refused,19-evidence-for-another-project-is-refused,20-missing-source-digests-are-refused,21-stale-source-digest-is-refused,22-empty-observation-fields-are-refused,23-valid-receipt-closes-once-through-direct-close",
+    "KBD_CONFORMANCE_RECEIPTS": "/Users/gqadonis/Projects/prometheus/prometheus-skills-mini/.kbd-orchestrator/phases/issue-81-admission-parity/receipts/installed-closeout-2026-11-13"
+  }
+}

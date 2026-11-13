@@ -1,0 +1,21 @@
+{
+  "distribution": {
+    "command": "node scripts/generate-skill-system-distribution.mjs --check",
+    "exit": 0,
+    "result": "104 skills; no drift in bytes and POSIX modes"
+  },
+  "openspec": {
+    "command": "node node_modules/@fission-ai/openspec/bin/openspec.js validate issue-81-installed-admission-parity --strict",
+    "exit": 0
+  },
+  "npmAuditProduction": {
+    "command": "npm audit --omit=dev --audit-level=high",
+    "exit": 0,
+    "vulnerabilities": 0
+  },
+  "npmAuditAll": {
+    "command": "npm audit --audit-level=high",
+    "exit": 1,
+    "result": "Existing dev dependency zod <4.6.6: GHSA-mrhx-c7xc-m3w5 (high). Dependency updates are outside #81; unchanged."
+  }
+}

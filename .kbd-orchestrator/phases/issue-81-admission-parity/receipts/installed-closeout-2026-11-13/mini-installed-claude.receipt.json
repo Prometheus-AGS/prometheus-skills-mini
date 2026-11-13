@@ -1,0 +1,513 @@
+{
+  "schema": "kbd.conformance-receipt/v1",
+  "corpus": "kbd-phase-closure/v1",
+  "pack": "prometheus-skills-mini",
+  "surface": "installed claude",
+  "packageRoot": "/var/folders/2l/dfb80qb56z99f_t41vyw6s5r0000gn/T/mini-81-installed-KZt1Iw/home/.claude/plugins/cache/prometheus-skills-mini/prometheus-skills-mini/1.13.2",
+  "commit": "c54ffdfc8e78a170a8b3f41db66ba44433a0a353",
+  "executable": {
+    "path": "/Users/gqadonis/Projects/prometheus/prometheus-skill-system/.claude/worktrees/fix-219-phase-close-admission-1d13d7/tools/prometheus-cli/target/release/prometheus",
+    "sha256": "580bd03c7188e3b371cd428f85de7859bd92eadc42b9a9cacb56689b9f21525a"
+  },
+  "versions": {
+    "prometheus": "prometheus 1.14.0",
+    "node": "v24.18.0",
+    "sshKeygen": "OpenSSH_10.3p1, LibreSSL 3.3.6",
+    "os": "darwin 25.6.0"
+  },
+  "cases": [
+    {
+      "id": "18-evidence-for-another-phase-is-refused",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "OPEN",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "REFUSED_BLOCKED",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        },
+        {
+          "index": 6,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "REFUSED_BLOCKED",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "19-evidence-for-another-project-is-refused",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "OPEN",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "REFUSED_BLOCKED",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        },
+        {
+          "index": 6,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "REFUSED_BLOCKED",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "20-missing-source-digests-are-refused",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "OPEN",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "REFUSED_BLOCKED",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        },
+        {
+          "index": 6,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "REFUSED_BLOCKED",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "21-stale-source-digest-is-refused",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "OPEN",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "REFUSED_BLOCKED",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        },
+        {
+          "index": 6,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "REFUSED_BLOCKED",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "22-empty-observation-fields-are-refused",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "OPEN",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        },
+        {
+          "index": 4,
+          "op": "close-eval",
+          "exit": 2,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "REFUSED_BLOCKED",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        },
+        {
+          "index": 6,
+          "op": "cli-close",
+          "exit": 7,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "REFUSED_BLOCKED",
+            "phaseStatus": "in_progress",
+            "successor": null
+          }
+        },
+        {
+          "index": 8,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 9,
+          "op": "cli-close",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 10,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "CLOSED",
+            "phaseStatus": "complete",
+            "successor": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "23-valid-receipt-closes-once-through-direct-close",
+      "acceptance": [
+        1
+      ],
+      "result": "PASS",
+      "steps": [
+        {
+          "index": 0,
+          "op": "adopt",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 1,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 2,
+          "op": "cli-close",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 3,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "CLOSED",
+            "phaseStatus": "complete",
+            "successor": null
+          }
+        },
+        {
+          "index": 4,
+          "op": "cli-close",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 5,
+          "op": "edit-source",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 6,
+          "op": "cli-close",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 7,
+          "op": "close-eval",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 8,
+          "op": "restart",
+          "exit": 0,
+          "problems": []
+        },
+        {
+          "index": 9,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "CLOSED",
+            "phaseStatus": "complete",
+            "successor": null
+          }
+        },
+        {
+          "index": 10,
+          "op": "evidence",
+          "exit": null,
+          "problems": []
+        },
+        {
+          "index": 11,
+          "op": "cli-close",
+          "exit": 6,
+          "problems": []
+        },
+        {
+          "index": 12,
+          "op": "assert",
+          "exit": null,
+          "problems": [],
+          "canonical": {
+            "disposition": "CLOSED",
+            "phaseStatus": "complete",
+            "successor": null
+          }
+        }
+      ]
+    }
+  ],
+  "notRun": [
+    "remote control plane",
+    "Windows and Linux hosts",
+    "harness hook activation",
+    "installed Codex"
+  ],
+  "passed": 6,
+  "total": 6
+}

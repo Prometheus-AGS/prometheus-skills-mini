@@ -250,9 +250,15 @@ function writeEvidence(ctx, args) {
   if (args.budget === 'unmeasured') values.timeMinutes = { value: null, class: 'unknown' };
   values.noProgress = { value: 0, class: 'measured' };
   values.tokens = { value: null, class: 'unknown' };
-  const evidence = { phase: ctx.phase, projectId: s.projectId, runId: args.run === 'prefix' ? `${s.runId}x` : s.runId,
-    contractDigest, sourceDigests: { 'src.txt': sha256(fs.readFileSync(path.join(ctx.project, 'src.txt'))) },
-    budgetConsumption: { source: 'conformance fixture (self-reported)', values }, scenarios };
+  // Evidence-admission defects (cases 18-23, full #219): blanked observation fields, a stale or
+  // absent sourceDigests, and evidence naming another phase or project.
+  const blanked = scenarios.map((item) => ({ ...item,
+    ...Object.fromEntries((args.blank?.[item.id] ?? []).map((field) => [field, ''])) }));
+  const currentSource = sha256(fs.readFileSync(path.join(ctx.project, 'src.txt')));
+  const sourceDigests = { current: { 'src.txt': currentSource }, stale: { 'src.txt': sha256('an earlier revision of the source\n') } }[args.sources ?? 'current'];
+  const evidence = { phase: args.phase ?? ctx.phase, projectId: args.project ?? s.projectId, runId: args.run === 'prefix' ? `${s.runId}x` : s.runId,
+    contractDigest, ...(sourceDigests ? { sourceDigests } : {}),
+    budgetConsumption: { source: 'conformance fixture (self-reported)', values }, scenarios: blanked };
   if (args.approvedBy) evidence.approvedBy = args.approvedBy;
   writeFile(path.join(ctx.phaseDir, 'boundary-results.json'), evidence);
 }
@@ -304,6 +310,7 @@ export async function step(ctx, { op, args = {} }) {
     }
     case 'edit-contract': editContract(ctx, args); return null;
     case 'evidence': writeEvidence(ctx, args); return null;
+    case 'edit-source': fs.appendFileSync(path.join(ctx.project, 'src.txt'), 'edited after the evidence was produced\n'); return null;
     case 'close-eval': return closeEval(ctx, args);
     case 'cli-close': return kbd(ctx, ['phase', 'close', '--id', ctx.phase, '--evidence-file',
       path.join(ctx.phaseDir, 'boundary-results.json'), '--disposition', args.disposition]);

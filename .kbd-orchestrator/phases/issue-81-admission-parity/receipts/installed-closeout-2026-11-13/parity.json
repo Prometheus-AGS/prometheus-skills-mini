@@ -1,0 +1,37 @@
+{
+  "result": "PASS",
+  "surfaces": [
+    {
+      "surface": "source",
+      "passed": 6,
+      "total": 6
+    },
+    {
+      "surface": "generated claude",
+      "passed": 6,
+      "total": 6
+    },
+    {
+      "surface": "generated codex",
+      "passed": 6,
+      "total": 6
+    },
+    {
+      "surface": "installed claude",
+      "passed": 6,
+      "total": 6
+    }
+  ],
+  "compared": "Exact case IDs, result, every step exit, assertion disposition/phaseStatus/successor, executable path/hash",
+  "binaryAndPayloadHashesUnchanged": true,
+  "checks": [
+    "wrong phase/project refusal",
+    "missing/stale source hashes refusal",
+    "empty observation refusal",
+    "single valid closure",
+    "retry/replay idempotency",
+    "no successor"
+  ],
+  "initialDriverInterrupted": true,
+  "installedSurfaceResumedOnly": true
+}

@@ -1,0 +1,29 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "producer_model": "GPT-6 Codex",
+  "judge_model": "harness-native code-reviewer and typescript-reviewer; inherited model family",
+  "isolation_mode": "harness-native",
+  "cross_model_check": "degraded-same-family",
+  "gatewayAttempt": {
+    "exit": 4,
+    "reason": "JUDGE_MODEL_COLLISION: no-distinct-backup; configured canonical model identities unavailable"
+  },
+  "findings": [],
+  "checked_classes": [
+    "Selection and silent skips: explicit installed requests require a runtime and helper entry points; unknown/empty exact IDs fail.",
+    "Async ordering and vacuous parity: sequential node:test execution, all surface receipts and selected cases required before comparison.",
+    "Fixture isolation: separate project/device/data roots for every case and surface.",
+    "Admission coverage: cases 18–22 exercise both direct and Node routes and assert no CLOSED on malformed evidence.",
+    "Replay and successors: case 23 checks duplicate/retry/post-edit/checkpoint replay, one closure event, zero successor events.",
+    "Surface routing: installed adoption/evaluation resolve from package root and execute in scratch consumers.",
+    "Regression and security: default enumeration preserved; changed code adds no shell interpolation, credentials or production authorization changes.",
+    "Scope: only qualification tooling; Windows/Linux and harness hooks explicitly untested."
+  ],
+  "limits": "Two fresh-context static reviews of mandate + packet, no execution receipts included yet; execution evidence receives a subsequent review.",
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

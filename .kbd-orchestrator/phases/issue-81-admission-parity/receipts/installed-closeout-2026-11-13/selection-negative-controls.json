@@ -1,0 +1,26 @@
+[
+  {
+    "name": "unknown-case",
+    "exit": 1,
+    "pass": true,
+    "expected": "exact corpus IDs"
+  },
+  {
+    "name": "empty-case",
+    "exit": 1,
+    "pass": true,
+    "expected": "exact corpus IDs"
+  },
+  {
+    "name": "missing-installed-root",
+    "exit": 1,
+    "pass": true,
+    "expected": "entry point missing"
+  },
+  {
+    "name": "missing-runtime",
+    "exit": 1,
+    "pass": true,
+    "expected": "lacks typed phase closure"
+  }
+]

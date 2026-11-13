@@ -1,0 +1,1 @@
+The initial outer driver had a 240000 ms timeout and exited without a final TAP result or installed receipt. Source and both generated surface receipts completed (6/6 each). Only the unfinished installed surface is resumed; passing gates are not repeated. Aggregate parity is checked against all four saved receipts afterward.

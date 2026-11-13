@@ -1,0 +1,32 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "producer_model": "GPT-6 Codex",
+  "judge_model": "harness-native code-reviewer; inherited model family",
+  "isolation_mode": "harness-native",
+  "cross_model_check": "degraded-same-family",
+  "findings": [],
+  "checked_classes": [
+    "Missing artifact identity (A1): /identity/upstream/sourceCommit records 7f56124f235a5bccd586ff69e8576de28af1b55f; /identity/binary records the executable path, version and SHA-256 580bd03c7188e3b371cd428f85de7859bd92eadc42b9a9cacb56689b9f21525a. Each /receipts/*/executable repeats that path and hash. These fields identify the reported artifacts; they do not independently establish their build relationship.",
+    "Commit-only identification of dirty mini files (A1): /identity/mini/workingTree explicitly states that the commit does not identify tested bytes; /identity/mini/runnerSha256, adapterSha256 and corpusPin supply additional identifiers. No clean-tree assertion appears in that record.",
+    "Missing refusal route or CLOSED after invalid evidence (A2): in each of /receipts/0 through /receipts/3, cases 18–22 contain cli-close exit 7 at step 2 followed by OPEN/in_progress at step 3, and close-eval exit 2 at step 4 followed by REFUSED_BLOCKED/in_progress at step 5. No corresponding invalid-evidence assertion snapshot is CLOSED.",
+    "Missing retry or replay evidence (A3): case 23 in each receipt contains initial cli-close exit 0, repeated cli-close exit 0, edit-source, another cli-close exit 0, close-eval exit 0 and restart exit 0. Its canonical snapshots at steps 3, 9 and 12 remain CLOSED with successor null. These records support retry/replay behavior as reported by the runner.",
+    "Copy-only payload mislabeled as installed (A4): /installation/exit is 0 and /installation/stdout reports successful plugin installation. /registration/plugins/prometheus-skills-mini@prometheus-skills-mini/0/installPath equals /receipts/3/packageRoot and /identity/payloads/installed-claude/root. Registration evidence is present in addition to the payload-equality claim.",
+    "Missing surface or divergent recorded disposition (A4): /receipts contains source, generated claude, generated codex and installed claude. Each contains the same six case IDs, passed=6, total=6 and matching recorded step exits and canonical snapshots.",
+    "Interrupted execution represented as uninterrupted success: /parity/initialDriverInterrupted is true, /parity/installedSurfaceResumedOnly is true, and /limits explicitly describes comparison of saved receipts after the installed-only rerun.",
+    "Unsupported platform or harness coverage: every /receipts/*/notRun lists Windows and Linux hosts, installed Codex, remote control plane and harness hook activation; /limits repeats those exclusions."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  },
+  "limitations": [
+    "This is an internal-consistency review of supplied evidence, not independent execution verification.",
+    "A1 source-to-binary provenance is expressly upstream-reported in /identity/binary/provenance. The packet does not independently attest that the recorded binary was built from the recorded source commit.",
+    "A2 receipts record exits, assertion snapshots and empty problems arrays, but omit raw process output, malformed evidence contents and scratch-project paths. Isolation and diagnostic matching are not independently established by this evidence packet alone.",
+    "For A3, receipts do not include raw journal counts or duplicate flags. The claim that closure occurred exactly once relies on the runner’s reported passing assertions, rather than directly inspectable event-count evidence in this packet.",
+    "/identity/installedPayloadMatchesGenerated and /parity/binaryAndPayloadHashesUnchanged are supplied comparison results. Payload entries contain roots and file counts, not per-file hash manifests, so those comparisons cannot be reconstructed from this packet.",
+    "The supplied records support acceptance at the reported-run evidence level within the explicit limits. They do not support describing installation, runtime behavior or provenance as independently reproduced by this review."
+  ]
+}

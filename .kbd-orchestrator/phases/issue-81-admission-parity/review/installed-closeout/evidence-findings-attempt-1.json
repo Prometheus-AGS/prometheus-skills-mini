@@ -1,0 +1,23 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "producer_model": "GPT-6 Codex",
+  "judge_model": "harness-native code-reviewer; inherited model family",
+  "isolation_mode": "harness-native",
+  "cross_model_check": "degraded-same-family",
+  "findings": [],
+  "checked_classes": [
+    "A1: exact source/merge revisions, binary path/version/hash, dirty mini identity and corpus pin recorded; all receipts use same binary; build provenance explicitly upstream-reported.",
+    "A2: four surfaces pass cases 18–22; direct exit 7 without CLOSED and wrapper exit 2 REFUSED_BLOCKED, phase in_progress.",
+    "A3: case 23 validates single closure, duplicate/post-edit/evaluator retry and restart, different-receipt refusal, no successor.",
+    "A4: successful real installer and registration identify the same cache path as installed receipt; installation not inferred from a copied directory.",
+    "A4: all four surfaces report 6/6 with identical exits and canonical snapshots.",
+    "Interruption: disclosed initial outer timeout and installed-only resumption; complete saved receipts and unchanged hashes support aggregate comparison.",
+    "Limits: Windows/Linux, installed Codex, remote control plane and harness hooks unverified; no independent build attestation or independent re-execution claimed."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

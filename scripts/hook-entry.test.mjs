@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { mkdtempSync, mkdirSync, writeFileSync, cpSync, rmSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, cpSync, rmSync, openSync, closeSync } from 'node:fs';
 import { tempDir } from '../lib/platform/paths.mjs';
 import { HOOK_MODULES, SOCKET_IDLE_MS, classifyLoadFailure, dispatch } from './hook-entry.mjs';
 
@@ -176,10 +176,9 @@ const withPausedProject = async (fn) => {
 
 const hookArgs = ['--hook', 'sessionstart-kbd-control', '--harness', 'claude-code'];
 
-// Spawns the entry with fd 0 as a socket the test controls, and resolves when
-// the process exits. `stdio: 'pipe'` is a socket on every platform this runs on;
-// the precondition test below checks that rather than assuming it.
-const runWithOpenSocket = ({ cwd, write, close }) =>
+// Spawn with the platform's native child stdin: a POSIX socket or Windows
+// pipe. The precondition checks the actual transport; effect tests cover both.
+const runWithOpenStream = ({ cwd, write, close }) =>
   new Promise((resolve, reject) => {
     const started = Date.now();
     const child = spawn(process.execPath, [entry, ...hookArgs], {
@@ -193,7 +192,7 @@ const runWithOpenSocket = ({ cwd, write, close }) =>
     child.stdout.resume();
     const guard = setTimeout(() => {
       child.kill('SIGKILL');
-      reject(new Error('hook-entry hung on an open socket stdin'));
+      reject(new Error('hook-entry hung on an open stdin stream'));
     }, 15000);
     child.on('error', reject);
     child.on('exit', (status) => {
@@ -205,18 +204,18 @@ const runWithOpenSocket = ({ cwd, write, close }) =>
     if (close) child.stdin.end();
   });
 
-test('precondition: spawnSync input reaches the child as a socket, as Claude Code delivers it', () => {
+test('precondition: child stdin uses the native socket or pipe transport', () => {
   const result = spawnSync(
     process.execPath,
-    ['-e', "process.stdout.write(String(require('node:fs').fstatSync(0).isSocket()))"],
+    ['-e', "process.stdout.write(JSON.stringify({socket:require('node:fs').fstatSync(0).isSocket(),tty:Boolean(process.stdin.isTTY)}))"],
     { shell: false, encoding: 'utf8', input: '{}' },
   );
 
   assert.equal(result.status, 0, result.stderr);
-  assert.equal(result.stdout, 'true', 'the socket tests below would prove nothing without a socket');
+  assert.deepEqual(JSON.parse(result.stdout), { socket: process.platform !== 'win32', tty: false });
 });
 
-test('a payload on a socket stdin that the harness closes reaches the hook', async () => {
+test('a payload on native stdin that the harness closes reaches the hook', async () => {
   await withPausedProject(({ project, elsewhere }) => {
     const result = spawnSync(process.execPath, [entry, ...hookArgs], {
       shell: false,
@@ -230,9 +229,9 @@ test('a payload on a socket stdin that the harness closes reaches the hook', asy
   });
 });
 
-test('a payload on a socket stdin that is never closed still reaches the hook, without hanging', async () => {
+test('a payload on native stdin that is never closed still reaches the hook, without hanging', async () => {
   await withPausedProject(async ({ project, elsewhere }) => {
-    const result = await runWithOpenSocket({
+    const result = await runWithOpenStream({
       cwd: elsewhere,
       write: JSON.stringify({ session_id: 's', cwd: project }),
       close: false,
@@ -245,9 +244,9 @@ test('a payload on a socket stdin that is never closed still reaches the hook, w
 
 // The case the original guard existed for: `node --test` gives a socket that
 // is never written and never closed. It must cost one idle gap, not a hang.
-test('a socket stdin that is never written or closed yields empty input and exits promptly', async () => {
+test('native stdin that is never written or closed yields empty input and exits promptly', async () => {
   await withPausedProject(async ({ elsewhere }) => {
-    const result = await runWithOpenSocket({ cwd: elsewhere, close: false });
+    const result = await runWithOpenStream({ cwd: elsewhere, close: false });
 
     assert.equal(result.status, 0, result.stderr);
     assert.doesNotMatch(result.stderr, /KBD REANCHOR/);
@@ -325,4 +324,22 @@ test('dispatch still treats a missing optional package as a degradation and exit
   };
   const pluginRoot = path.join(path.sep, 'cache', 'plugin');
   assert.equal(await dispatch(['--hook', 'probe-hook'], { modules, pluginRoot }), 0);
+});
+
+// Regular-file redirection remains an EOF read, independent of pipe idle bounds.
+test('a payload redirected from a regular file reaches the hook', async () => {
+  await withPausedProject(({ project, elsewhere }) => {
+    const input = path.join(elsewhere, 'input.json');
+    writeFileSync(input, JSON.stringify({ session_id: 's', cwd: project }));
+    const fd = openSync(input, 'r');
+    try {
+      const result = spawnSync(process.execPath, [entry, ...hookArgs], {
+        shell: false, encoding: 'utf8', cwd: elsewhere, stdio: [fd, 'pipe', 'pipe'],
+      });
+      assert.equal(result.status, 0, result.stderr);
+      assert.match(result.stderr, /KBD REANCHOR/);
+    } finally {
+      closeSync(fd);
+    }
+  });
 });

@@ -45,13 +45,13 @@ const valueAfter = (args, flag) => {
 //  - Claude Code 2.1.289 hands every command hook a SOCKET (mode 0140444), in
 //    exec form and shell form alike, writes the payload and closes it.
 //  - codex-cli 0.158.0 hands its hooks a FIFO.
-//  - `spawnSync(..., { input })` from Node is a socket too.
+//  - Node child stdin is a socket on POSIX and a pipe on Windows.
 //  - `node --test` gives each test file a socket that is never closed.
 //
 // An earlier guard read only FIFOs and regular files, which kept the last case
 // from hanging and silently dropped the first: every hook ran under Claude Code
-// with `{}` as its input. So a FIFO or a file is still read to EOF, and a socket
-// is read until EOF, an idle gap, or a byte cap, whichever comes first — the
+// with `{}` as its input. POSIX FIFOs and files are read to EOF, and a socket
+// (and a Windows pipe) is read until EOF, an idle gap, or a byte cap — the
 // harness closes it at once, and one that never closes costs one idle gap, not
 // the hook's timeout. A terminal, or anything else, yields no input, which
 // parseInput already treats as the ordinary empty case.
@@ -97,8 +97,11 @@ const readStdin = async ({
 } = {}) => {
   try {
     const stat = fstatSync(0);
-    if (stat.isFIFO() || stat.isFile()) return readFileSync(0, 'utf8');
-    if (stat.isSocket()) return await readSocket(process.stdin, { idleMs, maxBytes });
+    if (stat.isFile()) return readFileSync(0, 'utf8');
+    // Windows child pipe handles are not consistently classified as FIFOs by
+    // fstat. Node's non-terminal stdin stream still reads them correctly.
+    if (stat.isSocket() || (process.platform === 'win32' && !process.stdin.isTTY)) return await readSocket(process.stdin, { idleMs, maxBytes });
+    if (stat.isFIFO()) return readFileSync(0, 'utf8');
     return '';
   } catch {
     return '';

@@ -17,7 +17,7 @@ Failures attributed to this change, repaired at B5:
 
 Failures not attributed to this change:
 - `the real repository scan passes with exactly the dispositioned occurrences`: hits are in `tools/surreal-memory-server` (submodule working tree, untouched; no scan code or disposition changed).
-- Phase-closure corpus cases 18–22 (`cli-close` expected exit 7, got 0) in all three modes: the local `prometheus` binary is 1.14.0 (2026-11-06), which predates full-pack #219's admission refusals. A clean-main baseline of this corpus was started for confirmation; its result is recorded in the PR.
+- Phase-closure corpus cases 18–22 (`cli-close` expected exit 7, got 0) in all three modes: the local `prometheus` binary is 1.14.0 (2026-11-06), which predates full-pack #219's admission refusals. Baseline: `node --test scripts/kbd-phase-closure.conformance.test.mjs` on clean main (cb6694c) with the same binary fails the same cases 18–22 in all three modes (5 tests, 2 pass, 3 fail), so they predate this change.
 
 ## B5 — owner-authorized repair (affected checks only)
 - `node --test lib/distribution/package-builder.test.mjs scripts/generate-skill-system-distribution.test.mjs lib/context-bootstrap/*.test.mjs rules/test/scaffold.test.mjs`: 27 tests, 26 pass; the remaining bootstrap failure (item 4) repaired and `bootstrap.integration.test.mjs` rerun: pass.

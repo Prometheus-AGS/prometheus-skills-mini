@@ -18,6 +18,9 @@
 // mutable working contract. Evidence entries outside the bound contract are reported and
 // ignored. Decision-summary text is never read as closure.
 //
+// Every outcome after the bound snapshot is verified also writes the derived closure view
+// (closure.json + closure-packet.md, lib/kbd/closure-packet/) — never verdict-changing.
+//
 // Statuses: 0 closed/already-closed; 1 usage/io; 2 BLOCKED; 3 FAIL; 5 canonical writer failed
 // (nothing claimed); 6 already closed under a different evidence identity.
 
@@ -26,6 +29,7 @@ import path from 'node:path';
 import { budgetPredicate, contractDigest, sha256Of } from './adopted-contract.mjs';
 import { findKbdRoot, readCanonicalStatus } from './contract-adopt.mjs';
 import { readDisposition, runPhaseCommand } from './phase-disposition.mjs';
+import { writeClosurePacket } from './closure-packet/index.mjs';
 
 const isNonEmptyString = (v) => typeof v === 'string' && v.length > 0;
 const EXIT_WRITER_FAILED = 5;
@@ -75,13 +79,29 @@ export function phaseCloseEval(phase, ctx = {}) {
     return runPhaseCommand({ root, args, spawn: ctx.spawn });
   }
 
+  // Derived closure view (VLBV CR-21): closure.json + closure-packet.md beside the evidence.
+  // Best effort, written only once the bound snapshot is verified; it never changes the verdict
+  // or the exit status. A failure is a visible WARN line with the rerun command.
+  let packetSnapshot = null;
+  function closurePacket(dispositionName, reason) {
+    if (!packetSnapshot) return '';
+    try {
+      writeClosurePacket({ snapshotPath: packetSnapshot, evidencePath, phaseDir, projectRoot: root, disposition: dispositionName, reason });
+      return '';
+    } catch (error) {
+      return `WARN closure-packet not generated for phase=${phase} (${String(error.message).slice(0, 160)}); rerun: ` +
+        `node scripts/kbd-closure-packet.mjs --snapshot ${packetSnapshot} --evidence ${evidencePath} --out-dir ${phaseDir} --disposition ${dispositionName}\n`;
+    }
+  }
+
   function refuse(verdict, status, reason) {
     const written = record(verdict.toLowerCase(), reasonCode(reason));
     if (written.status !== 0) {
       return out(EXIT_WRITER_FAILED,
         `WRITER-FAILED phase=${phase} verdict=${verdict} reason=${reason} writer-exit=${written.status} (nothing recorded)`);
     }
-    return out(status, `${verdict} phase=${phase} reason=${reason}`);
+    const warning = closurePacket(`REFUSED_${verdict}`, reason);
+    return out(status, `${warning}${verdict} phase=${phase} reason=${reason}`);
   }
   const blocked = (reason) => refuse('BLOCKED', 2, reason);
   const failed = (reason) => refuse('FAIL', 3, reason);
@@ -112,6 +132,7 @@ export function phaseCloseEval(phase, ctx = {}) {
   if (!existsSync(snapshotPath) || sha256Of(readFileSync(snapshotPath)) !== boundDigest) {
     return blocked(`snapshot-invalid(${snapshotPath} does not hash to the bound digest ${boundDigest})`);
   }
+  packetSnapshot = snapshotPath;
   const contract = JSON.parse(readFileSync(snapshotPath, 'utf8'));
   let driftNote = '';
   const workingPath = path.join(phaseDir, 'adopted-contract.json');
@@ -190,8 +211,9 @@ export function phaseCloseEval(phase, ctx = {}) {
   if (written.status !== 0) {
     return out(EXIT_WRITER_FAILED, `WRITER-FAILED phase=${phase} verdict=PASS writer-exit=${written.status} (phase NOT closed)`);
   }
+  const warning = closurePacket('CLOSED', passReason || 'pass');
   return out(0,
-    `CLOSED phase=${phase} verdict=PASS evidence=sha256:${evidenceDigest} contract=${boundDigest} run=${canonicalRun} ` +
+    `${warning}CLOSED phase=${phase} verdict=PASS evidence=sha256:${evidenceDigest} contract=${boundDigest} run=${canonicalRun} ` +
     `entries=${all.length}${passReason ? ` budget-note=${passReason}` : ''}${scopeNote}${driftNote} (dispatch for this phase now refused)`);
 }
 

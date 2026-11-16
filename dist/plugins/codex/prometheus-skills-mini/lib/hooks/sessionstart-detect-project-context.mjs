@@ -1,5 +1,5 @@
 import { findProject } from '../platform/openspec/state.mjs';
-import { refreshOpenSpec } from '../platform/openspec.mjs';
+import { verifyOpenSpec } from '../platform/openspec.mjs';
 // SessionStart: reports what this project actually is.
 //
 // DELIBERATE BEHAVIOUR CHANGE FROM UPSTREAM (operator decision 2026-09-21,
@@ -31,9 +31,24 @@ const countCapabilities = (projectRoot) => {
   return found;
 };
 
+// Quiet when current, skipped or disabled; one line otherwise.
+const openspecLine = (status) => {
+  if (status === 'refresh-needed') {
+    return 'OpenSpec integration is not at the pack-pinned version; run the KBD phase-entry refresh before phase work.';
+  }
+  if (['current', 'skipped', 'disabled'].includes(status)) return null;
+  return 'OpenSpec session check did not complete; run: node lib/platform/openspec/cli.mjs verify --project <root>';
+};
+
 export async function run(payload) {
   return degradeSafely(payload.hookId, async () => {
-    refreshOpenSpec(cwdOf(payload.input), { timeoutMs: 12000 });
+    // Verify (never refresh) OpenSpec at session start. A new session, including
+    // a harness switch mid-phase, must not rewrite generated procedure text under
+    // a bound phase contract. The mutating refresh runs at phase entry only
+    // (kbd-new-phase / kbd-next-phase / kbd-new-child / kbd-next-child).
+    const openspec = verifyOpenSpec(cwdOf(payload.input), { timeoutMs: 10000 });
+    const openspecNotice = openspecLine(openspec.status);
+    if (openspecNotice) process.stderr.write(`${openspecNotice}\n`);
     const projectRoot = findProjectRoot(cwdOf(payload.input)) ?? findProject(cwdOf(payload.input));
 
     const context = {
@@ -42,6 +57,7 @@ export async function run(payload) {
       node: process.version,
       specBackend: projectRoot && existsSync(path.join(projectRoot, 'openspec')) ? 'openspec' : 'none',
       capabilities: projectRoot ? countCapabilities(projectRoot) : 0,
+      openspecVerify: openspec.status,
     };
 
     process.stderr.write(

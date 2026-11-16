@@ -13,22 +13,22 @@ does not authorize immediate command execution.
 Use `rust-best-practices` generally, `rust-async-patterns` for async/concurrency, and
 `rust-mcp-server-generator` for MCP work. Project dependency and protocol pins win.
 
-## Phase-gated verification
+## Phase-gated verification (VLBV)
 
-- Batch related edits and use static reasoning or rust-analyzer during a phase.
-- Run one consolidated Cargo validation batch only after a meaningful set of
-  production functionality is complete at a change or phase boundary. An immediate,
-  narrowly targeted compiler check is allowed only when compiler feedback is
-  necessary to unblock implementation or the user requests it.
+- Batch related edits and use static reasoning or rust-analyzer during a phase;
+  editor/LSP diagnostics are reading, not execution.
+- Cargo build/check/test/clippy commands run only as entries of the boundary packet
+  at the value-phase boundary (B4), or after an authorized repair (B5). There is no
+  change-level gate and no intermediate compiler check.
 - Start with the smallest integration target that exercises the completed production
   path and real collaborators. Unit tests, module-local tests, and filtered function
   tests do not count as completion evidence. Escalate only when the change or failure
   crosses package boundaries.
 - Reserve broad, release, cross-compile, feature-matrix, Miri, fuzzing, coverage,
   benchmark, and documentation commands for a final boundary or explicit request.
-- After a failure, read all diagnostics, batch fixes, and rerun only the smallest
-  integration command that confirms the completed behavior. Do not rerun after each
-  edit.
+- After a boundary failure, read all diagnostics, batch the owner-authorized repair,
+  and rerun only the affected scenarios' packet entries (B5). Do not rerun after
+  each edit.
 - Run formatting once at a coherent phase boundary and avoid unrelated churn.
 - Report commands, results, intentional deferrals, and any remaining integration gate.
 

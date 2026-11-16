@@ -1,7 +1,7 @@
 // Entry point only: parse argv, discover (and optionally write) the derived method-context
 // index, print, exit. All logic lives in lib/kbd/method-context/.
 //
-//   node <pack-root>/scripts/kbd-method-context.mjs [--project <root>] [--phase <id>] [--write] [--json] [--require-resolved]
+//   node <pack-root>/scripts/kbd-method-context.mjs [--project <root>] [--phase <id>] [--harness <id>] [--write] [--json] [--require-resolved]
 
 import { runMethodContext } from '../lib/kbd/method-context/index.mjs';
 

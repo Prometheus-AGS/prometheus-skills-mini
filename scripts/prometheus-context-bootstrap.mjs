@@ -38,6 +38,9 @@ try {
     for (const item of result.plan) console.log(`${item.kind.padEnd(9)} ${item.path}`);
     const { resident } = result;
     console.log(`RESIDENT  ${resident.path}: ${resident.managed} managed words (ceiling ${resident.ceiling}) + ${resident.project} project words`);
+    const policy = result.policy ?? { errors: [], stale: [] };
+    console.log(`POLICY    ${policy.errors.length ? 'FAIL' : 'PASS'} kbd-policy: verification VLBV, compiler exception retired, no /opsx:*`);
+    for (const note of policy.stale) console.log(`STALE     ${note} (manual cleanup; operator prose is never rewritten)`);
     if (options.check && result.drift.length) {
       console.error(`Context drift: ${result.drift.join(', ')}`);
       process.exitCode = 1;

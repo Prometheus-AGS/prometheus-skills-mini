@@ -9,12 +9,18 @@
 
 import { allChecks } from '../lib/doctor/registry.mjs';
 import { outcomeConformance, fixOutcomeConformance } from '../lib/doctor/contract.mjs';
+import { loadCapabilities, profileIds, profileView, renderProfile, resolveProfile } from '../lib/platform/harness-profiles/profiles.mjs';
 
 const USAGE = `Usage: node scripts/doctor.mjs [--human] [--fix <fixId>]
+       node scripts/doctor.mjs profile [<harness>] [--json]
 
   (no flags)      run every check, one JSON object per line, then a summary line
   --human         render a table instead of JSON
   --fix <fixId>   apply one named fix and print its result line
+  profile         print a harness capability profile (config/harnesses/capabilities.json);
+                  the harness defaults to $PROMETHEUS_HARNESS. Capabilities that are not
+                  "supported" are listed as UNKNOWN/UNSUPPORTED so no skill relies on them.
+                  This view is separate from the check stream and does not change it.
 
 Exit: 0 when nothing failed, 1 when any check failed or a fix could not be applied.`;
 
@@ -107,7 +113,22 @@ async function applyFix(fixId, ctx) {
   return outcome.status === 'refused' ? 1 : 0;
 }
 
+/** The profile view (VLBV CR-23, FR-H7). Not a registered check: the check stream stays stable. */
+function printProfile(argv) {
+  const json = argv.includes('--json');
+  const unknownFlag = argv.find((arg) => arg.startsWith('--') && arg !== '--json');
+  if (unknownFlag) throw new Error(`unrecognized argument: ${unknownFlag}`);
+  const name = argv.find((arg) => !arg.startsWith('--')) ?? process.env.PROMETHEUS_HARNESS;
+  const capabilities = loadCapabilities();
+  const resolved = resolveProfile(capabilities, name);
+  if (!resolved) throw new Error(`name a harness (${profileIds(capabilities).join(', ')})`);
+  if (json) write(JSON.stringify(profileView(resolved.id, resolved.profile), null, 2));
+  else for (const line of renderProfile(resolved.id, resolved.profile)) write(line);
+  return 0;
+}
+
 async function main(argv) {
+  if (argv[0] === 'profile') return printProfile(argv.slice(1));
   const args = parseArgs(argv);
   const ctx = context();
 

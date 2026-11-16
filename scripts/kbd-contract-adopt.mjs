@@ -7,12 +7,18 @@
 //   node "<package-root>/scripts/kbd-contract-adopt.mjs" <contract.json> [--supersedes <decision-id>]
 //       [--command-id <id>] [--status-file <f>] [--disposition-file <f>] [--decision-sink <f>]
 //       [--amendment <manifest.json> --signature <manifest.json.sig>]
+//       [--owner-decision <decision-id>] [--lint-only]
+//
+// --lint-only runs structural validation and the adoption lint (lib/kbd/contract-lint.mjs) only:
+// no canonical read or write, usable outside a KBD project (exit 0 clean, 2 defects).
+// --owner-decision names the recorded canonical decision that resolves an unresolved CRITICAL
+// review finding on acceptance content (.kbd-orchestrator/phases/<id>/review/contract/findings.json).
 //
 // Adoption binds the phase in canonical state (`prometheus kbd phase bind-contract`). Once
 // bound, a changed contract is a material amendment that needs a signed amend-contract
 // manifest (mini #66 / full #192).
 //
-// Exit codes: 0 adopted/already-adopted; 1 usage/io; 2 invalid contract; 3 identity mismatch;
+// Exit codes: 0 adopted/already-adopted (or lint clean); 1 usage/io; 2 invalid contract or lint defect; 3 identity mismatch;
 //             4 amendment without --supersedes or verified signed authority; 5 writer failure.
 
 import { fileURLToPath } from 'node:url';
@@ -20,7 +26,7 @@ import { fileURLToPath } from 'node:url';
 import { adoptContract } from '../lib/kbd/contract-adopt.mjs';
 
 function parseArgs(argv) {
-  const args = { contract: null, supersedes: null, commandId: null, statusFile: null, dispositionFile: null, decisionSink: null, amendment: null, signature: null };
+  const args = { contract: null, supersedes: null, commandId: null, statusFile: null, dispositionFile: null, decisionSink: null, amendment: null, signature: null, ownerDecision: null, lintOnly: false };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--supersedes') args.supersedes = argv[++i] ?? null;
@@ -30,8 +36,10 @@ function parseArgs(argv) {
     else if (arg === '--amendment') args.amendment = argv[++i] ?? null;
     else if (arg === '--signature') args.signature = argv[++i] ?? null;
     else if (arg === '--decision-sink') args.decisionSink = argv[++i] ?? null;
+    else if (arg === '--owner-decision') args.ownerDecision = argv[++i] ?? null;
+    else if (arg === '--lint-only') args.lintOnly = true;
     else if (arg === '-h' || arg === '--help') {
-      process.stdout.write(`usage: node "${fileURLToPath(import.meta.url)}" <contract.json> [--supersedes <id>] [--command-id <id>] [--status-file <f>] [--decision-sink <f>]\n`);
+      process.stdout.write(`usage: node "${fileURLToPath(import.meta.url)}" <contract.json> [--supersedes <id>] [--command-id <id>] [--status-file <f>] [--decision-sink <f>] [--owner-decision <id>] [--lint-only]\n`);
       process.exit(0);
     } else if (arg.startsWith('-')) {
       process.stderr.write(`kbd-contract-adopt: unknown flag: ${arg}\n`);
@@ -59,6 +67,8 @@ const result = adoptContract(args.contract, {
   decisionSink: args.decisionSink,
   amendment: args.amendment,
   signature: args.signature,
+  ownerDecision: args.ownerDecision,
+  lintOnly: args.lintOnly,
 });
 if (result.stdout) process.stdout.write(result.stdout);
 if (result.stderr) process.stderr.write(result.stderr);

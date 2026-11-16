@@ -1,6 +1,6 @@
 {
   "name": "prometheus-skills-mini",
-  "version": "1.15.0",
+  "version": "1.16.0",
   "private": true,
   "type": "module",
   "description": "Windows-native, scaled-down port of prometheus-skill-pack: KBD + PMPO process skills, OpenSpec, Karpathy logging.",
@@ -18,9 +18,12 @@
     "build:distribution": "node scripts/generate-skill-system-distribution.mjs",
     "check:distribution": "node scripts/generate-skill-system-distribution.mjs --check",
     "check:selected-method": "node scripts/check-selected-method-core.mjs",
+    "check:contract-templates": "node scripts/generate-contract-templates.mjs --check",
+    "check:harness-capabilities": "node scripts/check-harness-capabilities.mjs",
+    "eval:vlbv-protocol": "node evals/vlbv-protocol/run.mjs",
     "generate:commands": "node scripts/generate-commands.mjs"
   },
   "devDependencies": {
-    "@fission-ai/openspec": "1.16.0"
+    "@fission-ai/openspec": "2.0.0"
   }
 }

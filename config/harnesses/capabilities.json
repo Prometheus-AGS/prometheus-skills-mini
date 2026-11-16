@@ -1,0 +1,509 @@
+{
+  "schemaVersion": "2",
+  "aliases": {
+    "claude": "claude-code",
+    "kimi": "kimi-code"
+  },
+  "profiles": {
+    "_contract": "Harness capability profiles (VLBV CR-23), ported from full-pack shared/harnesses/capabilities.json. A field may be 'supported' only when verified.exercised is true, verified.evidence names a committed local evidence file, and the field carries its own evidence: {file} (committed) or {report, caseId} (a PASS case of the same harness in an evals/vlbv-protocol report whose corpus entry declares the field). Vendor documentation alone is 'unknown'. Gate: npm run check:harness-capabilities. Doctor prints these (node scripts/doctor.mjs profile); handoff packets carry the receiver profile. No skill may rely on an unknown capability.",
+    "claude-code": {
+      "rulesFiles": {
+        "precedence": [
+          "CLAUDE.md"
+        ],
+        "firstMatchOnly": false,
+        "overrideFile": null,
+        "status": "unknown",
+        "source": "https://code.claude.com/docs (CLAUDE.md does not read AGENTS.md unless it imports @AGENTS.md)"
+      },
+      "skillRoots": {
+        "project": [
+          ".claude/skills"
+        ],
+        "user": [
+          "~/.claude/skills"
+        ],
+        "status": "unknown",
+        "source": "https://code.claude.com/docs (CLAUDE.md does not read AGENTS.md unless it imports @AGENTS.md)"
+      },
+      "invocation": {
+        "explicit": "/name",
+        "implicit": "unknown",
+        "status": "unknown",
+        "source": "https://code.claude.com/docs (CLAUDE.md does not read AGENTS.md unless it imports @AGENTS.md)"
+      },
+      "hooks": {
+        "sessionStart": "documented",
+        "subagentStart": "unknown",
+        "status": "unknown"
+      },
+      "subagents": {
+        "status": "unknown"
+      },
+      "contextBudget": {
+        "rulesChars": null,
+        "status": "unknown"
+      },
+      "builtinsToSuppress": [
+        "openspec-apply-change before B4 (use kbd-apply)",
+        "openspec-verify-change before the phase is CLOSED"
+      ],
+      "canExecuteBoundary": {
+        "status": "unknown"
+      },
+      "verified": {
+        "date": null,
+        "version": null,
+        "source": "https://code.claude.com/docs (CLAUDE.md does not read AGENTS.md unless it imports @AGENTS.md)",
+        "exercised": false,
+        "evidence": null
+      }
+    },
+    "codex": {
+      "rulesFiles": {
+        "precedence": [
+          "AGENTS.md"
+        ],
+        "firstMatchOnly": false,
+        "overrideFile": "AGENTS.override.md",
+        "status": "unknown",
+        "source": "https://developers.openai.com/codex/skills"
+      },
+      "skillRoots": {
+        "project": [
+          ".agents/skills"
+        ],
+        "user": [
+          "~/.agents/skills"
+        ],
+        "status": "supported",
+        "source": "https://developers.openai.com/codex/skills",
+        "evidence": {
+          "file": "docs/decisions/harness-evidence/codex-skill-roots-2026-11-15.txt"
+        }
+      },
+      "invocation": {
+        "explicit": "$name",
+        "implicit": "unknown",
+        "status": "unknown",
+        "source": "https://developers.openai.com/codex/skills"
+      },
+      "hooks": {
+        "sessionStart": "unknown",
+        "subagentStart": "unknown",
+        "status": "unknown"
+      },
+      "subagents": {
+        "status": "unknown"
+      },
+      "contextBudget": {
+        "rulesChars": null,
+        "status": "unknown"
+      },
+      "builtinsToSuppress": [
+        "openspec-apply-change before B4 (use kbd-apply)",
+        "openspec-verify-change before the phase is CLOSED"
+      ],
+      "canExecuteBoundary": {
+        "status": "unknown"
+      },
+      "verified": {
+        "date": "2026-11-15",
+        "version": "codex-cli 0.166.0",
+        "source": "https://developers.openai.com/codex/skills",
+        "exercised": true,
+        "evidence": "docs/decisions/harness-evidence/codex-skill-roots-2026-11-15.txt",
+        "note": "Evidence carried from full-pack 73d67417 (a codex-cli run on a pack machine); the harness root behavior is pack-independent."
+      }
+    },
+    "opencode": {
+      "rulesFiles": {
+        "precedence": [
+          "AGENTS.md"
+        ],
+        "firstMatchOnly": false,
+        "overrideFile": null,
+        "status": "unknown",
+        "source": "https://opencode.ai/docs/skills"
+      },
+      "skillRoots": {
+        "project": [
+          ".opencode/skills",
+          ".claude/skills",
+          ".agents/skills"
+        ],
+        "user": [
+          "~/.config/opencode/skills",
+          "~/.claude/skills",
+          "~/.agents/skills"
+        ],
+        "status": "unknown",
+        "source": "https://opencode.ai/docs/skills"
+      },
+      "invocation": {
+        "explicit": "skill tool; /skills",
+        "implicit": "unknown",
+        "status": "unknown",
+        "source": "https://opencode.ai/docs/skills"
+      },
+      "hooks": {
+        "sessionStart": "unknown",
+        "subagentStart": "unknown",
+        "status": "unknown"
+      },
+      "subagents": {
+        "status": "unknown"
+      },
+      "contextBudget": {
+        "rulesChars": null,
+        "status": "unknown"
+      },
+      "builtinsToSuppress": [
+        "openspec-apply-change before B4 (use kbd-apply)",
+        "openspec-verify-change before the phase is CLOSED"
+      ],
+      "canExecuteBoundary": {
+        "status": "unknown"
+      },
+      "verified": {
+        "date": null,
+        "version": null,
+        "source": "https://opencode.ai/docs/skills",
+        "exercised": false,
+        "evidence": null
+      }
+    },
+    "kimi-code": {
+      "rulesFiles": {
+        "precedence": [
+          "AGENTS.md",
+          ".kimi-code/AGENTS.md"
+        ],
+        "firstMatchOnly": false,
+        "overrideFile": null,
+        "status": "unknown",
+        "source": "https://www.kimi.com/code/docs/en/kimi-code-cli/customization/skills.html"
+      },
+      "skillRoots": {
+        "project": [
+          ".kimi-code/skills",
+          ".agents/skills"
+        ],
+        "user": [
+          "~/.kimi-code/skills",
+          "~/.agents/skills"
+        ],
+        "status": "unknown",
+        "source": "https://www.kimi.com/code/docs/en/kimi-code-cli/customization/skills.html"
+      },
+      "invocation": {
+        "explicit": "/skill:name",
+        "implicit": "unknown",
+        "status": "unknown",
+        "source": "https://www.kimi.com/code/docs/en/kimi-code-cli/customization/skills.html"
+      },
+      "hooks": {
+        "sessionStart": "unknown",
+        "subagentStart": "unknown",
+        "status": "unknown"
+      },
+      "subagents": {
+        "status": "unknown"
+      },
+      "contextBudget": {
+        "rulesChars": null,
+        "status": "unknown"
+      },
+      "builtinsToSuppress": [
+        "openspec-apply-change before B4 (use kbd-apply)",
+        "openspec-verify-change before the phase is CLOSED"
+      ],
+      "canExecuteBoundary": {
+        "status": "unknown"
+      },
+      "verified": {
+        "date": null,
+        "version": null,
+        "source": "https://www.kimi.com/code/docs/en/kimi-code-cli/customization/skills.html",
+        "exercised": false,
+        "evidence": null
+      }
+    },
+    "zed": {
+      "rulesFiles": {
+        "precedence": [
+          ".rules",
+          ".cursorrules",
+          ".windsurfrules",
+          ".clinerules",
+          ".github/copilot-instructions.md",
+          "AGENT.md",
+          "AGENTS.md",
+          "CLAUDE.md",
+          "GEMINI.md"
+        ],
+        "firstMatchOnly": true,
+        "overrideFile": null,
+        "status": "unknown",
+        "source": "https://zed.dev/docs/ai/skills ; https://zed.dev/docs/ai/instructions"
+      },
+      "skillRoots": {
+        "project": [
+          ".agents/skills"
+        ],
+        "user": [
+          "~/.agents/skills"
+        ],
+        "status": "unknown",
+        "source": "https://zed.dev/docs/ai/skills ; https://zed.dev/docs/ai/instructions"
+      },
+      "invocation": {
+        "explicit": "by name",
+        "implicit": "unknown",
+        "status": "unknown",
+        "source": "https://zed.dev/docs/ai/skills ; https://zed.dev/docs/ai/instructions"
+      },
+      "hooks": {
+        "sessionStart": "unknown",
+        "subagentStart": "unknown",
+        "status": "unknown"
+      },
+      "subagents": {
+        "status": "unknown"
+      },
+      "contextBudget": {
+        "rulesChars": null,
+        "status": "unknown"
+      },
+      "builtinsToSuppress": [
+        "openspec-apply-change before B4 (use kbd-apply)",
+        "openspec-verify-change before the phase is CLOSED"
+      ],
+      "canExecuteBoundary": {
+        "status": "unknown"
+      },
+      "verified": {
+        "date": null,
+        "version": null,
+        "source": "https://zed.dev/docs/ai/skills ; https://zed.dev/docs/ai/instructions",
+        "exercised": false,
+        "evidence": null
+      }
+    },
+    "cursor": {
+      "rulesFiles": {
+        "precedence": [
+          "AGENTS.md",
+          ".cursor/rules/*.mdc"
+        ],
+        "firstMatchOnly": false,
+        "overrideFile": null,
+        "status": "unknown",
+        "source": "mini skill-system.json copy target; harness reading behavior not verified"
+      },
+      "skillRoots": {
+        "project": [
+          ".cursor/skills"
+        ],
+        "user": [
+          "~/.cursor/skills"
+        ],
+        "status": "unknown",
+        "source": "mini skill-system.json copy target; harness reading behavior not verified"
+      },
+      "invocation": {
+        "explicit": "by name",
+        "implicit": "unknown",
+        "status": "unknown",
+        "source": "mini skill-system.json copy target; harness reading behavior not verified"
+      },
+      "hooks": {
+        "sessionStart": "unknown",
+        "subagentStart": "unknown",
+        "status": "unknown"
+      },
+      "subagents": {
+        "status": "unknown"
+      },
+      "contextBudget": {
+        "rulesChars": null,
+        "status": "unknown"
+      },
+      "builtinsToSuppress": [
+        "openspec-apply-change before B4 (use kbd-apply)",
+        "openspec-verify-change before the phase is CLOSED"
+      ],
+      "canExecuteBoundary": {
+        "status": "unknown"
+      },
+      "verified": {
+        "date": null,
+        "version": null,
+        "source": "mini skill-system.json copy target; harness reading behavior not verified",
+        "exercised": false,
+        "evidence": null
+      }
+    },
+    "gemini": {
+      "rulesFiles": {
+        "precedence": [
+          "GEMINI.md"
+        ],
+        "firstMatchOnly": false,
+        "overrideFile": null,
+        "status": "unknown",
+        "source": "mini skill-system.json copy target; harness reading behavior not verified"
+      },
+      "skillRoots": {
+        "project": [
+          ".gemini/skills"
+        ],
+        "user": [
+          "~/.gemini/skills"
+        ],
+        "status": "unknown",
+        "source": "mini skill-system.json copy target; harness reading behavior not verified"
+      },
+      "invocation": {
+        "explicit": "by name",
+        "implicit": "unknown",
+        "status": "unknown",
+        "source": "mini skill-system.json copy target; harness reading behavior not verified"
+      },
+      "hooks": {
+        "sessionStart": "unknown",
+        "subagentStart": "unknown",
+        "status": "unknown"
+      },
+      "subagents": {
+        "status": "unknown"
+      },
+      "contextBudget": {
+        "rulesChars": null,
+        "status": "unknown"
+      },
+      "builtinsToSuppress": [
+        "openspec-apply-change before B4 (use kbd-apply)",
+        "openspec-verify-change before the phase is CLOSED"
+      ],
+      "canExecuteBoundary": {
+        "status": "unknown"
+      },
+      "verified": {
+        "date": null,
+        "version": null,
+        "source": "mini skill-system.json copy target; harness reading behavior not verified",
+        "exercised": false,
+        "evidence": null
+      }
+    },
+    "windsurf": {
+      "rulesFiles": {
+        "precedence": [
+          "AGENTS.md",
+          ".windsurfrules"
+        ],
+        "firstMatchOnly": false,
+        "overrideFile": null,
+        "status": "unknown",
+        "source": "mini skill-system.json copy target; harness reading behavior not verified"
+      },
+      "skillRoots": {
+        "project": [
+          ".windsurf/skills"
+        ],
+        "user": [
+          "~/.windsurf/skills"
+        ],
+        "status": "unknown",
+        "source": "mini skill-system.json copy target; harness reading behavior not verified"
+      },
+      "invocation": {
+        "explicit": "by name",
+        "implicit": "unknown",
+        "status": "unknown",
+        "source": "mini skill-system.json copy target; harness reading behavior not verified"
+      },
+      "hooks": {
+        "sessionStart": "unknown",
+        "subagentStart": "unknown",
+        "status": "unknown"
+      },
+      "subagents": {
+        "status": "unknown"
+      },
+      "contextBudget": {
+        "rulesChars": null,
+        "status": "unknown"
+      },
+      "builtinsToSuppress": [
+        "openspec-apply-change before B4 (use kbd-apply)",
+        "openspec-verify-change before the phase is CLOSED"
+      ],
+      "canExecuteBoundary": {
+        "status": "unknown"
+      },
+      "verified": {
+        "date": null,
+        "version": null,
+        "source": "mini skill-system.json copy target; harness reading behavior not verified",
+        "exercised": false,
+        "evidence": null
+      }
+    },
+    "cline": {
+      "rulesFiles": {
+        "precedence": [
+          "AGENTS.md",
+          ".clinerules"
+        ],
+        "firstMatchOnly": false,
+        "overrideFile": null,
+        "status": "unknown",
+        "source": "mini skill-system.json copy target; harness reading behavior not verified"
+      },
+      "skillRoots": {
+        "project": [
+          ".cline/skills"
+        ],
+        "user": [
+          "~/.cline/skills"
+        ],
+        "status": "unknown",
+        "source": "mini skill-system.json copy target; harness reading behavior not verified"
+      },
+      "invocation": {
+        "explicit": "by name",
+        "implicit": "unknown",
+        "status": "unknown",
+        "source": "mini skill-system.json copy target; harness reading behavior not verified"
+      },
+      "hooks": {
+        "sessionStart": "unknown",
+        "subagentStart": "unknown",
+        "status": "unknown"
+      },
+      "subagents": {
+        "status": "unknown"
+      },
+      "contextBudget": {
+        "rulesChars": null,
+        "status": "unknown"
+      },
+      "builtinsToSuppress": [
+        "openspec-apply-change before B4 (use kbd-apply)",
+        "openspec-verify-change before the phase is CLOSED"
+      ],
+      "canExecuteBoundary": {
+        "status": "unknown"
+      },
+      "verified": {
+        "date": null,
+        "version": null,
+        "source": "mini skill-system.json copy target; harness reading behavior not verified",
+        "exercised": false,
+        "evidence": null
+      }
+    }
+  }
+}

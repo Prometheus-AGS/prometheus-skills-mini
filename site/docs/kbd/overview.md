@@ -46,7 +46,7 @@ it **one task at a time**, so KBD stays the source of truth: every task boundary
 hooks, emits a plain-text position signal, and syncs `progress.json` plus the waypoint.
 
 **Hard invariant, preserved exactly from the source:** this driver never invokes a backend's
-"implement everything" command (a bare `/opsx:apply` or `/speckit.implement`). It always calls the
+"implement everything" command (OpenSpec's `openspec-apply-change` skill, formerly `/opsx:apply`, or `/speckit.implement`). It always calls the
 backend per task.
 
 Subcommands: `detect | list <change> | progress <change> | begin-task ... | end-task ... |

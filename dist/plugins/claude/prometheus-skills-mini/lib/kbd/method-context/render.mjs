@@ -16,7 +16,7 @@ const semantic = (context) => JSON.stringify(Object.fromEntries(Object.entries(c
 
 export function renderMethodContext(context) {
   return '# Derived method context\n\n'
-    + `Method: ${context.selectedMethod}; phase: ${context.phaseId}; revision: ${context.sourceRevision ?? 'UNKNOWN'}; status: ${context.status}.\n\n`
+    + `Method: ${context.selectedMethod} (${context.methodSource ?? 'unknown source'}); phase: ${context.phaseId}; revision: ${context.sourceRevision ?? 'UNKNOWN'}; status: ${context.status}.\n\n`
     + 'This is a recovery index, not execution permission. Resolve current canonical decisions and contract before dependent action.\n\n'
     + `\`\`\`json\n${JSON.stringify(context, null, 2)}\n\`\`\`\n`;
 }

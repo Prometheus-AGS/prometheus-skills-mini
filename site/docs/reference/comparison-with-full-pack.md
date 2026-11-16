@@ -26,7 +26,16 @@ records macOS and offline Linux-container integration plus packaged-helper evide
 Windows execution, live invocation of every harness and full Electron installed-app acceptance
 remain unverified. These are implementation/evidence limits, not current release certification.
 
-## Historical process-port baseline
+## Parity with full-pack 1.15.0 (mini 1.16.0)
+
+| Capability | Mini |
+| --- | --- |
+| OpenSpec | 2.0.0 pinned exactly; read-only `verify` at SessionStart, mutating `refresh` at phase entry; skills copied (never linked) from `.agents/skills`; `/opsx:*` commands removed. |
+| Verification method | VLBV is the single method (constitution A-9, `kbd-policy` block): generated code executes only at B4 (boundary packet, once) or B5 (authorized repair, affected checks only); compiler and cadence exceptions retired. |
+| Harness capability profiles | `config/harnesses/capabilities.json`, evidence-gated (`npm run check:harness-capabilities`), printed by `node scripts/doctor.mjs profile`. |
+| VLBV protocol evals | `evals/vlbv-protocol/` in Node; adapters for claude-code, codex, opencode, kimi-code; others reported not run. No mini reports yet. |
+| Context bootstrap | Emits the `kbd-policy` block and a hook-independent first-action protocol; `--check` rejects retired wording. |
+
 
 The following process-port snapshot was recorded at commit `8497ae8` (the Phase C KBD port).
 Its module test totals and older platform gaps describe that boundary only. They do not report
@@ -62,6 +71,10 @@ These are excluded by explicit constraint, not because porting them was deferred
 | `prometheus-knowledge`'s HTTP companion (`pk-cherry`) and its learning-worker timer daemon | This pack replaced the timer/worker model with durable receipts flushed opportunistically at SessionStart — see [Karpathy Progress Memory](/docs/karpathy/progress-memory). |
 | Entity-management, DevOps/GitOps and BDD/Cucumber families | Deliberately outside this port. Selected React/Vercel UI guidance is now included through the UI catalog; that does not add the full entity-development family. |
 | `karpathy-tokenizer` | Despite the name, it trains BPE tokenizers via Python (`rustbpe`, `tiktoken`) — unrelated to Karpathy *logging*, and a Python dependency either way. |
+| Apple Foundation Models LaunchAgent (full 1.15.0) | A third resident daemon and port; mini runs exactly two services. |
+| Rust `kbd-runtime` zeespec replay restoration (full 1.15.0) | Mini ships no Rust runtime. |
+| Installer root consolidation with symlink shims (full 1.15.0) | Mini distribution copies; symlinks are forbidden. |
+| Native SurrealDB 4.0 launchd/systemd templates (full 1.15.0) | Mini uses Docker Compose; only image pins are considered. |
 | `native-agent` / `start-business-build` | Generates a full service stack by design (Docker + surreal-memory + `pk` + liter-llm as *application* dependencies, not this pack's own two services) — out of scope for a process-focused mini pack. |
 
 ## Recorded gaps and acceptance limits

@@ -9,6 +9,8 @@
 //   identity   contract projectId/runId/phaseId agree with canonical status
 //   adoption   latest non-superseded adoption decision for the contract path carries the same
 //              digest — mismatch or superseded => REJECT-STALE; absent => BLOCKED (adoption)
+//   spec delta a v2 contract's method.specDeltaDigest equals the recomputed digest of the
+//              phase's OpenSpec deltas — a changed bound requirement => REJECT-STALE (VLBV CR-04)
 //   coverage   every scenarioMatrix ownerTask resolves uniquely in canonical phase change
 //              tasks from `prometheus kbd status --json` (full #209)
 //
@@ -26,6 +28,7 @@ import {
 } from './adopted-contract.mjs';
 import { readDisposition } from './phase-disposition.mjs';
 import { findKbdRoot, readCanonicalStatus } from './contract-adopt.mjs';
+import { specDeltaDigest } from './spec-delta-digest.mjs';
 
 /**
  * Readiness evaluation. `ctx`: { cwd, phaseDir, contractPath, statusFile, spawn, root }.
@@ -119,6 +122,23 @@ export function phaseReadiness(ctx = {}) {
         stdout:
           `REJECT-STALE contractDigest(decision=${latest.digest} contract=${currentDigest}) ` +
           `planRevision(decision=${latest.planRevision}) — amend via kbd-contract-adopt.mjs --supersedes\n`,
+        stderr: '',
+      };
+    }
+  }
+
+  // --- bound OpenSpec deltas (VLBV CR-04, contract v2) ---
+  // A v2 contract stamps method.specDeltaDigest at adoption. Editing a bound requirement after
+  // adoption changes the recomputed digest => REJECT-STALE until a signed amendment adopts it.
+  const boundSpecDigest = contract.contractVersion === '2' ? contract.method?.specDeltaDigest ?? null : null;
+  if (boundSpecDigest) {
+    const nowSpecDigest = specDeltaDigest({ root: root ?? cwd, phase, status: statusJson });
+    if (nowSpecDigest !== boundSpecDigest) {
+      return {
+        status: 4,
+        stdout:
+          `REJECT-STALE specDeltaDigest(bound=${boundSpecDigest} now=${nowSpecDigest ?? 'none'}) — a bound OpenSpec ` +
+          'requirement changed; adopt the new deltas through a signed amendment (kbd-contract-adopt.mjs --supersedes --amendment --signature)\n',
         stderr: '',
       };
     }

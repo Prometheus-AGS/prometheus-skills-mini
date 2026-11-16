@@ -9,7 +9,7 @@
 // entry plus its detection evidence, not a dispatch rewrite here).
 //
 // HARD INVARIANT, preserved exactly: this driver never invokes a backend's "implement
-// everything" command (bare `/opsx:apply`, `/speckit.implement`). It calls the backend per task.
+// everything" command (the bare `openspec-apply-change` skill, `/speckit.implement`). It calls the backend per task.
 // Subcommands: detect | list <change> | progress <change> | begin-task ... | end-task ... |
 // mark-done <change> <id> | verify <change> | archive <change>.
 //

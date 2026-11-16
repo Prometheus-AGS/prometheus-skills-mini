@@ -62,7 +62,11 @@ export function sha256Of(contents) {
 }
 
 const isNonEmptyString = (v) => typeof v === 'string' && v.length > 0;
-const SCENARIO_ID = /^[A-Z]+-[0-9]+$/;
+// Widened in 1.15.0 (VLBV): segmented IDs such as SCN-AUTH-001; every v1 ID still matches.
+export const SCENARIO_ID = /^[A-Z][A-Z0-9]*(-[A-Z0-9]+)*-[0-9]+$/;
+const isNonEmptyObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length > 0;
+/** A v2 scenario carries oracle and negativeControl as structured objects; v1 as strings. */
+const isStructuredOrText = (v) => isNonEmptyString(v) || isNonEmptyObject(v);
 const DIGEST_RE = /^[0-9a-f]{64}$/;
 
 /**
@@ -92,6 +96,7 @@ export function validateAdoptedContract(contract) {
   need(Array.isArray(c.releaseClaim?.supportedEnvironments) && c.releaseClaim.supportedEnvironments.length > 0, 'missing:releaseClaim.supportedEnvironments');
   need(isNonEmptyString(c.releaseClaim?.currentCapabilities), 'missing:releaseClaim.currentCapabilities');
   need(Array.isArray(c.statusVocabulary) && c.statusVocabulary.length >= 4, 'statusVocabulary-too-short');
+  need(c.contractVersion == null || c.contractVersion === '1' || c.contractVersion === '2', 'contractVersion(1|2)');
 
   const scenarios = Array.isArray(c.scenarioMatrix) ? c.scenarioMatrix : [];
   need(scenarios.length > 0, 'scenarioMatrix');
@@ -100,8 +105,8 @@ export function validateAdoptedContract(contract) {
   need(ids.every((id) => typeof id === 'string' && SCENARIO_ID.test(id)), 'scenario-id-pattern');
   need(
     scenarios.every((s) =>
-      isNonEmptyString(s?.productionEntry) && isNonEmptyString(s?.oracle) &&
-      isNonEmptyString(s?.negativeControl) && isNonEmptyString(s?.ownerTask) &&
+      isNonEmptyString(s?.productionEntry) && isStructuredOrText(s?.oracle) &&
+      isStructuredOrText(s?.negativeControl) && isNonEmptyString(s?.ownerTask) &&
       isNonEmptyString(s?.evidence) && isNonEmptyString(s?.fixtures)),
     'scenarioMatrix-quality(productionEntry/oracle/negativeControl/ownerTask/evidence/fixtures)',
   );

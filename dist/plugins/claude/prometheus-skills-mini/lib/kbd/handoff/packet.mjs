@@ -15,7 +15,7 @@ export function startPrompt({ harness, phaseChain, repoRoot, packetRel }) {
     `You are ${harness.label} taking over KBD phase ${phaseChain} in ${repoRoot}.`,
     `Read ${packetRel} first, then every file it lists under "Read in order", in that order.`,
     'Before changing anything, restate the phase, stage, implementation N/T, next change and task, and every open prerequisite from the packet.',
-    'Before dependent work, re-resolve the selected method, adopted contract revision and stage authority from current canonical KBD status (method-context.md is a derived index, not authority); a missing or changed reference is an explicit prerequisite. For a selected VLBV phase, no generated-code tests, builds, lint or typecheck run until the complete agreed value phase is done; a task, hour, commit, reviewer request or compiler problem is not that boundary.',
+    'Before dependent work, re-resolve the selected method, adopted contract revision and stage authority from current canonical KBD status (method-context.md is a derived index, not authority); a missing or changed reference is an explicit prerequisite. Verification follows VLBV (pack default; a deviation is a signed KBD-METHOD decision): generated code executes only at the value-phase boundary B4 and an authorized repair B5 (kbd-process-orchestrator/references/boundaries.md); a task, hour, commit, reviewer request or compiler problem is not that boundary. This handoff is a B3 checkpoint and executes nothing.',
     'Confirm position with the kbd-status skill, then drive the next task with the kbd-apply skill: begin-task, the work, end-task.',
     'Obey the packet\'s "Never do" list. Stop at every operator gate and ask the operator once, in one batch. Do not push, tag, publish or merge.',
   ].join('\n');
@@ -45,6 +45,21 @@ function methodSection(facts) {
     ...lines,
     '- These are identities, not authority. Re-resolve the latest non-superseded selected method, the adopted contract revision, stage authority, evidence/candidate freshness, consumed budgets and unresolved effects from current canonical state before dependent work; reconcile uncertain effects before any retry.',
     '- Refresh the derived index with `node <pack-root>/scripts/kbd-method-context.mjs --phase <canonical-phase-id> --write`. A missing or stale index is an explicit prerequisite, never guessed from memory or `exactNextCommand`.',
+  ].join('\n');
+}
+
+function vlbvSection(vlbv) {
+  const calibration = vlbv.calibrationCheck.sha256
+    ? `repeat a held-out check against ${code(vlbv.calibrationCheck.examplesPath)} (sha256 ${vlbv.calibrationCheck.sha256}) before dependent work.`
+    : 'no calibration.json in the phase; owner calibration is still required before scenario selection.';
+  return [
+    '## VLBV receiver check',
+    '',
+    '- This handoff is a B3 checkpoint: nothing executes until the value-phase boundary (`kbd-process-orchestrator/references/boundaries.md`).',
+    `- Receiving harness profile: ${code(vlbv.receiverProfile.harness ?? 'unknown')} (${vlbv.receiverProfile.availability}); boundary execution capability: **${vlbv.receiverProfile.canExecuteBoundary}**.`,
+    `- Calibration: ${calibration}`,
+    `- Unresolved effects inherited: ${vlbv.unresolvedEffects.length ? vlbv.unresolvedEffects.map((e) => code(`${e.boundary}:${e.subject}`)).join(', ') : 'none recorded'}.`,
+    '- Record `executedBy` (harness, version, model) in `boundary-results.json` if this harness runs the packet.',
   ].join('\n');
 }
 
@@ -78,7 +93,7 @@ function rulesSection(facts) {
     '- Run every `kbd-apply` and `prometheus kbd` call with a timeout and stdin closed.',
     '- After an interrupted close, read `boundaryObligations` from `prometheus kbd status --json` and repair with `prometheus kbd guard evaluate --boundary <change|task> --edge after --subject <change|change/id> --json --repair-projections`.',
     '- Never edit `progress.json`, `current-waypoint.json` or other projections by hand.',
-    '- Finish the complete delivery before its integration gate; reviewers run afterwards in a separate context.',
+    '- Finish the complete value phase before its boundary (B4); reviewers run afterwards in a separate context.',
     `- Native role definitions for ${facts.harness.label} live in ${code(facts.harness.agentsDir)}.`,
   ].join('\n');
 }
@@ -129,6 +144,8 @@ export function renderPacket(facts) {
     `- ${harnessLine}`,
     `- Installed \`kbd-*\` skills resolved: ${facts.skills.resolved.length ? facts.skills.resolved.map(code).join(', ') : 'none'}.`,
     '',
+    vlbvSection(facts.vlbv),
+    '',
     '## Open prerequisites',
     '',
     bullets(prerequisiteItems(facts), 'None found.'),
@@ -167,6 +184,7 @@ export function renderSidecar(facts) {
     skills: { ...facts.skills, broken: facts.skills.broken.map(({ path: entryPath, detail }) => ({ path: entryPath, detail })) },
     prerequisites: prerequisiteItems(facts),
     startPrompt: facts.prompt,
+    vlbv: facts.vlbv,
   };
 }
 

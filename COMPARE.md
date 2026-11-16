@@ -1,5 +1,10 @@
 # Mini vs. Full Skill System
 
+> **Updated for 1.16.0 (parity with full-pack 1.15.0 + R4, change `parity-full-1-15-vlbv`).**
+> The OpenSpec, verification-method, harness-profile, protocol-eval and context-bootstrap rows
+> below were rewritten for that port, and the [Exclusions](#exclusions-from-the-full-pack-1150-parity-port-d-p2)
+> section lists what was deliberately not ported. Other rows are unchanged from the Phase C pass.
+
 > **Updated for Phase C** (`feat(kbd): port the KBD process orchestrator and 49 skills to
 > Windows-native Node`). This document previously described a checkout from before that phase
 > landed; several rows below that said "not yet shipped," "planned, not currently shipped," or
@@ -44,7 +49,11 @@ absent is listed honestly in "What remains exclusive to the full version."
 | **Skill breadth** | KBD process, adversarial review/ideation, artifact refinement, scaffolding, conversion, context bootstrap, Rust routing | Architecture, DevOps, document extraction, Flint SDKs, Flutter, Go, HTMX, learning, process orchestration, Python, React, research, Rust, Tauri, testing, and TypeScript |
 | **Artifact refinement** | **Implemented.** Twenty artifact-refiner skills for UI, logos, images, content, A2UI, AG-UI/MCP UI scaffolding, conversion, validation, and rebranding | Same artifact-refiner family, plus its broader upstream support files, hook integration, imported tools, and sycophancy-correction |
 | **Persistent artifact state** | Implemented through manifests, constraints, refinement logs, decisions, and output directories | Implemented, with additional provider, MCP, and system integrations |
-| **OpenSpec support** | **Implemented and the default planning backend.** Twelve skills are present for Claude, Codex/Agents, Cursor, and OpenCode | Supported alongside the larger KBD planning system and other historical backends |
+| **OpenSpec support** | **OpenSpec 2.0.0, pinned exactly** (`package.json`, `config/spec-engines.json`, runner `PINNED_VERSION`); the default planning backend. SessionStart runs the read-only runner `verify`; the mutating `refresh` runs only at phase entry. Skills are generated once into `.agents/skills/openspec-*` and copied (never linked) into the other harness roots; the `/opsx:*` commands are gone | OpenSpec 2.0.0, pinned exactly, with the same verify/refresh split; skills in `.agents/skills` with per-skill symlinks in `.claude/skills` |
+| **Verification method** | **VLBV is the single method** (constitution A-9, `kbd-policy` block in `CLAUDE.md`/`AGENTS.md`): implementation completes first; generated code executes only at B4 (the boundary packet, once) or B5 (an owner-authorized repair rerunning only affected checks). No compiler exception and no hourly-cadence exception. Boundaries: `skills/kbd-process-orchestrator/references/boundaries.md`; adopted contract v2 | VLBV as the single method (1.15.0), same boundaries, contract v2, compiler exception retired |
+| **Harness capability profiles** | `config/harnesses/capabilities.json` for claude-code, codex, opencode, kimi-code, zed, cursor, gemini, windsurf and cline. A field is `supported` only with committed evidence or a PASS protocol-eval case of the same harness (`npm run check:harness-capabilities`, `--capabilities <file>`); `node scripts/doctor.mjs profile [<harness>]` prints a profile; handoff packets carry the receiver profile. One field (codex `skillRoots`) is supported, on evidence carried from the full pack | `shared/harnesses/capabilities.json` with the same evidence gate (`check-harness-adapters.js`) and `kbd-doctor profile` |
+| **VLBV protocol evals** | `evals/vlbv-protocol/` ported to Node: 23 cases, adapters for claude-code, codex, opencode and kimi-code; zed, cursor, gemini, windsurf and cline are reported not run. No reports have been produced in mini yet | Same corpus with adapters for five installed harnesses and committed per-harness reports |
+| **Context bootstrap** | Generates VLBV-conformant `AGENTS.md`/`CLAUDE.md` and stack rules: the `kbd-policy` block, a first-action protocol that works without hooks, precedence over built-in TDD/verify/apply skills; `--check` fails a governing file without the block or with retired wording (Node port of `vlbv-policy-check.sh`) | Same contract via `bootstrap.sh`/`verify.sh` |
 | **KBD lifecycle skills** | **Implemented.** 24 skills: `kbd-process-orchestrator` (parent) plus 22 sub-skills (`kbd-assess`, `-analyze`, `-spec`, `-plan`, `-execute`, `-apply`, `-reflect`, `-status`, `-audit`, `-pause`, `-resume`, `-cancel`, `-goal-check`, phase/child family, `-bottleneck-detector`, `-memory-recall`, `-inject-agent-rules`, `-init`) plus `kbd-evolve`. Backed by `lib/kbd/`, 12 modules, 230 tests | A KBD orchestrator/root and lifecycle skill set, including assess, analyze, plan, apply, execute, reflect, audit, pause/resume, child phases, status, doctor, and memory recall |
 | **KBD runtime state** | `lib/kbd/` is a full Node port of the state machine: position/waypoint, progress, stage-gate, rollup, hooks dispatch, child-scope enforcement, runtime-authority checking, and the SpecBackend contract (OpenSpec + native-kbd) | Full KBD control plane, runtime, state machine, stage gates, transitions, hierarchy, compatibility projections, and command integration |
 | **PMPO orchestration** | Artifact-refiner's own PMPO cycle (`lib/refiner/`) is implemented for the refinement loop specifically. The general-purpose `pmpo-elicit`, outer loop, evolver, and skill-creator family (independent of artifact refinement) is **not** part of this repo's skill set | Full PMPO family: elicitation, outer loop, evolver, skill creation/cloning/extension/validation, plus iterative evolution |
@@ -136,6 +145,21 @@ The present mini checkout can reliably:
    - Exclusive file locks
    - Shell-free process spawning and Windows `.cmd`/PATHEXT handling
    - Generated agent-rule checks
+
+## Exclusions from the full-pack 1.15.0 parity port (D-P2)
+
+Operator decision D-P2 (2026-11-16): full-pack 1.15.0 and R4 items that clash with mini's hard
+constraints are adapted or excluded, never imported as-is.
+
+| Full-pack item | Mini decision | Reason |
+|---|---|---|
+| Apple Foundation Models LaunchAgent (apfel on `:11437`, KBD `local` role) | Excluded | It would be a third resident daemon and port; mini runs exactly two services. |
+| Rust `kbd-runtime` zeespec replay restoration | Excluded | Mini ships no Rust runtime of its own. |
+| Installer root consolidation (`~/.agents/skills` canonical root with symlink shims) | Excluded | Mini's distribution copies into every harness root; symlinks are forbidden (Windows needs Developer Mode or elevation). |
+| Native SurrealDB 4.0 launchd/systemd templates | Excluded | Mini runs its services through Docker Compose; only image pins are considered. |
+| Bash/Python implementations (`vlbv-policy-check.sh`, `kbd-model-resolve.sh` grading, stub harness `#!/bin/sh`, `check-harness-adapters.js`) | Adapted to Node `.mjs` | Node is mini's only script runtime; spawn is shell-free. |
+| liter-llm loopback bind (full-pack 78abfd84, `--host 127.0.0.1` in the native launch script) | No change needed | Mini launches liter-llm only in Compose. The container must listen on `0.0.0.0` inside its own network namespace; the host side is already published on `127.0.0.1:${LITER_PORT:-4000}` only. |
+| Harness adapters for qwen-code, minimax-code, mimo-code | Not ported | Not mini harness targets; mini profiles cover its own copy targets instead. |
 
 ## What remains exclusive to the full version
 

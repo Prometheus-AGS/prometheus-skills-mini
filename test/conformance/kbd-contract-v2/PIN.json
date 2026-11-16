@@ -1,0 +1,7 @@
+{
+  "source": "Prometheus-AGS/prometheus-skill-system",
+  "path": "shared/references/conformance/kbd-contract-v2",
+  "commit": "73d67417b71a4aadae09441b2a56c6001c517ee3",
+  "gitTree": "223e70885f1c26ed141575d56c7beb535781260d",
+  "rule": "vendored verbatim; refresh by copying the directory from the pinned commit and updating this pin and SHA256SUMS. The upstream README drives the fixtures through the full pack's bash entry point; in mini the production entry point is `node scripts/kbd-contract-adopt.mjs --lint-only <fixture>` (golden: exit 0; each defect: exit 2 with stderr naming _expect.code)."
+}

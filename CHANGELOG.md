@@ -5,6 +5,52 @@ All notable changes to prometheus-skills-mini are recorded here. The format foll
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Earlier releases are
 recorded in the git history and in `COMPARE.md`; this file starts at 1.16.0.
 
+## [1.17.0] - Unreleased
+
+Parity with the full pack's certification work (#226–#238) and OpenSpec 2.1.0 (full-pack
+#239). OpenSpec change `parity-full-certification`; owner decisions of 2026-11-17: recent
+changes only, existing exclusions kept, static certification levels only.
+
+### Added
+
+- **`skill-certification` skill**, ported to Node. It certifies one skill against five
+  evidence levels and writes a certificate bound to the skill's content hash.
+  `run-evals.mjs` replaces the shell runner; every child process is started without a
+  shell, and a Windows `.cmd`/`.bat`/`.ps1` shim is reported as not exercised instead of
+  being run. A shell, Python or PowerShell script inside a skill is a static-level error.
+- **Strict skill validator**: `npm run validate` and `npm run validate:strict`
+  (`scripts/validate-skills.mjs`, `lib/skills/validate.mjs`). Strict mode requires
+  `license`, `metadata.version` and a comma-separated `metadata.tags`, rejects a top-level
+  `version`, and rejects a description the packaged plugin cannot read.
+- **VLBV session-start hook** (`sessionstart-vlbv`): states the boundary rule in a
+  KBD-managed project. Modes `kbd` (default), `always` and `off`, from
+  `PROMETHEUS_VLBV_DEFAULT`, `<project>/.prometheus/vlbv-default` or
+  `<home>/.prometheus/config/vlbv-default`.
+- **Eval cases** for `vlbv`, `kbd-status` and `prometheus-rust-workspace` (6 cases). They
+  have not been run.
+
+### Changed
+
+- **OpenSpec 2.1.0**, pinned exactly; Node.js 22.20.0 or newer. The runner's `init` passes
+  `--scope project`; `verify` and `refresh` use `openspec update --dry-run --json`; a
+  refresh that needs the network and cannot reach it returns `refresh-unavailable` and
+  exits 0. The 12 `openspec-*` skills were regenerated.
+- **Skill frontmatter** in 93 skills now follows the Agent Skills specification:
+  `metadata.version`, string tags, and a licence. Missing values came from the same skill in
+  the full pack; the 20 artifact-refiner skills take `MIT` from that repository's licence.
+- **Installed skills no longer carry `evals/` or a `.claude-plugin/` directory** that sits
+  beside their `SKILL.md`. This applies to both plugin packages and to doctor's
+  `copy-skills`.
+- `vlbv` 1.1.0: a description that says when to use it and when not to, and a "Where it
+  applies" section. `kbd-apply` and `prometheus-rust-workspace` route to it.
+
+### Not verified
+
+- Nothing in this release was run on Windows.
+- The trigger and outcome certification levels (C2, C3) were not run; they are billed
+  model runs.
+- Five full-pack eval cases were not ported because they need a bash scaffold script.
+
 ## [1.16.0] - Unreleased
 
 Feature parity with full-pack 1.15.0 (#224, d59a5a81), the liter-llm loopback fix

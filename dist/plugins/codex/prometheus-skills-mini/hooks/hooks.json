@@ -48,6 +48,17 @@
           }
         ],
         "matcher": "*"
+      },
+      {
+        "description": "State the verification method (VLBV) for KBD-managed projects",
+        "hooks": [
+          {
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/scripts/hook-entry.mjs --hook sessionstart-vlbv --harness codex",
+            "timeout": 5000,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
       }
     ],
     "SubagentStop": [

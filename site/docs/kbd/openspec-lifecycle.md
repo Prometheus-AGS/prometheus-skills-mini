@@ -6,7 +6,7 @@ description: Pack-pinned OpenSpec 2.0 selection, phase-entry refresh, verify-onl
 
 # OpenSpec lifecycle updates
 
-The pack is certified against **exactly OpenSpec 2.0.0** ([release notes](https://github.com/Fission-AI/OpenSpec/releases/tag/v2.0.0), [upgrade guide](https://openspec.dev/docs/upgrade-to-2)). `package.json`, `config/spec-engines.json` and the managed runner's `PINNED_VERSION` (`lib/platform/openspec/state.mjs`) carry the same exact pin. The runner never follows the npm registry past it: a newer release is reported as `newerAvailable`, a newer major as `migrationRequired`, and adopting either is a pack release (or an explicit operator pin). OpenSpec 2.0.0 needs Node.js 22.12.0 or newer, and the runner refuses an older Node with a failed receipt before installing anything. OpenSpec is the primary spec engine for new projects: `/kbd-init` runs the runner's `init` command (`node lib/platform/openspec/cli.mjs init --project <root> --tools claude,codex`), which reports `already-initialized` when `openspec/` exists. GitHub Spec Kit is the supported backup.
+The pack is certified against **exactly OpenSpec 2.1.0** ([release notes](https://github.com/Fission-AI/OpenSpec/releases/tag/v2.1.0), [upgrade guide](https://openspec.dev/docs/upgrade-to-2)). `package.json`, `config/spec-engines.json` and the managed runner's `PINNED_VERSION` (`lib/platform/openspec/state.mjs`) carry the same exact pin. The runner never follows the npm registry past it: a newer release is reported as `newerAvailable`, a newer major as `migrationRequired`, and adopting either is a pack release (or an explicit operator pin). OpenSpec 2.1.0 needs Node.js 22.20.0 or newer, and the runner refuses an older Node with a failed receipt before installing anything. OpenSpec is the primary spec engine for new projects: `/kbd-init` runs the runner's `init` command (`node lib/platform/openspec/cli.mjs init --project <root> --tools claude,codex`), which reports `already-initialized` when `openspec/` exists. GitHub Spec Kit is the supported backup.
 
 ## What OpenSpec 2.0 changed
 
@@ -14,6 +14,14 @@ The pack is certified against **exactly OpenSpec 2.0.0** ([release notes](https:
 - **No `/opsx:*` commands.** Each removed command has a skill of the same name: `/opsx:propose` → `openspec-propose`, `/opsx:new` → `openspec-new-change`, `/opsx:apply` → `openspec-apply-change`, `/opsx:verify` → `openspec-verify-change`, `/opsx:archive` → `openspec-archive-change`, and so on. Invoke a skill by name (`/openspec-propose` in Claude Code, `$openspec-propose` in Codex). KBD itself creates changes with the CLI (`openspec new change <id>` through the runner) and implements them only through `/kbd-apply`.
 - **The first 2.0 refresh migrates.** `openspec update --force` removes the 1.x per-tool copies and generated command files. This one-time migration can take longer than a short budget; a `pending` receipt means: run the long refresh once (`--timeout-ms 120000` or more). Re-running is idempotent.
 - **Never edit an `openspec-*` skill.** `update` overwrites it without a backup. Put project instructions in `openspec/config.yaml` (`context`, `rules`) or in a skill whose name does not start with `openspec-`.
+
+## What OpenSpec 2.1.0 changed
+
+- `openspec init --tools <ids>` installs skills globally by default in a new repository. The runner's `init` passes `--scope project`, so skills stay in the project.
+- Installing or refreshing skills clones the OpenSpec repository, so it needs Git and access to GitHub. `refresh` asks `openspec update --dry-run --json` first (this works offline) and skips the update when nothing in the project would change. If an update is needed and the network is unavailable, the result is `refresh-unavailable` with exit 0, and phase entry continues with the skills already in place.
+- `verify` reports `current` from the same dry run; 2.1.0 skills carry no `generatedBy` stamp.
+- Node.js 22.20.0 or newer is required.
+- On Windows the standalone OpenSpec executables are now labelled and signed, after an antivirus product had been removing `openspec.exe`. This pack runs OpenSpec through Node and was not affected. OpenSpec 2.1.0 has not been exercised on Windows from this pack.
 
 ## What updates automatically
 
@@ -38,18 +46,18 @@ In an installed package, locate the complete bundled helper directory through th
 
 The managed installation lives under ~/.prometheus/openspec/versions. It executes the package's JavaScript entry with Node and shell disabled. Exact versions are installed without lifecycle scripts or binary symlinks. It does not upgrade project dependencies or global CLI installations. Mini retains its Node-only portability contract; Windows execution still requires independent runtime validation.
 
-For a separately installed global CLI, use the package manager that owns that installation and verify every executable found on PATH. An npm-managed installation can be explicitly upgraded with npm install --global @fission-ai/openspec@2.0.0. A newer managed KBD CLI does not prove an older global shim was replaced.
+For a separately installed global CLI, use the package manager that owns that installation and verify every executable found on PATH. An npm-managed installation can be explicitly upgraded with npm install --global @fission-ai/openspec@2.1.0. A newer managed KBD CLI does not prove an older global shim was replaced.
 
 ## Availability and operator controls
 
 | Condition/control | Behavior |
 | --- | --- |
-| Registry available | Install the pinned 2.0.0 if needed and probe its CLI version; record `registryLatest`, plus `newerAvailable` / `migrationRequired` when the registry is ahead. The selection never moves |
+| Registry available | Install the pinned 2.1.0 if needed and probe its CLI version; record `registryLatest`, plus `newerAvailable` / `migrationRequired` when the registry is ahead. The selection never moves |
 | Registry unavailable | Use the pinned version (installed if cached) and record `registryError` |
 | Short refresh budget with insufficient time to install | Report pending (exit 75); complete the longer refresh before OpenSpec work |
 | Concurrent managed operation | Report contention (exit 75); no parallel updater or background daemon |
 | PROMETHEUS_OPENSPEC_HOME | Set a different managed cache, receipt and backup root |
-| PROMETHEUS_OPENSPEC_VERSION | Pin an exact stable version at or above 2.0.0 instead of the pack pin; report operator-pin |
+| PROMETHEUS_OPENSPEC_VERSION | Pin an exact stable version at or above 2.1.0 instead of the pack pin; report operator-pin |
 | PROMETHEUS_OPENSPEC_LATEST_URL | Replace the registry latest endpoint (isolated runs); affects reporting only |
 | PROMETHEUS_OPENSPEC_DISABLE=1 | Record disabled refresh; managed run exits 2 without executing OpenSpec |
 

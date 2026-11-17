@@ -25,7 +25,7 @@ openspec init --tools claude,codex,cursor,opencode --no-animation .
 OpenSpec 2.0 generates no `/opsx:*` command files. Each former command is a skill of the same
 name (`/opsx:propose` is `openspec-propose`, `/opsx:new` is `openspec-new-change`, and so on).
 
-The OpenSpec CLI (`@fission-ai/openspec`, pinned exactly `2.0.0` in `package.json` and the managed runner; it needs Node.js 22.12.0+) is itself a Node
+The OpenSpec CLI (`@fission-ai/openspec`, pinned exactly `2.1.0` in `package.json` and the managed runner; it needs Node.js 22.20.0+) is itself a Node
 package, satisfying the Node-only constraint with no extra runtime.
 
 See [OpenSpec lifecycle updates](/docs/kbd/openspec-lifecycle) for verify-only session start, phase-entry refresh, explicit overrides, offline behavior and backups. Generated tool counts depend on the selected OpenSpec version and profile.

@@ -7,9 +7,11 @@
 # each from a value the tree already enforces, not a new decision. See docs/versions-toml.md.
 # The operator raised [node] minimum to >=22.12.0 on 2026-11-05 ("raise the mini node floor to
 # >=22.12.0 too"), because OpenSpec 1.16.0 requires Node.js 22.12.0.
+# Raised again to >=22.20.0 on 2026-11-17 with the move to OpenSpec 2.1.0, whose package
+# `engines` requires Node.js 22.20.0.
 
 [node]
-minimum = ">=22.12.0"     # must equal package.json engines.node, exactly
+minimum = ">=22.20.0"     # must equal package.json engines.node, exactly
 
 [submodules]
 # "<path under the repository root>" = "<full or short commit sha>"

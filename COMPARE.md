@@ -1,5 +1,9 @@
 # Mini vs. Full Skill System
 
+> **Updated for 1.17.0 (change `parity-full-certification`).** Ports the full pack's
+> certification work (#226–#238) and moves both packs to OpenSpec 2.1.0. What was ported,
+> adapted and left out is in [Parity with the full pack's certification work](#parity-with-the-full-packs-certification-work-1170).
+
 > **Updated for 1.16.0 (parity with full-pack 1.15.0 + R4, change `parity-full-1-15-vlbv`).**
 > The OpenSpec, verification-method, harness-profile, protocol-eval and context-bootstrap rows
 > below were rewritten for that port, and the [Exclusions](#exclusions-from-the-full-pack-1150-parity-port-d-p2)
@@ -49,7 +53,7 @@ absent is listed honestly in "What remains exclusive to the full version."
 | **Skill breadth** | KBD process, adversarial review/ideation, artifact refinement, scaffolding, conversion, context bootstrap, Rust routing | Architecture, DevOps, document extraction, Flint SDKs, Flutter, Go, HTMX, learning, process orchestration, Python, React, research, Rust, Tauri, testing, and TypeScript |
 | **Artifact refinement** | **Implemented.** Twenty artifact-refiner skills for UI, logos, images, content, A2UI, AG-UI/MCP UI scaffolding, conversion, validation, and rebranding | Same artifact-refiner family, plus its broader upstream support files, hook integration, imported tools, and sycophancy-correction |
 | **Persistent artifact state** | Implemented through manifests, constraints, refinement logs, decisions, and output directories | Implemented, with additional provider, MCP, and system integrations |
-| **OpenSpec support** | **OpenSpec 2.0.0, pinned exactly** (`package.json`, `config/spec-engines.json`, runner `PINNED_VERSION`); the default planning backend. SessionStart runs the read-only runner `verify`; the mutating `refresh` runs only at phase entry. Skills are generated once into `.agents/skills/openspec-*` and copied (never linked) into the other harness roots; the `/opsx:*` commands are gone | OpenSpec 2.0.0, pinned exactly, with the same verify/refresh split; skills in `.agents/skills` with per-skill symlinks in `.claude/skills` |
+| **OpenSpec support** | **OpenSpec 2.1.0, pinned exactly** (`package.json`, `config/spec-engines.json`, runner `PINNED_VERSION`); the default planning backend. SessionStart runs the read-only runner `verify`; the mutating `refresh` runs only at phase entry. Skills are generated once into `.agents/skills/openspec-*` and copied (never linked) into the other harness roots; the `/opsx:*` commands are gone | OpenSpec 2.1.0, pinned exactly, with the same verify/refresh split; skills in `.agents/skills` with per-skill symlinks in `.claude/skills` |
 | **Verification method** | **VLBV is the single method** (constitution A-9, `kbd-policy` block in `CLAUDE.md`/`AGENTS.md`): implementation completes first; generated code executes only at B4 (the boundary packet, once) or B5 (an owner-authorized repair rerunning only affected checks). No compiler exception and no hourly-cadence exception. Boundaries: `skills/kbd-process-orchestrator/references/boundaries.md`; adopted contract v2 | VLBV as the single method (1.15.0), same boundaries, contract v2, compiler exception retired |
 | **Harness capability profiles** | `config/harnesses/capabilities.json` for claude-code, codex, opencode, kimi-code, zed, cursor, gemini, windsurf and cline. A field is `supported` only with committed evidence or a PASS protocol-eval case of the same harness (`npm run check:harness-capabilities`, `--capabilities <file>`); `node scripts/doctor.mjs profile [<harness>]` prints a profile; handoff packets carry the receiver profile. One field (codex `skillRoots`) is supported, on evidence carried from the full pack | `shared/harnesses/capabilities.json` with the same evidence gate (`check-harness-adapters.js`) and `kbd-doctor profile` |
 | **VLBV protocol evals** | `evals/vlbv-protocol/` ported to Node: 23 cases, adapters for claude-code, codex, opencode and kimi-code; zed, cursor, gemini, windsurf and cline are reported not run. No reports have been produced in mini yet | Same corpus with adapters for five installed harnesses and committed per-harness reports |
@@ -160,6 +164,32 @@ constraints are adapted or excluded, never imported as-is.
 | Bash/Python implementations (`vlbv-policy-check.sh`, `kbd-model-resolve.sh` grading, stub harness `#!/bin/sh`, `check-harness-adapters.js`) | Adapted to Node `.mjs` | Node is mini's only script runtime; spawn is shell-free. |
 | liter-llm loopback bind (full-pack 78abfd84, `--host 127.0.0.1` in the native launch script) | No change needed | Mini launches liter-llm only in Compose. The container must listen on `0.0.0.0` inside its own network namespace; the host side is already published on `127.0.0.1:${LITER_PORT:-4000}` only. |
 | Harness adapters for qwen-code, minimax-code, mimo-code | Not ported | Not mini harness targets; mini profiles cover its own copy targets instead. |
+
+## Parity with the full pack's certification work (1.17.0)
+
+Owner decisions (2026-11-17): port the recent changes only, keep mini's existing exclusions,
+and run the static certification levels only.
+
+| Full-pack change | Mini decision | Reason |
+|---|---|---|
+| Spec-conformant frontmatter and the strict validator (#226) | Ported | `scripts/validate-skills.mjs`, `npm run validate:strict`. 93 `SKILL.md` files migrated: top-level `version` moved to `metadata.version`, tag lists became strings, and missing `license`, `metadata.version` and `metadata.tags` were taken from the same skill in the full pack. |
+| `skill-certification` skill (#233) | Ported to Node | `skills/skill-certification/`. `run-evals.sh` became `run-evals.mjs`; child processes go through a shell-free helper that refuses `.cmd`/`.bat`/`.ps1` shims; the executable-bit check is replaced by "no non-Node script in a skill". |
+| VLBV session-start default (#229) | Ported to Node | `lib/hooks/sessionstart-vlbv.mjs`, same modes and precedence. It writes to stdout and ships to Codex as well. |
+| `evals/` and skill-level plugin manifests kept out of installed skills (#227, #237) | Ported | `lib/distribution/skill-source-only.mjs`, applied by the package builder and by doctor's `copy-skills`. |
+| Eval cases for `vlbv`, `kbd-status`, `prometheus-rust-workspace` | 6 of 11 ported | The other 5 build their working directory with a `setup.sh` scaffold. `claude plugin eval` runs a scaffold script with bash, and mini ships no shell script. Not ported: `vlbv/boundary-verdict-vocabulary`, `vlbv/mid-phase-test-request`, `vlbv/operator-names-other-method`, `kbd-status/implementation-complete-certification-pending`, `kbd-status/mid-phase-status`. |
+| Eval cases for `learn-grade`, `feynman-loop` | Excluded | Mini has no learning skills. |
+| Entity skills sync (#228, #235) | Excluded | Entity management is outside mini's scope. |
+| Domain plugins, domain index and installer `--domains` (#231, #232) | Excluded | Mini is one flat plugin of 106 skills with no generation installer. |
+| Runtime-only plugin and stale hook-carrier refresh (#236, #238) | Excluded | Mini has no generation store; `doctor` owns home-directory copies. |
+| `pmpo-skill-creator` rewired to KBD with a certification gate (#234) | Excluded | The skill is not in mini. |
+| OpenSpec 2.1.0 (full-pack #239) | Ported | Exact pin, `init --scope project`, dry-run `verify`, `refresh-unavailable` offline, Node 22.20.0. |
+
+Not at parity, by design of the full pack itself: six skills keep top-level fields the Agent
+Skills specification does not list, exactly as the full pack writes them
+(`disable-model-invocation` on `break`, `variant`, `explain-interface` and `interface-review`,
+which Claude Code reads; `authors`, `triggers` and `model_routing` on `adversarial-review` and
+`ideation-mindmap`). The certifier reports them at level C0. The strict validator accepts them,
+as the full pack's does.
 
 ## What remains exclusive to the full version
 

@@ -3,9 +3,9 @@
   "engines": {
     "openspec": {
       "cli": "openspec",
-      "pinnedVersion": "2.0.0",
+      "pinnedVersion": "2.1.0",
       "pinSource": "package.json devDependencies @fission-ai/openspec (exact)",
-      "rationale": "Primary engine. Exact pin per the repo dependency-pin discipline; version matches package.json and the managed runner PINNED_VERSION (lib/platform/openspec/state.mjs); the runner never follows npm latest and reports newerAvailable / migrationRequired instead. OpenSpec 2.0 installs skills once in .agents/skills (this repo mirrors them as real directory copies into each harness skill root) and removes the /opsx:* commands. Needs Node.js 22.12.0+ (enforced by lib/platform/openspec). DEFAULT engine: detection order is pinned > openspec > speckit > native-kbd.",
+      "rationale": "Primary engine. Exact pin per the repo dependency-pin discipline; version matches package.json and the managed runner PINNED_VERSION (lib/platform/openspec/state.mjs); the runner never follows npm latest and reports newerAvailable / migrationRequired instead. OpenSpec 2.0 installs skills once in .agents/skills (this repo mirrors them as real directory copies into each harness skill root) and removes the /opsx:* commands. Needs Node.js 22.20.0+ (enforced by lib/platform/openspec). DEFAULT engine: detection order is pinned > openspec > speckit > native-kbd.",
       "adapter": "os* in lib/kbd/spec-backend.mjs (CLI-backed, spawned with no shell)"
     },
     "speckit": {

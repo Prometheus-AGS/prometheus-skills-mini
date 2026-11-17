@@ -8,7 +8,7 @@
     },
     {
       "path": "hooks/hooks.json",
-      "sha256": "sha256:d99ce4561081c67649a845ce1d96f300855f5a42d14ed005261670b2c4029580"
+      "sha256": "sha256:f924611e3dd40721e43eb78e09553bde3a4b7211a8196c48f03607bc4d832b07"
     },
     {
       "path": "lib/cadence-adapters/io.mjs",
@@ -45,6 +45,10 @@
     {
       "path": "lib/hooks/sessionstart-kbd-control.mjs",
       "sha256": "sha256:d0be86d1b7954fc3f293d5996c8afabe02a02f0df75a119bed7089826e95eb19"
+    },
+    {
+      "path": "lib/hooks/sessionstart-vlbv.mjs",
+      "sha256": "sha256:9d843cb9deaacd11521ca85dffc327be5c130e556e98d3dc0b9ccdd9a0867e03"
     },
     {
       "path": "lib/hooks/subagent-fallback-checkpoint.mjs",
@@ -272,7 +276,7 @@
     },
     {
       "path": "lib/platform/openspec/README.md",
-      "sha256": "sha256:c384301f74b75f631dd62e56992e1b7851cb5185539ffdecb51097a00675a6ba"
+      "sha256": "sha256:76d6bb1f616f6df2757664aacb0557e96652836ba1808c5248780ddbef71b683"
     },
     {
       "path": "lib/platform/openspec/backup.mjs",
@@ -284,7 +288,7 @@
     },
     {
       "path": "lib/platform/openspec/lifecycle.mjs",
-      "sha256": "sha256:65093502b6538bef5b6a7825b3f0c56a79d332c943e0ee8bebe4ab45f5956d98"
+      "sha256": "sha256:19dbe4ca2bfa13a1251f370906e29b56c47f6f833e5fcc8fca7e6ca0e20e87a3"
     },
     {
       "path": "lib/platform/openspec/materialize.mjs",
@@ -296,7 +300,7 @@
     },
     {
       "path": "lib/platform/openspec/state.mjs",
-      "sha256": "sha256:5770609bba25b23c68fe931b888ba8c183161a92440a11f7ed2a7b73f014c6a2"
+      "sha256": "sha256:8949938254eec6670b4a918c2507a210c2f809e0d46fe8003728e6129cf4f52f"
     },
     {
       "path": "lib/platform/paths.mjs",
@@ -320,7 +324,7 @@
     },
     {
       "path": "scripts/hook-entry.mjs",
-      "sha256": "sha256:60605cf7dfb7241372be3d316f8c41d5303ed0343b4d2d4ea80c1d5f85ef6cb8"
+      "sha256": "sha256:55976534eb1e41bbfce2d198ecfddc27f897de500912f08f071ae9fb93294d0c"
     },
     {
       "path": "scripts/kbd-apply.mjs",
@@ -388,7 +392,7 @@
     },
     {
       "path": "skills/adversarial-review/SKILL.md",
-      "sha256": "sha256:762a808f2ea86fe7bdfc356fe84ed5b584f0f4e3992335d9cc726921e26abe57"
+      "sha256": "sha256:d0157159734355e8cc59a26f4c5c3eb0537dc92eb5e3de71c0af73303b9a1de0"
     },
     {
       "path": "skills/adversarial-review/assets/reviewer-mandate-agent.md",
@@ -1020,7 +1024,7 @@
     },
     {
       "path": "skills/android-compose-adaptive/SKILL.md",
-      "sha256": "sha256:1d5832d2a3122ac522fdb2f6299c9e1c7e4f7a5eb0ba7094cc43b727cc6207d8"
+      "sha256": "sha256:60600c6e616d543c403da5cb47547b607823b9a5be9e53d9e78fcac007841979"
     },
     {
       "path": "skills/android-compose-adaptive/references/android/develop/ui/compose/layouts/adaptive/flexbox/container-behavior.md",
@@ -1076,11 +1080,11 @@
     },
     {
       "path": "skills/android-edge-to-edge/SKILL.md",
-      "sha256": "sha256:9bab0fd355537e19c43435687672aee8e579bfffe2b74d11afb0aeda30501fb7"
+      "sha256": "sha256:177af806ab4be2b5d0fec1f04daa8a4dd80252d0d3c3d551ffdd1bfd01eed044"
     },
     {
       "path": "skills/artifact-refiner/SKILL.md",
-      "sha256": "sha256:ed28a5792a5a15e5a674788d5dac9736f29736517dd73d4ad2cda9ab57796973"
+      "sha256": "sha256:bd803b53210cccf37272e9af063a05db6a0d1e05cdb107eb4e27845f0c1ed178"
     },
     {
       "path": "skills/bdd-cucumber-js/SKILL.md",
@@ -1100,7 +1104,7 @@
     },
     {
       "path": "skills/better-accessibility/SKILL.md",
-      "sha256": "sha256:f936208a7225d199bb6d6546dad81de2fd96c922a1110adf0d69b8f044b0f41a"
+      "sha256": "sha256:7c5bed5f66bab5c76f19b40d040890f6e0ecfccac0d30ccd4ba2ecb62ab3f1a7"
     },
     {
       "path": "skills/better-accessibility/agents/openai.yaml",
@@ -1140,7 +1144,7 @@
     },
     {
       "path": "skills/better-colors/SKILL.md",
-      "sha256": "sha256:8c742ce089bb9c8ab1c2866576bffdd0821cbbff9f7fdd7e7c7ce1ac42f5df27"
+      "sha256": "sha256:a3bba5447900c51540777ee78ed9edb88982b8a2488bc62f06a8be6098e00940"
     },
     {
       "path": "skills/better-colors/agents/openai.yaml",
@@ -1180,7 +1184,7 @@
     },
     {
       "path": "skills/better-interface/SKILL.md",
-      "sha256": "sha256:36fa2c8a3665138a7d2820949e44477af10ab7a2a3d3642d93aea9811a4ab842"
+      "sha256": "sha256:16843ed4c449972e3a0f0dc8224a423b7fb4086910bee9b974ee0f8e101ad673"
     },
     {
       "path": "skills/better-interface/agents/openai.yaml",
@@ -1200,7 +1204,7 @@
     },
     {
       "path": "skills/better-layout/SKILL.md",
-      "sha256": "sha256:7652d540c11a318a3a483025d991cf6cbe36adfaccb02919261f835f45f698a2"
+      "sha256": "sha256:ae9c7795e5087b012c4a2e20cd362f4bd309738930a6a1d8808042d8da27fac5"
     },
     {
       "path": "skills/better-layout/agents/openai.yaml",
@@ -1224,7 +1228,7 @@
     },
     {
       "path": "skills/better-typography/SKILL.md",
-      "sha256": "sha256:d0e7fe82c7552014bd7485d10a99b5819b6c21b76986a33dce5630682dfc8f0a"
+      "sha256": "sha256:adfbd8289aa921d5b5efe82c216a83f8e556d88ba61ce85608df845618d8ff8d"
     },
     {
       "path": "skills/better-typography/agents/openai.yaml",
@@ -1264,7 +1268,7 @@
     },
     {
       "path": "skills/better-ui/SKILL.md",
-      "sha256": "sha256:5a19ec697df62aa58398ca5cce06816674054e6a9042163aea12d3ae329c6c71"
+      "sha256": "sha256:9ef3ef42dc687513b22061850f7a10e7fcf144e7b4ef02ecd1898ba4c84b4f58"
     },
     {
       "path": "skills/better-ui/agents/openai.yaml",
@@ -1304,7 +1308,7 @@
     },
     {
       "path": "skills/better-writing/SKILL.md",
-      "sha256": "sha256:10cfd6ebf824e2638ac058e6f3395b8078800ecf9cfffb0194cd07c0fb835154"
+      "sha256": "sha256:a791c6fcf7b181c8f68296d7e290c75a2f8ca1ae884c8113ea4654c8010e4c15"
     },
     {
       "path": "skills/better-writing/agents/openai.yaml",
@@ -1320,7 +1324,7 @@
     },
     {
       "path": "skills/break/SKILL.md",
-      "sha256": "sha256:931d14a6c820292c36daf1de880574cd8fdc3c8ec2e399ba74c3939cf2a13b6f"
+      "sha256": "sha256:01711a0a3420682087d70b438c66dea2dcf8ef09db82bd858f977d4ee6bf1023"
     },
     {
       "path": "skills/break/agents/openai.yaml",
@@ -1332,15 +1336,15 @@
     },
     {
       "path": "skills/convert-htmx-pdf/SKILL.md",
-      "sha256": "sha256:4a38f45e0259221941ad353746d10a02ce5c8d6cada301cc145efdace224066b"
+      "sha256": "sha256:b53571ae60e1e830758206d41cabddcfe231e9f21ebdc3ffac45265b3723a694"
     },
     {
       "path": "skills/convert-htmx-react/SKILL.md",
-      "sha256": "sha256:7f41dc2e08146cb1db93a6edd509006af0f9c3ba8d7a30ab37bb0732be024a08"
+      "sha256": "sha256:0185046a2d7d57b210b022886faced9b9f59475f8f80a7b08e7a76c4776f0f83"
     },
     {
       "path": "skills/convert-md-to-htmx/SKILL.md",
-      "sha256": "sha256:cf0a7a6436dce0b447f90ae84e1b499463e2b16e4d73fd43eea91f469567f901"
+      "sha256": "sha256:7c8003b63c90968d9bf3c8465682b59e08101442a3315486e369396654a20e36"
     },
     {
       "path": "skills/delivery-cadence/SKILL.md",
@@ -1604,7 +1608,7 @@
     },
     {
       "path": "skills/design-svg-logo/SKILL.md",
-      "sha256": "sha256:826a3e80ba6eb1c097a11b5216ae93b174a0de0e84692ac1f1cc6f59a3051bd4"
+      "sha256": "sha256:857d3cde7403d86c8926067679ebed9b60453d4cc0a53ad21bbafb06d0c27f91"
     },
     {
       "path": "skills/design-taste-frontend-v1/LICENSE",
@@ -1616,7 +1620,7 @@
     },
     {
       "path": "skills/design-taste-frontend-v1/SKILL.md",
-      "sha256": "sha256:838823ce16068f5300250cea57b3961c032bcac2ea3ed8952dc9b06461262710"
+      "sha256": "sha256:b45c5fe786b7342acc7d704e59f5bad317b28a66e5f250e69de44bde6590c4cf"
     },
     {
       "path": "skills/design-taste-frontend/LICENSE",
@@ -1628,11 +1632,11 @@
     },
     {
       "path": "skills/design-taste-frontend/SKILL.md",
-      "sha256": "sha256:d7a00f4506f2469c94a848d3321e370b36c3ca5f40fb0d41fc16b3814d525ff2"
+      "sha256": "sha256:ae745aad2c89abd58307fb8fac708889bfe1717dbca4edceb2aadfe6a5bd384d"
     },
     {
       "path": "skills/doctor/SKILL.md",
-      "sha256": "sha256:fc047f3b1014b4a3332b40b67368326f48cbc5839320da1e207829844af402ce"
+      "sha256": "sha256:5ad4c2cd1608d20f1306984bad7fd36f5bbce8a338f74513219cd52a1af408af"
     },
     {
       "path": "skills/explain-interface/LICENSE",
@@ -1644,7 +1648,7 @@
     },
     {
       "path": "skills/explain-interface/SKILL.md",
-      "sha256": "sha256:1ae922ae25464591657bd78734d5a6e94b306a12d478d486469123b8238f40e5"
+      "sha256": "sha256:6d2401f15c170d787ffe1f920a06e985b9e7c66ed06c9d369921ea911af026d4"
     },
     {
       "path": "skills/explain-interface/agents/openai.yaml",
@@ -1684,7 +1688,7 @@
     },
     {
       "path": "skills/expo-animation/SKILL.md",
-      "sha256": "sha256:3803371b4a66d531f80e45c9beb98b0f85e9bfe3452329f716585c328375cc1a"
+      "sha256": "sha256:6ebd1bc5b4b6a58d6c9a2b2ade22e453277024d97090bfc6362f31805572c217"
     },
     {
       "path": "skills/expo-animation/agents/openai.yaml",
@@ -1700,7 +1704,7 @@
     },
     {
       "path": "skills/expo-design-system/SKILL.md",
-      "sha256": "sha256:d91f618055fff1405cea57a003a8951c6423d45051bdc3ebbede740aaf653771"
+      "sha256": "sha256:434f7ffb6b30a6d807e19dd112459553cf3db4263689e63cbeff21a99d821b76"
     },
     {
       "path": "skills/expo-design-system/agents/openai.yaml",
@@ -1724,7 +1728,7 @@
     },
     {
       "path": "skills/expo-native-ui/SKILL.md",
-      "sha256": "sha256:dc63d04dbbeb83fd1750d3652d910afea42c58d3a9c37260b350d338172fa20d"
+      "sha256": "sha256:b43ef8605c34cdabdbfee36c1cd300339cb8a52bd9435dd98296dd2442ba8649"
     },
     {
       "path": "skills/expo-native-ui/agents/openai.yaml",
@@ -1768,7 +1772,7 @@
     },
     {
       "path": "skills/expo-router/SKILL.md",
-      "sha256": "sha256:91101a6920079190c48a9d9343048c1a1bd8a8a2c649f8ee1191c7ffc2aaf000"
+      "sha256": "sha256:b38fc833e25aa93dff1b8865afe723ac4b418dc040ce227af88066e34250dc85"
     },
     {
       "path": "skills/expo-router/agents/openai.yaml",
@@ -1808,7 +1812,7 @@
     },
     {
       "path": "skills/expo-ui/SKILL.md",
-      "sha256": "sha256:4308c8bdae452a44091b2fc4655852d1fbef32bd66bb38bc7ff0f8ad794716aa"
+      "sha256": "sha256:aee69cd69f4a78a3cb938f24bb93cb129e56c1a9dea9e2a8586e57dacc9619ca"
     },
     {
       "path": "skills/expo-ui/agents/openai.yaml",
@@ -1844,7 +1848,7 @@
     },
     {
       "path": "skills/flutter-build-responsive-layout/SKILL.md",
-      "sha256": "sha256:1a3fd933282eb31bde720651a992b220905f9bc0ddb5d75f01a0a5738efd8b98"
+      "sha256": "sha256:632d1d9a741851104300ffe8499669c70b38f0ffa0eb060d2ec113e3d93e6485"
     },
     {
       "path": "skills/flutter-fix-layout-issues/LICENSE",
@@ -1856,7 +1860,7 @@
     },
     {
       "path": "skills/flutter-fix-layout-issues/SKILL.md",
-      "sha256": "sha256:6e350bee8275930a144f9263bdfe6c17537ee9b77f315b9a28f75643a75af256"
+      "sha256": "sha256:b59fe1cd1ffb3e65ab4f45953ed3736a4b8389adaf4935e31c6eeaa465a37630"
     },
     {
       "path": "skills/flutter-setup-declarative-routing/LICENSE",
@@ -1868,7 +1872,7 @@
     },
     {
       "path": "skills/flutter-setup-declarative-routing/SKILL.md",
-      "sha256": "sha256:f30045d7e85713b0b02b0750b59458870820ed9de6f477248306c955a45b88d5"
+      "sha256": "sha256:c0d8029f34a326af13e98b6214b51afb3afeb1d3bb7af6da26b86c3d9ae6a4cf"
     },
     {
       "path": "skills/flutter-setup-localization/LICENSE",
@@ -1880,7 +1884,7 @@
     },
     {
       "path": "skills/flutter-setup-localization/SKILL.md",
-      "sha256": "sha256:5751dd394fdac988440144326a06342ad32c8f16409b9cdb6a3a360d09bd42c8"
+      "sha256": "sha256:95001eb3140f6643083139b2a9a0674cd05dd79a4436a6bd61c81fc13115a7e0"
     },
     {
       "path": "skills/full-output-enforcement/LICENSE",
@@ -1892,7 +1896,7 @@
     },
     {
       "path": "skills/full-output-enforcement/SKILL.md",
-      "sha256": "sha256:e044dddfd3a1cd64c0936a3434e619bfa498356718587b532877df075b76a1fe"
+      "sha256": "sha256:c962f06c4e16105d7af231540143449c3c3d4d46ccfccb9469e014e49bddc3a7"
     },
     {
       "path": "skills/gpt-taste/LICENSE",
@@ -1904,7 +1908,7 @@
     },
     {
       "path": "skills/gpt-taste/SKILL.md",
-      "sha256": "sha256:f66fbb08b070f806172c5d7e1967d5b187a76b42f2d800288e473d92e774c040"
+      "sha256": "sha256:ae061a20523ed6a663b4169f3d3baadd405f65bf91f4f35b2c48b9dfc391e118"
     },
     {
       "path": "skills/high-end-visual-design/LICENSE",
@@ -1916,11 +1920,11 @@
     },
     {
       "path": "skills/high-end-visual-design/SKILL.md",
-      "sha256": "sha256:b66d3624501825aa566261f80710b6498dae03cbd80bfada5d68d28206406bdd"
+      "sha256": "sha256:464a6cc58cb4eb1003abc66dc6d1eb83f1373196877c97f10abe017b43e33987"
     },
     {
       "path": "skills/ideation-mindmap/SKILL.md",
-      "sha256": "sha256:63323f8ffae3bbeb0fb96854abadad0a0cae736ca1ae3784841dbbc08c589e74"
+      "sha256": "sha256:68f6e051af3a6d4d3df2ecf74ae102a3236af9e719f1bdcfc248f1ae5ae2f74a"
     },
     {
       "path": "skills/ideation-mindmap/references/harness-delivery.md",
@@ -1936,7 +1940,7 @@
     },
     {
       "path": "skills/industrial-brutalist-ui/SKILL.md",
-      "sha256": "sha256:aafb58aa19a304037c3a145cc2dec6264e99180e91dc8d82d92e969e1f284cf7"
+      "sha256": "sha256:a4a74161d4aab6c64c8ae06d0a46e0a3d9d993a5df8f78094e0a9382f79a9f56"
     },
     {
       "path": "skills/interface-review/LICENSE",
@@ -1948,7 +1952,7 @@
     },
     {
       "path": "skills/interface-review/SKILL.md",
-      "sha256": "sha256:1d1be380023599398a5f911e9c90c3ebacb45e63cbcf1759ceab936733b49cb6"
+      "sha256": "sha256:0ee85b12333b4846036339dd867c90b22d563c00f7501d9eec979e8c8ee3b73f"
     },
     {
       "path": "skills/interface-review/agents/openai.yaml",
@@ -1964,39 +1968,39 @@
     },
     {
       "path": "skills/karpathy-progress-memory/SKILL.md",
-      "sha256": "sha256:bffd8e141a9f225c4c64fb827104910c155d3a9f0ebdac21f9d75f3206d087ce"
+      "sha256": "sha256:788b5b00d61f50770d974c2829c660d849cecbc17c4e75fde0aa485328bfa7b1"
     },
     {
       "path": "skills/kbd-analyze/SKILL.md",
-      "sha256": "sha256:5f3f0418c42bbd24a28c3cfb9d498b39bf7a03938d66c34f1c34261cc0964a38"
+      "sha256": "sha256:8f35568cf8080825b1357949d5e2c2446afca2f7219d40b1e25aeba5d03837ba"
     },
     {
       "path": "skills/kbd-apply/SKILL.md",
-      "sha256": "sha256:061be323b0d36b740a7b5ba5882c527fcfc8cafdf76370936e6e185f7b0438fe"
+      "sha256": "sha256:cc0b316f40a156abc1d99bb4688e94bd9ad66acef9d89e7f7599b799e7eb5d70"
     },
     {
       "path": "skills/kbd-assess/SKILL.md",
-      "sha256": "sha256:025ac493d3ac558a94e96ebefcd4e9cb098ab8416b1bdea54b95ebb1160547b4"
+      "sha256": "sha256:7a3c19f12648c50bcb2737bef06ce277318ad958d562af0d374a459f4a7ebf77"
     },
     {
       "path": "skills/kbd-audit/SKILL.md",
-      "sha256": "sha256:e260dc04a6d25e4b055731bc0c09a2012f1a50ba786faffdd729d6fc47e07c35"
+      "sha256": "sha256:51149d439f4e23d3cc1bc43c35ac57d8284ec000d9583a4d7c2acc5bf4678b92"
     },
     {
       "path": "skills/kbd-bottleneck-detector/SKILL.md",
-      "sha256": "sha256:6b9205d7d6db95df008b4368e2796533296e6719dbcc7d99a55e6c9b98ef3a12"
+      "sha256": "sha256:82343bb2393fd19111044f240d10c3ded0bb7511be3359cb194baa37dc03a37a"
     },
     {
       "path": "skills/kbd-cancel/SKILL.md",
-      "sha256": "sha256:5d10f2df1eea559a1be2cd896dfa3a91216077a9d1cd856db3cf1fff6305abb5"
+      "sha256": "sha256:59b3efefb879e2616a2f0ada61d5ed729a2f21add39e40a435ef2262aedf17b8"
     },
     {
       "path": "skills/kbd-child-exit/SKILL.md",
-      "sha256": "sha256:8d9399a48f0b5d396e4c272fe77cd076e40e10f3936523f8d1f1b4b778a9c01a"
+      "sha256": "sha256:6cd06354d79b0017833297a22b1aa7cc2b4054bd88e7b75cc11478d0f8b48077"
     },
     {
       "path": "skills/kbd-evolve/SKILL.md",
-      "sha256": "sha256:c44bde9a00a4c75ef3dd99d0c9c5ab34a404ac3e351de9632a588d7fa3e5958d"
+      "sha256": "sha256:32ae970f535c879ea638b32db3b4fb2c30b4a54a01081c7dafaed6299d066e7b"
     },
     {
       "path": "skills/kbd-evolve/references/criteria.md",
@@ -2008,23 +2012,23 @@
     },
     {
       "path": "skills/kbd-execute/SKILL.md",
-      "sha256": "sha256:1ca537d51bd2083f52c8a0027c2a71cbd5236bdb213b21dddf50f3a6bb82875b"
+      "sha256": "sha256:b7c63c611315574d44d3e1b30f87c169c5e996e11947f5980a50c557d9d62068"
     },
     {
       "path": "skills/kbd-goal-check/SKILL.md",
-      "sha256": "sha256:178438ee6b249a851a4f68faa83b7a3c4b42fbf8b3f077558f2e604655c98725"
+      "sha256": "sha256:bd1d86be8e119a44788b837b8dc354ae9ca58507b710e437457695d0fb45bc95"
     },
     {
       "path": "skills/kbd-goal/SKILL.md",
-      "sha256": "sha256:b0e857b57e942464e8980e920ba94a6f0c5aeee87c58755714edb1cbf6e6bffb"
+      "sha256": "sha256:9d1837f2f1ea97e9e332f41f611242d33d5d156b39dafb472888c1be5fd50d0f"
     },
     {
       "path": "skills/kbd-handoff/SKILL.md",
-      "sha256": "sha256:bef284629b5eeeac8ca69daca9fc47d3ba4c948a31bfe83e10bb9ec519e3a2a6"
+      "sha256": "sha256:1980a47069b298bf8c7637a8e18da195b228deea466b27c83722260cbf5d1af8"
     },
     {
       "path": "skills/kbd-init/SKILL.md",
-      "sha256": "sha256:ea48219610e60b9eeb13f0281cf70d39ced24935f3ede44075487a35e0d286bd"
+      "sha256": "sha256:1fbb27d60337fc2f1835b866915dc61735fc744dbc1d299409f1e57256a1a4d9"
     },
     {
       "path": "skills/kbd-init/references/constraints.md",
@@ -2048,7 +2052,7 @@
     },
     {
       "path": "skills/kbd-inject-agent-rules/SKILL.md",
-      "sha256": "sha256:47c4533057fd94eb67c2c7455663a392dd4e30c30401be3924afb47bd485ebc1"
+      "sha256": "sha256:3b1738ba7e5bec2fc66434467a3f18f959eb05210310e64877ccd46cbc6ba1c5"
     },
     {
       "path": "skills/kbd-inject-agent-rules/references/cache-agent-rules.md",
@@ -2068,35 +2072,35 @@
     },
     {
       "path": "skills/kbd-loop/SKILL.md",
-      "sha256": "sha256:3b215173259d7259e6eaa52f991136c74d302a712e08c328ee540a83f2ce4d8b"
+      "sha256": "sha256:ed8b8c02316d562d6a652c1b96674f20fa3ba484c89c5d3ec9e53aafc56bda62"
     },
     {
       "path": "skills/kbd-memory-recall/SKILL.md",
-      "sha256": "sha256:974d6696e9c1849ffbcb435f48d2b0279ef0f86ff71f5ae575d36d10e9667512"
+      "sha256": "sha256:24074184d4770fbb34c376a6a36b48a616e5aca5b53f3c5e393da65d2d604428"
     },
     {
       "path": "skills/kbd-new-child/SKILL.md",
-      "sha256": "sha256:897dd20493daf98e4ef427e32a2cd432ff8ed3a1d4b8151ac7db1e0685aa03e5"
+      "sha256": "sha256:ad9c44748cac816f7635f54c781962a9d795f0dadce7b17f207655298fba3b84"
     },
     {
       "path": "skills/kbd-new-phase/SKILL.md",
-      "sha256": "sha256:aa61f8a27741536fd93fba696b7772af78628cbd9a3bc485f30327b7620bfec3"
+      "sha256": "sha256:45f49fda3377a4f1f19a05f5e6aae4544eabfb2d96d048d460043ff4daa60c2f"
     },
     {
       "path": "skills/kbd-next-child/SKILL.md",
-      "sha256": "sha256:09e444ba847ff8f81bf37cc1bb22247f52af910f163a8d1a11a8f9f6768c14d8"
+      "sha256": "sha256:6d6bd6242ef64ec7778bea5791e1a62912514e16db7e84cc07f869cdb1cb6904"
     },
     {
       "path": "skills/kbd-next-phase/SKILL.md",
-      "sha256": "sha256:97574b6e4c680230bdabc66e06b419bc1e37e4c05bef508cbeae766d727db6f7"
+      "sha256": "sha256:3e06692245997a6a2e003a37c527e4b0880fe9dc4809a492e328d923978e855b"
     },
     {
       "path": "skills/kbd-pause/SKILL.md",
-      "sha256": "sha256:1af29aa9c9287b97ba6d7604c752e52172fe6f702116731521450a56ab8d9c11"
+      "sha256": "sha256:4ab2ab80749d6b96dbb1d80eb23c021695de85db0632b02038e3450a65f11bce"
     },
     {
       "path": "skills/kbd-plan/SKILL.md",
-      "sha256": "sha256:f8177485d245bc1c4e37f9b21655094f3c0976cbd7343b20620b21a266e3ff44"
+      "sha256": "sha256:1f241434eace815fe28a001c5984365dbbb79b938f65d6ed4724a062147e487d"
     },
     {
       "path": "skills/kbd-plan/references/task-model-selection.md",
@@ -2104,7 +2108,7 @@
     },
     {
       "path": "skills/kbd-process-orchestrator/SKILL.md",
-      "sha256": "sha256:213d672bf007c82144a05583a7a2e5982514c9d416151641369e5f21ebfca3bc"
+      "sha256": "sha256:0db512352361c176ae1e019be7693d1f5a7785178b782b920bf0768e8c2112f2"
     },
     {
       "path": "skills/kbd-process-orchestrator/references/boundaries.md",
@@ -2144,19 +2148,19 @@
     },
     {
       "path": "skills/kbd-reflect/SKILL.md",
-      "sha256": "sha256:7b2d2ed82cbe6b0e35c9cfe7303b78e5911e44c40bba9228c91c47b6b560b43e"
+      "sha256": "sha256:4268e72b6d4ec18d8b35714e4ee9f14ee0bf7a1ce7bc3d8919ab3a39d8539253"
     },
     {
       "path": "skills/kbd-resume/SKILL.md",
-      "sha256": "sha256:9c9a3014988ddea4c05cf35f99208abf4024654f7a7c9632c7beca986c680bb5"
+      "sha256": "sha256:2545455e4e1fd6090a94197331aea5913545806ef67356cfea98027fb0e41b18"
     },
     {
       "path": "skills/kbd-spec/SKILL.md",
-      "sha256": "sha256:cb319d659b3ac1bb54adb479825e507f43dfb1453fe7132e4ace43c432bcee11"
+      "sha256": "sha256:7229ac7471f1db3cdc4ef08950fb7ef3747ab6179799a481e6900bad5af9c958"
     },
     {
       "path": "skills/kbd-status/SKILL.md",
-      "sha256": "sha256:fa1fa97ba2ea1b7218436766ba178c196827a4e8308a5f42aabf0256187da138"
+      "sha256": "sha256:158ad910a4a6a6ee73360b408a06c0e517f259be0cdb425af70864b4b20110da"
     },
     {
       "path": "skills/minimalist-ui/LICENSE",
@@ -2168,11 +2172,11 @@
     },
     {
       "path": "skills/minimalist-ui/SKILL.md",
-      "sha256": "sha256:f657476e330783507a9352768fc2da555812a8f3a3c00f7a4970cd5d407be310"
+      "sha256": "sha256:d8afc06dd1388c78bf450e4c5d2f06e4396b4d3e8c02f22ea69e2d77a831eb55"
     },
     {
       "path": "skills/prometheus-context-bootstrap/SKILL.md",
-      "sha256": "sha256:c60317f4ea4cf19b16b1e286123fc8a720325526d02989118a68d6de381b80a0"
+      "sha256": "sha256:941be6befd3b76c03e36f692d6452e61cd25fc3b458f6964f97e09a0e72b0c72"
     },
     {
       "path": "skills/prometheus-context-bootstrap/references/AGENTS.base.md",
@@ -2188,7 +2192,7 @@
     },
     {
       "path": "skills/prometheus-impeccable-core/SKILL.md",
-      "sha256": "sha256:d19fc20bd31b707a96247e3105bfcebc2cfcf2adb08deeacacc33b9e50cf0726"
+      "sha256": "sha256:6e3e1fb422b1a2d4d72bfc4cda1f6332d946290cc5429717518a44a2c5fe3afe"
     },
     {
       "path": "skills/prometheus-impeccable-core/references/LICENSE.impeccable",
@@ -2204,7 +2208,7 @@
     },
     {
       "path": "skills/prometheus-rust-workspace/SKILL.md",
-      "sha256": "sha256:a8626e35ce6d8b35b8037a651d89e9c05c7173378d8152a0f47af7e02703d149"
+      "sha256": "sha256:2c1caec1583504e210c12541108d47cc620c24f1b2c9c5b6a6f617e1f32204ce"
     },
     {
       "path": "skills/prometheus-rust-workspace/references/phase-gated-verification.md",
@@ -2216,11 +2220,11 @@
     },
     {
       "path": "skills/prometheus-ui-review/SKILL.md",
-      "sha256": "sha256:a032b9ba76b3e044b0517d8846f6838d49385119a390b564adaf7a34c5ecb593"
+      "sha256": "sha256:b72d91c6b271f3889efd6144e9aeced3b9582e9e30ab1155ef77ebd6960e122f"
     },
     {
       "path": "skills/prometheus-ui-ux/SKILL.md",
-      "sha256": "sha256:481e22bb27f6922727f5268a671e16f612bb6a01e13922050a08f057a2a48127"
+      "sha256": "sha256:5e63b1699a717c543eaf2edf3d90d89500cb02a2dc62e77e26e7bb38a77e8311"
     },
     {
       "path": "skills/prometheus-ui-ux/references/UI_UX_PROTOCOL.md",
@@ -2276,7 +2280,7 @@
     },
     {
       "path": "skills/rebrand-artifact/SKILL.md",
-      "sha256": "sha256:332fd5dbf10fa0c28cb311777e672ddfe745587a0972e31ccfc55b8d9819cba2"
+      "sha256": "sha256:cd97c0864a7400a565801819612f16ea68058ded621adb7ed59e588ae1f55718"
     },
     {
       "path": "skills/redesign-existing-projects/LICENSE",
@@ -2288,47 +2292,47 @@
     },
     {
       "path": "skills/redesign-existing-projects/SKILL.md",
-      "sha256": "sha256:e05b52a1d0c3ed15936adf2b1aca3f9214e3c55d302d9f197da64dc8c7282bd8"
+      "sha256": "sha256:a4e184efceb81814954bfb0d31fb3663ba9a7383514da7b2aa34fc02d631be64"
     },
     {
       "path": "skills/refine-a2ui/SKILL.md",
-      "sha256": "sha256:dc38b018f331d5f930f1cef35acdf42da212180dc4c12a7aa29a20d773f38b0c"
+      "sha256": "sha256:5afb7605b9abf15f6b21a27176ddf0a67d51f89875dccfedc291529d8d9a6561"
     },
     {
       "path": "skills/refine-content/SKILL.md",
-      "sha256": "sha256:122a0422b3077f5fc4d796f8e634f2cf7d7e78be0273f6a79163aa56c98e480a"
+      "sha256": "sha256:2b7195cc69834c72a5b2455e1b8627c1b88dd631b5dff347d78deeb883d3e09e"
     },
     {
       "path": "skills/refine-image/SKILL.md",
-      "sha256": "sha256:64584180b2a1678657196fca98aaad1369d108293b3cb481d4e8d207a8fa4cd1"
+      "sha256": "sha256:edfcc52ec34d731c7c5efeffde61986b8dd666dfe41eb87ec70b24f9184080eb"
     },
     {
       "path": "skills/refine-logo/SKILL.md",
-      "sha256": "sha256:f8dfe9dccc4d0585f918275764f9f6c1b2f24a9ced1347d55531a11ade8a4712"
+      "sha256": "sha256:24d76492d11e3fa511371b7588e6d0a08e7f42432aed4de8d74dd8447192b7b4"
     },
     {
       "path": "skills/refine-mcp-ui/SKILL.md",
-      "sha256": "sha256:dc69aa018b1462d330a052b026fb9111423276eeeca5d2bef4889ff4a3bc3b00"
+      "sha256": "sha256:53b5ea46337e78ac88bd22310c0b5cd07e197b2a5ac1ead0225f5eb0d9a3cde2"
     },
     {
       "path": "skills/refine-moodboard/SKILL.md",
-      "sha256": "sha256:d19964c43fe063732293f67ae187f9a9ce951de9b7da2b3154557a96858240b6"
+      "sha256": "sha256:8ccfd6c7758bcfd6cc1f9214381726c37f8b2512793db7340e85a4bad1786238"
     },
     {
       "path": "skills/refine-status/SKILL.md",
-      "sha256": "sha256:7498b375d8580fa42f005a1156ce28ed494aba5d635add21c9e7dd368ef54206"
+      "sha256": "sha256:a2e18ec0baf8cce658f74e5546588cbef3deb39bbe3e8367de1d4313bd930fe4"
     },
     {
       "path": "skills/refine-ui/SKILL.md",
-      "sha256": "sha256:590454eb211c7b822907d3304cb4a43fa4384b41a983b51124eab721eca772a9"
+      "sha256": "sha256:1d2f47514c4c37aaf53aa0436d3a6f4853c55d05c995cf39f107cc60eb939bee"
     },
     {
       "path": "skills/refine-validate/SKILL.md",
-      "sha256": "sha256:0aeb562674bbeeb7cd7c0e28cc48039a69904ba6e511f02e05adab8aa2f2b47b"
+      "sha256": "sha256:73b37558be00782524dadbe800fe23e4b80d0ab0d2e3a14b921212fb9623f0d0"
     },
     {
       "path": "skills/rust-async-patterns/SKILL.md",
-      "sha256": "sha256:3af1a8fb60617d6d2e05bfae87a3ba830d263c80a65993832fae568a06855340"
+      "sha256": "sha256:d0dabd5961535214b66ce9b14669f2eedade2d7cb6f601c28964314d186a06f0"
     },
     {
       "path": "skills/rust-async-patterns/references/details.md",
@@ -2336,7 +2340,7 @@
     },
     {
       "path": "skills/rust-best-practices/SKILL.md",
-      "sha256": "sha256:ddf74289c1e960170dd2b0370528d1e1e8b31b0fd5fbbfcafe34108d34fc7b79"
+      "sha256": "sha256:c2c6201d212e9397f0d168b740081a4eaa9b7b720b71f00d519a459f1f3b0d70"
     },
     {
       "path": "skills/rust-best-practices/references/chapter_01.md",
@@ -2376,7 +2380,7 @@
     },
     {
       "path": "skills/rust-mcp-server-generator/SKILL.md",
-      "sha256": "sha256:375fb165d135e62e0de6c3f87eeb5224be69b6c0c992fa9adb092008261798fd"
+      "sha256": "sha256:dd0eb1cb2f86c3333fdd3ebf757f5aefc7cb9df7d0f7267eb7de032d502f5a51"
     },
     {
       "path": "skills/rust-mcp-server-generator/references/generator.md",
@@ -2384,23 +2388,63 @@
     },
     {
       "path": "skills/scaffold-flutter-a2ui/SKILL.md",
-      "sha256": "sha256:06b0cfb19a0ace209e4e97c2e32f88b21da1f61a392648f037d943129c910d27"
+      "sha256": "sha256:14ff7d82199a3c4323d738215d1125d539339ae392b86f807fdfb9b7a6e145b4"
     },
     {
       "path": "skills/scaffold-react-vite-a2ui/SKILL.md",
-      "sha256": "sha256:43c2daccd9d063bba1bcb315863ba73d204bbfe7dae7f4af534615e89a66be91"
+      "sha256": "sha256:26f61c51bf68c05fecf54ff3abce376a46d16824893d22f86cdcbc6b74688ec9"
     },
     {
       "path": "skills/scaffold-react-vite-agui/SKILL.md",
-      "sha256": "sha256:a8dc46c69ef67f9ffdd3a8f2166c68e8f32cca0f6022d043ab11048d853aade2"
+      "sha256": "sha256:d774aba4fae42effcac85e5d48b9e85da2561d3133fd1b15d49be37d7a22eb00"
     },
     {
       "path": "skills/scaffold-react-vite-tauri/SKILL.md",
-      "sha256": "sha256:c87defc5c41540967e9c77a64243dd4340c8cfd02622b1fc2b92a2b18414da3d"
+      "sha256": "sha256:c59d62b40e1ae86ecdcb0935c48acbab2c5ef2724547791c4d5619a67627af3a"
     },
     {
       "path": "skills/scaffold-react-vite/SKILL.md",
-      "sha256": "sha256:5b6f5a133d3867cc601925d25dfd62a49d277f8418f5f4d91a2cfbfa12c24ca3"
+      "sha256": "sha256:94b7680543d788e4251ca271ff4b6afa1412fab9cccc85bf9bf5778e596af734"
+    },
+    {
+      "path": "skills/skill-certification/SKILL.md",
+      "sha256": "sha256:3dc7a0830783c1713673f5438e526ceb97d326b2a6e164a18e9af623eb0d9d9d"
+    },
+    {
+      "path": "skills/skill-certification/references/levels.md",
+      "sha256": "sha256:b75c5722517bb8cdf539fda110ac28babc559b4e00e502c08d85a3b2b75394d4"
+    },
+    {
+      "path": "skills/skill-certification/references/when-a-level-fails.md",
+      "sha256": "sha256:fed3db00292e66d99a9147da8c82b193bba6d3ccd1e3c58d9271e6b601e45ddb"
+    },
+    {
+      "path": "skills/skill-certification/references/writing-cases.md",
+      "sha256": "sha256:3e8499e54dc0853f52cf36093fc29c4d657bbffdcecfd54ea3d9f2de2eaac9ea"
+    },
+    {
+      "path": "skills/skill-certification/scripts/certify.mjs",
+      "sha256": "sha256:638c61581a7f380f03941937b6a62e24152cd5cc3de666e77bb85da976dc40d2"
+    },
+    {
+      "path": "skills/skill-certification/scripts/lib.mjs",
+      "sha256": "sha256:ddbb17b14e6103050276aeaf384e310d2223e2ea97fba7061af8e3fa2112825d"
+    },
+    {
+      "path": "skills/skill-certification/scripts/listing-size.mjs",
+      "sha256": "sha256:8a0f5c0edb255bd8238e7de1756331c9b61166475bc6ee67bcb63638b3282ce7"
+    },
+    {
+      "path": "skills/skill-certification/scripts/process.mjs",
+      "sha256": "sha256:306c6669f8a00ed15b10fb45b5229e555d3466f8716037c00f3bcf5206153c3e"
+    },
+    {
+      "path": "skills/skill-certification/scripts/run-evals.mjs",
+      "sha256": "sha256:81b2c4dc824a103fde5f677a59d5069b60e7e6f40c77d5db0735cc6a42bec419"
+    },
+    {
+      "path": "skills/skill-certification/scripts/summarize-evals.mjs",
+      "sha256": "sha256:d7fc472a9b237be315b6b791725b496a6f39c073ed9d19899d0eed9004b65d66"
     },
     {
       "path": "skills/stitch-design-taste/DESIGN.stitch.md",
@@ -2416,7 +2460,7 @@
     },
     {
       "path": "skills/stitch-design-taste/SKILL.md",
-      "sha256": "sha256:ac568f0f25c2e782ef57e84444f8308f7104877cdef1f667c1be958b69869d8a"
+      "sha256": "sha256:d9a909a014ae4a17b1e984286b368e5f786bc29ab8b561d6e5ee2c88e1d98c58"
     },
     {
       "path": "skills/swiftui-pro/LICENSE",
@@ -2488,7 +2532,7 @@
     },
     {
       "path": "skills/ui-ux-pro-max/SKILL.md",
-      "sha256": "sha256:2e06cf4aac86e3cb65cfd4403b5139fe267ea2c9cb710cae3820e071d357654b"
+      "sha256": "sha256:f779c43ddbb68ca370b3babde53b33dcf7e737a5986d6bcf8a23f5ba1110e9de"
     },
     {
       "path": "skills/ui-ux-pro-max/data/app-interface.csv",
@@ -2764,7 +2808,7 @@
     },
     {
       "path": "skills/variant/SKILL.md",
-      "sha256": "sha256:4fd6b1c68c1c15d51cfa532494de59f1069a6f01d1073edff8504cd62f9d6ed2"
+      "sha256": "sha256:3bf1c4b788df77bad0569bff5a8a3f4f2ded1bc7cedf35332f40052b90591e04"
     },
     {
       "path": "skills/variant/agents/openai.yaml",
@@ -2788,7 +2832,7 @@
     },
     {
       "path": "skills/vercel-composition-patterns/SKILL.md",
-      "sha256": "sha256:8f841b20ed26d9703c385ba2079278112d611ef9a6ecf28503ec2f26e99276ce"
+      "sha256": "sha256:912d2adac81d97bf45c840c6af8b0a7ebdbcd918d945132e28e349eb91b784bd"
     },
     {
       "path": "skills/vercel-composition-patterns/UPSTREAM-LICENSE-EVIDENCE.md",
@@ -3164,7 +3208,7 @@
     },
     {
       "path": "skills/vercel-react-native-skills/SKILL.md",
-      "sha256": "sha256:14b1f7487372916fccf4c16ab47eecad2465fe0f43b31b9c308c4bb7a4ad013f"
+      "sha256": "sha256:65fb5c7b557f57479df002ac9b1caf33e4cfefc278f259b080a1740bf95378e6"
     },
     {
       "path": "skills/vercel-react-native-skills/UPSTREAM-LICENSE-EVIDENCE.md",
@@ -3328,7 +3372,7 @@
     },
     {
       "path": "skills/vlbv/SKILL.md",
-      "sha256": "sha256:2ff74fe2501bdf3d9d423221be9ccfd27672e4e20b27d11214841933a4b1a69f"
+      "sha256": "sha256:e783fe97569c9b4d70d3ac857244fef582710cc2682ba653227053dc92d9bd8f"
     },
     {
       "path": "skills/vlbv/references/checklist.md",
@@ -3369,7 +3413,7 @@
         "id": null,
         "name": "adversarial-review",
         "version": "1.0.0",
-        "artifactDigest": "sha256:762a808f2ea86fe7bdfc356fe84ed5b584f0f4e3992335d9cc726921e26abe57"
+        "artifactDigest": "sha256:d0157159734355e8cc59a26f4c5c3eb0537dc92eb5e3de71c0af73303b9a1de0"
       },
       "entrypoint": "skills/adversarial-review/SKILL.md",
       "roots": [
@@ -3392,6 +3436,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -3488,7 +3533,7 @@
           "skills/adversarial-review/references/model-configuration.md",
           "skills/adversarial-review/references/output-contract.md"
         ],
-        "digest": "sha256:2a62976086190a8f9d581a786b3267b9efbc58c7b920f371bed34c02e23e88a9"
+        "digest": "sha256:588be34356688abd6f253fb275a1c6f91168a7e5d03eff6388af56e7588afbe2"
       }
     },
     {
@@ -3519,6 +3564,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -3745,7 +3791,7 @@
           "skills/agent-team-creator/tests/models-memory.integration.mjs",
           "skills/agent-team-creator/tests/state.integration.mjs"
         ],
-        "digest": "sha256:a01c7cca23297b885876cc839bd924f5e3a4e44753f1dd248f68d3ddbdd820fb"
+        "digest": "sha256:e29b3ae72b924434e44b29cb814984a9121a1ee59d2e3c1a09370e602c43cb5e"
       }
     },
     {
@@ -3776,6 +3822,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -3864,7 +3911,7 @@
           "skills/agent-team-handoff/SKILL.md",
           "skills/agent-team-handoff/agents/openai.yaml"
         ],
-        "digest": "sha256:aeb941355fdb4569b3f1350f34767ea1dfbe47201bbfff6af641f4249477cee7"
+        "digest": "sha256:654921f1e5abd9b4ddea9ed0844e6836302f87c824ab709b8a08bcc89abf9685"
       }
     },
     {
@@ -3895,6 +3942,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -3983,7 +4031,7 @@
           "skills/agent-team-manage/SKILL.md",
           "skills/agent-team-manage/agents/openai.yaml"
         ],
-        "digest": "sha256:cad71773fb295996a2ff184e6186d64911f59161874c3e8026b804435dda7cda"
+        "digest": "sha256:730977fc662c59069b8e4ad5b0477393740caf1e2fa6ead03801d8cd4aa9d7ee"
       }
     },
     {
@@ -4014,6 +4062,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -4102,7 +4151,7 @@
           "skills/agent-team-models/SKILL.md",
           "skills/agent-team-models/agents/openai.yaml"
         ],
-        "digest": "sha256:9a6a8b9b04faad7c74f73813351b31161e25266998351cc5da0d5182d4905a89"
+        "digest": "sha256:53f421eb26070355a9a550464a1e5cec3d4d3e4cb8334d5ba3515312750b093b"
       }
     },
     {
@@ -4110,7 +4159,7 @@
         "id": null,
         "name": "android-compose-adaptive",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:1d5832d2a3122ac522fdb2f6299c9e1c7e4f7a5eb0ba7094cc43b727cc6207d8"
+        "artifactDigest": "sha256:60600c6e616d543c403da5cb47547b607823b9a5be9e53d9e78fcac007841979"
       },
       "entrypoint": "skills/android-compose-adaptive/SKILL.md",
       "roots": [
@@ -4133,6 +4182,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -4233,7 +4283,7 @@
           "skills/android-compose-adaptive/references/android/develop/ui/compose/tooling/debug.md",
           "skills/android-compose-adaptive/references/android/guide/navigation/navigation-3/recipes/material-listdetail.md"
         ],
-        "digest": "sha256:15f5ac337fbe62f18973360ce6a5e12f8333e4a949259354de8853ed42671d34"
+        "digest": "sha256:a73ed56ac92395a150333aa74e2dc04ee8eab9e87af10df62261f7f5e2c07710"
       }
     },
     {
@@ -4241,7 +4291,7 @@
         "id": null,
         "name": "android-edge-to-edge",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:9bab0fd355537e19c43435687672aee8e579bfffe2b74d11afb0aeda30501fb7"
+        "artifactDigest": "sha256:177af806ab4be2b5d0fec1f04daa8a4dd80252d0d3c3d551ffdd1bfd01eed044"
       },
       "entrypoint": "skills/android-edge-to-edge/SKILL.md",
       "roots": [
@@ -4264,6 +4314,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -4353,15 +4404,15 @@
           "skills/android-edge-to-edge/PROVENANCE.md",
           "skills/android-edge-to-edge/SKILL.md"
         ],
-        "digest": "sha256:6ba10d57ad2131ebca6697f4b8e75da05fcc0f6e868b7b8d18f39eb2fa5dcca1"
+        "digest": "sha256:add4848a390164e6ee37db332c8e9f42397ccb2b0116452243729bf727c812f3"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "artifact-refiner",
-        "version": null,
-        "artifactDigest": "sha256:ed28a5792a5a15e5a674788d5dac9736f29736517dd73d4ad2cda9ab57796973"
+        "version": "1.4.1",
+        "artifactDigest": "sha256:bd803b53210cccf37272e9af063a05db6a0d1e05cdb107eb4e27845f0c1ed178"
       },
       "entrypoint": "skills/artifact-refiner/SKILL.md",
       "roots": [
@@ -4384,6 +4435,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -4471,7 +4523,7 @@
           "scripts/record-progress.mjs",
           "skills/artifact-refiner/SKILL.md"
         ],
-        "digest": "sha256:4daa5ca6ac2b4c36bc33dab5db4ce81c75fd5f675e73a91fbe7bfad52dc69a7d"
+        "digest": "sha256:d7d17ee50fcbd355348a21d07e6a7ab8f65f103d9877266f3f232140fa7a7096"
       }
     },
     {
@@ -4502,6 +4554,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -4590,7 +4643,7 @@
           "skills/bdd-cucumber-js/SKILL.md",
           "skills/bdd-cucumber-js/references/author-only.md"
         ],
-        "digest": "sha256:3d69e5a91f0147c5bcbbb58430b02d091d6a58d10455a57932417aed5fa18a45"
+        "digest": "sha256:3dad047b8dc818c4db66a4ecb37a1d64c70af6543b4883e3c3a7721a4c87a1c6"
       }
     },
     {
@@ -4598,7 +4651,7 @@
         "id": null,
         "name": "better-accessibility",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:f936208a7225d199bb6d6546dad81de2fd96c922a1110adf0d69b8f044b0f41a"
+        "artifactDigest": "sha256:7c5bed5f66bab5c76f19b40d040890f6e0ecfccac0d30ccd4ba2ecb62ab3f1a7"
       },
       "entrypoint": "skills/better-accessibility/SKILL.md",
       "roots": [
@@ -4621,6 +4674,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -4717,7 +4771,7 @@
           "skills/better-accessibility/screen-readers.md",
           "skills/better-accessibility/semantics-and-aria.md"
         ],
-        "digest": "sha256:cdc4984363f454494b0e10fc03bc6cb85d2a96b3d350ad6a9db0fa5e5da0a2f0"
+        "digest": "sha256:cb57276fc26c40ecec8bb914746ba8ea4366e03bbc97c9d3b7619b3f6b8d5ac7"
       }
     },
     {
@@ -4725,7 +4779,7 @@
         "id": null,
         "name": "better-colors",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:8c742ce089bb9c8ab1c2866576bffdd0821cbbff9f7fdd7e7c7ce1ac42f5df27"
+        "artifactDigest": "sha256:a3bba5447900c51540777ee78ed9edb88982b8a2488bc62f06a8be6098e00940"
       },
       "entrypoint": "skills/better-colors/SKILL.md",
       "roots": [
@@ -4748,6 +4802,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -4844,7 +4899,7 @@
           "skills/better-colors/palette-structure.md",
           "skills/better-colors/token-naming.md"
         ],
-        "digest": "sha256:166a3a16907807ff4a75fd9ddc0c6346e0227b49c4d77a75072e6c7778870853"
+        "digest": "sha256:22403f1a3966be959184dd603b7f29f5cc3d37e57d2598f4062fa5c11874e981"
       }
     },
     {
@@ -4852,7 +4907,7 @@
         "id": null,
         "name": "better-interface",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:36fa2c8a3665138a7d2820949e44477af10ab7a2a3d3642d93aea9811a4ab842"
+        "artifactDigest": "sha256:16843ed4c449972e3a0f0dc8224a423b7fb4086910bee9b974ee0f8e101ad673"
       },
       "entrypoint": "skills/better-interface/SKILL.md",
       "roots": [
@@ -4875,6 +4930,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -4966,7 +5022,7 @@
           "skills/better-interface/agents/openai.yaml",
           "skills/better-interface/review-format.md"
         ],
-        "digest": "sha256:1fc90a7f631f6484e4854ee42b98f2178e1a74616c65610d6fb95938430ec683"
+        "digest": "sha256:84836f1bfc084fb57c068cb6c22b034f95ed9322928a2e7deeab50fcfde6bf78"
       }
     },
     {
@@ -4974,7 +5030,7 @@
         "id": null,
         "name": "better-layout",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:7652d540c11a318a3a483025d991cf6cbe36adfaccb02919261f835f45f698a2"
+        "artifactDigest": "sha256:ae9c7795e5087b012c4a2e20cd362f4bd309738930a6a1d8808042d8da27fac5"
       },
       "entrypoint": "skills/better-layout/SKILL.md",
       "roots": [
@@ -4997,6 +5053,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -5089,7 +5146,7 @@
           "skills/better-layout/grouping-and-alignment.md",
           "skills/better-layout/spacing-and-adaptivity.md"
         ],
-        "digest": "sha256:1cc2d185909f8dcfa3571275d89ac917df62437910ab8bcb75867043d9a2518a"
+        "digest": "sha256:a2496a923eb1130e0a9d5761363b165277a099b616c0fd8b36d841d7ba7597c3"
       }
     },
     {
@@ -5097,7 +5154,7 @@
         "id": null,
         "name": "better-typography",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:d0e7fe82c7552014bd7485d10a99b5819b6c21b76986a33dce5630682dfc8f0a"
+        "artifactDigest": "sha256:adfbd8289aa921d5b5efe82c216a83f8e556d88ba61ce85608df845618d8ff8d"
       },
       "entrypoint": "skills/better-typography/SKILL.md",
       "roots": [
@@ -5120,6 +5177,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -5216,7 +5274,7 @@
           "skills/better-typography/variable-fonts-and-opentype.md",
           "skills/better-typography/wrapping-and-punctuation.md"
         ],
-        "digest": "sha256:973cf2e1facc29a8bb0094958770d93b9fd6716315a77e194559cf50066b9cf5"
+        "digest": "sha256:2476e39f3aa621b6b5e29606ba85c08c2404f2967e8d0da0d2468ec277863330"
       }
     },
     {
@@ -5224,7 +5282,7 @@
         "id": null,
         "name": "better-ui",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:5a19ec697df62aa58398ca5cce06816674054e6a9042163aea12d3ae329c6c71"
+        "artifactDigest": "sha256:9ef3ef42dc687513b22061850f7a10e7fcf144e7b4ef02ecd1898ba4c84b4f58"
       },
       "entrypoint": "skills/better-ui/SKILL.md",
       "roots": [
@@ -5247,6 +5305,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -5343,7 +5402,7 @@
           "skills/better-ui/performance.md",
           "skills/better-ui/surfaces.md"
         ],
-        "digest": "sha256:8c000d7503a549c19a977722e60d445f640fcb08eff0fe509a9cde3320e3c4c6"
+        "digest": "sha256:b1a838d06be9935e443456bc5b057a7be6022b9efe00acc77a0d7f113782337f"
       }
     },
     {
@@ -5351,7 +5410,7 @@
         "id": null,
         "name": "better-writing",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:10cfd6ebf824e2638ac058e6f3395b8078800ecf9cfffb0194cd07c0fb835154"
+        "artifactDigest": "sha256:a791c6fcf7b181c8f68296d7e290c75a2f8ca1ae884c8113ea4654c8010e4c15"
       },
       "entrypoint": "skills/better-writing/SKILL.md",
       "roots": [
@@ -5374,6 +5433,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -5464,7 +5524,7 @@
           "skills/better-writing/SKILL.md",
           "skills/better-writing/agents/openai.yaml"
         ],
-        "digest": "sha256:606ca52d60d49b79aa247315c0413db29bc37f296abd2f48decabbc67e45e3c1"
+        "digest": "sha256:cbbc5252b498f1c31aeb68f85819fd884dea53c7ba433b520f061bb0ac6abedf"
       }
     },
     {
@@ -5472,7 +5532,7 @@
         "id": null,
         "name": "break",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:931d14a6c820292c36daf1de880574cd8fdc3c8ec2e399ba74c3939cf2a13b6f"
+        "artifactDigest": "sha256:01711a0a3420682087d70b438c66dea2dcf8ef09db82bd858f977d4ee6bf1023"
       },
       "entrypoint": "skills/break/SKILL.md",
       "roots": [
@@ -5495,6 +5555,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -5586,15 +5647,15 @@
           "skills/break/agents/openai.yaml",
           "skills/break/scenarios.md"
         ],
-        "digest": "sha256:5de56b4ae32a3abc78ac543fc2dda93a925119670bdc597080d419ed9dfcf2af"
+        "digest": "sha256:99bded5e4d4f888c6a265b9e263e29b456d8f36e6bc2490857473eae2aa09191"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "convert-htmx-pdf",
-        "version": null,
-        "artifactDigest": "sha256:4a38f45e0259221941ad353746d10a02ce5c8d6cada301cc145efdace224066b"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:b53571ae60e1e830758206d41cabddcfe231e9f21ebdc3ffac45265b3723a694"
       },
       "entrypoint": "skills/convert-htmx-pdf/SKILL.md",
       "roots": [
@@ -5617,6 +5678,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -5704,15 +5766,15 @@
           "scripts/record-progress.mjs",
           "skills/convert-htmx-pdf/SKILL.md"
         ],
-        "digest": "sha256:41dc53c771bf8412e252d91bc8952931226f539316725af7398409d0f126e98d"
+        "digest": "sha256:e3acbabf63ccd12a97966ee53cd3890b845c816e9a28b52384b4dc2ac69ed38d"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "convert-htmx-react",
-        "version": null,
-        "artifactDigest": "sha256:7f41dc2e08146cb1db93a6edd509006af0f9c3ba8d7a30ab37bb0732be024a08"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:0185046a2d7d57b210b022886faced9b9f59475f8f80a7b08e7a76c4776f0f83"
       },
       "entrypoint": "skills/convert-htmx-react/SKILL.md",
       "roots": [
@@ -5735,6 +5797,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -5822,15 +5885,15 @@
           "scripts/record-progress.mjs",
           "skills/convert-htmx-react/SKILL.md"
         ],
-        "digest": "sha256:6ea2a73a92e8487fdfa7204716f5a10cdf7b4def40e5b074d46b8b2ba9e54b4b"
+        "digest": "sha256:5c8b278f48ee92a98cc4391c4ab80f90f7f94fcc37f507e5e1daba1e46eceeec"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "convert-md-to-htmx",
-        "version": null,
-        "artifactDigest": "sha256:cf0a7a6436dce0b447f90ae84e1b499463e2b16e4d73fd43eea91f469567f901"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:7c8003b63c90968d9bf3c8465682b59e08101442a3315486e369396654a20e36"
       },
       "entrypoint": "skills/convert-md-to-htmx/SKILL.md",
       "roots": [
@@ -5853,6 +5916,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -5940,7 +6004,7 @@
           "scripts/record-progress.mjs",
           "skills/convert-md-to-htmx/SKILL.md"
         ],
-        "digest": "sha256:d6adc63381c2fc5fea812389b8d4b116b6322e85d0acc7d69feee41404e150d9"
+        "digest": "sha256:199e8ba6c0db78165bf237b6261dd436abfc31c726a3bee780bb1da606e78b55"
       }
     },
     {
@@ -5971,6 +6035,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -6122,15 +6187,15 @@
           "skills/delivery-cadence/scripts/publication-receipt.mjs",
           "skills/delivery-cadence/scripts/sync-mini.mjs"
         ],
-        "digest": "sha256:099f2390f3a97f2b8830bf399a010bcf8254b331f751bee56dea8ff49ea7a160"
+        "digest": "sha256:a5fd438f925ed9e0fb2b2180b3e375e0d8358de843177644fd78fb56bae78c7c"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "design-svg-logo",
-        "version": null,
-        "artifactDigest": "sha256:826a3e80ba6eb1c097a11b5216ae93b174a0de0e84692ac1f1cc6f59a3051bd4"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:857d3cde7403d86c8926067679ebed9b60453d4cc0a53ad21bbafb06d0c27f91"
       },
       "entrypoint": "skills/design-svg-logo/SKILL.md",
       "roots": [
@@ -6153,6 +6218,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -6240,7 +6306,7 @@
           "scripts/record-progress.mjs",
           "skills/design-svg-logo/SKILL.md"
         ],
-        "digest": "sha256:5a4a90d823b58f6a6960d552f30f5b4cee1311e80cc933f845fc32c5ab12427a"
+        "digest": "sha256:2dd770bf45dcbf43a3e64ba799b623a09b45659bfc6fa50fba8af882cabdab6a"
       }
     },
     {
@@ -6248,7 +6314,7 @@
         "id": null,
         "name": "design-taste-frontend-v1",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:838823ce16068f5300250cea57b3961c032bcac2ea3ed8952dc9b06461262710"
+        "artifactDigest": "sha256:b45c5fe786b7342acc7d704e59f5bad317b28a66e5f250e69de44bde6590c4cf"
       },
       "entrypoint": "skills/design-taste-frontend-v1/SKILL.md",
       "roots": [
@@ -6271,6 +6337,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -6360,7 +6427,7 @@
           "skills/design-taste-frontend-v1/PROVENANCE.md",
           "skills/design-taste-frontend-v1/SKILL.md"
         ],
-        "digest": "sha256:e8e0752b0264f7cbad163d4303527c681736f65e7d8dfbd3f146b892011509ec"
+        "digest": "sha256:ae78f5c4baa50757b70bee1d5c91e8d2fcd79c3dc8ed8976a7b7d6e7c0d1c5a7"
       }
     },
     {
@@ -6368,7 +6435,7 @@
         "id": null,
         "name": "design-taste-frontend",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:d7a00f4506f2469c94a848d3321e370b36c3ca5f40fb0d41fc16b3814d525ff2"
+        "artifactDigest": "sha256:ae745aad2c89abd58307fb8fac708889bfe1717dbca4edceb2aadfe6a5bd384d"
       },
       "entrypoint": "skills/design-taste-frontend/SKILL.md",
       "roots": [
@@ -6391,6 +6458,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -6480,15 +6548,15 @@
           "skills/design-taste-frontend/PROVENANCE.md",
           "skills/design-taste-frontend/SKILL.md"
         ],
-        "digest": "sha256:11c4963baa69db35828d932201745d30c2590d08a802b090a0612c689ba0271a"
+        "digest": "sha256:64a9de08243a46c60a61c234c32756bdcfdd8492ff91d150edaf2a5f1897a353"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "doctor",
-        "version": null,
-        "artifactDigest": "sha256:fc047f3b1014b4a3332b40b67368326f48cbc5839320da1e207829844af402ce"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:5ad4c2cd1608d20f1306984bad7fd36f5bbce8a338f74513219cd52a1af408af"
       },
       "entrypoint": "skills/doctor/SKILL.md",
       "roots": [
@@ -6511,6 +6579,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -6598,7 +6667,7 @@
           "scripts/record-progress.mjs",
           "skills/doctor/SKILL.md"
         ],
-        "digest": "sha256:d8c9e6f4e1790851392da51a22b339842bca9c62a690b935c4c215c703e734b5"
+        "digest": "sha256:d9a2bbd24bdef350604b185f0345584f108ac46a21c91517f41d209b635973b3"
       }
     },
     {
@@ -6606,7 +6675,7 @@
         "id": null,
         "name": "explain-interface",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:1ae922ae25464591657bd78734d5a6e94b306a12d478d486469123b8238f40e5"
+        "artifactDigest": "sha256:6d2401f15c170d787ffe1f920a06e985b9e7c66ed06c9d369921ea911af026d4"
       },
       "entrypoint": "skills/explain-interface/SKILL.md",
       "roots": [
@@ -6629,6 +6698,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -6723,7 +6793,7 @@
           "skills/explain-interface/no-browser.md",
           "skills/explain-interface/read-the-system.md"
         ],
-        "digest": "sha256:675cac4544b7e05a5187ff5dc56147d9ff29f282a1d8ce9f62c9371829966b0e"
+        "digest": "sha256:96e5fc34341c12b3322e357525aeaa3a368e03487d429cf1832a5b4033494f98"
       }
     },
     {
@@ -6731,7 +6801,7 @@
         "id": null,
         "name": "expo-animation",
         "version": "1.0.0",
-        "artifactDigest": "sha256:3803371b4a66d531f80e45c9beb98b0f85e9bfe3452329f716585c328375cc1a"
+        "artifactDigest": "sha256:6ebd1bc5b4b6a58d6c9a2b2ade22e453277024d97090bfc6362f31805572c217"
       },
       "entrypoint": "skills/expo-animation/SKILL.md",
       "roots": [
@@ -6754,6 +6824,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -6846,7 +6917,7 @@
           "skills/expo-animation/SKILL.md",
           "skills/expo-animation/agents/openai.yaml"
         ],
-        "digest": "sha256:ba25316841690450c7bf51579e0134fa939dfac579399020e073c9092aed4d10"
+        "digest": "sha256:a670c1ecc7dbfe7b717b228edb725ca22bbf961e15b504e50454e17602907a5c"
       }
     },
     {
@@ -6854,7 +6925,7 @@
         "id": null,
         "name": "expo-design-system",
         "version": "1.0.0",
-        "artifactDigest": "sha256:d91f618055fff1405cea57a003a8951c6423d45051bdc3ebbede740aaf653771"
+        "artifactDigest": "sha256:434f7ffb6b30a6d807e19dd112459553cf3db4263689e63cbeff21a99d821b76"
       },
       "entrypoint": "skills/expo-design-system/SKILL.md",
       "roots": [
@@ -6877,6 +6948,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -6969,7 +7041,7 @@
           "skills/expo-design-system/references/audit.md",
           "skills/expo-design-system/references/native-slop.md"
         ],
-        "digest": "sha256:2a07f80743b79d84df7c06f91918dd88ddbfa747098f1c4d4d88bfc3f01e34ad"
+        "digest": "sha256:942981ebe74c1fa40afab9f8e74b74714e611be057819b215f4374776ed7dd58"
       }
     },
     {
@@ -6977,7 +7049,7 @@
         "id": null,
         "name": "expo-native-ui",
         "version": "1.1.1",
-        "artifactDigest": "sha256:dc63d04dbbeb83fd1750d3652d910afea42c58d3a9c37260b350d338172fa20d"
+        "artifactDigest": "sha256:b43ef8605c34cdabdbfee36c1cd300339cb8a52bd9435dd98296dd2442ba8649"
       },
       "entrypoint": "skills/expo-native-ui/SKILL.md",
       "roots": [
@@ -7000,6 +7072,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -7097,7 +7170,7 @@
           "skills/expo-native-ui/references/visual-effects.md",
           "skills/expo-native-ui/references/webgpu-three.md"
         ],
-        "digest": "sha256:9ac5f844b0e1854f815dc789665448dce97d2dbdd12cd520098e96ef0abcba9a"
+        "digest": "sha256:1871dd2a5cd320552b4fc3e334ad4394e100b729af0a5b46821179d6c26e1054"
       }
     },
     {
@@ -7105,7 +7178,7 @@
         "id": null,
         "name": "expo-router",
         "version": "1.0.1",
-        "artifactDigest": "sha256:91101a6920079190c48a9d9343048c1a1bd8a8a2c649f8ee1191c7ffc2aaf000"
+        "artifactDigest": "sha256:b38fc833e25aa93dff1b8865afe723ac4b418dc040ce227af88066e34250dc85"
       },
       "entrypoint": "skills/expo-router/SKILL.md",
       "roots": [
@@ -7128,6 +7201,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -7224,7 +7298,7 @@
           "skills/expo-router/references/toolbar-and-headers.md",
           "skills/expo-router/references/zoom-transitions.md"
         ],
-        "digest": "sha256:d07bfde6d9a6c4693709fcd0fed76f76398ce15b35677cd78b9082673a8b39e2"
+        "digest": "sha256:9b7d9319297db4bcb7b5540ad4f6b44a144a39ff5860148a99595db889cf280c"
       }
     },
     {
@@ -7232,7 +7306,7 @@
         "id": null,
         "name": "expo-ui",
         "version": "1.0.0",
-        "artifactDigest": "sha256:4308c8bdae452a44091b2fc4655852d1fbef32bd66bb38bc7ff0f8ad794716aa"
+        "artifactDigest": "sha256:aee69cd69f4a78a3cb938f24bb93cb129e56c1a9dea9e2a8586e57dacc9619ca"
       },
       "entrypoint": "skills/expo-ui/SKILL.md",
       "roots": [
@@ -7255,6 +7329,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -7350,7 +7425,7 @@
           "skills/expo-ui/references/universal.md",
           "skills/expo-ui/scripts/list-components.mjs"
         ],
-        "digest": "sha256:828f172346e7232547fd2f17faa064d1441ca985022f5e6ab8a1849d9f79fc9e"
+        "digest": "sha256:807af7df9f533a31ab78faff915d0e3721f73f5489f430a124f5c8911c11d351"
       }
     },
     {
@@ -7358,7 +7433,7 @@
         "id": null,
         "name": "flutter-build-responsive-layout",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:1a3fd933282eb31bde720651a992b220905f9bc0ddb5d75f01a0a5738efd8b98"
+        "artifactDigest": "sha256:632d1d9a741851104300ffe8499669c70b38f0ffa0eb060d2ec113e3d93e6485"
       },
       "entrypoint": "skills/flutter-build-responsive-layout/SKILL.md",
       "roots": [
@@ -7381,6 +7456,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -7470,7 +7546,7 @@
           "skills/flutter-build-responsive-layout/PROVENANCE.md",
           "skills/flutter-build-responsive-layout/SKILL.md"
         ],
-        "digest": "sha256:e1827536542ed44a476d9eee3ea820afb252f7a8e4fd62dc78b9ecabaadc15f6"
+        "digest": "sha256:bf725825e2dd66045566e4e88de165e225689ce9b97aac4f77beaacbb62599b5"
       }
     },
     {
@@ -7478,7 +7554,7 @@
         "id": null,
         "name": "flutter-fix-layout-issues",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:6e350bee8275930a144f9263bdfe6c17537ee9b77f315b9a28f75643a75af256"
+        "artifactDigest": "sha256:b59fe1cd1ffb3e65ab4f45953ed3736a4b8389adaf4935e31c6eeaa465a37630"
       },
       "entrypoint": "skills/flutter-fix-layout-issues/SKILL.md",
       "roots": [
@@ -7501,6 +7577,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -7590,7 +7667,7 @@
           "skills/flutter-fix-layout-issues/PROVENANCE.md",
           "skills/flutter-fix-layout-issues/SKILL.md"
         ],
-        "digest": "sha256:ecb666c05805c67ac7f653247a62124d2f87ba685fabff4d31046f8e38436d80"
+        "digest": "sha256:ebe024e225f9d50eb4b8a227e8726d1cb0761775bbf84c041427e3d6fd5da6bc"
       }
     },
     {
@@ -7598,7 +7675,7 @@
         "id": null,
         "name": "flutter-setup-declarative-routing",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:f30045d7e85713b0b02b0750b59458870820ed9de6f477248306c955a45b88d5"
+        "artifactDigest": "sha256:c0d8029f34a326af13e98b6214b51afb3afeb1d3bb7af6da26b86c3d9ae6a4cf"
       },
       "entrypoint": "skills/flutter-setup-declarative-routing/SKILL.md",
       "roots": [
@@ -7621,6 +7698,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -7710,7 +7788,7 @@
           "skills/flutter-setup-declarative-routing/PROVENANCE.md",
           "skills/flutter-setup-declarative-routing/SKILL.md"
         ],
-        "digest": "sha256:abf83b3f5990bd36b1ce21f3036e1251c1fd2bb4693e89d2d64e811df490323b"
+        "digest": "sha256:3914402d5225db89c96eb53974718ba31551e3327272e95253e05e3e61aedc6b"
       }
     },
     {
@@ -7718,7 +7796,7 @@
         "id": null,
         "name": "flutter-setup-localization",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:5751dd394fdac988440144326a06342ad32c8f16409b9cdb6a3a360d09bd42c8"
+        "artifactDigest": "sha256:95001eb3140f6643083139b2a9a0674cd05dd79a4436a6bd61c81fc13115a7e0"
       },
       "entrypoint": "skills/flutter-setup-localization/SKILL.md",
       "roots": [
@@ -7741,6 +7819,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -7830,7 +7909,7 @@
           "skills/flutter-setup-localization/PROVENANCE.md",
           "skills/flutter-setup-localization/SKILL.md"
         ],
-        "digest": "sha256:3a724069b76daaf6ea72baabff84e91be0f1086357e769cf694f2b6941983209"
+        "digest": "sha256:19ff94fce41eea39739b88a5519cd4ae465d209a0a9ecad3fb461141be7821c8"
       }
     },
     {
@@ -7838,7 +7917,7 @@
         "id": null,
         "name": "full-output-enforcement",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:e044dddfd3a1cd64c0936a3434e619bfa498356718587b532877df075b76a1fe"
+        "artifactDigest": "sha256:c962f06c4e16105d7af231540143449c3c3d4d46ccfccb9469e014e49bddc3a7"
       },
       "entrypoint": "skills/full-output-enforcement/SKILL.md",
       "roots": [
@@ -7861,6 +7940,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -7950,7 +8030,7 @@
           "skills/full-output-enforcement/PROVENANCE.md",
           "skills/full-output-enforcement/SKILL.md"
         ],
-        "digest": "sha256:ab450fbc5a791d99cd6aed2c204179b571bd73fa7b8aa3770a366c946c9fa5db"
+        "digest": "sha256:c63227f48914d3afcca6e996c743b5623a44a79e3ad63128584988b8f0979bba"
       }
     },
     {
@@ -7958,7 +8038,7 @@
         "id": null,
         "name": "gpt-taste",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:f66fbb08b070f806172c5d7e1967d5b187a76b42f2d800288e473d92e774c040"
+        "artifactDigest": "sha256:ae061a20523ed6a663b4169f3d3baadd405f65bf91f4f35b2c48b9dfc391e118"
       },
       "entrypoint": "skills/gpt-taste/SKILL.md",
       "roots": [
@@ -7981,6 +8061,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -8070,7 +8151,7 @@
           "skills/gpt-taste/PROVENANCE.md",
           "skills/gpt-taste/SKILL.md"
         ],
-        "digest": "sha256:5d70b44f9852543808513e4d2dc4ce191822c3f0b664b1117744b48019986bf3"
+        "digest": "sha256:88baa4a714b9ccab9871a9fe32d653deeba7b378e3356d5fe0411d7a78998e03"
       }
     },
     {
@@ -8078,7 +8159,7 @@
         "id": null,
         "name": "high-end-visual-design",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:b66d3624501825aa566261f80710b6498dae03cbd80bfada5d68d28206406bdd"
+        "artifactDigest": "sha256:464a6cc58cb4eb1003abc66dc6d1eb83f1373196877c97f10abe017b43e33987"
       },
       "entrypoint": "skills/high-end-visual-design/SKILL.md",
       "roots": [
@@ -8101,6 +8182,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -8190,7 +8272,7 @@
           "skills/high-end-visual-design/PROVENANCE.md",
           "skills/high-end-visual-design/SKILL.md"
         ],
-        "digest": "sha256:57e2431c300af24e4795fd30da9d49feec17cdf951ba1a9b64ccd91e507845f2"
+        "digest": "sha256:1bf7627c7a5edd6639a7d4377e2cfbe68bc0f12e38018f6fb3fd1477d2a91f36"
       }
     },
     {
@@ -8198,7 +8280,7 @@
         "id": null,
         "name": "ideation-mindmap",
         "version": "1.0.0",
-        "artifactDigest": "sha256:63323f8ffae3bbeb0fb96854abadad0a0cae736ca1ae3784841dbbc08c589e74"
+        "artifactDigest": "sha256:68f6e051af3a6d4d3df2ecf74ae102a3236af9e719f1bdcfc248f1ae5ae2f74a"
       },
       "entrypoint": "skills/ideation-mindmap/SKILL.md",
       "roots": [
@@ -8221,6 +8303,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -8309,7 +8392,7 @@
           "skills/ideation-mindmap/SKILL.md",
           "skills/ideation-mindmap/references/harness-delivery.md"
         ],
-        "digest": "sha256:fac349f0a5dde3b93327ccf5a700e110ccf79acdbd26e5528bc6046d7e5a5625"
+        "digest": "sha256:4dc5470206db1838c6fd428dfc47ae01d350b5064965080de39e888fe7002fbc"
       }
     },
     {
@@ -8317,7 +8400,7 @@
         "id": null,
         "name": "industrial-brutalist-ui",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:aafb58aa19a304037c3a145cc2dec6264e99180e91dc8d82d92e969e1f284cf7"
+        "artifactDigest": "sha256:a4a74161d4aab6c64c8ae06d0a46e0a3d9d993a5df8f78094e0a9382f79a9f56"
       },
       "entrypoint": "skills/industrial-brutalist-ui/SKILL.md",
       "roots": [
@@ -8340,6 +8423,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -8429,7 +8513,7 @@
           "skills/industrial-brutalist-ui/PROVENANCE.md",
           "skills/industrial-brutalist-ui/SKILL.md"
         ],
-        "digest": "sha256:1ada85f9dc3f5451fbf05fac6371eab9489ce8f6b739354af3e1edcf0c53117b"
+        "digest": "sha256:3216fae8c8e0fe762dc8fbd2cc59ab035c8300f3824033a2fa13a641c005638a"
       }
     },
     {
@@ -8437,7 +8521,7 @@
         "id": null,
         "name": "interface-review",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:1d1be380023599398a5f911e9c90c3ebacb45e63cbcf1759ceab936733b49cb6"
+        "artifactDigest": "sha256:0ee85b12333b4846036339dd867c90b22d563c00f7501d9eec979e8c8ee3b73f"
       },
       "entrypoint": "skills/interface-review/SKILL.md",
       "roots": [
@@ -8460,6 +8544,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -8552,7 +8637,7 @@
           "skills/interface-review/removed-signals.md",
           "skills/interface-review/scope-resolution.md"
         ],
-        "digest": "sha256:f3e30c5d36040c390983a821802a8f0c1478d569774fd9875f5847b55ce89170"
+        "digest": "sha256:96fdc31353cd453ebc957a6cf8dc427a032ffd558f110ed56dd477c16a220c39"
       }
     },
     {
@@ -8560,7 +8645,7 @@
         "id": null,
         "name": "karpathy-progress-memory",
         "version": "1.0.0",
-        "artifactDigest": "sha256:bffd8e141a9f225c4c64fb827104910c155d3a9f0ebdac21f9d75f3206d087ce"
+        "artifactDigest": "sha256:788b5b00d61f50770d974c2829c660d849cecbc17c4e75fde0aa485328bfa7b1"
       },
       "entrypoint": "skills/karpathy-progress-memory/SKILL.md",
       "roots": [
@@ -8583,6 +8668,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -8670,15 +8756,15 @@
           "scripts/record-progress.mjs",
           "skills/karpathy-progress-memory/SKILL.md"
         ],
-        "digest": "sha256:5eb98f70f7a3b3e8c507d2373da6acc2ffc4732603ac651cc0c36c01acf32b67"
+        "digest": "sha256:f97f8b7513016e168ad919715e1ca6ae7aedd619430c1d1318a47794713f334b"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-analyze",
-        "version": null,
-        "artifactDigest": "sha256:5f3f0418c42bbd24a28c3cfb9d498b39bf7a03938d66c34f1c34261cc0964a38"
+        "version": "1.1.0",
+        "artifactDigest": "sha256:8f35568cf8080825b1357949d5e2c2446afca2f7219d40b1e25aeba5d03837ba"
       },
       "entrypoint": "skills/kbd-analyze/SKILL.md",
       "roots": [
@@ -8701,6 +8787,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -8788,15 +8875,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-analyze/SKILL.md"
         ],
-        "digest": "sha256:b296e67d36815d208db65ad759469d3b42213989bd1c5bbc4de8e95b34c7e1f9"
+        "digest": "sha256:867ae01dd35bbe6a4820ede7fa7d6d14a0dff8dffd1784d6aa82bc88a4c07ba2"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-apply",
-        "version": null,
-        "artifactDigest": "sha256:061be323b0d36b740a7b5ba5882c527fcfc8cafdf76370936e6e185f7b0438fe"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:cc0b316f40a156abc1d99bb4688e94bd9ad66acef9d89e7f7599b799e7eb5d70"
       },
       "entrypoint": "skills/kbd-apply/SKILL.md",
       "roots": [
@@ -8819,6 +8906,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -8906,15 +8994,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-apply/SKILL.md"
         ],
-        "digest": "sha256:563d302120bb32d61a41013a75bc535924e4129ca34fc292b612890c68f68f01"
+        "digest": "sha256:76f2f7f21128921764c5b2b7e3659d330d7b39f629764aff0156557b47cfb014"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-assess",
-        "version": null,
-        "artifactDigest": "sha256:025ac493d3ac558a94e96ebefcd4e9cb098ab8416b1bdea54b95ebb1160547b4"
+        "version": "1.1.0",
+        "artifactDigest": "sha256:7a3c19f12648c50bcb2737bef06ce277318ad958d562af0d374a459f4a7ebf77"
       },
       "entrypoint": "skills/kbd-assess/SKILL.md",
       "roots": [
@@ -8937,6 +9025,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -9024,15 +9113,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-assess/SKILL.md"
         ],
-        "digest": "sha256:bda2d3d195dd8713fefefd28f0809c129d20f0d39fe7ce1372bfcd181d5189d0"
+        "digest": "sha256:2b6229f4f3262aa5953a48177ad09960482d18f23227a8b17c40be0ba1669bd6"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-audit",
-        "version": null,
-        "artifactDigest": "sha256:e260dc04a6d25e4b055731bc0c09a2012f1a50ba786faffdd729d6fc47e07c35"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:51149d439f4e23d3cc1bc43c35ac57d8284ec000d9583a4d7c2acc5bf4678b92"
       },
       "entrypoint": "skills/kbd-audit/SKILL.md",
       "roots": [
@@ -9055,6 +9144,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -9142,15 +9232,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-audit/SKILL.md"
         ],
-        "digest": "sha256:44c0558c53be4002d5d4073857e75dceb32f6dfd8a290c085e45ace69ef8781b"
+        "digest": "sha256:d5b152aa472327db78203dd2deba436ddce911ff85479ffca0a3ae82233a4629"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-bottleneck-detector",
-        "version": null,
-        "artifactDigest": "sha256:6b9205d7d6db95df008b4368e2796533296e6719dbcc7d99a55e6c9b98ef3a12"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:82343bb2393fd19111044f240d10c3ded0bb7511be3359cb194baa37dc03a37a"
       },
       "entrypoint": "skills/kbd-bottleneck-detector/SKILL.md",
       "roots": [
@@ -9173,6 +9263,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -9260,15 +9351,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-bottleneck-detector/SKILL.md"
         ],
-        "digest": "sha256:1e5b454a14f531c9e35a5c0e765a640a7978609b7a69bb56b5a3f9a094c62f88"
+        "digest": "sha256:30b43b8f083a09ecca40dcaa5400f4b858fd64868c0c2c5c7be2e7b23f7d80ee"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-cancel",
-        "version": null,
-        "artifactDigest": "sha256:5d10f2df1eea559a1be2cd896dfa3a91216077a9d1cd856db3cf1fff6305abb5"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:59b3efefb879e2616a2f0ada61d5ed729a2f21add39e40a435ef2262aedf17b8"
       },
       "entrypoint": "skills/kbd-cancel/SKILL.md",
       "roots": [
@@ -9291,6 +9382,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -9378,15 +9470,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-cancel/SKILL.md"
         ],
-        "digest": "sha256:f42ede07a81efdae9f6ec35e8f2503a29da232373ea2591f7102cc4793efbd38"
+        "digest": "sha256:5bd5b20c5faa2f98d3256360e8575a1ce107a81e045512e79e19d7581d6fd849"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-child-exit",
-        "version": null,
-        "artifactDigest": "sha256:8d9399a48f0b5d396e4c272fe77cd076e40e10f3936523f8d1f1b4b778a9c01a"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:6cd06354d79b0017833297a22b1aa7cc2b4054bd88e7b75cc11478d0f8b48077"
       },
       "entrypoint": "skills/kbd-child-exit/SKILL.md",
       "roots": [
@@ -9409,6 +9501,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -9496,15 +9589,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-child-exit/SKILL.md"
         ],
-        "digest": "sha256:e15d610b567b818cd8fe35ab7b39cddd47d73cba5bb9613c0c3fa606a9c25377"
+        "digest": "sha256:87526f744b9ace6f4ca2821fc802e9d7fa49205f7c4c4f518cbd2a8be3744f9b"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-evolve",
-        "version": null,
-        "artifactDigest": "sha256:c44bde9a00a4c75ef3dd99d0c9c5ab34a404ac3e351de9632a588d7fa3e5958d"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:32ae970f535c879ea638b32db3b4fb2c30b4a54a01081c7dafaed6299d066e7b"
       },
       "entrypoint": "skills/kbd-evolve/SKILL.md",
       "roots": [
@@ -9527,6 +9620,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -9616,15 +9710,15 @@
           "skills/kbd-evolve/references/criteria.md",
           "skills/kbd-evolve/references/landscape-research.md"
         ],
-        "digest": "sha256:be962280d63ab556878a3f4582363294111bf67d6662674d01d5e0326a1db9eb"
+        "digest": "sha256:66b84a244680bc494064b3c2c8a2a2a9e7680fdaf2aa55320920cef3014acc9a"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-execute",
-        "version": null,
-        "artifactDigest": "sha256:1ca537d51bd2083f52c8a0027c2a71cbd5236bdb213b21dddf50f3a6bb82875b"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:b7c63c611315574d44d3e1b30f87c169c5e996e11947f5980a50c557d9d62068"
       },
       "entrypoint": "skills/kbd-execute/SKILL.md",
       "roots": [
@@ -9647,6 +9741,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -9734,15 +9829,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-execute/SKILL.md"
         ],
-        "digest": "sha256:cfc182457f7142f105e1c0b5ad3945c4398bc100e625270a5da9a7841289af5c"
+        "digest": "sha256:4eb9abcb460a0fded2ca12c52cc5d4294cd45a22b958a48c66393d3589457b6b"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-goal-check",
-        "version": null,
-        "artifactDigest": "sha256:178438ee6b249a851a4f68faa83b7a3c4b42fbf8b3f077558f2e604655c98725"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:bd1d86be8e119a44788b837b8dc354ae9ca58507b710e437457695d0fb45bc95"
       },
       "entrypoint": "skills/kbd-goal-check/SKILL.md",
       "roots": [
@@ -9765,6 +9860,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -9852,7 +9948,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-goal-check/SKILL.md"
         ],
-        "digest": "sha256:77605b706c73f44c0eef5f4304d4130e8f176e2c35690f1be81cf43b45eece02"
+        "digest": "sha256:2485cc58e273e03bfec24bcd29de7bdd721db1c91d50bb82d0a37f5b3e18c1f0"
       }
     },
     {
@@ -9860,7 +9956,7 @@
         "id": null,
         "name": "kbd-goal",
         "version": "1.0.0",
-        "artifactDigest": "sha256:b0e857b57e942464e8980e920ba94a6f0c5aeee87c58755714edb1cbf6e6bffb"
+        "artifactDigest": "sha256:9d1837f2f1ea97e9e332f41f611242d33d5d156b39dafb472888c1be5fd50d0f"
       },
       "entrypoint": "skills/kbd-goal/SKILL.md",
       "roots": [
@@ -9883,6 +9979,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -9970,15 +10067,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-goal/SKILL.md"
         ],
-        "digest": "sha256:dc77f59c75792b77ea212b541ce2345490fc1f0571470d1cff8a19fa9bcc431f"
+        "digest": "sha256:ce4aa076278cc0c65da218c695bb2722e40928d422f49dc5542de9e7ec902773"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-handoff",
-        "version": null,
-        "artifactDigest": "sha256:bef284629b5eeeac8ca69daca9fc47d3ba4c948a31bfe83e10bb9ec519e3a2a6"
+        "version": "2.0.0",
+        "artifactDigest": "sha256:1980a47069b298bf8c7637a8e18da195b228deea466b27c83722260cbf5d1af8"
       },
       "entrypoint": "skills/kbd-handoff/SKILL.md",
       "roots": [
@@ -10001,6 +10098,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -10088,15 +10186,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-handoff/SKILL.md"
         ],
-        "digest": "sha256:a6356bfa82d537d1942b9fd44d31262e07de3ef003464dc8637ceb731447b48b"
+        "digest": "sha256:d0a488179c0d40b779371583d2fa13231e3b137a81df351594dd111ec8f91099"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-init",
-        "version": null,
-        "artifactDigest": "sha256:ea48219610e60b9eeb13f0281cf70d39ced24935f3ede44075487a35e0d286bd"
+        "version": "1.2.0",
+        "artifactDigest": "sha256:1fbb27d60337fc2f1835b866915dc61735fc744dbc1d299409f1e57256a1a4d9"
       },
       "entrypoint": "skills/kbd-init/SKILL.md",
       "roots": [
@@ -10119,6 +10217,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -10211,15 +10310,15 @@
           "skills/kbd-init/references/workspace-context.md",
           "skills/kbd-init/scripts/kbd-init-validate.mjs"
         ],
-        "digest": "sha256:9c819d39674b045d33bbd7178c4da2c54373defa5cf084a9448ea4142e2f1ef5"
+        "digest": "sha256:30b6359222f8ede5f34cc8f3b752dd490373a95bfcdb13775d9ce709f1ef6738"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-inject-agent-rules",
-        "version": null,
-        "artifactDigest": "sha256:47c4533057fd94eb67c2c7455663a392dd4e30c30401be3924afb47bd485ebc1"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:3b1738ba7e5bec2fc66434467a3f18f959eb05210310e64877ccd46cbc6ba1c5"
       },
       "entrypoint": "skills/kbd-inject-agent-rules/SKILL.md",
       "roots": [
@@ -10242,6 +10341,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -10333,7 +10433,7 @@
           "skills/kbd-inject-agent-rules/references/template-agent-rules.md",
           "skills/kbd-inject-agent-rules/references/template-uiux-routing.md"
         ],
-        "digest": "sha256:e1bedb26a810f5fda8c05c3d145c23b1c2f2d1fa17992921abdd27294be79989"
+        "digest": "sha256:2fb3018193f986441783e72fd7c2df35bf4faffd944c0837b1cd8ed72dc5a4e6"
       }
     },
     {
@@ -10341,7 +10441,7 @@
         "id": null,
         "name": "kbd-loop",
         "version": "1.0.0",
-        "artifactDigest": "sha256:3b215173259d7259e6eaa52f991136c74d302a712e08c328ee540a83f2ce4d8b"
+        "artifactDigest": "sha256:ed8b8c02316d562d6a652c1b96674f20fa3ba484c89c5d3ec9e53aafc56bda62"
       },
       "entrypoint": "skills/kbd-loop/SKILL.md",
       "roots": [
@@ -10364,6 +10464,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -10451,15 +10552,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-loop/SKILL.md"
         ],
-        "digest": "sha256:c1e2032b2b6edb0cdeff2a8a285645356f0465195c671c2ab93746c3e3e5e1e0"
+        "digest": "sha256:ef359ae596841a0505a80cf45924ffb7cd8923405a8fbc8ca85c7133a95b6bb0"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-memory-recall",
-        "version": null,
-        "artifactDigest": "sha256:974d6696e9c1849ffbcb435f48d2b0279ef0f86ff71f5ae575d36d10e9667512"
+        "version": "2.0.0",
+        "artifactDigest": "sha256:24074184d4770fbb34c376a6a36b48a616e5aca5b53f3c5e393da65d2d604428"
       },
       "entrypoint": "skills/kbd-memory-recall/SKILL.md",
       "roots": [
@@ -10482,6 +10583,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -10569,15 +10671,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-memory-recall/SKILL.md"
         ],
-        "digest": "sha256:27f3636101e92263dd622d1547706b1797ff87674134c476fa31e2a51e3c1b17"
+        "digest": "sha256:de20aa6e5f5b4b41a7f0ba657f9095152cadf70d0e052292ec2cc49090af8961"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-new-child",
-        "version": null,
-        "artifactDigest": "sha256:897dd20493daf98e4ef427e32a2cd432ff8ed3a1d4b8151ac7db1e0685aa03e5"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:ad9c44748cac816f7635f54c781962a9d795f0dadce7b17f207655298fba3b84"
       },
       "entrypoint": "skills/kbd-new-child/SKILL.md",
       "roots": [
@@ -10600,6 +10702,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -10687,15 +10790,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-new-child/SKILL.md"
         ],
-        "digest": "sha256:ded07bb786b06baf8f764bc03f59ebf3cc61cbc65e9a6612ecafe10b030dadd6"
+        "digest": "sha256:1d864350c227b51dbb4c5bb8a449ef6b2a675820a6cd89af1f6a217b5c512ddd"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-new-phase",
-        "version": null,
-        "artifactDigest": "sha256:aa61f8a27741536fd93fba696b7772af78628cbd9a3bc485f30327b7620bfec3"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:45f49fda3377a4f1f19a05f5e6aae4544eabfb2d96d048d460043ff4daa60c2f"
       },
       "entrypoint": "skills/kbd-new-phase/SKILL.md",
       "roots": [
@@ -10718,6 +10821,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -10805,15 +10909,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-new-phase/SKILL.md"
         ],
-        "digest": "sha256:bc57f8692b852d76bbfc0dd3779015be139e4b33f110fac9d3d788c28a70150b"
+        "digest": "sha256:23df89094c66b30d2b7c67dcebcdedc300bec2fee93f7f0c12dcfa60ee3f2438"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-next-child",
-        "version": null,
-        "artifactDigest": "sha256:09e444ba847ff8f81bf37cc1bb22247f52af910f163a8d1a11a8f9f6768c14d8"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:6d6bd6242ef64ec7778bea5791e1a62912514e16db7e84cc07f869cdb1cb6904"
       },
       "entrypoint": "skills/kbd-next-child/SKILL.md",
       "roots": [
@@ -10836,6 +10940,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -10923,15 +11028,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-next-child/SKILL.md"
         ],
-        "digest": "sha256:69e95fcabaf8ac22df6ea95cbb44b730097b6a50f5161d534a44714ab9f359ba"
+        "digest": "sha256:1ad1eb8d00cd054bdf143fbd7a266d158bd4315133388d5f7d23ad3700bc9eef"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-next-phase",
-        "version": null,
-        "artifactDigest": "sha256:97574b6e4c680230bdabc66e06b419bc1e37e4c05bef508cbeae766d727db6f7"
+        "version": "1.1.1",
+        "artifactDigest": "sha256:3e06692245997a6a2e003a37c527e4b0880fe9dc4809a492e328d923978e855b"
       },
       "entrypoint": "skills/kbd-next-phase/SKILL.md",
       "roots": [
@@ -10954,6 +11059,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -11041,15 +11147,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-next-phase/SKILL.md"
         ],
-        "digest": "sha256:d806b358e84382b6eb81618df7b71ccde297131a597fd0ef1b4de9d81b07ce4e"
+        "digest": "sha256:fff34d51d396da6ee213175dc14032501af226f7b91a06c71d412c07f4cd43c6"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-pause",
-        "version": null,
-        "artifactDigest": "sha256:1af29aa9c9287b97ba6d7604c752e52172fe6f702116731521450a56ab8d9c11"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:4ab2ab80749d6b96dbb1d80eb23c021695de85db0632b02038e3450a65f11bce"
       },
       "entrypoint": "skills/kbd-pause/SKILL.md",
       "roots": [
@@ -11072,6 +11178,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -11159,15 +11266,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-pause/SKILL.md"
         ],
-        "digest": "sha256:4b06dbfba5015423dfa1d48fa9afec55c3583999777e6e7626462db1efbe3297"
+        "digest": "sha256:f4436b83421ba4132e03b1fde3404e798eedd3365c43e32aa45875aea6914c63"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-plan",
-        "version": null,
-        "artifactDigest": "sha256:f8177485d245bc1c4e37f9b21655094f3c0976cbd7343b20620b21a266e3ff44"
+        "version": "1.1.0",
+        "artifactDigest": "sha256:1f241434eace815fe28a001c5984365dbbb79b938f65d6ed4724a062147e487d"
       },
       "entrypoint": "skills/kbd-plan/SKILL.md",
       "roots": [
@@ -11190,6 +11297,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -11278,15 +11386,15 @@
           "skills/kbd-plan/SKILL.md",
           "skills/kbd-plan/references/task-model-selection.md"
         ],
-        "digest": "sha256:7bd25f89604774fdd6efe66c860f0c38550fd45d2ab9f712942797b0bc60707b"
+        "digest": "sha256:f9008a6736595f0d2addbee3c7f50f01a7b84aea24c787f2d18a44780ba04fce"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-process-orchestrator",
-        "version": null,
-        "artifactDigest": "sha256:213d672bf007c82144a05583a7a2e5982514c9d416151641369e5f21ebfca3bc"
+        "version": "2.0.0",
+        "artifactDigest": "sha256:0db512352361c176ae1e019be7693d1f5a7785178b782b920bf0768e8c2112f2"
       },
       "entrypoint": "skills/kbd-process-orchestrator/SKILL.md",
       "roots": [
@@ -11309,6 +11417,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -11405,15 +11514,15 @@
           "skills/kbd-process-orchestrator/references/templates/acceptance.template.md",
           "skills/kbd-process-orchestrator/references/templates/adopted-contract.template.md"
         ],
-        "digest": "sha256:b6698da812e85a9fcec6cd33df5a626d948a9925f37777e4d1f060d8fa8b3ef6"
+        "digest": "sha256:1431ca724ace82354f0fb877d67b98bd40de17f48fc73272d42e93c4fcba46b1"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-reflect",
-        "version": null,
-        "artifactDigest": "sha256:7b2d2ed82cbe6b0e35c9cfe7303b78e5911e44c40bba9228c91c47b6b560b43e"
+        "version": "1.2.0",
+        "artifactDigest": "sha256:4268e72b6d4ec18d8b35714e4ee9f14ee0bf7a1ce7bc3d8919ab3a39d8539253"
       },
       "entrypoint": "skills/kbd-reflect/SKILL.md",
       "roots": [
@@ -11436,6 +11545,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -11523,15 +11633,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-reflect/SKILL.md"
         ],
-        "digest": "sha256:ded27b6a6eeeea3e42bc4446f15e1ebd965cf3fd65309221d1946ab9451a72d3"
+        "digest": "sha256:22bcb6a3a0fe1305f377afa3751b56a331d225dbeedcd19fcb10ff48e481902e"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-resume",
-        "version": null,
-        "artifactDigest": "sha256:9c9a3014988ddea4c05cf35f99208abf4024654f7a7c9632c7beca986c680bb5"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:2545455e4e1fd6090a94197331aea5913545806ef67356cfea98027fb0e41b18"
       },
       "entrypoint": "skills/kbd-resume/SKILL.md",
       "roots": [
@@ -11554,6 +11664,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -11641,15 +11752,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-resume/SKILL.md"
         ],
-        "digest": "sha256:591e8153b6734bea3c7f8a8f1d890da0946e8d869e4617cd50f5f73eade9f4a7"
+        "digest": "sha256:498941e6e60636539fe1e8dcffd62ed67e2ac079f6f6ab1c871f97a4973b42a7"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-spec",
-        "version": null,
-        "artifactDigest": "sha256:cb319d659b3ac1bb54adb479825e507f43dfb1453fe7132e4ace43c432bcee11"
+        "version": "1.1.0",
+        "artifactDigest": "sha256:7229ac7471f1db3cdc4ef08950fb7ef3747ab6179799a481e6900bad5af9c958"
       },
       "entrypoint": "skills/kbd-spec/SKILL.md",
       "roots": [
@@ -11672,6 +11783,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -11759,15 +11871,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-spec/SKILL.md"
         ],
-        "digest": "sha256:7d470829002893e2da8677efdff6b427499afe7c4c020f784674912c8617e2a7"
+        "digest": "sha256:6babe91161c8f7612956638559abaad3dc1104d50f682ca1836b4233dd8b91ea"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-status",
-        "version": null,
-        "artifactDigest": "sha256:fa1fa97ba2ea1b7218436766ba178c196827a4e8308a5f42aabf0256187da138"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:158ad910a4a6a6ee73360b408a06c0e517f259be0cdb425af70864b4b20110da"
       },
       "entrypoint": "skills/kbd-status/SKILL.md",
       "roots": [
@@ -11790,6 +11902,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -11877,7 +11990,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-status/SKILL.md"
         ],
-        "digest": "sha256:8ac2956da8d73bfabb6e8d8f12337556eeb4bbb8daba86082f88169ca2a533c8"
+        "digest": "sha256:f33749c5e0d1ca448b0d740641d43e8dad7291fec5900824f1213901db1beaad"
       }
     },
     {
@@ -11885,7 +11998,7 @@
         "id": null,
         "name": "minimalist-ui",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:f657476e330783507a9352768fc2da555812a8f3a3c00f7a4970cd5d407be310"
+        "artifactDigest": "sha256:d8afc06dd1388c78bf450e4c5d2f06e4396b4d3e8c02f22ea69e2d77a831eb55"
       },
       "entrypoint": "skills/minimalist-ui/SKILL.md",
       "roots": [
@@ -11908,6 +12021,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -11997,7 +12111,7 @@
           "skills/minimalist-ui/PROVENANCE.md",
           "skills/minimalist-ui/SKILL.md"
         ],
-        "digest": "sha256:2a49e45a400af8c7ea33143f6b426792fe963954d0cbe4e0523415a02d5c230c"
+        "digest": "sha256:dd760029a9bb2cd9cb948b4f5fac948da0f7001e1f7dfbbe0cbf576e404400b6"
       }
     },
     {
@@ -12005,7 +12119,7 @@
         "id": null,
         "name": "prometheus-context-bootstrap",
         "version": "1.2.0",
-        "artifactDigest": "sha256:c60317f4ea4cf19b16b1e286123fc8a720325526d02989118a68d6de381b80a0"
+        "artifactDigest": "sha256:941be6befd3b76c03e36f692d6452e61cd25fc3b458f6964f97e09a0e72b0c72"
       },
       "entrypoint": "skills/prometheus-context-bootstrap/SKILL.md",
       "roots": [
@@ -12028,6 +12142,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -12118,7 +12233,7 @@
           "skills/prometheus-context-bootstrap/references/rules-rust.md",
           "skills/prometheus-context-bootstrap/references/rules-typescript.md"
         ],
-        "digest": "sha256:135a3bd1421c7fef0c3929a28d5235513626965643553da128d23344aef8ac63"
+        "digest": "sha256:42df3b9e145eb4cfe5e73ec942ae2e3759e2c4cade33f5feaf65dbb386ebdb24"
       }
     },
     {
@@ -12126,7 +12241,7 @@
         "id": null,
         "name": "prometheus-impeccable-core",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:d19fc20bd31b707a96247e3105bfcebc2cfcf2adb08deeacacc33b9e50cf0726"
+        "artifactDigest": "sha256:6e3e1fb422b1a2d4d72bfc4cda1f6332d946290cc5429717518a44a2c5fe3afe"
       },
       "entrypoint": "skills/prometheus-impeccable-core/SKILL.md",
       "roots": [
@@ -12149,6 +12264,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -12239,7 +12355,7 @@
           "skills/prometheus-impeccable-core/references/impeccable-context-and-modes.md",
           "skills/prometheus-impeccable-core/references/impeccable-craft-floor.md"
         ],
-        "digest": "sha256:5e96491648dabcb475d45dd2372d473fba07ac3c4eafa8bb1be95c8df8c54c20"
+        "digest": "sha256:bbe5d3b28bee527d4bdcff1c07340d7b75fc793b3a97f18c4fd9055e3eb9e341"
       }
     },
     {
@@ -12247,7 +12363,7 @@
         "id": null,
         "name": "prometheus-rust-workspace",
         "version": "1.1.0",
-        "artifactDigest": "sha256:a8626e35ce6d8b35b8037a651d89e9c05c7173378d8152a0f47af7e02703d149"
+        "artifactDigest": "sha256:2c1caec1583504e210c12541108d47cc620c24f1b2c9c5b6a6f617e1f32204ce"
       },
       "entrypoint": "skills/prometheus-rust-workspace/SKILL.md",
       "roots": [
@@ -12270,6 +12386,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -12359,7 +12476,7 @@
           "skills/prometheus-rust-workspace/references/phase-gated-verification.md",
           "skills/prometheus-rust-workspace/references/skill-routing.md"
         ],
-        "digest": "sha256:56daeb71090731aab2c2ca75373a80de6c4ca8c9ba1ae86def59e912ab98da39"
+        "digest": "sha256:8df615c8854262e4313d260f0ee73b89caaccef7cf876140cbe035bbd297c226"
       }
     },
     {
@@ -12367,7 +12484,7 @@
         "id": null,
         "name": "prometheus-ui-review",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:a032b9ba76b3e044b0517d8846f6838d49385119a390b564adaf7a34c5ecb593"
+        "artifactDigest": "sha256:b72d91c6b271f3889efd6144e9aeced3b9582e9e30ab1155ef77ebd6960e122f"
       },
       "entrypoint": "skills/prometheus-ui-review/SKILL.md",
       "roots": [
@@ -12390,6 +12507,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -12477,7 +12595,7 @@
           "scripts/record-progress.mjs",
           "skills/prometheus-ui-review/SKILL.md"
         ],
-        "digest": "sha256:4f682c777a7f1f8f1f964962db73b3cd65ec06f62ac42370442ae9ec54695bae"
+        "digest": "sha256:5f908d525216911428afdb088313ce04131a90605b34b41156a4cda1054031a2"
       }
     },
     {
@@ -12485,7 +12603,7 @@
         "id": null,
         "name": "prometheus-ui-ux",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:481e22bb27f6922727f5268a671e16f612bb6a01e13922050a08f057a2a48127"
+        "artifactDigest": "sha256:5e63b1699a717c543eaf2edf3d90d89500cb02a2dc62e77e26e7bb38a77e8311"
       },
       "entrypoint": "skills/prometheus-ui-ux/SKILL.md",
       "roots": [
@@ -12508,6 +12626,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -12608,15 +12727,15 @@
           "skills/prometheus-ui-ux/scripts/install.mjs",
           "skills/prometheus-ui-ux/scripts/routing.mjs"
         ],
-        "digest": "sha256:cd7a519e84b8e3bee2de6d0402ef9810279e303daaa8d50eb8442536bf8cf375"
+        "digest": "sha256:76684c93a34dc8dbe64a559916c238343083c2b7696f2ceb7a16abcdadf8ffd6"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "rebrand-artifact",
-        "version": null,
-        "artifactDigest": "sha256:332fd5dbf10fa0c28cb311777e672ddfe745587a0972e31ccfc55b8d9819cba2"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:cd97c0864a7400a565801819612f16ea68058ded621adb7ed59e588ae1f55718"
       },
       "entrypoint": "skills/rebrand-artifact/SKILL.md",
       "roots": [
@@ -12639,6 +12758,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -12726,7 +12846,7 @@
           "scripts/record-progress.mjs",
           "skills/rebrand-artifact/SKILL.md"
         ],
-        "digest": "sha256:6091867dec152d9a944844934c0cbbf27e36468a0e59abe7c4e6749e0a9c5c05"
+        "digest": "sha256:e9f8f3698882ccf5daa587cfc79c9ac9ec10eb7da52d3957b0cad7f70f26b9d8"
       }
     },
     {
@@ -12734,7 +12854,7 @@
         "id": null,
         "name": "redesign-existing-projects",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:e05b52a1d0c3ed15936adf2b1aca3f9214e3c55d302d9f197da64dc8c7282bd8"
+        "artifactDigest": "sha256:a4e184efceb81814954bfb0d31fb3663ba9a7383514da7b2aa34fc02d631be64"
       },
       "entrypoint": "skills/redesign-existing-projects/SKILL.md",
       "roots": [
@@ -12757,6 +12877,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -12846,15 +12967,15 @@
           "skills/redesign-existing-projects/PROVENANCE.md",
           "skills/redesign-existing-projects/SKILL.md"
         ],
-        "digest": "sha256:8a0bdf2791a8c730b8d018862d92350f9d32f43a9c2202423e9d8a2db07099f0"
+        "digest": "sha256:6555ec5cdb8e21e8653d1b0c8e7a186bc8958b196abc360e3b8a55c23ea03a53"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "refine-a2ui",
-        "version": null,
-        "artifactDigest": "sha256:dc38b018f331d5f930f1cef35acdf42da212180dc4c12a7aa29a20d773f38b0c"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:5afb7605b9abf15f6b21a27176ddf0a67d51f89875dccfedc291529d8d9a6561"
       },
       "entrypoint": "skills/refine-a2ui/SKILL.md",
       "roots": [
@@ -12877,6 +12998,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -12964,15 +13086,15 @@
           "scripts/record-progress.mjs",
           "skills/refine-a2ui/SKILL.md"
         ],
-        "digest": "sha256:f710c92373583ffaf32c26362aec8536d63fbe0e4a9e05ed2ebd5d86918cb7b8"
+        "digest": "sha256:6b2fdc730e34a37e3a7865819ce00eb81759f228022aac7844a5cbadf6422baa"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "refine-content",
-        "version": null,
-        "artifactDigest": "sha256:122a0422b3077f5fc4d796f8e634f2cf7d7e78be0273f6a79163aa56c98e480a"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:2b7195cc69834c72a5b2455e1b8627c1b88dd631b5dff347d78deeb883d3e09e"
       },
       "entrypoint": "skills/refine-content/SKILL.md",
       "roots": [
@@ -12995,6 +13117,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -13082,15 +13205,15 @@
           "scripts/record-progress.mjs",
           "skills/refine-content/SKILL.md"
         ],
-        "digest": "sha256:974dfe680e4821b81337620d9b5688b1ce6dcbc9ca8ea0aed3b0419af332944e"
+        "digest": "sha256:3ba5a20f1ae84903743d88ce357c758a48e09b36053ce3cd8207c2120f06a4f3"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "refine-image",
-        "version": null,
-        "artifactDigest": "sha256:64584180b2a1678657196fca98aaad1369d108293b3cb481d4e8d207a8fa4cd1"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:edfcc52ec34d731c7c5efeffde61986b8dd666dfe41eb87ec70b24f9184080eb"
       },
       "entrypoint": "skills/refine-image/SKILL.md",
       "roots": [
@@ -13113,6 +13236,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -13200,15 +13324,15 @@
           "scripts/record-progress.mjs",
           "skills/refine-image/SKILL.md"
         ],
-        "digest": "sha256:9fed7aef1e89f917f4e17634cf9b5f0156cd343575c9de2240a43b1eddbcfbcd"
+        "digest": "sha256:01deeb1e74a772e372f631a26deb9ff8902d8dfcbc8449c93ac29d342aeacc08"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "refine-logo",
-        "version": null,
-        "artifactDigest": "sha256:f8dfe9dccc4d0585f918275764f9f6c1b2f24a9ced1347d55531a11ade8a4712"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:24d76492d11e3fa511371b7588e6d0a08e7f42432aed4de8d74dd8447192b7b4"
       },
       "entrypoint": "skills/refine-logo/SKILL.md",
       "roots": [
@@ -13231,6 +13355,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -13318,15 +13443,15 @@
           "scripts/record-progress.mjs",
           "skills/refine-logo/SKILL.md"
         ],
-        "digest": "sha256:17698efc2813b347f73a247e112a8d99d398aa3eae18e828c47d56b78ea6be0f"
+        "digest": "sha256:e03803baedc0d96c9acf05a8f9dbd8b5f80d2dbaeca42022f087c727c44251f9"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "refine-mcp-ui",
-        "version": null,
-        "artifactDigest": "sha256:dc69aa018b1462d330a052b026fb9111423276eeeca5d2bef4889ff4a3bc3b00"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:53b5ea46337e78ac88bd22310c0b5cd07e197b2a5ac1ead0225f5eb0d9a3cde2"
       },
       "entrypoint": "skills/refine-mcp-ui/SKILL.md",
       "roots": [
@@ -13349,6 +13474,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -13436,15 +13562,15 @@
           "scripts/record-progress.mjs",
           "skills/refine-mcp-ui/SKILL.md"
         ],
-        "digest": "sha256:18e7e56dc08156074aacb138259b692afca3733c0354612e0c7e479e48e7f8ca"
+        "digest": "sha256:391d13de90d5d9da1022a133dfff0fc6df294cc138c0bbaefae572de662eb981"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "refine-moodboard",
-        "version": null,
-        "artifactDigest": "sha256:d19964c43fe063732293f67ae187f9a9ce951de9b7da2b3154557a96858240b6"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:8ccfd6c7758bcfd6cc1f9214381726c37f8b2512793db7340e85a4bad1786238"
       },
       "entrypoint": "skills/refine-moodboard/SKILL.md",
       "roots": [
@@ -13467,6 +13593,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -13554,15 +13681,15 @@
           "scripts/record-progress.mjs",
           "skills/refine-moodboard/SKILL.md"
         ],
-        "digest": "sha256:c9a03769de1d00b4ba02f6b76be4894e37d6edf89da94d1fffd4b26b8d3a8d1e"
+        "digest": "sha256:a567a6a71e85862a9fceea1296430923a7824e2bc3cb5ae7708271b1b9457eeb"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "refine-status",
-        "version": null,
-        "artifactDigest": "sha256:7498b375d8580fa42f005a1156ce28ed494aba5d635add21c9e7dd368ef54206"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:a2e18ec0baf8cce658f74e5546588cbef3deb39bbe3e8367de1d4313bd930fe4"
       },
       "entrypoint": "skills/refine-status/SKILL.md",
       "roots": [
@@ -13585,6 +13712,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -13672,15 +13800,15 @@
           "scripts/record-progress.mjs",
           "skills/refine-status/SKILL.md"
         ],
-        "digest": "sha256:14a10459f79168f31f7292afaa676ac973da5d60f172fb9bc81310099a108bd1"
+        "digest": "sha256:dceab0b7a6fdd798d8e7a24d0bffdc436684cb82d29b8806a79982dd8cdf71ce"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "refine-ui",
-        "version": null,
-        "artifactDigest": "sha256:590454eb211c7b822907d3304cb4a43fa4384b41a983b51124eab721eca772a9"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:1d2f47514c4c37aaf53aa0436d3a6f4853c55d05c995cf39f107cc60eb939bee"
       },
       "entrypoint": "skills/refine-ui/SKILL.md",
       "roots": [
@@ -13703,6 +13831,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -13790,15 +13919,15 @@
           "scripts/record-progress.mjs",
           "skills/refine-ui/SKILL.md"
         ],
-        "digest": "sha256:82f4d34b036bf212f968f9f592079b6f0b50de77b1375f7fadafe79e1ced13a2"
+        "digest": "sha256:feaa3a783265c9b9bd6b97183e1a357ad0f7145d6d478aaa625b67cc577c4439"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "refine-validate",
-        "version": null,
-        "artifactDigest": "sha256:0aeb562674bbeeb7cd7c0e28cc48039a69904ba6e511f02e05adab8aa2f2b47b"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:73b37558be00782524dadbe800fe23e4b80d0ab0d2e3a14b921212fb9623f0d0"
       },
       "entrypoint": "skills/refine-validate/SKILL.md",
       "roots": [
@@ -13821,6 +13950,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -13908,15 +14038,15 @@
           "scripts/record-progress.mjs",
           "skills/refine-validate/SKILL.md"
         ],
-        "digest": "sha256:4cd6ecd8cc07aa04cdcd8868c49fd442569dd8e9dd64338e0710c38e3967d544"
+        "digest": "sha256:d260b15be4de9f2332e0063c5e90d19bad93a5b4b8d716122856f55a1dbf4ae1"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "rust-async-patterns",
-        "version": null,
-        "artifactDigest": "sha256:3af1a8fb60617d6d2e05bfae87a3ba830d263c80a65993832fae568a06855340"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:d0dabd5961535214b66ce9b14669f2eedade2d7cb6f601c28964314d186a06f0"
       },
       "entrypoint": "skills/rust-async-patterns/SKILL.md",
       "roots": [
@@ -13939,6 +14069,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -14027,7 +14158,7 @@
           "skills/rust-async-patterns/SKILL.md",
           "skills/rust-async-patterns/references/details.md"
         ],
-        "digest": "sha256:fd130271dc8d2d010d999e3a50290029ba43cf108e1dee3595329db477b7c15f"
+        "digest": "sha256:840c66c77fe61119f08b03f1695ea904123d59ac763e28c48fa0a10a2259d315"
       }
     },
     {
@@ -14035,7 +14166,7 @@
         "id": null,
         "name": "rust-best-practices",
         "version": "1.1.1",
-        "artifactDigest": "sha256:ddf74289c1e960170dd2b0370528d1e1e8b31b0fd5fbbfcafe34108d34fc7b79"
+        "artifactDigest": "sha256:c2c6201d212e9397f0d168b740081a4eaa9b7b720b71f00d519a459f1f3b0d70"
       },
       "entrypoint": "skills/rust-best-practices/SKILL.md",
       "roots": [
@@ -14058,6 +14189,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -14154,15 +14286,15 @@
           "skills/rust-best-practices/references/chapter_08.md",
           "skills/rust-best-practices/references/chapter_09.md"
         ],
-        "digest": "sha256:1c9e0f7c08c85017d1e538d1c02cd0e6172ce7bae284b69611c80611a713ec9d"
+        "digest": "sha256:0d0b3fc868bef4c6939417fe214d38c135526cdb2f4d0457a06ab0b625582446"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "rust-mcp-server-generator",
-        "version": null,
-        "artifactDigest": "sha256:375fb165d135e62e0de6c3f87eeb5224be69b6c0c992fa9adb092008261798fd"
+        "version": "1.0.0",
+        "artifactDigest": "sha256:dd0eb1cb2f86c3333fdd3ebf757f5aefc7cb9df7d0f7267eb7de032d502f5a51"
       },
       "entrypoint": "skills/rust-mcp-server-generator/SKILL.md",
       "roots": [
@@ -14185,6 +14317,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -14273,15 +14406,15 @@
           "skills/rust-mcp-server-generator/SKILL.md",
           "skills/rust-mcp-server-generator/references/generator.md"
         ],
-        "digest": "sha256:2e335155d63025a28014aa0229725132804ee11cfc2ee989bf4b0bcc34d4e88e"
+        "digest": "sha256:fd5cf6a5ab27c5e6811e57500c05f99b6323e486c79160573842ca2fbf5c69ec"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "scaffold-flutter-a2ui",
-        "version": null,
-        "artifactDigest": "sha256:06b0cfb19a0ace209e4e97c2e32f88b21da1f61a392648f037d943129c910d27"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:14ff7d82199a3c4323d738215d1125d539339ae392b86f807fdfb9b7a6e145b4"
       },
       "entrypoint": "skills/scaffold-flutter-a2ui/SKILL.md",
       "roots": [
@@ -14304,6 +14437,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -14391,15 +14525,15 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-flutter-a2ui/SKILL.md"
         ],
-        "digest": "sha256:787e38752907d2d55954f72b0313c71e329bddf2530410b6c011c84dbde210c6"
+        "digest": "sha256:4094e550ddc02e8332e73cd4a0d914029caee1afb94e9dacf6a6d26ff5f028b0"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "scaffold-react-vite-a2ui",
-        "version": null,
-        "artifactDigest": "sha256:43c2daccd9d063bba1bcb315863ba73d204bbfe7dae7f4af534615e89a66be91"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:26f61c51bf68c05fecf54ff3abce376a46d16824893d22f86cdcbc6b74688ec9"
       },
       "entrypoint": "skills/scaffold-react-vite-a2ui/SKILL.md",
       "roots": [
@@ -14422,6 +14556,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -14509,15 +14644,15 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-a2ui/SKILL.md"
         ],
-        "digest": "sha256:3686a60e6c3d14f8bc5b0f3e4853b79a00dcd4e3042204615b3d5e95490da746"
+        "digest": "sha256:7403d6dbc1bbc890a2d310c943686df8c24911fa56ea4c3224980b0c56e177cd"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "scaffold-react-vite-agui",
-        "version": null,
-        "artifactDigest": "sha256:a8dc46c69ef67f9ffdd3a8f2166c68e8f32cca0f6022d043ab11048d853aade2"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:d774aba4fae42effcac85e5d48b9e85da2561d3133fd1b15d49be37d7a22eb00"
       },
       "entrypoint": "skills/scaffold-react-vite-agui/SKILL.md",
       "roots": [
@@ -14540,6 +14675,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -14627,15 +14763,15 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-agui/SKILL.md"
         ],
-        "digest": "sha256:dc80edc38d7fb2bea78bbf675d31a9bde5454355b7ceb626d36207c951e87dd0"
+        "digest": "sha256:a4f033f45c229dc0cbf9d73474ff0d60fbc0c4af178297da25c81616dbe7227b"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "scaffold-react-vite-tauri",
-        "version": null,
-        "artifactDigest": "sha256:c87defc5c41540967e9c77a64243dd4340c8cfd02622b1fc2b92a2b18414da3d"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:c59d62b40e1ae86ecdcb0935c48acbab2c5ef2724547791c4d5619a67627af3a"
       },
       "entrypoint": "skills/scaffold-react-vite-tauri/SKILL.md",
       "roots": [
@@ -14658,6 +14794,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -14745,15 +14882,15 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-tauri/SKILL.md"
         ],
-        "digest": "sha256:36a3d3b9a4052da2128a6361bf0ced22b4a8e0d44f73f7f649b7be7921d88c3a"
+        "digest": "sha256:865294a47f7bab95327f56b10945551d607fa8fd69cc43e1bd7ee4bf9431dbd7"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "scaffold-react-vite",
-        "version": null,
-        "artifactDigest": "sha256:5b6f5a133d3867cc601925d25dfd62a49d277f8418f5f4d91a2cfbfa12c24ca3"
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:94b7680543d788e4251ca271ff4b6afa1412fab9cccc85bf9bf5778e596af734"
       },
       "entrypoint": "skills/scaffold-react-vite/SKILL.md",
       "roots": [
@@ -14776,6 +14913,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -14863,7 +15001,135 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite/SKILL.md"
         ],
-        "digest": "sha256:b72fea9d89cc38de7b376276e39220ecde3604c30a3d6aaba25ef5fd303fb3e3"
+        "digest": "sha256:404117d5eb30a5b20be83a10b42fcd08810766119b410785102459daa87d4150"
+      }
+    },
+    {
+      "identity": {
+        "id": null,
+        "name": "skill-certification",
+        "version": "1.0.0-prometheus.1",
+        "artifactDigest": "sha256:3dc7a0830783c1713673f5438e526ceb97d326b2a6e164a18e9af623eb0d9d9d"
+      },
+      "entrypoint": "skills/skill-certification/SKILL.md",
+      "roots": [
+        "skills/skill-certification",
+        ".mcp.json",
+        "hooks",
+        "lib",
+        "scripts"
+      ],
+      "closure": {
+        "paths": [
+          ".mcp.json",
+          "hooks/hooks.json",
+          "lib/cadence-adapters/io.mjs",
+          "lib/cadence-adapters/karpathy.mjs",
+          "lib/cadence-adapters/kbd.mjs",
+          "lib/hooks/context.mjs",
+          "lib/hooks/method-reanchor.mjs",
+          "lib/hooks/posttool-write-position-reminder.mjs",
+          "lib/hooks/precompact-kbd-control.mjs",
+          "lib/hooks/sessionstart-detect-project-context.mjs",
+          "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
+          "lib/hooks/subagent-fallback-checkpoint.mjs",
+          "lib/hooks/subagentstart-learning.mjs",
+          "lib/hooks/taskcompleted-kbd-receipt.mjs",
+          "lib/karpathy/canonical-state.mjs",
+          "lib/karpathy/event.mjs",
+          "lib/karpathy/hash.mjs",
+          "lib/karpathy/receipt.mjs",
+          "lib/karpathy/record.mjs",
+          "lib/karpathy/session-log.mjs",
+          "lib/karpathy/transport.mjs",
+          "lib/karpathy/validate.mjs",
+          "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/bottleneck-guard.mjs",
+          "lib/kbd/boundary-authorize.mjs",
+          "lib/kbd/closure-packet/index.mjs",
+          "lib/kbd/closure-packet/render.mjs",
+          "lib/kbd/closure-packet/scan.mjs",
+          "lib/kbd/contract-adopt.mjs",
+          "lib/kbd/contract-lint.mjs",
+          "lib/kbd/handoff/checks.mjs",
+          "lib/kbd/handoff/extract.mjs",
+          "lib/kbd/handoff/harnesses.mjs",
+          "lib/kbd/handoff/index.mjs",
+          "lib/kbd/handoff/packet.mjs",
+          "lib/kbd/handoff/state.mjs",
+          "lib/kbd/harness-profiles.mjs",
+          "lib/kbd/hook-command.mjs",
+          "lib/kbd/hooks.mjs",
+          "lib/kbd/method-context/discover.mjs",
+          "lib/kbd/method-context/index.mjs",
+          "lib/kbd/method-context/paths.mjs",
+          "lib/kbd/method-context/policy.mjs",
+          "lib/kbd/method-context/render.mjs",
+          "lib/kbd/phase-close-eval.mjs",
+          "lib/kbd/phase-disposition.mjs",
+          "lib/kbd/phase-readiness.mjs",
+          "lib/kbd/progress.mjs",
+          "lib/kbd/reconcile-artifacts.mjs",
+          "lib/kbd/reconcile-identity.mjs",
+          "lib/kbd/reconcile-repair.mjs",
+          "lib/kbd/reconcile-state.mjs",
+          "lib/kbd/reconcile.mjs",
+          "lib/kbd/rollup.mjs",
+          "lib/kbd/runtime-authority.mjs",
+          "lib/kbd/spec-backend.mjs",
+          "lib/kbd/spec-delta-digest.mjs",
+          "lib/kbd/stage-gate.mjs",
+          "lib/kbd/task-identity.mjs",
+          "lib/kbd/waypoint.mjs",
+          "lib/learning/envelope.mjs",
+          "lib/learning/file-tier.mjs",
+          "lib/learning/identity.mjs",
+          "lib/platform/atomic-write.mjs",
+          "lib/platform/harness-profiles/profiles.mjs",
+          "lib/platform/lock.mjs",
+          "lib/platform/openspec.mjs",
+          "lib/platform/openspec/README.md",
+          "lib/platform/openspec/backup.mjs",
+          "lib/platform/openspec/cli.mjs",
+          "lib/platform/openspec/lifecycle.mjs",
+          "lib/platform/openspec/materialize.mjs",
+          "lib/platform/openspec/runtime.mjs",
+          "lib/platform/openspec/state.mjs",
+          "lib/platform/paths.mjs",
+          "lib/platform/spawn.mjs",
+          "lib/platform/text.mjs",
+          "scripts/cadence-karpathy-adapter.mjs",
+          "scripts/cadence-kbd-adapter.mjs",
+          "scripts/hook-entry.mjs",
+          "scripts/kbd-apply.mjs",
+          "scripts/kbd-boundary-authorize.mjs",
+          "scripts/kbd-child-exit.mjs",
+          "scripts/kbd-closure-packet.mjs",
+          "scripts/kbd-contract-adopt.mjs",
+          "scripts/kbd-handoff.mjs",
+          "scripts/kbd-method-context.mjs",
+          "scripts/kbd-new-child.mjs",
+          "scripts/kbd-new-phase.mjs",
+          "scripts/kbd-next-child.mjs",
+          "scripts/kbd-next-phase.mjs",
+          "scripts/kbd-phase-close-eval.mjs",
+          "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-scope-authority-template.mjs",
+          "scripts/kbd-spec-delta-digest.mjs",
+          "scripts/record-progress.mjs",
+          "skills/skill-certification/SKILL.md",
+          "skills/skill-certification/references/levels.md",
+          "skills/skill-certification/references/when-a-level-fails.md",
+          "skills/skill-certification/references/writing-cases.md",
+          "skills/skill-certification/scripts/certify.mjs",
+          "skills/skill-certification/scripts/lib.mjs",
+          "skills/skill-certification/scripts/listing-size.mjs",
+          "skills/skill-certification/scripts/process.mjs",
+          "skills/skill-certification/scripts/run-evals.mjs",
+          "skills/skill-certification/scripts/summarize-evals.mjs"
+        ],
+        "digest": "sha256:311683922784946b6e4cf1fb36ec51f3c8a0e6772ac59d2a3fb78e4aa542801a"
       }
     },
     {
@@ -14871,7 +15137,7 @@
         "id": null,
         "name": "stitch-design-taste",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:ac568f0f25c2e782ef57e84444f8308f7104877cdef1f667c1be958b69869d8a"
+        "artifactDigest": "sha256:d9a909a014ae4a17b1e984286b368e5f786bc29ab8b561d6e5ee2c88e1d98c58"
       },
       "entrypoint": "skills/stitch-design-taste/SKILL.md",
       "roots": [
@@ -14894,6 +15160,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -14984,7 +15251,7 @@
           "skills/stitch-design-taste/PROVENANCE.md",
           "skills/stitch-design-taste/SKILL.md"
         ],
-        "digest": "sha256:2a244ff913814664280b321afa656d2d6cee7fbe5e3f2031b730178cd6b2265d"
+        "digest": "sha256:46327bc30cb3e58bedefe8198d8004e0bfa3455f36ef849efae3c127cd83cb8f"
       }
     },
     {
@@ -15015,6 +15282,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -15116,7 +15384,7 @@
           "skills/swiftui-pro/references/swift.md",
           "skills/swiftui-pro/references/views.md"
         ],
-        "digest": "sha256:2668bee15f8c9be13154b1cdf07b005ab7486d5d5ec16c49974dcb2c94acf411"
+        "digest": "sha256:9418073a620acaee58e9394722c44501b2cf83c289f0426b14c957900de20251"
       }
     },
     {
@@ -15124,7 +15392,7 @@
         "id": null,
         "name": "ui-ux-pro-max",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:2e06cf4aac86e3cb65cfd4403b5139fe267ea2c9cb710cae3820e071d357654b"
+        "artifactDigest": "sha256:f779c43ddbb68ca370b3babde53b33dcf7e737a5986d6bcf8a23f5ba1110e9de"
       },
       "entrypoint": "skills/ui-ux-pro-max/SKILL.md",
       "roots": [
@@ -15147,6 +15415,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -15300,7 +15569,7 @@
           "skills/ui-ux-pro-max/scripts/reasoning.mjs",
           "skills/ui-ux-pro-max/scripts/search.mjs"
         ],
-        "digest": "sha256:8cbea708dab5c29e53d5d34648f4bc06cfb4a9d8ac0ebcc9f4228ff1c5e9dda6"
+        "digest": "sha256:0299cc7da79b30ef158e2b72b9f9df0fa9c463cfc4950e456d6734a6ab7aa334"
       }
     },
     {
@@ -15331,6 +15600,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -15418,7 +15688,7 @@
           "scripts/record-progress.mjs",
           "skills/value-scenario-discovery/SKILL.md"
         ],
-        "digest": "sha256:862dff8e99deffcad206c8bb8af2adf50bda3d592b8bb5bd9ec2112cf96b289b"
+        "digest": "sha256:30315fb8fe57a6d4c937e5a8db3c18f393762429416686843815ff93fca055d1"
       }
     },
     {
@@ -15449,6 +15719,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -15536,7 +15807,7 @@
           "scripts/record-progress.mjs",
           "skills/value-scenario-verify/SKILL.md"
         ],
-        "digest": "sha256:e5884c908ca51a3235e475273284215f413835113751fe558d6df63a72ceff45"
+        "digest": "sha256:fcc8e4947beb3253b8fc95755e72e43329cd3d84da70a9162029b5fd09677bfa"
       }
     },
     {
@@ -15544,7 +15815,7 @@
         "id": null,
         "name": "variant",
         "version": "1.0.0-prometheus.1",
-        "artifactDigest": "sha256:4fd6b1c68c1c15d51cfa532494de59f1069a6f01d1073edff8504cd62f9d6ed2"
+        "artifactDigest": "sha256:3bf1c4b788df77bad0569bff5a8a3f4f2ded1bc7cedf35332f40052b90591e04"
       },
       "entrypoint": "skills/variant/SKILL.md",
       "roots": [
@@ -15567,6 +15838,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -15658,7 +15930,7 @@
           "skills/variant/agents/openai.yaml",
           "skills/variant/picker.md"
         ],
-        "digest": "sha256:48e2262aa12b5a55e1e1a94dfef83874bbe5880e40731c7e1c355eaec993aa80"
+        "digest": "sha256:fc22e797a41351dee02492e07adde9f36bfd3535da1bb12906f42dccbad4fc76"
       }
     },
     {
@@ -15666,7 +15938,7 @@
         "id": null,
         "name": "vercel-composition-patterns",
         "version": "1.0.0",
-        "artifactDigest": "sha256:8f841b20ed26d9703c385ba2079278112d611ef9a6ecf28503ec2f26e99276ce"
+        "artifactDigest": "sha256:912d2adac81d97bf45c840c6af8b0a7ebdbcd918d945132e28e349eb91b784bd"
       },
       "entrypoint": "skills/vercel-composition-patterns/SKILL.md",
       "roots": [
@@ -15689,6 +15961,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -15791,7 +16064,7 @@
           "skills/vercel-composition-patterns/rules/state-decouple-implementation.md",
           "skills/vercel-composition-patterns/rules/state-lift-state.md"
         ],
-        "digest": "sha256:2ebf62273d3de0a3bfbfd51648f8be1c016425cb8150299f03912223929531b1"
+        "digest": "sha256:9ed5451759e41b27522b14f4c66fe2fa8d6f4308d6e2fd86b8dd9a646fbc4b02"
       }
     },
     {
@@ -15822,6 +16095,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -15986,7 +16260,7 @@
           "skills/vercel-react-best-practices/rules/server-parallel-nested-fetching.md",
           "skills/vercel-react-best-practices/rules/server-serialization.md"
         ],
-        "digest": "sha256:51f4a1d3e64d3d3b4d6d9635154e73fc3c1870e5396eae468743e9f7bd922ae4"
+        "digest": "sha256:3e536560371e677cfa746c08a9a7ff216e9086184ebdae24cac7a1da184ba610"
       }
     },
     {
@@ -15994,7 +16268,7 @@
         "id": null,
         "name": "vercel-react-native-skills",
         "version": "1.0.0",
-        "artifactDigest": "sha256:14b1f7487372916fccf4c16ab47eecad2465fe0f43b31b9c308c4bb7a4ad013f"
+        "artifactDigest": "sha256:65fb5c7b557f57479df002ac9b1caf33e4cfefc278f259b080a1740bf95378e6"
       },
       "entrypoint": "skills/vercel-react-native-skills/SKILL.md",
       "roots": [
@@ -16017,6 +16291,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -16147,15 +16422,15 @@
           "skills/vercel-react-native-skills/rules/ui-scrollview-content-inset.md",
           "skills/vercel-react-native-skills/rules/ui-styling.md"
         ],
-        "digest": "sha256:2c57f189cfe7b37e46796670cf4b95217fd89e8ded23ac6b9de77efb6a4b8307"
+        "digest": "sha256:18b37cd659adcd66e9553f6bf21d93dd7352bc4f0859ffc2349a74d7aa949153"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "vlbv",
-        "version": "1.0.0",
-        "artifactDigest": "sha256:2ff74fe2501bdf3d9d423221be9ccfd27672e4e20b27d11214841933a4b1a69f"
+        "version": "1.1.0",
+        "artifactDigest": "sha256:e783fe97569c9b4d70d3ac857244fef582710cc2682ba653227053dc92d9bd8f"
       },
       "entrypoint": "skills/vlbv/SKILL.md",
       "roots": [
@@ -16178,6 +16453,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -16268,7 +16544,7 @@
           "skills/vlbv/references/requirements.md",
           "skills/vlbv/references/supersession.template.md"
         ],
-        "digest": "sha256:1f557ea43a2a7c5ef802c90b09763d3c80a9e54cb8f11e0dd59fc3e4a27968d5"
+        "digest": "sha256:beacc2dc122a00767fdc01e5a2f4a0d9f7c27d34d9d1e6564e66e9ac0c8683c2"
       }
     },
     {
@@ -16299,6 +16575,7 @@
           "lib/hooks/precompact-kbd-control.mjs",
           "lib/hooks/sessionstart-detect-project-context.mjs",
           "lib/hooks/sessionstart-kbd-control.mjs",
+          "lib/hooks/sessionstart-vlbv.mjs",
           "lib/hooks/subagent-fallback-checkpoint.mjs",
           "lib/hooks/subagentstart-learning.mjs",
           "lib/hooks/taskcompleted-kbd-receipt.mjs",
@@ -16390,9 +16667,9 @@
           "skills/web-design-guidelines/references/LICENSE.web-interface-guidelines",
           "skills/web-design-guidelines/references/web-interface-guidelines.md"
         ],
-        "digest": "sha256:d8a37b40af8fbd774c06632a930aefbeb2b48bc708bd0b88cdee9ad853498e81"
+        "digest": "sha256:a134dcab0aafa5d963a16a7ae2a6689d050b8bfc55865526e919659f61bdf49e"
       }
     }
   ],
-  "inventoryDigest": "sha256:e56819e21db31eff9b57b741dcbe0bab84061e390b3a2e7fbc1eaaaef55f2373"
+  "inventoryDigest": "sha256:6a3c020109d10e46bc2f7d940f32fed941aa86c0f10a49e9d9466d5038ad02e6"
 }

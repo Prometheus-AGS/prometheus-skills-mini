@@ -26,11 +26,25 @@ records macOS and offline Linux-container integration plus packaged-helper evide
 Windows execution, live invocation of every harness and full Electron installed-app acceptance
 remain unverified. These are implementation/evidence limits, not current release certification.
 
+## Parity with the full pack's certification work (mini 1.17.0)
+
+| Full-pack change | Mini |
+| --- | --- |
+| Spec-conformant frontmatter and strict validator | Ported: `npm run validate:strict` (`scripts/validate-skills.mjs`). |
+| `skill-certification` skill | Ported to Node, with no shell script and no reliance on an executable bit. Static levels were run; trigger and outcome levels were not. |
+| VLBV session-start default | Ported: `lib/hooks/sessionstart-vlbv.mjs`; modes `kbd`, `always`, `off`. |
+| `evals/` and skill-level plugin manifests left out of installed skills | Ported, in the package builder and in doctor's `copy-skills`. |
+| Eval cases | 6 of 11 ported. Five need a bash scaffold script and are not portable to a pack with no shell scripts. |
+| OpenSpec 2.1.0 | Ported: exact pin, project scope, dry-run `verify`, `refresh-unavailable` when offline. |
+| Entity skills, domain plugins and installer domain selection, runtime-only plugin, `pmpo-skill-creator` | Not ported: outside mini's scope or tied to the full pack's generation installer. |
+
+The full list with reasons is in [COMPARE.md](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/COMPARE.md).
+
 ## Parity with full-pack 1.15.0 (mini 1.16.0)
 
 | Capability | Mini |
 | --- | --- |
-| OpenSpec | 2.0.0 pinned exactly; read-only `verify` at SessionStart, mutating `refresh` at phase entry; skills copied (never linked) from `.agents/skills`; `/opsx:*` commands removed. |
+| OpenSpec | 2.1.0 pinned exactly; read-only `verify` at SessionStart, mutating `refresh` at phase entry; skills copied (never linked) from `.agents/skills`; `/opsx:*` commands removed. |
 | Verification method | VLBV is the single method (constitution A-9, `kbd-policy` block): generated code executes only at B4 (boundary packet, once) or B5 (authorized repair, affected checks only); compiler and cadence exceptions retired. |
 | Harness capability profiles | `config/harnesses/capabilities.json`, evidence-gated (`npm run check:harness-capabilities`), printed by `node scripts/doctor.mjs profile`. |
 | VLBV protocol evals | `evals/vlbv-protocol/` in Node; adapters for claude-code, codex, opencode, kimi-code; others reported not run. No mini reports yet. |

@@ -2,7 +2,7 @@
 
 This directory is self-contained and uses Node builtins. Copy the whole directory
 when packaging it for another harness. Node must meet OpenSpec's requirement
-(22.12.0 or newer, unchanged in OpenSpec 2.0; the runner refuses an older Node with a
+(22.20.0 or newer from OpenSpec 2.1.0; the runner refuses an older Node with a
 failed receipt before any install); invoke JavaScript with `node`, without executable bits or
 shell shims.
 
@@ -19,7 +19,7 @@ OpenSpec command's stdout, including JSON output.
 
 ## Selection and installation
 
-The pack is certified against **exactly OpenSpec 2.0.0** (`PINNED_VERSION` in
+The pack is certified against **exactly OpenSpec 2.1.0** (`PINNED_VERSION` in
 `state.mjs`; also `package.json` and `config/spec-engines.json`). `refresh`,
 `run` and `init` always use that version unless an operator pins another. The
 npm registry is consulted only to *report*: a newer release is recorded as
@@ -27,7 +27,7 @@ npm registry is consulted only to *report*: a newer release is recorded as
 the selection: adopting a new OpenSpec release is a pack release, never an
 unattended side effect (procedure text must not change under a bound phase
 contract). A registry failure is recorded as `registryError` and changes
-nothing. A cached selection below the minimum (**2.0.0**) is stale and is
+nothing. A cached selection below the minimum (**2.1.0**) is stale and is
 replaced by the pin.
 
 The default managed home is `~/.prometheus/openspec`. Exact versions live beneath
@@ -44,7 +44,7 @@ Human overrides are explicit environment variables:
 | Variable | Behavior |
 | --- | --- |
 | `PROMETHEUS_OPENSPEC_HOME` | Override the managed home, including for isolated integration runs. |
-| `PROMETHEUS_OPENSPEC_VERSION` | Pin an exact stable version at or above 2.0.0 instead of the pack pin; receipts say `operator-pin`. |
+| `PROMETHEUS_OPENSPEC_VERSION` | Pin an exact stable version at or above 2.1.0 instead of the pack pin; receipts say `operator-pin`. |
 | `PROMETHEUS_OPENSPEC_LATEST_URL` | Replace the registry `latest` endpoint (isolated runs and fixtures). It only affects `newerAvailable` reporting. |
 | `PROMETHEUS_OPENSPEC_DISABLE=1` | Disable managed activity; refresh records disabled and exits 0, run exits 2 without executing a CLI. |
 
@@ -60,6 +60,27 @@ complete, so a new session, including a harness switch in the middle of a phase,
 cannot regenerate OpenSpec skills under a bound contract. The mutating `refresh`
 runs at phase entry: `kbd-new-phase`, `kbd-next-phase`, `kbd-new-child`,
 `kbd-next-child`.
+
+## What OpenSpec 2.1.0 changed for the runner
+
+- **Project scope is explicit.** `openspec init --tools <ids>` in a new
+  repository now installs skills globally by default. The runner's `init` passes
+  `--scope project`, so OpenSpec skills stay inside the project and nothing is
+  written under the home directory's skill folders.
+- **A refresh needs Git and access to GitHub.** Skills are installed by cloning
+  the OpenSpec repository, so `init` and `update` fail without the network even
+  for a project install. `refresh` first asks `openspec update --dry-run --json`
+  what would change, which works offline, and skips the update when nothing in
+  the project would. When an update is needed and the network is not there, it
+  returns `refresh-unavailable` with exit 0: phase entry reports it and carries
+  on with the skills already in place.
+- **`verify` is decided by the same dry run** (`checkedBy: "dry-run"`). OpenSpec
+  2.1.0 skills no longer carry a `generatedBy` stamp to compare.
+- **Node.js 22.20.0 or newer** (2.0.0 needed 22.12.0).
+- **Windows.** The 2.1.0 standalone executables are labelled and signed as
+  OpenSpec; an antivirus product had been removing `openspec.exe`. This pack runs
+  OpenSpec through Node, so it never depended on that executable. The fix matters
+  to anyone who also installs the standalone CLI.
 
 ## OpenSpec 2.0 layout
 
@@ -90,7 +111,7 @@ project's primary spec engine.
 Refresh runs `openspec update <project> --force` with stdin closed,
 `OPEN_SPEC_INTERACTIVE=0`, and `OPENSPEC_NO_UPDATE_CHECK=1`. Force permits the
 official generated-integration cleanup after backups. The audited implementation
-is [OpenSpec v2.0.0](https://github.com/Fission-AI/OpenSpec/tree/v2.0.0/src/core).
+is [OpenSpec v2.1.0](https://github.com/Fission-AI/OpenSpec/tree/v2.1.0/src/core).
 The selected package's own tool, skill, workflow, command, and legacy-migration
 declarations determine backup paths. An incompatible internal API fails before
 update instead of guessing paths.

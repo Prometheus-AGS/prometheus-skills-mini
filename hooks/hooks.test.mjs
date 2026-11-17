@@ -106,10 +106,11 @@ test('every import-map entry resolves to a module file that exists', async () =>
   }
 });
 
-test('the manifest registers exactly the six ported hook ids and the learning hook', () => {
+test('the manifest registers exactly the six ported hook ids, the learning hook and the VLBV hook', () => {
   const ported = [
     'sessionstart-kbd-control',
     'sessionstart-detect-project-context',
+    'sessionstart-vlbv',
     'posttool-write-position-reminder',
     'subagent-fallback-checkpoint',
     'taskcompleted-kbd-receipt',
@@ -119,7 +120,7 @@ test('the manifest registers exactly the six ported hook ids and the learning ho
 
   const ids = hookEntries().map(({ hook }) => valueAfter(hook.args, '--hook'));
 
-  assert.equal(new Set(ids).size, 7);
+  assert.equal(new Set(ids).size, 8);
   assert.deepEqual([...new Set(ids)].sort(), [...ported].sort());
 });
 

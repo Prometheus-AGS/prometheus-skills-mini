@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url';
 import { readSkillSystem, collectDistributionSkills } from '../../lib/distribution/skill-system.mjs';
 import { canonicalBytes } from '../../lib/distribution/canonical-bytes.mjs';
 import { homeDir } from '../../lib/platform/paths.mjs';
+import { isSkillSourceOnly, SKILL_SOURCE_ONLY_DIRS } from '../../lib/distribution/skill-source-only.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const contract = readSkillSystem(root);
@@ -30,6 +31,8 @@ function digestTree(directory, relative = '', source = false) {
   const result = [];
   for (const name of fs.readdirSync(path.join(directory, relative)).sort()) {
     if (source && localOnly.has(name)) continue;
+    // A skill's cases and plugin manifest are source-only by the package contract.
+    if (source && isSkillSourceOnly(path.join(directory, relative), name)) continue;
     const child = path.join(relative, name);
     const absolute = path.join(directory, child);
     const stat = fs.lstatSync(absolute);
@@ -65,6 +68,19 @@ for (const platform of ['claude', 'codex']) {
         `${platform}/${skill.name}`,
       );
     }
+  });
+
+  test(`${platform} package: no skill ships its eval cases or a plugin manifest of its own`, () => {
+    const packageRoot = path.join(root, 'dist/plugins', platform, contract.name);
+    const shipped = [];
+    for (const skill of skills) {
+      for (const name of SKILL_SOURCE_ONLY_DIRS) {
+        if (fs.existsSync(path.join(packageRoot, 'skills', skill.name, name))) shipped.push(`${skill.name}/${name}`);
+      }
+    }
+    assert.deepEqual(shipped, []);
+    // The rule is exercised, not vacuous: at least one source skill has cases.
+    assert.ok(skills.some((skill) => fs.existsSync(path.join(skill.source, 'evals'))), 'no source skill has an evals/ directory');
   });
 
   test(`${platform} package: .mcp.json leaks no host path and no literal Tavily key`, () => {

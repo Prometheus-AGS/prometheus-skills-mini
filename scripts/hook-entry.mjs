@@ -23,6 +23,7 @@ export const HOOK_MODULES = {
   'sessionstart-kbd-control': () => import('../lib/hooks/sessionstart-kbd-control.mjs'),
   'sessionstart-detect-project-context': () =>
     import('../lib/hooks/sessionstart-detect-project-context.mjs'),
+  'sessionstart-vlbv': () => import('../lib/hooks/sessionstart-vlbv.mjs'),
   'posttool-write-position-reminder': () =>
     import('../lib/hooks/posttool-write-position-reminder.mjs'),
   'subagent-fallback-checkpoint': () => import('../lib/hooks/subagent-fallback-checkpoint.mjs'),

@@ -9,10 +9,10 @@ toolchain.
 [Skill catalog](SKILLS.md) · [Maintenance](docs/maintenance.md) ·
 [Contribution rules](CONTRIBUTING.md)
 
-## Spec engines (1.16.0)
+## Spec engines (1.17.0)
 
 `kbd-apply` speaks three spec engines through one registry (`lib/kbd/spec-backend.mjs`):
-**OpenSpec 2.0.0 (primary, exact pin; needs Node.js 22.12.0+)**, **GitHub Spec Kit** (the backup, `speckit`, pinned to [spec-kit v1.3.0](https://github.com/github/spec-kit) — artifacts under `.specify/` and `specs/<slug>/`), and **native-kbd** (compatibility for existing native projects). `/kbd-init` initializes OpenSpec on new projects, or Spec Kit with `--spec-engine speckit`. Detection prefers an explicit `.kbd-orchestrator/project.json` `specBackend` pin, then OpenSpec, then Spec Kit, then native-kbd. All five adapter ops (list, progress, mark-done, verify, archive) are implemented for every engine as pure-Node `.mjs` (Windows-safe, no shell). Engine metadata and version pins live in `config/spec-engines.json`; when a new Spec Kit release ships, bump `pinnedVersion` there after confirming the adapter still matches the `specs/` layout — see `skills/kbd-apply/SKILL.md` for the update procedure and for how to register additional engines.
+**OpenSpec 2.1.0 (primary, exact pin; needs Node.js 22.20.0+)**, **GitHub Spec Kit** (the backup, `speckit`, pinned to [spec-kit v1.3.0](https://github.com/github/spec-kit) — artifacts under `.specify/` and `specs/<slug>/`), and **native-kbd** (compatibility for existing native projects). `/kbd-init` initializes OpenSpec on new projects, or Spec Kit with `--spec-engine speckit`. Detection prefers an explicit `.kbd-orchestrator/project.json` `specBackend` pin, then OpenSpec, then Spec Kit, then native-kbd. All five adapter ops (list, progress, mark-done, verify, archive) are implemented for every engine as pure-Node `.mjs` (Windows-safe, no shell). Engine metadata and version pins live in `config/spec-engines.json`; when a new Spec Kit release ships, bump `pinnedVersion` there after confirming the adapter still matches the `specs/` layout — see `skills/kbd-apply/SKILL.md` for the update procedure and for how to register additional engines.
 
 ## Choose mini or full
 
@@ -20,7 +20,7 @@ toolchain.
 |---|---|---|
 | Intended use | Portable process, team, research and UI guidance | Broad language/domain guidance, learning and optional native tools |
 | Source layout | Flat `skills/<name>/` | Categorized skills, flattened for distribution |
-| Core prerequisites | Node 22.12+; Git for a source checkout | Node, Git and Bash; individual workflows can require Python, jq or Rust |
+| Core prerequisites | Node 22.20+; Git for a source checkout | Node, Git and Bash; individual workflows can require Python, jq or Rust |
 | Platforms | Node entry points for Windows, macOS and Linux | Windows skills through Git Bash or WSL; native services on macOS/Linux |
 | Optional infrastructure | HTTP memory/model services; a supplied Docker Compose stack | Native memory, knowledge, gateway, research and execution components |
 
@@ -98,7 +98,7 @@ Open a project in your harness and ask for the installed skill by name:
 > Implement the complete production change before its local integration gate.
 
 KBD keeps change/task identity across sessions and uses OpenSpec as its spec
-backend. The managed OpenSpec runner stays on the pinned OpenSpec 2.0.0 (a newer
+backend. The managed OpenSpec runner stays on the pinned OpenSpec 2.1.0 (a newer
 release is only reported), verifies read-only at session start and refreshes
 generated integrations at phase entry, with explicit pending and migration
 outcomes; see

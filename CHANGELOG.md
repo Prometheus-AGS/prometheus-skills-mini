@@ -5,6 +5,10 @@ All notable changes to prometheus-skills-mini are recorded here. The format foll
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Earlier releases are
 recorded in the git history and in `COMPARE.md`; this file starts at 1.16.0.
 
+## [1.18.1] - 2026-11-19
+
+- Bind Bootstrap and KBD acceptance completion to delivered user value, relevant VLBV evidence, guidance/access, honest limits and reflection; distinguish review-ready from done. Existing gates unchanged.
+
 ## [1.18.0] - 2026-11-19
 
 - Require user goals/value and plain-language business rules in Context Bootstrap, KBD and VLBV; trace reachable meaningful scenarios to accepted rules, controls and evidence.

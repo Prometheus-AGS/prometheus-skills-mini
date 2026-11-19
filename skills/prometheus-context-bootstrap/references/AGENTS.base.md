@@ -76,4 +76,7 @@ summary or next-command.
   `rust-mcp-server-generator` when relevant. Project pins and protocols win.
 - Stack details live under `.claude/rules/`; load only the rule matching the files
   being changed. Preserve operator prose outside this managed region.
+### Done
+
+Done requires the actual agreed user goal and value to be achieved, supported by relevant end-of-phase VLBV evidence against accepted business rules and all existing mandatory exit criteria. Deliver the necessary user guidance and access, verify the observable outcome, disclose limits and remaining risks, and record reflection. Review-ready means a coherent change is ready for maintainer assessment, not that the user outcome is already delivered. Preserve existing approval, release and verification boundaries; tests alone are not completion.
 <!-- prometheus-mini-context:end -->

@@ -5,6 +5,11 @@ All notable changes to prometheus-skills-mini are recorded here. The format foll
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Earlier releases are
 recorded in the git history and in `COMPARE.md`; this file starts at 1.16.0.
 
+## [1.18.0] - 2026-11-19
+
+- Require user goals/value and plain-language business rules in Context Bootstrap, KBD and VLBV; trace reachable meaningful scenarios to accepted rules, controls and evidence.
+- Preserve established phase-end verification/release processes and all independent runtime/dependency pins.
+
 ## [1.17.0] - Unreleased
 
 Parity with the full pack's certification work (#226–#238) and OpenSpec 2.1.0 (full-pack

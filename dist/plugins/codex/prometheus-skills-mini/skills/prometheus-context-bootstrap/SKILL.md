@@ -1,11 +1,11 @@
 ---
 name: prometheus-context-bootstrap
-description: Install compact, layered Prometheus agent context into a project with Node-only, copy-mode behavior. Use when initializing or refreshing AGENTS.md, CLAUDE.md, path-scoped Rust or TypeScript rules, and project-local Rust skill routing on Windows, macOS, or Linux. Do NOT use for global skill installation or for replacing operator-owned project prose.
+description: Install compact, layered Prometheus agent context into a project with Node-only, copy-mode behavior. Use when auditing, previewing or explicitly updating an existing project, or initializing or refreshing AGENTS.md, CLAUDE.md, path-scoped Rust or TypeScript rules, and project-local Rust skill routing on Windows, macOS, or Linux. Do NOT use for global skill installation or for replacing operator-owned project prose.
 license: MIT
 compatibility: Node.js LTS (>= 22.20.0); no shell, Python, symlinks, or executable bit required
 metadata:
   tags: 'bootstrap, context-engineering, agents-md, claude-md, hooks, scaffold'
-  version: '1.2.0'
+  version: '1.2.1'
 ---
 
 # Prometheus Context Bootstrap
@@ -96,6 +96,33 @@ as `STALE` for manual cleanup and never rewritten.
 Use `--dry-run` to print the complete write plan without changing files. If
 `--stacks` is absent, a root `Cargo.toml` selects Rust and a root `package.json`
 selects TypeScript.
+
+## Maintain instructions in an existing project
+
+From the Mini repository, run the existing CLI with the project's exact Git root:
+
+```text
+node scripts/prometheus-context-bootstrap.mjs --path <project-root> --audit
+node scripts/prometheus-context-bootstrap.mjs --path <project-root> --preview
+node scripts/prometheus-context-bootstrap.mjs --path <project-root> --apply <PLAN_SHA256>
+```
+
+In an installed skill, call its bundled `scripts/maintain-project.mjs` with the same
+arguments. These modes are exclusive; they do not take stack or scaffold flags.
+Audit lists coverage and planned changes without printing file content. Preview
+adds a local unified diff and `PLAN_SHA256`. Inspect it before explicit apply;
+do not share local diffs containing private prose. Apply requires the same root
+and fresh digest. No file is staged in Git or enrolled into the installer.
+
+The modes touch only the named root instruction files. They preserve dirty
+prose, recognised relative canonical references, existing in-root entrypoint
+symlinks, and managed block bytes. An ignored named entrypoint, broken or
+conflicting topology, malformed/partial recognised policy, or unsafe generated
+authority is blocked for manual review. Natural-language conflicts are not fully
+machine-detectable. Run apply with no concurrent editor. If a filesystem failure
+partially applies, audit and reconcile before repeating; separate named writes
+are not a multi-file transaction. A fresh preview after a complete apply is
+a no-op. The legacy initializer, `--dry-run` and `--check` are unchanged.
 
 ## Installed context
 

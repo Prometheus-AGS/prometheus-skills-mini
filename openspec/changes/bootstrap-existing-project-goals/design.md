@@ -1,0 +1,16 @@
+# Existing-project instruction maintenance
+
+## Assess and analyze
+
+An operator needs to know whether each harness gets goals-first guidance, and safely update it without discarding dirty instructions or initializing a project. Real reproductions include hand-maintained files, tracked symlinks both directions, managed text, and ignored AGENTS.md with an independent tracked CLAUDE.md. The initializer is not the source of authority for maintaining them.
+
+## Plan and decisions
+
+- Repo CLI routes new exclusive modes to a self-contained Node-only implementation under the existing skill payload, so generated packages already ship it without changing the distribution builder. Installed skill can run this packaged helper directly. Legacy CLI and installer path untouched.
+- Bind exact physical Git top-level and cross-check entrypoint type, bytes, versions and links. Both entrypoints absent is blocked, not a new-project initializer. Only same-root AGENTS.md and CLAUDE.md are eligible; no external, broken, chained, hard-linked or generated/unrecognized ownership target. Preserve existing recognized imports/symlinks. Never edit inside managed markup. Block malformed managed markers, duplicate or partial owned headings and ownership ambiguity rather than treating all prose as machine-interpretable. Explicitly report that natural-language conflicts need human review. Ignored named entrypoints block this tool's pair update unless tracked, so tracked instructions don't gain a missing local-only dependency.
+- Audit prints path/topology/status, not contents. Preview prints a unified diff and PLAN_SHA256 covering root, status/type/link/all current bytes plus exact proposed bytes and schema. Apply requires same path+digest, revalidates immediately before write, preserves unrelated bytes and avoids touching symlinks. Apply should finish with a no-op preview when repeated; a stale prior digest is rejected. Do not treat filesystem writes as a cross-file transaction; reconcile any partial failure from a fresh audit, never blindly replay. Use only same-directory transient atomic staging, removed upon completion/failure, no backup, recovery or other persisted project files.
+- The canonical documented policy starts with the Full/Mini goals/value axiom and makes accepted business rules, scoped reachable VLBV, unchanged approved verification and delivery outcome explicit. A file already carrying an identifiable complete compatible policy is covered and not rewritten. Unknown or partial contradicting content requires operator review.
+
+## Execute and reflect
+
+Only an adopted Mini B4 may execute the complete candidate or produce/package candidate distributions. Keep prior run budgets and source authority. Run the project's existing real node:test model for integration acceptance; no dependency installs or foreign framework assumed. Local CLI/packaged route and platform-specific execution evidence are separate. Where applicable complete the established distribution generation/comparison and CI only through existing approved release workflow; record exact command, result, candidate identity, dirty files retained, and limitations before release. No test/build/push authorization or closure is claimed by this plan.

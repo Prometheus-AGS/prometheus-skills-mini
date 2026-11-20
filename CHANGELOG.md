@@ -5,6 +5,10 @@ All notable changes to prometheus-skills-mini are recorded here. The format foll
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Earlier releases are
 recorded in the git history and in `COMPARE.md`; this file starts at 1.16.0.
 
+## [1.18.2] - Unreleased
+
+- Extend the existing context bootstrap skill with read-only audit and exact preview, then explicit digest-bound apply for existing root instructions. Preserve managed text, dirty prose, canonical links, and the legacy initializer.
+
 ## [1.18.1] - 2026-11-19
 
 - Bind Bootstrap and KBD acceptance completion to delivered user value, relevant VLBV evidence, guidance/access, honest limits and reflection; distinguish review-ready from done. Existing gates unchanged.

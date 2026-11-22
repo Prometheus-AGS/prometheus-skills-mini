@@ -5,6 +5,15 @@ All notable changes to prometheus-skills-mini are recorded here. The format foll
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Earlier releases are
 recorded in the git history and in `COMPARE.md`; this file starts at 1.16.0.
 
+## [1.19.0] - Unreleased
+
+- Scope KBD Assess and Plan to the end user's Origin/Before outcome and a reachable,
+  independently observable exit contract.
+- Allow early static fixture and runner feedback without creating execution or
+  acceptance authority. Explain focused phase-end VLBV and bounded harness-only
+  recovery without invalidating unrelated evidence or changing release gates.
+- Clarify that Bootstrap preserves project-local hooks and does not migrate them.
+
 ## [1.18.1] - 2026-11-19
 
 - Bind Bootstrap and KBD acceptance completion to delivered user value, relevant VLBV evidence, guidance/access, honest limits and reflection; distinguish review-ready from done. Existing gates unchanged.

@@ -52,6 +52,14 @@ npm ci
 node scripts/doctor.mjs --human
 ```
 
+For native KBD and knowledge commands, install the release-matched `prometheus` and `pk` executables:
+
+```text
+npm run install:native
+```
+
+Add the printed bin directory to the harness's PATH. Mini verifies the SHA-256 of its platform-specific release assets before installation. An absent asset falls back to the pinned Cargo source. Use `--bin-dir` for an application-owned directory. See [native release installation](docs/native-releases.md) for exact targets, optional service downloads and fallback requirements.
+
 The doctor reports runtime, tool, service, skill-copy, KBD and installation-scope
 findings. Optional-service warnings do not prevent local file workflows. Its
 plugin-source check inspects Claude Code registrations only; it does not inspect

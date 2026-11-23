@@ -16,6 +16,10 @@ symlinks need Developer Mode or elevation on Windows, exactly what this pack exi
 requiring. Each target also carries a `detect` list (e.g. `[".claude", "command:claude"]`) so the
 generator only materializes a harness's skill directory when that harness is actually present.
 
+## Install native KBD and knowledge helpers
+
+Run `npm run install:native` in a durable checkout, then add its printed bin directory to the harness PATH. This downloads the checked Mini version's `prometheus` and `pk` executables for this CPU and OS and verifies SHA-256 before installation. A missing asset uses the pinned Cargo source. Select a single tool or destination with `node scripts/install-native.mjs pk --bin-dir <directory>`. Optional service executables can be selected individually. Compose continues to pull its configured images.
+
 ## Generating the distribution
 
 Complete all phase production before generation or validation. Use isolated output paths and homes for local integration; command availability is not authorization to change a live harness.

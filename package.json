@@ -9,6 +9,7 @@
     "node": ">=22.20.0"
   },
   "scripts": {
+    "install:native": "node scripts/install-native.mjs",
     "test": "node --test",
     "check": "node rules/build.mjs --check",
     "validate": "node scripts/validate-skills.mjs",

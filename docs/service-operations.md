@@ -4,8 +4,7 @@ The canonical mini operations page is
 [Services and recovery](../site/docs/services/docker-services.md), published at
 `/docs/services/docker-services` in the mini site.
 
-Mini ships three Compose containers for optional memory/database and model
-gateway capabilities. It can discover an existing full installation without
+Standalone Mini supports a native, local Docker, or existing provider for each optional service. Use `npm run services -- plan` to inspect the choices. The Boss can also use its three-container Compose stack. It can discover an existing full installation without
 taking over its services. Local skills and team files remain usable without
 either stack. Full native knowledge/execution/learning services and Companion's
 optional connected control are separate installations.
@@ -33,3 +32,5 @@ intent outbox and receipts. Its optional Claude registration and macOS service
 installer belong to Companion. No public remote or certified Companion release
 exists yet; consult that checkout's `docs/installation.md` and
 `docs/control-api.md` before any approved deployment.
+
+Native Mini jobs use an owner-readable launcher under `~/.prometheus/service-providers/mini-native/<service>/`. The supervisor runs the selected executable with that directory as its working directory. macOS stages a verified copy there when a Mini binary lives on a mounted volume. Keep the gateway configuration and model data in locations readable by the logged-in account's background services. Each service directory contains its launch settings and stdout/stderr logs.

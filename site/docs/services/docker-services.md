@@ -23,7 +23,8 @@ images or assume every binary matches mini's package version.
 
 | Owner | Owns | Mini's boundary |
 | --- | --- | --- |
-| Mini checkout | Compose configuration and the `scripts/services.mjs` lifecycle wrapper | Uses supplied container images and an existing Docker/Compose installation. |
+| Standalone Mini | Services installed with `npm run services -- apply` | Records native, Docker, reused and disabled services separately. Stops and uninstalls only its own resources. |
+| The Boss | Its generated private configuration and `the-boss-prometheus` Compose project | Uses the existing `scripts/services.mjs` wrapper for its own stack. |
 | surreal-memory-server repository | Memory server implementation and its service interfaces | Configure an approved image or explicit external endpoint; copying a skill does not install this server. |
 | liter-llm repository | Gateway implementation, model routes and provider configuration | Inference remains separate from a tool-enabled native worker. |
 | Full pack installation | Its Rust/native tools, installers and global service ownership | Discovery does not compile, install, upgrade or take over those services. |
@@ -60,8 +61,8 @@ compatibility and publication, independently of these three containers.
 
 `docker/compose.yaml` uses project name `the-boss-prometheus`:
 
-- SurrealDB is pinned to `3.3.0` by image digest in the current source. It uses
-  named volume `surreal-data` and exposes container `8000` only through host
+- SurrealDB is pinned to `4.0.1` by image digest in the current source. It uses
+  the existing Compose project volume by default and exposes container `8000` only through host
   `127.0.0.1:${SURREAL_PORT:-28000}`.
 - `SURREAL_MEMORY_IMAGE` is required. Memory connects to `surrealdb:8000`, uses
   a namespace account, namespace `memory`, database `main_local_384` and local
@@ -75,15 +76,17 @@ template selects `memory/main_local_384`. Choosing the same port does not share
 or migrate those datasets. Record your actual endpoint, database and embedding
 identity before switching service owners.
 
+For the Boss Compose stack, set `SURREAL_DATA_VOLUME` to name a separately restored or new volume. The provider-managed Docker install uses a separate `surreal-data-v4` volume, and the native provider uses `~/.prometheus/service-providers/mini-native/surrealdb/data-v4`. With existing 3.x provider data, restore a v4 datastore or set `SURREAL_START_FRESH_V4=1` to create a separate empty one. In-place 3.x conversion is disabled.
+
+Before moving from a 3.x data volume, verify a `surreal db export` and retain a separate offline copy of the original store. Import into a fresh 4.0.1 instance, provision the namespace account, then check existing memory records through the v1.11.0 memory service. Select the new endpoint after these checks. A rollback must use the original 3.x store or a restore into a fresh 3.x store. [SurrealDB migration guide](https://surrealdb.com/docs/operate/upgrading/3x-to-4x).
+
 Each container has a memory limit and `restart: unless-stopped`. Required
 database/gateway credentials come from the local ignored `.env` file, not inline
 defaults. Use the shipped example for variable names and supply your own values.
 Container-to-container addresses are separate from host loopback addresses.
 Scope fields such as `user_id` and `agent_id` are not network authentication.
 
-`docker/compose.build.yaml` is a maintainer source-build overlay. It is not the
-normal prebuilt-image setup path and does not prove a complete collaborating
-harness installation.
+For standalone installation, use `npm run services -- plan` and `npm run services -- apply` with per-service choices such as `--service liter-llm=docker`. The installer discovers compatible local endpoints, including The Boss, and records who owns each service. The maintainer overlay in `docker/compose.build.yaml` packages the same versioned Linux binaries used for the GHCR images. See `docker/README.md` for the local packaging commands.
 
 ## Lifecycle
 

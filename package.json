@@ -1,6 +1,6 @@
 {
   "name": "prometheus-skills-mini",
-  "version": "1.20.0",
+  "version": "1.20.1",
   "private": true,
   "type": "module",
   "description": "Windows-native, scaled-down port of prometheus-skill-pack: KBD + PMPO process skills, OpenSpec, Karpathy logging.",
@@ -9,6 +9,7 @@
     "node": ">=22.20.0"
   },
   "scripts": {
+    "services": "node scripts/service-providers/cli.mjs",
     "install:native": "node scripts/install-native.mjs",
     "test": "node --test",
     "check": "node rules/build.mjs --check",

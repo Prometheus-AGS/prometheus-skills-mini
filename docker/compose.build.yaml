@@ -1,12 +1,12 @@
-# Maintainer-only image production. Installed applications use compose.yaml and pull images.
+# Local packaging overlay. MINI_IMAGE_CONTEXTS is the absolute output of package.py prepare.
 services:
   surreal-memory:
+    image: prometheus-mini-local/surreal-memory:${MINI_IMAGE_VERSION:?Set the prepared version tag}
+    platform: linux/${MINI_IMAGE_ARCH:?Set the prepared Linux architecture}
     build:
-      context: ../tools/surreal-memory-server
-      dockerfile: Dockerfile
-      args:
-        CARGO_BUILD_FLAGS: --no-default-features --features server-only,palace,local-embeddings
+      context: ${MINI_IMAGE_CONTEXTS:?Prepare the release image contexts}/surreal-memory
   liter-llm:
+    image: prometheus-mini-local/liter-llm:${MINI_IMAGE_VERSION:?Set the prepared version tag}
+    platform: linux/${MINI_IMAGE_ARCH:?Set the prepared Linux architecture}
     build:
-      context: ../tools/liter-llm
-      dockerfile: ../../docker/liter-llm.Dockerfile
+      context: ${MINI_IMAGE_CONTEXTS:?Prepare the release image contexts}/liter-llm

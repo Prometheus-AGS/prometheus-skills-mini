@@ -18,12 +18,12 @@ minimum = ">=22.20.0"     # must equal package.json engines.node, exactly
 # Each path must be a gitlink in HEAD at exactly this commit.
 "tools/prometheus-knowledge"    = "99c2a13dc69992b561876852350aab06de4b2948"   # PK issue #40 fix; exact commit beyond v1.11.0 (operator approved)
 "tools/liter-llm"               = "a6047386cc9fae4258b4a8577f6a016022095586"   # operator-requested current gitlink; restored transport boundaries and absent refusal fix
-"tools/surreal-memory-server"   = "63eb413ebf520a4a525ffd3b8d1d07f1389d48d4"    # surreal-memory-server v1.10.2 (surrealdb =3.3.0, matching the image below)
+"tools/surreal-memory-server"   = "88122324e50a8ca249c4d17ca43bba454dc8d0ef"    # surreal-memory-server v1.11.0, Rust SDK 4.0.0
 
 [images]
 # The one SurrealDB container is shared by surreal-memory, compass and UAR. The release must keep
-# those clients compatible with this operator-selected 3.3.0 server baseline.
-"surrealdb"      = { image = "surrealdb/surrealdb:v3.3.0", digest = "sha256:681c6c22c287421b5c7d99e0fde79b6e0d32c36c1ddeaab2762a1661cb04cd20" }
+# those clients compatible with this operator-selected 4.0.1 server baseline.
+"surrealdb"      = { image = "surrealdb/surrealdb:v4.0.1", digest = "sha256:408eb8e5c9436670525e2bc2634b1e50ba74ce1b447eaf0094c35f73b67f9cb6" }
 # Built from their submodules; used only as `build:` contexts, so nothing under them runs on the host.
 "liter-llm"      = { built_from_submodule = true, submodule = "tools/liter-llm" }
 "surreal-memory" = { built_from_submodule = true, submodule = "tools/surreal-memory-server" }

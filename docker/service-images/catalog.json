@@ -1,0 +1,36 @@
+{
+  "repository": "Prometheus-AGS/prometheus-skills-mini",
+  "format": "individual",
+  "services": {
+    "liter-llm": {
+      "binary": "liter-llm",
+      "directory": "tools/liter-llm",
+      "port": 4000,
+      "args": [
+        "api",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "4000",
+        "--config",
+        "/etc/prometheus/liter.toml"
+      ]
+    },
+    "surreal-memory": {
+      "binary": "surreal-memory-server",
+      "directory": "tools/surreal-memory-server",
+      "port": 3001,
+      "env": {
+        "API_HOST": "0.0.0.0",
+        "API_PORT": "3001",
+        "MCP_STDIO": "false",
+        "SURREAL_MODE": "server",
+        "EMBEDDING_PROVIDER": "local"
+      }
+    }
+  },
+  "otherBinaries": {
+    "pk": "CLI",
+    "prometheus": "CLI"
+  }
+}

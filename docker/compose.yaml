@@ -2,11 +2,13 @@ name: the-boss-prometheus
 
 services:
   surrealdb:
-    image: surrealdb/surrealdb:v3.3.0@sha256:681c6c22c287421b5c7d99e0fde79b6e0d32c36c1ddeaab2762a1661cb04cd20
+    image: surrealdb/surrealdb:v4.0.1@sha256:408eb8e5c9436670525e2bc2634b1e50ba74ce1b447eaf0094c35f73b67f9cb6
     restart: unless-stopped
     mem_limit: 2g
     command: [start, --bind, '0.0.0.0:8000', 'surrealkv:/data/database']
     environment:
+      # Older data must first be backed up and upgraded in a separate copy.
+      SURREAL_EXPERIMENTAL_UPGRADE_FROM_3X: "false"
       SURREAL_USER: ${SURREAL_ROOT_USERNAME:?Configure the database administrator}
       SURREAL_PASS: ${SURREAL_ROOT_PASSWORD:?Configure the database administrator password}
       RUST_LOG: info
@@ -15,7 +17,7 @@ services:
     volumes:
       - surreal-data:/data
     healthcheck:
-      test: [CMD, /surreal, isready, --endpoint, 'http://localhost:8000']
+      test: [CMD, /surreal, is-ready, --endpoint, 'http://localhost:8000']
       interval: 10s
       timeout: 5s
       retries: 12
@@ -65,6 +67,8 @@ services:
 
 volumes:
   surreal-data:
+    # Keep an existing project volume by default. An explicit replacement names a fresh or restored volume.
+    name: ${SURREAL_DATA_VOLUME:-${COMPOSE_PROJECT_NAME}_surreal-data}
   embedding-cache:
 
 configs:

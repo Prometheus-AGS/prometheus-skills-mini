@@ -5,6 +5,11 @@ All notable changes to prometheus-skills-mini are recorded here. The format foll
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Earlier releases are
 recorded in the git history and in `COMPARE.md`; this file starts at 1.16.0.
 
+## [1.20.1] - 2026-11-23
+
+- Support SurrealDB 4.0.1 with a matching 4.x memory-server client.
+- Choose a native service, a Docker container or a compatible existing instance during installation. The release workflow packages the Linux ARM64 and AMD64 native executables as versioned GHCR images.
+
 ## [1.20.0] - Unreleased
 
 - Add audit, preview and digest-bound apply for existing project instructions. The installed Bootstrap skill preserves local prose and reports which files an update would change.

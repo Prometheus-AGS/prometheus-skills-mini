@@ -58,6 +58,8 @@ For native KBD and knowledge commands, install the release-matched `prometheus` 
 npm run install:native
 ```
 
+To choose native, Docker, or an existing instance separately for each optional service, use [service installation](docs/native-releases.md#service-installation).
+
 Add the printed bin directory to the harness's PATH. Mini verifies the SHA-256 of its platform-specific release assets before installation. An absent asset falls back to the pinned Cargo source. Use `--bin-dir` for an application-owned directory. See [native release installation](docs/native-releases.md) for exact targets, optional service downloads and fallback requirements.
 
 The doctor reports runtime, tool, service, skill-copy, KBD and installation-scope

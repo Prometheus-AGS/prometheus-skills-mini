@@ -41,23 +41,29 @@ function placeholderDefects(contract) {
   return defects;
 }
 
-/** ownerTask must exist in the canonical task surface once tasks are registered. */
+/** A supplied canonical phase registry is authoritative, including an empty registry. */
 function ownerTaskDefects(contract, scenarios, status) {
   if (!status) return [];
   const phase = status.phases?.[contract.identity?.phaseId];
-  const tasks = new Set();
+  const tasks = new Map();
   for (const [changeId, change] of Object.entries(phase?.changes ?? {})) {
     const list = Array.isArray(change?.tasks) ? change.tasks : Object.values(change?.tasks ?? {});
     for (const task of list) {
       if (!task?.id) continue;
-      tasks.add(task.id);
-      tasks.add(`${changeId}/${task.id}`);
+      tasks.set(task.id, (tasks.get(task.id) ?? 0) + 1);
+      tasks.set(`${changeId}/${task.id}`, 1);
     }
   }
-  if (tasks.size === 0) return [];
-  return scenarios.flatMap((s) => String(s.ownerTask ?? '').split('+').map((t) => t.trim()).filter(Boolean)
-    .filter((task) => !tasks.has(task))
-    .map((task) => `owner-task: ${s.id}: ownerTask ${task} is not a registered task of phase ${contract.identity?.phaseId}`));
+  const defects = [];
+  for (const scenario of scenarios) {
+    for (const ref of String(scenario.ownerTask ?? '').split('+')) {
+      const owner = ref.trim();
+      const count = tasks.get(owner) ?? 0;
+      if (!count) defects.push(`owner-task: ${scenario.id}: ownerTask ${owner || '<empty>'} is not a registered task of phase ${contract.identity?.phaseId}`);
+      else if (count > 1) defects.push(`owner-task: ${scenario.id}: ownerTask ${owner} is ambiguous in phase ${contract.identity?.phaseId}; qualify it with its change ID`);
+    }
+  }
+  return defects;
 }
 
 /** Unresolved CRITICAL review findings on acceptance content block adoption (CR-30). */
@@ -141,7 +147,6 @@ function versionTwoDefects(contract, scenarios, context) {
   const byId = new Map(commands.map((c) => [c?.id, c]));
   const defects = [
     ...placeholderDefects(contract),
-    ...ownerTaskDefects(contract, scenarios, context.status),
     ...reviewDefects(context),
   ];
   if (JSON.stringify(contract.statusVocabulary) !== JSON.stringify(VERDICTS)) {
@@ -170,6 +175,9 @@ export function lintContract(contract, context = {}) {
   const scenarios = Array.isArray(contract?.scenarioMatrix) ? contract.scenarioMatrix : [];
   const defects = scenarios.filter((s) => !SCENARIO_ID.test(s?.id ?? ''))
     .map((s) => `scenario-id: ${s?.id ?? '<missing>'} does not match ${SCENARIO_ID}`);
+  if (contract?.contractVersion === '2' || context.requireOwners) {
+    defects.push(...ownerTaskDefects(contract, scenarios, context.status));
+  }
   if (contract?.contractVersion === '2') defects.push(...versionTwoDefects(contract, scenarios, context));
   return {
     defects,

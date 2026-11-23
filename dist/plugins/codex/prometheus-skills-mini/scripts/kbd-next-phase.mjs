@@ -19,9 +19,10 @@ import { spawnExecutable } from '../lib/platform/spawn.mjs';
 import { atomicWrite } from '../lib/platform/atomic-write.mjs';
 import { isRuntimeAuthoritative } from '../lib/kbd/runtime-authority.mjs';
 import { isBottleneckActive, evaluateBottleneck, bottleneckSignalText } from '../lib/kbd/bottleneck-guard.mjs';
-import { hooksFire } from '../lib/kbd/hooks.mjs';
+import { fireAfter } from '../lib/kbd/after-hooks.mjs';
+import { miniPackRoot, hooksFire } from '../lib/kbd/hooks.mjs';
 import { runHookCommand } from '../lib/kbd/hook-command.mjs';
-import { readDisposition, runPhaseCommand } from '../lib/kbd/phase-disposition.mjs';
+import { isClosed, readDisposition, runPhaseCommand } from '../lib/kbd/phase-disposition.mjs';
 
 const USAGE = `Usage: node scripts/kbd-next-phase.mjs [phase-name] [--allow-incomplete-reflection]
 
@@ -114,6 +115,12 @@ function normalizePhaseName(name) {
 }
 
 /** goals.md is written only after canonical success, labelled as proposals, never adopted scope. */
+function successorSeed(operatorExit, successor, reflection) {
+  if (operatorExit) return operatorExit.withdrawn.filter((row) => row.destination === successor)
+    .map((row) => '- ' + row.kind + ' ' + row.id).join('\n');
+  return existsSync(reflection) ? extractSeedContent(readFileSync(reflection, 'utf8')) : '';
+}
+
 function writeGoals({ newPhaseDir, newPhase, currentPhase, timestamp, seedContent }) {
   mkdirSync(newPhaseDir, { recursive: true });
   const goalsBody = seedContent || '(No seed content found in reflection -- add goals manually before running /kbd-assess)';
@@ -176,7 +183,7 @@ function boundContinuation({ projectRoot, kbdDir, currentPhase, proposedName, au
   if (disposition.status !== 0) die(`${disposition.stderr}; nothing was written`);
   const view = disposition.json;
   if (!view.contractBound) return {};
-  if (view.disposition !== 'CLOSED') {
+  if (!isClosed(view.disposition)) {
     process.stdout.write(
       `[kbd-next-phase] NOT-CLOSED: phase '${currentPhase}' disposition is ${view.disposition}; nothing was written.\n` +
         '  A contract-bound phase closes only through its terminal evaluator:\n' +
@@ -189,7 +196,7 @@ function boundContinuation({ projectRoot, kbdDir, currentPhase, proposedName, au
     const goals = path.join(kbdDir, 'phases', started, 'goals.md');
     if (!existsSync(goals)) {
       const reflection = path.join(kbdDir, 'phases', currentPhase, 'reflection.md');
-      const seed = existsSync(reflection) ? extractSeedContent(readFileSync(reflection, 'utf8')) : '';
+      const seed = successorSeed(view.closure?.operatorExit, started, reflection);
       writeGoals({ newPhaseDir: path.dirname(goals), newPhase: started, currentPhase, timestamp: new Date().toISOString(), seedContent: seed });
     }
     process.stdout.write(`[kbd-next-phase] ALREADY-STARTED: successor '${started}' of '${currentPhase}' was already started; no new events.\n`);
@@ -217,11 +224,11 @@ function boundContinuation({ projectRoot, kbdDir, currentPhase, proposedName, au
     process.stdout.write(`[kbd-next-phase] SUCCESSOR-UNAUTHORIZED: '${proposedName}' is not the authorized successor '${id}'\n`);
     process.exit(4);
   }
-  return { successor: { id, title, authManifest, authSignature } };
+  return { successor: { id, title, authManifest, authSignature, operatorExit: view.closure?.operatorExit } };
 }
 
 /** One typed runtime event defines and activates exactly the authorized successor. */
-async function startAuthorizedSuccessor({ id, title, authManifest, authSignature, projectRoot, kbdDir, currentPhase, orchestratorRoot, timestamp }) {
+async function startAuthorizedSuccessor({ id, operatorExit, title, authManifest, authSignature, projectRoot, kbdDir, currentPhase, orchestratorRoot, timestamp }) {
   const newPhaseDir = path.join(kbdDir, 'phases', id);
   if (existsSync(newPhaseDir)) die(`Phase '${id}' already exists:\n  ${newPhaseDir}`);
   refreshOpenSpec(projectRoot);
@@ -232,20 +239,13 @@ async function startAuthorizedSuccessor({ id, title, authManifest, authSignature
     process.stdout.write(`[kbd-next-phase] SUCCESSOR-UNAUTHORIZED: the runtime refused the successor; nothing was written.\n${started.stdout}${started.stderr}`);
     process.exit(4);
   }
-  try {
-    await hooksFire('phase', 'after', currentPhase, 1, 1, {
-      orchestratorRoot, cwd: projectRoot, runCommand: runHookCommand, phasePath: currentPhase, sourceTool: 'kbd-next-phase',
-    });
-  } catch {
-    process.stderr.write('[kbd-next-phase] phase completion hook failed\n');
-  }
   if (isBottleneckActive(projectRoot)) {
     const postStart = evaluateBottleneck('phase', 'before', id, false, { root: projectRoot });
     if (postStart.status !== 0) die(`next phase start postcommit blocked; record it with: prometheus kbd --path . guard evaluate --boundary phase --edge before --subject ${id} --json`);
     process.stdout.write(`${bottleneckSignalText(postStart.stdout)}\n`);
   }
   const reflection = path.join(kbdDir, 'phases', currentPhase, 'reflection.md');
-  const seedContent = existsSync(reflection) ? extractSeedContent(readFileSync(reflection, 'utf8')) : '';
+  const seedContent = successorSeed(operatorExit, id, reflection);
   writeGoals({ newPhaseDir, newPhase: id, currentPhase, timestamp, seedContent });
   process.stdout.write(`\nCompleted kbd-next-phase — ${id} ready for /kbd-assess\n`);
   process.stdout.write(`  phase: ${id}\n`);
@@ -276,7 +276,7 @@ async function main(argv) {
   const waypointJson = path.join(kbdDir, 'current-waypoint.json');
   const waypointMd = path.join(kbdDir, 'current-waypoint.md');
   const projectJson = path.join(kbdDir, 'project.json');
-  const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? projectRoot;
+  const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? miniPackRoot;
 
   if (!existsSync(waypointJson)) {
     die('.kbd-orchestrator/current-waypoint.json not found.\n  Run /kbd-init first to initialize KBD for this project.');
@@ -383,17 +383,7 @@ async function main(argv) {
         if (post.status !== 0) die('current phase completion postcommit blocked');
         completedGuardText = bottleneckSignalText(post.stdout);
       }
-      try {
-        await hooksFire('phase', 'after', currentPhase, 1, 1, {
-          orchestratorRoot,
-          cwd: projectRoot,
-          runCommand: runHookCommand,
-          phasePath: currentPhase,
-          sourceTool: 'kbd-next-phase',
-        });
-      } catch {
-        process.stderr.write('[kbd-next-phase] phase completion hook failed\n');
-      }
+      await fireAfter({ root: projectRoot, phase: currentPhase, kind: 'phase', state, runId: state.runId, sourceTool: 'kbd-next-phase' });
     }
 
     const createResult = spawnExecutable('prometheus', [

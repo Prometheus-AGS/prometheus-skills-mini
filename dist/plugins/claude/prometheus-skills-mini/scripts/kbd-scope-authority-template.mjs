@@ -18,11 +18,12 @@
 // Exit codes: 0 printed; 1 usage/io; 2 canonical state does not permit it.
 
 import { randomBytes } from 'node:crypto';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { tmpdir } from 'node:os';
 import { contractDigest, scenarioDigests, stableStringify } from '../lib/kbd/adopted-contract.mjs';
-import { findKbdRoot, readCanonicalStatus } from '../lib/kbd/contract-adopt.mjs';
-import { readDisposition } from '../lib/kbd/phase-disposition.mjs';
+import { adoptContract, findKbdRoot, readCanonicalStatus } from '../lib/kbd/contract-adopt.mjs';
+import { isClosed, readDisposition, runPhaseCommand } from '../lib/kbd/phase-disposition.mjs';
 import { spawnExecutable } from '../lib/platform/spawn.mjs';
 
 const NAMESPACE = 'prometheus-kbd-scope-amendment';
@@ -37,10 +38,10 @@ const [action, ...rest] = process.argv.slice(2);
 const opts = {};
 for (let i = 0; i < rest.length; i += 2) {
   const key = rest[i]?.replace(/^--/, '');
-  if (!['phase', 'contract', 'successor', 'title', 'reason', 'approver'].includes(key)) fail(`unknown argument: ${rest[i]}`);
+  if (!['phase', 'contract', 'successor', 'title', 'reason', 'approver', 'details', 'owner-decision'].includes(key)) fail(`unknown argument: ${rest[i]}`);
   opts[key] = rest[i + 1] ?? '';
 }
-if (!['amend-contract', 'start-successor'].includes(action)) fail('action must be amend-contract or start-successor');
+if (!['amend-contract', 'start-successor', 'supersede-exit'].includes(action)) fail('action must be amend-contract, supersede-exit or start-successor');
 if (!opts.phase) fail('--phase is required');
 if (!opts.reason || opts.reason.trim().length < 10) fail('--reason is required (at least 10 characters)');
 const approver = opts.approver || spawnExecutable('git', ['config', 'user.email'])?.stdout?.trim();
@@ -69,6 +70,10 @@ if (action === 'amend-contract') {
   if (!existsSync(file)) fail(`contract not found: ${file}`);
   if (!view.binding) fail(`phase ${opts.phase} is not bound; adopt it first (no amendment needed)`, 2);
   const contract = JSON.parse(readFileSync(file, 'utf8'));
+  if (contract.identity?.phaseId !== opts.phase) fail('contract phase differs from --phase', 2);
+  const lint = adoptContract(file, { cwd: root, lintOnly: true, requireCanonical: true,
+    canonicalStatus: status, ownerDecision: opts['owner-decision'] });
+  if (lint.status !== 0) fail(lint.stderr, lint.status);
   const next = scenarioDigests(contract);
   const previous = view.binding.scenarioDigests ?? {};
   const digest = contractDigest(contract);
@@ -83,9 +88,26 @@ if (action === 'amend-contract') {
       removed: Object.keys(previous).filter((id) => !(id in next)).sort(),
     },
   });
+} else if (action === 'supersede-exit') {
+  if (!opts.details || !view.binding) fail('a bound phase and --details <json-file> are required', 2);
+  const details = JSON.parse(readFileSync(opts.details, 'utf8'));
+  for (const key of ['operatorDecision', 'exercised', 'withdrawn', 'budgetAccounting', 'limits']) {
+    manifest[key] = details[key];
+  }
+  manifest.boundContractDigest = view.binding.contractDigest;
+  const temp = mkdtempSync(path.join(tmpdir(), 'kbd-exit-'));
+  let checked;
+  try {
+    const file = path.join(temp, 'manifest.json');
+    writeFileSync(file, stableStringify(manifest) + '\n', { mode: 0o600 });
+    checked = runPhaseCommand({ root, args: ['validate-exit', '--id', opts.phase, '--manifest', file] });
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+  if (checked.status !== 0) fail(checked.stderr || checked.stdout || 'exit validation failed', 2);
 } else {
   if (!opts.successor || !opts.title) fail('--successor and --title are required for start-successor');
-  if (view.disposition !== 'CLOSED') fail(`phase ${opts.phase} is not CLOSED; a successor starts only from a closed phase`, 2);
+  if (!isClosed(view.disposition)) fail(`phase ${opts.phase} is not CLOSED; a successor starts only from a closed phase`, 2);
   if (view.successor?.phaseId) fail(`phase ${opts.phase} already has a successor`, 2);
   Object.assign(manifest, {
     predecessorClosureKey: view.closure.closureKey,

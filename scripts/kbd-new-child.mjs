@@ -14,7 +14,7 @@ import { spawnExecutable } from '../lib/platform/spawn.mjs';
 import { atomicWrite } from '../lib/platform/atomic-write.mjs';
 import { isRuntimeAuthoritative } from '../lib/kbd/runtime-authority.mjs';
 import { isBottleneckActive, evaluateBottleneck, bottleneckSignalText } from '../lib/kbd/bottleneck-guard.mjs';
-import { hooksFire } from '../lib/kbd/hooks.mjs';
+import { miniPackRoot, hooksFire } from '../lib/kbd/hooks.mjs';
 import { kbdExistingPathTokens, kbdNodeDir, kbdNodeChain, chainSeparator } from '../lib/kbd/waypoint.mjs';
 import { runHookCommand } from '../lib/kbd/hook-command.mjs';
 
@@ -183,7 +183,7 @@ async function main(argv) {
       process.stdout.write(`${bottleneckSignalText(post.stdout)}\n`);
     }
 
-    const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? '.';
+    const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? miniPackRoot;
     try {
       await hooksFire('child', 'before', name, curDepth + 1, maxDepth, {
         orchestratorRoot,
@@ -294,7 +294,7 @@ async function main(argv) {
   }
 
   const index = curDepth + 1;
-  const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? '.';
+  const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? miniPackRoot;
   try {
     await hooksFire('child', 'before', name, index, maxDepth, {
       orchestratorRoot,

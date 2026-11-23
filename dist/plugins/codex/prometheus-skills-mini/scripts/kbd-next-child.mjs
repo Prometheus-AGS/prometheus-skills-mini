@@ -23,7 +23,7 @@ import path from 'node:path';
 import { spawnExecutable } from '../lib/platform/spawn.mjs';
 import { atomicWrite } from '../lib/platform/atomic-write.mjs';
 import { isRuntimeAuthoritative } from '../lib/kbd/runtime-authority.mjs';
-import { hooksFire } from '../lib/kbd/hooks.mjs';
+import { miniPackRoot, hooksFire } from '../lib/kbd/hooks.mjs';
 import { kbdExistingPathTokens } from '../lib/kbd/waypoint.mjs';
 import { runHookCommand } from '../lib/kbd/hook-command.mjs';
 
@@ -120,7 +120,7 @@ async function legacyPath(waypoint, target) {
     if (!next) die(`already on last child '${prior}' — run /kbd-reflect, then /kbd-next-phase`);
   }
 
-  const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? '.';
+  const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? miniPackRoot;
   const hookCtx = { orchestratorRoot, cwd: '.', runCommand: runHookCommand, phasePath: parent, sourceTool: 'kbd-next-child' };
 
   let fromLabel = '(none)';

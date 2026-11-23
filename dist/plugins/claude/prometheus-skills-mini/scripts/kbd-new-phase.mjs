@@ -13,7 +13,7 @@ import { spawnExecutable } from '../lib/platform/spawn.mjs';
 import { atomicWrite } from '../lib/platform/atomic-write.mjs';
 import { isRuntimeAuthoritative } from '../lib/kbd/runtime-authority.mjs';
 import { isBottleneckActive, evaluateBottleneck, bottleneckSignalText } from '../lib/kbd/bottleneck-guard.mjs';
-import { hooksFire } from '../lib/kbd/hooks.mjs';
+import { miniPackRoot, hooksFire } from '../lib/kbd/hooks.mjs';
 import { runHookCommand } from '../lib/kbd/hook-command.mjs';
 
 function die(message) {
@@ -240,7 +240,7 @@ async function main(argv) {
   }
   flipProjectActivePhase(name, now, project);
 
-  const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? '.';
+  const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? miniPackRoot;
   try {
     await hooksFire('phase', 'before', name, 1, 1, {
       orchestratorRoot,

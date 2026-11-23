@@ -64,11 +64,11 @@
     },
     {
       "path": "lib/karpathy/canonical-state.mjs",
-      "sha256": "sha256:32352c1ecc1e948dc904934ccae54d02bb6e1b3c4cf133b8c58279ec90ead2c2"
+      "sha256": "sha256:630b27bdb5266d563f97f9f3d37f31b779f2751f5f87ea3c76f7fe23faa9b23d"
     },
     {
       "path": "lib/karpathy/event.mjs",
-      "sha256": "sha256:1e096013cf673e0afeba52c64f7cf88ab6467fca3d2520ce5a33b75eb5548b07"
+      "sha256": "sha256:83264b5bb6aced602b32eb4d799fa56fa8a87a6e81706970c5067f091d281790"
     },
     {
       "path": "lib/karpathy/hash.mjs",
@@ -99,6 +99,10 @@
       "sha256": "sha256:9b1297d734829bdd67033162572485e2f16daca66210e6d30d329604ea375b8e"
     },
     {
+      "path": "lib/kbd/after-hooks.mjs",
+      "sha256": "sha256:9ff68e353fb507808475f831d7f99d21983a9f1add5dd9e1446871af095ed200"
+    },
+    {
       "path": "lib/kbd/bottleneck-guard.mjs",
       "sha256": "sha256:a384275c5c9a5b33de485244cf51be3e92ed261b2f6d3ae11955a4cc3c09b89b"
     },
@@ -108,11 +112,11 @@
     },
     {
       "path": "lib/kbd/closure-packet/index.mjs",
-      "sha256": "sha256:0dd455d74bdc8a890b8b5b2fa4ea875c47572228560f6ad52a714c0d55ab2c8e"
+      "sha256": "sha256:67e8c4cc98832c2736a3122cef9647bc84daf372177fda872fd37bea7415c8a9"
     },
     {
       "path": "lib/kbd/closure-packet/render.mjs",
-      "sha256": "sha256:e587e8afa0ca98aec32534650bb49db9a9076294d620cdf9b7b248148e617975"
+      "sha256": "sha256:cf7386ebac4a46881d9a511e0465c4691bab436f629110c58e1af1c38f12b2bc"
     },
     {
       "path": "lib/kbd/closure-packet/scan.mjs",
@@ -120,11 +124,11 @@
     },
     {
       "path": "lib/kbd/contract-adopt.mjs",
-      "sha256": "sha256:b9efafbc269428296404e09f9b744bb7ac5f1902e5576b04612865bb45f1a3c1"
+      "sha256": "sha256:369cb5e7eb3ae6128c545be3c0bf03e10aa3b8c57bbfa26dcc12cf58828fd3ca"
     },
     {
       "path": "lib/kbd/contract-lint.mjs",
-      "sha256": "sha256:ad74f783a145dda777ccf50c9217aa3221726bb35ebb40f742b40e629a72938b"
+      "sha256": "sha256:4ac88a19e728bebd055e53f80da068de8759e899a8dfdad457a2e1ab8ff1384f"
     },
     {
       "path": "lib/kbd/handoff/checks.mjs",
@@ -156,11 +160,15 @@
     },
     {
       "path": "lib/kbd/hook-command.mjs",
-      "sha256": "sha256:efe4442b46c6ef4b14ebc69bb05632300b7efcc15569810b61877ca30a20a1e2"
+      "sha256": "sha256:ac18960cb03bca6b586f3b9cb59bfad057f04ee968de5caac132dbc9c18919e5"
     },
     {
       "path": "lib/kbd/hooks.mjs",
-      "sha256": "sha256:d5fb1be5bb6fad8e43c54b4912d8d94b27c34a6fddba14527569cf7ea6d19f2a"
+      "sha256": "sha256:15ba41337f906ad7fa8a6d113055123da9526069a84a8a84b5fdcdf1bb434c6e"
+    },
+    {
+      "path": "lib/kbd/lifecycle-hooks.json",
+      "sha256": "sha256:942e85460c4bd7901c5e979bf6058b9f8e8ee0a004abe91d0695795484ffbf9c"
     },
     {
       "path": "lib/kbd/method-context/discover.mjs",
@@ -184,11 +192,11 @@
     },
     {
       "path": "lib/kbd/phase-close-eval.mjs",
-      "sha256": "sha256:d962fb820e2f4f04296ee36f79584a5ef571054bd420b3fec42f0743518e31ab"
+      "sha256": "sha256:27e95705ea4d08db5800a2a0162f762fdebedbc6dd522a135fb2ce35e0f1195c"
     },
     {
       "path": "lib/kbd/phase-disposition.mjs",
-      "sha256": "sha256:48ce5ebd727ceecdca0dcc86a35e802016f0a139b69554069d58437b2fff07d1"
+      "sha256": "sha256:2ddfb47ab7a3eebbdfa87da9619d2f108513d646da2d762b715abe05909397b7"
     },
     {
       "path": "lib/kbd/phase-readiness.mjs",
@@ -200,7 +208,7 @@
     },
     {
       "path": "lib/kbd/reconcile-artifacts.mjs",
-      "sha256": "sha256:2ba93e08f53edd39694a823cf0f990c0bc853d11a6fa7b065ac0a246c134817d"
+      "sha256": "sha256:fab978d98b9e92911cc814233eaed0a1e635d5ba6292f67665dc119eebd01ed3"
     },
     {
       "path": "lib/kbd/reconcile-identity.mjs",
@@ -208,7 +216,7 @@
     },
     {
       "path": "lib/kbd/reconcile-repair.mjs",
-      "sha256": "sha256:a154bbfda309eab604d7b06eaf3a055f606cce7ca59718dd4473512ae4b3870f"
+      "sha256": "sha256:c0f00cf4849fc348cefd0c438ca6eae6d1ae1ef537ba08d751fd059c5f3f1e77"
     },
     {
       "path": "lib/kbd/reconcile-state.mjs",
@@ -216,7 +224,7 @@
     },
     {
       "path": "lib/kbd/reconcile.mjs",
-      "sha256": "sha256:f66ece6856015f987d9e87c23ddad6f6ea4c8acec7b547e6ddddfc67270c1afd"
+      "sha256": "sha256:d539c4bb320b07b2031c8334847c72b073aa5ae4b1235609df5b4abcfd6697c4"
     },
     {
       "path": "lib/kbd/rollup.mjs",
@@ -236,7 +244,7 @@
     },
     {
       "path": "lib/kbd/stage-gate.mjs",
-      "sha256": "sha256:2c958efc3e04fa51042f17dfb0b94b5524e28e179da7168fa057c9242618c65a"
+      "sha256": "sha256:1b1a6d16f3cf385fef374fa32a3a57f759ee1128cabc0c08ddc91fdb81fa65f7"
     },
     {
       "path": "lib/kbd/task-identity.mjs",
@@ -328,7 +336,7 @@
     },
     {
       "path": "scripts/kbd-apply.mjs",
-      "sha256": "sha256:ebe6d34af752811b9afeaad4bae22960cbcdb2e9f827c641d45be3430856e95d"
+      "sha256": "sha256:2b8bc39d622b9056993cc3b4acbd6517f76957af73a7c8f219247c98045a943a"
     },
     {
       "path": "scripts/kbd-boundary-authorize.mjs",
@@ -336,7 +344,7 @@
     },
     {
       "path": "scripts/kbd-child-exit.mjs",
-      "sha256": "sha256:b6b9a18795944cc04ec1d212a37fc7e2409e703db2cc8ac563ddc1bc11f9c207"
+      "sha256": "sha256:818eeb40180fa06cc6e65dce5b0206aa5a51e0a5cfcf5f1de38306d9e1fe4271"
     },
     {
       "path": "scripts/kbd-closure-packet.mjs",
@@ -344,7 +352,7 @@
     },
     {
       "path": "scripts/kbd-contract-adopt.mjs",
-      "sha256": "sha256:579c7079a54fd3bb5dc86f67dbb522e45fdafa00eb7101ac1894862dc1bcc380"
+      "sha256": "sha256:3f5d9bdb32b6f40b300690e9f4a859556e0f8a96dea625d8e39d1c0205d63170"
     },
     {
       "path": "scripts/kbd-handoff.mjs",
@@ -356,31 +364,39 @@
     },
     {
       "path": "scripts/kbd-new-child.mjs",
-      "sha256": "sha256:b5e0b6e12411b32add4076460e3d8ed6329803d07481675f20bb664799fbcb43"
+      "sha256": "sha256:738cba2b292f01df802848013944b99908ab336f9f9cfe91a187c123fe43a142"
     },
     {
       "path": "scripts/kbd-new-phase.mjs",
-      "sha256": "sha256:ede1ca9b59970c3b6b1e610e2f026748178abe2d0b183e176130688758b2ba2f"
+      "sha256": "sha256:4f6e0ee82dbc7160bbc8cac2c122c55a9f850312f6363d3d7589a12d460c3126"
     },
     {
       "path": "scripts/kbd-next-child.mjs",
-      "sha256": "sha256:635f58915389d12c9b86690aa25fd010bb8fde47975fe85d02296a89a39fa033"
+      "sha256": "sha256:d6fc6539bfcf95a1ca4d839070361c86981d576c9c133103150bdcd0195c704b"
     },
     {
       "path": "scripts/kbd-next-phase.mjs",
-      "sha256": "sha256:13af978122d4544374bbef6906c87f53cc67039858d5976b8b7360b061cc0406"
+      "sha256": "sha256:e780bd3235c7c9d2220821377a66d0123864e67a8d0cef4350ea8638c7195eed"
     },
     {
       "path": "scripts/kbd-phase-close-eval.mjs",
-      "sha256": "sha256:4681d0c364710912c5c6d85eb88e9b14e9cce1ff3cf67688451197eb296aaed3"
+      "sha256": "sha256:ab343db9dd151b52ec4ffe12c538d4c602e0c6554aaba19b0c57115fe610ef40"
     },
     {
       "path": "scripts/kbd-phase-readiness-check.mjs",
       "sha256": "sha256:4b6be80dc691a11f089741f15bd927b8a247fc810e78fc7cffb67cfe3154e550"
     },
     {
+      "path": "scripts/kbd-reflection-finalize.mjs",
+      "sha256": "sha256:fb2a4ec45e2e588c7c3772812d24cfd3cb8309593d265ef4e2f5998a12ac0724"
+    },
+    {
+      "path": "scripts/kbd-reflection-writeback.mjs",
+      "sha256": "sha256:3859dd2fa3084645348c7c13e5ea3f2ec6b91f1cbac95eed0dfa6a3a563007d6"
+    },
+    {
       "path": "scripts/kbd-scope-authority-template.mjs",
-      "sha256": "sha256:ebeff86d0de0e3e37f88593794584dd4f7c078abeef15037abb70c1318a09a14"
+      "sha256": "sha256:bb665ccd37a767eb2ec5c4a77e0f0e52d9d08de4f245bcef438fcd94812c9af9"
     },
     {
       "path": "scripts/kbd-spec-delta-digest.mjs",
@@ -2116,7 +2132,7 @@
     },
     {
       "path": "skills/kbd-process-orchestrator/references/hooks.md",
-      "sha256": "sha256:5a7961a3e8fb1a7c0110be4acbae9c3a2770d56112bb39c99fef714506e9f6d7"
+      "sha256": "sha256:130de4c1007db5aeb88bedd21ce20344a4c0f3615c3cdcd4fd7a0817d562869d"
     },
     {
       "path": "skills/kbd-process-orchestrator/references/method-context.md",
@@ -2148,7 +2164,7 @@
     },
     {
       "path": "skills/kbd-reflect/SKILL.md",
-      "sha256": "sha256:4268e72b6d4ec18d8b35714e4ee9f14ee0bf7a1ce7bc3d8919ab3a39d8539253"
+      "sha256": "sha256:4503531c691ec01fb2708dab59088ef8b1ba782f61372a2ced342956f2f0c64a"
     },
     {
       "path": "skills/kbd-resume/SKILL.md",
@@ -3449,6 +3465,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -3465,6 +3482,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -3519,6 +3537,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -3533,7 +3553,7 @@
           "skills/adversarial-review/references/model-configuration.md",
           "skills/adversarial-review/references/output-contract.md"
         ],
-        "digest": "sha256:588be34356688abd6f253fb275a1c6f91168a7e5d03eff6388af56e7588afbe2"
+        "digest": "sha256:a0e6d4f2b5b96e271f0f4710eabeba5ee888010b89f3f99d573b9444107e5d71"
       }
     },
     {
@@ -3577,6 +3597,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -3593,6 +3614,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -3647,6 +3669,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -3791,7 +3815,7 @@
           "skills/agent-team-creator/tests/models-memory.integration.mjs",
           "skills/agent-team-creator/tests/state.integration.mjs"
         ],
-        "digest": "sha256:e29b3ae72b924434e44b29cb814984a9121a1ee59d2e3c1a09370e602c43cb5e"
+        "digest": "sha256:27b96dbd406e36d3f62e9355dc4cd2a67c9533c44a795e32f1a3adc4e82e7e48"
       }
     },
     {
@@ -3835,6 +3859,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -3851,6 +3876,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -3905,13 +3931,15 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/agent-team-handoff/SKILL.md",
           "skills/agent-team-handoff/agents/openai.yaml"
         ],
-        "digest": "sha256:654921f1e5abd9b4ddea9ed0844e6836302f87c824ab709b8a08bcc89abf9685"
+        "digest": "sha256:3e6271e73bcc71250f7ed3f21628b8c7ce8431a3ec318a344a23c4c4fb216ebf"
       }
     },
     {
@@ -3955,6 +3983,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -3971,6 +4000,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -4025,13 +4055,15 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/agent-team-manage/SKILL.md",
           "skills/agent-team-manage/agents/openai.yaml"
         ],
-        "digest": "sha256:730977fc662c59069b8e4ad5b0477393740caf1e2fa6ead03801d8cd4aa9d7ee"
+        "digest": "sha256:df37b4c78b29fbc098f1fbaae6f24904142b6f1a789565cb69226432534843c0"
       }
     },
     {
@@ -4075,6 +4107,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4091,6 +4124,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -4145,13 +4179,15 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/agent-team-models/SKILL.md",
           "skills/agent-team-models/agents/openai.yaml"
         ],
-        "digest": "sha256:53f421eb26070355a9a550464a1e5cec3d4d3e4cb8334d5ba3515312750b093b"
+        "digest": "sha256:9bde0779442861dd1cf95bc5ff4b9c4791e247bb869c9190ad71032ca1233dda"
       }
     },
     {
@@ -4195,6 +4231,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4211,6 +4248,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -4265,6 +4303,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -4283,7 +4323,7 @@
           "skills/android-compose-adaptive/references/android/develop/ui/compose/tooling/debug.md",
           "skills/android-compose-adaptive/references/android/guide/navigation/navigation-3/recipes/material-listdetail.md"
         ],
-        "digest": "sha256:a73ed56ac92395a150333aa74e2dc04ee8eab9e87af10df62261f7f5e2c07710"
+        "digest": "sha256:d284c4ef12c4fdd1e0ec807e9f7df6e1d1b01b2bfb1787efa7595f9bca82eb98"
       }
     },
     {
@@ -4327,6 +4367,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4343,6 +4384,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -4397,6 +4439,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -4404,7 +4448,7 @@
           "skills/android-edge-to-edge/PROVENANCE.md",
           "skills/android-edge-to-edge/SKILL.md"
         ],
-        "digest": "sha256:add4848a390164e6ee37db332c8e9f42397ccb2b0116452243729bf727c812f3"
+        "digest": "sha256:cdc226c7c9d98cbe22a1fcb046a4e6c2f11d775b717206543bd4330abc36d020"
       }
     },
     {
@@ -4448,6 +4492,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4464,6 +4509,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -4518,12 +4564,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/artifact-refiner/SKILL.md"
         ],
-        "digest": "sha256:d7d17ee50fcbd355348a21d07e6a7ab8f65f103d9877266f3f232140fa7a7096"
+        "digest": "sha256:d849db4679deb4968817e5266acaad582f692c97197d39bf47c9d124114e6535"
       }
     },
     {
@@ -4567,6 +4615,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4583,6 +4632,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -4637,13 +4687,15 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/bdd-cucumber-js/SKILL.md",
           "skills/bdd-cucumber-js/references/author-only.md"
         ],
-        "digest": "sha256:3dad047b8dc818c4db66a4ecb37a1d64c70af6543b4883e3c3a7721a4c87a1c6"
+        "digest": "sha256:42cedaac413a8d97af9534b3a7777c960d8c4a5c830f40afffc80550372fd6f3"
       }
     },
     {
@@ -4687,6 +4739,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4703,6 +4756,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -4757,6 +4811,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -4771,7 +4827,7 @@
           "skills/better-accessibility/screen-readers.md",
           "skills/better-accessibility/semantics-and-aria.md"
         ],
-        "digest": "sha256:cb57276fc26c40ecec8bb914746ba8ea4366e03bbc97c9d3b7619b3f6b8d5ac7"
+        "digest": "sha256:62432e8312cd4d432c88f161119a90ca19b7126884711dc27342612a1a778da2"
       }
     },
     {
@@ -4815,6 +4871,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4831,6 +4888,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -4885,6 +4943,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -4899,7 +4959,7 @@
           "skills/better-colors/palette-structure.md",
           "skills/better-colors/token-naming.md"
         ],
-        "digest": "sha256:22403f1a3966be959184dd603b7f29f5cc3d37e57d2598f4062fa5c11874e981"
+        "digest": "sha256:df7dd892a63da910b2c65067be93fce8973adf092fb9068c87d70c703c664c18"
       }
     },
     {
@@ -4943,6 +5003,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4959,6 +5020,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -5013,6 +5075,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -5022,7 +5086,7 @@
           "skills/better-interface/agents/openai.yaml",
           "skills/better-interface/review-format.md"
         ],
-        "digest": "sha256:84836f1bfc084fb57c068cb6c22b034f95ed9322928a2e7deeab50fcfde6bf78"
+        "digest": "sha256:fae40c68d5880374cb15b67dc23e9347ee1bb61d7653093500f0f1a5b4a49c81"
       }
     },
     {
@@ -5066,6 +5130,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5082,6 +5147,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -5136,6 +5202,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -5146,7 +5214,7 @@
           "skills/better-layout/grouping-and-alignment.md",
           "skills/better-layout/spacing-and-adaptivity.md"
         ],
-        "digest": "sha256:a2496a923eb1130e0a9d5761363b165277a099b616c0fd8b36d841d7ba7597c3"
+        "digest": "sha256:14dfdc183b3f53214b65a81d2b8e0153758894773577267589bf1a22acb061d1"
       }
     },
     {
@@ -5190,6 +5258,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5206,6 +5275,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -5260,6 +5330,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -5274,7 +5346,7 @@
           "skills/better-typography/variable-fonts-and-opentype.md",
           "skills/better-typography/wrapping-and-punctuation.md"
         ],
-        "digest": "sha256:2476e39f3aa621b6b5e29606ba85c08c2404f2967e8d0da0d2468ec277863330"
+        "digest": "sha256:2d72c1aaf1b5e09bd2b63def6b2cca14f45dd846b4f80fc1a3e882c69c53a652"
       }
     },
     {
@@ -5318,6 +5390,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5334,6 +5407,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -5388,6 +5462,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -5402,7 +5478,7 @@
           "skills/better-ui/performance.md",
           "skills/better-ui/surfaces.md"
         ],
-        "digest": "sha256:b1a838d06be9935e443456bc5b057a7be6022b9efe00acc77a0d7f113782337f"
+        "digest": "sha256:1f4f9b6f6352e240db495cd9d8387975ee5be1f87ddd5892794c993c0dcfafbb"
       }
     },
     {
@@ -5446,6 +5522,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5462,6 +5539,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -5516,6 +5594,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -5524,7 +5604,7 @@
           "skills/better-writing/SKILL.md",
           "skills/better-writing/agents/openai.yaml"
         ],
-        "digest": "sha256:cbbc5252b498f1c31aeb68f85819fd884dea53c7ba433b520f061bb0ac6abedf"
+        "digest": "sha256:4bccc56376224bc71237fdb4d6655f7fdde66cb95b1a11d02be6a067c69b8c5e"
       }
     },
     {
@@ -5568,6 +5648,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5584,6 +5665,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -5638,6 +5720,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -5647,7 +5731,7 @@
           "skills/break/agents/openai.yaml",
           "skills/break/scenarios.md"
         ],
-        "digest": "sha256:99bded5e4d4f888c6a265b9e263e29b456d8f36e6bc2490857473eae2aa09191"
+        "digest": "sha256:0fd8314fe7bc4fdff9c856c76a3a650b7b5960facb90ae286942c4daf5ac25df"
       }
     },
     {
@@ -5691,6 +5775,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5707,6 +5792,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -5761,12 +5847,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/convert-htmx-pdf/SKILL.md"
         ],
-        "digest": "sha256:e3acbabf63ccd12a97966ee53cd3890b845c816e9a28b52384b4dc2ac69ed38d"
+        "digest": "sha256:0b3f455efe9380aa5c99be2f0fc8e94059b108586a45d6f4462244d7b10e3383"
       }
     },
     {
@@ -5810,6 +5898,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5826,6 +5915,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -5880,12 +5970,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/convert-htmx-react/SKILL.md"
         ],
-        "digest": "sha256:5c8b278f48ee92a98cc4391c4ab80f90f7f94fcc37f507e5e1daba1e46eceeec"
+        "digest": "sha256:d1b23db38c566338b4a3f4cf48fb4e126c8e21f079ea79df6674f405431257d0"
       }
     },
     {
@@ -5929,6 +6021,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5945,6 +6038,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -5999,12 +6093,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/convert-md-to-htmx/SKILL.md"
         ],
-        "digest": "sha256:199e8ba6c0db78165bf237b6261dd436abfc31c726a3bee780bb1da606e78b55"
+        "digest": "sha256:7cb76d662c1ed56d9533a67dc65b0ebe8630f3b6cb8d3827fab347009da4d3bd"
       }
     },
     {
@@ -6048,6 +6144,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6064,6 +6161,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -6118,6 +6216,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -6187,7 +6287,7 @@
           "skills/delivery-cadence/scripts/publication-receipt.mjs",
           "skills/delivery-cadence/scripts/sync-mini.mjs"
         ],
-        "digest": "sha256:a5fd438f925ed9e0fb2b2180b3e375e0d8358de843177644fd78fb56bae78c7c"
+        "digest": "sha256:7f1168e5f998aa0c0aa9e6cce4ad0b325d7d40461b3ffe4cfcfd6a1204f04726"
       }
     },
     {
@@ -6231,6 +6331,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6247,6 +6348,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -6301,12 +6403,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/design-svg-logo/SKILL.md"
         ],
-        "digest": "sha256:2dd770bf45dcbf43a3e64ba799b623a09b45659bfc6fa50fba8af882cabdab6a"
+        "digest": "sha256:67d2e5b89ea665793e6466d3dadaa74e0479d9ec9044aa00055203640561c933"
       }
     },
     {
@@ -6350,6 +6454,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6366,6 +6471,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -6420,6 +6526,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -6427,7 +6535,7 @@
           "skills/design-taste-frontend-v1/PROVENANCE.md",
           "skills/design-taste-frontend-v1/SKILL.md"
         ],
-        "digest": "sha256:ae78f5c4baa50757b70bee1d5c91e8d2fcd79c3dc8ed8976a7b7d6e7c0d1c5a7"
+        "digest": "sha256:2c35b383980f3380f7468f5876c0db025ef9fdc2555d11ec2e0bc503b0732bda"
       }
     },
     {
@@ -6471,6 +6579,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6487,6 +6596,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -6541,6 +6651,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -6548,7 +6660,7 @@
           "skills/design-taste-frontend/PROVENANCE.md",
           "skills/design-taste-frontend/SKILL.md"
         ],
-        "digest": "sha256:64a9de08243a46c60a61c234c32756bdcfdd8492ff91d150edaf2a5f1897a353"
+        "digest": "sha256:4c671fc61fbd6f9b37353a7e8af7463360012dab102d320a5f271463e89c429b"
       }
     },
     {
@@ -6592,6 +6704,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6608,6 +6721,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -6662,12 +6776,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/doctor/SKILL.md"
         ],
-        "digest": "sha256:d9a2bbd24bdef350604b185f0345584f108ac46a21c91517f41d209b635973b3"
+        "digest": "sha256:f3e663a8a66b477d83731c94cc2ee7ab275070211873cf91daad81191f6e6bf8"
       }
     },
     {
@@ -6711,6 +6827,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6727,6 +6844,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -6781,6 +6899,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -6793,7 +6913,7 @@
           "skills/explain-interface/no-browser.md",
           "skills/explain-interface/read-the-system.md"
         ],
-        "digest": "sha256:96e5fc34341c12b3322e357525aeaa3a368e03487d429cf1832a5b4033494f98"
+        "digest": "sha256:2230f0ba851379ce954f13321cece43b60d9e7b8d913121490c150ac14bfae44"
       }
     },
     {
@@ -6837,6 +6957,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6853,6 +6974,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -6907,6 +7029,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -6917,7 +7041,7 @@
           "skills/expo-animation/SKILL.md",
           "skills/expo-animation/agents/openai.yaml"
         ],
-        "digest": "sha256:a670c1ecc7dbfe7b717b228edb725ca22bbf961e15b504e50454e17602907a5c"
+        "digest": "sha256:dfe6fc6b447482ce596fa74c7cb654c88b3c37cbe564742e3e28c41f789256f2"
       }
     },
     {
@@ -6961,6 +7085,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6977,6 +7102,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -7031,6 +7157,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -7041,7 +7169,7 @@
           "skills/expo-design-system/references/audit.md",
           "skills/expo-design-system/references/native-slop.md"
         ],
-        "digest": "sha256:942981ebe74c1fa40afab9f8e74b74714e611be057819b215f4374776ed7dd58"
+        "digest": "sha256:a43ff67d685bd26f2f47930ad0b8035827236052f438006c733010f39a8bc885"
       }
     },
     {
@@ -7085,6 +7213,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7101,6 +7230,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -7155,6 +7285,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -7170,7 +7302,7 @@
           "skills/expo-native-ui/references/visual-effects.md",
           "skills/expo-native-ui/references/webgpu-three.md"
         ],
-        "digest": "sha256:1871dd2a5cd320552b4fc3e334ad4394e100b729af0a5b46821179d6c26e1054"
+        "digest": "sha256:3d534736c65cff509a11b95ad5903bdcea3df96de3030eeb98385e16012375dc"
       }
     },
     {
@@ -7214,6 +7346,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7230,6 +7363,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -7284,6 +7418,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -7298,7 +7434,7 @@
           "skills/expo-router/references/toolbar-and-headers.md",
           "skills/expo-router/references/zoom-transitions.md"
         ],
-        "digest": "sha256:9b7d9319297db4bcb7b5540ad4f6b44a144a39ff5860148a99595db889cf280c"
+        "digest": "sha256:b94fc8271d8fc39f293486528508076e483a675ec3b0d6a22097750bce7ca482"
       }
     },
     {
@@ -7342,6 +7478,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7358,6 +7495,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -7412,6 +7550,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -7425,7 +7565,7 @@
           "skills/expo-ui/references/universal.md",
           "skills/expo-ui/scripts/list-components.mjs"
         ],
-        "digest": "sha256:807af7df9f533a31ab78faff915d0e3721f73f5489f430a124f5c8911c11d351"
+        "digest": "sha256:1ee049556410c43aa13d27d681e12b54bf138869a337735663fea48ff01f7b80"
       }
     },
     {
@@ -7469,6 +7609,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7485,6 +7626,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -7539,6 +7681,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -7546,7 +7690,7 @@
           "skills/flutter-build-responsive-layout/PROVENANCE.md",
           "skills/flutter-build-responsive-layout/SKILL.md"
         ],
-        "digest": "sha256:bf725825e2dd66045566e4e88de165e225689ce9b97aac4f77beaacbb62599b5"
+        "digest": "sha256:59a9cae7b73fb6c00fb3e888ef1dbdc8c1c36b11f6fcaa1ada225af405793c57"
       }
     },
     {
@@ -7590,6 +7734,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7606,6 +7751,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -7660,6 +7806,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -7667,7 +7815,7 @@
           "skills/flutter-fix-layout-issues/PROVENANCE.md",
           "skills/flutter-fix-layout-issues/SKILL.md"
         ],
-        "digest": "sha256:ebe024e225f9d50eb4b8a227e8726d1cb0761775bbf84c041427e3d6fd5da6bc"
+        "digest": "sha256:2fb95f48c717d518ee1160589b260a36901a21bb761323389d590d4c325b9fbe"
       }
     },
     {
@@ -7711,6 +7859,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7727,6 +7876,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -7781,6 +7931,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -7788,7 +7940,7 @@
           "skills/flutter-setup-declarative-routing/PROVENANCE.md",
           "skills/flutter-setup-declarative-routing/SKILL.md"
         ],
-        "digest": "sha256:3914402d5225db89c96eb53974718ba31551e3327272e95253e05e3e61aedc6b"
+        "digest": "sha256:e9f7506ae33dd073446434c824c18de0e48060f379c180f91f5f19eb10b77f6f"
       }
     },
     {
@@ -7832,6 +7984,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7848,6 +8001,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -7902,6 +8056,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -7909,7 +8065,7 @@
           "skills/flutter-setup-localization/PROVENANCE.md",
           "skills/flutter-setup-localization/SKILL.md"
         ],
-        "digest": "sha256:19ff94fce41eea39739b88a5519cd4ae465d209a0a9ecad3fb461141be7821c8"
+        "digest": "sha256:63c7bb768ce2e09c4a9ea45926410312ce3915fd39c1f6301fefe34afe329f21"
       }
     },
     {
@@ -7953,6 +8109,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7969,6 +8126,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -8023,6 +8181,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -8030,7 +8190,7 @@
           "skills/full-output-enforcement/PROVENANCE.md",
           "skills/full-output-enforcement/SKILL.md"
         ],
-        "digest": "sha256:c63227f48914d3afcca6e996c743b5623a44a79e3ad63128584988b8f0979bba"
+        "digest": "sha256:f5be57df7538e9fc8b3edd36296e471fda9962705de3bdca13273efc51657e05"
       }
     },
     {
@@ -8074,6 +8234,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8090,6 +8251,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -8144,6 +8306,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -8151,7 +8315,7 @@
           "skills/gpt-taste/PROVENANCE.md",
           "skills/gpt-taste/SKILL.md"
         ],
-        "digest": "sha256:88baa4a714b9ccab9871a9fe32d653deeba7b378e3356d5fe0411d7a78998e03"
+        "digest": "sha256:d83b10c59c97b26b065fc00937a22c416cb54de0934e2342006372813fcc5767"
       }
     },
     {
@@ -8195,6 +8359,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8211,6 +8376,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -8265,6 +8431,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -8272,7 +8440,7 @@
           "skills/high-end-visual-design/PROVENANCE.md",
           "skills/high-end-visual-design/SKILL.md"
         ],
-        "digest": "sha256:1bf7627c7a5edd6639a7d4377e2cfbe68bc0f12e38018f6fb3fd1477d2a91f36"
+        "digest": "sha256:5524ea33eb0537dd329412304044e268851d3d19b8a18da9c416a694a0bc6fa3"
       }
     },
     {
@@ -8316,6 +8484,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8332,6 +8501,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -8386,13 +8556,15 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/ideation-mindmap/SKILL.md",
           "skills/ideation-mindmap/references/harness-delivery.md"
         ],
-        "digest": "sha256:4dc5470206db1838c6fd428dfc47ae01d350b5064965080de39e888fe7002fbc"
+        "digest": "sha256:83f8265d19fb0249d391464c3cfe93c279f1d3bcb189c50c9c63d46c6b63743c"
       }
     },
     {
@@ -8436,6 +8608,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8452,6 +8625,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -8506,6 +8680,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -8513,7 +8689,7 @@
           "skills/industrial-brutalist-ui/PROVENANCE.md",
           "skills/industrial-brutalist-ui/SKILL.md"
         ],
-        "digest": "sha256:3216fae8c8e0fe762dc8fbd2cc59ab035c8300f3824033a2fa13a641c005638a"
+        "digest": "sha256:f7b4293d21fc6c7c2e5abba5790ced068b09b13a8e54de6eea198df6dd604ca4"
       }
     },
     {
@@ -8557,6 +8733,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8573,6 +8750,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -8627,6 +8805,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -8637,7 +8817,7 @@
           "skills/interface-review/removed-signals.md",
           "skills/interface-review/scope-resolution.md"
         ],
-        "digest": "sha256:96fdc31353cd453ebc957a6cf8dc427a032ffd558f110ed56dd477c16a220c39"
+        "digest": "sha256:5571b0f7b87e40e352b92a17bfffe46a19bab2de2be694127aa7c80dffe532b9"
       }
     },
     {
@@ -8681,6 +8861,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8697,6 +8878,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -8751,12 +8933,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/karpathy-progress-memory/SKILL.md"
         ],
-        "digest": "sha256:f97f8b7513016e168ad919715e1ca6ae7aedd619430c1d1318a47794713f334b"
+        "digest": "sha256:06bc7b5ca500c6ea323ca776ce692cc172c8be8cd5c5313feaa570e19ce2136c"
       }
     },
     {
@@ -8800,6 +8984,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8816,6 +9001,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -8870,12 +9056,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-analyze/SKILL.md"
         ],
-        "digest": "sha256:867ae01dd35bbe6a4820ede7fa7d6d14a0dff8dffd1784d6aa82bc88a4c07ba2"
+        "digest": "sha256:3f8bb19fec42cfce43a968544038994093a153a7c5f82f55dd8b4f36191af166"
       }
     },
     {
@@ -8919,6 +9107,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8935,6 +9124,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -8989,12 +9179,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-apply/SKILL.md"
         ],
-        "digest": "sha256:76f2f7f21128921764c5b2b7e3659d330d7b39f629764aff0156557b47cfb014"
+        "digest": "sha256:2a95174404b4a47c1b3584398708659b3ece8d6e40f9a7b5c97c619da443339e"
       }
     },
     {
@@ -9038,6 +9230,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9054,6 +9247,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -9108,12 +9302,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-assess/SKILL.md"
         ],
-        "digest": "sha256:dd8bc7f084f7eb3841f6856998ff8fafb3cbf3b8206dfca8d4a42f9f56afe4fa"
+        "digest": "sha256:37b503dba78551ff471fc55b4e20e27c75cef3ac0dfddceadf24014989cbffd7"
       }
     },
     {
@@ -9157,6 +9353,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9173,6 +9370,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -9227,12 +9425,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-audit/SKILL.md"
         ],
-        "digest": "sha256:d5b152aa472327db78203dd2deba436ddce911ff85479ffca0a3ae82233a4629"
+        "digest": "sha256:009c92ed91435bf7709f7bfdc72e1ceae89c034bef9aabd3f3ff550f76377106"
       }
     },
     {
@@ -9276,6 +9476,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9292,6 +9493,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -9346,12 +9548,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-bottleneck-detector/SKILL.md"
         ],
-        "digest": "sha256:30b43b8f083a09ecca40dcaa5400f4b858fd64868c0c2c5c7be2e7b23f7d80ee"
+        "digest": "sha256:81f32f7d13e126e6fea8feb0740328fd056399009e557b5614bdcc7fb7ee38cd"
       }
     },
     {
@@ -9395,6 +9599,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9411,6 +9616,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -9465,12 +9671,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-cancel/SKILL.md"
         ],
-        "digest": "sha256:5bd5b20c5faa2f98d3256360e8575a1ce107a81e045512e79e19d7581d6fd849"
+        "digest": "sha256:727900e2b4c4a6c9583fc12c2e710bf416e5fd4341e02a78dff0817f18a5e0f5"
       }
     },
     {
@@ -9514,6 +9722,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9530,6 +9739,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -9584,12 +9794,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-child-exit/SKILL.md"
         ],
-        "digest": "sha256:87526f744b9ace6f4ca2821fc802e9d7fa49205f7c4c4f518cbd2a8be3744f9b"
+        "digest": "sha256:eb00fcc5252b3217558ccd62780a14ef5a1359f2e02cf0327c5499d4f7e7c6b6"
       }
     },
     {
@@ -9633,6 +9845,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9649,6 +9862,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -9703,6 +9917,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -9710,7 +9926,7 @@
           "skills/kbd-evolve/references/criteria.md",
           "skills/kbd-evolve/references/landscape-research.md"
         ],
-        "digest": "sha256:66b84a244680bc494064b3c2c8a2a2a9e7680fdaf2aa55320920cef3014acc9a"
+        "digest": "sha256:81dc43c60079ad6ea01815cac054f99ad04ddc1f51fd478ff444bc34619f5cfc"
       }
     },
     {
@@ -9754,6 +9970,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9770,6 +9987,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -9824,12 +10042,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-execute/SKILL.md"
         ],
-        "digest": "sha256:4eb9abcb460a0fded2ca12c52cc5d4294cd45a22b958a48c66393d3589457b6b"
+        "digest": "sha256:b2913a53f0430d7b1ee7f5b8f9b3e8e176af485452ed678eba850bba9099331d"
       }
     },
     {
@@ -9873,6 +10093,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9889,6 +10110,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -9943,12 +10165,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-goal-check/SKILL.md"
         ],
-        "digest": "sha256:2485cc58e273e03bfec24bcd29de7bdd721db1c91d50bb82d0a37f5b3e18c1f0"
+        "digest": "sha256:1233a5798ec5ca963cdb67e1664d76709904af518c97bad722974bec13145330"
       }
     },
     {
@@ -9992,6 +10216,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10008,6 +10233,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -10062,12 +10288,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-goal/SKILL.md"
         ],
-        "digest": "sha256:9af5208c3f503b332071f42be0fd035008905bfc2a238d31631207a6c0ce139c"
+        "digest": "sha256:9dc26d1aecbc81678cfc9354e27bf91260f84f2fee167ff034f9c71ea6f8215e"
       }
     },
     {
@@ -10111,6 +10339,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10127,6 +10356,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -10181,12 +10411,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-handoff/SKILL.md"
         ],
-        "digest": "sha256:d0a488179c0d40b779371583d2fa13231e3b137a81df351594dd111ec8f91099"
+        "digest": "sha256:8de12cd16c974d09c3dffe04e5deb61db2fb4ed91abe2cfda2fc5dfceed14ee4"
       }
     },
     {
@@ -10230,6 +10462,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10246,6 +10479,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -10300,6 +10534,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -10310,7 +10546,7 @@
           "skills/kbd-init/references/workspace-context.md",
           "skills/kbd-init/scripts/kbd-init-validate.mjs"
         ],
-        "digest": "sha256:30b6359222f8ede5f34cc8f3b752dd490373a95bfcdb13775d9ce709f1ef6738"
+        "digest": "sha256:e0ca6c4fa90308250d718dd46b77f9409bfcfebdcb79d97a99b56358d94a65fb"
       }
     },
     {
@@ -10354,6 +10590,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10370,6 +10607,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -10424,6 +10662,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -10433,7 +10673,7 @@
           "skills/kbd-inject-agent-rules/references/template-agent-rules.md",
           "skills/kbd-inject-agent-rules/references/template-uiux-routing.md"
         ],
-        "digest": "sha256:2fb3018193f986441783e72fd7c2df35bf4faffd944c0837b1cd8ed72dc5a4e6"
+        "digest": "sha256:5904f338d9296af2523ad4480080e9ffe4faf05d538b62e17ae4586ada18e1db"
       }
     },
     {
@@ -10477,6 +10717,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10493,6 +10734,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -10547,12 +10789,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-loop/SKILL.md"
         ],
-        "digest": "sha256:ef359ae596841a0505a80cf45924ffb7cd8923405a8fbc8ca85c7133a95b6bb0"
+        "digest": "sha256:185c1bfb82d438047e038602831dfcefee4ed9f4ce25fc5b11352ea29f648d75"
       }
     },
     {
@@ -10596,6 +10840,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10612,6 +10857,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -10666,12 +10912,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-memory-recall/SKILL.md"
         ],
-        "digest": "sha256:de20aa6e5f5b4b41a7f0ba657f9095152cadf70d0e052292ec2cc49090af8961"
+        "digest": "sha256:0386044c336094a7110666f72c82cae6e9e4e1a2b4e62db6ac34abfb8eb3ba7f"
       }
     },
     {
@@ -10715,6 +10963,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10731,6 +10980,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -10785,12 +11035,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-new-child/SKILL.md"
         ],
-        "digest": "sha256:1d864350c227b51dbb4c5bb8a449ef6b2a675820a6cd89af1f6a217b5c512ddd"
+        "digest": "sha256:af48e7dc9de8e79e7e1a9982b563f32188d18d1e8931ce777a4d7a30a264a70b"
       }
     },
     {
@@ -10834,6 +11086,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10850,6 +11103,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -10904,12 +11158,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-new-phase/SKILL.md"
         ],
-        "digest": "sha256:23df89094c66b30d2b7c67dcebcdedc300bec2fee93f7f0c12dcfa60ee3f2438"
+        "digest": "sha256:e35965c4fce07e9f915d570ff99844aab3c69b7616c3c292b621a8a5f9f3475e"
       }
     },
     {
@@ -10953,6 +11209,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10969,6 +11226,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -11023,12 +11281,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-next-child/SKILL.md"
         ],
-        "digest": "sha256:678a523a54cd22ce0eae8ca4c6b3647cf3b16239cb79978ea9cb4adcc138bdbe"
+        "digest": "sha256:0b2fd756da92539dddaa291a660f0c07ed970a496ebd3d91d71a3d78bbb5ce11"
       }
     },
     {
@@ -11072,6 +11332,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11088,6 +11349,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -11142,12 +11404,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-next-phase/SKILL.md"
         ],
-        "digest": "sha256:fff34d51d396da6ee213175dc14032501af226f7b91a06c71d412c07f4cd43c6"
+        "digest": "sha256:9b859f1e47b600ef6a76e5d45ca87b388fecf564ea9a07571e7efb784141628c"
       }
     },
     {
@@ -11191,6 +11455,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11207,6 +11472,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -11261,12 +11527,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-pause/SKILL.md"
         ],
-        "digest": "sha256:f4436b83421ba4132e03b1fde3404e798eedd3365c43e32aa45875aea6914c63"
+        "digest": "sha256:93b58d796882ffdf43347f105e2468336939397393406d071790770106d91f5a"
       }
     },
     {
@@ -11310,6 +11578,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11326,6 +11595,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -11380,13 +11650,15 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-plan/SKILL.md",
           "skills/kbd-plan/references/task-model-selection.md"
         ],
-        "digest": "sha256:fdd9a2162d9bce1d3333e1758b923cd0d28eb006218e2aca2a2895e096ab0e17"
+        "digest": "sha256:dd7f694c8a9bba5bcdf37f28aad7b4afad50df399e594cb49ead3e6f8a58ffe8"
       }
     },
     {
@@ -11430,6 +11702,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11446,6 +11719,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -11500,6 +11774,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -11514,7 +11790,7 @@
           "skills/kbd-process-orchestrator/references/templates/acceptance.template.md",
           "skills/kbd-process-orchestrator/references/templates/adopted-contract.template.md"
         ],
-        "digest": "sha256:894b9f541ba031e5f53b569f4872026f8493ee44a8e27513b800316549aaae2d"
+        "digest": "sha256:868f803ef958794362fb4a8e2fa5ead47069318240ab445ddef246f8cae511d0"
       }
     },
     {
@@ -11522,7 +11798,7 @@
         "id": null,
         "name": "kbd-reflect",
         "version": "1.2.0",
-        "artifactDigest": "sha256:4268e72b6d4ec18d8b35714e4ee9f14ee0bf7a1ce7bc3d8919ab3a39d8539253"
+        "artifactDigest": "sha256:4503531c691ec01fb2708dab59088ef8b1ba782f61372a2ced342956f2f0c64a"
       },
       "entrypoint": "skills/kbd-reflect/SKILL.md",
       "roots": [
@@ -11558,6 +11834,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11574,6 +11851,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -11628,12 +11906,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-reflect/SKILL.md"
         ],
-        "digest": "sha256:22bcb6a3a0fe1305f377afa3751b56a331d225dbeedcd19fcb10ff48e481902e"
+        "digest": "sha256:79e452a0708de42e23302b6a8db687a696229fc75ba2e5680eba1d13240119e3"
       }
     },
     {
@@ -11677,6 +11957,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11693,6 +11974,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -11747,12 +12029,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-resume/SKILL.md"
         ],
-        "digest": "sha256:498941e6e60636539fe1e8dcffd62ed67e2ac079f6f6ab1c871f97a4973b42a7"
+        "digest": "sha256:122d0186492875217cc4eab8d6ec6df46ac6a92f921dbce240bf6ab6b3d45cfc"
       }
     },
     {
@@ -11796,6 +12080,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11812,6 +12097,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -11866,12 +12152,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-spec/SKILL.md"
         ],
-        "digest": "sha256:6babe91161c8f7612956638559abaad3dc1104d50f682ca1836b4233dd8b91ea"
+        "digest": "sha256:ddb30debe81633ed0c847d593a1adfa2a904406e6babbefb20a30d35fe9fc704"
       }
     },
     {
@@ -11915,6 +12203,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11931,6 +12220,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -11985,12 +12275,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/kbd-status/SKILL.md"
         ],
-        "digest": "sha256:f33749c5e0d1ca448b0d740641d43e8dad7291fec5900824f1213901db1beaad"
+        "digest": "sha256:b53c8cff98eeda56e86387886a1974107e5832e855c7e894b1f32d65ed324d55"
       }
     },
     {
@@ -12034,6 +12326,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12050,6 +12343,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -12104,6 +12398,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -12111,7 +12407,7 @@
           "skills/minimalist-ui/PROVENANCE.md",
           "skills/minimalist-ui/SKILL.md"
         ],
-        "digest": "sha256:dd760029a9bb2cd9cb948b4f5fac948da0f7001e1f7dfbbe0cbf576e404400b6"
+        "digest": "sha256:adbe21c2142444d4bfd7e1101ad3090cd63d5afcecc85366628a3adb3d321c46"
       }
     },
     {
@@ -12155,6 +12451,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12171,6 +12468,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -12225,6 +12523,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -12233,7 +12533,7 @@
           "skills/prometheus-context-bootstrap/references/rules-rust.md",
           "skills/prometheus-context-bootstrap/references/rules-typescript.md"
         ],
-        "digest": "sha256:b8a24b3e415008b9834a7209c76cb62d7744d057ad8ee05497fc719003d4ad71"
+        "digest": "sha256:5c66a2fe3889bf8427659e457d0cd2c493da90410a112a7b96fe4e40d67a88a9"
       }
     },
     {
@@ -12277,6 +12577,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12293,6 +12594,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -12347,6 +12649,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -12355,7 +12659,7 @@
           "skills/prometheus-impeccable-core/references/impeccable-context-and-modes.md",
           "skills/prometheus-impeccable-core/references/impeccable-craft-floor.md"
         ],
-        "digest": "sha256:bbe5d3b28bee527d4bdcff1c07340d7b75fc793b3a97f18c4fd9055e3eb9e341"
+        "digest": "sha256:ec7cb5327b0b8e17d083cb7ee8e437d9f57542e704f4e2d79f19876406811287"
       }
     },
     {
@@ -12399,6 +12703,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12415,6 +12720,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -12469,6 +12775,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -12476,7 +12784,7 @@
           "skills/prometheus-rust-workspace/references/phase-gated-verification.md",
           "skills/prometheus-rust-workspace/references/skill-routing.md"
         ],
-        "digest": "sha256:8df615c8854262e4313d260f0ee73b89caaccef7cf876140cbe035bbd297c226"
+        "digest": "sha256:4bb14b8d48d4b2ea51634848fdfc9f9a4ab05db6613c8c3d5fb9e6e27eb485c0"
       }
     },
     {
@@ -12520,6 +12828,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12536,6 +12845,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -12590,12 +12900,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/prometheus-ui-review/SKILL.md"
         ],
-        "digest": "sha256:5f908d525216911428afdb088313ce04131a90605b34b41156a4cda1054031a2"
+        "digest": "sha256:327a0ce1f697ff4c076ef8b4892a47d40c8fff4765aa52bc3c4eb0a7baae7287"
       }
     },
     {
@@ -12639,6 +12951,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12655,6 +12968,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -12709,6 +13023,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -12727,7 +13043,7 @@
           "skills/prometheus-ui-ux/scripts/install.mjs",
           "skills/prometheus-ui-ux/scripts/routing.mjs"
         ],
-        "digest": "sha256:76684c93a34dc8dbe64a559916c238343083c2b7696f2ceb7a16abcdadf8ffd6"
+        "digest": "sha256:b38012475acc23c6f34c1cec7608db49de762c16ee417206afda1ac5a53566c3"
       }
     },
     {
@@ -12771,6 +13087,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12787,6 +13104,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -12841,12 +13159,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/rebrand-artifact/SKILL.md"
         ],
-        "digest": "sha256:e9f8f3698882ccf5daa587cfc79c9ac9ec10eb7da52d3957b0cad7f70f26b9d8"
+        "digest": "sha256:8cfe66decdf4c2132b33bba985c1066037997a368e573acbb6a7bb5b4d5d1057"
       }
     },
     {
@@ -12890,6 +13210,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12906,6 +13227,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -12960,6 +13282,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -12967,7 +13291,7 @@
           "skills/redesign-existing-projects/PROVENANCE.md",
           "skills/redesign-existing-projects/SKILL.md"
         ],
-        "digest": "sha256:6555ec5cdb8e21e8653d1b0c8e7a186bc8958b196abc360e3b8a55c23ea03a53"
+        "digest": "sha256:5426f02d6da606ec43f358d06e631b2cb00e6d1d7a16dabdb4121a9202b47bae"
       }
     },
     {
@@ -13011,6 +13335,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13027,6 +13352,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -13081,12 +13407,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-a2ui/SKILL.md"
         ],
-        "digest": "sha256:6b2fdc730e34a37e3a7865819ce00eb81759f228022aac7844a5cbadf6422baa"
+        "digest": "sha256:6a6d53aae13fe6b9edf255a7f907abda1675e1dd704748553288fb9b61355e0a"
       }
     },
     {
@@ -13130,6 +13458,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13146,6 +13475,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -13200,12 +13530,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-content/SKILL.md"
         ],
-        "digest": "sha256:3ba5a20f1ae84903743d88ce357c758a48e09b36053ce3cd8207c2120f06a4f3"
+        "digest": "sha256:2ea8112d1e68cc44a9aa0bd83edd265d39424f97e8b6d4cce970fea627903744"
       }
     },
     {
@@ -13249,6 +13581,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13265,6 +13598,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -13319,12 +13653,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-image/SKILL.md"
         ],
-        "digest": "sha256:01deeb1e74a772e372f631a26deb9ff8902d8dfcbc8449c93ac29d342aeacc08"
+        "digest": "sha256:2d595aefab19590763e5df102e0cbfe145b82e7ab344b8f38bf8c545efce07f7"
       }
     },
     {
@@ -13368,6 +13704,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13384,6 +13721,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -13438,12 +13776,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-logo/SKILL.md"
         ],
-        "digest": "sha256:e03803baedc0d96c9acf05a8f9dbd8b5f80d2dbaeca42022f087c727c44251f9"
+        "digest": "sha256:3c193b3cf75157e883b65894e800373e2418ef7aae79cb5f0c54dd90e44baa7f"
       }
     },
     {
@@ -13487,6 +13827,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13503,6 +13844,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -13557,12 +13899,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-mcp-ui/SKILL.md"
         ],
-        "digest": "sha256:391d13de90d5d9da1022a133dfff0fc6df294cc138c0bbaefae572de662eb981"
+        "digest": "sha256:1f0e46d7fb786592af83aa8619dd87a8d80b147a7b8f23380cf8163a8f927832"
       }
     },
     {
@@ -13606,6 +13950,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13622,6 +13967,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -13676,12 +14022,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-moodboard/SKILL.md"
         ],
-        "digest": "sha256:a567a6a71e85862a9fceea1296430923a7824e2bc3cb5ae7708271b1b9457eeb"
+        "digest": "sha256:06a12a117d0141502a5bee67696a47da40c9c734beaf43adecc37941d8cee82a"
       }
     },
     {
@@ -13725,6 +14073,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13741,6 +14090,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -13795,12 +14145,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-status/SKILL.md"
         ],
-        "digest": "sha256:dceab0b7a6fdd798d8e7a24d0bffdc436684cb82d29b8806a79982dd8cdf71ce"
+        "digest": "sha256:9cbc41cda65879a06352ced6bee1e3fbc7c067223820b26ed53ea5c18a7473a1"
       }
     },
     {
@@ -13844,6 +14196,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13860,6 +14213,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -13914,12 +14268,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-ui/SKILL.md"
         ],
-        "digest": "sha256:feaa3a783265c9b9bd6b97183e1a357ad0f7145d6d478aaa625b67cc577c4439"
+        "digest": "sha256:bc4bb198abaf724297347213c0ac7f46ba51f9d7894dedf1a360bae2ece0086f"
       }
     },
     {
@@ -13963,6 +14319,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13979,6 +14336,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -14033,12 +14391,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/refine-validate/SKILL.md"
         ],
-        "digest": "sha256:d260b15be4de9f2332e0063c5e90d19bad93a5b4b8d716122856f55a1dbf4ae1"
+        "digest": "sha256:14419f82ea748e043bdaa67a618bcd78bb98729a3162f4f2b4e3d35010b7ee9e"
       }
     },
     {
@@ -14082,6 +14442,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14098,6 +14459,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -14152,13 +14514,15 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/rust-async-patterns/SKILL.md",
           "skills/rust-async-patterns/references/details.md"
         ],
-        "digest": "sha256:840c66c77fe61119f08b03f1695ea904123d59ac763e28c48fa0a10a2259d315"
+        "digest": "sha256:db7eeeb87796352fa10368f610eda90924575da2bde9d23a468ec51665b6b4c8"
       }
     },
     {
@@ -14202,6 +14566,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14218,6 +14583,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -14272,6 +14638,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -14286,7 +14654,7 @@
           "skills/rust-best-practices/references/chapter_08.md",
           "skills/rust-best-practices/references/chapter_09.md"
         ],
-        "digest": "sha256:0d0b3fc868bef4c6939417fe214d38c135526cdb2f4d0457a06ab0b625582446"
+        "digest": "sha256:07bc33667f08104a9455b4a383b0cff3e9b0f7966b6d8202711ad846192cbb62"
       }
     },
     {
@@ -14330,6 +14698,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14346,6 +14715,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -14400,13 +14770,15 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/rust-mcp-server-generator/SKILL.md",
           "skills/rust-mcp-server-generator/references/generator.md"
         ],
-        "digest": "sha256:fd5cf6a5ab27c5e6811e57500c05f99b6323e486c79160573842ca2fbf5c69ec"
+        "digest": "sha256:3f009e66ec9b9e0b9670a90f767d1a76036528f365217242cd37b4bce6edbb0d"
       }
     },
     {
@@ -14450,6 +14822,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14466,6 +14839,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -14520,12 +14894,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/scaffold-flutter-a2ui/SKILL.md"
         ],
-        "digest": "sha256:4094e550ddc02e8332e73cd4a0d914029caee1afb94e9dacf6a6d26ff5f028b0"
+        "digest": "sha256:cbf53d39e92309287ce1bbd1a8f51e539280d123831091bc5fe547747b025e7c"
       }
     },
     {
@@ -14569,6 +14945,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14585,6 +14962,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -14639,12 +15017,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-a2ui/SKILL.md"
         ],
-        "digest": "sha256:7403d6dbc1bbc890a2d310c943686df8c24911fa56ea4c3224980b0c56e177cd"
+        "digest": "sha256:093ecabb210543f480c058e36e193719b83dc4fe1c1f42a39b023a8ba72ee227"
       }
     },
     {
@@ -14688,6 +15068,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14704,6 +15085,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -14758,12 +15140,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-agui/SKILL.md"
         ],
-        "digest": "sha256:a4f033f45c229dc0cbf9d73474ff0d60fbc0c4af178297da25c81616dbe7227b"
+        "digest": "sha256:f9d6d44454c475b3c5d70fb3e7d6f29abea3f85895517fd84de18e6565a48187"
       }
     },
     {
@@ -14807,6 +15191,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14823,6 +15208,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -14877,12 +15263,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-tauri/SKILL.md"
         ],
-        "digest": "sha256:865294a47f7bab95327f56b10945551d607fa8fd69cc43e1bd7ee4bf9431dbd7"
+        "digest": "sha256:fae0a649e9485c06237f3b5d27a7ffbd79e9388dd956990cb3d3de6abe897a29"
       }
     },
     {
@@ -14926,6 +15314,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14942,6 +15331,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -14996,12 +15386,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite/SKILL.md"
         ],
-        "digest": "sha256:404117d5eb30a5b20be83a10b42fcd08810766119b410785102459daa87d4150"
+        "digest": "sha256:5e48f285041de4d66fbfb8a0681ee442b33fc38dd7736fe61c48f3cf1df797b2"
       }
     },
     {
@@ -15045,6 +15437,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15061,6 +15454,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -15115,6 +15509,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -15129,7 +15525,7 @@
           "skills/skill-certification/scripts/run-evals.mjs",
           "skills/skill-certification/scripts/summarize-evals.mjs"
         ],
-        "digest": "sha256:311683922784946b6e4cf1fb36ec51f3c8a0e6772ac59d2a3fb78e4aa542801a"
+        "digest": "sha256:da6d32fb8259dc1cd0dbcf9d6d9d16dcea536562a67d8eb7343fc44d244dbfcb"
       }
     },
     {
@@ -15173,6 +15569,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15189,6 +15586,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -15243,6 +15641,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -15251,7 +15651,7 @@
           "skills/stitch-design-taste/PROVENANCE.md",
           "skills/stitch-design-taste/SKILL.md"
         ],
-        "digest": "sha256:46327bc30cb3e58bedefe8198d8004e0bfa3455f36ef849efae3c127cd83cb8f"
+        "digest": "sha256:5382b97dda2b335b4c819f2461d51d29d95b371cc033db7836984d17fe50ded6"
       }
     },
     {
@@ -15295,6 +15695,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15311,6 +15712,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -15365,6 +15767,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -15384,7 +15788,7 @@
           "skills/swiftui-pro/references/swift.md",
           "skills/swiftui-pro/references/views.md"
         ],
-        "digest": "sha256:9418073a620acaee58e9394722c44501b2cf83c289f0426b14c957900de20251"
+        "digest": "sha256:9d713eaa5d34cb958669ce8f3b1116b85ecf07f86f76b2748309e522ab24d210"
       }
     },
     {
@@ -15428,6 +15832,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15444,6 +15849,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -15498,6 +15904,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -15569,7 +15977,7 @@
           "skills/ui-ux-pro-max/scripts/reasoning.mjs",
           "skills/ui-ux-pro-max/scripts/search.mjs"
         ],
-        "digest": "sha256:0299cc7da79b30ef158e2b72b9f9df0fa9c463cfc4950e456d6734a6ab7aa334"
+        "digest": "sha256:84d0d5ffc39203af4cd02b10dc839c6803090527e3875bc77989828234a47114"
       }
     },
     {
@@ -15613,6 +16021,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15629,6 +16038,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -15683,12 +16093,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/value-scenario-discovery/SKILL.md"
         ],
-        "digest": "sha256:4aaf7e7c3591c79d0da07bb0cb63e25acd9b56ca37d6b80939e6f8182f502b01"
+        "digest": "sha256:18255cacc2a1150078b591863091577ac17899dbf0ce70e5ce57d8d5d6498edc"
       }
     },
     {
@@ -15732,6 +16144,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15748,6 +16161,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -15802,12 +16216,14 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
           "skills/value-scenario-verify/SKILL.md"
         ],
-        "digest": "sha256:3f7f80d925684bb8e4ab73ec14e711dcc96df365896a85b58554b58d579e6336"
+        "digest": "sha256:933f6b59c51cfaf28549880556fd5e0422d84a75fd076a6edba79d06ab0dfb02"
       }
     },
     {
@@ -15851,6 +16267,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15867,6 +16284,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -15921,6 +16339,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -15930,7 +16350,7 @@
           "skills/variant/agents/openai.yaml",
           "skills/variant/picker.md"
         ],
-        "digest": "sha256:fc22e797a41351dee02492e07adde9f36bfd3535da1bb12906f42dccbad4fc76"
+        "digest": "sha256:d0591c9fe5b69d3fa0e5ed8c9b77a6bf80b0318a33a5df6b94b80ba5a092cd89"
       }
     },
     {
@@ -15974,6 +16394,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15990,6 +16411,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -16044,6 +16466,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -16064,7 +16488,7 @@
           "skills/vercel-composition-patterns/rules/state-decouple-implementation.md",
           "skills/vercel-composition-patterns/rules/state-lift-state.md"
         ],
-        "digest": "sha256:9ed5451759e41b27522b14f4c66fe2fa8d6f4308d6e2fd86b8dd9a646fbc4b02"
+        "digest": "sha256:f0ab41c8bd709d79bf9dc02ad59fab7e2a35b9f6f91938e72408227cf5196401"
       }
     },
     {
@@ -16108,6 +16532,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -16124,6 +16549,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -16178,6 +16604,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -16260,7 +16688,7 @@
           "skills/vercel-react-best-practices/rules/server-parallel-nested-fetching.md",
           "skills/vercel-react-best-practices/rules/server-serialization.md"
         ],
-        "digest": "sha256:3e536560371e677cfa746c08a9a7ff216e9086184ebdae24cac7a1da184ba610"
+        "digest": "sha256:9df46362ab4e6e7f33eb4673a43e676f20104211a3bca63a3dd04805998d2fd8"
       }
     },
     {
@@ -16304,6 +16732,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -16320,6 +16749,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -16374,6 +16804,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -16422,7 +16854,7 @@
           "skills/vercel-react-native-skills/rules/ui-scrollview-content-inset.md",
           "skills/vercel-react-native-skills/rules/ui-styling.md"
         ],
-        "digest": "sha256:18b37cd659adcd66e9553f6bf21d93dd7352bc4f0859ffc2349a74d7aa949153"
+        "digest": "sha256:2bf541f1dff2bd4c9efe22e0627fd621cda3beace9e5acf0d931c111f924c171"
       }
     },
     {
@@ -16466,6 +16898,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -16482,6 +16915,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -16536,6 +16970,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -16544,7 +16980,7 @@
           "skills/vlbv/references/requirements.md",
           "skills/vlbv/references/supersession.template.md"
         ],
-        "digest": "sha256:9ce7fd0230d73e8b518b70775f76a43c957e5a9072cd889b34c2b2a18c37185b"
+        "digest": "sha256:0fdeb916f8677975b59550889e0ccccab5a63e90cf5fc71d88f7e168dcf31113"
       }
     },
     {
@@ -16588,6 +17024,7 @@
           "lib/karpathy/transport.mjs",
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
+          "lib/kbd/after-hooks.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -16604,6 +17041,7 @@
           "lib/kbd/harness-profiles.mjs",
           "lib/kbd/hook-command.mjs",
           "lib/kbd/hooks.mjs",
+          "lib/kbd/lifecycle-hooks.json",
           "lib/kbd/method-context/discover.mjs",
           "lib/kbd/method-context/index.mjs",
           "lib/kbd/method-context/paths.mjs",
@@ -16658,6 +17096,8 @@
           "scripts/kbd-next-phase.mjs",
           "scripts/kbd-phase-close-eval.mjs",
           "scripts/kbd-phase-readiness-check.mjs",
+          "scripts/kbd-reflection-finalize.mjs",
+          "scripts/kbd-reflection-writeback.mjs",
           "scripts/kbd-scope-authority-template.mjs",
           "scripts/kbd-spec-delta-digest.mjs",
           "scripts/record-progress.mjs",
@@ -16667,9 +17107,9 @@
           "skills/web-design-guidelines/references/LICENSE.web-interface-guidelines",
           "skills/web-design-guidelines/references/web-interface-guidelines.md"
         ],
-        "digest": "sha256:a134dcab0aafa5d963a16a7ae2a6689d050b8bfc55865526e919659f61bdf49e"
+        "digest": "sha256:df4e7d7986b9f79be245679bf0db20d649b14b3d0f0787cbc02f6ab960903efd"
       }
     }
   ],
-  "inventoryDigest": "sha256:94aad27151ddce9f61f7c24c642014c4f905d2da8f87561a9178b22185d891d3"
+  "inventoryDigest": "sha256:9da1fd1fa3ebd708d463c261bb404c136896e69f7b4b433b0c8d5917cd35facf"
 }

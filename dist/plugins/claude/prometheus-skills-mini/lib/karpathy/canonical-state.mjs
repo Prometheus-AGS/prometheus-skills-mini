@@ -63,6 +63,7 @@ const fromCli = ({ root, env, spawn }) => {
     activePath: { phaseId: text(active.phaseId), changeId: text(active.changeId), taskId: text(active.taskId) },
     exactNextWork: text(status.exactNextWork),
     phases: isObject(status.phases) ? status.phases : {},
+    terminalPhases: status.phaseClosure?.phases ?? {},
   };
 };
 

@@ -1,0 +1,19 @@
+{
+  "hooks": [
+    {
+      "id": "memory-reflection-writeback",
+      "event": "reflect:after",
+      "action": { "command": "node", "args": ["${KBD_PACK_ROOT}/scripts/kbd-reflection-writeback.mjs"], "timeout": 15, "on_failure": "warn" }
+    },
+    {
+      "id": "karpathy-progress-phase-boundary",
+      "event": "phase:after",
+      "action": { "command": "node", "args": ["${KBD_PACK_ROOT}/scripts/record-progress.mjs", "--from-hook", "--boundary", "phase"], "timeout": 15, "on_failure": "warn" }
+    },
+    {
+      "id": "method-context-phase-after",
+      "event": "phase:after",
+      "action": { "command": "node", "args": ["${KBD_PACK_ROOT}/scripts/kbd-method-context.mjs", "--phase", "${KBD_HOOK_NAME}", "--write"], "timeout": 30, "on_failure": "warn" }
+    }
+  ]
+}

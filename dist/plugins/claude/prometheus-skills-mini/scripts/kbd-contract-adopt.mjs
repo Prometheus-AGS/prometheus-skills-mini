@@ -10,7 +10,7 @@
 //       [--owner-decision <decision-id>] [--lint-only]
 //
 // --lint-only runs structural validation and the adoption lint (lib/kbd/contract-lint.mjs) only:
-// no canonical read or write, usable outside a KBD project (exit 0 clean, 2 defects).
+// reads canonical status when available and discloses skipped offline owner-task checks.
 // --owner-decision names the recorded canonical decision that resolves an unresolved CRITICAL
 // review finding on acceptance content (.kbd-orchestrator/phases/<id>/review/contract/findings.json).
 //

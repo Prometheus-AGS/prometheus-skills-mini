@@ -38,7 +38,7 @@ function phaseCounts(phase, progress) {
 export async function scanReconcile(root, requested, { readCanonical, resolveIdentity = resolveRuntimeTaskId } = {}) {
   const drift = [];
   const errors = [];
-  const context = { root, artifacts: {}, repairs: [] };
+  const context = { root, artifacts: {}, repairs: [], checkboxRepairs: [] };
   let phase = requested ?? '';
   try {
     const waypoint = readJson(path.join(root, '.kbd-orchestrator', 'current-waypoint.json'));
@@ -50,6 +50,14 @@ export async function scanReconcile(root, requested, { readCanonical, resolveIde
     const progressFile = path.join(context.directory, 'progress.json');
     const progress = readJson(progressFile);
     if (!Array.isArray(progress.changes)) throw new Error('invalid phase progress changes');
+    const ledgerTasks = state && Object.values(state.phases[phase]?.changes ?? {}).flatMap(change => Object.values(change.tasks ?? {}));
+    context.taskCounts = {
+      runtime: ledgerTasks ? { completed: ledgerTasks.filter(task => complete(task.status)).length, total: ledgerTasks.length } : null,
+      projection: progress.changes.reduce((sum, row) => ({
+        completed: sum.completed + Number(row.tasks_done ?? 0), total: sum.total + Number(row.tasks_total ?? 0),
+      }), { completed: 0, total: 0 }),
+      backend: { completed: 0, total: 0 },
+    };
     const rows = progressRowsById(phase, progress.changes);
     if (state) assertCanonicalIdentity(phase, state);
     const projectFile = path.join(root, '.kbd-orchestrator', 'project.json');
@@ -72,6 +80,8 @@ export async function scanReconcile(root, requested, { readCanonical, resolveIde
         const { tasks, archived } = artifact;
         const total = tasks.length;
         const bcomp = tasks.filter((task) => task.done).length;
+        context.taskCounts.backend.completed += bcomp;
+        context.taskCounts.backend.total += total;
         const add = (task, kind, title = task.title) => drift.push({ change, task: task.id, sequence: task.sequence, total, kind, title });
         if (state) {
           const registered = ledger?.tasks ?? {};
@@ -94,7 +104,13 @@ export async function scanReconcile(root, requested, { readCanonical, resolveIde
               // Repair drives kbd-apply by backend name; mini's kbd-apply does not resolve retired aliases,
               // so drift behind an alias is reported and left for the signed-identity workflow.
               if ((kind === 'ledger-pending' || kind === 'ledger-missing') && backendChange === change) context.repairs.push({ change, ...task, total, runtimeId: id, status });
-            } else if (!task.done && complete(status)) add(task, 'ledger-ahead');
+            } else if (!task.done && complete(status)) {
+              add(task, 'ledger-ahead');
+              if (artifact.backend === 'openspec' && !archived && backendChange === change &&
+                  registered[id].title?.trim() === task.title && tasks.filter(row => row.title === task.title).length === 1) {
+                context.checkboxRepairs.push({ change, ...task, runtimeId: id });
+              }
+            }
           }
           for (const [id, task] of Object.entries(registered)) {
             if (!mapped.has(id) && !cancelled(task.status)) add({ id, sequence: task.sequence ?? 0, title: task.title ?? id }, 'ledger-only');
@@ -121,7 +137,7 @@ export async function scanReconcile(root, requested, { readCanonical, resolveIde
         kind: state ? 'projection' : 'phase-count', title: `phase implementation counts must match change ledger ${counts.completed}/${counts.total}` });
     }
   } catch (error) { errors.push(errorRow(error instanceof IdentityError ? 'identity' : 'scan', error.message)); }
-  return { report: result(phase, drift, errors), context };
+  return { report: { ...result(phase, drift, errors), taskCounts: context.taskCounts ?? null }, context };
 }
 
 export async function reconcile(root, options, adapters) {
@@ -139,6 +155,9 @@ export async function reconcile(root, options, adapters) {
     if (context.authoritative) {
       // Multiple backend rows mapping to one identity are never independently repairable.
       const ambiguousChanges = new Set(scanned.report.drift.filter((row) => row.kind === 'unmappable').map((row) => row.change));
+      for (const task of context.checkboxRepairs) {
+        if (!ambiguousChanges.has(task.change)) await adapters.repairCheckbox(root, context.phase, task);
+      }
       for (const task of context.repairs) {
         if (ambiguousChanges.has(task.change)) continue;
         await adapters.repairTask(root, context.phase, task);

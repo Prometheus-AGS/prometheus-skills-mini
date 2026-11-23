@@ -86,10 +86,17 @@ export function buildClosure({ contract = {}, evidence = {}, evidencePath, phase
  * Write closure.json and closure-packet.md into `phaseDir`. `snapshotPath` is the verified bound
  * contract snapshot. Returns { closure } — callers treat a throw as a visible warning only.
  */
-export function writeClosurePacket({ snapshotPath, evidencePath, phaseDir, projectRoot, disposition, reason, now }) {
+export function writeClosurePacket({ snapshotPath, evidencePath, phaseDir, projectRoot, disposition, reason, now, operatorExit }) {
   const contract = readJson(snapshotPath) ?? {};
   const evidence = readJson(evidencePath) ?? {};
   const closure = buildClosure({ contract, evidence, evidencePath, phaseDir, projectRoot, disposition, reason, now });
+  if (operatorExit) {
+    closure.operatorExit = operatorExit;
+    closure.contractDigest = operatorExit.boundContractDigest;
+    for (const row of closure.scenarios) {
+      row.verdict = operatorExit.exercised.find((item) => item.id === row.id)?.verdict ?? 'WITHDRAWN';
+    }
+  }
   mkdirSync(phaseDir, { recursive: true });
   atomicWrite(path.join(phaseDir, 'closure.json'), `${JSON.stringify(closure, null, 2)}\n`);
   atomicWrite(path.join(phaseDir, 'closure-packet.md'), renderClosurePacket(closure, contract.releaseClaim ?? {}));

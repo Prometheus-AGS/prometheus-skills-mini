@@ -14,11 +14,12 @@ import { spawnExecutable } from '../lib/platform/spawn.mjs';
 import { atomicWrite } from '../lib/platform/atomic-write.mjs';
 import { isRuntimeAuthoritative } from '../lib/kbd/runtime-authority.mjs';
 import { isBottleneckActive, evaluateBottleneck, bottleneckSignalText } from '../lib/kbd/bottleneck-guard.mjs';
-import { hooksFire } from '../lib/kbd/hooks.mjs';
+import { fireAfter } from '../lib/kbd/after-hooks.mjs';
+import { miniPackRoot, hooksFire } from '../lib/kbd/hooks.mjs';
 import { kbdExistingPathTokens, kbdNodeDir, kbdNodeChain } from '../lib/kbd/waypoint.mjs';
 import { rollupChain } from '../lib/kbd/rollup.mjs';
 import { runHookCommand } from '../lib/kbd/hook-command.mjs';
-import { readDisposition } from '../lib/kbd/phase-disposition.mjs';
+import { isClosed, readDisposition } from '../lib/kbd/phase-disposition.mjs';
 
 function die(message) {
   process.stderr.write(`kbd-child-exit: ${message}\n`);
@@ -128,7 +129,7 @@ async function runExit(waypoint) {
   writeHandoffOut(childDir, kbdNodeChain(tokens), status, parentLabel);
 
   const runtimeAuthoritative = isRuntimeAuthoritative('.');
-  const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? '.';
+  const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? miniPackRoot;
   const hookCtx = { orchestratorRoot, cwd: '.', runCommand: runHookCommand, phasePath: childName, sourceTool: 'kbd-child-exit' };
 
   if (runtimeAuthoritative) {
@@ -146,7 +147,7 @@ async function runExit(waypoint) {
     const childDisposition = readDisposition({ root: '.', phase: childRuntimeId });
     if (childDisposition.status !== 0) die(childDisposition.stderr);
     if (childDisposition.json.contractBound) {
-      if (childDisposition.json.disposition !== 'CLOSED') {
+      if (!isClosed(childDisposition.json.disposition)) {
         process.stderr.write(
           `kbd-child-exit: NOT-CLOSED: contract-bound child ${childRuntimeId} is ${childDisposition.json.disposition}; ` +
             `run node scripts/kbd-phase-close-eval.mjs --phase ${childRuntimeId} first\n`,
@@ -170,11 +171,8 @@ async function runExit(waypoint) {
         if (post.status !== 0) die('child phase completion postcommit evaluation blocked');
         process.stdout.write(`${bottleneckSignalText(post.stdout)}\n`);
       }
-    }
-    try {
-      await hooksFire('phase', 'after', childRuntimeId, depth, depth, hookCtx);
-    } catch {
-      warn('phase:after hook fire failed');
+      await fireAfter({ root: '.', phase: childRuntimeId, kind: 'phase', view: childDisposition.json, state,
+        runId: state.runId, sourceTool: 'kbd-child-exit' });
     }
 
     const ancestorArgs = (state.activePath.phasePath ?? [])

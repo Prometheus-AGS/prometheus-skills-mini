@@ -25,7 +25,7 @@ import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { atomicWrite } from '../platform/atomic-write.mjs';
 import { phaseReadiness } from './phase-readiness.mjs';
-import { readDisposition } from './phase-disposition.mjs';
+import { isClosed, readDisposition } from './phase-disposition.mjs';
 import { isRuntimeAuthoritative } from './runtime-authority.mjs';
 
 const STAGE_ORDER = ['assess', 'analyze', 'spec', 'plan', 'execute', 'reflect'];
@@ -220,7 +220,7 @@ function validateHandoff(handoffFile, prev, phaseDir, forStage, ctx) {
     // repair dispatch. Under canonical runtime authority an unreadable disposition blocks.
     const dispositionFile = ctx.dispositionFile ?? ctx.env?.KBD_PHASE_DISPOSITION_FILE ?? null;
     const disposition = readDisposition({ root: gateRoot, phase: workedPhase, dispositionFile, spawn: ctx.spawn });
-    if (disposition.status === 0 && disposition.json.disposition === 'CLOSED') {
+    if (disposition.status === 0 && isClosed(disposition.json.disposition)) {
       return fail(
         `kbd_stage_gate: execute blocked — phase ${workedPhase} is CLOSED in canonical state (typed phase disposition).\n` +
           'A closed phase receives no further dispatch. A successor starts only with a signed start-successor authorization (kbd-next-phase --authorize-successor).\n',

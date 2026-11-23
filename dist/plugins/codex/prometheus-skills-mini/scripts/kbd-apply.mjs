@@ -28,7 +28,7 @@ import { atomicWrite } from '../lib/platform/atomic-write.mjs';
 import { isRuntimeAuthoritative } from '../lib/kbd/runtime-authority.mjs';
 import { resolveRuntimeTaskId } from '../lib/kbd/task-identity.mjs';
 import { isBottleneckActive, evaluateBottleneck, bottleneckSignalText } from '../lib/kbd/bottleneck-guard.mjs';
-import { hooksFire } from '../lib/kbd/hooks.mjs';
+import { miniPackRoot, hooksFire } from '../lib/kbd/hooks.mjs';
 import { kbdCurrentNodeDir } from '../lib/kbd/waypoint.mjs';
 import { runHookCommand } from '../lib/kbd/hook-command.mjs';
 import { detectBackend, specEngines } from '../lib/kbd/spec-backend.mjs';
@@ -46,7 +46,7 @@ function warn(message) {
 }
 
 const WP = path.join('.kbd-orchestrator', 'current-waypoint.json');
-const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? '.';
+const orchestratorRoot = process.env.KBD_ORCHESTRATOR_ROOT ?? miniPackRoot;
 
 // ---- backend dispatch -------------------------------------------------------
 //

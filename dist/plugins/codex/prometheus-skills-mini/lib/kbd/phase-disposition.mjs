@@ -8,7 +8,8 @@ import { readFileSync } from 'node:fs';
 import { spawnExecutable } from '../platform/spawn.mjs';
 
 export const DISPOSITION_SCHEMA = 'kbd.phase-disposition/v1';
-export const DISPOSITION_TOKENS = Object.freeze(['UNBOUND', 'OPEN', 'CLOSED', 'REFUSED_BLOCKED', 'REFUSED_FAIL']);
+export const isClosed = (token) => ['CLOSED', 'CLOSED_SUPERSEDED', 'CLOSED_UNMET'].includes(token);
+export const DISPOSITION_TOKENS = Object.freeze(['UNBOUND', 'OPEN', 'CLOSED', 'CLOSED_SUPERSEDED', 'CLOSED_UNMET', 'REFUSED_BLOCKED', 'REFUSED_FAIL']);
 
 /**
  * Canonical disposition of `phase`. `dispositionFile` substitutes a fixture JSON (disclosed

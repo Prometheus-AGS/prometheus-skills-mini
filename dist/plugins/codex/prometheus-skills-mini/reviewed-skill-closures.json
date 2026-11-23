@@ -2192,7 +2192,7 @@
     },
     {
       "path": "skills/prometheus-context-bootstrap/SKILL.md",
-      "sha256": "sha256:78d94200ea1028710db5cf152c84c555d3e26b0d7c239e2369d870ba6d52fe22"
+      "sha256": "sha256:5e6075c8ed6a66adf807303f9b87efdf66a47642acf216efcafe3f2510e514e9"
     },
     {
       "path": "skills/prometheus-context-bootstrap/references/AGENTS.base.md",
@@ -2205,6 +2205,14 @@
     {
       "path": "skills/prometheus-context-bootstrap/references/rules-typescript.md",
       "sha256": "sha256:23e37845a24d133a6478797926bd2ed062c1253d1c61300129e8ada72dabcb53"
+    },
+    {
+      "path": "skills/prometheus-context-bootstrap/scripts/existing-project.mjs",
+      "sha256": "sha256:f51df8789def97625d7e4b5ef2a0f0e11fa859359727dcdad9487f0c28070aa9"
+    },
+    {
+      "path": "skills/prometheus-context-bootstrap/scripts/maintain-project.mjs",
+      "sha256": "sha256:b77ade08004480759b43361964538df796e82203ce7409b635000222f647210d"
     },
     {
       "path": "skills/prometheus-impeccable-core/SKILL.md",
@@ -12414,8 +12422,8 @@
       "identity": {
         "id": null,
         "name": "prometheus-context-bootstrap",
-        "version": "1.2.0",
-        "artifactDigest": "sha256:78d94200ea1028710db5cf152c84c555d3e26b0d7c239e2369d870ba6d52fe22"
+        "version": "1.2.1",
+        "artifactDigest": "sha256:5e6075c8ed6a66adf807303f9b87efdf66a47642acf216efcafe3f2510e514e9"
       },
       "entrypoint": "skills/prometheus-context-bootstrap/SKILL.md",
       "roots": [
@@ -12531,9 +12539,11 @@
           "skills/prometheus-context-bootstrap/SKILL.md",
           "skills/prometheus-context-bootstrap/references/AGENTS.base.md",
           "skills/prometheus-context-bootstrap/references/rules-rust.md",
-          "skills/prometheus-context-bootstrap/references/rules-typescript.md"
+          "skills/prometheus-context-bootstrap/references/rules-typescript.md",
+          "skills/prometheus-context-bootstrap/scripts/existing-project.mjs",
+          "skills/prometheus-context-bootstrap/scripts/maintain-project.mjs"
         ],
-        "digest": "sha256:5c66a2fe3889bf8427659e457d0cd2c493da90410a112a7b96fe4e40d67a88a9"
+        "digest": "sha256:f3987575d6021ef4f8f57b5aa65b5ce919afc87de361da474658839a41165c53"
       }
     },
     {
@@ -17111,5 +17121,5 @@
       }
     }
   ],
-  "inventoryDigest": "sha256:9da1fd1fa3ebd708d463c261bb404c136896e69f7b4b433b0c8d5917cd35facf"
+  "inventoryDigest": "sha256:05822713f290fa6d7e9aa7f974e0ec1265694eec192d8104b520f21e2df10ef5"
 }

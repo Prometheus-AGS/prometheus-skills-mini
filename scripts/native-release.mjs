@@ -17,7 +17,7 @@ try {
     if (!host || host.target !== second) throw new Error('Release build requires the declared native host: ' + second);
     product(first);
     fs.mkdirSync(third, { recursive: true });
-    buildBinary(first, path.join(third, assetName(first, host)), host.target);
+    await buildBinary(first, path.join(third, assetName(first, host)), host.target);
   } else if (command === 'publish') {
     publishRelease(first, second);
   } else { throw new Error('Expected plan, build <tool> <target> <directory>, or publish <directory> <commit>'); }

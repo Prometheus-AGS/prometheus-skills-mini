@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "1",
+  "phase": "mini-bootstrap-existing-project-goals",
+  "runId": "platform-foundation-20260921T101006Z",
+  "contractDigest": "1da7306e8c2f026269e6592f7235ca46248c9a6b669cd78a9e308741d9f522f4",
+  "producedBy": "Original B4 and first B5 preserved; second approved narrow B5 repaired reviewer findings",
+  "executedBy": {
+    "harness": "OpenAI Codex",
+    "version": "UNKNOWN",
+    "model": "UNKNOWN"
+  },
+  "sourceDigests": {
+    "CHANGELOG.md": "181dfe6cdd4fbdd8556d51653b1c5cf32468492d3190b1d9db14fe88866b7b32",
+    "package.json": "5409252d98c2df29f22e678363a9abc8011e532a78f0be0880625806675b0944",
+    "package-lock.json": "9d36ad0a1e7daf0c3ee7f4972f86eccb0e24b99881121450451c51c1620a922a",
+    "skill-system.json": "e88494e885b57c377b7c08807e704f57562dce1b6df7d77042203866c274b55e",
+    "scripts/prometheus-context-bootstrap.mjs": "907f198564f2163f8b7f17042300410fa2816b3c3a40d15327add7e5d98b3f94",
+    "skills/prometheus-context-bootstrap/SKILL.md": "6376411b45daadf385a51f323a8f38b5cfc8de83b525c60afde179a4ddc11ff6",
+    "skills/prometheus-context-bootstrap/scripts/existing-project.mjs": "f51df8789def97625d7e4b5ef2a0f0e11fa859359727dcdad9487f0c28070aa9",
+    "skills/prometheus-context-bootstrap/scripts/maintain-project.mjs": "b77ade08004480759b43361964538df796e82203ce7409b635000222f647210d",
+    "lib/context-bootstrap/existing-project.integration.test.mjs": "cf45e2053dd62d6c17934408248333e8e0138d18f9193c651f01a2cc4c62bdc9",
+    "lib/context-bootstrap/bootstrap.integration.test.mjs": "e39f63ffac099dee08189b5b00c40b8c9522754a0efdcafaa7a5982dce8a723f",
+    "scripts/generate-skill-system-distribution.mjs": "279c16ce2e64da39067f32034c794baeabc53103262e3ca068258f0a997c4a89",
+    "lib/distribution/package-builder.mjs": "942da3ddb259e9e96e207919476f464d2f3607e5d40f5eeecb9c5d914b56ab01",
+    "openspec/changes/bootstrap-existing-project-goals/specs/existing-project-instruction-maintenance/spec.md": "3ce6f5489db2f47015937b09a618870e655a1db556515b978c4acc30b1386827"
+  },
+  "boundary": "B5",
+  "approvedBy": "Sentinel_97357747152c8191ab9ee4666be545ce",
+  "scenarios": [
+    {
+      "id": "MINI-BOOT-1",
+      "status": "PASS",
+      "attempted": "Scoped positives and negatives once on second repair; no legacy rerun.",
+      "observed": "Audit/preview read-only, scoped dirty-file and no-op behavior passed. Real staged and unstaged tracked deletions remained absent and the other named file and index remained unchanged through audit/preview/apply. Stale/cross-root intent refused.",
+      "evidence": "evidence/B5-Sentinel_97357747152c8191ab9ee4666be545ce/mini-bootstrap-positive.stdout; evidence/B5-Sentinel_97357747152c8191ab9ee4666be545ce/mini-bootstrap-negative.stdout"
+    },
+    {
+      "id": "MINI-BOOT-2",
+      "status": "PASS",
+      "attempted": "Existing linked/managed and ambiguity fixture scope once on second repair, with synthetic authored example/comment controls.",
+      "observed": "Native local symlinks in both directions, live text routes and managed source remained intact. Fenced and commented faux goals/import could not grant policy coverage or redirect writes. Ambiguous unclosed fence held. Broader Markdown semantics or automatic harness loading are not established.",
+      "evidence": "evidence/B5-Sentinel_97357747152c8191ab9ee4666be545ce/mini-bootstrap-positive.stdout; evidence/B5-Sentinel_97357747152c8191ab9ee4666be545ce/mini-bootstrap-negative.stdout"
+    }
+  ],
+  "budgetConsumption": {
+    "source": "Conservative time wall-window from independent phase definition to last B5 command (includes waiting); tool calls manually tallied and rounded upward from visible phase-scoped calls from definition through evidence preparation, including waits and internal coordination; planning before phase definition is separate. Not independent telemetry.",
+    "values": {
+      "timeMinutes": {
+        "value": 72,
+        "class": "estimate"
+      },
+      "toolCalls": {
+        "value": 132,
+        "class": "estimate"
+      },
+      "repairAttempts": {
+        "value": 2,
+        "class": "measured"
+      },
+      "noProgress": {
+        "value": 0,
+        "class": "measured"
+      },
+      "tokens": {
+        "value": null,
+        "class": "unknown"
+      }
+    }
+  },
+  "packet": {
+    "b4Evidence": "evidence/B4-Sentinel_2791442569f88191bed61774e0f78a53",
+    "firstB5Evidence": "evidence/B5-Sentinel_c556c5e794b48191a351ce7888bf0088",
+    "secondB5Evidence": "evidence/B5-Sentinel_97357747152c8191ab9ee4666be545ce",
+    "notExecuted": [],
+    "unrelatedStateUnchanged": true,
+    "legacyPassed": true,
+    "legacyReceipt": "evidence/B5-Sentinel_c556c5e794b48191a351ce7888bf0088/mini-bootstrap-legacy.stdout",
+    "legacyCarryForwardBasis": "Legacy dispatcher and bootstrap source untouched by second repair; no repeat.",
+    "distribution": {
+      "skills": 106,
+      "verification": "byte and POSIX mode comparison"
+    }
+  }
+}

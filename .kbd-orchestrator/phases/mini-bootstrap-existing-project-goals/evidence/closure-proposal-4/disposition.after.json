@@ -1,0 +1,64 @@
+{
+  "schema": "kbd.phase-disposition/v1",
+  "projectId": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
+  "runId": "platform-foundation-20260921T101006Z",
+  "phaseId": "mini-bootstrap-existing-project-goals",
+  "phaseStatus": "complete",
+  "contractBound": true,
+  "disposition": "CLOSED",
+  "binding": {
+    "contractPath": ".kbd-orchestrator/phases/mini-bootstrap-existing-project-goals/adopted-contract.json",
+    "contractDigest": "eeaab447ba333ce9d92822ef5cd99af39d6bd2b24d292b8132e9e1b3addfb0e5",
+    "scenarioDigests": {
+      "MINI-BOOT-1": "8b04833b6b59c83c309456427d150e79f395115ea4d19cc56069ebe726691e7c",
+      "MINI-BOOT-2": "00205ef14f00fce4be21b9ba9fadd6d05665bd8f1fcd41caa658bb2f474c7fde"
+    },
+    "planRevision": 5,
+    "adoptionDecisionId": "contract-adoption-mini-bootstrap-existing-project-goals-eeaab447",
+    "bindingRevision": 4,
+    "authority": {
+      "manifestRaw": "{\"action\":\"amend-contract\",\"approver\":\"travis@tribehealthsolutions.com\",\"contractPath\":\".kbd-orchestrator/phases/mini-bootstrap-existing-project-goals/adopted-contract.json\",\"kind\":\"kbd.scope-authority\",\"namespace\":\"prometheus-kbd-scope-amendment\",\"newContractDigest\":\"eeaab447ba333ce9d92822ef5cd99af39d6bd2b24d292b8132e9e1b3addfb0e5\",\"nonce\":\"26afe9dd3f758ce7bf61540b5efb4a21\",\"phaseId\":\"mini-bootstrap-existing-project-goals\",\"previousContractDigest\":\"1da7306e8c2f026269e6592f7235ca46248c9a6b669cd78a9e308741d9f522f4\",\"projectId\":\"78f44ea7-639e-4a07-a792-01eeb9d2a48a\",\"reason\":\"Allow closure and reflection only; 1440 cumulative elapsed minutes from original phase definition 2026-11-20T11:35:04.165Z (waiting included); 165 tool calls and no new repairs. Replaces previous signed but never adopted proposal, without modifying it. No scenario, source, execution or release authorization changes.\",\"runId\":\"platform-foundation-20260921T101006Z\",\"scenarioChanges\":{\"added\":[],\"modified\":[],\"removed\":[]},\"schemaVersion\":\"1\",\"timestamp\":\"2026-11-20T14:09:55Z\"}",
+      "manifestSha256": "7a375ee6695c4f957bf8a5a6357353eb09dfdb2748b34e2c97a541f189bd1dcb",
+      "signature": "-----BEGIN SSH SIGNATURE-----\nU1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgsgqOvzJMpDfEY0CKRyfxixLl97\nUxT+bg/r6Jl4BBHFcAAAAecHJvbWV0aGV1cy1rYmQtc2NvcGUtYW1lbmRtZW50AAAAAAAA\nAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAAQP9NbRPZD3dx6747Rt/JT5BGPnZuT4\nU9PAj6NIa6suNxgAbXfkMSc7+EoyElDPereHMSMQpN3qA36HrougKr6gw=\n-----END SSH SIGNATURE-----\n",
+      "approver": "travis@tribehealthsolutions.com",
+      "namespace": "prometheus-kbd-scope-amendment",
+      "allowedSignersSha256": "4c32adefb70e281e6c78f3ecb562088ef82209c54a9a01b1ed630ba3ed78a573"
+    }
+  },
+  "closure": {
+    "runId": "platform-foundation-20260921T101006Z",
+    "contractDigest": "eeaab447ba333ce9d92822ef5cd99af39d6bd2b24d292b8132e9e1b3addfb0e5",
+    "evidenceDigest": "dd1c65223b28bfd8e0f425bbd0987917dfa56a3b09418a290e1a3f945a2c252f",
+    "disposition": "pass",
+    "reasonCode": "budget-exhausted",
+    "scenarios": [
+      {
+        "id": "MINI-BOOT-1",
+        "status": "PASS"
+      },
+      {
+        "id": "MINI-BOOT-2",
+        "status": "PASS"
+      }
+    ],
+    "budgetConsumption": {
+      "noProgress": 0,
+      "repairAttempts": 2,
+      "timeMinutes": 487,
+      "toolCalls": 163
+    },
+    "closureKey": "a04608c9d9dced4c30ed579223e5997cd847e01de6a20a36d6b9fd4248bd7662",
+    "recordedAtRevision": 1016
+  },
+  "lastRefusal": null,
+  "successor": null,
+  "consumptionHighWater": {
+    "noProgress": 0,
+    "repairAttempts": 2,
+    "timeMinutes": 487,
+    "toolCalls": 163
+  },
+  "awaitingSuccessor": false,
+  "dispatchAllowed": false,
+  "successorAllowed": true
+}

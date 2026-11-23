@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { isExistingProjectMode, runExistingProjectMode } from '../skills/prometheus-context-bootstrap/scripts/existing-project.mjs';
 import { fileURLToPath } from 'node:url';
 import { runContextBootstrap } from '../lib/context-bootstrap/bootstrap.mjs';
 
@@ -26,10 +27,13 @@ function parseArgs(argv) {
 }
 
 function usage() {
+  console.log('Existing project: node scripts/prometheus-context-bootstrap.mjs --path <Git root> --audit|--preview|--apply <sha256>');
   console.log('Usage: node scripts/prometheus-context-bootstrap.mjs [--path <project>] [--stacks rust,typescript] [--dry-run|--check]');
 }
 
-try {
+if (isExistingProjectMode(process.argv.slice(2))) {
+  process.exitCode = runExistingProjectMode(process.argv.slice(2));
+} else try {
   const options = parseArgs(process.argv.slice(2));
   if (options.help) {
     usage();

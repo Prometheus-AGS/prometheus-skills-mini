@@ -5,6 +5,12 @@ All notable changes to prometheus-skills-mini are recorded here. The format foll
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Earlier releases are
 recorded in the git history and in `COMPARE.md`; this file starts at 1.16.0.
 
+## [1.20.0] - Unreleased
+
+- Add audit, preview and digest-bound apply for existing project instructions. The installed Bootstrap skill preserves local prose and reports which files an update would change.
+- Ship KBD reflection and phase completion actions in both Mini plugin packages. Accepted reflections persist lessons, and retries resume failed actions using phase-scoped receipts.
+- Support signed superseded and unmet phase exits, pre-signing adoption checks, withdrawal-aware successor seeds, and reconciliation of phase task counts across canonical state, progress projections and OpenSpec.
+
 ## [1.19.0] - Unreleased
 
 - Scope KBD Assess and Plan to the end user's Origin/Before outcome and a reachable,

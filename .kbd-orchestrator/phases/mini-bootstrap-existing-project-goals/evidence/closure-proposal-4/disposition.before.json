@@ -1,0 +1,35 @@
+{
+  "schema": "kbd.phase-disposition/v1",
+  "projectId": "78f44ea7-639e-4a07-a792-01eeb9d2a48a",
+  "runId": "platform-foundation-20260921T101006Z",
+  "phaseId": "mini-bootstrap-existing-project-goals",
+  "phaseStatus": "pending",
+  "contractBound": true,
+  "disposition": "OPEN",
+  "binding": {
+    "contractPath": ".kbd-orchestrator/phases/mini-bootstrap-existing-project-goals/adopted-contract.json",
+    "contractDigest": "1da7306e8c2f026269e6592f7235ca46248c9a6b669cd78a9e308741d9f522f4",
+    "scenarioDigests": {
+      "MINI-BOOT-1": "8b04833b6b59c83c309456427d150e79f395115ea4d19cc56069ebe726691e7c",
+      "MINI-BOOT-2": "00205ef14f00fce4be21b9ba9fadd6d05665bd8f1fcd41caa658bb2f474c7fde"
+    },
+    "planRevision": 5,
+    "adoptionDecisionId": "contract-adoption-mini-bootstrap-existing-project-goals-1da7306e",
+    "bindingRevision": 3,
+    "authority": {
+      "manifestRaw": "{\"action\":\"amend-contract\",\"approver\":\"travis@tribehealthsolutions.com\",\"contractPath\":\".kbd-orchestrator/phases/mini-bootstrap-existing-project-goals/adopted-contract.json\",\"kind\":\"kbd.scope-authority\",\"namespace\":\"prometheus-kbd-scope-amendment\",\"newContractDigest\":\"1da7306e8c2f026269e6592f7235ca46248c9a6b669cd78a9e308741d9f522f4\",\"nonce\":\"d6714789b5294e26df2913f5f92ac7bf\",\"phaseId\":\"mini-bootstrap-existing-project-goals\",\"previousContractDigest\":\"6fa4bb6a16f7db85d7e8c4d8d71dba568bbb78c3ab2c2325dd39757fdafaf33e\",\"projectId\":\"78f44ea7-639e-4a07-a792-01eeb9d2a48a\",\"reason\":\"Increase cumulative budget for one repair of existing instruction inference and tracked deletion behavior. No scenario or prior consumption changes.\",\"runId\":\"platform-foundation-20260921T101006Z\",\"scenarioChanges\":{\"added\":[],\"modified\":[],\"removed\":[]},\"schemaVersion\":\"1\",\"timestamp\":\"2026-11-20T12:32:11Z\"}",
+      "manifestSha256": "22948f278cdbfbf240914518b1a91327cb8ece3f87531c660627b519eaf1c276",
+      "signature": "-----BEGIN SSH SIGNATURE-----\nU1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgsgqOvzJMpDfEY0CKRyfxixLl97\nUxT+bg/r6Jl4BBHFcAAAAecHJvbWV0aGV1cy1rYmQtc2NvcGUtYW1lbmRtZW50AAAAAAAA\nAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5AAAAQJlqixM08Tef/wnrEDVQMgi7R40imq\n/cBoX+xr26mq5anWuCI1FKcKOFUtbesAkTdOeMtUknikxOuc53T8pAewY=\n-----END SSH SIGNATURE-----\n",
+      "approver": "travis@tribehealthsolutions.com",
+      "namespace": "prometheus-kbd-scope-amendment",
+      "allowedSignersSha256": "4c32adefb70e281e6c78f3ecb562088ef82209c54a9a01b1ed630ba3ed78a573"
+    }
+  },
+  "closure": null,
+  "lastRefusal": null,
+  "successor": null,
+  "consumptionHighWater": {},
+  "awaitingSuccessor": false,
+  "dispatchAllowed": true,
+  "successorAllowed": false
+}

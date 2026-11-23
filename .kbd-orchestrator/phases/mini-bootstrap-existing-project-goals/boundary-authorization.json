@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "kind": "kbd.boundary-authorization",
+  "phaseId": "mini-bootstrap-existing-project-goals",
+  "events": [
+    {
+      "boundary": "B4",
+      "authorizedAt": "2026-11-20T12:09:40.063Z",
+      "authorizer": "Travis James",
+      "contractDigest": "6fa4bb6a16f7db85d7e8c4d8d71dba568bbb78c3ab2c2325dd39757fdafaf33e",
+      "reason": "Sentinel_2791442569f88191bed61774e0f78a53 approved the exact five-step Mini and six-step Full B4 packets: \"yes, run for both\"."
+    },
+    {
+      "boundary": "B5",
+      "authorizedAt": "2026-11-20T12:20:27.005Z",
+      "authorizer": "Travis James",
+      "contractDigest": "6fa4bb6a16f7db85d7e8c4d8d71dba568bbb78c3ab2c2325dd39757fdafaf33e",
+      "reason": "Sentinel_c556c5e794b48191a351ce7888bf0088 replying to Sentinel_fbc49dd634d88191bd843b0ae1b9c698 approved one ignore-check-only option repair and one B5 pass for failed and still-unrun checks."
+    },
+    {
+      "boundary": "B5",
+      "authorizedAt": "2026-11-20T12:46:19.233Z",
+      "authorizer": "Travis James",
+      "contractDigest": "1da7306e8c2f026269e6592f7235ca46248c9a6b669cd78a9e308741d9f522f4",
+      "reason": "Sentinel_97357747152c8191ab9ee4666be545ce approved one focused second repair: active Markdown only and preserve tracked deletions; one pass affected checks, no install/release."
+    }
+  ]
+}

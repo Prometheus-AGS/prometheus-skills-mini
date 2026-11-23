@@ -1,0 +1,79 @@
+{
+  "phase": "mini-bootstrap-existing-project-goals",
+  "digest": "6fa4bb6a16f7db85d7e8c4d8d71dba568bbb78c3ab2c2325dd39757fdafaf33e",
+  "approval": "Sentinel_c556c5e794b48191a351ce7888bf0088",
+  "ask": "Sentinel_fbc49dd634d88191bd843b0ae1b9c698",
+  "previousSourceSha": "7caa06b91d54e51cbd3283f3c58c208f44326bcaa7ff0d4910605a73ec332a95",
+  "newSourceSha": "f78095704f2d7900988ccfb995398f16ec2ff1555b62e324cecd49b5cd18df10",
+  "b4Before": {
+    ".kbd-orchestrator/phases/mini-bootstrap-existing-project-goals/evidence/B4-Sentinel_2791442569f88191bed61774e0f78a53/authorization.stdout": "ba41c0808ae9096dda14eb8fe07819f61c86d8dc3d9e286926a19629d9f83f67",
+    ".kbd-orchestrator/phases/mini-bootstrap-existing-project-goals/evidence/B4-Sentinel_2791442569f88191bed61774e0f78a53/boundary-observations.json": "e1911d16abf79db3aa7e0a1d721cf1f7210c1af06779008c91effa16a5b71703",
+    ".kbd-orchestrator/phases/mini-bootstrap-existing-project-goals/evidence/B4-Sentinel_2791442569f88191bed61774e0f78a53/candidate.json": "4a886316027bc3e7fe06995d955f907f82c96f6aed36b4f9367559a0bf8733db",
+    ".kbd-orchestrator/phases/mini-bootstrap-existing-project-goals/evidence/B4-Sentinel_2791442569f88191bed61774e0f78a53/mini-bootstrap-positive.json": "041e272e25cffd41d70c1388224b4b3a3440cb3a8b3164cf4c842f7325c5699f",
+    ".kbd-orchestrator/phases/mini-bootstrap-existing-project-goals/evidence/B4-Sentinel_2791442569f88191bed61774e0f78a53/mini-bootstrap-positive.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".kbd-orchestrator/phases/mini-bootstrap-existing-project-goals/evidence/B4-Sentinel_2791442569f88191bed61774e0f78a53/mini-bootstrap-positive.stdout": "45f9313e064004df5d27cc85a33ef824de5cb2bdd44139e7341002ed2a6c02c7",
+    ".kbd-orchestrator/phases/mini-bootstrap-existing-project-goals/boundary-results.json": "5fc44e427f2c93d3e8bd90679906dbdef0400a39b1993bad688734a3697bcf04"
+  },
+  "commands": [
+    {
+      "id": "mini-bootstrap-positive",
+      "kind": "scenario",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "--test",
+        "--test-name-pattern=^operator preserves",
+        "lib/context-bootstrap/existing-project.integration.test.mjs"
+      ],
+      "cwd": "/Volumes/T7/Projects/prometheus/prometheus-skills-mini",
+      "scenarioIds": [
+        "MINI-BOOT-1",
+        "MINI-BOOT-2"
+      ]
+    },
+    {
+      "id": "mini-bootstrap-negative",
+      "kind": "negativeControl",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "--test",
+        "--test-name-pattern=^(unsafe|stale)",
+        "lib/context-bootstrap/existing-project.integration.test.mjs"
+      ],
+      "cwd": "/Volumes/T7/Projects/prometheus/prometheus-skills-mini",
+      "scenarioIds": [
+        "MINI-BOOT-1",
+        "MINI-BOOT-2"
+      ]
+    },
+    {
+      "id": "mini-bootstrap-legacy",
+      "kind": "run",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "--test",
+        "lib/context-bootstrap/bootstrap.integration.test.mjs"
+      ],
+      "cwd": "/Volumes/T7/Projects/prometheus/prometheus-skills-mini"
+    },
+    {
+      "id": "mini-bootstrap-distribution",
+      "kind": "build",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "scripts/generate-skill-system-distribution.mjs"
+      ],
+      "cwd": "/Volumes/T7/Projects/prometheus/prometheus-skills-mini"
+    },
+    {
+      "id": "mini-bootstrap-distribution-check",
+      "kind": "run",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "scripts/generate-skill-system-distribution.mjs",
+        "--check"
+      ],
+      "cwd": "/Volumes/T7/Projects/prometheus/prometheus-skills-mini"
+    }
+  ],
+  "retainedPriorPositive": "dirty tracked files/audit/preview/apply/no-op, does not call check-ignore for tracked paths"
+}

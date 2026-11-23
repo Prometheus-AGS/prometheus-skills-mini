@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "kind": "kbd.closure-view",
+  "generatedAt": "2026-11-20T19:41:30.985Z",
+  "authority": "derived view; the canonical disposition recorded by prometheus kbd phase close is authoritative",
+  "phaseId": "mini-bootstrap-existing-project-goals",
+  "contractVersion": "2",
+  "contractDigest": "eeaab447ba333ce9d92822ef5cd99af39d6bd2b24d292b8132e9e1b3addfb0e5",
+  "evidenceDigest": "dd1c65223b28bfd8e0f425bbd0987917dfa56a3b09418a290e1a3f945a2c252f",
+  "disposition": "CLOSED",
+  "reason": "budget-exhausted",
+  "states": {
+    "implementationComplete": true,
+    "behaviorAccepted": true,
+    "releaseEligible": true,
+    "releaseAuthorized": false
+  },
+  "method": {
+    "name": "VLBV",
+    "source": "contract",
+    "deviation": null
+  },
+  "executedBy": {
+    "harness": "OpenAI Codex",
+    "version": "UNKNOWN",
+    "model": "UNKNOWN"
+  },
+  "preAuthorizationArtifacts": {
+    "status": "no-globs",
+    "authorizedAt": "2026-11-20T12:09:40.063Z",
+    "globs": [],
+    "scanned": 0,
+    "artifacts": []
+  },
+  "scenarios": [
+    {
+      "id": "MINI-BOOT-1",
+      "name": "Preview and apply an exact scoped update",
+      "actor": "Repository operator maintaining existing root guidance",
+      "usefulOutcome": "Read-only audit and preview, exact apply to dirty named files only, and no-op fresh apply with index and unrelated work untouched.",
+      "mandatory": true,
+      "verdict": "PASS",
+      "limitations": [
+        "No live project edits or Windows execution established."
+      ],
+      "substitutedBoundaries": [],
+      "realCollaborators": [
+        "Actual Mini CLI and packaged skill helper source",
+        "Git index/status and filesystem in temporary repositories"
+      ]
+    },
+    {
+      "id": "MINI-BOOT-2",
+      "name": "Preserve existing canonical links and managed bytes",
+      "actor": "Repository operator maintaining existing root guidance",
+      "usefulOutcome": "Both symlink directions and documented routes are preserved, only their intended regular target changes, and managed text remains byte-identical.",
+      "mandatory": true,
+      "verdict": "PASS",
+      "limitations": [
+        "Documented reverse route is not proof of automatic harness loading.",
+        "Native symlink evidence is limited to this machine; other platforms explicitly unverified."
+      ],
+      "substitutedBoundaries": [],
+      "realCollaborators": [
+        "Actual Mini CLI and packaged skill helper source",
+        "Git index/status and filesystem in temporary repositories"
+      ]
+    }
+  ]
+}

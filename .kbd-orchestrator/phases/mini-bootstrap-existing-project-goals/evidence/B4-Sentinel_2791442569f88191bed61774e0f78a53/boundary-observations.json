@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "1",
+  "phase": "mini-bootstrap-existing-project-goals",
+  "runId": "platform-foundation-20260921T101006Z",
+  "contractDigest": "6fa4bb6a16f7db85d7e8c4d8d71dba568bbb78c3ab2c2325dd39757fdafaf33e",
+  "producedBy": "Mini B4 exact approved local packet",
+  "sourceDigests": {
+    "CHANGELOG.md": "181dfe6cdd4fbdd8556d51653b1c5cf32468492d3190b1d9db14fe88866b7b32",
+    "package.json": "5409252d98c2df29f22e678363a9abc8011e532a78f0be0880625806675b0944",
+    "package-lock.json": "9d36ad0a1e7daf0c3ee7f4972f86eccb0e24b99881121450451c51c1620a922a",
+    "skill-system.json": "e88494e885b57c377b7c08807e704f57562dce1b6df7d77042203866c274b55e",
+    "scripts/prometheus-context-bootstrap.mjs": "907f198564f2163f8b7f17042300410fa2816b3c3a40d15327add7e5d98b3f94",
+    "skills/prometheus-context-bootstrap/SKILL.md": "6376411b45daadf385a51f323a8f38b5cfc8de83b525c60afde179a4ddc11ff6",
+    "skills/prometheus-context-bootstrap/scripts/existing-project.mjs": "7caa06b91d54e51cbd3283f3c58c208f44326bcaa7ff0d4910605a73ec332a95",
+    "skills/prometheus-context-bootstrap/scripts/maintain-project.mjs": "b77ade08004480759b43361964538df796e82203ce7409b635000222f647210d",
+    "lib/context-bootstrap/existing-project.integration.test.mjs": "928323baca690828a9b41b7d53bad27cc7e766794f5faef1113856a90af00470",
+    "lib/context-bootstrap/bootstrap.integration.test.mjs": "e39f63ffac099dee08189b5b00c40b8c9522754a0efdcafaa7a5982dce8a723f",
+    "scripts/generate-skill-system-distribution.mjs": "279c16ce2e64da39067f32034c794baeabc53103262e3ca068258f0a997c4a89",
+    "lib/distribution/package-builder.mjs": "942da3ddb259e9e96e207919476f464d2f3607e5d40f5eeecb9c5d914b56ab01",
+    "openspec/changes/bootstrap-existing-project-goals/specs/existing-project-instruction-maintenance/spec.md": "3ce6f5489db2f47015937b09a618870e655a1db556515b978c4acc30b1386827"
+  },
+  "commands": [
+    {
+      "id": "mini-bootstrap-positive",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "--test",
+        "--test-name-pattern=^operator",
+        "lib/context-bootstrap/existing-project.integration.test.mjs"
+      ],
+      "start": "2026-11-20T12:09:41.387Z",
+      "end": "2026-11-20T12:09:45.429Z",
+      "exit": 1,
+      "signal": null,
+      "spawnError": null
+    }
+  ],
+  "notExecuted": [
+    "mini-bootstrap-negative",
+    "mini-bootstrap-legacy",
+    "mini-bootstrap-distribution",
+    "mini-bootstrap-distribution-check"
+  ],
+  "packetComplete": false,
+  "unrelatedStateUnchanged": true,
+  "budgetConsumption": {
+    "source": "Measured in the boundary runner only; separate planning/adoption usage not included",
+    "values": {
+      "timeMinutes": {
+        "value": 0.0926,
+        "class": "measured"
+      },
+      "toolCalls": {
+        "value": 1,
+        "class": "measured"
+      },
+      "repairAttempts": {
+        "value": 0,
+        "class": "measured"
+      },
+      "noProgress": {
+        "value": 0,
+        "class": "measured"
+      },
+      "tokens": {
+        "value": null,
+        "class": "unknown"
+      }
+    }
+  }
+}

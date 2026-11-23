@@ -1,0 +1,59 @@
+{
+  "digest": "1da7306e8c2f026269e6592f7235ca46248c9a6b669cd78a9e308741d9f522f4",
+  "approval": "Sentinel_97357747152c8191ab9ee4666be545ce",
+  "records": [
+    {
+      "id": "mini-bootstrap-positive",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "--test",
+        "--test-name-pattern=^operator",
+        "lib/context-bootstrap/existing-project.integration.test.mjs"
+      ],
+      "start": "2026-11-20T12:46:19.931Z",
+      "end": "2026-11-20T12:46:25.669Z",
+      "exit": 0
+    },
+    {
+      "id": "mini-bootstrap-negative",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "--test",
+        "--test-name-pattern=^(unsafe|stale)",
+        "lib/context-bootstrap/existing-project.integration.test.mjs"
+      ],
+      "start": "2026-11-20T12:46:25.670Z",
+      "end": "2026-11-20T12:46:30.149Z",
+      "exit": 0
+    },
+    {
+      "id": "mini-bootstrap-distribution",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "scripts/generate-skill-system-distribution.mjs"
+      ],
+      "start": "2026-11-20T12:46:30.149Z",
+      "end": "2026-11-20T12:46:32.454Z",
+      "exit": 0
+    },
+    {
+      "id": "mini-bootstrap-distribution-check",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "scripts/generate-skill-system-distribution.mjs",
+        "--check"
+      ],
+      "start": "2026-11-20T12:46:32.454Z",
+      "end": "2026-11-20T12:46:33.463Z",
+      "exit": 0
+    }
+  ],
+  "notExecuted": [],
+  "pass": true,
+  "intact": true,
+  "repairsConsumed": 2,
+  "seconds": 14.4,
+  "priorResultSha": "b85c937e11569030bf0ff2eaf0eb46504df2a3b794737c3850173e771e55e52c",
+  "sourceSha": "f51df8789def97625d7e4b5ef2a0f0e11fa859359727dcdad9487f0c28070aa9",
+  "fixtureSha": "cf45e2053dd62d6c17934408248333e8e0138d18f9193c651f01a2cc4c62bdc9"
+}

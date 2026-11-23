@@ -1,0 +1,60 @@
+{
+  "digest": "1da7306e8c2f026269e6592f7235ca46248c9a6b669cd78a9e308741d9f522f4",
+  "approval": "Sentinel_97357747152c8191ab9ee4666be545ce",
+  "commands": [
+    {
+      "id": "mini-bootstrap-positive",
+      "kind": "scenario",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "--test",
+        "--test-name-pattern=^operator",
+        "lib/context-bootstrap/existing-project.integration.test.mjs"
+      ],
+      "cwd": "/Volumes/T7/Projects/prometheus/prometheus-skills-mini",
+      "scenarioIds": [
+        "MINI-BOOT-1",
+        "MINI-BOOT-2"
+      ]
+    },
+    {
+      "id": "mini-bootstrap-negative",
+      "kind": "negativeControl",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "--test",
+        "--test-name-pattern=^(unsafe|stale)",
+        "lib/context-bootstrap/existing-project.integration.test.mjs"
+      ],
+      "cwd": "/Volumes/T7/Projects/prometheus/prometheus-skills-mini",
+      "scenarioIds": [
+        "MINI-BOOT-1",
+        "MINI-BOOT-2"
+      ]
+    },
+    {
+      "id": "mini-bootstrap-distribution",
+      "kind": "build",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "scripts/generate-skill-system-distribution.mjs"
+      ],
+      "cwd": "/Volumes/T7/Projects/prometheus/prometheus-skills-mini"
+    },
+    {
+      "id": "mini-bootstrap-distribution-check",
+      "kind": "run",
+      "argv": [
+        "/opt/homebrew/opt/node@24/bin/node",
+        "scripts/generate-skill-system-distribution.mjs",
+        "--check"
+      ],
+      "cwd": "/Volumes/T7/Projects/prometheus/prometheus-skills-mini"
+    }
+  ],
+  "priorSource": "f78095704f2d7900988ccfb995398f16ec2ff1555b62e324cecd49b5cd18df10",
+  "source": "f51df8789def97625d7e4b5ef2a0f0e11fa859359727dcdad9487f0c28070aa9",
+  "priorFixture": "928323baca690828a9b41b7d53bad27cc7e766794f5faef1113856a90af00470",
+  "fixture": "cf45e2053dd62d6c17934408248333e8e0138d18f9193c651f01a2cc4c62bdc9",
+  "priorRepairsUsed": 1
+}

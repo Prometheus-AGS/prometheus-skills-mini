@@ -26,6 +26,24 @@ node scripts/prometheus-context-bootstrap.mjs --path "../My Project" --check
 
 Per `package.json`, these are wired as `npm run context:bootstrap` and `npm run context:check`.
 
+## Update a project with existing instructions
+
+From the Mini checkout, point at the existing project. Audit summarizes instruction coverage and the proposed file changes. Preview displays the local diff and its digest.
+
+```text
+node scripts/prometheus-context-bootstrap.mjs --path "../My Project" --audit
+node scripts/prometheus-context-bootstrap.mjs --path "../My Project" --preview
+```
+
+Read the diff for files such as `AGENTS.md` and `CLAUDE.md`. If it preserves the project's local instructions, apply that preview. Replace the placeholder with its actual digest.
+
+```text
+node scripts/prometheus-context-bootstrap.mjs --path "../My Project" --apply <PLAN_SHA256>
+node scripts/prometheus-context-bootstrap.mjs --path "../My Project" --preview
+```
+
+A stale digest requires a fresh preview. After a successful update, the second preview should have no further instruction changes. Keep private diffs local. Bootstrap leaves repository staging and any global pack installation to the operator.
+
 ## UI routing and existing teams
 
 Bootstrap now installs the portable UI catalog into project `.agents/skills` and

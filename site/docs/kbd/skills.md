@@ -17,7 +17,7 @@ This reference summarizes the KBD family. The generated catalog and current skil
 | `kbd-spec` | Use to run the Spec stage (between Analyze and Plan) — turn an assessment and analysis into concrete, ordered changes (native-kbd `spec.md` + `tasks.json` + `verification.md`, or OpenSpec proposals). |
 | `kbd-plan` | Use to create a prioritized, ordered change list for the current KBD project phase. Project-agnostic — reads the assessment and project constraints to produce an ordered change list, auto-detecting OpenSpec availability and emitting the appropriate change format. |
 | `kbd-execute` | Use to select an execution backend for the active KBD phase, write canonical phase execution state, dispatch the phase, and maintain KBD as the source of truth. Supports multi-tool handoff via the `progress.json` protocol. |
-| `kbd-apply` | KBD-owned spec-apply driver. Wraps a spec backend (openspec; native-kbd as the always-available fallback) and drives it ONE task at a time, so KBD stays the source of truth — every task boundary fires KBD hooks, emits a plain-text position signal, and syncs `progress.json` and the waypoint. |
+| `kbd-apply` | KBD-owned spec-apply driver. Wraps a spec backend (OpenSpec, Spec Kit or native-kbd for existing native projects) and drives it ONE task at a time, so KBD stays the source of truth — every task boundary fires KBD hooks, emits a plain-text position signal, and syncs `progress.json` and the waypoint. |
 | `kbd-reflect` | Use to generate the phase reflection report after all changes in a KBD phase are complete — goal achievement, delivered changes, artifact quality summary, technical debt, lessons captured, and recommended focus for the next phase. Seeds the next phase's planning inputs. |
 
 ## Status and control

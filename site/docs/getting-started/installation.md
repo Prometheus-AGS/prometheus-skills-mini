@@ -20,6 +20,10 @@ generator only materializes a harness's skill directory when that harness is act
 
 Run `npm run install:native` in a durable checkout, then add its printed bin directory to the harness PATH. This downloads the checked Mini version's `prometheus` and `pk` executables for this CPU and OS and verifies SHA-256 before installation. A missing asset uses the pinned Cargo source. Select a single tool or destination with `node scripts/install-native.mjs pk --bin-dir <directory>`. Optional service executables can be selected individually. Compose continues to pull its configured images.
 
+## Choose a service provider
+
+Start with `npm run services -- plan` to inspect service selection before applying it. On a machine that already runs a compatible service, select `reuse`. Choose `docker` for a container under Mini's ownership or `off` for a file-only workflow. Mini resolves release image digests for the host's Linux container architecture. Native service supervision uses launch agents on macOS and systemd user services on Linux. Windows users can choose Docker Desktop's Linux containers or reuse a compatible endpoint. For a conflict, inspect the owner and select its endpoint or a free port. [Examples and ownership](/docs/services/docker-services).
+
 ## Generating the distribution
 
 Complete all phase production before generation or validation. Use isolated output paths and homes for local integration; command availability is not authorization to change a live harness.

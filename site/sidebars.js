@@ -7,7 +7,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Getting Started',
-      items: ['getting-started/installation', 'getting-started/npm-scripts'],
+      items: ['getting-started/installation', 'getting-started/worked-change', 'getting-started/npm-scripts'],
     },
     {
       type: 'category',
@@ -83,7 +83,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Reference',
-      items: ['reference/comparison-with-full-pack'],
+      items: ['reference/comparison-with-full-pack', 'reference/release-history'],
     },
   ],
 };

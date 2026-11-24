@@ -19,6 +19,8 @@ hook taxonomy, and the sub-skill list; the actual work happens in the `kbd-<stag
 `analyze` and `spec` are **optional** stages: when no handoff exists for them, the stage-gate walks
 back to the nearest earlier stage instead of failing.
 
+For an example with a user-visible outcome, an explicit stop condition and a second-session handoff, follow [a small change from request to handoff](/docs/getting-started/worked-change).
+
 ## The state machine: `lib/kbd/`
 
 Focused modules, each a Node port of a `shared/lib/*.sh` file from the full pack:
@@ -36,7 +38,7 @@ Focused modules, each a Node port of a `shared/lib/*.sh` file from the full pack
 | `bottleneck-guard.mjs` | `bottleneck-guard.sh` (37 lines) | Whether the `prometheus` CLI is on `PATH` and its installed version advertises the `guard` subcommand — a CLI that predates `guard` is treated the same as an absent CLI. |
 | `check-child-scope.mjs` | `check-child-scope.sh` + `path-scope.sh` (102+ lines) | `PreToolUse(Write\|Edit\|MultiEdit)` **advisory** enforcement of a child loop's `scope.json`: writes outside a child's `allowedWritePaths` are flagged. This is hook-level advisory isolation, not an OS sandbox — the threat model is agent drift, not an adversary. Glob matching is a hand-rolled `matchesAnyGlob` rather than a `python3 -c fnmatch` subprocess. |
 | `runtime-authority.mjs` | `runtime-authority.sh` (31 lines) | Whether `.kbd-orchestrator/current-waypoint.json` was produced by the canonical `prometheus kbd` runtime, versus a hand-authored or legacy projection. A missing file or unparsable JSON reads as "not authoritative," not an error. |
-| `spec-backend.mjs` | the SpecBackend contract inside `kbd-apply.sh` | The six-op backend contract: `detect`, `list_tasks`/`progress`, `mark_done`, `verify`, `archive`, implemented for OpenSpec and native-kbd. The Spec Kit (`speckit`) adapter is detected but not implemented — `detectBackend` still returns `'speckit'` when on-disk evidence says so, but no `speckit`-specific operations exist yet. |
+| `spec-backend.mjs` | SpecBackend contract | Selects OpenSpec, Spec Kit or native-kbd and supplies task listing, progress, completion, verification and archive operations. [Choose an engine](/docs/specs/openspec-integration). |
 
 ## `kbd-apply`: driving a spec backend one task at a time
 

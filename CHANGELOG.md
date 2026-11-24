@@ -5,6 +5,10 @@ All notable changes to prometheus-skills-mini are recorded here. The format foll
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Earlier releases are
 recorded in the git history and in `COMPARE.md`; this file starts at 1.16.0.
 
+## [1.21.0] - Unreleased
+
+- Include the archived verification and closure records for bootstrapping Mini into an existing project.
+
 ## [1.20.1] - 2026-11-23
 
 - Support SurrealDB 4.0.1 with a matching 4.x memory-server client.

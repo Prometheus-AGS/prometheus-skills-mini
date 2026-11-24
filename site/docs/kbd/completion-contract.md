@@ -23,11 +23,25 @@ at phase close. This is the customer-safe port of the qualified full-pack workfl
   semantically; a blocked readiness gate (exit 2) is never treated as success, and a
   CLOSED phase refuses execute dispatch.
 - **Terminal evaluation** — `kbd-phase-close-eval` consumes only scenario-result
-  evidence. FAIL never closes; missing, stale or wrong-run evidence is BLOCKED;
+  evidence. FAIL prevents a successful qualification; missing, stale or wrong-run evidence is BLOCKED;
   missing budget accounting is BLOCKED; exceeding budget blocks qualification while
   at-ceiling closes completed in-budget work; unknown token telemetry stays UNKNOWN.
 - **No unauthorized successor** — reflection alone never creates the next phase;
   continuation requires explicit operator authorization.
+
+## When the scope changes
+
+Suppose a project adopted two export formats and the operator withdraws one midway. Keep the signed, adopted scope and the observed result for each exercised scenario. The operator supplies a signed supersession manifest naming the withdrawals, their destinations and the budget basis. The evaluator reads the terminal disposition back from canonical state. Report its actual label, including `CLOSED_UNMET` when no scenario was exercised. An exercised failure remains visible.
+
+```text
+node <pack-root>/scripts/kbd-phase-close-eval.mjs --phase <id> --superseded <manifest> --signature <signature>
+```
+
+After the execute handoff and reflection review have been accepted, run the following from the consumer project to persist accepted lessons and dispatch eligible completion actions. Retry the same command if an action remains pending. Starting a successor is a separate signed operator decision.
+
+```text
+node <pack-root>/scripts/kbd-reflection-finalize.mjs --phase <id> --accepted
+```
 
 ## Commands
 

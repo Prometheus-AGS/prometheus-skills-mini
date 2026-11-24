@@ -41,6 +41,15 @@ schema library in the runtime path.
 | `npm run build:distribution` / `check:distribution` | Generates (or checks for drift in) the plugin packages and marketplace listings — see [Installation](/docs/getting-started/installation). |
 | `npm run generate:commands` | Generates Claude Code slash-command files from `SKILL.md` frontmatter. |
 
+## Daily commands
+
+| Goal | Run from the Mini checkout | Look for |
+| --- | --- | --- |
+| Put the native KBD CLI and knowledge helper in a chosen directory | `npm run install:native -- --bin-dir <directory>` | Release-matched assets and their checksums, or the reported pinned-source fallback |
+| Inspect service ownership | `npm run services -- plan` | The proposed host, port and provider before applying a change |
+| Read the service state | `npm run services -- status --json` | Which instances Mini manages, reuses or disables |
+| Build the documentation locally | `npm --prefix site ci` followed by `npm --prefix site run build` | Generated catalog and rendered pages with valid internal links |
+
 ## Local validation and publication
 
 Finish all planned production changes in the phase before authoring or running tests, checks, generation, formatters or review. Run the applicable integration batch on the local development machine, through the real production entry point and collaborators, and record exact commands and results. Legacy coverage or unit totals do not certify a release.

@@ -13,6 +13,10 @@ driven by skills, with OpenSpec as the spec backend, and Karpathy-style progress
 Windows, macOS, and Linux, with no Git Bash, no Python, and no WSL in anything the pack itself
 runs.
 
+## Where to start
+
+Follow [one change from request to handoff](/docs/getting-started/worked-change) for a small, local example. See [release history and product boundaries](/docs/reference/release-history) to choose between Mini, Full and Companion.
+
 ## Why a mini port exists
 
 The full pack supports its skills profile on Windows through Git Bash or WSL; its native service profile is macOS/Linux. Mini implements its local process workflow with Node ESM, copy delivery and no Python or shell dependency in the pack's runtime. External harnesses and optional services have their own prerequisites and acceptance limits.

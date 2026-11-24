@@ -46,14 +46,12 @@ export default function Home() {
         <div className="container">
           <h1 className={styles.heroTitle}>Prometheus Skills Mini</h1>
           <p className={styles.heroTagline}>
-            A Windows-native, scaled-down port of prometheus-skill-pack: the KBD development
-            process, driven by the generated skills catalog, with OpenSpec as the spec backend.
-            The pack runtime uses Node without WSL, Git Bash or Python; harnesses and services
-            have their own platform requirements.
+            Plan a change, verify it through the user’s workflow and hand it to another session.
+            Mini runs its local process with Node on Windows, macOS and Linux.
           </p>
           <div className={styles.buttons}>
-            <Link className="button button--primary button--lg" to="/docs/intro">
-              Read the docs
+            <Link className="button button--primary button--lg" to="/docs/getting-started/worked-change">
+              Work through an example
             </Link>
             <Link className="button button--secondary button--lg" to="/docs/catalog">
               Browse the skills catalog
@@ -72,16 +70,14 @@ export default function Home() {
             ))}
           </div>
           <section className={styles.constraintList}>
-            <h2>Non-negotiable constraints</h2>
+            <h2>Installation choices</h2>
             <ul>
-              <li>Windows without WSL for anything the pack runs.</li>
-              <li>Node.js LTS (&gt;=22) is the only script runtime.</li>
-              <li>No shell scripts, no Python, anywhere.</li>
-              <li>OpenSpec native and default.</li>
+              <li>Use the portable workflow on Windows without WSL or Git Bash.</li>
+              <li>Install Node.js 22.20 or later for the pinned OpenSpec runner.</li>
+              <li>Choose OpenSpec by default or retain an existing supported spec engine.</li>
               <li>
-                Optional surreal-memory and liter-llm services, with a Windows-oriented Docker stack.
+                Run with local files, connect existing services, or select a supported native or Docker provider.
               </li>
-              <li>Record actual platform and resource evidence before claiming installed acceptance.</li>
             </ul>
           </section>
         </div>

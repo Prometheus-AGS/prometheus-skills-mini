@@ -73,7 +73,7 @@ After a hard-killed process, inspect the operation.lock owner before removing a 
 
 ## Release and publication
 
-Mini 0.2.0 and full 1.11.0 include this lifecycle. The full process plugin is 1.7.0. Reload existing harness sessions after updating the pack. On machines using the full pack, distribute the full pack only and preserve custom harness configuration and the previous generation.
+The lifecycle was already present in Mini 0.2.0 and Full 1.11.0. For the checkout in front of you, read Mini’s pack version in `package.json` and its selected engine version in `config/spec-engines.json`. Reload existing harness sessions after updating the pack. On machines using the full pack, distribute the full pack only and preserve custom harness configuration and the previous generation.
 
 The GitHub Pages workflow builds the Docusaurus site and skills catalog after these changes reach main. Local builds validate content before publication; hosted deployment is not runtime certification. A PR alone is not evidence that the public site has updated.
 

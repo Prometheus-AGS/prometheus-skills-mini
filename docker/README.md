@@ -1,5 +1,7 @@
 # The Boss service stack
 
+For a standalone Mini checkout, start with [native, Docker and endpoint selection](../docs/native-releases.md#service-installation). For a Boss-owned stack, keep its configuration and lifecycle with The Boss.
+
 `compose.yaml` runs the three containers used by the two Prometheus services:
 SurrealDB plus surreal-memory, and the liter-llm gateway. Only loopback ports
 28000, 23001, and 4000 are published by default. SurrealDB is pinned to 4.0.1. The Boss Compose stack keeps its existing project volume. Set `SURREAL_DATA_VOLUME` to select a separately restored or new named volume. The provider-managed Docker install uses `surreal-data-v4`. Both start with experimental in-place 3.x migration disabled. Before moving an existing installation, take and verify a database export and a separate offline copy of the old data. Restore into a fresh 4.0.1 store and check the namespace, users, and memory records before switching clients. A rollback to 3.x requires its original data or a restore into a new 3.x datastore. [SurrealDB 3.x-to-4.x migration guide](https://surrealdb.com/docs/operate/upgrading/3x-to-4x).

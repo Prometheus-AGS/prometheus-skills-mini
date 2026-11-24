@@ -1,5 +1,7 @@
 # Mini vs. Full Skill System
 
+Start with the [current product and release guide](site/docs/reference/release-history.md) for the portable workflow, service providers and optional Companion. The sections below document individual parity decisions at their stated dates.
+
 > **Updated for 1.17.0 (change `parity-full-certification`).** Ports the full pack's
 > certification work (#226–#238) and moves both packs to OpenSpec 2.1.0. What was ported,
 > adapted and left out is in [Parity with the full pack's certification work](#parity-with-the-full-packs-certification-work-1170).

@@ -49,7 +49,7 @@ const config = {
           path: 'docs',
           routeBasePath: 'docs',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/Prometheus-AGS/prometheus-skills-mini/edit/main/site/docs/',
+          editUrl: 'https://github.com/Prometheus-AGS/prometheus-skills-mini/edit/main/site/',
         },
         blog: false,
         theme: {

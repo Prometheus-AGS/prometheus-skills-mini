@@ -5,8 +5,7 @@ sidebar_label: Overview
 
 # OpenSpec Integration
 
-OpenSpec is this pack's spec backend and planning system by binding constraint
-(`openspec/config.yaml`), not merely a preference.
+Mini uses OpenSpec by default. Projects can select Spec Kit at initialization or keep native-kbd for existing native changes.
 
 ## What OpenSpec generates
 
@@ -43,12 +42,15 @@ satisfy, ported from the SpecBackend contract embedded in the full pack's `kbd-a
 | `verify` | `openspec validate <c>` |
 | `archive` | `openspec archive <c> --yes` — `--yes` is mandatory or the CLI blocks on an interactive prompt |
 
-**native-kbd** (a `tasks.json` file) remains available for native changes. An unavailable managed
-OpenSpec route is reported explicitly; it does not silently convert existing OpenSpec tasks. **Spec Kit (`speckit`)** is detected (`detectBackend` still returns `'speckit'` when
-on-disk evidence — an explicit pin, or `specs/*/tasks.md` — says so) but has no implemented
-operations in this pack; `kbd-apply`'s own upstream behavior already treats `speckit` as a no-op for
-`verify`/`archive`, and porting its markdown-checklist parsing was judged out of scope for the batch
-that ported `kbd-apply`.
+### Choose an engine
+
+| Your project | Select | Where the task lives |
+| --- | --- | --- |
+| New project or existing OpenSpec changes | OpenSpec (default) | `openspec/changes/<change>/tasks.md` |
+| Existing Spec Kit specs, or a team choosing that format | Spec Kit 1.3.0 (`/kbd-init --spec-engine speckit` for a new project) | `specs/<change>/tasks.md`, next to `spec.md` |
+| Existing native KBD changes | native-kbd | `.kbd-orchestrator/changes/<change>/tasks.json` |
+
+An explicit project pin takes priority. Otherwise Mini detects OpenSpec, then Spec Kit, then native-kbd. An unavailable OpenSpec tool leaves its change with that engine. The Spec Kit adapter reads and updates Markdown directly. Its verification checks for the spec file and completed checkboxes. Archiving moves the change under `specs/archive/`. A structurally complete specification still needs evidence for its user outcome.
 
 **Invariant kept from the full pack:** `kbd-apply` drives **per task**, and never calls a backend's
 "implement everything" command. See [KBD Overview](/docs/kbd/overview).

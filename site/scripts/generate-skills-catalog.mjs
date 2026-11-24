@@ -1,21 +1,13 @@
 #!/usr/bin/env node
 // generate-skills-catalog.mjs — build-time skills catalog generator.
 //
-// Ported mechanism from prometheus-skill-pack/site/scripts/generate-skills-catalog.mjs, adapted
-// for this repo's FLAT skills/<name>/SKILL.md layout — there is no category subdirectory level
-// here, unlike the full pack's skills/<category>/<name>/SKILL.md. Skills are bucketed into
-// logical groups inferred from their names/purpose (see CATEGORY_OF below) so the catalog reads
-// as organized reference material instead of one flat 50-row list.
-//
-// Walks ../skills/*/SKILL.md, parses YAML frontmatter, and emits one Markdown page per category
-// plus an index into site/docs-catalog/ (generated, gitignored). Wired via `prebuild`,
-// `prestart`, `build:deploy` and `generate:catalog`. Output derives from SKILL.md inputs
-// and the shared UI catalog lock.
+// Read the shipping inventory and publish its index, category bookmarks and skill instructions.
 
-import { readdirSync, readFileSync, lstatSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
-import { join, dirname, relative } from 'node:path';
+import { readFileSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { join, dirname, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import YAML from 'yaml';
+import { collectDistributionSkills, readSkillSystem } from '../../lib/distribution/skill-system.mjs';
 
 const siteDir = dirname(dirname(fileURLToPath(import.meta.url)));
 const repoRoot = dirname(siteDir);
@@ -85,114 +77,67 @@ const CATEGORY_OF = new Map(
 );
 
 function categoryFor(name) {
-  return uiEntries.has(name) ? 'UI & UX' : CATEGORY_OF.get(name) || 'Other';
+  if (uiEntries.has(name)) return 'UI & UX';
+  if (name.startsWith('kbd-')) return 'KBD Process';
+  if (name.startsWith('rust-')) return 'Context & Platform';
+  return CATEGORY_OF.get(name) || 'Other';
 }
 
-/** Recursively find SKILL.md files under skillsRoot, one level deep per skill directory. */
-function findSkillFiles(dir) {
-  const out = [];
-  for (const entry of readdirSync(dir)) {
-    if (entry.startsWith('.') || entry === 'node_modules') continue;
-    const p = join(dir, entry);
-    let st;
-    try {
-      st = lstatSync(p); // never follow symlinks
-    } catch {
-      console.warn(`[skills-catalog] WARN: cannot stat ${p} — skipped`);
-      continue;
-    }
-    if (st.isSymbolicLink()) continue;
-    if (st.isDirectory()) {
-      const skillFile = join(p, 'SKILL.md');
-      try {
-        if (lstatSync(skillFile).isFile()) out.push(skillFile);
-      } catch {
-        // not a skill directory (e.g. skills/AGENTS.md lives at this level too) — skip
-      }
-    }
-  }
-  return out;
-}
+const contract = readSkillSystem(repoRoot);
+const groups = new Map();
+const repoUrl = 'https://github.com/Prometheus-AGS/prometheus-skills-mini';
+const skills = collectDistributionSkills(repoRoot, contract).map(({name, source}) => {
+  const file = join(source, 'SKILL.md');
+  const content = readFileSync(file, 'utf8').replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
+  const match = /^---\n([\s\S]*?)\n---(?:\n|$)/.exec(content);
+  if (!match) throw new Error('Missing skill frontmatter: ' + file);
+  const metadata = YAML.parse(match[1]);
+  const body = content.slice(match[0].length).trim();
+  if (!metadata.description?.trim() || !body) throw new Error('Incomplete skill: ' + file);
+  const skill = {name, category: categoryFor(name), description: metadata.description.trim().replace(/\s+/g, ' '), body,
+    sourceUrl: repoUrl + '/blob/main/' + relative(repoRoot, file).split(sep).map(encodeURIComponent).join('/'),
+    version: metadata.version || metadata.metadata?.version, tags: metadata.metadata?.tags,
+    invocation: uiEntries.get(name)?.invocation};
+  if (!groups.has(skill.category)) groups.set(skill.category, []);
+  groups.get(skill.category).push(skill);
+  return skill;
+});
 
-/** Parse frontmatter; returns null when absent/invalid. */
-function parseFrontmatter(file) {
-  const text = readFileSync(file, 'utf8');
-  const m = text.match(/^﻿?---\r?\n([\s\S]*?)\r?\n---/);
-  if (!m) {
-    console.warn(`[skills-catalog] WARN: no frontmatter in ${file} — degraded entry`);
-    return null;
-  }
-  try {
-    return YAML.parse(m[1]);
-  } catch {
-    console.warn(`[skills-catalog] WARN: unparseable frontmatter in ${file} — degraded entry`);
-    return null;
-  }
-}
+const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+const front = (metadata) => '---\n' + YAML.stringify(metadata) + '---\n\n';
+const categoryLink = cat => '[' + cat + '](./' + slug(cat) + '.md)';
+const skillLink = skill => '[`' + skill.name + '`](./skills/' + skill.name + '.md)';
+const text = s => s.replace(/[<>{}]/g, c => ({'<':'&lt;', '>':'&gt;', '{':'&#123;', '}':'&#125;'})[c]);
 
-const files = findSkillFiles(skillsRoot).sort();
-const byCategory = new Map();
-let count = 0;
-
-for (const file of files) {
-  const fm = parseFrontmatter(file);
-  const rel = relative(skillsRoot, file); // e.g. kbd-analyze/SKILL.md
-  const dirName = rel.split('/')[0];
-  const name = (fm && fm.name) || dirName;
-  const description = ((fm && fm.description) || '').toString().trim().replace(/\s+/g, ' ');
-  const rawTags = fm && fm.metadata && fm.metadata.tags;
-  const tags = (Array.isArray(rawTags) ? rawTags : typeof rawTags === 'string' ? rawTags.split(/[,\s]+/) : [])
-    .filter((tag) => typeof tag === 'string' && tag.trim())
-    .map((tag) => tag.trim());
-  const version = (fm && (fm.version || (fm.metadata && fm.metadata.version))) || '';
-  const category = categoryFor(dirName);
-  if (!byCategory.has(category)) byCategory.set(category, []);
-  const invocation = uiEntries.get(dirName)?.invocation;
-  byCategory.get(category).push({ name, description, tags, version, rel, invocation });
-  count += 1;
-}
-
-rmSync(outDir, { recursive: true, force: true });
-mkdirSync(outDir, { recursive: true });
-
-const esc = (s) =>
-  s.replace(/[<>{}]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '{': '&#123;', '}': '&#125;' })[c]);
-const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-
-const categories = [...byCategory.keys()].sort();
-let indexRows = '';
+rmSync(outDir, {recursive: true, force: true});
+mkdirSync(join(outDir, 'skills'), {recursive: true});
+const categories = [...groups.keys()].sort();
+const index = [front({title: 'Skills Catalog', sidebar_label: 'Overview'}), '# Skills Catalog', '',
+  'Mini ' + contract.releaseVersion + ' includes **' + skills.length + ' skills** in ' + categories.length + ' categories.', '',
+  '| Category | Skills |', '| --- | --- |'];
 for (const cat of categories) {
-  const skills = byCategory.get(cat);
-  const catSlug = slug(cat);
-  indexRows += `| [${cat}](./${catSlug}) | ${skills.length} |\n`;
-
-  let body = `---\ntitle: ${cat}\nsidebar_label: ${cat}\n---\n\n# ${cat}\n\n`;
-  body += `${skills.length} skill${skills.length === 1 ? '' : 's'}. Source of truth: [\`skills/\`](https://github.com/Prometheus-AGS/prometheus-skills-mini/tree/main/skills).\n\n`;
-  if (cat === 'UI & UX') {
-    body += 'The shared catalog has 41 entries; mini carries 40 portable entries. Full-only Impeccable is excluded; prometheus-impeccable-core is a bounded adaptation, not native-engine parity. See [UI/UX routing](/docs/ui-ux/overview) for selective loading, project authority and completed-phase review. User-only entries are never invoked automatically.\n\n';
+  const members = groups.get(cat);
+  index.push('| ' + categoryLink(cat) + ' | ' + members.length + ' |');
+  const page = [front({title: cat}), '# ' + cat, '', '[All skills](./index.md)', ''];
+  for (const skill of members) {
+    // Keep category anchors stable for bookmarks from previous releases.
+    page.push('## ' + skill.name, '', text(skill.description), '', skillLink(skill) + (skill.invocation === 'user-only' ? ' · User-only invocation' : '') + ' · [Source](' + skill.sourceUrl + ')', '');
   }
-  for (const s of skills.sort((a, b) => a.name.localeCompare(b.name, 'en'))) {
-    body += `## ${esc(s.name)}\n\n`;
-    if (s.description) body += `${esc(s.description)}\n\n`;
-    const meta = [];
-    if (s.version) meta.push(`v${s.version}`);
-    if (s.invocation === 'user-only') meta.push('**User-only invocation**');
-    if (s.tags.length) meta.push(s.tags.map((t) => `\`${t}\``).join(' '));
-    meta.push(
-      `[source](https://github.com/Prometheus-AGS/prometheus-skills-mini/blob/main/skills/${s.rel})`,
-    );
-    body += `${meta.join(' · ')}\n\n`;
-  }
-  writeFileSync(join(outDir, `${catSlug}.md`), body);
+  writeFileSync(join(outDir, slug(cat) + '.md'), page.join('\n'));
 }
-
-writeFileSync(
-  join(outDir, 'index.md'),
-  `---\ntitle: Skills Catalog\nsidebar_label: Overview\n---\n\n# Skills Catalog\n\n` +
-    `Generated at build time from SKILL.md frontmatter — **${count} skills** across ${categories.length} categories.\n\n` +
-    `| Category | Skills |\n|---|---|\n${indexRows}`,
-);
-
-console.log(
-  `[skills-catalog] generated ${count} skills across ${categories.length} categories -> ${relative(siteDir, outDir)}`,
-);
+index.push('', '## All skills', '');
+for (const skill of skills) {
+  index.push('- ' + skillLink(skill));
+  const details = [front({title: skill.name, description: skill.description, mdx: {format:'md'}}),
+    '# ' + skill.name, '', text(skill.description), '',
+    '[Source instructions](' + skill.sourceUrl + ')', ''];
+  const labels = [];
+  if (skill.version) labels.push('Skill version ' + skill.version);
+  if (skill.invocation === 'user-only') labels.push('User-only invocation');
+  if (skill.tags) labels.push((Array.isArray(skill.tags) ? skill.tags : [skill.tags]).join(', '));
+  if (labels.length) details.push(labels.join(' · '), '');
+  details.push(skill.body, '');
+  writeFileSync(join(outDir, 'skills', skill.name + '.md'), details.join('\n'));
+}
+writeFileSync(join(outDir, 'index.md'), index.join('\n') + '\n');
+console.log('[skills-catalog] generated ' + skills.length + ' skill pages in ' + categories.length + ' categories.');

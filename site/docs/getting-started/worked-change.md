@@ -20,6 +20,17 @@ In your harness, ask: “Use KBD to plan this export change. Record who needs it
 
 Run the installed KBD status skill in the same project to recover the active phase and evidence references. To move to another supported harness, use the KBD handoff skill to produce a read-only packet with the repository state, open prerequisites and the next authorized action. A recipient should verify the project and revision before continuing. This file-based example works with optional memory and gateway services down. Its scope is Mini's local handoff. The Full/Companion live-peer exchange has its own implementation and evidence.
 
+From an initialized project with a runtime-owned phase, the following commands show the local handoff path. Replace `<pack-root>` with the Mini checkout. The first command creates and activates a new phase. Choose an unused phase ID when trying it yourself.
+
+```text
+node <pack-root>/scripts/kbd-new-phase.mjs export-order "Open newest requests first"
+prometheus kbd --path . status --json
+node <pack-root>/scripts/kbd-handoff.mjs --to codex --phase export-order --dry-run
+node <pack-root>/scripts/kbd-handoff.mjs --to codex --phase export-order
+```
+
+Read `activePath.phaseId` in the status output. It should be `export-order`. Preview prints the proposed packet; the last command writes it and a JSON sidecar. Read any warning about unresolved skills in the destination harness before asking that harness to resume. In an empty project, a read-only status request can report an uninitialized runtime until a phase is created.
+
 ## When a change needs another skill
 
 For a new export screen, use [UI routing](/docs/ui-ux/overview) to preserve the project's interface conventions. A team choosing between several designs can use [ideation](/docs/ideation/ideation-mindmap) to compare alternatives, then [artifact refinement](/docs/artifact-refinement/overview) to iterate on the chosen one. Convert an approved design with the [conversion guides](/docs/conversion/overview); generate a new project shell through [scaffolding](/docs/scaffolding/overview) only when the deliverable calls for one.

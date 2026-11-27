@@ -56,7 +56,9 @@ See `proposal.md` for motivation. Constraints that shape the approach:
    (`lib/kbd/memory.mjs`, REST, 2 s health probe); `pk search` through the
    `PK_BIN` convention in `lib/karpathy/transport.mjs`, with a timeout (the
    existing call in `build-review-packet.mjs` has none). Results are wrapped in
-   the untrusted fence from `lib/learning/file-tier.mjs`. Promotion is screened
+   an untrusted fence of the module's own, built like the one in
+   `lib/learning/file-tier.mjs` (capabilities do not import each other). The
+   script, as the entry point, resolves the project id and screens promotion
    with `secretPattern()` from `lib/karpathy/validate.mjs`. Every path resolves;
    none throws to the caller.
 

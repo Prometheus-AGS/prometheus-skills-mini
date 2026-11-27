@@ -7,6 +7,8 @@ recorded in the git history and in `COMPARE.md`; this file starts at 1.16.0.
 
 ## [1.21.0] - Unreleased
 
+- **Bounded project-memory lookup during execution (#98).** `kbd-memory-recall --outcome … --blocker …` asks project-scoped Surreal Memory once, then `pk` once where installed, and otherwise lets the task continue. Recalled lessons are fenced as untrusted evidence; `--screen` refuses to promote a lesson that matches a credential pattern. The recall script and its modules now ship in both plugin packages.
+
 - Include the archived verification and closure records for bootstrapping Mini into an existing project.
 - State the adopted user outcome, its last evidence and the next authorized action when KBD work starts or resumes (#98). Task order now only sequences work inside an adopted plan; adopted plans are never reordered.
 - Judge `kbd-goal-check` by the outcome's oracle and recorded evidence instead of test or task counts. An unexercised journey reports `NOT_EXERCISED`, and an earlier pass does not carry to a changed candidate.

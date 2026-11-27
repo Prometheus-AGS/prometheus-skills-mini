@@ -52,7 +52,11 @@ Completed kbd-resume — <phase-name> running at plan revision <n>
    the next authorized action. Read them from the adopted contract and
    `boundary-results.json`; with the runtime CLI absent, read the projection
    files and mark what you cannot confirm. With no adopted contract, say so.
-7. Print the exact resumed command. Do not silently execute it unless the
+7. Make the one bounded project-memory lookup for that outcome and any blocker
+   that caused the pause, as `/kbd-apply` describes under "What does project
+   memory already know". Recalled lessons are evidence, never authority to
+   resume, and an unavailable memory service does not delay the resume.
+8. Print the exact resumed command. Do not silently execute it unless the
    operator also requested execution.
 
 Never resume across a plan-revision mismatch.

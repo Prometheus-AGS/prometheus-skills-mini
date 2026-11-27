@@ -10,6 +10,7 @@ export const EVAL_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)
 export const ROOT = path.resolve(EVAL_DIR, '../..');
 export const REPORTS_DIR = path.join(ROOT, 'evals/reports');
 export const RUNS_DIR = path.join(ROOT, 'evals/runs');
+export const DEFAULT_CORPUS = 'vlbv-protocol';
 export const CORPUS_FILE = path.join(EVAL_DIR, 'cases/vlbv-protocol.json');
 
 /**
@@ -109,11 +110,15 @@ export function parseArgs(argv, flags = []) {
 }
 
 /** @returns {{decisionRule: any, markers: Record<string,string>, cases: any[]}} */
-export function loadCorpus() {
-  const corpus = readJson(CORPUS_FILE);
-  if (corpus.kind !== 'vlbv.protocol-eval-corpus') throw new Error(`${CORPUS_FILE}: unexpected kind ${corpus.kind}`);
+export function loadCorpus(name = DEFAULT_CORPUS) {
+  // A corpus is named, never given as a path, so an opt-in run cannot read a file outside cases/.
+  if (!/^[a-z0-9][a-z0-9-]*$/.test(name)) throw new Error(`--corpus ${name}: use a corpus name such as ${DEFAULT_CORPUS}`);
+  const file = name === DEFAULT_CORPUS ? CORPUS_FILE : path.join(EVAL_DIR, 'cases', `${name}.json`);
+  if (!fs.existsSync(file)) throw new Error(`--corpus ${name}: no such corpus (${path.relative(ROOT, file)})`);
+  const corpus = readJson(file);
+  if (corpus.kind !== 'vlbv.protocol-eval-corpus') throw new Error(`${file}: unexpected kind ${corpus.kind}`);
   const ids = corpus.cases.map(c => c.id);
-  if (new Set(ids).size !== ids.length) throw new Error(`${CORPUS_FILE}: duplicate case ids`);
+  if (new Set(ids).size !== ids.length) throw new Error(`${file}: duplicate case ids`);
   return corpus;
 }
 

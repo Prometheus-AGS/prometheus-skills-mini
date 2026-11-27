@@ -7,6 +7,7 @@ recorded in the git history and in `COMPARE.md`; this file starts at 1.16.0.
 
 ## [1.21.0] - Unreleased
 
+- **Opt-in qualification cases (#98).** `evals/vlbv-protocol/run.mjs --corpus outcome-first` runs nine agent cases for outcome-first resume, blocker advice and the bounded memory lookup against the generated package, with `--no-helper` for the fallback without `prometheus`. The default corpus and its reports are unchanged. No model session has been run yet; status is in the change's `receipts/README.md`.
 - **Native services start through a Node launcher.** The launchd and systemd units now run a private `start-service.mjs` with the installing Node binary; Mini no longer generates a shell script. Credentials stay in `launch.json`. An existing installation is re-applied once, and its earlier launcher is removed after the new job starts. Each native service now keeps one Node parent process.
 - **Phase closure with the real CLI.** An exceeded budget is reported in the full pack's wording (`budget-exceeded(exceeded:…)`). Two evaluators closing one phase at once no longer leave the second exiting 1 on a held completion-action lock; it waits for the first. Adoption writes the contract snapshot to the phase's canonical projection directory as well, so a nested bound phase closes under runtimes from full pack 1.18.
 - **Existing-project and rules audit on Windows.** A project path given as an 8.3 short name is accepted as the Git top-level, and linked worktrees are reported by native path.

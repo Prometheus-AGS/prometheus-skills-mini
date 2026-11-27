@@ -73,14 +73,42 @@ refuses instead of registering a duplicate. Duplicates would leave the planned
 tasks pending forever, so the change could never complete. To avoid mapping
 entirely, register plan tasks with the backend IDs.
 
+## Which outcome am I serving
+
+At task start and on every resume, before naming a task, state once:
+
+- **Outcome** — from `phases/<phase>/adopted-contract.json`, the scenario this
+  work serves: `actor`, `usefulOutcome`, `productionEntry`, `oracle` and
+  `reasonNow`. With no adopted contract, say "outcome not adopted" and quote
+  the phase goal; do not invent an outcome.
+- **Last meaningful evidence** — the latest entry for that scenario in
+  `boundary-results.json`, or "none yet". Evidence for an earlier candidate is
+  not evidence for a changed one, and a journey nobody exercised is
+  `NOT_EXERCISED`, not failed.
+- **Next authorized action** — the task selected below, and the authority it
+  runs under.
+
+The task list orders work; it is not the goal. Do not report task counts or
+test counts as progress toward the outcome.
+
 ## Which change am I on
 
-In this order:
+Inside the adopted slice, keep ledger order. In this order:
 
 1. `current-waypoint.json`'s `.nextChange`, when present.
 2. Otherwise the first entry in `phases/<phase>/progress.json`'s `changes[]`
    whose status is not `DONE`, honouring the phase plan's order. For a child
    phase, read the child's ledger, not the parent's.
+
+This order selects the next step toward the outcome; it never widens scope.
+A plan adopted before this section existed runs unchanged. When the operator
+names a higher priority, do not reorder or drop adopted work: request the
+existing scope change (`/kbd-resume` plan revision or a signed disposition)
+and continue the adopted plan until it is granted.
+
+Without the `prometheus` helper, present the same three statements from the
+projection files and mark anything you cannot confirm as unconfirmed. A
+projection grants no authority the runtime would not.
 
 **Never select work from `exactNextCommand`.** It is a stored operator string
 that is not rewritten by ordinary task completion and can drift far behind

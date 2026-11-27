@@ -41,6 +41,10 @@ independently useful outcome; name its real boundaries, material failure modes,
 and out-of-scope work. Separate verified facts from unresolved feasibility.
 Do not substitute test counts or ceremony for value. Escalate an unresolved
 choice only if it changes the outcome or makes the proposed exit unreachable.
+
+When several outcomes are eligible, list each with its hard dependencies and
+why it is needed now, so `/kbd-plan` can rank them if the operator opts in to
+outcome-ranked scope. Do not rank or drop any here.
 ## What this does
 
 Inspects the current codebase and produces a structured gap report against the

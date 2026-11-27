@@ -192,6 +192,21 @@ stage, or record an explicit skip with its reason under project policy.
 A deliberate stage skip is recorded with
 `stageHandoffSkip('plan', '<reason>', { cwd })`.
 
+## Outcome-ranked scope (opt-in, new phases only)
+
+The default scope is unchanged. When the operator opts in for a new phase, plan
+the smallest independently useful outcome first:
+
+- Rank eligible outcomes by operator priority, then material user impact; break
+  ties by time-to-value. Give the reason for the first place in one sentence.
+- For that outcome state its hard dependencies — what must exist before it can
+  be observed at its real entry point — and why it is needed now.
+- Keep speculative, low-consequence work off its critical path; list it after.
+
+This ranks outcomes, not tasks: inside the chosen slice the change list keeps
+its order. Never apply it to an adopted plan; a new priority there goes through
+the existing scope revision.
+
 ## Make exit reachable before adoption
 
 Trace each predicate to the assessed end-user task and value in the exact

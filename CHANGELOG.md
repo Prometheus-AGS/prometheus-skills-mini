@@ -8,6 +8,9 @@ recorded in the git history and in `COMPARE.md`; this file starts at 1.16.0.
 ## [1.21.0] - Unreleased
 
 - Include the archived verification and closure records for bootstrapping Mini into an existing project.
+- State the adopted user outcome, its last evidence and the next authorized action when KBD work starts or resumes (#98). Task order now only sequences work inside an adopted plan; adopted plans are never reordered.
+- Judge `kbd-goal-check` by the outcome's oracle and recorded evidence instead of test or task counts. An unexercised journey reports `NOT_EXERCISED`, and an earlier pass does not carry to a changed candidate.
+- Offer outcome-ranked scope as an opt-in for new phases in Assess and Plan. Defaults are unchanged.
 
 ## [1.20.1] - 2026-11-23
 

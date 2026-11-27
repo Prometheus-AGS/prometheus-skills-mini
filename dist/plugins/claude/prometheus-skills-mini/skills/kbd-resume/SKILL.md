@@ -47,7 +47,12 @@ Completed kbd-resume — <phase-name> running at plan revision <n>
    `atomicWrite` (after checking `assertProjectionWritable(root, target)` from
    `lib/kbd/runtime-authority.mjs`), record resume metadata, and move
    `.kbd-orchestrator/PAUSE` to a timestamped audit file.
-6. Print the exact resumed command. Do not silently execute it unless the
+6. State the adopted outcome the resumed work serves (actor, useful outcome,
+   real entry point, oracle, why now), the last meaningful evidence for it, and
+   the next authorized action. Read them from the adopted contract and
+   `boundary-results.json`; with the runtime CLI absent, read the projection
+   files and mark what you cannot confirm. With no adopted contract, say so.
+7. Print the exact resumed command. Do not silently execute it unless the
    operator also requested execution.
 
 Never resume across a plan-revision mismatch.

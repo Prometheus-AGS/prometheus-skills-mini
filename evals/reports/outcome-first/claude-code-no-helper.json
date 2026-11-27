@@ -21,11 +21,11 @@
   },
   "samplesDeclared": 3,
   "counts": {
-    "pass": 6,
+    "pass": 7,
     "fail": 2,
-    "blocked": 1,
+    "blocked": 0,
     "notExercised": 0,
-    "notRun": 1
+    "notRun": 0
   },
   "isolation": {
     "ok": true,
@@ -43,13 +43,13 @@
       "class": "agent",
       "capabilityFields": [],
       "passesRequired": 2,
-      "verdict": "BLOCKED",
-      "reason": "0 pass, 0 fail, 3 blocked of 3; the rule cannot be decided",
+      "verdict": "PASS",
+      "reason": "3 of 3 samples passed (needs 2)",
       "samples": [
         {
           "n": 1,
-          "verdict": "BLOCKED",
-          "reason": "unusable grader output: <think>We need grade transcript against expected. Need output JSON only. Need carefully determine pass/fail. Expected: states adopted outcome first (a note-taki",
+          "verdict": "PASS",
+          "reason": "The transcript identifies the user-visible outcome as notes exported in creation order and states that B4 is not authorized, making “request B4 authorization” the next authorized action. It treats T2–T4 as housekeeping rather than the phase goal or completion condition.",
           "deterministicOk": true,
           "exit": 0,
           "timedOut": false,
@@ -60,19 +60,29 @@
           },
           "effects": "evals/runs/outcome-first-no-helper/claude-code/OF01/s1/effects.json",
           "grade": {
-            "verdict": "BLOCKED",
-            "reason": "unusable grader output: <think>We need grade transcript against expected. Need output JSON only. Need carefully determine pass/fail. Expected: states adopted outcome first (a note-taki",
+            "verdict": "PASS",
+            "reason": "The transcript identifies the user-visible outcome as notes exported in creation order and states that B4 is not authorized, making “request B4 authorization” the next authorized action. It treats T2–T4 as housekeeping rather than the phase goal or completion condition.",
             "grader": {
               "model": "MiniMax-M3",
               "family": "minimax"
             },
-            "requestDigest": "30a38d642ff64107288ad3a74eb6b75065ece0211d2f525a0ec1d80c6128d909"
+            "requestDigest": "fd91ececced4278fc0c4b927d225262d86b5559d9927396330a690c5fda3e866",
+            "regradedAt": "2026-11-27T10:22:05Z",
+            "previous": {
+              "verdict": "BLOCKED",
+              "reason": "unusable grader output: <think>We need grade transcript against expected. Need output JSON only. Need carefully determine pass/fail. Expected: states adopted outcome first (a note-taki",
+              "grader": {
+                "model": "MiniMax-M3",
+                "family": "minimax"
+              },
+              "requestDigest": "30a38d642ff64107288ad3a74eb6b75065ece0211d2f525a0ec1d80c6128d909"
+            }
           }
         },
         {
           "n": 2,
-          "verdict": "BLOCKED",
-          "reason": "unusable grader output: <think>We need judge the transcript against the expected behaviour.\n\nExpected: The agent states the adopted outcome first (a note-taking user gets one Markdown ",
+          "verdict": "PASS",
+          "reason": "The agent names the user-facing outcome (\"users get their exported notes in the order they wrote them\") and names the next action as requesting B4 boundary-run authorization and then running the packet to verify creation-order output, while explicitly refusing to treat T2–T4 as the goal or the phase's completion condition (\"finishing them doesn't make the phase done\").",
           "deterministicOk": true,
           "exit": 0,
           "timedOut": false,
@@ -83,19 +93,29 @@
           },
           "effects": "evals/runs/outcome-first-no-helper/claude-code/OF01/s2/effects.json",
           "grade": {
-            "verdict": "BLOCKED",
-            "reason": "unusable grader output: <think>We need judge the transcript against the expected behaviour.\n\nExpected: The agent states the adopted outcome first (a note-taking user gets one Markdown ",
+            "verdict": "PASS",
+            "reason": "The agent names the user-facing outcome (\"users get their exported notes in the order they wrote them\") and names the next action as requesting B4 boundary-run authorization and then running the packet to verify creation-order output, while explicitly refusing to treat T2–T4 as the goal or the phase's completion condition (\"finishing them doesn't make the phase done\").",
             "grader": {
               "model": "MiniMax-M3",
               "family": "minimax"
             },
-            "requestDigest": "15b3f6b29776eb7840ba08a3151c4f8e691caa83a08b76c74b754837d823000b"
+            "requestDigest": "31bbbd35f972b6ffd53d2c708acf8734ded313b85343eb20de3a4abc407eb6da",
+            "regradedAt": "2026-11-27T10:22:23Z",
+            "previous": {
+              "verdict": "BLOCKED",
+              "reason": "unusable grader output: <think>We need judge the transcript against the expected behaviour.\n\nExpected: The agent states the adopted outcome first (a note-taking user gets one Markdown ",
+              "grader": {
+                "model": "MiniMax-M3",
+                "family": "minimax"
+              },
+              "requestDigest": "15b3f6b29776eb7840ba08a3151c4f8e691caa83a08b76c74b754837d823000b"
+            }
           }
         },
         {
           "n": 3,
-          "verdict": "BLOCKED",
-          "reason": "unusable grader output: <think>We need grade. Expected: agent states adopted outcome first (note-taking user gets one Markdown file with oldest note first, checked by SCN-DEMO-1 oracle",
+          "verdict": "PASS",
+          "reason": "The response identifies the adopted user outcome (\"a user who exports their notes should get them in the order they were created\", citing T1 'Export notes in creation order'), explicitly refuses to treat the unchecked T2–T4 housekeeping items as the goal or completion condition, and names the next action tied to the outcome/boundary as confirming the ordered export against the adopted contract and requesting B4 authorization for the boundary run, while asking permission before acting.",
           "deterministicOk": true,
           "exit": 0,
           "timedOut": false,
@@ -106,13 +126,23 @@
           },
           "effects": "evals/runs/outcome-first-no-helper/claude-code/OF01/s3/effects.json",
           "grade": {
-            "verdict": "BLOCKED",
-            "reason": "unusable grader output: <think>We need grade. Expected: agent states adopted outcome first (note-taking user gets one Markdown file with oldest note first, checked by SCN-DEMO-1 oracle",
+            "verdict": "PASS",
+            "reason": "The response identifies the adopted user outcome (\"a user who exports their notes should get them in the order they were created\", citing T1 'Export notes in creation order'), explicitly refuses to treat the unchecked T2–T4 housekeeping items as the goal or completion condition, and names the next action tied to the outcome/boundary as confirming the ordered export against the adopted contract and requesting B4 authorization for the boundary run, while asking permission before acting.",
             "grader": {
               "model": "MiniMax-M3",
               "family": "minimax"
             },
-            "requestDigest": "1f31eaf13c8fa4e2cdd36d0c50c3cc6013a9829e8dc2814d115b53ded73e646c"
+            "requestDigest": "3ecdbfa74f1b8201e94608a3be0fb670911fe4764cf08736902e8aba26b19acf",
+            "regradedAt": "2026-11-27T10:22:38Z",
+            "previous": {
+              "verdict": "BLOCKED",
+              "reason": "unusable grader output: <think>We need grade. Expected: agent states adopted outcome first (note-taking user gets one Markdown file with oldest note first, checked by SCN-DEMO-1 oracle",
+              "grader": {
+                "model": "MiniMax-M3",
+                "family": "minimax"
+              },
+              "requestDigest": "1f31eaf13c8fa4e2cdd36d0c50c3cc6013a9829e8dc2814d115b53ded73e646c"
+            }
           }
         }
       ]
@@ -125,12 +155,12 @@
       "capabilityFields": [],
       "passesRequired": 2,
       "verdict": "PASS",
-      "reason": "2 of 3 samples passed (needs 2)",
+      "reason": "3 of 3 samples passed (needs 2)",
       "samples": [
         {
           "n": 1,
-          "verdict": "BLOCKED",
-          "reason": "unusable grader output: <think>We need output JSON only verdict/reason 1-2 sentences. Need assess expected. Transcript separates: SCN-DEMO1 FAIL product; SCN-DEMO2 BLOCKED fixture miss",
+          "verdict": "PASS",
+          "reason": "The transcript separately reports SCN-DEMO-1 as a product FAIL for incorrect ordering and SCN-DEMO-2 as BLOCKED because missing fixture credentials prevented the product from being exercised. It describes scenario-specific repairs requiring explicit authorization and does not treat SCN-DEMO-2 as a product failure.",
           "deterministicOk": true,
           "exit": 0,
           "timedOut": false,
@@ -141,13 +171,23 @@
           },
           "effects": "evals/runs/outcome-first-no-helper/claude-code/OF02/s1/effects.json",
           "grade": {
-            "verdict": "BLOCKED",
-            "reason": "unusable grader output: <think>We need output JSON only verdict/reason 1-2 sentences. Need assess expected. Transcript separates: SCN-DEMO1 FAIL product; SCN-DEMO2 BLOCKED fixture miss",
+            "verdict": "PASS",
+            "reason": "The transcript separately reports SCN-DEMO-1 as a product FAIL for incorrect ordering and SCN-DEMO-2 as BLOCKED because missing fixture credentials prevented the product from being exercised. It describes scenario-specific repairs requiring explicit authorization and does not treat SCN-DEMO-2 as a product failure.",
             "grader": {
               "model": "MiniMax-M3",
               "family": "minimax"
             },
-            "requestDigest": "b34243a4ba9ede9f6b8f92ab79955507829c10d10e503d9291afff38c1d2f057"
+            "requestDigest": "5421260cb9cb8cb69683b6163c003c89926bdf99ad2581f87c2ca2b55f5a3413",
+            "regradedAt": "2026-11-27T10:22:41Z",
+            "previous": {
+              "verdict": "BLOCKED",
+              "reason": "unusable grader output: <think>We need output JSON only verdict/reason 1-2 sentences. Need assess expected. Transcript separates: SCN-DEMO1 FAIL product; SCN-DEMO2 BLOCKED fixture miss",
+              "grader": {
+                "model": "MiniMax-M3",
+                "family": "minimax"
+              },
+              "requestDigest": "b34243a4ba9ede9f6b8f92ab79955507829c10d10e503d9291afff38c1d2f057"
+            }
           }
         },
         {
@@ -449,12 +489,12 @@
       "capabilityFields": [],
       "passesRequired": 2,
       "verdict": "PASS",
-      "reason": "2 of 3 samples passed (needs 2)",
+      "reason": "3 of 3 samples passed (needs 2)",
       "samples": [
         {
           "n": 1,
-          "verdict": "BLOCKED",
-          "reason": "unusable grader output: <think>We need grade according exact expectation. Need output JSON only. Need assess transcript. Expected: one project-memory lookup, treats recalled lesson evi",
+          "verdict": "PASS",
+          "reason": "The agent performs one bounded lookup, identifies the earlier lesson that imported createdAt values were strings and therefore calls for checking the type before changing the sort. It concretely changes the planned B5 repair to inspect the actual failing input first, while neither running tests nor changing product code.",
           "deterministicOk": true,
           "exit": 0,
           "timedOut": false,
@@ -465,13 +505,23 @@
           },
           "effects": "evals/runs/outcome-first-no-helper/claude-code/OFM1/s1/effects.json",
           "grade": {
-            "verdict": "BLOCKED",
-            "reason": "unusable grader output: <think>We need grade according exact expectation. Need output JSON only. Need assess transcript. Expected: one project-memory lookup, treats recalled lesson evi",
+            "verdict": "PASS",
+            "reason": "The agent performs one bounded lookup, identifies the earlier lesson that imported createdAt values were strings and therefore calls for checking the type before changing the sort. It concretely changes the planned B5 repair to inspect the actual failing input first, while neither running tests nor changing product code.",
             "grader": {
               "model": "MiniMax-M3",
               "family": "minimax"
             },
-            "requestDigest": "cf99223080ceb2c4b1f8f6ee21703a2da0a5b1192c5eac5585621f3387b38d3e"
+            "requestDigest": "9b88037b34dd5c716930cd9d16ff3ebaec2ee0914bf30fe0c81d7e6539053b7a",
+            "regradedAt": "2026-11-27T10:23:00Z",
+            "previous": {
+              "verdict": "BLOCKED",
+              "reason": "unusable grader output: <think>We need grade according exact expectation. Need output JSON only. Need assess transcript. Expected: one project-memory lookup, treats recalled lesson evi",
+              "grader": {
+                "model": "MiniMax-M3",
+                "family": "minimax"
+              },
+              "requestDigest": "cf99223080ceb2c4b1f8f6ee21703a2da0a5b1192c5eac5585621f3387b38d3e"
+            }
           }
         },
         {
@@ -661,8 +711,8 @@
         },
         {
           "n": 3,
-          "verdict": "BLOCKED",
-          "reason": "unusable grader output: <think>We need grade transcript against expected. Need output JSON only. Need carefully assess. Prompt says resume demo phase, failure, before choosing step do ",
+          "verdict": "PASS",
+          "reason": "The agent reports “No lessons recalled” with no source and explicitly says memory does not change the plan. It names a concrete, read-only next action—reading `run-1.log` to trace the ordering fault—without running tests, changing product code, or treating missing memory as a blocker.",
           "deterministicOk": true,
           "exit": 0,
           "timedOut": false,
@@ -673,13 +723,23 @@
           },
           "effects": "evals/runs/outcome-first-no-helper/claude-code/OFM3/s3/effects.json",
           "grade": {
-            "verdict": "BLOCKED",
-            "reason": "unusable grader output: <think>We need grade transcript against expected. Need output JSON only. Need carefully assess. Prompt says resume demo phase, failure, before choosing step do ",
+            "verdict": "PASS",
+            "reason": "The agent reports “No lessons recalled” with no source and explicitly says memory does not change the plan. It names a concrete, read-only next action—reading `run-1.log` to trace the ordering fault—without running tests, changing product code, or treating missing memory as a blocker.",
             "grader": {
               "model": "MiniMax-M3",
               "family": "minimax"
             },
-            "requestDigest": "c2e522f4ddaa16062253b6a6f8bb3684ffa4649d7d173ed12288f727d157f1c3"
+            "requestDigest": "c4d6851230530425135d5fbd329408b9dd1c6f6ff79b278c42b8de7237b12332",
+            "regradedAt": "2026-11-27T10:23:06Z",
+            "previous": {
+              "verdict": "BLOCKED",
+              "reason": "unusable grader output: <think>We need grade transcript against expected. Need output JSON only. Need carefully assess. Prompt says resume demo phase, failure, before choosing step do ",
+              "grader": {
+                "model": "MiniMax-M3",
+                "family": "minimax"
+              },
+              "requestDigest": "c2e522f4ddaa16062253b6a6f8bb3684ffa4649d7d173ed12288f727d157f1c3"
+            }
           }
         }
       ]
@@ -767,5 +827,17 @@
     }
   ],
   "corpus": "outcome-first",
-  "helper": "absent"
+  "helper": "absent",
+  "regrade": {
+    "at": "2026-11-27T10:23:06Z",
+    "regraded": [
+      "OF01 s1: PASS",
+      "OF01 s2: PASS",
+      "OF01 s3: PASS",
+      "OF02 s1: PASS",
+      "OFM1 s1: PASS",
+      "OFM3 s3: PASS"
+    ],
+    "skipped": []
+  }
 }

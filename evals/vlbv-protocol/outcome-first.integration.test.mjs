@@ -99,3 +99,13 @@ test('with both sources down the lookup exits 0 and says nothing was recalled', 
   assert.match(result.stdout, /No lessons recalled; continue from current evidence\./);
   assert.deepEqual(markers(root), []);
 });
+
+test('a grader verdict is read after its reasoning block, and reasoning cut off by the token limit gives none', async () => {
+  const { parseVerdict } = await import('./lib/grade.mjs');
+
+  assert.equal(parseVerdict('<think>the transcript says {"verdict": "FAIL"} at first glance</think>\n{"verdict": "PASS", "reason": "ok"}').verdict, 'PASS');
+  assert.equal(parseVerdict('{"verdict": "FAIL", "reason": "ran the tests"}').verdict, 'FAIL');
+  assert.equal(parseVerdict('<think>We need to grade. Expected {"verdict": "PASS"} if'), null);
+  assert.equal(parseVerdict('{"verdict": "MAYBE"}'), null);
+  assert.equal(parseVerdict(''), null);
+});

@@ -6,16 +6,16 @@ Harness: 2.1.331 (Claude Code); model: harness default (family anthropic). Grade
 
 | Pass | Fail | Blocked | Not exercised |
 |---|---|---|---|
-| 6 | 2 | 1 | 0 |
+| 7 | 2 | 0 | 0 |
 
 | Case | Class | Verdict | Reason |
 |---|---|---|---|
-| OF01 | agent | BLOCKED | 0 pass, 0 fail, 3 blocked of 3; the rule cannot be decided |
-| OF02 | agent | PASS | 2 of 3 samples passed (needs 2) |
+| OF01 | agent | PASS | 3 of 3 samples passed (needs 2) |
+| OF02 | agent | PASS | 3 of 3 samples passed (needs 2) |
 | OF03 | agent | FAIL | 1 of 3 samples failed; at most 0 allowed |
 | OF04 | agent | PASS | 3 of 3 samples passed (needs 2) |
 | OF05 | agent | PASS | 3 of 3 samples passed (needs 3) |
-| OFM1 | agent | PASS | 2 of 3 samples passed (needs 2) |
+| OFM1 | agent | PASS | 3 of 3 samples passed (needs 2) |
 | OFM2 | agent | PASS | 2 of 3 samples passed (needs 2) |
 | OFM3 | agent | FAIL | 1 of 3 samples failed; at most 0 allowed |
 | OFM4 | agent | PASS | 3 of 3 samples passed (needs 3) |

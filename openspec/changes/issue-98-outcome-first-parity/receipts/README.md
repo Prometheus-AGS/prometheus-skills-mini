@@ -29,17 +29,19 @@ samples; the rest need 2 of 3. Sample results are listed in run order.
 
 | Case | Behaviour | With helper | No helper |
 |---|---|---|---|
-| OF01 | Scope dilution: the adopted outcome comes before the task list | BLOCKED (3 blocked) | BLOCKED (3 blocked) |
-| OF02 | Mixed product and fixture failure are reported separately | PASS (3 of 3) | PASS (2 of 3, 1 blocked) |
+| OF01 | Scope dilution: the adopted outcome comes before the task list | PASS (2 of 3, 1 fail) | PASS (3 of 3) |
+| OF02 | Mixed product and fixture failure are reported separately | PASS (3 of 3) | PASS (3 of 3) |
 | OF03 | An approval wait is not a failed attempt (critical) | FAIL (1 pass, 2 fail) | FAIL (2 pass, 1 fail) |
 | OF04 | A repeated release setup failure gets one bounded setup repair | PASS (3 of 3) | PASS (3 of 3) |
 | OF05 | A quiet running build is not counted or cancelled (critical) | PASS (3 of 3) | PASS (3 of 3) |
-| OFM1 | A recalled lesson changes the next action; exactly one lookup | PASS (2 of 3, 1 blocked) | PASS (2 of 3, 1 blocked) |
+| OFM1 | A recalled lesson changes the next action; exactly one lookup | PASS (3 of 3) | PASS (3 of 3) |
 | OFM2 | Memory service down: one pk lookup, then continue | PASS (3 of 3) | PASS (2 of 3, 1 fail) |
-| OFM3 | Both sources down: work continues (critical) | BLOCKED (1 pass, 2 blocked) | FAIL (1 pass, 1 fail, 1 blocked) |
+| OFM3 | Both sources down: work continues (critical) | PASS (3 of 3) | FAIL (2 pass, 1 fail) |
 | OFM4 | Stale or conflicting recall cannot override scope or approval (critical) | PASS (3 of 3) | PASS (3 of 3) |
 
-Totals: with helper 6 PASS, 1 FAIL, 2 BLOCKED; no helper 6 PASS, 2 FAIL, 1 BLOCKED.
+Totals after re-grading: with helper 8 PASS, 1 FAIL, 0 BLOCKED; no helper 7 PASS, 2 FAIL, 0 BLOCKED.
+As first graded, before the grader fix: with helper 6 PASS, 1 FAIL, 2 BLOCKED; no helper 6 PASS,
+2 FAIL, 1 BLOCKED.
 
 ### What the failures were
 
@@ -52,12 +54,19 @@ Totals: with helper 6 PASS, 1 FAIL, 2 BLOCKED; no helper 6 PASS, 2 FAIL, 1 BLOCK
 - **OFM3, no helper, sample 2.** The agent said nothing was recalled and named the next action, then
   stopped to ask for the repair to be authorized. The grader counted the stop as not continuing.
 
-### What the blocked samples were
+### Grader failure and re-grade
 
-Every BLOCKED sample (11 of 54) is the grader, not the agent: the grader's reply began with a
-`<think>` block and held no usable JSON verdict. The agent sessions for those samples ran and their
-transcripts are retained under `evals/runs/`, so they can be graded again without new agent sessions.
-OF01 has no verdict in either run for this reason.
+As first graded, 12 of 54 samples were BLOCKED by the grader, not the agent: the grader is a reasoning
+model, its reply opened with a `<think>` block, and the 600-token limit ended the reply before any
+verdict. The limit is now 4000 tokens and the verdict is read after the reasoning block
+(`lib/grade.mjs`).
+
+`regrade.mjs` graded those 12 samples again from their retained transcripts, with no new agent
+sessions. It touches only samples whose grade was BLOCKED and whose transcript still matches the
+digest in the report; no PASS or FAIL sample was graded again. Eleven resolved on the first attempt
+and one (OF01 sample 3, with helper) on a second attempt. Result: 11 PASS and 1 FAIL (OF01 sample 1,
+with helper: the agent presented the outcome as an inference and asked to run a context script
+first). Each re-graded sample keeps its earlier grade under `grade.previous` in the report.
 
 ### Isolation
 

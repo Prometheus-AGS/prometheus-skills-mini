@@ -124,8 +124,9 @@ function linkedWorktrees(root) {
   return result.stdout
     .split(/\r?\n/)
     .filter((line) => line.startsWith('worktree '))
-    .map((line) => line.slice('worktree '.length))
-    .filter((directory) => real(directory) !== real(root));
+    // Reported in the same native form as the project root, not as Git spells it.
+    .map((line) => real(line.slice('worktree '.length)))
+    .filter((directory) => directory !== real(root));
 }
 
 const skillVersion = (file) => {

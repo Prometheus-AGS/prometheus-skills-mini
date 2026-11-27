@@ -54,6 +54,31 @@ const SYSTEM = [
   'Reply with one JSON object and nothing else: {"verdict": "PASS" | "FAIL", "reason": "<one or two sentences citing the transcript>"}.',
 ].join(' ');
 
+// The graders are reasoning models: the reply can open with a <think> block that counts against the
+// token limit. At 600 tokens the reasoning used the whole reply and no verdict followed (11 of 54
+// samples in the first outcome-first run). The limit leaves room for the reasoning and the verdict.
+const GRADER_MAX_TOKENS = 4000;
+
+/**
+ * The verdict object in a grader reply, or null. Reasoning inside <think> is dropped first, including
+ * a block the token limit cut off before it closed, so braces in the reasoning are never read as the
+ * verdict. The last JSON object that carries PASS or FAIL wins.
+ * @param {unknown} content @returns {{verdict: 'PASS'|'FAIL', reason?: unknown} | null}
+ */
+export function parseVerdict(content) {
+  const answer = String(content ?? '').replace(/<think>[\s\S]*?<\/think>/gi, '').replace(/<think>[\s\S]*$/i, '');
+  const candidates = answer.match(/\{[^{}]*\}/g) ?? [];
+  for (const candidate of candidates.reverse()) {
+    try {
+      const parsed = JSON.parse(candidate);
+      if (['PASS', 'FAIL'].includes(parsed?.verdict)) return parsed;
+    } catch {
+      // Not JSON; try the next candidate.
+    }
+  }
+  return null;
+}
+
 /**
  * Grade one sample. Never throws: an unreachable or unusable grader yields BLOCKED.
  * @param {{testCase: any, transcript: string, harnessFamily: string}} input
@@ -68,7 +93,7 @@ export async function gradeSample({ testCase, transcript, harnessFamily }) {
     `Grading rule:\n${testCase.rubric}`,
     `Transcript:\n<<<\n${clip(transcript)}\n>>>`,
   ].join('\n\n');
-  const body = { model: grader.model, messages: [{ role: 'system', content: SYSTEM }, { role: 'user', content: user }], max_tokens: 600, temperature: 0 };
+  const body = { model: grader.model, messages: [{ role: 'system', content: SYSTEM }, { role: 'user', content: user }], max_tokens: GRADER_MAX_TOKENS, temperature: 0 };
   const requestDigest = sha256(JSON.stringify(body));
   const { url, token } = await gateway();
   if (!url) return { verdict: 'BLOCKED', reason: 'no OpenAI-compatible gateway reachable (LITER_LLM_BASE_URL or models.toml candidates)', grader, requestDigest };
@@ -89,9 +114,8 @@ export async function gradeSample({ testCase, transcript, harnessFamily }) {
       return { verdict: 'BLOCKED', reason: `gateway answered as ${answeredBy}, not ${grader.model}`, grader, requestDigest };
     }
     const content = payload?.choices?.[0]?.message?.content ?? '';
-    const match = String(content).match(/\{[\s\S]*\}/);
-    const parsed = match ? JSON.parse(match[0]) : null;
-    if (!parsed || !['PASS', 'FAIL'].includes(parsed.verdict)) {
+    const parsed = parseVerdict(content);
+    if (!parsed) {
       return { verdict: 'BLOCKED', reason: `unusable grader output: ${String(content).slice(0, 160)}`, grader, requestDigest };
     }
     return { verdict: parsed.verdict, reason: String(parsed.reason ?? '').slice(0, 600), grader, requestDigest };

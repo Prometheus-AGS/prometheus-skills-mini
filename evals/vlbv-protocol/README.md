@@ -56,6 +56,7 @@ enables one, so such a harness is reported not run rather than spawned through
 | `validate-report.mjs --harness <id> [--negative]` | Re-derives every verdict from retained artifacts; `--negative` plants a PASS with a missing transcript and a PASS contradicted by its effects |
 | `apply-capabilities.mjs --reports evals/reports [--negative]` | Promotes `config/harnesses/capabilities.json` fields from PASS cases only, then runs `scripts/check-harness-capabilities.mjs`; `--negative` checks that gate rejects three bad promotions |
 | `scan-fixture.mjs --case mixed\|all-after` | Drives the closure packet's pre-authorization artifact scan (CR-33); needs `scripts/kbd-boundary-authorize.mjs` and reports BLOCKED without it |
+| `regrade.mjs --corpus <name> --harness <id> [--no-helper]` | Grades again only the samples a grader failure left BLOCKED, from retained transcripts; never touches a PASS or FAIL sample |
 | `scan-secrets.mjs <path>...` | Refuses credential-shaped text in reports and transcripts (AT 22) |
 
 `npm run eval:vlbv-protocol -- --harness all` is the same as `run.mjs`. A

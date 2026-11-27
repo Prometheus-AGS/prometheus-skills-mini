@@ -17,18 +17,18 @@ group: `npm run check`, `npm run check:distribution`,
 
 ## 2. Bounded memory lookup
 
-- [ ] 2.1 Create `lib/kbd/recall.mjs` (one Surreal lookup keyed to outcome and blocker, one `pk search` fallback with timeout, always resolves, untrusted fence) with `lib/kbd/recall.test.mjs` covering: Surreal hit, Surreal down then `pk`, both down, `pk` absent; verify the test file passes
-- [ ] 2.2 Add `--outcome` and `--blocker` to `scripts/kbd-memory-recall.mjs`, keeping pre-assess behaviour, and add promotion screening with `secretPattern()`; verify existing recall tests and a new secret-refusal test pass
-- [ ] 2.3 Add the recall rule (when, once, evidence not instruction, record how it changed the next action, safe promotion) to `skills/kbd-apply`, `kbd-execute`, `kbd-resume` and `kbd-memory-recall` SKILL.md; verify against the three memory requirements
-- [ ] 2.4 Add `scripts/kbd-memory-recall.mjs`, `lib/kbd/memory.mjs`, `lib/kbd/memory-log.mjs` and `lib/kbd/recall.mjs` to the payload list in `lib/distribution/package-builder.mjs`; verify the files exist under `dist/plugins/claude` and `dist/plugins/codex` after `npm run build:distribution`
-- [ ] 2.5 Add a CHANGELOG entry and run the boundary packet; verify all commands exit 0
+- [x] 2.1 Create `lib/kbd/recall.mjs` (one Surreal lookup keyed to outcome and blocker, one `pk search` fallback with timeout, always resolves, its own untrusted fence) with `lib/kbd/recall.test.mjs` covering: Surreal hit, Surreal down then `pk`, both down, `pk` absent; verify the test file passes
+- [x] 2.2 Add `--outcome` and `--blocker` to `scripts/kbd-memory-recall.mjs`, keeping pre-assess behaviour, and add a `--screen` mode that screens a lesson for promotion with `secretPattern()`; verify existing recall tests and a new secret-refusal test pass
+- [x] 2.3 Add the recall rule (when, once, evidence not instruction, record how it changed the next action, safe promotion) to `skills/kbd-apply`, `kbd-execute`, `kbd-resume` and `kbd-memory-recall` SKILL.md; verify against the three memory requirements
+- [x] 2.4 Add `scripts/kbd-memory-recall.mjs` to the payload list in `lib/distribution/package-builder.mjs` (its imports, including `lib/kbd/memory.mjs` and `lib/kbd/recall.mjs`, follow by closure); verify the script and those two modules exist under `dist/plugins/claude` and `dist/plugins/codex` after `npm run build:distribution`
+- [x] 2.5 Add a CHANGELOG entry and run the boundary packet; verify the six check commands exit 0 and `npm test` has no failure that is absent on `main` (2026-11-26: checks exit 0; `npm test` 1408 tests, the same 128 failures as `main`, 9 new tests pass)
 
 ## 3. Advisory blockers and installed-rules audit
 
-- [ ] 3.1 Create `lib/kbd/blocker-advice.mjs` (pure classifier) with tests for: approval wait not counted, running job not counted, new evidence resets, two completed same-blocker attempts yield one of four dispositions; verify the test file passes
-- [ ] 3.2 Add an `advise` mode to `scripts/kbd-bottleneck-detector.mjs` that works without the `prometheus` guard, update `skills/kbd-bottleneck-detector/SKILL.md`, and add the script and its modules to the payload list; verify `scripts/kbd-bottleneck-detector.test.mjs` passes and the script exists in both `dist` packages
-- [ ] 3.3 Extend the existing-project `--audit` (new sibling module) to report nested instruction files, harness rule directories, linked worktrees, outcome-policy conflicts and installed version, read-only; verify with a new integration test that asserts the working tree is unchanged and both versions are reported
-- [ ] 3.4 Document the audit output in `skills/prometheus-context-bootstrap/SKILL.md`, add a CHANGELOG entry and run the boundary packet; verify all commands exit 0
+- [x] 3.1 Create `lib/kbd/blocker-advice.mjs` (pure classifier) with tests for: approval wait not counted, running job not counted, new evidence resets, two completed same-blocker attempts yield one of four dispositions; verify the test file passes
+- [x] 3.2 Add an `advise` mode to `scripts/kbd-bottleneck-detector.mjs` that works without the `prometheus` guard, update `skills/kbd-bottleneck-detector/SKILL.md`, and add the script and its modules to the payload list; verify `scripts/kbd-bottleneck-detector.test.mjs` passes and the script exists in both `dist` packages
+- [x] 3.3 Add a separate read-only `audit-rules.mjs` beside the existing-project script (which the active `mini-bootstrap-existing-project-goals` phase pins and this change does not edit) to report nested instruction files, harness rule directories, linked worktrees, outcome-policy conflicts and installed version, read-only; verify with a new integration test that asserts the working tree is unchanged and both versions are reported
+- [x] 3.4 Document the audit output in `skills/prometheus-context-bootstrap/SKILL.md`, add a CHANGELOG entry and run the boundary packet; verify the six check commands exit 0 and `npm test` has no failure that is absent on `main`
 
 ## 4. Qualification evidence
 

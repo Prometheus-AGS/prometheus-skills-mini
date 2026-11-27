@@ -8,7 +8,7 @@ files are effective in a project and which pack version is actually installed.
 ## ADDED Requirements
 
 ### Requirement: Audit covers every effective rule source
-The existing-project audit SHALL report root and nested `AGENTS.md` and `CLAUDE.md` files, their imports, harness rule directories and linked worktrees, and SHALL identify which of them conflict with the outcome-first policy.
+The rules audit SHALL report root and nested `AGENTS.md` and `CLAUDE.md` files, their imports, harness rule directories and linked worktrees, and SHALL identify which of them conflict with the outcome-first policy.
 
 #### Scenario: Nested rule file conflicts
 - **WHEN** a nested rule file instructs sessions to treat a test count as completion

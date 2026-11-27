@@ -9,11 +9,19 @@
 // Judgment call: the source's local ranking is a `jq` pipeline (tokenizing entity/observation
 // text, scoring, sorting). Ported as plain JS functions below — no new dependency, same scoring
 // fields and tie-break order.
+//
+// Two further modes, both of which also always exit 0:
+//   --outcome <text> [--blocker <text>]  one bounded lookup (lib/kbd/recall.mjs); prints the
+//                                        fenced lessons, or a line saying none were recalled.
+//   --screen <file>                      says whether a lesson may be promoted to shared memory.
 
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { atomicWrite } from '../lib/platform/atomic-write.mjs';
 import { createMemoryProbe } from '../lib/kbd/memory.mjs';
+import { recallLessons } from '../lib/kbd/recall.mjs';
+import { secretPattern } from '../lib/karpathy/validate.mjs';
+import { resolveProject as resolveProjectIdentity } from '../lib/learning/identity.mjs';
 
 function tokens(text) {
   const lower = String(text ?? '').toLowerCase();
@@ -136,7 +144,45 @@ function resolveProject() {
   return 'unknown';
 }
 
+function flagValue(argv, flag) {
+  const index = argv.indexOf(flag);
+  return index >= 0 ? (argv[index + 1] ?? '') : '';
+}
+
+async function recallForOutcome(argv) {
+  const { projectId } = resolveProjectIdentity(process.cwd(), { env: process.env });
+  const result = await recallLessons({
+    outcome: flagValue(argv, '--outcome'),
+    blocker: flagValue(argv, '--blocker'),
+    projectId,
+    root: '.',
+  });
+  process.stdout.write(result.context ? `${result.context}\n` : 'No lessons recalled; continue from current evidence.\n');
+  process.stderr.write(`Completed kbd-memory-recall — bounded lookup (source: ${result.source})\n`);
+}
+
+function screenLessonFile(file) {
+  let text;
+  try {
+    text = readFileSync(file, 'utf8');
+  } catch {
+    process.stdout.write(`promote: no — cannot read ${file}\n`);
+    return;
+  }
+  const refused = secretPattern().test(text);
+  process.stdout.write(refused ? 'promote: no — lesson appears to contain a secret\n' : 'promote: yes — no secret pattern found\n');
+}
+
 async function main(argv) {
+  process.exitCode = 0;
+  if (argv.includes('--screen')) {
+    screenLessonFile(flagValue(argv, '--screen'));
+    return;
+  }
+  if (argv.includes('--outcome') || argv.includes('--blocker')) {
+    await recallForOutcome(argv);
+    return;
+  }
   const phase = resolvePhase(argv[0] ?? '');
   if (!phase) {
     process.stderr.write('kbd-memory-recall: no phase resolved (arg empty + no waypoint)\n');

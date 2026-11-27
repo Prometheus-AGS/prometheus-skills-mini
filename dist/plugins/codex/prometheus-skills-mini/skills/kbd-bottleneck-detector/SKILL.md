@@ -1,9 +1,9 @@
 ---
 name: kbd-bottleneck-detector
-description: Evaluate or repair canonical KBD task, change and phase boundaries. Use when progress receipts, projections, or build gates may be stale, or when the user mentions "bottleneck detector". Do NOT use for creating or advancing phases (see kbd-new-child and kbd-next-phase).
+description: Evaluate or repair canonical KBD task, change and phase boundaries. Use when progress receipts, projections, or build gates may be stale, or when the user mentions "bottleneck detector". Also gives an advisory recommendation when the same blocker has stopped two completed attempts. Do NOT use for creating or advancing phases (see kbd-new-child and kbd-next-phase).
 license: MIT
 metadata:
-  version: '1.0.0'
+  version: '1.1.0'
   tags: 'process, orchestration, recovery'
 ---
 
@@ -64,6 +64,50 @@ verbatim, followed by `Position: <position> @ revision <authoritativeRevision>`.
 Ordinary evaluation is deterministic, local, and network-free. At phase or
 child completion, on ambiguous canonical authority, or after the same violation
 twice at one revision, load and run the installed `adversarial-review` skill.
+
+## Advice for a repeated blocker
+
+`advise` needs no `prometheus` CLI, changes nothing and never stops or
+cancels work. It reads attempt records you supply; it does not infer attempts
+from logs.
+
+```bash
+node scripts/kbd-bottleneck-detector.mjs advise <attempts.json>
+```
+
+`attempts.json` is a list, oldest first:
+
+```json
+[
+  { "blocker": "release-signing", "completed": true, "waitingOnApproval": false, "evidence": "ci-run-812", "kind": "setup" },
+  { "blocker": "release-signing", "completed": true, "waitingOnApproval": false, "evidence": "ci-run-812", "kind": "setup" }
+]
+```
+
+- `completed` is true only when the attempt ran to an end. A job that is still
+  running, or whose progress you cannot see, is not a completed attempt: do
+  not count it and do not stop it.
+- `waitingOnApproval` marks an attempt held for an approval. A wait is not a
+  failed attempt, and no recommendation is issued while one is pending.
+- `evidence` is a reference to what the attempt observed. A new value is new
+  evidence and resets the count.
+- `kind` is what stands in the way: `setup`, `measurement`, `authority` or
+  `architecture`.
+
+After two completed attempts at the same blocker with no new evidence it
+recommends exactly one of:
+
+| Kind | Recommendation |
+|---|---|
+| `setup` | Bounded setup repair: fix the environment, fixture or tooling once, within a stated limit. |
+| `measurement` | Measurement repair: fix the check or oracle; do not change the product to satisfy it. |
+| `authority` (or kind not stated) | One exact authority handoff: one question or approval request to the person who decides. |
+| `architecture` | A scoped architecture child, opened through the existing child-phase path. |
+
+The recommendation is advice. It grants no authority, opens no child and
+approves nothing: act on it only through the existing scope, approval and
+child-phase paths. Report product failures and fixture or harness failures
+separately; a harness failure is not a product failure.
 
 Never attach this detector to operator-requested Stop. Stop remains advisory and
 fail-open.

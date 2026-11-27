@@ -3,7 +3,7 @@ name: kbd-bottleneck-detector
 description: Evaluate or repair canonical KBD task, change and phase boundaries. Use when progress receipts, projections, or build gates may be stale, or when the user mentions "bottleneck detector". Also gives an advisory recommendation when the same blocker has stopped two completed attempts. Do NOT use for creating or advancing phases (see kbd-new-child and kbd-next-phase).
 license: MIT
 metadata:
-  version: '1.1.0'
+  version: '1.1.1'
   tags: 'process, orchestration, recovery'
 ---
 
@@ -72,8 +72,11 @@ cancels work. It reads attempt records you supply; it does not infer attempts
 from logs.
 
 ```bash
-node scripts/kbd-bottleneck-detector.mjs advise <attempts.json>
+node "<package-root>/scripts/kbd-bottleneck-detector.mjs" advise <attempts.json>
 ```
+
+`<package-root>` is the directory the Mini package is installed in, not this
+project's own `scripts/` directory.
 
 `attempts.json` is a list, oldest first:
 
@@ -103,6 +106,16 @@ recommends exactly one of:
 | `measurement` | Measurement repair: fix the check or oracle; do not change the product to satisfy it. |
 | `authority` (or kind not stated) | One exact authority handoff: one question or approval request to the person who decides. |
 | `architecture` | A scoped architecture child, opened through the existing child-phase path. |
+
+When the result has no recommendation it carries `guidance` instead. Follow
+it and add nothing of your own:
+
+- **Approval pending:** keep waiting. Do not advise escalating, setting a
+  deadline, going to another decider or sending the request again. Whether to
+  chase the approval is the operator's decision; say so if asked. Continue only
+  with work that does not depend on it.
+- **Still running or progress unknown:** leave it running. Do not stop it or
+  count it as failed.
 
 The recommendation is advice. It grants no authority, opens no child and
 approves nothing: act on it only through the existing scope, approval and

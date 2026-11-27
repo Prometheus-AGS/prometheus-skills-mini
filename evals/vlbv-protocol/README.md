@@ -61,6 +61,24 @@ enables one, so such a harness is reported not run rather than spawned through
 `npm run eval:vlbv-protocol -- --harness all` is the same as `run.mjs`. A
 negative-control command exits 0 when the expected rejection was observed.
 
+## Opt-in corpus: outcome-first (Mini #98)
+
+`cases/outcome-first.json` holds 9 agent cases for outcome-first resume, advisory blocker advice and
+the bounded project-memory lookup. It runs only when named:
+
+```text
+node evals/vlbv-protocol/run.mjs --corpus outcome-first --harness claude-code --samples 3
+node evals/vlbv-protocol/run.mjs --corpus outcome-first --harness claude-code --samples 3 --no-helper
+```
+
+Each sample installs the generated Mini package into the scratch project and copies seven KBD skills
+from it. The lookup script the agent runs is the packaged one; its memory service is a stand-in on a
+loopback port and its pk is pinned, so no sample reaches a real memory service or knowledge base. Each
+search writes `.eval-markers/memory-search-<n>`, which the deterministic checks read. `--no-helper`
+removes `prometheus` from PATH. Reports go to `evals/reports/outcome-first/` and never replace the
+default corpus's reports. Status is recorded in
+`openspec/changes/issue-98-outcome-first-parity/receipts/README.md`.
+
 ## Isolation
 
 Each sample runs in a scratch root under the system temp directory with its own

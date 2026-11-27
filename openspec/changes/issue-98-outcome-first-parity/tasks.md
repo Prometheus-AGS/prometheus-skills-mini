@@ -32,10 +32,10 @@ group: `npm run check`, `npm run check:distribution`,
 
 ## 4. Qualification evidence
 
-- [ ] 4.1 Add opt-in cases to `evals/vlbv-protocol/cases/` for scope dilution, mixed product/fixture failure, approval wait, release setup failure, quiet running build, and the four memory behaviours; verify the corpus loads and unknown case IDs still fail
+- [x] 4.1 Add opt-in cases to `evals/vlbv-protocol/cases/` for scope dilution, mixed product/fixture failure, approval wait, release setup failure, quiet running build, and the four memory behaviours; verify the corpus loads and unknown case IDs still fail
 - [ ] 4.2 With operator go-ahead, run the cases against the installed Mini entry point on one full-capability harness and one fallback with no `prometheus` helper; store receipts under this change's `receipts/` directory and report each case as PASS, FAIL, BLOCKED or NOT_EXERCISED
 - [ ] 4.3 Evaluate the opt-in outcome-ranked scope on one new phase and record the comparison; verify no default was changed
-- [ ] 4.4 Record the Full comparison as NOT_EXERCISED with its reason in the receipts
+- [x] 4.4 Record the Full comparison as NOT_EXERCISED with its reason in the receipts
 
 ## Workflow follow-up
 

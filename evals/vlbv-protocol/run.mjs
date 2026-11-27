@@ -12,6 +12,8 @@
 //   node evals/vlbv-protocol/run.mjs --harness <id[,id]|all> [--samples 3]
 //   node evals/vlbv-protocol/run.mjs --stub exit0 --samples 3           (EVAL-NOTRUN-1 negative)
 //   [--report-dir <dir>] [--concurrency 3] [--timeout-min 10]
+//   [--corpus outcome-first [--no-helper]]   opt-in corpus (Mini #98); reports go to evals/reports/<corpus>/,
+//                                            and --no-helper runs it with no `prometheus` on PATH
 //   [--keep-scratch --expect-leftover]                                  (AUTH-ISO-1 negative)
 // Exit: 0 reports written and valid with isolation intact; 1 a report failed
 // validation; 3 isolation violated (later harnesses are not started);
@@ -21,10 +23,11 @@ import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { adapterFor } from './adapters/index.mjs';
 import { buildProject } from './lib/fixture.mjs';
+import { startMemorySources } from './lib/memory-stub.mjs';
 import { gradeSample, graderFor } from './lib/grade.mjs';
 import { caseVerdict, machineryCases, renderMarkdown, tally, validateReport, deterministicChecks } from './lib/report.mjs';
 import {
-  INSTALLED_HARNESSES, REPORTS_DIR, RUNS_DIR, ROOT, casesByClass, gitCommit, hashPath, loadCorpus,
+  DEFAULT_CORPUS, INSTALLED_HARNESSES, REPORTS_DIR, RUNS_DIR, ROOT, casesByClass, gitCommit, hashPath, loadCorpus,
   parseArgs, passesRequired, readJson, run, sha256, stamp, writeJson, writeText,
 } from './lib/common.mjs';
 import { compareManifests, createScratch, destroyScratch, realStateManifest, repoAuthFiles } from './lib/isolation.mjs';
@@ -70,6 +73,14 @@ function spawnAsync(exe, args, { cwd, env, timeoutMs }) {
   });
 }
 
+/** PATH without any directory that holds a `prometheus` executable: the fallback with no helper. */
+function pathWithoutHelper(value) {
+  const names = process.platform === 'win32' ? ['prometheus.exe', 'prometheus.cmd'] : ['prometheus'];
+  return String(value ?? '').split(path.delimiter)
+    .filter(dir => dir && !names.some(name => fs.existsSync(path.join(dir, name))))
+    .join(path.delimiter);
+}
+
 /** Raw observations for a case's deterministic checks. */
 function observe(project, def, phase) {
   const d = def.deterministic ?? {};
@@ -88,9 +99,17 @@ async function runSample(adapter, def, n, runDir, options) {
   ACTIVE_SCRATCH.add(scratch);
   const sampleDir = path.join(runDir, def.id, `s${n}`);
   let leftovers = [];
+  let memory = null;
   try {
-    const { project } = buildProject(scratch.project, def);
+    const { project } = buildProject(scratch.project, def, options.fixture);
     const { env, copied } = adapter.prepare(scratch);
+    if (options.fixture.installedPack) {
+      // Outcome-first cases run the real packaged lookup, so its sources are always pinned here:
+      // a sample never reaches the operator's memory service or knowledge base.
+      memory = await startMemorySources(def.memory, { project, scratchRoot: scratch.root });
+      Object.assign(env, memory.env);
+    }
+    if (options.noHelper) env.PATH = pathWithoutHelper(env.PATH);
     if (options.keepScratch) {
       // AUTH-ISO-1 negative control: an auth-named, non-secret probe proves the
       // leftover check finds kept auth material even for harnesses (Claude Code)
@@ -142,6 +161,7 @@ async function runSample(adapter, def, n, runDir, options) {
   } catch (error) {
     return { n, verdict: 'BLOCKED', reason: `runner error: ${String(error?.message ?? error).slice(0, 300)}`, deterministicOk: null, text: '' };
   } finally {
+    if (memory) await memory.close();
     ACTIVE_SCRATCH.delete(scratch);
     leftovers = destroyScratch(scratch, { keep: options.keepScratch });
     options.leftovers.push(...leftovers);
@@ -218,20 +238,29 @@ function notRunReport(id, reason, corpus, machineryReport, samples) {
 }
 
 async function main() {
-  const args = parseArgs(process.argv.slice(2), ['keep-scratch', 'expect-leftover']);
-  const corpus = loadCorpus();
+  const args = parseArgs(process.argv.slice(2), ['keep-scratch', 'expect-leftover', 'no-helper']);
+  const corpusName = String(args.corpus ?? DEFAULT_CORPUS);
+  const corpus = loadCorpus(corpusName);
+  const optIn = corpusName !== DEFAULT_CORPUS;
+  if (args['no-helper'] && !optIn) throw new Error('--no-helper applies to an opt-in corpus (--corpus <name>)');
   const samples = Number(args.samples ?? corpus.decisionRule.samples);
   if (!Number.isInteger(samples) || samples < 1) throw new Error('--samples must be a positive integer');
-  const reportDir = path.resolve(args['report-dir'] ?? REPORTS_DIR);
-  const isNegativeDir = reportDir !== path.resolve(REPORTS_DIR);
+  // An opt-in corpus keeps its reports and transcripts apart, so it never replaces the default evidence.
+  const homeReports = optIn ? path.join(REPORTS_DIR, corpusName) : REPORTS_DIR;
+  const homeRuns = optIn ? path.join(RUNS_DIR, corpusName + (args['no-helper'] ? '-no-helper' : '')) : RUNS_DIR;
+  const reportDir = path.resolve(args['report-dir'] ?? homeReports);
+  const isNegativeDir = reportDir !== path.resolve(homeReports);
+  const reportName = id => id + (args['no-helper'] ? '-no-helper' : '');
   const options = {
+    fixture: corpus.fixture ?? {},
+    noHelper: Boolean(args['no-helper']),
     samples,
     concurrency: Math.max(1, Number(args.concurrency ?? 3)),
     caseConcurrency: Math.max(1, Number(args['case-concurrency'] ?? process.env.VLBV_EVAL_CASE_CONCURRENCY ?? 4)),
     timeoutMs: Math.max(1, Number(args['timeout-min'] ?? 10)) * 60_000,
     keepScratch: Boolean(args['keep-scratch']),
     firstCaseOnly: Boolean(args['expect-leftover']),
-    runsDir: isNegativeDir ? path.join(reportDir, 'runs') : RUNS_DIR,
+    runsDir: isNegativeDir ? path.join(reportDir, 'runs') : homeRuns,
     leftovers: [],
     keptRoots: [],
   };
@@ -250,8 +279,9 @@ async function main() {
     const report = availability.ok
       ? await runHarness(adapter, corpus, machineryReport, options)
       : notRunReport(id, availability.reason, corpus, machineryReport, samples);
-    writeJson(path.join(reportDir, `${id}.json`), report);
-    writeText(path.join(reportDir, `${id}.md`), renderMarkdown(report));
+    if (optIn) Object.assign(report, { corpus: corpusName, helper: options.noHelper ? 'absent' : 'as installed' });
+    writeJson(path.join(reportDir, `${reportName(id)}.json`), report);
+    writeText(path.join(reportDir, `${reportName(id)}.md`), renderMarkdown(report));
     // The one-case leftover control is not a full report; it is checked for isolation only.
     const problems = options.firstCaseOnly ? [] : validateReport(report, { corpus, machineryReport });
     process.stdout.write(`${id}: pass ${report.counts.pass}, fail ${report.counts.fail}, blocked ${report.counts.blocked}, not exercised ${report.counts.notExercised}; report ${problems.length ? 'INVALID' : 'valid'}\n`);

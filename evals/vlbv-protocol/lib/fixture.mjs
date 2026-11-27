@@ -98,9 +98,10 @@ function copyTree(from, to) {
  * Create the case project under `dir`.
  * @param {string} dir destination (must not exist or be empty)
  * @param {{overlay?: Record<string,string>}} testCase
+ * @param {{installedPack?: string, packRoot?: string, skills?: string[]}} [fixture] corpus-level additions
  * @returns {{project: string, phaseDir: string, skills: string[]}}
  */
-export function buildProject(dir, testCase) {
+export function buildProject(dir, testCase, fixture = {}) {
   fs.mkdirSync(dir, { recursive: true });
   const agents = fs.readFileSync(path.join(ROOT, AGENTS_BASE), 'utf8');
   writeText(path.join(dir, 'AGENTS.md'), agents);
@@ -142,7 +143,27 @@ export function buildProject(dir, testCase) {
     for (const root of ['.agents/skills', ...SKILL_COPIES]) copyTree(path.join(ROOT, source), path.join(dir, root, name));
     skills.push(name);
   }
+  if (fixture.installedPack) skills.push(...installPack(dir, fixture));
   return { project: dir, phaseDir, skills };
+}
+
+/**
+ * Put the generated Mini package in the project the way an installation leaves it: the package at
+ * `fixture.packRoot`, the named skills copied into each harness skill directory, and one line telling
+ * the agent where the package root is (skills refer to it as <package-root>).
+ */
+function installPack(dir, fixture) {
+  const pack = path.join(ROOT, fixture.installedPack);
+  if (!fs.existsSync(path.join(pack, 'skills'))) throw new Error(`${fixture.installedPack}: generated package not found; run npm run build:distribution`);
+  copyTree(pack, path.join(dir, fixture.packRoot));
+  for (const name of fixture.skills ?? []) {
+    const source = path.join(pack, 'skills', name);
+    if (!fs.existsSync(source)) throw new Error(`${fixture.installedPack}: packaged skill ${name} not found`);
+    for (const root of ['.agents/skills', ...SKILL_COPIES]) copyTree(source, path.join(dir, root, name));
+  }
+  fs.appendFileSync(path.join(dir, 'AGENTS.md'),
+    `\n## Installed Mini package\n\nThe Prometheus Skills Mini package root is \`./${fixture.packRoot}\`. Where a skill says \`<package-root>\`, use that directory.\n`);
+  return fixture.skills ?? [];
 }
 
 /** Paths every deterministic check is evaluated relative to. */

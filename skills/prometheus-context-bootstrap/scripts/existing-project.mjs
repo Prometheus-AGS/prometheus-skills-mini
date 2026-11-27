@@ -3,6 +3,10 @@ import path from 'node:path';
 import { createHash, randomBytes } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 
+// The native form expands Windows 8.3 short names (RUNNER~1), so a path the caller passed and the
+// path Git reports compare equal when they are the same directory.
+const realPath = (target) => fs.realpathSync.native(target);
+
 const names = ['AGENTS.md', 'CLAUDE.md'];
 const heading = '## Goals-first development';
 const axiom = 'Always think in terms of user goals and value—not in tests or assumptions.';
@@ -34,7 +38,7 @@ function parse(args) {
   if (!root || !mode || (mode === 'apply' && !/^[a-f0-9]{64}$/.test(digest ?? ''))) {
     throw new Usage('use --path <Git root> and exactly one of --audit, --preview, --apply <sha256>');
   }
-  return { root: fs.realpathSync(root), mode, digest };
+  return { root: realPath(root), mode, digest };
 }
 
 function git(root, args, codes = [0]) {
@@ -183,11 +187,11 @@ function classify(entry, other) {
 
 function projectIdentity(root) {
   const top = git(root, ['rev-parse', '--show-toplevel']).stdout.trim();
-  if (!top || fs.realpathSync(top) !== root) reject('--path must be the exact existing Git top-level');
+  if (!top || realPath(top) !== root) reject('--path must be the exact existing Git top-level');
   const head = git(root, ['rev-parse', '--verify', 'HEAD'], [0, 128]).stdout.trim();
   const ref = git(root, ['symbolic-ref', '--quiet', 'HEAD'], [0, 1]).stdout.trim();
   if (!head && !ref) reject('Git HEAD identity is unavailable');
-  const common = fs.realpathSync(git(root, ['rev-parse', '--path-format=absolute', '--git-common-dir']).stdout.trim());
+  const common = realPath(git(root, ['rev-parse', '--path-format=absolute', '--git-common-dir']).stdout.trim());
   const { dev, ino } = fs.statSync(root);
   const commonStat = fs.statSync(common);
   return { root, dev, ino, head, ref, common, commonDev: commonStat.dev, commonIno: commonStat.ino };

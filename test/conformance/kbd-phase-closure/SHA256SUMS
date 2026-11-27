@@ -1,4 +1,4 @@
-57e84e7a8b99badc96adf0bbaa0e3b378873df8afed8e2fead4b0b3f3503969a  ./README.md
+d123fa35c54afa98e575acdfab8622708e3f0e25e1951ae96747bcf062e7ea2c  ./README.md
 3703cb18912b7f02b0fd38c294bc9c54324a1db8da1822a91d17e728066a0e76  ./cases/01-pass-closes-once.json
 347891346748554603961ca67f208c36225e937825e6b28ccaf17d87da967f75  ./cases/02-forged-text-is-not-closure.json
 a7038bfb4f33193b7da3d6bae15dc24b865d5af3f330487a21fd75eec5ff6a3f  ./cases/03-refused-closure-blocks-continuation.json
@@ -22,6 +22,7 @@ e4da9f9497a125e3a88b23f380aa75040a7aa122f01dd6108481844457a85523  ./cases/18-evi
 663a3a0b70b09ac9d6a900e2e7033c735a72fd7dbdd697290110735137a9ea34  ./cases/21-stale-source-digest-is-refused.json
 2900bbdc0c50f7833f9cb37470e4cb5c4f59b9424e40b0d5f7e26d9312196554  ./cases/22-empty-observation-fields-are-refused.json
 f93be7df940bd6f9a682ff42388643fdaf28aa32c181ae7ba23a38c3408dca01  ./cases/23-valid-receipt-closes-once-through-direct-close.json
+4001d2b27427c5b1dcae3106818cb28f35ebe53cb9c5c4cc9665edaa21222742  ./cases/24-budget-ceilings-agree-between-routes.json
 522d418b0b7ca15498d3a97ef72b27ac9c59a15962176c8dc408ffa4fd72dc9d  ./golden/closure-identity.jcs
 15607da6b61bb3c3ffdfbda39586c458a84256766f0160d8710b879bbc37792e  ./golden/contract.json
 63221f68858b0aefbe2ce5351f34486de9daceb2af488e70a198b67fa21b5762  ./golden/contract.snapshot.json
@@ -29,5 +30,5 @@ f93be7df940bd6f9a682ff42388643fdaf28aa32c181ae7ba23a38c3408dca01  ./cases/23-val
 6ba3f086916699653992b58ba482d47d77ab2ed00427a3943f1005af9d72bd62  ./golden/manifest.start-successor.json
 2bd527fe1ed84955b09e71523651da8e7d0fc674d35805cb30f6e3eafce37380  ./golden/vectors.json
 89880a58098df91ee5e6a10ae03cf817a934edb0676bfa05b265fa22973e3518  ./schemas/case.schema.json
-a6168671514070e9f11dbe71bc1501913a6fd01e309a413da83f7c6d61e0fb40  ./schemas/phase-disposition.schema.json
-2fe8b647e112133c76901e5779e9a9873fcca08c231ba86437e50af2b7a4434a  ./schemas/scope-authority-manifest.schema.json
+a1edf6d4617da5f6433a77c67043866d4a29b7dcd59f2dc73ce884179bd01f67  ./schemas/phase-disposition.schema.json
+193e0edf60a34c2d5c9c9ec40a53d7fa94a6257f4e8b98f215677695f98bccf3  ./schemas/scope-authority-manifest.schema.json

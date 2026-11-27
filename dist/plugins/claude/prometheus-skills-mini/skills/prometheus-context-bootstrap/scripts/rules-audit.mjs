@@ -112,9 +112,11 @@ function linkedWorktrees(root) {
     encoding: 'utf8', env, shell: false, windowsHide: true,
   });
   if (result.error || result.status !== 0) return null;
+  // The native form expands Windows 8.3 short names (RUNNER~1) and normalises separators, so the
+  // path Git prints and the path the caller passed compare equal when they are the same directory.
   const real = (directory) => {
     try {
-      return fs.realpathSync(directory);
+      return fs.realpathSync.native(directory);
     } catch {
       return directory;
     }
@@ -122,8 +124,9 @@ function linkedWorktrees(root) {
   return result.stdout
     .split(/\r?\n/)
     .filter((line) => line.startsWith('worktree '))
-    .map((line) => line.slice('worktree '.length))
-    .filter((directory) => real(directory) !== real(root));
+    // Reported in the same native form as the project root, not as Git spells it.
+    .map((line) => real(line.slice('worktree '.length)))
+    .filter((directory) => directory !== real(root));
 }
 
 const skillVersion = (file) => {
@@ -225,7 +228,7 @@ export function runRulesAudit(args) {
   }
   let real;
   try {
-    real = fs.realpathSync(root);
+    real = fs.realpathSync.native(root);
   } catch {
     process.stderr.write(`USAGE ${root} is not an existing directory\n`);
     return 1;

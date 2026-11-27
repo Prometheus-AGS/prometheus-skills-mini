@@ -34,6 +34,9 @@ progress and waypoint projections. Resume from actual canonical work state,
 not the existence of a dispatch artifact. On start and resume, state the
 adopted outcome, its last meaningful evidence and the next authorized action
 as `kbd-apply` describes; task order serves that outcome and is not the goal.
+The same section covers the one bounded project-memory lookup made at task
+start, resume and on a material blocker: recalled lessons are evidence, add no
+gate, and never replace scope, a required control or an approval.
 
 ## Value-phase boundary (B4)
 

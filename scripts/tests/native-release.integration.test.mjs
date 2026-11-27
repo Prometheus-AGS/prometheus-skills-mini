@@ -5,7 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import http from 'node:http';
 import { once } from 'node:events';
-import { execFile, execFileSync } from 'node:child_process';
+import { execFile, execFileSync, spawnSync } from 'node:child_process';
 import { promisify } from 'node:util';
 import { assetName, currentHost, executable, releaseTag, releaseVersion, root } from '../../lib/native-release/catalog.mjs';
 import { sourceRows } from '../../lib/native-release/provenance.mjs';
@@ -21,9 +21,22 @@ const tmp = (t) => {
 };
 const onPath = (tool) => execFileSync(process.platform === 'win32' ? 'where' : 'which', [tool], { encoding: 'utf8' }).trim().split(/\r?\n/)[0];
 
+const cli = 'prometheus';
+// These tests drive the real `prometheus` executable. Matrix runners without one skip with a visible
+// reason; PROMETHEUS_CLI_REQUIRED=1 turns the skip into a failure (same rule as the other real-CLI suites).
+const cliProbe = spawnSync(cli, ['--version'], { encoding: 'utf8', timeout: 30_000 });
+const cliAvailable = !cliProbe.error && cliProbe.status === 0;
+if (process.env.PROMETHEUS_CLI_REQUIRED === '1' && !cliAvailable) {
+  throw new Error(`PROMETHEUS_CLI_REQUIRED=1 but ${cli} is not runnable: ${cliProbe.error?.message ?? cliProbe.stderr}`);
+}
+const realCli = cliAvailable
+  ? {}
+  : { skip: `real prometheus executable not found (${cli}); put one on PATH, or set PROMETHEUS_CLI_REQUIRED=1 to fail instead` };
+
 // Pack the production installer as a source archive would, with no repository metadata.
 function archiveInstaller(directory, version, pins = fs.readFileSync(path.join(root, 'versions.toml'))) {
-  for (const relative of ['lib/native-release', 'lib/platform/atomic-write.mjs', 'rules/lib/versions-toml.mjs', 'scripts/install-native.mjs']) {
+  for (const relative of ['lib/native-release', 'lib/platform/atomic-write.mjs', 'rules/lib/versions-toml.mjs', 'scripts/install-native.mjs',
+    'scripts/service-providers', 'skill-system.json']) {
     const destination = path.join(directory, relative);
     fs.mkdirSync(path.dirname(destination), { recursive: true });
     fs.cpSync(path.join(root, relative), destination, { recursive: true });
@@ -41,9 +54,9 @@ async function mirror(t, listener) {
   return 'http://127.0.0.1:' + server.address().port + '/download';
 }
 
-test('installer downloads the exact native CLI, verifies its checksum, and refuses corruption and edited executables', async t => {
+test('installer downloads the exact native CLI, verifies its checksum, and refuses corruption and edited executables', realCli, async t => {
   const directory = tmp(t);
-  const source = onPath('prometheus');
+  const source = onPath(cli);
   const version = '0.0.1-integration';
   const tag = 'v' + version;
   const future = archiveInstaller(path.join(directory, 'pack'), version);

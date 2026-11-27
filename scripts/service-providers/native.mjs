@@ -32,27 +32,27 @@ function locations(id, options) {
   const mac = process.platform === 'darwin';
   const unit = mac ? path.join(home, 'Library', 'LaunchAgents', name + '.plist')
     : path.join(home, '.config', 'systemd', 'user', name + '.service');
-  return {id, home, name, dir, unit, config: path.join(dir, 'launch.json'), runner:path.join(dir,'start-service.sh'), mac};
+  return {id, home, name, dir, unit, config: path.join(dir, 'launch.json'), runner:path.join(dir,'start-service.mjs'), mac};
 }
 
-// A native supervisor can run this private script with the system shell.
-// Keep the credential values out of the unit and out of the process arguments.
-const quote = value => "'" + value.replaceAll("'", "'\\''") + "'";
+// The supervisor starts a private Node launcher copied into the service directory. The launcher reads
+// the launch configuration beside it, so credential values stay out of the unit and out of the
+// process arguments, and the job does not depend on where this pack is installed.
+const launcherSource = () => fs.readFileSync(new URL('./native-run.mjs', import.meta.url), 'utf8');
 
-function renderNativeRunner({binary, args, environment}) {
-  const lines = ['#!/bin/sh', 'set -eu', 'umask 077'];
-  for (const [key, value] of Object.entries(environment)) {
-    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(key) || typeof value !== 'string' || value.includes('\0')) {
-      throw new Error('Invalid native launch environment key or value');
-    }
-    lines.push('export ' + key + '=' + quote(value));
+// A launcher written by an earlier Mini release is recognised by the ownership digest recorded for it,
+// never by its file name, so only a file this installation wrote is removed.
+const MAX_LAUNCHER_BYTES = 1_000_000; // logs share this directory; a launcher is a few kilobytes
+function removeSupersededLauncher(l, owned) {
+  if (!owned) return;
+  for (const entry of fs.readdirSync(l.dir, {withFileTypes:true})) {
+    const file = path.join(l.dir, entry.name);
+    if (entry.isFile() && file !== l.runner && fs.statSync(file).size < MAX_LAUNCHER_BYTES && digest(fs.readFileSync(file, 'utf8')) === owned) fs.rmSync(file, {force:true});
   }
-  lines.push('exec ' + [binary, ...args].map(quote).join(' '));
-  return lines.join('\n') + '\n';
 }
 
 function unitText(l) {
-  const argv = ['/bin/sh', l.runner];
+  const argv = [process.execPath, l.runner, l.config];
   if (argv.some(s => /[\x00-\x1f]/.test(s))) throw new Error('Control character in native service path');
   if (!l.mac) return '[Unit]\nDescription=Prometheus Skills Mini ' + l.id + '\nAfter=network.target\n\n[Service]\nWorkingDirectory=' + l.dir.replaceAll('%','%%') + '\nExecStart=' + argv.map(unitArg).join(' ') + '\nRestart=on-failure\nRestartSec=5\n\n[Install]\nWantedBy=default.target\n';
   return '<?xml version="1.0" encoding="UTF-8"?>\n<plist version="1.0"><dict><key>Label</key><string>' + l.name +
@@ -240,11 +240,12 @@ export default {
     const error = validate(service,plan,options); if (error) throw new Error(error);
     const binary = await nativeBinary(service.id,l,options);
     const config = launchConfig(service,plan,options,l,binary);
-    const script = renderNativeRunner(JSON.parse(config));
+    const script = launcherSource();
     const oldRunner = read(l.runner), runnerMarker = path.join(l.dir,'runner.sha256');
     if (oldRunner !== null && (fs.lstatSync(l.runner).isSymbolicLink() || digest(oldRunner) !== read(runnerMarker))) {
       throw new Error('Preserving externally modified Mini launcher '+l.runner);
     }
+    const superseded = read(runnerMarker);
     const unit = unitText(l), oldUnit = read(l.unit), marker = path.join(l.dir, 'unit.sha256');
     const registered = loaded(l);
     const running = registered && loaded(l, true);
@@ -258,6 +259,8 @@ export default {
       write(l.unit, unit);
       write(marker, digest(unit));
       start(l);
+      // Only after the new job runs: a failed start restores the earlier unit, which still needs its launcher.
+      removeSupersededLauncher(l, superseded);
     } catch (error) {
       if (loaded(l)) unload(l);
       if (oldRunner !== null) { write(l.runner,oldRunner); write(runnerMarker,digest(oldRunner)); }
@@ -289,6 +292,7 @@ export default {
       throw new Error('Preserving externally modified Mini launcher '+l.runner);
     }
     unload(l);
+    removeSupersededLauncher(l, read(runnerMarker));
     fs.rmSync(l.runner,{force:true}); fs.rmSync(runnerMarker,{force:true});
     if (products[l.id]) {
       const copied = path.join(l.dir,'bin',products[l.id]), marker = copied+'.sha256';

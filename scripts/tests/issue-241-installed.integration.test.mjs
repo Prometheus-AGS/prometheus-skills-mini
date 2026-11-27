@@ -11,6 +11,16 @@ import { fileURLToPath } from 'node:url';
 const source = fileURLToPath(new URL('../../', import.meta.url));
 const namespace = 'prometheus-kbd-scope-amendment';
 const cli = process.env.PROMETHEUS_CLI_TEST_BINARY ?? 'prometheus';
+// These tests drive the real `prometheus` executable. Matrix runners without one skip with a visible
+// reason; PROMETHEUS_CLI_REQUIRED=1 turns the skip into a failure (same rule as the other real-CLI suites).
+const cliProbe = spawnSync(cli, ['--version'], { encoding: 'utf8', timeout: 30_000 });
+const cliAvailable = !cliProbe.error && cliProbe.status === 0;
+if (process.env.PROMETHEUS_CLI_REQUIRED === '1' && !cliAvailable) {
+  throw new Error(`PROMETHEUS_CLI_REQUIRED=1 but ${cli} is not runnable: ${cliProbe.error?.message ?? cliProbe.stderr}`);
+}
+const realCli = cliAvailable
+  ? {}
+  : { skip: `real prometheus executable not found (${cli}); set PROMETHEUS_CLI_TEST_BINARY, or PROMETHEUS_CLI_REQUIRED=1 to fail instead` };
 const json = file => JSON.parse(fs.readFileSync(file, 'utf8'));
 function write(file, content) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
@@ -72,7 +82,7 @@ function consumer(platform, t) {
   return { cwd, scratch, env, payload, run, native, helper };
 }
 
-for (const platform of ['claude', 'codex']) test('installed Mini operator exit, hooks and task projections on ' + platform, t => {
+for (const platform of ['claude', 'codex']) test('installed Mini operator exit, hooks and task projections on ' + platform, realCli, t => {
   const { cwd, scratch, env, payload, run, native, helper } = consumer(platform, t);
   const phase = 'operator-exit';
   const dir = path.join(cwd, '.kbd-orchestrator/phases', phase);
@@ -158,7 +168,7 @@ for (const platform of ['claude', 'codex']) test('installed Mini operator exit, 
   assert.ok(fs.existsSync(path.join(dir, 'method-context.json')));
 });
 
-test('installed Mini closes a nested bound phase from its historical evidence and delivers to its projection', t => {
+test('installed Mini closes a nested bound phase from its historical evidence and delivers to its projection', realCli, t => {
   const { cwd, native, helper } = consumer('codex', t);
   const parent = 'outer', phase = 'outer::inner';
   native('phase', 'create', '--id', parent, '--title', 'Parent phase', '--command-id', 'create-parent');

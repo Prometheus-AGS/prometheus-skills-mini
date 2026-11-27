@@ -7,6 +7,8 @@ recorded in the git history and in `COMPARE.md`; this file starts at 1.16.0.
 
 ## [1.21.0] - Unreleased
 
+- **Native services start through a Node launcher.** The launchd and systemd units now run a private `start-service.mjs` with the installing Node binary; Mini no longer generates a shell script. Credentials stay in `launch.json`. An existing installation is re-applied once, and its earlier launcher is removed after the new job starts. Each native service now keeps one Node parent process.
+- **Test suite repairs.** Stale fixtures and assertions corrected, the vendored phase-closure corpus refreshed to full-pack commit `9de86b4d`, and real-CLI suites skip with a reason when no `prometheus` executable is present.
 - **Advice for a repeated blocker (#98).** `kbd-bottleneck-detector advise <attempts.json>` recommends one of four dispositions after two completed attempts at the same blocker with no new evidence. Approval waits and running jobs are never counted, nothing is stopped, and it works without the `prometheus` CLI. The detector script now ships in both plugin packages.
 - **Read-only rules audit (#98).** `prometheus-context-bootstrap`'s `audit-rules.mjs` lists root and nested instruction files, imports, harness rule directories and linked worktrees, flags passages that treat a test count or task order as the goal, and reports the installed pack and skill versions.
 

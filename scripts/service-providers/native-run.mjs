@@ -1,5 +1,5 @@
-// Compatibility entry point for older Mini supervisor jobs. New jobs launch a
-// private system-shell script from the service directory.
+// Launcher for a Mini supervisor job. native.mjs copies this file into the service directory and the
+// unit runs it with the launch configuration as its argument. Older jobs run it from the pack.
 import fs from 'node:fs';
 import { spawn } from 'node:child_process';
 

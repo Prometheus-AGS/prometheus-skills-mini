@@ -294,6 +294,27 @@ async function executeEntry(entry, kind, edge, name, index, total, ctx) {
   return status;
 }
 
+const DELIVERY_POLL_MS = 100;
+const DELIVERY_GRACE_SECONDS = 5;
+
+// Two processes can reach the same completion action for the same revision: two evaluators closing
+// one phase at once is the observed case. The second waits for the first, bounded by the action's own
+// timeout. A receipt means it was delivered, so there is nothing left to do (returns null). A lock
+// released without a receipt means the first attempt failed, so this process takes its turn. A lock
+// still held after the bound is reported as before.
+async function acquireDeliveryLock(receipt, timeoutSeconds) {
+  const deadline = Date.now() + ((timeoutSeconds ?? 15) + DELIVERY_GRACE_SECONDS) * 1000;
+  for (;;) {
+    try {
+      return acquireLock(receipt + '.lock');
+    } catch (error) {
+      if (!String(error?.message).startsWith('lock held:') || Date.now() >= deadline) throw error;
+    }
+    if (existsSync(receipt)) return null;
+    await new Promise((resolve) => setTimeout(resolve, DELIVERY_POLL_MS));
+  }
+}
+
 async function runEntry(entry, kind, edge, name, index, total, ctx) {
   if (!ctx.revision) {
     return executeEntry(entry, kind, edge, name, index, total, ctx);
@@ -302,7 +323,8 @@ async function runEntry(entry, kind, edge, name, index, total, ctx) {
   const directory = path.join(ctx.phaseDir ?? phaseDirectory(ctx.cwd, name), 'hook-receipts');
   mkdirSync(directory, { recursive: true });
   const receipt = path.join(directory, hash + '.json');
-  const release = acquireLock(receipt + '.lock');
+  const release = await acquireDeliveryLock(receipt, entry.timeout);
+  if (!release) return 0; // another process delivered this action for the same revision
   try {
     if (existsSync(receipt)) return 0;
     const status = await executeEntry(entry, kind, edge, name, index, total, ctx);

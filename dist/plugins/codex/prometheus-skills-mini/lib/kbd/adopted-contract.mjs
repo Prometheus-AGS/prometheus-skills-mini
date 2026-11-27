@@ -237,7 +237,8 @@ export function budgetPredicate(contract, consumption) {
     const entry = values[consumptionKey];
     if (entry == null || entry.value == null || (entry.class ?? 'unknown') === 'unknown') continue;
     const ceiling = ceilings[ceilingKey] ?? 0;
-    if (entry.value > ceiling) exceeded.push(`${consumptionKey}(${entry.value}>${ceiling},${entry.class})`);
+    // Same wording as the full pack and the canonical runtime, which the conformance corpus matches on.
+    if (entry.value > ceiling) exceeded.push(`exceeded:${consumptionKey}(${entry.value}>${ceiling},${entry.class})`);
     else if (entry.value === ceiling) atCeiling.push(consumptionKey);
   }
   if (exceeded.length > 0) return { outcome: 'exceeded', hits: exceeded, ceilings, source: consumption.source };

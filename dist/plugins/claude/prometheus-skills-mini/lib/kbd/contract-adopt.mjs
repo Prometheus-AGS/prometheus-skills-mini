@@ -15,7 +15,7 @@
 // 3 identity mismatch; 4 amendment without --supersedes or verified signed authority (or
 // ambiguous lineage); 5 canonical writer failure.
 
-import { appendFileSync, existsSync, mkdirSync, readFileSync } from 'node:fs';
+import { appendFileSync, existsSync, mkdirSync, readFileSync, realpathSync } from 'node:fs';
 import path from 'node:path';
 import { spawnExecutable } from '../platform/spawn.mjs';
 import { atomicWrite } from '../platform/atomic-write.mjs';
@@ -31,6 +31,7 @@ import {
 } from './adopted-contract.mjs';
 import { readDisposition, runPhaseCommand } from './phase-disposition.mjs';
 import { lintContract, readReviewFindings } from './contract-lint.mjs';
+import { phaseDirectory } from './reconcile-artifacts.mjs';
 
 /** Walk up from `cwd` looking for `.kbd-orchestrator`. Returns null when none found. */
 export function findKbdRoot(cwd) {
@@ -171,16 +172,28 @@ export function adoptContract(contractPath, ctx = {}) {
   const disposition = readDisposition({ root, phase: phaseId, dispositionFile: ctx.dispositionFile, spawn: ctx.spawn });
   if (disposition.status !== 0) return fail(disposition.stderr, 1);
   const binding = disposition.json.binding ?? null;
-  const snapshot = path.join(expectedDir, 'adopted', `${digest}.json`);
+  // The snapshot is content-addressed and immutable. Runtimes up to full pack 1.17 read it beside the
+  // contract; 1.18 and later read it from the phase's canonical projection directory, which differs
+  // for a nested phase (phases/<parent>/children/<slug>). Both locations hold the same bytes. The
+  // projection is resolved from the real project root, which is what its containment check compares.
+  const snapshots = [path.join(expectedDir, 'adopted', `${digest}.json`)];
+  if (statusJson?.phases?.[phaseId]) {
+    const projected = path.join(phaseDirectory(realpathSync.native(root), phaseId, statusJson), 'adopted', `${digest}.json`);
+    if (!snapshots.includes(projected)) snapshots.push(projected);
+  }
+  const snapshotMissing = () => snapshots.some((file) => !existsSync(file));
   const writeSnapshot = () => {
     const bytes = contractSnapshotBytes(contract);
     if (sha256Of(bytes) !== digest) throw new Error('internal error: snapshot digest mismatch');
-    mkdirSync(path.dirname(snapshot), { recursive: true });
-    atomicWrite(snapshot, bytes);
+    for (const file of snapshots) {
+      if (existsSync(file)) continue;
+      mkdirSync(path.dirname(file), { recursive: true });
+      atomicWrite(file, bytes);
+    }
   };
 
   if (binding?.contractDigest === digest) {
-    if (!existsSync(snapshot)) writeSnapshot();
+    if (snapshotMissing()) writeSnapshot();
     return {
       status: 0,
       stdout: `ALREADY-ADOPTED path=${rel} sha256=${digest} decision=${binding.adoptionDecisionId} bound=revision-${binding.bindingRevision} (idempotent no-op)\n`,

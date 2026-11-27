@@ -31,7 +31,9 @@ it at `handoffs/execute.handoff.json`.
 Keep the parent Execute stage active while delegated or local work runs. Use
 `kbd-apply` task boundaries and typed KBD mutations; the runtime refreshes
 progress and waypoint projections. Resume from actual canonical work state,
-not the existence of a dispatch artifact.
+not the existence of a dispatch artifact. On start and resume, state the
+adopted outcome, its last meaningful evidence and the next authorized action
+as `kbd-apply` describes; task order serves that outcome and is not the goal.
 
 ## Value-phase boundary (B4)
 

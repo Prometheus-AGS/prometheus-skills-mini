@@ -1,9 +1,9 @@
 ---
 name: kbd-goal-check
-description: Use after each execution turn within a goal-driven KBD phase to evaluate whether the active phase's stopping condition has been met, without the implementer agent grading its own work — returns PASS (with evidence) or CONTINUE (with the next action). Implements the maker-is-not-evaluator pattern for harnesses whose loop is a queue rather than a condition-based loop.
+description: Use after each execution turn within a goal-driven KBD phase to evaluate whether the active phase's stopping condition has been met, without the implementer agent grading its own work — returns PASS (with evidence for the adopted outcome) or CONTINUE (with the missing observation and next authorized action). Implements the maker-is-not-evaluator pattern for harnesses whose loop is a queue rather than a condition-based loop.
 license: MIT
 metadata:
-  version: '1.0.0'
+  version: '1.1.0'
   tags: 'process, goal, evaluator, kimi, loop, condition-check'
 ---
 
@@ -37,71 +37,82 @@ Emit to plain response text — no tool call needed.
 
 ## What This Does
 
-1. **Reads the stopping condition** from `.kbd-orchestrator/goals/<slug>/goal.json`
-   → `phases[active_phase].stopping_condition`
-2. **Reads current STATE.md** to understand what has been completed
-3. **Checks the condition** against evidence files (test output, lint log,
-   file content)
+1. **Reads the stopping condition** of the goal already running in this
+   session, and the adopted outcome it serves from
+   `.kbd-orchestrator/phases/<phase>/adopted-contract.json`
+2. **Reads the recorded evidence** for that outcome
+3. **Checks the outcome's oracle** against that evidence — never a test count
+   or a task count
 4. **Returns PASS or CONTINUE** with specific evidence
+
+This skill only reads. It runs no build, test or product command, and it
+changes no KBD state; phase closure stays with `kbd-phase-close-eval`.
 
 ## Output Format
 
 ```
 PASS
-Evidence: All 23 tests in tests/ exit 0 (see .goal-run/test-output.txt line 1).
-Lint: 0 errors (see .goal-run/lint-output.txt).
-Stopping condition: "all tests pass, lint clean" — SATISFIED.
+Outcome: a support agent can refund an order from the order page (scenario S1).
+Oracle: the customer's balance shows the refund — observed for candidate 4f2a9c1
+(boundary-results.json, S1: PASS).
+Stopping condition: "S1 observed at the real entry" — SATISFIED.
 ```
 
 or
 
 ```
 CONTINUE
-Next action: task-004 (implement error handling for edge case in auth.go)
-Blocker: 3 tests still failing: TestAuthExpiry, TestTokenRefresh, TestLogout
-See: .goal-run/test-output.txt lines 47, 83, 112
+Outcome: a support agent can refund an order from the order page (scenario S1).
+Missing observation: the balance was never read after a refund (S1: NOT_EXERCISED
+for candidate 4f2a9c1; the PASS on record is for an earlier candidate).
+Next authorized action: the change the runtime names next inside the adopted
+slice — report it, do not choose a different one.
 ```
+
+Passing automated checks is not a PASS here unless they are the outcome's
+oracle. A journey nobody exercised is `NOT_EXERCISED`, not a failure. A result
+recorded for an earlier candidate does not carry to a changed candidate.
 
 ## Steps to Follow
 
-### 1. Find the active goal
+### 1. Find the active goal and phase
 
-Read `.kbd-orchestrator/current-waypoint.json` for its `goal_slug` field.
+Use the goal the session is already running; read
+`.kbd-orchestrator/current-waypoint.json` for the active phase. If no goal is
+running, say so and stop — do not create one.
 
-If no `goal_slug` is set, read `.kbd-orchestrator/goals/` to find the most
-recently modified `goal.json` and check its `status == "running"`.
+### 2. Read the adopted outcome
 
-### 2. Read the stopping condition
+Read `phases/<phase>/adopted-contract.json` and take the scenario the goal
+serves: `actor`, `usefulOutcome`, `productionEntry`, `oracle`, `reasonNow`.
+With no adopted contract, return CONTINUE with "outcome not adopted"; do not
+invent an outcome or substitute a test suite for it.
 
-Read `.kbd-orchestrator/goals/<slug>/goal.json` and locate the entry in
-`phases[]` whose `status == "running"`, then read its `stopping_condition`
-field.
+### 3. Read the evidence
 
-### 3. Read STATE.md
+Read `phases/<phase>/boundary-results.json` and any evidence references the
+scenario lists. Note which candidate each result belongs to.
 
-Read `.kbd-orchestrator/goals/<slug>/STATE.md`.
+### 4. Check the oracle
 
-### 4. Check evidence
+Compare the oracle's expected observation with the recorded one for the
+current candidate:
 
-Read the evidence files referenced by the stopping condition. Common patterns:
-
-- **"all tests pass"** → read `.goal-run/test-output.txt`, check exit code
-- **"lint clean"** → read `.goal-run/lint-output.txt`, count errors
-- **"TASKS.md complete"** → read TASKS.md, count unchecked `[ ]` entries
-- **"file X contains Y"** → read the file directly
+- observed and matching → PASS
+- observed and not matching → CONTINUE, naming the difference
+- not observed, or observed only for an earlier candidate → CONTINUE,
+  `NOT_EXERCISED`, naming the missing observation
+- waiting on an approval, or a job still running → CONTINUE, naming what is
+  awaited; this is not a failure
 
 ### 5. Return verdict
 
-**If PASS:**
-- Write your PASS verdict and evidence to the response
-- Update `.kbd-orchestrator/goals/<slug>/STATE.md`:
-  append a `## Phase Complete` section: `<timestamp>: PASS — <evidence-summary>`
-- The orchestrator will advance to the next phase or end the goal
+**If PASS:** write the verdict and evidence to the response. The orchestrator
+decides what follows.
 
-**If CONTINUE:**
-- Write your CONTINUE verdict with next action
-- Identify the next unchecked task in TASKS.md
-- The implementer agent will continue work on the next turn
+**If CONTINUE:** write the verdict, the missing observation, and the next
+authorized action as the runtime or the phase ledger names it. The implementer
+continues on the next turn.
 
 ## Separation of Concerns
 

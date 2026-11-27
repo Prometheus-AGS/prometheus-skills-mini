@@ -12,7 +12,9 @@ review, source inspection, and editor/LSP diagnostics are developer feedback,
 not an execution or acceptance event. A compiler, test, build, or validator
 that runs generated code requires the applicable adopted cadence and explicit
 admission; only a signed method decision can specify another execution cadence.
-A tier label, hook, marker, or clock never confers authority.
+A tier label, hook, marker, or clock never confers authority. Research,
+model-routing and UI tiers classify sources, models and surfaces; none of them
+schedules or permits verification.
 
 `<pack-root>` below is the installed mini pack root (the directory holding
 `scripts/` and `lib/`). Every command is a Node ESM entry point run as

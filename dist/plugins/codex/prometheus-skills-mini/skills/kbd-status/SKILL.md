@@ -23,7 +23,9 @@ Output includes:
 - Native KBD changes: status from `progress.json`
 - Goal completion: MET | PARTIAL | NOT MET per goal
 - Last tool to update state and when
-- Waypoint-guided next recommended action
+- Adopted outcome for the active phase (actor, useful outcome, real entry
+  point, oracle) and its last meaningful evidence, or "outcome not adopted"
+- Waypoint-guided next authorized action toward that outcome
 - Separate implementation, evidence, certification, and publication state
 
 ## Completion semantics (mandatory)
@@ -141,7 +143,8 @@ Changes:
   PENDING:     change-008-clients-page
   PENDING:     change-009-deals-page
 
-Next action (from waypoint): apply change-007-complete-team-invitations
+Outcome: a team owner can invite a colleague from Settings (oracle: the invitee appears as pending) — last evidence: none yet
+Next authorized action (from waypoint): apply change-007-complete-team-invitations
 ```
 
 ### Example — nested phase, outside worktreeRoot

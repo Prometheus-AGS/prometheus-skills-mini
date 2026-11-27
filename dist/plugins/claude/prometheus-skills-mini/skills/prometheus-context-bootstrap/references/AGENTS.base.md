@@ -55,6 +55,8 @@ summary or next-command.
   `position-reminder.txt` are their derived position view. Read `versions.toml`,
   `.prometheus/decisions.md`, and relevant `.prometheus/gotchas.md` before
   dependency or architecture changes.
+- On start or resume, state the adopted outcome, its last evidence and the
+  next authorized action. Task order and test counts are not the goal.
 - Recover the active phase's `method-context.md` and adopted contract before
   dependent work (`node <pack-root>/scripts/kbd-method-context.mjs --phase <id>
   --write`). The index is advisory: resolve canonical identity, latest

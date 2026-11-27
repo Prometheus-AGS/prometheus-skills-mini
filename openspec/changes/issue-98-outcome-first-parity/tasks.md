@@ -25,10 +25,10 @@ group: `npm run check`, `npm run check:distribution`,
 
 ## 3. Advisory blockers and installed-rules audit
 
-- [ ] 3.1 Create `lib/kbd/blocker-advice.mjs` (pure classifier) with tests for: approval wait not counted, running job not counted, new evidence resets, two completed same-blocker attempts yield one of four dispositions; verify the test file passes
-- [ ] 3.2 Add an `advise` mode to `scripts/kbd-bottleneck-detector.mjs` that works without the `prometheus` guard, update `skills/kbd-bottleneck-detector/SKILL.md`, and add the script and its modules to the payload list; verify `scripts/kbd-bottleneck-detector.test.mjs` passes and the script exists in both `dist` packages
-- [ ] 3.3 Extend the existing-project `--audit` (new sibling module) to report nested instruction files, harness rule directories, linked worktrees, outcome-policy conflicts and installed version, read-only; verify with a new integration test that asserts the working tree is unchanged and both versions are reported
-- [ ] 3.4 Document the audit output in `skills/prometheus-context-bootstrap/SKILL.md`, add a CHANGELOG entry and run the boundary packet; verify all commands exit 0
+- [x] 3.1 Create `lib/kbd/blocker-advice.mjs` (pure classifier) with tests for: approval wait not counted, running job not counted, new evidence resets, two completed same-blocker attempts yield one of four dispositions; verify the test file passes
+- [x] 3.2 Add an `advise` mode to `scripts/kbd-bottleneck-detector.mjs` that works without the `prometheus` guard, update `skills/kbd-bottleneck-detector/SKILL.md`, and add the script and its modules to the payload list; verify `scripts/kbd-bottleneck-detector.test.mjs` passes and the script exists in both `dist` packages
+- [x] 3.3 Add a separate read-only `audit-rules.mjs` beside the existing-project script (which the active `mini-bootstrap-existing-project-goals` phase pins and this change does not edit) to report nested instruction files, harness rule directories, linked worktrees, outcome-policy conflicts and installed version, read-only; verify with a new integration test that asserts the working tree is unchanged and both versions are reported
+- [x] 3.4 Document the audit output in `skills/prometheus-context-bootstrap/SKILL.md`, add a CHANGELOG entry and run the boundary packet; verify the six check commands exit 0 and `npm test` has no failure that is absent on `main`
 
 ## 4. Qualification evidence
 

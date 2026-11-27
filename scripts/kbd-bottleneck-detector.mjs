@@ -13,13 +13,19 @@
 //
 // Judgment call: the source's unknown-mode branch exits `64` (EX_USAGE), distinct from every
 // other failure's exit `1`. Preserved exactly via `die(message, 64)`.
+//
+// `advise` is Mini's own mode: it classifies attempt records with `lib/kbd/blocker-advice.mjs`,
+// needs no `prometheus` CLI, changes nothing and is advisory only.
 
+import { readFileSync } from 'node:fs';
 import { spawnExecutable } from '../lib/platform/spawn.mjs';
 import { evaluateBottleneck } from '../lib/kbd/bottleneck-guard.mjs';
+import { adviseBlockers } from '../lib/kbd/blocker-advice.mjs';
 
 const USAGE = `Usage: node scripts/kbd-bottleneck-detector.mjs status
        node scripts/kbd-bottleneck-detector.mjs evaluate <task|change|phase> <before|after> <subject>
-       node scripts/kbd-bottleneck-detector.mjs repair <task|change|phase> <before|after> <subject>`;
+       node scripts/kbd-bottleneck-detector.mjs repair <task|change|phase> <before|after> <subject>
+       node scripts/kbd-bottleneck-detector.mjs advise <attempts.json>`;
 
 function die(message, code = 1) {
   process.stderr.write(`kbd-bottleneck-detector: ${message}\n`);
@@ -66,6 +72,18 @@ function runEvaluate(mode, args) {
   process.exit(result.status ?? 1);
 }
 
+function runAdvise(args) {
+  const [file] = args;
+  if (!file) die('usage: advise <attempts.json>');
+  let advice;
+  try {
+    advice = adviseBlockers(JSON.parse(readFileSync(file, 'utf8')));
+  } catch (error) {
+    die(`cannot read attempt records from ${file}: ${error.message}`);
+  }
+  process.stdout.write(`${JSON.stringify(advice, null, 2)}\n`);
+}
+
 function main(argv) {
   const [mode, ...rest] = argv;
   const resolvedMode = mode ?? 'status';
@@ -75,8 +93,10 @@ function main(argv) {
     case 'evaluate':
     case 'repair':
       return runEvaluate(resolvedMode, rest);
+    case 'advise':
+      return runAdvise(rest);
     default:
-      die(`unknown mode ${JSON.stringify(resolvedMode)} (use status, evaluate, or repair)\n\n${USAGE}`, 64);
+      die(`unknown mode ${JSON.stringify(resolvedMode)} (use status, evaluate, repair, or advise)\n\n${USAGE}`, 64);
   }
 }
 

@@ -69,9 +69,16 @@ See `proposal.md` for motivation. Constraints that shape the approach:
    `prometheus kbd status` blockers — rejected: that requires the helper and
    blockers there have no attempt or evidence fields.
 
-6. **Audit extends the existing `--audit`; it gains no fix.** New discovery goes
-   in a sibling module beside `existing-project.mjs` (296 lines). Installed
-   version comes from the doctor's managed-copy receipts and `releaseVersion`.
+6. **The rules audit is a separate read-only entry point; it gains no fix.**
+   `existing-project.mjs` and its integration test are the candidate of the
+   active `mini-bootstrap-existing-project-goals` phase, which pins the test by
+   hash, so this change does not edit them. Discovery lives in a sibling
+   `rules-audit.mjs` with its own entry `audit-rules.mjs`. The pack version comes
+   from the nearest plugin manifest or `package.json`; installed state comes
+   from the managed-copy marker and each installed skill's `version`. The
+   marker records no version, so a skill without one is reported as unknown.
+   Classifying a blocker needs its `kind`, supplied on the attempt record; an
+   unstated kind recommends one authority handoff.
 
 7. **Tier clarification lives in `references/boundaries.md`,** next to the
    existing "a tier label … never confers authority" sentence, not in the

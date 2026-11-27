@@ -103,6 +103,10 @@
       "sha256": "sha256:9ff68e353fb507808475f831d7f99d21983a9f1add5dd9e1446871af095ed200"
     },
     {
+      "path": "lib/kbd/blocker-advice.mjs",
+      "sha256": "sha256:edbdb3b85c9482653a290fe8fc8f7dcadc557d85780cd59900cf7d9da4078834"
+    },
+    {
       "path": "lib/kbd/bottleneck-guard.mjs",
       "sha256": "sha256:a384275c5c9a5b33de485244cf51be3e92ed261b2f6d3ae11955a4cc3c09b89b"
     },
@@ -345,6 +349,10 @@
     {
       "path": "scripts/kbd-apply.mjs",
       "sha256": "sha256:2b8bc39d622b9056993cc3b4acbd6517f76957af73a7c8f219247c98045a943a"
+    },
+    {
+      "path": "scripts/kbd-bottleneck-detector.mjs",
+      "sha256": "sha256:ff97e868fb81d98326c6f38c29b4c603328dfc14202cc5922f8f5d66811ca281"
     },
     {
       "path": "scripts/kbd-boundary-authorize.mjs",
@@ -2016,7 +2024,7 @@
     },
     {
       "path": "skills/kbd-bottleneck-detector/SKILL.md",
-      "sha256": "sha256:82343bb2393fd19111044f240d10c3ded0bb7511be3359cb194baa37dc03a37a"
+      "sha256": "sha256:911d010df35c045a356f7895ed88a277c9521031a0e8967972000fce1b663088"
     },
     {
       "path": "skills/kbd-cancel/SKILL.md",
@@ -2204,7 +2212,7 @@
     },
     {
       "path": "skills/prometheus-context-bootstrap/SKILL.md",
-      "sha256": "sha256:5e6075c8ed6a66adf807303f9b87efdf66a47642acf216efcafe3f2510e514e9"
+      "sha256": "sha256:de92db60148ca61db8e11837b00887196cc7c36407ec932996526b0c9c26907c"
     },
     {
       "path": "skills/prometheus-context-bootstrap/references/AGENTS.base.md",
@@ -2219,12 +2227,20 @@
       "sha256": "sha256:23e37845a24d133a6478797926bd2ed062c1253d1c61300129e8ada72dabcb53"
     },
     {
+      "path": "skills/prometheus-context-bootstrap/scripts/audit-rules.mjs",
+      "sha256": "sha256:2b9373298767d1df610288fd6d871ab5aa12fd793c0762ebb387f75e6a856b43"
+    },
+    {
       "path": "skills/prometheus-context-bootstrap/scripts/existing-project.mjs",
       "sha256": "sha256:f51df8789def97625d7e4b5ef2a0f0e11fa859359727dcdad9487f0c28070aa9"
     },
     {
       "path": "skills/prometheus-context-bootstrap/scripts/maintain-project.mjs",
       "sha256": "sha256:b77ade08004480759b43361964538df796e82203ce7409b635000222f647210d"
+    },
+    {
+      "path": "skills/prometheus-context-bootstrap/scripts/rules-audit.mjs",
+      "sha256": "sha256:41aa410c7151fa1bab2e40d842e7fa3c80ed8c8c7ce845474ec9a63818d19c20"
     },
     {
       "path": "skills/prometheus-impeccable-core/SKILL.md",
@@ -3486,6 +3502,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -3547,6 +3564,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -3576,7 +3594,7 @@
           "skills/adversarial-review/references/model-configuration.md",
           "skills/adversarial-review/references/output-contract.md"
         ],
-        "digest": "sha256:601fc47edf1e4cf7fad963fdd9b044e48cc5b868a18da615aa29c73dd9bf4770"
+        "digest": "sha256:6605a2860a1c83fc82afe88b0470a007e94b682654526911c2087524fa9fd500"
       }
     },
     {
@@ -3621,6 +3639,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -3682,6 +3701,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -3841,7 +3861,7 @@
           "skills/agent-team-creator/tests/models-memory.integration.mjs",
           "skills/agent-team-creator/tests/state.integration.mjs"
         ],
-        "digest": "sha256:4d1551945318167663b279bd06af1e42c39252a97c316c5adaedce9a3e39457e"
+        "digest": "sha256:37e1f7146ef800092d19b8c438b2146d6ce50a6ab1f2be382f305fef3911385c"
       }
     },
     {
@@ -3886,6 +3906,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -3947,6 +3968,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -3968,7 +3990,7 @@
           "skills/agent-team-handoff/SKILL.md",
           "skills/agent-team-handoff/agents/openai.yaml"
         ],
-        "digest": "sha256:a82c793214c4e14472dc9ab0973fc33916ff81129506dc330e837eb20f3a75d7"
+        "digest": "sha256:e7aa31f0415f6c4fe99fe7a064e5e3074951a47008c8818f9f9890b595d4876c"
       }
     },
     {
@@ -4013,6 +4035,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4074,6 +4097,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -4095,7 +4119,7 @@
           "skills/agent-team-manage/SKILL.md",
           "skills/agent-team-manage/agents/openai.yaml"
         ],
-        "digest": "sha256:bb8bdc1268d6c0c2a9f65cb7c5163fa8be8dd536c40b7722c5b0d04c3ba0de57"
+        "digest": "sha256:0190cc3a89441e6215f00f4190a23b85620f89af25c6d5481b67c664931437c3"
       }
     },
     {
@@ -4140,6 +4164,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4201,6 +4226,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -4222,7 +4248,7 @@
           "skills/agent-team-models/SKILL.md",
           "skills/agent-team-models/agents/openai.yaml"
         ],
-        "digest": "sha256:b197bb51d40fc774acb2e4f23b7cb8b178d11d8f8a3280d553f84caa60ce5aba"
+        "digest": "sha256:56cadb549ec74b46a7f528ebcce363e1f11e28605f556c05efba21ac96089ae3"
       }
     },
     {
@@ -4267,6 +4293,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4328,6 +4355,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -4361,7 +4389,7 @@
           "skills/android-compose-adaptive/references/android/develop/ui/compose/tooling/debug.md",
           "skills/android-compose-adaptive/references/android/guide/navigation/navigation-3/recipes/material-listdetail.md"
         ],
-        "digest": "sha256:eeff8357949f2812c21a186cd045a3f2010842fdd9e6558878c65337e5d989d4"
+        "digest": "sha256:deca5a2470942ed8efda2ab3bc435b40477e5af80d64df49536f49f2464930d6"
       }
     },
     {
@@ -4406,6 +4434,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4467,6 +4496,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -4489,7 +4519,7 @@
           "skills/android-edge-to-edge/PROVENANCE.md",
           "skills/android-edge-to-edge/SKILL.md"
         ],
-        "digest": "sha256:0b2d853c4b7a9e3253e50c97badf80505ea0930242ab8a92898593ffa9b6c0f7"
+        "digest": "sha256:5b8367d0d6992a92384a0ee0560eae13db13a31d66067564809d61b0446fad0d"
       }
     },
     {
@@ -4534,6 +4564,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4595,6 +4626,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -4615,7 +4647,7 @@
           "scripts/record-progress.mjs",
           "skills/artifact-refiner/SKILL.md"
         ],
-        "digest": "sha256:38d044b684bf17d1722ec72e0fd5ba0ee02efea96b9539ba93d029c1ac47e01d"
+        "digest": "sha256:9782b56d02820a5a0e3681079d4203bf4e2c47f72820e71754e42ad887e4b1da"
       }
     },
     {
@@ -4660,6 +4692,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4721,6 +4754,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -4742,7 +4776,7 @@
           "skills/bdd-cucumber-js/SKILL.md",
           "skills/bdd-cucumber-js/references/author-only.md"
         ],
-        "digest": "sha256:1b9054ef6bc1e8d226fe8ec47720bfee083764b73079b9b85c41e005c88d55ff"
+        "digest": "sha256:631ff0e3de3289d1643262631f33812cb2532309befd3422bb2e9695844f7667"
       }
     },
     {
@@ -4787,6 +4821,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4848,6 +4883,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -4877,7 +4913,7 @@
           "skills/better-accessibility/screen-readers.md",
           "skills/better-accessibility/semantics-and-aria.md"
         ],
-        "digest": "sha256:14c7a572af8cd182179ea6d15a909c58538f9c85d7a0641e0851c3c6ec4ae457"
+        "digest": "sha256:1ad202b74ef7561258fd2a209eef3f90fc3f755aeb32be08fb46b53c5b26e4bf"
       }
     },
     {
@@ -4922,6 +4958,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -4983,6 +5020,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -5012,7 +5050,7 @@
           "skills/better-colors/palette-structure.md",
           "skills/better-colors/token-naming.md"
         ],
-        "digest": "sha256:a3bae72d5954bd7f59c04edc8ef8908132e301139dbee3130040559cbae16386"
+        "digest": "sha256:941cc3360e97edd66cb3ef1559e8ae1d0ef00de3da5befcb88a731fe3042440f"
       }
     },
     {
@@ -5057,6 +5095,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5118,6 +5157,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -5142,7 +5182,7 @@
           "skills/better-interface/agents/openai.yaml",
           "skills/better-interface/review-format.md"
         ],
-        "digest": "sha256:330250ae115ac3d863a4e4286a042111b55aa01731103d089bf69c1208b2f6f0"
+        "digest": "sha256:4989039ead489ffe3ce410056c0e7b4ce12b280319d57c8f495046823f62bfff"
       }
     },
     {
@@ -5187,6 +5227,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5248,6 +5289,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -5273,7 +5315,7 @@
           "skills/better-layout/grouping-and-alignment.md",
           "skills/better-layout/spacing-and-adaptivity.md"
         ],
-        "digest": "sha256:69c5a1fa69888549990fd407a74caf4d7570f2ed6c1545ae3eb1540b8bdb9769"
+        "digest": "sha256:ca35d6e5e3b332758fa4b7df2c678d56037908eb747f277877e64c49fec91a5b"
       }
     },
     {
@@ -5318,6 +5360,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5379,6 +5422,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -5408,7 +5452,7 @@
           "skills/better-typography/variable-fonts-and-opentype.md",
           "skills/better-typography/wrapping-and-punctuation.md"
         ],
-        "digest": "sha256:fa63c6ad8c9f2c16c6dcd894f3027f15d8de26b2c18ecbeb5e3ab4b462ae7332"
+        "digest": "sha256:141a216056cc49411c9eb97b013a89e33288d79129e1202f300e126486f613d1"
       }
     },
     {
@@ -5453,6 +5497,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5514,6 +5559,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -5543,7 +5589,7 @@
           "skills/better-ui/performance.md",
           "skills/better-ui/surfaces.md"
         ],
-        "digest": "sha256:ee88c8fce694d8328a2894fddae8efbcc961fb77b859e78e44135dfaecba41b3"
+        "digest": "sha256:b18f7cc1460311dc13d36b57f30222fa594ef1066c8151c9ab8936562c7ee7b0"
       }
     },
     {
@@ -5588,6 +5634,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5649,6 +5696,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -5672,7 +5720,7 @@
           "skills/better-writing/SKILL.md",
           "skills/better-writing/agents/openai.yaml"
         ],
-        "digest": "sha256:4bc71bac7c97e7c294b70f9eb4564017bbebdaa4fe4a60cb81690fc4dae4db08"
+        "digest": "sha256:7a805f717c9f846427bfdfc9d61e5b970e593edaf8ea70a6facf244539682a84"
       }
     },
     {
@@ -5717,6 +5765,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5778,6 +5827,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -5802,7 +5852,7 @@
           "skills/break/agents/openai.yaml",
           "skills/break/scenarios.md"
         ],
-        "digest": "sha256:8e7bfa6d54d080e8f20d120f8817cb0c6153a26944a479568c237f35ccf15319"
+        "digest": "sha256:08370924e316630c550821d8fb2cdc0d0d0b15126d097be5230b0b9b305752c7"
       }
     },
     {
@@ -5847,6 +5897,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -5908,6 +5959,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -5928,7 +5980,7 @@
           "scripts/record-progress.mjs",
           "skills/convert-htmx-pdf/SKILL.md"
         ],
-        "digest": "sha256:0f8a2c865fa1c890cd0c32631d515b800e069349c98e539141f583eaf21701d2"
+        "digest": "sha256:a0ab1f17bec4d361f20646dfce37b1e227216899a974d5817d275e92c012fdb0"
       }
     },
     {
@@ -5973,6 +6025,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6034,6 +6087,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -6054,7 +6108,7 @@
           "scripts/record-progress.mjs",
           "skills/convert-htmx-react/SKILL.md"
         ],
-        "digest": "sha256:f356f35f09b92ff9651d5d50aa51a04f72d6233a9853f100bf4ffe5f3691612b"
+        "digest": "sha256:84d294eb8dfaa03c7d6f80b80df4e5c60a0d9bf3332da5fbe94d1696f036e4cd"
       }
     },
     {
@@ -6099,6 +6153,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6160,6 +6215,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -6180,7 +6236,7 @@
           "scripts/record-progress.mjs",
           "skills/convert-md-to-htmx/SKILL.md"
         ],
-        "digest": "sha256:1ebdbf32a4b48a06ae2698f9db9d33f5f544aa1018264f77130f936c718f39f4"
+        "digest": "sha256:35e576097ccad0fd3e4471c5a06cb39d78afe9c6e03a0c35cb0033304905e1bd"
       }
     },
     {
@@ -6225,6 +6281,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6286,6 +6343,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -6370,7 +6428,7 @@
           "skills/delivery-cadence/scripts/publication-receipt.mjs",
           "skills/delivery-cadence/scripts/sync-mini.mjs"
         ],
-        "digest": "sha256:0cd7885e832facaa15ba406153f3d9f1c4898e57593761547543206fa6782d5c"
+        "digest": "sha256:4b6eed9d9dc523966e0c9ea13ba52faf81347870044b253f5fa5c62372d5b799"
       }
     },
     {
@@ -6415,6 +6473,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6476,6 +6535,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -6496,7 +6556,7 @@
           "scripts/record-progress.mjs",
           "skills/design-svg-logo/SKILL.md"
         ],
-        "digest": "sha256:9fe1914bddf4347f9e48a7b0d368ad9db7234a21078c7e8eacc144b190d31fa6"
+        "digest": "sha256:5e43370ff332158fa8ee9fbceee256cf01a69cfcb9263edddda93f956ac8debe"
       }
     },
     {
@@ -6541,6 +6601,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6602,6 +6663,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -6624,7 +6686,7 @@
           "skills/design-taste-frontend-v1/PROVENANCE.md",
           "skills/design-taste-frontend-v1/SKILL.md"
         ],
-        "digest": "sha256:adf903b03d617dd8f916570e3d03a78cc231d7de0858289465f5c0e8bb866c7c"
+        "digest": "sha256:9d55fd905fd3693375d465252287222377f317e65d43b49e477b150f6e53426d"
       }
     },
     {
@@ -6669,6 +6731,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6730,6 +6793,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -6752,7 +6816,7 @@
           "skills/design-taste-frontend/PROVENANCE.md",
           "skills/design-taste-frontend/SKILL.md"
         ],
-        "digest": "sha256:b194716adc9ca8630bb341fc6ba73585da6ed796171da641451a925c04f3bad2"
+        "digest": "sha256:ac6c1b6295559a22ee16624d964ee40e61d3468e1e338e732f038cc999d58dbd"
       }
     },
     {
@@ -6797,6 +6861,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6858,6 +6923,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -6878,7 +6944,7 @@
           "scripts/record-progress.mjs",
           "skills/doctor/SKILL.md"
         ],
-        "digest": "sha256:e7b59e5b7b8b92f7ccf750e0209c748cb050fc632b9b61f890024413c3edc0fb"
+        "digest": "sha256:5eba9e898794fb3ddc6a98fa6dca172ab58d02d36efbb037696916b8678b2ef1"
       }
     },
     {
@@ -6923,6 +6989,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -6984,6 +7051,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -7011,7 +7079,7 @@
           "skills/explain-interface/no-browser.md",
           "skills/explain-interface/read-the-system.md"
         ],
-        "digest": "sha256:acd0255de9c16b8aaaa2849d656cef131e3c419eab8d3d2685dc4b4297127459"
+        "digest": "sha256:d5e5538504dbd4e4222b0a4f37ade25910b5b94e84995a686e4d51492293f4e5"
       }
     },
     {
@@ -7056,6 +7124,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7117,6 +7186,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -7142,7 +7212,7 @@
           "skills/expo-animation/SKILL.md",
           "skills/expo-animation/agents/openai.yaml"
         ],
-        "digest": "sha256:f20689757f10746ddaeebdd73c67cd3da86192069351d9d3df1c7ac801eebe81"
+        "digest": "sha256:d9611e1829871d4cb65560e2db84a6324e4d1cd48ad736ef6ab56b5019b15e4b"
       }
     },
     {
@@ -7187,6 +7257,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7248,6 +7319,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -7273,7 +7345,7 @@
           "skills/expo-design-system/references/audit.md",
           "skills/expo-design-system/references/native-slop.md"
         ],
-        "digest": "sha256:a3c97651113b30f1afbea187701ba65b606043cd4fac4bce064b68b8504dde0b"
+        "digest": "sha256:2cd8f7f8ac41f75562d03803e6afdc8dabb5753f3afd48ce65e338626b5673ff"
       }
     },
     {
@@ -7318,6 +7390,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7379,6 +7452,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -7409,7 +7483,7 @@
           "skills/expo-native-ui/references/visual-effects.md",
           "skills/expo-native-ui/references/webgpu-three.md"
         ],
-        "digest": "sha256:de437fa449b97083ad4ffec059f6c4b9bed1e98fcb9dc00b336e18c4b79d3ab0"
+        "digest": "sha256:5297702c1baa1de31352a44b7e851eb5a790581110beb95c000e1750053d67a5"
       }
     },
     {
@@ -7454,6 +7528,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7515,6 +7590,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -7544,7 +7620,7 @@
           "skills/expo-router/references/toolbar-and-headers.md",
           "skills/expo-router/references/zoom-transitions.md"
         ],
-        "digest": "sha256:1e479925bccca78b0bd6ea2663b3481311f960164d06381be839511e67c9612d"
+        "digest": "sha256:2d6c0994577dac62530dee515440de7c61bc3cac3e7f63b416542bc60f4670dd"
       }
     },
     {
@@ -7589,6 +7665,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7650,6 +7727,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -7678,7 +7756,7 @@
           "skills/expo-ui/references/universal.md",
           "skills/expo-ui/scripts/list-components.mjs"
         ],
-        "digest": "sha256:aae5bf0d8f290d239c43b674856596bf0c95d137f21d86075ff9c6da4bb8dc40"
+        "digest": "sha256:21dcdce0f04b0986945df090a36cf663d68adacae86a46a9a1be8c0b48a45f7f"
       }
     },
     {
@@ -7723,6 +7801,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7784,6 +7863,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -7806,7 +7886,7 @@
           "skills/flutter-build-responsive-layout/PROVENANCE.md",
           "skills/flutter-build-responsive-layout/SKILL.md"
         ],
-        "digest": "sha256:7aeacb6f3831bf0994174c5995cdc92b7a615de7243be25c85672897b995513e"
+        "digest": "sha256:c5fe3b873cb2e6b9704e002d6de4a81d1b1c58eefa343398713105148fa04f3b"
       }
     },
     {
@@ -7851,6 +7931,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -7912,6 +7993,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -7934,7 +8016,7 @@
           "skills/flutter-fix-layout-issues/PROVENANCE.md",
           "skills/flutter-fix-layout-issues/SKILL.md"
         ],
-        "digest": "sha256:de3170f1b2aa4094bfcec7d96f0c679f33ee0209d6ff706930787142bc761474"
+        "digest": "sha256:76e1fc0fe520e37f8e2c925c10de7a5f7ae12413fe75c674262448381620c498"
       }
     },
     {
@@ -7979,6 +8061,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8040,6 +8123,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -8062,7 +8146,7 @@
           "skills/flutter-setup-declarative-routing/PROVENANCE.md",
           "skills/flutter-setup-declarative-routing/SKILL.md"
         ],
-        "digest": "sha256:32af4b8e27bc396db1d4f5fe2f341a72213a7c26177bb411b0294ea61a69826d"
+        "digest": "sha256:cebaa1d1e9e0e625274159d8ed9f1f64bc657fd1f956a90e09ae86d853473800"
       }
     },
     {
@@ -8107,6 +8191,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8168,6 +8253,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -8190,7 +8276,7 @@
           "skills/flutter-setup-localization/PROVENANCE.md",
           "skills/flutter-setup-localization/SKILL.md"
         ],
-        "digest": "sha256:a4478f37f8f28334370bc4a3991641eaad1ec9b9d0219203f9b6ba7d06608a5d"
+        "digest": "sha256:c96b83eb9148a8183b54134adea4f43723623acb29c2965c0928112b4d1c3125"
       }
     },
     {
@@ -8235,6 +8321,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8296,6 +8383,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -8318,7 +8406,7 @@
           "skills/full-output-enforcement/PROVENANCE.md",
           "skills/full-output-enforcement/SKILL.md"
         ],
-        "digest": "sha256:81faeedd30cd7122c6f01be9b5f1035f4180d5bc25effe1890f548d9dd149a63"
+        "digest": "sha256:3732c61b7e09b9f182c1e48b79e30e1a8bccf3ef76783f02ac61804678ec7e7f"
       }
     },
     {
@@ -8363,6 +8451,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8424,6 +8513,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -8446,7 +8536,7 @@
           "skills/gpt-taste/PROVENANCE.md",
           "skills/gpt-taste/SKILL.md"
         ],
-        "digest": "sha256:578c65c654ebdc7f084d000fdcd74171941347cd23b0010a27b122629778d07e"
+        "digest": "sha256:eae80cbb09d6c220acda2fbc08fc27c5c7303fcf53d2f9c3a3102b2b4e2b8a7d"
       }
     },
     {
@@ -8491,6 +8581,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8552,6 +8643,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -8574,7 +8666,7 @@
           "skills/high-end-visual-design/PROVENANCE.md",
           "skills/high-end-visual-design/SKILL.md"
         ],
-        "digest": "sha256:880a240884b82fbd049105cdc888393f74bc39f6fec21391dd546ad70beaf832"
+        "digest": "sha256:e6038ccdc56f67151773bd22cb54d3e81878c691f0195c13f9a3d0ed0fe7330e"
       }
     },
     {
@@ -8619,6 +8711,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8680,6 +8773,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -8701,7 +8795,7 @@
           "skills/ideation-mindmap/SKILL.md",
           "skills/ideation-mindmap/references/harness-delivery.md"
         ],
-        "digest": "sha256:e894714c15536a57379ad48b7500636427f9709fb465c1c1cfe8408eca62468f"
+        "digest": "sha256:9d4a590cffa75a7382c51e7c25c94e49b612be9eace29eddfedc1a411a5014e2"
       }
     },
     {
@@ -8746,6 +8840,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8807,6 +8902,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -8829,7 +8925,7 @@
           "skills/industrial-brutalist-ui/PROVENANCE.md",
           "skills/industrial-brutalist-ui/SKILL.md"
         ],
-        "digest": "sha256:a13bb77291ef8fb1d8baf099dfee5797b36e612e2d08dc9d1c81179e335e127c"
+        "digest": "sha256:86a7644524c99cf4fad8c7d0d2b929a760f22696837f6f356e08cf5186679a73"
       }
     },
     {
@@ -8874,6 +8970,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -8935,6 +9032,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -8960,7 +9058,7 @@
           "skills/interface-review/removed-signals.md",
           "skills/interface-review/scope-resolution.md"
         ],
-        "digest": "sha256:d4c82961e2ced9e1adafc6566be7c1922badb31582b298dccc558c6209c8d54d"
+        "digest": "sha256:b7b17e6ebb774c4318a2ffb87d20f6065267faa7fbd4d5411e8d1c7fc43fadff"
       }
     },
     {
@@ -9005,6 +9103,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9066,6 +9165,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -9086,7 +9186,7 @@
           "scripts/record-progress.mjs",
           "skills/karpathy-progress-memory/SKILL.md"
         ],
-        "digest": "sha256:c1eba88a071027b2433377ec8c1c577470eee7d0285f681039ddaca91fd1ff13"
+        "digest": "sha256:04a9c125cc422bfe912e3defa2a361858eda38423ea691ec6dc400a51c8eaae6"
       }
     },
     {
@@ -9131,6 +9231,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9192,6 +9293,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -9212,7 +9314,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-analyze/SKILL.md"
         ],
-        "digest": "sha256:a4de98d6db02c411dc0bb9619b6d9cbbe2801d533dc2c94b0d59c2b9ceeb90a0"
+        "digest": "sha256:e5abde363730a3eac431a23084580322184ba9eb78962351bfde75ce72122170"
       }
     },
     {
@@ -9257,6 +9359,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9318,6 +9421,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -9338,7 +9442,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-apply/SKILL.md"
         ],
-        "digest": "sha256:a4372b6b4e4e6449145d2f16f85c03d41c100ceeddfa042c050478f0eb1e26f8"
+        "digest": "sha256:a21c7c5b2515a9c7ab452e5463e009917abf9c6ceb9152d73a130eaa3e690ee9"
       }
     },
     {
@@ -9383,6 +9487,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9444,6 +9549,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -9464,7 +9570,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-assess/SKILL.md"
         ],
-        "digest": "sha256:f299b57403ee26927031114e6b687f0bc61f38443d4fd76ec2eb13b3d7b735e8"
+        "digest": "sha256:792d1177797f327e56b4578cbf4ca81a638184f0d809e4cb3a5a8dbab38183ef"
       }
     },
     {
@@ -9509,6 +9615,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9570,6 +9677,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -9590,15 +9698,15 @@
           "scripts/record-progress.mjs",
           "skills/kbd-audit/SKILL.md"
         ],
-        "digest": "sha256:4020c20d25aa67fbadded7b37bb68df70db4209d78d33eed3c3869ca37fd8e76"
+        "digest": "sha256:162fc40f90cb6b54bc05918d438a1ad39f9602670a29a055af4b920b85732eaf"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "kbd-bottleneck-detector",
-        "version": "1.0.0",
-        "artifactDigest": "sha256:82343bb2393fd19111044f240d10c3ded0bb7511be3359cb194baa37dc03a37a"
+        "version": "1.1.0",
+        "artifactDigest": "sha256:911d010df35c045a356f7895ed88a277c9521031a0e8967972000fce1b663088"
       },
       "entrypoint": "skills/kbd-bottleneck-detector/SKILL.md",
       "roots": [
@@ -9635,6 +9743,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9696,6 +9805,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -9716,7 +9826,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-bottleneck-detector/SKILL.md"
         ],
-        "digest": "sha256:6d97564a588182f0333ea1a6c5e472933e48dbedaa392568d6dd11b62c362d39"
+        "digest": "sha256:0621b5aff040c37faa2a5d0986ab9fdde6fc0fd4db0640da80b21219b9895fb3"
       }
     },
     {
@@ -9761,6 +9871,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9822,6 +9933,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -9842,7 +9954,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-cancel/SKILL.md"
         ],
-        "digest": "sha256:47241d10dce7852ba672559b612b9a37a2c1b20aff3ca94a34a9a0c044556fc2"
+        "digest": "sha256:6b91aa98681800f2a48bebc06bb30858ee8d7fe24275670f893df12bdd369508"
       }
     },
     {
@@ -9887,6 +9999,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -9948,6 +10061,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -9968,7 +10082,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-child-exit/SKILL.md"
         ],
-        "digest": "sha256:485096360943493413cc2895835cb72fb6105b3cad826c26a92657736c9da0c8"
+        "digest": "sha256:c0bcd23043ee8ee5286d7ef90f37c5fd660c8a4e2d0bb0f565946ac873091bff"
       }
     },
     {
@@ -10013,6 +10127,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10074,6 +10189,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -10096,7 +10212,7 @@
           "skills/kbd-evolve/references/criteria.md",
           "skills/kbd-evolve/references/landscape-research.md"
         ],
-        "digest": "sha256:c54f28dba5a44f9e2c96f835e3cf0316c5f55498d23de4622e5750b6cf898263"
+        "digest": "sha256:105465588d7113ec2ab9876222d84c2feaabe8caeba86502a1ca5fde13b88576"
       }
     },
     {
@@ -10141,6 +10257,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10202,6 +10319,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -10222,7 +10340,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-execute/SKILL.md"
         ],
-        "digest": "sha256:7c877cfe7c6c0830e9e42666de5e6cf8dbc0e01d402474d8efe2b8e90cc1446d"
+        "digest": "sha256:cb1e5701657eb1525007d8f296a152cf99678638900e03b95683234e6e8603b8"
       }
     },
     {
@@ -10267,6 +10385,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10328,6 +10447,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -10348,7 +10468,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-goal-check/SKILL.md"
         ],
-        "digest": "sha256:110271d35a6dc08991561a450743b63c9ea86cb579ea0eade2b115862bcf3597"
+        "digest": "sha256:9d44a0907d7ae8e5b87aeb2de0b4a56e5c971af0c2cc230c0817f269a3b832ef"
       }
     },
     {
@@ -10393,6 +10513,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10454,6 +10575,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -10474,7 +10596,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-goal/SKILL.md"
         ],
-        "digest": "sha256:3a01a5860bdcf288c4d156ab5ac8881836eed7f29fed013c77cfde6bdbe45957"
+        "digest": "sha256:d60fb77d3a380704a554175129fa0b1ad5edebe09b9e499e43d49dab6146d964"
       }
     },
     {
@@ -10519,6 +10641,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10580,6 +10703,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -10600,7 +10724,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-handoff/SKILL.md"
         ],
-        "digest": "sha256:6930ac839ecceff60589bff4f95d4f7d8d787e0e0f7ebaefda089b4d5266ea22"
+        "digest": "sha256:1fe4a69466c9c6198785b792610e358ae983dfe555dc1fca9b8201cb8016990a"
       }
     },
     {
@@ -10645,6 +10769,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10706,6 +10831,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -10731,7 +10857,7 @@
           "skills/kbd-init/references/workspace-context.md",
           "skills/kbd-init/scripts/kbd-init-validate.mjs"
         ],
-        "digest": "sha256:f535c88ecad8bcf3339fb69c18b0a40d579b3079f82d64028aba6b9d9ac5cc3e"
+        "digest": "sha256:1ad3928cb50a399265cc24645beb75fa3e3b0e00cd783c73c947cac23b73d0b3"
       }
     },
     {
@@ -10776,6 +10902,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10837,6 +10964,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -10861,7 +10989,7 @@
           "skills/kbd-inject-agent-rules/references/template-agent-rules.md",
           "skills/kbd-inject-agent-rules/references/template-uiux-routing.md"
         ],
-        "digest": "sha256:e917af4a087ac4391dcbb9ef422f4fb4f2e2e4cabd170b9a96061e2a288ca5b3"
+        "digest": "sha256:d25dbcff461bacc769f29ee34b06c336617f5ba830b4b60d361385ec48019907"
       }
     },
     {
@@ -10906,6 +11034,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -10967,6 +11096,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -10987,7 +11117,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-loop/SKILL.md"
         ],
-        "digest": "sha256:12999e848fb15a017db685e128c8bdcc9a5ae837f56576736a8898651f24f423"
+        "digest": "sha256:c724c463dacb82b0a480d3eb4fc1e29e7bee96493a2c39a9e5e1af1b7a79f137"
       }
     },
     {
@@ -11032,6 +11162,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11093,6 +11224,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -11113,7 +11245,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-memory-recall/SKILL.md"
         ],
-        "digest": "sha256:0ca1643ef360064c8a3dd93fc6afbadf511e422b811869b7a4b82984ec82c03f"
+        "digest": "sha256:b6c553a5c1d003733e176515e47e946bb7bfaeed3429111063a7638f9d842bd7"
       }
     },
     {
@@ -11158,6 +11290,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11219,6 +11352,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -11239,7 +11373,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-new-child/SKILL.md"
         ],
-        "digest": "sha256:3a87487606ba617df890ebf19ccb0a9203d52606bb1e694ca558fe6a838298c0"
+        "digest": "sha256:a6d9e6ae4ede12e647d9499f7d52474347e074c9b02ff963f0e5819bef335c9c"
       }
     },
     {
@@ -11284,6 +11418,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11345,6 +11480,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -11365,7 +11501,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-new-phase/SKILL.md"
         ],
-        "digest": "sha256:c59aa9d51f72320bec88f518e9d2746f7faa05dd8a80f0e578268e33d27c95be"
+        "digest": "sha256:e8639033df0be795e31b34f62f85e3027846fd3bd237de41dd46e66f94f2fae1"
       }
     },
     {
@@ -11410,6 +11546,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11471,6 +11608,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -11491,7 +11629,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-next-child/SKILL.md"
         ],
-        "digest": "sha256:df8406f9613b21ccd893810359e8e6b57e7cef237938d56e97f538a8fbd253ca"
+        "digest": "sha256:a3872738bdb1b0c3ca9d0352f0ba7e471eede07167820fa4585ccb5f215121ef"
       }
     },
     {
@@ -11536,6 +11674,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11597,6 +11736,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -11617,7 +11757,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-next-phase/SKILL.md"
         ],
-        "digest": "sha256:43f82399dccead220ba7d10364afa80201664af06051d8ba92396e4b9628c2ee"
+        "digest": "sha256:f612ec3c7ee27aed30c8dbe3c1164be8d1cd2649587548521f5776a49c11bcfd"
       }
     },
     {
@@ -11662,6 +11802,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11723,6 +11864,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -11743,7 +11885,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-pause/SKILL.md"
         ],
-        "digest": "sha256:ba3310a78e789ea9aeec28ca370d767e571680f590a1396057d4724342ad7fb4"
+        "digest": "sha256:50dd8b47fe9f2209038a34b6ce5e3d07e579228f0b96d68d25b36ad27f9e349e"
       }
     },
     {
@@ -11788,6 +11930,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11849,6 +11992,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -11870,7 +12014,7 @@
           "skills/kbd-plan/SKILL.md",
           "skills/kbd-plan/references/task-model-selection.md"
         ],
-        "digest": "sha256:7f10171300fba85cab543e6b5421f71ee0db0a57fa9881ac954346fe17feefd4"
+        "digest": "sha256:7d08a3ff2ed794b242fe68733847f7c6c6be6e902b131f8f8804fac82c25be94"
       }
     },
     {
@@ -11915,6 +12059,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -11976,6 +12121,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -12005,7 +12151,7 @@
           "skills/kbd-process-orchestrator/references/templates/acceptance.template.md",
           "skills/kbd-process-orchestrator/references/templates/adopted-contract.template.md"
         ],
-        "digest": "sha256:fae5866c39502cb2f148f77eaa65610ddb3e38549e1003d5a835a0f5d6df6f10"
+        "digest": "sha256:c552ebf6d16bca16b97a848a32ea16be185d1df6ac6dbcbbcc57acc065c145c2"
       }
     },
     {
@@ -12050,6 +12196,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12111,6 +12258,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -12131,7 +12279,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-reflect/SKILL.md"
         ],
-        "digest": "sha256:975ed1f4079524a597775dde0a898bf5748055678d06641c54eb33be909d21ae"
+        "digest": "sha256:ae1c38c4bc38dd2789eb3d9f74c9ae8888347e58edb0fc78c18c3d8dfdb778ed"
       }
     },
     {
@@ -12176,6 +12324,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12237,6 +12386,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -12257,7 +12407,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-resume/SKILL.md"
         ],
-        "digest": "sha256:e1883c0ea8602d1dc6fd8f55c937c6dfb309956b57a05554c12eab4d196911fe"
+        "digest": "sha256:feae34f57c610cb55e5e2850ea2c7256cdcca48755567a45033b0bdb7a688762"
       }
     },
     {
@@ -12302,6 +12452,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12363,6 +12514,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -12383,7 +12535,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-spec/SKILL.md"
         ],
-        "digest": "sha256:9d14257cdb2a6f1539ba05a3d5b1177da986048a64396a40c3d0c05b90c44123"
+        "digest": "sha256:8a4cc424961cf6053660ce05e51c2a8ceb094dba47352632fe6b250b99d785f1"
       }
     },
     {
@@ -12428,6 +12580,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12489,6 +12642,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -12509,7 +12663,7 @@
           "scripts/record-progress.mjs",
           "skills/kbd-status/SKILL.md"
         ],
-        "digest": "sha256:25a20e9404ee911762a6434aa554d01ddbadddad84d80e7481c03ffa34abe33e"
+        "digest": "sha256:0d318fd9d349e0ff642057af195fa1950d5f59400ea3702b290f63c8325f8b2e"
       }
     },
     {
@@ -12554,6 +12708,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12615,6 +12770,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -12637,15 +12793,15 @@
           "skills/minimalist-ui/PROVENANCE.md",
           "skills/minimalist-ui/SKILL.md"
         ],
-        "digest": "sha256:3633376cfcf1c7387c6bef87ab7243685ab301a6564aa57924aaf7b2fd6a21f4"
+        "digest": "sha256:f9f95502b7c9cfb5f32b3d42d9d37167464a978498b907b8d5ceae0749558c2d"
       }
     },
     {
       "identity": {
         "id": null,
         "name": "prometheus-context-bootstrap",
-        "version": "1.2.1",
-        "artifactDigest": "sha256:5e6075c8ed6a66adf807303f9b87efdf66a47642acf216efcafe3f2510e514e9"
+        "version": "1.3.0",
+        "artifactDigest": "sha256:de92db60148ca61db8e11837b00887196cc7c36407ec932996526b0c9c26907c"
       },
       "entrypoint": "skills/prometheus-context-bootstrap/SKILL.md",
       "roots": [
@@ -12682,6 +12838,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12743,6 +12900,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -12765,10 +12923,12 @@
           "skills/prometheus-context-bootstrap/references/AGENTS.base.md",
           "skills/prometheus-context-bootstrap/references/rules-rust.md",
           "skills/prometheus-context-bootstrap/references/rules-typescript.md",
+          "skills/prometheus-context-bootstrap/scripts/audit-rules.mjs",
           "skills/prometheus-context-bootstrap/scripts/existing-project.mjs",
-          "skills/prometheus-context-bootstrap/scripts/maintain-project.mjs"
+          "skills/prometheus-context-bootstrap/scripts/maintain-project.mjs",
+          "skills/prometheus-context-bootstrap/scripts/rules-audit.mjs"
         ],
-        "digest": "sha256:46d10bfc08713799a74ca04c05542a549a255d7dec0beac004bd9ca062718a2e"
+        "digest": "sha256:c2392db50875e37860e0e6cdc6f6305f1d6fe5e474dda869aedc64f77b2f3a05"
       }
     },
     {
@@ -12813,6 +12973,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -12874,6 +13035,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -12897,7 +13059,7 @@
           "skills/prometheus-impeccable-core/references/impeccable-context-and-modes.md",
           "skills/prometheus-impeccable-core/references/impeccable-craft-floor.md"
         ],
-        "digest": "sha256:e64096204612d5cf99ef3a2724201aadb86171c645048a235336c0ac459e65a6"
+        "digest": "sha256:36e4a4f3e6c18c2bd1fea37cd5e544596fc7e3389b8194b58fa4607759b1b7d0"
       }
     },
     {
@@ -12942,6 +13104,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13003,6 +13166,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -13025,7 +13189,7 @@
           "skills/prometheus-rust-workspace/references/phase-gated-verification.md",
           "skills/prometheus-rust-workspace/references/skill-routing.md"
         ],
-        "digest": "sha256:ccaa380858f90cd1cf8906e33852c40d5df56c77aa97905d4f1ba050786beda8"
+        "digest": "sha256:db7f8cae8e3b6c84cec413c72af766af783d6962cbd81c9db0edff5077aac3b8"
       }
     },
     {
@@ -13070,6 +13234,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13131,6 +13296,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -13151,7 +13317,7 @@
           "scripts/record-progress.mjs",
           "skills/prometheus-ui-review/SKILL.md"
         ],
-        "digest": "sha256:6ccb3c637313f4b72fee1612ccb90f7ebdabd11072c302b66dea65cd15e7e9b9"
+        "digest": "sha256:772896a908925c952a15db3abac1fa54e74024c95e2e201d1ea012d59c9d58e7"
       }
     },
     {
@@ -13196,6 +13362,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13257,6 +13424,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -13290,7 +13458,7 @@
           "skills/prometheus-ui-ux/scripts/install.mjs",
           "skills/prometheus-ui-ux/scripts/routing.mjs"
         ],
-        "digest": "sha256:3f7e2940c0055c0d2e15b9341304f816d3f4fb1ec1731fb8b67c1cb2553c9bc1"
+        "digest": "sha256:313b32ad212ef446cf715cf8f768b74183337259f2441fbe3557527bc70f804d"
       }
     },
     {
@@ -13335,6 +13503,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13396,6 +13565,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -13416,7 +13586,7 @@
           "scripts/record-progress.mjs",
           "skills/rebrand-artifact/SKILL.md"
         ],
-        "digest": "sha256:3f92be23d1428fb02fc3885733a2c0fcf19696ede79f2c7337b365fb5697057c"
+        "digest": "sha256:3c3c320b4051bae13aed4b86c40f1b5b3796d827d8242fd9db0e32cedc8a1858"
       }
     },
     {
@@ -13461,6 +13631,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13522,6 +13693,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -13544,7 +13716,7 @@
           "skills/redesign-existing-projects/PROVENANCE.md",
           "skills/redesign-existing-projects/SKILL.md"
         ],
-        "digest": "sha256:5a6ed961fcac9df9130037f13512cbae56706ec47e032a51d25e9121877312cf"
+        "digest": "sha256:c66afde88303c8704950314d97028f7280541dc268be658dacb3860dde6fd2a9"
       }
     },
     {
@@ -13589,6 +13761,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13650,6 +13823,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -13670,7 +13844,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-a2ui/SKILL.md"
         ],
-        "digest": "sha256:6db6ec190f4146f4faaac0919b38e68fadbd32440a3f15f44f44b3236a7452d3"
+        "digest": "sha256:f798556f47e3bb35e15f22292e9cc89fe9803a2a420df2240a5ab04769b3f7d1"
       }
     },
     {
@@ -13715,6 +13889,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13776,6 +13951,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -13796,7 +13972,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-content/SKILL.md"
         ],
-        "digest": "sha256:c58cb4bebfb2c4911260c42e6728543b0fe0e374f3e27b9ea361d1023fbb9d3b"
+        "digest": "sha256:75d33857a7a51a73cf5528c98a0da19e2ca13438e1d77eabd73089c37883f913"
       }
     },
     {
@@ -13841,6 +14017,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -13902,6 +14079,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -13922,7 +14100,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-image/SKILL.md"
         ],
-        "digest": "sha256:54f6aa578a8f1b1a73ac06195faf6f7509c36d9abe9573e9c2caf68a5ff6009a"
+        "digest": "sha256:1aadfdd478bf84c317c12d59f03c6130a1549f54155c0da7d42af8398b63adeb"
       }
     },
     {
@@ -13967,6 +14145,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14028,6 +14207,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -14048,7 +14228,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-logo/SKILL.md"
         ],
-        "digest": "sha256:6e89a332fe64874c4092076752d9e388333de0305953de3544c748059fc63c86"
+        "digest": "sha256:f6d09bf658dd8c1570907d488de7b740359994e1f55d9bb1120ab1d8aecbcded"
       }
     },
     {
@@ -14093,6 +14273,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14154,6 +14335,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -14174,7 +14356,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-mcp-ui/SKILL.md"
         ],
-        "digest": "sha256:ac3e82f48d4a268f8de898f7c44dfb329c06354801394d4adc34837f31be8065"
+        "digest": "sha256:f537baad6c0ae175561b7eff0e45221b7553837432bef02394236996fc1feb93"
       }
     },
     {
@@ -14219,6 +14401,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14280,6 +14463,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -14300,7 +14484,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-moodboard/SKILL.md"
         ],
-        "digest": "sha256:6bff6171e2f8c7dc3dfcbfbe26e70c60ed9ebe3cc5e498f5a24396da0a712a45"
+        "digest": "sha256:9345afe640481780cb678aed5cce3f6a16f8902c8804b56467f6f62631d22527"
       }
     },
     {
@@ -14345,6 +14529,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14406,6 +14591,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -14426,7 +14612,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-status/SKILL.md"
         ],
-        "digest": "sha256:d26161a89ebb3f095975cf5ca0fb40e9888b62983340c06d8585c19103b70023"
+        "digest": "sha256:2feac7ed9148393a5d0d9cc6d84dd5faadd26f781c2152ffc7cede8c9f91c2e8"
       }
     },
     {
@@ -14471,6 +14657,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14532,6 +14719,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -14552,7 +14740,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-ui/SKILL.md"
         ],
-        "digest": "sha256:19ae735e469dd3634c82614ebddbcdc37e697864379ab11e00903045f5f2722c"
+        "digest": "sha256:51477be502179e8d17d10a07ac9db9fe776290fbd782af4f87a1e58b52aa95a3"
       }
     },
     {
@@ -14597,6 +14785,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14658,6 +14847,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -14678,7 +14868,7 @@
           "scripts/record-progress.mjs",
           "skills/refine-validate/SKILL.md"
         ],
-        "digest": "sha256:9280a35e610ea70072c7d41550ec5ac5d66b0e56e582cab2b4dee9271166794d"
+        "digest": "sha256:e67120f4f5458e2a33f5e993ef950aa5c7f6bab96bb54857cecdbf1a03f8480c"
       }
     },
     {
@@ -14723,6 +14913,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14784,6 +14975,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -14805,7 +14997,7 @@
           "skills/rust-async-patterns/SKILL.md",
           "skills/rust-async-patterns/references/details.md"
         ],
-        "digest": "sha256:8f08fb89029c4bf40d05f83d7ee5dc95ee7860d4751b870d18607ec231869b13"
+        "digest": "sha256:b8e7dac167cd0a005c34cae56d6ec9b1f033838b013d5a3112b5dbcaed1a3403"
       }
     },
     {
@@ -14850,6 +15042,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -14911,6 +15104,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -14940,7 +15134,7 @@
           "skills/rust-best-practices/references/chapter_08.md",
           "skills/rust-best-practices/references/chapter_09.md"
         ],
-        "digest": "sha256:2a16c3bb0573829ac5c7ad4bf6de41dc1124989a3b1224fd8eff71ac4b66b053"
+        "digest": "sha256:2c02f78e47641759f3b75912179058b0d1667b8388515e411b932afe2d884c1d"
       }
     },
     {
@@ -14985,6 +15179,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15046,6 +15241,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -15067,7 +15263,7 @@
           "skills/rust-mcp-server-generator/SKILL.md",
           "skills/rust-mcp-server-generator/references/generator.md"
         ],
-        "digest": "sha256:7b3e8d72bd876f398886174940ea007e658a4f9294999aa478b347f95700cb53"
+        "digest": "sha256:656050fddc6b9d0db7f1c30e524f742b85bf1d1d3cd7b6dbe32f9f67368a00b5"
       }
     },
     {
@@ -15112,6 +15308,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15173,6 +15370,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -15193,7 +15391,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-flutter-a2ui/SKILL.md"
         ],
-        "digest": "sha256:37129149d4c65696db32f032e4473ab98852c2917008d8c41f24c88ac124da04"
+        "digest": "sha256:4ae757bb7e5a12992f6eab817cce5fbcfee8e2506b2f32ce24c2723c4e778ff5"
       }
     },
     {
@@ -15238,6 +15436,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15299,6 +15498,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -15319,7 +15519,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-a2ui/SKILL.md"
         ],
-        "digest": "sha256:459f4e7c6210dbdcf56a227c4e896e624ca3bfd9f14df0628501e9214a8d8732"
+        "digest": "sha256:19e8dc6c8e8acf6733a7b4545ec5e854182e911a24149f8fd7b79299cb408a4f"
       }
     },
     {
@@ -15364,6 +15564,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15425,6 +15626,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -15445,7 +15647,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-agui/SKILL.md"
         ],
-        "digest": "sha256:e57832648cc55aaf37e274d4622b099f0bd984a6da49ee5b07142a9715833320"
+        "digest": "sha256:a5acc2c5ed75e503d00adc51c6a8ae133d6e695ba28bf4bdfdde29a72d6a28fa"
       }
     },
     {
@@ -15490,6 +15692,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15551,6 +15754,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -15571,7 +15775,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite-tauri/SKILL.md"
         ],
-        "digest": "sha256:fb074aaafe98f7b1ad31fc8bf8164787b9f6995a1e3219796aa2e2f156b4053b"
+        "digest": "sha256:2384e62e4fa94e0c19867e03f5f007a8884046b4fcf106af7208c52dd7caba50"
       }
     },
     {
@@ -15616,6 +15820,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15677,6 +15882,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -15697,7 +15903,7 @@
           "scripts/record-progress.mjs",
           "skills/scaffold-react-vite/SKILL.md"
         ],
-        "digest": "sha256:8a8854a6b95257c32249971f369a1d161455c0336d57e15e325d71b4e50e742d"
+        "digest": "sha256:d32ea3f56154f0c58be81bc07247149318f5b0dc2a775bf4aaf15f66a10f159c"
       }
     },
     {
@@ -15742,6 +15948,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15803,6 +16010,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -15832,7 +16040,7 @@
           "skills/skill-certification/scripts/run-evals.mjs",
           "skills/skill-certification/scripts/summarize-evals.mjs"
         ],
-        "digest": "sha256:c24a7ee9f93a6e938976ecbd70fe88f501a4163d8424de5464d42627b86797e1"
+        "digest": "sha256:bc2eba5f0f69c9439a20093132e3a9285e4291d5c18fd8e2655128f1862be032"
       }
     },
     {
@@ -15877,6 +16085,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -15938,6 +16147,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -15961,7 +16171,7 @@
           "skills/stitch-design-taste/PROVENANCE.md",
           "skills/stitch-design-taste/SKILL.md"
         ],
-        "digest": "sha256:4fb9ed6d7100429684ea622d861653f68a75a55c41b4ddca3a7ee8e9aa5f3d08"
+        "digest": "sha256:74c33725eac08c958f594509ecfcb12a1fc53f5d481279a1d5956c4429c18b87"
       }
     },
     {
@@ -16006,6 +16216,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -16067,6 +16278,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -16101,7 +16313,7 @@
           "skills/swiftui-pro/references/swift.md",
           "skills/swiftui-pro/references/views.md"
         ],
-        "digest": "sha256:9bfb9fbaa137213da0f95f90adf459544583949c89b931ab4c75c81dcb2b4fd9"
+        "digest": "sha256:270931073a2a0cefc0821dc8bca502169404141fee761b2bc8baffb734ab7464"
       }
     },
     {
@@ -16146,6 +16358,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -16207,6 +16420,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -16293,7 +16507,7 @@
           "skills/ui-ux-pro-max/scripts/reasoning.mjs",
           "skills/ui-ux-pro-max/scripts/search.mjs"
         ],
-        "digest": "sha256:9de96f423425436a0ecb532fa4a793fa710e363ed3e195ed1784e7320f479435"
+        "digest": "sha256:5e726cd26485e74fa573d96bec3e9a0f1a5991e8c69a2009db5d5ad670b3e7ef"
       }
     },
     {
@@ -16338,6 +16552,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -16399,6 +16614,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -16419,7 +16635,7 @@
           "scripts/record-progress.mjs",
           "skills/value-scenario-discovery/SKILL.md"
         ],
-        "digest": "sha256:42d93a98928b0eb14b022c078896101d6369aece2118d2f5c23ad54fe3b34fab"
+        "digest": "sha256:8e6341c53380bba626f19312209a0c7b300a5c8bcc67c8f923de0b2891e8cfd5"
       }
     },
     {
@@ -16464,6 +16680,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -16525,6 +16742,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -16545,7 +16763,7 @@
           "scripts/record-progress.mjs",
           "skills/value-scenario-verify/SKILL.md"
         ],
-        "digest": "sha256:fb37d823d4528d7ee7b8f9899ced19fc04e1182f0dc628a14229cb472646c66a"
+        "digest": "sha256:0d3163469517e7c6ff2bb9266b4cfe88947642c20f63aa71321bd4e25f146da6"
       }
     },
     {
@@ -16590,6 +16808,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -16651,6 +16870,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -16675,7 +16895,7 @@
           "skills/variant/agents/openai.yaml",
           "skills/variant/picker.md"
         ],
-        "digest": "sha256:a9d1704ba767b9b609450ef8d473aea9575f8aba7adb18fb11e9c56627f08d35"
+        "digest": "sha256:d7d0a058662095c068ef83f70bf3bb2a5ca8e2ac1d874de3f944779f18e7ec60"
       }
     },
     {
@@ -16720,6 +16940,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -16781,6 +17002,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -16816,7 +17038,7 @@
           "skills/vercel-composition-patterns/rules/state-decouple-implementation.md",
           "skills/vercel-composition-patterns/rules/state-lift-state.md"
         ],
-        "digest": "sha256:ad825b08cb053f4b6a864642ec34b89d49e901eb33df680d375b308834dd2935"
+        "digest": "sha256:40f70ee05e3a6d6ff9cb8119c77e7569c2e086a7c245cc2968858e698d21eaa7"
       }
     },
     {
@@ -16861,6 +17083,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -16922,6 +17145,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -17019,7 +17243,7 @@
           "skills/vercel-react-best-practices/rules/server-parallel-nested-fetching.md",
           "skills/vercel-react-best-practices/rules/server-serialization.md"
         ],
-        "digest": "sha256:07ed3408ceb0845dc707fa053695f8b89769fc96ba0d3b79ccc4c1f6088e903f"
+        "digest": "sha256:9d1864fb9b8071c0824a6eae06f10db3269b6626c6c61f68ec6054894bedf999"
       }
     },
     {
@@ -17064,6 +17288,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -17125,6 +17350,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -17188,7 +17414,7 @@
           "skills/vercel-react-native-skills/rules/ui-scrollview-content-inset.md",
           "skills/vercel-react-native-skills/rules/ui-styling.md"
         ],
-        "digest": "sha256:4af563eec0547d4b5db86f2542be8ba13aeda1a9efb76327db4483d45bc86baf"
+        "digest": "sha256:93d015e60ef379214a1ee29b6d179ec75503a9d0609819b5d4e4b2b32dabec90"
       }
     },
     {
@@ -17233,6 +17459,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -17294,6 +17521,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -17317,7 +17545,7 @@
           "skills/vlbv/references/requirements.md",
           "skills/vlbv/references/supersession.template.md"
         ],
-        "digest": "sha256:60c67153ef56fcb82c5129f139254c9f16677e14db8cb81c1cdaf2f04aa74ba4"
+        "digest": "sha256:f664c2cda3d0a701d62979cfa33f51753ed652f5655b57692b699290a0b80297"
       }
     },
     {
@@ -17362,6 +17590,7 @@
           "lib/karpathy/validate.mjs",
           "lib/kbd/adopted-contract.mjs",
           "lib/kbd/after-hooks.mjs",
+          "lib/kbd/blocker-advice.mjs",
           "lib/kbd/bottleneck-guard.mjs",
           "lib/kbd/boundary-authorize.mjs",
           "lib/kbd/closure-packet/index.mjs",
@@ -17423,6 +17652,7 @@
           "scripts/cadence-kbd-adapter.mjs",
           "scripts/hook-entry.mjs",
           "scripts/kbd-apply.mjs",
+          "scripts/kbd-bottleneck-detector.mjs",
           "scripts/kbd-boundary-authorize.mjs",
           "scripts/kbd-child-exit.mjs",
           "scripts/kbd-closure-packet.mjs",
@@ -17447,9 +17677,9 @@
           "skills/web-design-guidelines/references/LICENSE.web-interface-guidelines",
           "skills/web-design-guidelines/references/web-interface-guidelines.md"
         ],
-        "digest": "sha256:09af7263714061d37ac46ef8f711eec9f2316652ca26a7509abdacc390cf8f78"
+        "digest": "sha256:f0b12301e52363d97c59ab1dfd422186be199d8d5d88b50f8989959abc02e9cc"
       }
     }
   ],
-  "inventoryDigest": "sha256:f54f2a292946e6632646b642324f882c016fe07ed584dfaf5c1886c0f4ac93e8"
+  "inventoryDigest": "sha256:a601e92b7a5225bcc74c47323a4cb15df80f48525c5850e3ae8aeb3125fe1466"
 }

@@ -5,7 +5,7 @@ license: MIT
 compatibility: Node.js LTS (>= 22.20.0); no shell, Python, symlinks, or executable bit required
 metadata:
   tags: 'bootstrap, context-engineering, agents-md, claude-md, hooks, scaffold'
-  version: '1.2.1'
+  version: '1.3.0'
 ---
 
 # Prometheus Context Bootstrap
@@ -130,6 +130,34 @@ machine-detectable. Run apply with no concurrent editor. If a filesystem failure
 partially applies, audit and reconcile before repeating; separate named writes
 are not a multi-file transaction. A fresh preview after a complete apply is
 a no-op. The legacy initializer, `--dry-run` and `--check` are unchanged.
+
+## Audit which rules are effective
+
+A separate read-only report lists every instruction and rule source a session
+in the project can pick up, and which pack version is installed there:
+
+```text
+node skills/prometheus-context-bootstrap/scripts/audit-rules.mjs --path <project-root>
+```
+
+In an installed skill, call its bundled `scripts/audit-rules.mjs`. It reports:
+
+- `ROOT` and `NESTED` `AGENTS.md`, `CLAUDE.md` and `CLAUDE.local.md` files;
+- `IMPORT` lines (`@file.md`) and whether the target exists;
+- `RULE` files in `.claude/rules`, `.cursor/rules`, `.github/instructions` and
+  `.github/copilot-instructions.md`;
+- the same for each linked Git worktree, listed separately;
+- `CONFLICT file:line` for a passage that treats a test count as completion or
+  task order as the goal;
+- the pack version running the audit, whether `.claude/skills` and
+  `.agents/skills` hold a managed copy, and `VERSION` for each installed skill
+  whose version differs from this pack. With no receipt or version it says
+  `unknown`.
+
+It changes nothing, fixes nothing and exits 0 whatever it finds; resolve a
+conflict at the file's owning source. Conflicts are recognised patterns only,
+so prose that says the same thing another way is not found. It does not need
+the path to be a Git root; outside Git, worktrees are reported as unknown.
 
 ## Installed context
 
